@@ -21,6 +21,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
 }
 
 dependencies {
@@ -37,6 +41,7 @@ dependencies {
     implementation rootProject.ext.dependencies["fragmentation-swipeback"]
     implementation rootProject.ext.dependencies["eventbus-activity-scope"]
     implementation rootProject.ext.dependencies["eventbus"]
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
 
     implementation rootProject.ext.dependencies["multidex"]
     implementation rootProject.ext.dependencies["junit"]

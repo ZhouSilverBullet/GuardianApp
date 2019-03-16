@@ -1,6 +1,9 @@
 package com.xuxin.guardianapp.ui.fragment;
 
 
+import android.view.View;
+import android.widget.LinearLayout;
+
 import com.orhanobut.logger.Logger;
 import com.xuxin.guardianapp.R;
 import com.xuxin.guardianapp.base.BaseMvpFragment;
@@ -8,6 +11,7 @@ import com.xuxin.guardianapp.presenter.HomeFragmentPresenter;
 import com.xuxin.guardianapp.presenter.contract.HomeFragmentContract;
 import com.xuxin.guardianapp.ui.adapter.HomeRecyclerAdapter;
 import com.xuxin.guardianapp.ui.widget.TitleView;
+import com.xuxin.guardianapp.utils.UIUtils;
 
 import java.util.ArrayList;
 
@@ -23,6 +27,8 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
     TitleView mTitleView;
     @BindView(R.id.rv)
     RecyclerView mRecyclerView;
+    @BindView(R.id.ll_container)
+    LinearLayout mllContainer;
 
     @Override
     protected int getFragmentLayout() {
@@ -42,6 +48,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
         ArrayList<Integer> data = getRecyclerData();
 
         mRecyclerView.setAdapter(new HomeRecyclerAdapter(R.layout.item_home_recycler, data));
+
     }
 
     private ArrayList<Integer> getRecyclerData() {
@@ -59,6 +66,37 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
     protected void initData() {
         super.initData();
         mPresenter.loadSignData();
+    }
+
+    @Override
+    protected void initEvent() {
+        super.initEvent();
+        tabEvent();
+    }
+
+    private void tabEvent() {
+        for (int i = 0; i < mllContainer.getChildCount(); i++) {
+            final int j = i;
+            mllContainer.getChildAt(i).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switch (j) {
+                        case 0:
+                            UIUtils.showToast("查询记录");
+                            break;
+                        case 1:
+                            UIUtils.showToast("通讯录");
+                            break;
+                        case 2:
+                            UIUtils.showToast("网格地图");
+                            break;
+                        case 3:
+                            UIUtils.showToast("打卡");
+                            break;
+                    }
+                }
+            });
+        }
     }
 
     @Override

@@ -11,8 +11,10 @@
     <color name="color_999999">#999999</color>
     <color name="color_303030">#303030</color>
     <color name="color_E4E4E4">#E4E4E4</color>
+    <color name="color_dddddd">#DDDDDD</color>
     <color name="green">#34B26D</color>
     <color name="translate">#00000000</color>
+    <color name="half_translate">#60000000</color>
 
     <array name="tab_colors">
         <item>#34B26D</item>

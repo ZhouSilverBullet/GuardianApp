@@ -26,11 +26,30 @@
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
             android:src="@drawable/top_1" />
+
+        <LinearLayout
+            android:id="@+id/ll_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView style="@style/text" />
+
+            <TextView style="@style/text" />
+
+            <TextView style="@style/text" />
+
+            <TextView style="@style/text" />
+
+        </LinearLayout>
+
     </FrameLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

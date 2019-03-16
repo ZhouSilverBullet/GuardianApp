@@ -4,5 +4,8 @@
         <attr name="titleValue" format="string"/>
         <attr name="titleColor" format="color" />
         <attr name="bgColor" format="color" />
+        <attr name="rightTextValue" format="string"/>
+        <attr name="rightTextColor" format="color"/>
+        <attr name="leftLayoutIsShow" format="boolean"/>
     </declare-styleable>
 </resources>

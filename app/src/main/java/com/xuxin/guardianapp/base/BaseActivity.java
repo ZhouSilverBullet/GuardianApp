@@ -10,9 +10,9 @@ import com.xuxin.guardianapp.utils.StatusBarUtil;
 import androidx.annotation.Nullable;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import me.yokeyword.fragmentation.SupportActivity;
+import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 
-public abstract class BaseActivity extends SupportActivity {
+public abstract class BaseActivity extends SwipeBackActivity {
 
     private Unbinder mUnbinder;
 
@@ -20,7 +20,7 @@ public abstract class BaseActivity extends SupportActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayout());
-
+        setSwipeBackEnable(false);
         initStatusBar();
 
         mUnbinder = ButterKnife.bind(this);

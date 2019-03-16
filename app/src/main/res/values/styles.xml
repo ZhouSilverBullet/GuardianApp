@@ -7,6 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <style name="TextAppearanceHome" parent="TextAppearance.Design.Tab">
@@ -45,5 +46,20 @@
         <item name="android:taskToFrontExitAnimation">@anim/wb_movie_exit_left</item>
         <item name="android:taskToBackEnterAnimation">@anim/wb_movie_enter_left</item>
         <item name="android:taskToBackExitAnimation">@anim/wb_movie_exit_right</item>
+    </style>
+
+    <declare-styleable name="TextAndTextView">
+        <attr name="tatv_text_view" format="string" />
+        <attr name="tatv_text_right_value" format="string" />
+        <attr name="tatv_text_right_hint_value" format="string" />
+        <attr name="tatv_text_img_is_show" format="boolean" />
+        <attr name="tatv_line_is_show" format="boolean" />
+    </declare-styleable>
+
+    <style name="text">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
     </style>
 </resources>
