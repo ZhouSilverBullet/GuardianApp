@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.xuxin.guardianapp.R;
 import com.xuxin.guardianapp.ui.activity.EventReportActivity;
+import com.xuxin.guardianapp.ui.activity.TaskAgentsActivity;
 import com.xuxin.guardianapp.utils.UIUtils;
 
 import java.util.List;
@@ -30,12 +31,15 @@ public class HomeRecyclerAdapter extends BaseQuickAdapter<Integer, BaseViewHolde
                 Intent intent = null;
                 switch (item) {
                     case R.drawable.list_1:
+                        intent = new Intent(mContext, TaskAgentsActivity.class);
                         break;
                     case R.drawable.list_2:
                         intent = new Intent(mContext, EventReportActivity.class);
-                        mContext.startActivity(intent);
+                        break;
+                    case R.drawable.list_3:
                         break;
                 }
+                mContext.startActivity(intent);
             }
         });
     }

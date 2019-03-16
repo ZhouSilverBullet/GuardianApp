@@ -33,6 +33,7 @@
         </activity>
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.EventReportActivity" />
+        <activity android:name=".ui.activity.TaskAgentsActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
