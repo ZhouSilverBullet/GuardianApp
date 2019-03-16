@@ -1,0 +1,82 @@
+package com.xuxin.guardianapp.base;
+
+import android.os.Build;
+import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
+
+import com.xuxin.guardianapp.utils.StatusBarUtil;
+
+import androidx.annotation.Nullable;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import me.yokeyword.fragmentation.SupportActivity;
+
+public abstract class BaseActivity extends SupportActivity {
+
+    private Unbinder mUnbinder;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(getLayout());
+
+        initStatusBar();
+
+        mUnbinder = ButterKnife.bind(this);
+        initVariables();
+        initView();
+        initEvent();
+        initData();
+    }
+
+    /**
+     * statusBar 控制
+     */
+    private void initStatusBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window window = getWindow();
+            // Translucent status bar
+            window.setFlags(
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+            if (StatusBarUtil.MIUISetStatusBarLightMode(getWindow(), true)) {//小米MIUI系统
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {//Android6.0以上系统
+                    StatusBarUtil.android6_SetStatusBarLightMode(getWindow());
+                    StatusBarUtil.compat(this);
+                } else {
+                    StatusBarUtil.compat(this);
+                }
+            } else if (StatusBarUtil.FlymeSetStatusBarLightMode(getWindow(), true)) {//魅族flyme系统
+                StatusBarUtil.compat(this);
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {//Android6.0以上系统
+                StatusBarUtil.android6_SetStatusBarLightMode(getWindow());
+                StatusBarUtil.compat(this);
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mUnbinder != null) {
+            mUnbinder.unbind();
+            mUnbinder = null;
+        }
+    }
+
+    protected void initEvent() {
+    }
+
+    protected void initData() {
+    }
+
+    protected void initView() {
+    }
+
+    protected void initVariables() {
+    }
+
+    protected abstract int getLayout();
+}

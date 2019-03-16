@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item_main"
+        android:icon="@drawable/tab_home_selector"
+        android:title="网格管理" />
+    <item
+        android:id="@+id/item_video"
+        android:icon="@drawable/tab_video_selector"
+        android:title="学海无涯" />
+    <!--<item-->
+        <!--android:id="@+id/item_add"-->
+        <!--android:icon="@drawable/add_channel"-->
+        <!--android:title="发头条" />-->
+    <!--<item-->
+        <!--android:id="@+id/item_small_video"-->
+        <!--android:icon="@drawable/tab_micro_selector"-->
+        <!--android:title="小视频" />-->
+    <item
+        android:id="@+id/item_mine"
+        android:icon="@drawable/tab_me_selector"
+        android:title="个人中心" />
+</menu>

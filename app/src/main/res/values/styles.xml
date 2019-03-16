@@ -1,0 +1,49 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="TextAppearanceHome" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <declare-styleable name="ColorTrackView">
+        <attr name="ctvText" format="string" />
+        <attr name="ctvText_size" format="dimension" />
+        <attr name="ctvText_origin_color" format="color" />
+        <attr name="ctvText_change_color" format="color" />
+        <attr name="ctvProgress" format="float" />
+        <attr name="ctvDirection" format="integer" />
+    </declare-styleable>
+
+    <style name="NormalSplash" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/welcome_layler_drawable</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:scrollbarThumbVertical">@drawable/global_scroll_thumb</item>
+        <!--<item name="android:windowAnimationStyle">@style/MyAnimationActivity</item>-->
+    </style>
+
+    <style name="MyAnimationActivity">
+        <item name="android:activityOpenEnterAnimation">@anim/wb_movie_enter_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/wb_movie_exit_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/wb_movie_enter_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/wb_movie_exit_right</item>
+        <item name="android:taskOpenEnterAnimation">@anim/wb_movie_enter_right</item>
+        <item name="android:taskOpenExitAnimation">@anim/wb_movie_exit_left</item>
+        <item name="android:taskCloseEnterAnimation">@anim/wb_movie_enter_left</item>
+        <item name="android:taskCloseExitAnimation">@anim/wb_movie_exit_right</item>
+        <item name="android:taskToFrontEnterAnimation">@anim/wb_movie_enter_right</item>
+        <item name="android:taskToFrontExitAnimation">@anim/wb_movie_exit_left</item>
+        <item name="android:taskToBackEnterAnimation">@anim/wb_movie_enter_left</item>
+        <item name="android:taskToBackExitAnimation">@anim/wb_movie_exit_right</item>
+    </style>
+</resources>
