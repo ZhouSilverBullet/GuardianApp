@@ -42,6 +42,7 @@ dependencies {
     implementation rootProject.ext.dependencies["eventbus-activity-scope"]
     implementation rootProject.ext.dependencies["eventbus"]
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 
     implementation rootProject.ext.dependencies["multidex"]
     implementation rootProject.ext.dependencies["junit"]
