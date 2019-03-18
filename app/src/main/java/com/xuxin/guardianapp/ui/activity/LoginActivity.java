@@ -88,8 +88,9 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
             UIUtils.showToast("账号不能为空");
             return;
         }
-        boolean isAdmin = trim.equals("1800000000");
+        boolean isAdmin = trim.equals("18000000000");
         intent.putExtra("isAdmin", isAdmin);
+        intent.putExtra("phone", trim);
         startActivity(intent);
         finish();
     }

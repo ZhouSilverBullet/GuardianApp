@@ -94,7 +94,7 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
     private void switchFragment(int position) {
         HomeFragment fragment = findFragment(HomeFragment.class);
         if (fragment == null) {
-            mFragments[0] = new HomeFragment();
+            mFragments[0] = HomeFragment.newInstance(isAdmin);
             mFragments[1] = new LearningFragment();
             mFragments[2] = new MineFragment();
 

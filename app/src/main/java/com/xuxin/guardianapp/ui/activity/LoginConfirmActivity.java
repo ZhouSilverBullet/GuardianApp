@@ -1,6 +1,7 @@
 package com.xuxin.guardianapp.ui.activity;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ public class LoginConfirmActivity extends BaseActivity {
     @BindView(R.id.btn_no_people)
     Button btnNoPeople;
     private boolean isAdmin;
+    private String phone;
 
     @Override
     protected int getLayout() {
@@ -36,6 +38,7 @@ public class LoginConfirmActivity extends BaseActivity {
         super.initVariables();
         if (getIntent() != null) {
             isAdmin = getIntent().getBooleanExtra("isAdmin", false);
+            phone = getIntent().getStringExtra("phone");
         }
     }
 
@@ -43,7 +46,11 @@ public class LoginConfirmActivity extends BaseActivity {
     protected void initView() {
         super.initView();
         tvName.setText("张三");
-        tvPhone.setText("13333333333");
+        if (TextUtils.isEmpty(phone)) {
+            tvPhone.setText(phone);
+        } else {
+            tvPhone.setText("13333333333");
+        }
         tvCompany.setText("网格检测中心");
         if (isAdmin) {
             tvJobs.setText("网格员");
