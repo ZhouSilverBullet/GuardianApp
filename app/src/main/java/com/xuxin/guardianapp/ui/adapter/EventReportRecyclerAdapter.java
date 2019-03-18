@@ -45,11 +45,17 @@ public class EventReportRecyclerAdapter extends BaseQuickAdapter<LocalMedia, Bas
             view.setVisibility(View.GONE);
             dele.setVisibility(View.VISIBLE);
             horImg.setVisibility(View.VISIBLE);
-            final String compressPath = item.getCompressPath();
-            Bitmap bitmap = getBitmapForPath(compressPath);
-            if (bitmap != null) {
-                horImg.setImageBitmap(bitmap);
+            if (item.getDuration() == -1) {
+                horImg.setImageResource(R.mipmap.ic_launcher);
+            } else {
+                final String compressPath = item.getCompressPath();
+                Bitmap bitmap = getBitmapForPath(compressPath);
+                if (bitmap != null) {
+                    horImg.setImageBitmap(bitmap);
+                }
             }
+
+
             dele.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -71,6 +77,7 @@ public class EventReportRecyclerAdapter extends BaseQuickAdapter<LocalMedia, Bas
 
     public interface HorListener {
         void click();
+
         void delete(LocalMedia item);
     }
 

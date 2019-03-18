@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="135dp"
+    android:layout_width="104dp"
     android:layout_height="135dp"
     android:background="@drawable/recycler_item_bg">
 
@@ -25,6 +25,6 @@
         android:layout_height="16dp"
         android:layout_gravity="right|top"
         android:layout_marginTop="17dp"
-        android:layout_marginRight="17dp"
+        android:layout_marginRight="2dp"
         android:background="@drawable/delete_bg" />
 </FrameLayout>

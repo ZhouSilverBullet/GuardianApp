@@ -1,6 +1,8 @@
 package com.xuxin.guardianapp.ui.activity;
 
 import android.content.Intent;
+import android.view.View;
+import android.widget.Button;
 
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -9,6 +11,7 @@ import com.luck.picture.lib.entity.LocalMedia;
 import com.xuxin.guardianapp.R;
 import com.xuxin.guardianapp.base.BaseActivity;
 import com.xuxin.guardianapp.ui.adapter.EventReportRecyclerAdapter;
+import com.xuxin.guardianapp.utils.UIUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +24,9 @@ import butterknife.BindView;
 public class EventReportActivity extends BaseActivity implements EventReportRecyclerAdapter.HorListener {
     @BindView(R.id.rv)
     RecyclerView mRecyclerView;
+    @BindView(R.id.btn_push)
+    Button btnPush;
+
     private EventReportRecyclerAdapter mAdapter;
     private List<LocalMedia> localMediaList = new ArrayList<>();
 
@@ -37,11 +43,26 @@ public class EventReportActivity extends BaseActivity implements EventReportRecy
         setPhotoRecycler(mRecyclerView);
     }
 
+    @Override
+    protected void initEvent() {
+        super.initEvent();
+        btnPush.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIUtils.showToast("上传成功");
+                finish();
+            }
+        });
+    }
+
     protected void setPhotoRecycler(RecyclerView recycler) {
         recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mAdapter = new EventReportRecyclerAdapter(R.layout.item_event_report_recycler);
         recycler.setAdapter(mAdapter);
         LocalMedia localMedia = new LocalMedia();
+        localMedia.setDuration(-1);
+        localMediaList.add(localMedia);
+        localMedia = new LocalMedia();
         localMedia.setDuration(-100);
         localMediaList.add(localMedia);
         mAdapter.addData(localMediaList);
