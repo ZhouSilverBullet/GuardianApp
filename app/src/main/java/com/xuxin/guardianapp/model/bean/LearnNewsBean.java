@@ -17,6 +17,16 @@ public class LearnNewsBean implements MultiItemEntity {
     private String content;
     private String add_time;
     private String article_path;
+    private int type = 1;
+    private String video_path;
+
+    public String getVideo_path() {
+        return video_path;
+    }
+
+    public void setVideo_path(String video_path) {
+        this.video_path = video_path;
+    }
 
     public String getArticle_path() {
         return article_path;
@@ -82,15 +92,13 @@ public class LearnNewsBean implements MultiItemEntity {
         this.add_time = add_time;
     }
 
-    private int itemType = 2;
-
-    public void setItemType(int itemType) {
-        this.itemType = itemType;
+    public void setType(int type) {
+        this.type = type;
     }
 
     @Override
     public int getItemType() {
-        return itemType;
+        return type;
     }
 }
 

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_containor"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:id="@+id/ll_containor"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -21,18 +21,32 @@
             android:textColor="@color/color_333333"
             android:textSize="16sp"/>
 
-        <ImageView
-            android:scaleType="centerCrop"
-            android:id="@+id/iv_img"
+        <FrameLayout
+            android:layout_marginTop="10dp"
+            android:id="@+id/fram"
             android:layout_width="345dp"
             android:layout_height="180dp"
-            android:layout_below="@+id/tv_title"
-            android:layout_marginTop="10dp"/>
+            android:layout_below="@+id/tv_title">
+
+            <ImageView
+                android:id="@+id/iv_img"
+                android:layout_width="345dp"
+                android:layout_height="180dp"
+                android:scaleType="centerCrop"/>
+
+            <ImageView
+                android:id="@+id/iv_video"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/play"
+                android:visibility="gone"/>
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/iv_img"
+            android:layout_below="@+id/fram"
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
 

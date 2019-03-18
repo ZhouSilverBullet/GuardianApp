@@ -2,7 +2,6 @@ package com.xuxin.guardianapp.di.component;
 
 import android.app.Activity;
 
-
 import com.xuxin.guardianapp.di.module.ActivityModule;
 import com.xuxin.guardianapp.di.qualifier.ActivityScope;
 import com.xuxin.guardianapp.ui.activity.HomeActivity;
@@ -19,5 +18,5 @@ public interface ActivityComponent {
     void inject(HomeActivity homeActivity);
 
     void inject(LoginActivity loginActivity);
-    void inject(NewsDetailsActivity loginActivity);
+    void inject(NewsDetailsActivity newsDetailsActivity);
 }
