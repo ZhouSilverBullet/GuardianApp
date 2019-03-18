@@ -68,6 +68,11 @@ public class HomeFragmentPresenter extends RxPresenter<HomeFragmentContract.IVie
                             Logger.e(requestBean.getMsg() + "--- " + requestBean.getCode());
                         }
                     }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+
+                    }
                 });
         addSubscribe(subscribe);
     }
