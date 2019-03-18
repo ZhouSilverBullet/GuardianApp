@@ -1,4 +1,4 @@
-package com.xuxin.guardianapp;
+package com.sdxxtop.guardianapp;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

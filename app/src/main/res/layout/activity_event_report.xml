@@ -8,7 +8,7 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <com.xuxin.guardianapp.ui.widget.TitleView
+    <com.sdxxtop.guardianapp.ui.widget.TitleView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -55,28 +55,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="135dp" />
 
-            <com.xuxin.guardianapp.ui.widget.TextAndTextView
+            <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
                 android:id="@+id/tatv_query"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:tatv_text_right_hint_value="请点击选择"
                 app:tatv_text_view="查询方式" />
 
-            <com.xuxin.guardianapp.ui.widget.TextAndTextView
+            <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
                 android:id="@+id/tatv_happen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:tatv_text_right_hint_value="请点击选择"
                 app:tatv_text_view="事件发生地点" />
 
-            <com.xuxin.guardianapp.ui.widget.TextAndTextView
+            <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
                 android:id="@+id/tatv_monitor_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:tatv_text_right_hint_value="请点击选择"
                 app:tatv_text_view="带入监控信息" />
 
-            <com.xuxin.guardianapp.ui.widget.TextAndTextView
+            <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
                 android:id="@+id/tatv_report_path"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

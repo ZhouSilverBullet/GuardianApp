@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.activity.HomeActivity">
+    tools:context="com.sdxxtop.guardianapp.ui.activity.HomeActivity">
 
     <FrameLayout
         android:id="@+id/fl_home_container"

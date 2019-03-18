@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <com.xuxin.guardianapp.ui.widget.TitleView
+    <com.sdxxtop.guardianapp.ui.widget.TitleView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,22 +31,22 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/my_bg" />
 
-            <com.xuxin.guardianapp.ui.widget.TextAndTextView
+            <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:tatv_text_view="单位信息" />
 
-            <com.xuxin.guardianapp.ui.widget.TextAndTextView
+            <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:tatv_text_view="学习积分说明" />
 
-            <com.xuxin.guardianapp.ui.widget.TextAndTextView
+            <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:tatv_text_view="统计分析分数说明" />
 
-            <com.xuxin.guardianapp.ui.widget.TextAndTextView
+            <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:tatv_text_view="意见反馈" />

@@ -7,9 +7,9 @@
     android:background="@color/white"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context=".ui.fragment.LearningFragment">
+    tools:context="com.sdxxtop.guardianapp.ui.fragment.LearningFragment">
 
-    <com.xuxin.guardianapp.ui.widget.TitleView
+    <com.sdxxtop.guardianapp.ui.widget.TitleView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

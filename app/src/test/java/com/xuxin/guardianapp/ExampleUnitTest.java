@@ -1,4 +1,4 @@
-package com.xuxin.guardianapp;
+package com.sdxxtop.guardianapp;
 
 import org.junit.Test;
 
