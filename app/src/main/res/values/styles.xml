@@ -62,4 +62,8 @@
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">center</item>
     </style>
+
+    <style name="AppliedTabLayoutTextStyle">
+        <item name="android:textSize">15sp</item>
+    </style>
 </resources>

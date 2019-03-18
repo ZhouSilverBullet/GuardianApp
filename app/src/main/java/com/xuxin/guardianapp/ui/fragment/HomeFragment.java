@@ -1,6 +1,7 @@
 package com.xuxin.guardianapp.ui.fragment;
 
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -9,6 +10,7 @@ import com.xuxin.guardianapp.R;
 import com.xuxin.guardianapp.base.BaseMvpFragment;
 import com.xuxin.guardianapp.presenter.HomeFragmentPresenter;
 import com.xuxin.guardianapp.presenter.contract.HomeFragmentContract;
+import com.xuxin.guardianapp.ui.activity.ContactActivity;
 import com.xuxin.guardianapp.ui.adapter.HomeRecyclerAdapter;
 import com.xuxin.guardianapp.ui.widget.TitleView;
 import com.xuxin.guardianapp.utils.UIUtils;
@@ -80,12 +82,14 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
             mllContainer.getChildAt(i).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Intent intent =null;
                     switch (j) {
                         case 0:
                             UIUtils.showToast("查询记录");
                             break;
                         case 1:
                             UIUtils.showToast("通讯录");
+                            intent = new Intent(getContext(), ContactActivity.class);
                             break;
                         case 2:
                             UIUtils.showToast("网格地图");
@@ -93,6 +97,9 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
                         case 3:
                             UIUtils.showToast("打卡");
                             break;
+                    }
+                    if (intent != null) {
+                        startActivity(intent);
                     }
                 }
             });

@@ -37,9 +37,9 @@
             android:gravity="center_vertical">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@mipmap/ic_launcher" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/phone" />
 
             <EditText
                 android:layout_width="0dp"
@@ -52,6 +52,7 @@
                 android:textColorHint="@color/color_E4E4E4" />
 
             <Button
+                android:id="@+id/btn_code"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:background="@drawable/white_send_code_bg"
@@ -72,9 +73,9 @@
             android:gravity="center_vertical">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@mipmap/ic_launcher" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/code" />
 
             <EditText
                 android:layout_width="0dp"

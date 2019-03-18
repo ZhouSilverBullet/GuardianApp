@@ -34,6 +34,7 @@
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.EventReportActivity" />
         <activity android:name=".ui.activity.TaskAgentsActivity" />
+        <activity android:name=".ui.activity.ContactActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

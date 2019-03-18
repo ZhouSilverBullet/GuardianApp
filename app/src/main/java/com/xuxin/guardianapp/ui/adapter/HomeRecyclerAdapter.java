@@ -39,7 +39,10 @@ public class HomeRecyclerAdapter extends BaseQuickAdapter<Integer, BaseViewHolde
                     case R.drawable.list_3:
                         break;
                 }
-                mContext.startActivity(intent);
+
+                if (intent != null) {
+                    mContext.startActivity(intent);
+                }
             }
         });
     }

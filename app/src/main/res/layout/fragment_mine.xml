@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"
-                android:src="@drawable/top_2" />
+                android:src="@drawable/my_bg" />
 
             <com.xuxin.guardianapp.ui.widget.TextAndTextView
                 android:layout_width="match_parent"

@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true"
     android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
     tools:context=".ui.fragment.LearningFragment">
 
     <com.xuxin.guardianapp.ui.widget.TitleView
@@ -16,4 +16,20 @@
         app:bgColor="@color/white"
         app:titleColor="@color/color_303030"
         app:titleValue="学海无涯" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#F0F7F8"
+        app:tabIndicatorColor="@color/green"
+        app:tabSelectedTextColor="@color/green"
+        app:tabTextAppearance="@style/AppliedTabLayoutTextStyle"
+        app:tabTextColor="@color/color_303030" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </LinearLayout>
