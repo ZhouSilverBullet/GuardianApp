@@ -1,8 +1,11 @@
 package com.xuxin.guardianapp.ui.activity;
 
+import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 import com.xuxin.guardianapp.R;
 import com.xuxin.guardianapp.base.BaseMvpActivity;
@@ -20,6 +23,8 @@ public class NewsDetailsActivity extends BaseMvpActivity<NewsDetailPresenter> im
 
     @BindView(R.id.webview)
     WebView webView;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
 
     private String article_path; // 文章id
 
@@ -40,6 +45,15 @@ public class NewsDetailsActivity extends BaseMvpActivity<NewsDetailPresenter> im
 
     @Override
     protected void initView() {
+        webView.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                if (newProgress==100){
+                    progressBar.setVisibility(View.GONE);
+                }
+            }
+        });
+
         article_path = getIntent().getStringExtra("article_path");
 
         webView.setHorizontalScrollBarEnabled(false);//水平不显示
@@ -68,13 +82,11 @@ public class NewsDetailsActivity extends BaseMvpActivity<NewsDetailPresenter> im
         webSettings.setSupportZoom(false);
         // 将图片调整到合适的大小
         webSettings.setUseWideViewPort(true);
-        //现加载网页,在加载图片
-        webSettings.setBlockNetworkImage(true);
         // 支持内容重新布局,一共有四种方式
         // 默认的是NARROW_COLUMNS
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         // 设置可以被显示的屏幕控制
-        webSettings.setDisplayZoomControls(true);
+        webSettings.setDisplayZoomControls(false);
         // 设置默认字体大小
         webSettings.setDefaultFontSize(12);
 

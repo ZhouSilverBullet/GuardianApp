@@ -11,23 +11,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:bgColor="@color/color_32B16C"
-        app:titleColor="@color/white"
         app:leftLayoutIsShow="true"
-        app:titleValue="罗湖区"/>
+        app:titleColor="@color/white"
+        app:titleValue="文章学习"/>
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <WebView
-        android:id="@+id/webview"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-    <ImageView
+        android:layout_height="match_parent">
 
-        android:layout_centerInParent="true"
-        android:layout_width="100dp"
-        android:layout_height="100dp"/>
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
-</RelativeLayout>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
 
 </LinearLayout>
