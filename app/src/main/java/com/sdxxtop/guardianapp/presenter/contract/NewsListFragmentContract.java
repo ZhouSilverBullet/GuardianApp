@@ -1,8 +1,8 @@
-package com.xuxin.guardianapp.presenter.contract;
+package com.sdxxtop.guardianapp.presenter.contract;
 
-import com.xuxin.guardianapp.base.BasePresenter;
-import com.xuxin.guardianapp.base.BaseView;
-import com.xuxin.guardianapp.model.bean.LearnNewsBean;
+import com.sdxxtop.guardianapp.model.bean.LearnNewsBean;
+import com.sdxxtop.guardianapp.base.BasePresenter;
+import com.sdxxtop.guardianapp.base.BaseView;
 
 import java.util.List;
 

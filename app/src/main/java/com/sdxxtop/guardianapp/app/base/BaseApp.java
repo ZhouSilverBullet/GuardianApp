@@ -1,4 +1,4 @@
-package com.xuxin.guardianapp.app.base;
+package com.sdxxtop.guardianapp.app.base;
 
 import android.content.Context;
 import android.content.Intent;

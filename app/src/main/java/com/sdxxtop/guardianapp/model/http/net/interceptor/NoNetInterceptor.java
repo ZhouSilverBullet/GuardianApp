@@ -1,9 +1,8 @@
-package com.xuxin.guardianapp.model.http.net.interceptor;
+package com.sdxxtop.guardianapp.model.http.net.interceptor;
 
 import android.util.Log;
 
-import com.xuxin.guardianapp.model.http.util.NetUtil;
-import com.xuxin.guardianapp.utils.SystemUtil;
+import com.sdxxtop.guardianapp.utils.SystemUtil;
 
 import java.io.IOException;
 
