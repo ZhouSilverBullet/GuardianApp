@@ -16,7 +16,15 @@ public class LearnNewsBean implements MultiItemEntity {
     private int comment_num;
     private String content;
     private String add_time;
+    private String article_path;
 
+    public String getArticle_path() {
+        return article_path;
+    }
+
+    public void setArticle_path(String article_path) {
+        this.article_path = article_path;
+    }
 
     public int getArticle_id() {
         return article_id;

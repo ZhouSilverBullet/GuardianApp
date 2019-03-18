@@ -15,11 +15,19 @@
         app:leftLayoutIsShow="true"
         app:titleValue="罗湖区"/>
 
-    <TextView
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <WebView
+        android:id="@+id/webview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="新闻详情"
-        android:textSize="22sp"/>
+        android:layout_height="match_parent"/>
+    <ImageView
+
+        android:layout_centerInParent="true"
+        android:layout_width="100dp"
+        android:layout_height="100dp"/>
+
+</RelativeLayout>
 
 </LinearLayout>

@@ -61,7 +61,7 @@ public class NewsListAdapter extends BaseMultiItemQuickAdapter<LearnNewsBean, Ba
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(mContext, NewsDetailsActivity.class);
-                        intent.putExtra("article_id",item.getArticle_id());
+                        intent.putExtra("article_path",item.getArticle_path());
                         mContext.startActivity(intent);
                     }
                 });

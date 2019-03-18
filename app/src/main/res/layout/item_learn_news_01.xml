@@ -46,7 +46,6 @@
             android:layout_height="80dp"
             android:layout_alignParentRight="true"/>
 
-
     </RelativeLayout>
 
     <TextView
