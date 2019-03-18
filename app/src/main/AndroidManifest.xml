@@ -57,6 +57,7 @@
         <activity
             android:name=".ui.activity.GridMapActivity"
             android:theme="@style/AppNormalTheme" />
+        <activity android:name=".ui.activity.ExamineActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
