@@ -1,0 +1,15 @@
+Alias name: zhidian
+Creation date: Mar 18, 2019
+Entry type: PrivateKeyEntry
+Certificate chain length: 1
+Certificate[1]:
+Owner: ST=BeiJing, C=CN
+Issuer: ST=BeiJing, C=CN
+Serial number: 1989457
+Valid from: Mon Mar 18 10:08:14 CST 2019 until: Tue Mar 05 10:08:14 CST 2069
+Certificate fingerprints:
+	 MD5:  3D:D5:03:5F:61:4D:AA:49:4E:EF:B7:3F:67:08:CF:4C
+	 SHA1: F2:5E:22:C7:C3:79:3A:31:9B:69:07:BC:1D:8D:9B:E5:50:52:E0:A1
+	 SHA256: 06:00:62:1B:DC:76:95:07:79:6F:1D:85:94:56:6D:C5:7C:E5:05:49:79:93:DD:14:8D:14:71:46:69:7C:44:3F
+Signature algorithm name: SHA256withRSA
+Subject Public Key Algorithm: 2048-bit RSA key
