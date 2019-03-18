@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.baidu.idl.face.platform.ui.FaceLivenessActivity;
 import com.orhanobut.logger.Logger;
 import com.sdxxtop.guardianapp.base.BaseMvpFragment;
 import com.sdxxtop.guardianapp.presenter.contract.HomeFragmentContract;
 import com.sdxxtop.guardianapp.ui.activity.ContactActivity;
 import com.sdxxtop.guardianapp.ui.activity.GridMapActivity;
+import com.sdxxtop.guardianapp.ui.activity.MyFaceLivenessActivity;
 import com.sdxxtop.guardianapp.ui.activity.PatrolRecordActivity;
 import com.sdxxtop.guardianapp.ui.adapter.HomeRecyclerAdapter;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
@@ -118,6 +120,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
                             break;
                         case 3:
                             UIUtils.showToast("打卡");
+                            intent = new Intent(getContext(), MyFaceLivenessActivity.class);
                             break;
                     }
                     if (intent != null) {

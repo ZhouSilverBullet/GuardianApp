@@ -3,6 +3,7 @@ package com.sdxxtop.guardianapp.app;
 
 import android.content.Context;
 
+import com.baidu.idl.face.platform.FaceSDKManager;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
@@ -34,6 +35,11 @@ public class App extends BaseApp {
 
         initLogger();
         AppSession.getInstance().init(this);
+        initBaiduFace();
+    }
+
+    private void initBaiduFace() {
+        FaceSDKManager.getInstance().initialize(this, "luozhuang-face-android", "idl-license.face-android");
     }
 
     //初始化logger
