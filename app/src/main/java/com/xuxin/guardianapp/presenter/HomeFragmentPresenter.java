@@ -64,7 +64,9 @@ public class HomeFragmentPresenter extends RxPresenter<HomeFragmentContract.IVie
                 .subscribe(new Consumer<RequestBean>() {
                     @Override
                     public void accept(RequestBean requestBean) throws Exception {
-                        Logger.e(requestBean.getMsg() + "--- " + requestBean.getCode());
+                        if (requestBean != null) {
+                            Logger.e(requestBean.getMsg() + "--- " + requestBean.getCode());
+                        }
                     }
                 });
         addSubscribe(subscribe);
