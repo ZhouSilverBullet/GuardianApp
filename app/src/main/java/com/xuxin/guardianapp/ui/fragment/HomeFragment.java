@@ -2,6 +2,7 @@ package com.xuxin.guardianapp.ui.fragment;
 
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -33,6 +34,16 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
     RecyclerView mRecyclerView;
     @BindView(R.id.ll_container)
     LinearLayout mllContainer;
+    private boolean isAdmin;
+
+    public static HomeFragment newInstance(boolean isAdmin) {
+
+        Bundle args = new Bundle();
+        args.putBoolean("isAdmin", isAdmin);
+        HomeFragment fragment = new HomeFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     protected int getFragmentLayout() {
@@ -48,19 +59,26 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
     protected void initView() {
         super.initView();
         statusBar(false);
+
+        if (getArguments() != null) {
+            isAdmin = getArguments().getBoolean("isAdmin");
+        }
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        ArrayList<Integer> data = getRecyclerData();
+        ArrayList<Integer> data = getRecyclerData(isAdmin);
 
         mRecyclerView.setAdapter(new HomeRecyclerAdapter(R.layout.item_home_recycler, data));
 
     }
 
-    private ArrayList<Integer> getRecyclerData() {
+    private ArrayList<Integer> getRecyclerData(boolean isAdmin) {
         ArrayList<Integer> data = new ArrayList<>();
         data.add(R.drawable.list_1);
         data.add(R.drawable.list_2);
-        data.add(R.drawable.list_3);
-        data.add(R.drawable.list_4);
+        if (isAdmin) {
+            data.add(R.drawable.list_3);
+            data.add(R.drawable.list_4);
+        }
         data.add(R.drawable.list_5);
         data.add(R.drawable.list_6);
         return data;

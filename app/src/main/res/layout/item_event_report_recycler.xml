@@ -26,5 +26,5 @@
         android:layout_gravity="right|top"
         android:layout_marginTop="17dp"
         android:layout_marginRight="2dp"
-        android:background="@drawable/delete_bg" />
+        android:background="@drawable/add_1" />
 </FrameLayout>

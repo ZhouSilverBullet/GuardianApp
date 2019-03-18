@@ -30,6 +30,7 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
     AHBottomNavigation mAHBottomNavigation;
     private int prePosition;
     private SupportFragment[] mFragments = new SupportFragment[3];
+    private boolean isAdmin;
 
     @Override
     protected int getLayout() {
@@ -44,6 +45,14 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
     @Override
     public void showError(String error) {
 
+    }
+
+    @Override
+    protected void initVariables() {
+        super.initVariables();
+        if (getIntent() != null) {
+            isAdmin = getIntent().getBooleanExtra("isAdmin", false);
+        }
     }
 
     @Override

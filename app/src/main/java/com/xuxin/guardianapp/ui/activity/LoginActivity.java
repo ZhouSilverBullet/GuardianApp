@@ -1,15 +1,21 @@
 package com.xuxin.guardianapp.ui.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.text.InputFilter;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.xuxin.guardianapp.R;
 import com.xuxin.guardianapp.base.BaseMvpActivity;
 import com.xuxin.guardianapp.presenter.LoginPresenter;
 import com.xuxin.guardianapp.presenter.contract.LoginContract;
+import com.xuxin.guardianapp.utils.UIUtils;
 
 import butterknife.BindView;
 
@@ -18,6 +24,8 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     Button btnLogin;
     @BindView(R.id.btn_code)
     Button btnCode;
+    @BindView(R.id.et_phone)
+    EditText etPhone;
     private Handler mHandler;
     private boolean isSending;
 
@@ -29,6 +37,13 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     @Override
     protected int getLayout() {
         return R.layout.activity_login;
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
+
+        etPhone.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
     }
 
     @Override
@@ -67,7 +82,14 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
 
     @Override
     public void loginSuccess() {
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, LoginConfirmActivity.class);
+        String trim = etPhone.getText().toString().trim();
+        if (TextUtils.isEmpty(trim)) {
+            UIUtils.showToast("账号不能为空");
+            return;
+        }
+        boolean isAdmin = trim.equals("1800000000");
+        intent.putExtra("isAdmin", isAdmin);
         startActivity(intent);
         finish();
     }
@@ -94,5 +116,13 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         }
 
         return true;
+    }
+
+    private static class LoginReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+        }
     }
 }
