@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:padding="15dp">
+
+        <TextView
+            android:singleLine="true"
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="习近平参加福建代表团审议"
+            android:textColor="@color/color_333333"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:textColor="@color/color_808080"
+            android:textSize="12sp"
+            android:id="@+id/tv_come_from"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="新华网  555评"/>
+
+        <TextView
+            android:textColor="@color/color_808080"
+            android:textSize="12sp"
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/tv_come_from"
+            android:text="2019-3-14"/>
+
+        <ImageView
+            android:id="@+id/iv_img"
+            android:layout_width="130dp"
+            android:layout_height="80dp"
+            android:layout_alignParentRight="true"/>
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_E6E6E6"/>
+</LinearLayout>

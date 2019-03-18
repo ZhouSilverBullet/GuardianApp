@@ -26,8 +26,8 @@ public class Params {
     }
 
     private void defaultValue() {
-        map.put("ci", SpUtil.getString(HttpConstantValue.COMPANY_ID));
-        map.put("ui", SpUtil.getString(HttpConstantValue.USER_ID));
+//        map.put("ci", SpUtil.getString(HttpConstantValue.COMPANY_ID));
+//        map.put("ui", SpUtil.getString(HttpConstantValue.USER_ID));
     }
 
     public String getUserId() {

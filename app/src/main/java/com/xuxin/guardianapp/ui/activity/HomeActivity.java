@@ -19,12 +19,9 @@ import com.xuxin.guardianapp.ui.fragment.LearningFragment;
 import com.xuxin.guardianapp.ui.fragment.MineFragment;
 import com.xuxin.guardianapp.utils.ReflectUtils;
 
-import java.util.HashMap;
 import java.util.List;
 
-import androidx.fragment.app.Fragment;
 import butterknife.BindView;
-import me.yokeyword.fragmentation.ISupportFragment;
 import me.yokeyword.fragmentation.SupportFragment;
 
 public class HomeActivity extends BaseMvpActivity<HomePresenter> implements HomeContract.IView {
@@ -54,8 +51,6 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
         initAHNavigation();
 
         switchFragment(0);
-
-
     }
 
     private void initAHNavigation() {

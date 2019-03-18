@@ -40,8 +40,8 @@ public class LearningFragment extends BaseFragment {
         titleList.add("考核");
 
         ArrayList<Fragment> fragments = new ArrayList<>();
-        fragments.add(NewsListFragment.newInstance("aaa"));
-        fragments.add(NewsListFragment.newInstance("aaa"));
+        fragments.add(NewsListFragment.newInstance(1));
+        fragments.add(NewsListFragment.newInstance(2));
         fragments.add(ImageTabFragment.newInstance(R.drawable.course));
         fragments.add(ImageTabFragment.newInstance(R.drawable.score));
         fragments.add(ImageTabFragment.newInstance(R.drawable.exam));

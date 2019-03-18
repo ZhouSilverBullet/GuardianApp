@@ -69,7 +69,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
     @Override
     protected void initData() {
         super.initData();
-        mPresenter.loadSignData();
+//        mPresenter.loadSignData();
     }
 
     @Override

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:id="@+id/ll_containor"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="习近平参加福建代表团审议"
+            android:textColor="@color/color_333333"
+            android:textSize="16sp"/>
+
+        <ImageView
+            android:id="@+id/iv_img"
+            android:layout_width="345dp"
+            android:layout_height="180dp"
+            android:layout_below="@+id/tv_title"
+            android:layout_marginTop="10dp"
+            android:scaleType="centerCrop"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_img"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_come_from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="新华网  555评"
+                android:textColor="@color/color_808080"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@+id/tv_come_from"
+                android:text="2019-3-14"
+                android:textColor="@color/color_808080"
+                android:textSize="12sp"/>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@color/color_E6E6E6"/>
+</LinearLayout>

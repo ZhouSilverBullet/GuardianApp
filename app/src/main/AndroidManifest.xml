@@ -10,9 +10,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
-    <!--允许程序访问WiFi网络信息-->
+
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!--允许程序访问CellID或WiFi热点来获取粗略的位置-->
+
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
@@ -58,6 +58,7 @@
             android:name=".ui.activity.GridMapActivity"
             android:theme="@style/AppNormalTheme" />
         <activity android:name=".ui.activity.ExamineActivity" />
+        <activity android:name=".ui.activity.NewsDetailsActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -68,6 +69,14 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <meta-data
+            android:name="design_width_in_dp"
+            android:value="375"/>
+        <meta-data
+            android:name="design_height_in_dp"
+            android:value="724"/>
+
     </application>
 
 </manifest>
