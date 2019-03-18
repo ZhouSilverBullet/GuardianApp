@@ -1,6 +1,7 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
 import android.animation.Animator;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 import android.view.View;
@@ -10,14 +11,14 @@ import android.widget.ImageView;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
 import com.orhanobut.logger.Logger;
+import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
+import com.sdxxtop.guardianapp.presenter.HomePresenter;
 import com.sdxxtop.guardianapp.presenter.contract.HomeContract;
+import com.sdxxtop.guardianapp.ui.fragment.HomeFragment;
 import com.sdxxtop.guardianapp.ui.fragment.LearningFragment;
 import com.sdxxtop.guardianapp.ui.fragment.MineFragment;
 import com.sdxxtop.guardianapp.utils.ReflectUtils;
-import com.sdxxtop.guardianapp.R;
-import com.sdxxtop.guardianapp.presenter.HomePresenter;
-import com.sdxxtop.guardianapp.ui.fragment.HomeFragment;
 
 import java.util.List;
 
@@ -125,5 +126,10 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
             animator.setDuration(300);
             animator.start();
         }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 }

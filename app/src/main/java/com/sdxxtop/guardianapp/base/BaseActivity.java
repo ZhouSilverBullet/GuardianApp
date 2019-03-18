@@ -65,7 +65,11 @@ public abstract class BaseActivity extends SwipeBackActivity {
             mUnbinder = null;
         }
     }
-
+    public void statusBar(boolean isDark) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {//Android6.0以上系统
+            StatusBarUtil.setDarkStatusIcon(this.getWindow(), isDark);
+        }
+    }
     protected void initEvent() {
     }
 

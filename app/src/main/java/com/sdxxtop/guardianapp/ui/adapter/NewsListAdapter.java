@@ -8,10 +8,10 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.model.bean.LearnNewsBean;
 import com.sdxxtop.guardianapp.ui.activity.NewsDetailsActivity;
 import com.sdxxtop.guardianapp.ui.activity.VideoPlayActivity;
-import com.sdxxtop.guardianapp.R;
 
 import java.util.List;
 

@@ -12,6 +12,10 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowNoTitle">true</item>
     </style>
+    <style name="AppHalfTranslateTheme" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@color/half_translate</item>
+    </style>
 
     <style name="AppFullScreenTheme" parent="AppNormalTheme">
         <item name="android:windowFullscreen">true</item>

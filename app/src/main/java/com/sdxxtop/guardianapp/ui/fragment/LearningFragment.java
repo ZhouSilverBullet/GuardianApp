@@ -1,10 +1,10 @@
 package com.sdxxtop.guardianapp.ui.fragment;
 
 import com.google.android.material.tabs.TabLayout;
-import com.sdxxtop.guardianapp.ui.widget.TitleView;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseFragment;
 import com.sdxxtop.guardianapp.ui.adapter.HomePagerAdapter;
+import com.sdxxtop.guardianapp.ui.widget.TitleView;
 
 import java.util.ArrayList;
 
@@ -59,4 +59,5 @@ public class LearningFragment extends BaseFragment {
             statusBar(true);
         }
     }
+
 }

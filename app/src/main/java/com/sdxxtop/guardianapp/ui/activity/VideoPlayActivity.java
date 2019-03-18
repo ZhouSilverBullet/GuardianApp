@@ -1,11 +1,9 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
-import android.widget.TextView;
-
+import com.dueeeke.videocontroller.StandardVideoController;
+import com.dueeeke.videoplayer.player.IjkVideoView;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseActivity;
-
-import butterknife.BindView;
 
 /**
  * @author :  lwb
@@ -14,9 +12,20 @@ import butterknife.BindView;
  */
 public class VideoPlayActivity extends BaseActivity {
 
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
-    private String video_path;
+    private IjkVideoView ijkVideoView;
+
+    @Override
+    protected void initView() {
+        statusBar(false);
+
+        String video_path = getIntent().getStringExtra("video_path");
+        ijkVideoView = findViewById(R.id.player);
+        ijkVideoView.setUrl(video_path); //设置视频地址
+        ijkVideoView.setTitle(""); //设置视频标题
+        StandardVideoController controller = new StandardVideoController(this);
+        ijkVideoView.setVideoController(controller); //设置控制器，如需定制可继承BaseVideoController
+        ijkVideoView.start(); //开始播放，不调用则不自动播放
+    }
 
     @Override
     protected int getLayout() {
@@ -24,8 +33,33 @@ public class VideoPlayActivity extends BaseActivity {
     }
 
     @Override
-    protected void initView() {
-        video_path = getIntent().getStringExtra("video_path");
-        tvTitle.setText(video_path);
+    protected void onPause() {
+        super.onPause();
+        if (ijkVideoView!=null){
+            ijkVideoView.pause();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (ijkVideoView!=null){
+            ijkVideoView.resume();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (ijkVideoView!=null){
+            ijkVideoView.release();
+        }
+    }
+
+    @Override
+    public void onBackPressedSupport() {
+        if (!ijkVideoView.onBackPressed()) {
+            super.onBackPressedSupport();
+        }
     }
 }
