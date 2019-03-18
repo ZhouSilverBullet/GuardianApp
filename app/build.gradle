@@ -81,5 +81,5 @@ dependencies {
     implementation 'com.amap.api:map2d:5.2.0'
     implementation 'com.amap.api:search:6.1.0'
     implementation 'com.amap.api:location:4.0.1'
-    api project(':faceplatform-ui')
+    api project(path: ':faceplatform')
 }

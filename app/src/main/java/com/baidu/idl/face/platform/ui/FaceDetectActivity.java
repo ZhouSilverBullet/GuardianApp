@@ -42,6 +42,7 @@ import com.baidu.idl.face.platform.ui.widget.FaceDetectRoundView;
 import com.baidu.idl.face.platform.utils.APIUtils;
 import com.baidu.idl.face.platform.utils.Base64Utils;
 import com.baidu.idl.face.platform.utils.CameraPreviewUtils;
+import com.sdxxtop.guardianapp.R;
 
 import java.util.HashMap;
 import java.util.Map;
