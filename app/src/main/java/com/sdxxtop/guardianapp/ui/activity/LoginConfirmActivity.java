@@ -44,7 +44,7 @@ public class LoginConfirmActivity extends BaseActivity {
     @Override
     protected void initView() {
         super.initView();
-        tvName.setText("张三");
+        tvName.setText("李海龙");
         if (!TextUtils.isEmpty(phone)) {
             tvPhone.setText(phone);
         } else {

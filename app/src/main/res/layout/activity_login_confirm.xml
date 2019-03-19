@@ -180,7 +180,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
             android:elevation="5dp"
-            android:src="@drawable/map_1" />
+            android:src="@drawable/tou_xiang" />
     </FrameLayout>
 
 </LinearLayout>

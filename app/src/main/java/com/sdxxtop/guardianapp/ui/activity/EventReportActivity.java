@@ -8,10 +8,10 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.sdxxtop.guardianapp.utils.UIUtils;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseActivity;
 import com.sdxxtop.guardianapp.ui.adapter.EventReportRecyclerAdapter;
+import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +61,8 @@ public class EventReportActivity extends BaseActivity implements EventReportRecy
         recycler.setAdapter(mAdapter);
         LocalMedia localMedia = new LocalMedia();
         localMedia.setDuration(-1);
+        localMedia.setCompressPath("");
+        localMedia.setPath("");
         localMediaList.add(localMedia);
         localMedia = new LocalMedia();
         localMedia.setDuration(-100);
@@ -128,7 +130,7 @@ public class EventReportActivity extends BaseActivity implements EventReportRecy
                     if (selectList != null && selectList.size() > 0) {
                         localMediaList.clear();
                         int size = selectList.size();
-                        if (size < 3) {
+                        if (size < 9) {
                             localMediaList.addAll(selectList);
                             localMediaList.add(getTemp());
                         } else {

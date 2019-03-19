@@ -97,7 +97,7 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
         if (fragment == null) {
             mFragments[0] = HomeFragment.newInstance(isAdmin);
             mFragments[1] = new LearningFragment();
-            mFragments[2] = new MineFragment();
+            mFragments[2] = MineFragment.newInstance(isAdmin);
 
             loadMultipleRootFragment(R.id.fl_home_container, position,
                     mFragments[0],

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">网格员</string>
+    <string name="app_name">罗庄区监管平台</string>
 
     <string name="detect_no_face">未检测到人脸</string>
     <string name="detect_face_in">把脸移入框内</string>

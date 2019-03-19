@@ -4,6 +4,7 @@ package com.sdxxtop.guardianapp.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.orhanobut.logger.Logger;
@@ -30,6 +31,8 @@ import butterknife.BindView;
 public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> implements HomeFragmentContract.IView {
     @BindView(R.id.tv_title)
     TitleView mTitleView;
+    @BindView(R.id.iv_top)
+    ImageView ivTop;
     @BindView(R.id.rv)
     RecyclerView mRecyclerView;
     @BindView(R.id.ll_container)
@@ -64,6 +67,12 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
             isAdmin = getArguments().getBoolean("isAdmin");
         }
 
+        if (isAdmin) {
+            ivTop.setImageResource(R.drawable.top_1);
+        } else {
+            ivTop.setImageResource(R.drawable.top_2);
+        }
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         ArrayList<Integer> data = getRecyclerData(isAdmin);
 
@@ -78,10 +87,10 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
         if (isAdmin) {
             data.add(R.drawable.list_3);
             data.add(R.drawable.list_4);
-        }
-        data.add(R.drawable.list_5);
-        if(!isAdmin) {
+            data.add(R.drawable.list_5);
+        } else {
             data.add(R.drawable.list_6);
+            data.add(R.drawable.list_5);
         }
         return data;
     }

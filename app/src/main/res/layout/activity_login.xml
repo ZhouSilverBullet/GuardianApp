@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
-        android:text="综合网格化监理平台"
+        android:text="综合网格化监管平台"
         android:textColor="@color/white"
         android:textSize="25sp" />
 

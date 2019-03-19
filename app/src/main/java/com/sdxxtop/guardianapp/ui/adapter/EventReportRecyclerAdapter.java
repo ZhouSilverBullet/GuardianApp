@@ -46,10 +46,13 @@ public class EventReportRecyclerAdapter extends BaseQuickAdapter<LocalMedia, Bas
             dele.setVisibility(View.VISIBLE);
             horImg.setVisibility(View.VISIBLE);
             if (item.getDuration() == -1) {
-                horImg.setImageResource(R.mipmap.ic_launcher);
+                horImg.setImageResource(R.drawable.add_3);
             } else {
                 final String compressPath = item.getCompressPath();
                 Bitmap bitmap = getBitmapForPath(compressPath);
+                if (bitmap == null) {
+                    bitmap = getBitmapForPath(item.getPath());
+                }
                 if (bitmap != null) {
                     horImg.setImageBitmap(bitmap);
                 }

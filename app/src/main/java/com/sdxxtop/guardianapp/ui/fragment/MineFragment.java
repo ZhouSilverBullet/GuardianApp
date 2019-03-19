@@ -1,6 +1,8 @@
 package com.sdxxtop.guardianapp.ui.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sdxxtop.guardianapp.R;
@@ -16,6 +18,18 @@ public class MineFragment extends BaseFragment {
     TitleView mTitleView;
     @BindView(R.id.tv_logout)
     TextView tvLogout;
+    @BindView(R.id.iv_top)
+    ImageView ivTop;
+    private boolean isAdmin;
+
+    public static MineFragment newInstance(boolean isAdmin) {
+
+        Bundle args = new Bundle();
+        args.putBoolean("isAdmin", isAdmin);
+        MineFragment fragment = new MineFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     protected int getFragmentLayout() {
@@ -26,6 +40,16 @@ public class MineFragment extends BaseFragment {
     protected void initView() {
         super.initView();
         statusBar(false);
+        if (getArguments() != null) {
+            isAdmin = getArguments().getBoolean("isAdmin");
+        }
+
+        if (isAdmin) {
+            ivTop.setImageResource(R.drawable.mine_top);
+        } else {
+            ivTop.setImageResource(R.drawable.mine_top_2);
+        }
+
         topViewPadding(mTitleView);
     }
 
