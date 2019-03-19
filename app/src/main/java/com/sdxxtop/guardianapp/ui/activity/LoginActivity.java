@@ -44,6 +44,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         super.initView();
 
         etPhone.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
+        etPhone.setText("18000000000");
     }
 
     @Override

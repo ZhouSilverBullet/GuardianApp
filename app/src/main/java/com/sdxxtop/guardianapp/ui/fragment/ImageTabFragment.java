@@ -83,7 +83,8 @@ public class ImageTabFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.ll_containor:
                 Intent intent = new Intent(getContext(), VideoPlayActivity.class);
-                intent.putExtra("video_path","http://video.sdxxtop.com/10fps.mp4");
+                intent.putExtra("video_path","http://flv4mp4.people.com.cn/videofile6/pvmsvideo/2019/3/12/WuTing_c0035e0a4affb0af7e3f511efabb7b69.mp4");
+                intent.putExtra("title","习近平的两会时间|在福建团，总书记讲话的三个关键词，你get到了吗？");
                 getActivity().startActivity(intent);
                 break;
         }

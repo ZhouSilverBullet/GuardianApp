@@ -6,9 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.baidu.idl.face.platform.ui.FaceLivenessActivity;
 import com.orhanobut.logger.Logger;
+import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpFragment;
+import com.sdxxtop.guardianapp.presenter.HomeFragmentPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.HomeFragmentContract;
 import com.sdxxtop.guardianapp.ui.activity.ContactActivity;
 import com.sdxxtop.guardianapp.ui.activity.GridMapActivity;
@@ -16,9 +17,6 @@ import com.sdxxtop.guardianapp.ui.activity.MyFaceLivenessActivity;
 import com.sdxxtop.guardianapp.ui.activity.PatrolRecordActivity;
 import com.sdxxtop.guardianapp.ui.adapter.HomeRecyclerAdapter;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
-import com.sdxxtop.guardianapp.utils.UIUtils;
-import com.sdxxtop.guardianapp.R;
-import com.sdxxtop.guardianapp.presenter.HomeFragmentPresenter;
 
 import java.util.ArrayList;
 
@@ -82,7 +80,9 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
             data.add(R.drawable.list_4);
         }
         data.add(R.drawable.list_5);
-        data.add(R.drawable.list_6);
+        if(!isAdmin) {
+            data.add(R.drawable.list_6);
+        }
         return data;
     }
 
@@ -107,19 +107,19 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
                     Intent intent = null;
                     switch (j) {
                         case 0:
-                            UIUtils.showToast("查询记录");
+//                            UIUtils.showToast("查询记录");
                             intent = new Intent(getContext(), PatrolRecordActivity.class);
                             break;
                         case 1:
-                            UIUtils.showToast("通讯录");
+//                            UIUtils.showToast("通讯录");
                             intent = new Intent(getContext(), ContactActivity.class);
                             break;
                         case 2:
-                            UIUtils.showToast("网格地图");
+//                            UIUtils.showToast("网格地图");
                             intent = new Intent(getContext(), GridMapActivity.class);
                             break;
                         case 3:
-                            UIUtils.showToast("打卡");
+//                            UIUtils.showToast("打卡");
                             intent = new Intent(getContext(), MyFaceLivenessActivity.class);
                             break;
                     }

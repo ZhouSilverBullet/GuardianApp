@@ -6,14 +6,13 @@ import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.ui.activity.EnvironmentalTestActivity;
+import com.sdxxtop.guardianapp.ui.activity.EventReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.ImpeachReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.IntelligentSensorActivity;
 import com.sdxxtop.guardianapp.ui.activity.StatisticsAnalyzeActivity;
 import com.sdxxtop.guardianapp.ui.activity.TaskAgentsActivity;
-import com.sdxxtop.guardianapp.R;
-import com.sdxxtop.guardianapp.ui.activity.EventReportActivity;
-import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import java.util.List;
 
@@ -31,7 +30,7 @@ public class HomeRecyclerAdapter extends BaseQuickAdapter<Integer, BaseViewHolde
         helper.getConvertView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIUtils.showToast("" + item);
+//                UIUtils.showToast("" + item);
                 Intent intent = null;
                 switch (item) {
                     case R.drawable.list_1: // 待办任务
