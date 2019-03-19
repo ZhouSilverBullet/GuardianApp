@@ -33,6 +33,8 @@
             android:name="com.amap.api.v2.apikey"
             android:value="1985905fa798941ad45e429a5bbd97e0"/>
 
+        <service android:name="com.amap.api.location.APSService"/>
+
         <activity android:name="com.sdxxtop.guardianapp.ui.activity.HomeActivity"
                   android:launchMode="singleTask"
                   android:configChanges="keyboardHidden|orientation|screenSize">

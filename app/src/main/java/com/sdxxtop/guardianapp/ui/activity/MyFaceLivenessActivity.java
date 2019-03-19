@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.baidu.idl.face.platform.ui.FaceLivenessActivity;
 import com.luck.picture.lib.permissions.Permission;
 import com.luck.picture.lib.permissions.RxPermissions;
+import com.sdxxtop.guardianapp.R;
 
 import io.reactivex.functions.Consumer;
 
@@ -18,7 +19,7 @@ public class MyFaceLivenessActivity extends FaceLivenessActivity {
         super.onCreate(savedInstanceState);
         mRxPermissions = new RxPermissions(this);
         mRxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE
-                , Manifest.permission.CAMERA).subscribe(new Consumer<Boolean>() {
+                , Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION).subscribe(new Consumer<Boolean>() {
             @Override
             public void accept(Boolean aBoolean) throws Exception {
                 if (aBoolean) {
@@ -26,5 +27,8 @@ public class MyFaceLivenessActivity extends FaceLivenessActivity {
                 }
             }
         });
+
     }
+
+
 }

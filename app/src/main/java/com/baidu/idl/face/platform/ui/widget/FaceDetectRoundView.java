@@ -36,7 +36,7 @@ public class FaceDetectRoundView extends View {
     public static final int PATH_SMALL_SPACE = 12;
     public static final int PATH_WIDTH = 4;
 
-    public static final int COLOR_BG = Color.parseColor("#2F2F33");
+    public static final int COLOR_BG = Color.parseColor("#FFFFFF");
     public static final int COLOR_RECT = Color.parseColor("#FFFFFF");
     public static final int COLOR_ROUND = Color.parseColor("#FFA800");
 

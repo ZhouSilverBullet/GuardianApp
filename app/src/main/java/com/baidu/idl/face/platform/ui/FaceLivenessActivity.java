@@ -30,12 +30,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.amap.api.location.AMapLocation;
 import com.baidu.aip.face.stat.Ast;
 import com.baidu.idl.face.platform.FaceConfig;
 import com.baidu.idl.face.platform.FaceSDKManager;
 import com.baidu.idl.face.platform.FaceStatusEnum;
 import com.baidu.idl.face.platform.ILivenessStrategy;
 import com.baidu.idl.face.platform.ILivenessStrategyCallback;
+import com.baidu.idl.face.platform.LivenessTypeEnum;
 import com.baidu.idl.face.platform.ui.utils.CameraUtils;
 import com.baidu.idl.face.platform.ui.utils.VolumeUtils;
 import com.baidu.idl.face.platform.ui.widget.FaceDetectRoundView;
@@ -43,15 +45,21 @@ import com.baidu.idl.face.platform.utils.APIUtils;
 import com.baidu.idl.face.platform.utils.Base64Utils;
 import com.baidu.idl.face.platform.utils.CameraPreviewUtils;
 import com.sdxxtop.guardianapp.R;
+import com.sdxxtop.guardianapp.utils.AMapFindLocation;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * 活体检测接口
  */
-public class FaceLivenessActivity extends Activity implements
+public class FaceLivenessActivity extends AppCompatActivity implements
         SurfaceHolder.Callback,
         Camera.PreviewCallback,
         Camera.ErrorCallback,
@@ -96,6 +104,8 @@ public class FaceLivenessActivity extends Activity implements
     protected int mPreviewDegree;
     // 监听系统音量广播
     protected BroadcastReceiver mVolumeReceiver;
+    private TextView tvLocation;
+    private View btnCard;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -118,7 +128,18 @@ public class FaceLivenessActivity extends Activity implements
         mRootView = this.findViewById(R.id.liveness_root_layout);
         mFrameLayout = (FrameLayout) mRootView.findViewById(R.id.liveness_surface_layout);
 
+        tvLocation = findViewById(R.id.tv_location);
+        btnCard = findViewById(R.id.btn_card);
 
+        AMapFindLocation instance = AMapFindLocation.getInstance();
+        instance.location();
+        instance.setLocationCompanyListener(new AMapFindLocation.LocationCompanyListener() {
+            @Override
+            public void onAddress(AMapLocation address) {
+                String address1 = address.getAddress();
+                tvLocation.setText(address1);
+            }
+        });
     }
 
     public void init() {
@@ -408,10 +429,29 @@ public class FaceLivenessActivity extends Activity implements
 
             Rect detectRect = FaceDetectRoundView.getPreviewDetectRect(
                     mDisplayWidth, mPreviewHight, mPreviewWidth);
+            List<LivenessTypeEnum> list = new ArrayList<>();
+            list.add(getLivenessTypeEnum());
             mILivenessStrategy.setLivenessStrategyConfig(
-                    mFaceConfig.getLivenessTypeList(), mPreviewRect, detectRect, this);
+                    list, mPreviewRect, detectRect, this);
+//            mILivenessStrategy.setLivenessStrategyConfig(
+//                    mFaceConfig.getLivenessTypeList(), mPreviewRect, detectRect, this);
         }
         mILivenessStrategy.livenessStrategy(data);
+    }
+
+    private LivenessTypeEnum getLivenessTypeEnum() {
+        Random random = new Random();
+        int i = random.nextInt(100);
+        if (i < 20) {
+            return LivenessTypeEnum.Eye;
+        } else if (i < 40) {
+            return LivenessTypeEnum.HeadLeft;
+        } else if (i < 70) {
+            return LivenessTypeEnum.HeadRight;
+        } else if (i <= 100) {
+            return LivenessTypeEnum.HeadLeftOrRight;
+        }
+        return LivenessTypeEnum.HeadLeftOrRight;
     }
 
     @Override
@@ -507,6 +547,19 @@ public class FaceLivenessActivity extends Activity implements
             mSuccessView.setTag("setlayout");
         }
         mSuccessView.setVisibility(isShow ? View.VISIBLE : View.INVISIBLE);
+        if (isShow) {
+            AMapFindLocation instance = AMapFindLocation.getInstance();
+            instance.location();
+            instance.setLocationCompanyListener(new AMapFindLocation.LocationCompanyListener() {
+                @Override
+                public void onAddress(AMapLocation address) {
+                    String address1 = address.getAddress();
+                    tvLocation.setText(address1);
+                    btnCard.setVisibility(View.VISIBLE);
+                }
+            });
+
+        }
     }
 
     private void saveImage(HashMap<String, String> imageMap) {
