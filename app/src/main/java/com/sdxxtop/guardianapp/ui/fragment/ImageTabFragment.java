@@ -4,16 +4,33 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseFragment;
 import com.sdxxtop.guardianapp.ui.activity.ExamineActivity;
+import com.sdxxtop.guardianapp.ui.activity.VideoPlayActivity;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class ImageTabFragment extends BaseFragment {
     @BindView(R.id.iv_tab)
     ImageView ivTab;
+    @BindView(R.id.tv_video)
+    TextView tvVideo;
+    @BindView(R.id.tv_leanrning)
+    TextView tvLeanrning;
+    @BindView(R.id.tv_article)
+    TextView tvArticle;
+    @BindView(R.id.tv_leanrning_02)
+    TextView tvLeanrning02;
+    @BindView(R.id.ll_containor)
+    LinearLayout ll_containor;
+    @BindView(R.id.inclued_video)
+    View inclued_video;
+
     private int mImg;
 
     public static ImageTabFragment newInstance(int drawableId) {
@@ -36,6 +53,14 @@ public class ImageTabFragment extends BaseFragment {
         mImg = getArguments().getInt("img");
         ivTab.setImageResource(mImg);
 
+        if (mImg==R.drawable.course){
+            ivTab.setVisibility(View.GONE);
+            ll_containor.setVisibility(View.VISIBLE);
+        }else{
+            ivTab.setVisibility(View.VISIBLE);
+            ll_containor.setVisibility(View.GONE);
+        }
+
         ivTab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,6 +74,17 @@ public class ImageTabFragment extends BaseFragment {
         switch (mImg) {
             case R.drawable.exam:
                 getContext().startActivity(new Intent(getContext(), ExamineActivity.class));
+                break;
+        }
+    }
+
+    @OnClick({R.id.tv_video, R.id.tv_leanrning, R.id.tv_article, R.id.tv_leanrning_02,R.id.ll_containor})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ll_containor:
+                Intent intent = new Intent(getContext(), VideoPlayActivity.class);
+                intent.putExtra("video_path","http://video.sdxxtop.com/10fps.mp4");
+                getActivity().startActivity(intent);
                 break;
         }
     }

@@ -17,6 +17,7 @@
 
 
     <com.dueeeke.videoplayer.player.IjkVideoView
+        android:background="@color/translate"
         android:id="@+id/player"
         android:layout_width="match_parent"
         android:layout_height="300dp"/>

@@ -1,19 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/iv_tab"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            android:src="@drawable/course" />
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/iv_tab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/course"
+                android:visibility="gone"/>
+            <LinearLayout
+                android:id="@+id/ll_containor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="43dp"
+                    android:background="#7ECEF4"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
+                    android:text="党政课程"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textStyle="bold"/>
+
+                <include
+                    android:id="@+id/inclued_video"
+                    layout="@layout/item_course"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="43dp"
+                    android:background="#8C97CB"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
+                    android:text="安全教育"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textStyle="bold"/>
+
+                <include layout="@layout/item_course"></include>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="43dp"
+                    android:background="#89C997"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
+                    android:text="环保教育"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textStyle="bold"/>
+
+                <include layout="@layout/item_course"></include>
+            </LinearLayout>
+        </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 
