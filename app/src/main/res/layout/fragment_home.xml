@@ -21,30 +21,106 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/iv_top"
+        <!--<ImageView-->
+        <!--android:id="@+id/iv_top"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:scaleType="fitXY"-->
+        <!--android:src="@drawable/top_1" />-->
+
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            android:src="@drawable/top_1" />
+            android:layout_height="80dp"
+            android:layout_gravity="bottom"
+            android:background="@color/white" />
 
-        <LinearLayout
-            android:id="@+id/ll_container"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            android:layout_height="133dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="42dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="5dp"
+            app:cardCornerRadius="5dp">
 
-            <TextView style="@style/text" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-            <TextView style="@style/text" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
-            <TextView style="@style/text" />
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp"
+                        android:text="李海龙"
+                        android:textColor="@color/color_303030" />
 
-            <TextView style="@style/text" />
+                    <TextView
+                        android:id="@+id/tv_place"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="网格员 草原区"
+                        android:textColor="@color/color_303030" />
 
-        </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <TextView
+                        style="@style/text"
+                        android:drawableTop="@drawable/icon_6_home"
+                        android:text="查询记录" />
+
+                    <TextView
+                        style="@style/text"
+                        android:drawableTop="@drawable/icon_6_home"
+                        android:text="通讯录" />
+
+                    <TextView
+                        style="@style/text"
+                        android:drawableTop="@drawable/icon_6_home"
+                        android:text="网格地图" />
+
+                    <TextView
+                        style="@style/text"
+                        android:drawableTop="@drawable/icon_6_home"
+                        android:text="打卡" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="19dp"
+            android:elevation="5dp"
+            android:src="@color/white" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civ_header"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:elevation="5dp"
+            android:src="@drawable/tou_xiang" />
+
 
     </FrameLayout>
 

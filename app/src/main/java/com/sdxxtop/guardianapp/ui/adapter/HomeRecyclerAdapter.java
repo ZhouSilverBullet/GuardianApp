@@ -25,15 +25,16 @@ public class HomeRecyclerAdapter extends BaseQuickAdapter<Integer, BaseViewHolde
 
     @Override
     protected void convert(BaseViewHolder helper, Integer item) {
-        ImageView itemImageView = helper.getView(R.id.item_iv);
+        ImageView itemImageView = helper.getView(R.id.iv_right);
         itemImageView.setImageResource(item);
+
         helper.getConvertView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                UIUtils.showToast("" + item);
                 Intent intent = null;
                 switch (item) {
-                    case R.drawable.list_1: // 待办任务
+                    case R.drawable.icon_6_home: // 待办任务
                         intent = new Intent(mContext, TaskAgentsActivity.class);
                         break;
                     case R.drawable.list_2:  //事件上报

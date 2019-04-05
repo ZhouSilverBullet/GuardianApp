@@ -13,8 +13,40 @@
         app:titleColor="@color/white"
         app:titleValue="罗庄网格管理通讯录" />
 
-    <ImageView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/maillist" />
+        android:layout_height="match_parent">
+
+        <!--<ImageView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/maillist" />-->
+
+        <com.sdxxtop.guardianapp.ui.widget.SideIndexBar
+            android:id="@+id/index_bar"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:paddingTop="30dp"
+            android:paddingBottom="30dp"
+            app:isBoldface="true"
+            app:isLetterCenter="true"
+            app:letterColor="@color/green"
+            app:letterSize="15sp"
+            app:selectBackground="@color/half_translate"
+            app:selectLetterColor="@color/black" />
+
+
+        <TextView
+            android:id="@+id/text_dialog"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:background="@color/half_translate"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
 </LinearLayout>

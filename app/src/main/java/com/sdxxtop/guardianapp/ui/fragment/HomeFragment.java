@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
 import com.sdxxtop.guardianapp.R;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * A simple {@link HomeFragment} subclass.
@@ -31,13 +33,20 @@ import butterknife.BindView;
 public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> implements HomeFragmentContract.IView {
     @BindView(R.id.tv_title)
     TitleView mTitleView;
-    @BindView(R.id.iv_top)
-    ImageView ivTop;
+    @BindView(R.id.civ_header)
+    CircleImageView civHeader;
+
+    @BindView(R.id.tv_name)
+    TextView tvName;
+     @BindView(R.id.tv_place)
+    TextView tvPlace;
+
     @BindView(R.id.rv)
     RecyclerView mRecyclerView;
     @BindView(R.id.ll_container)
     LinearLayout mllContainer;
     private boolean isAdmin;
+    private HomeRecyclerAdapter mRecyclerAdapter;
 
     public static HomeFragment newInstance(boolean isAdmin) {
 
@@ -67,22 +76,25 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
             isAdmin = getArguments().getBoolean("isAdmin");
         }
 
-        if (isAdmin) {
-            ivTop.setImageResource(R.drawable.top_1);
+        if (isAdmin) { // 管理员 姓名 地址
+//            ivTop.setImageResource(R.drawable.top_1);
+
         } else {
-            ivTop.setImageResource(R.drawable.top_2);
+//            ivTop.setImageResource(R.drawable.top_2);
+
         }
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         ArrayList<Integer> data = getRecyclerData(isAdmin);
 
-        mRecyclerView.setAdapter(new HomeRecyclerAdapter(R.layout.item_home_recycler, data));
+        mRecyclerAdapter = new HomeRecyclerAdapter(R.layout.item_home_recycler, data);
+        mRecyclerView.setAdapter(mRecyclerAdapter);
 
     }
 
     private ArrayList<Integer> getRecyclerData(boolean isAdmin) {
         ArrayList<Integer> data = new ArrayList<>();
-        data.add(R.drawable.list_1);
+        data.add(R.drawable.icon_6_home);
         data.add(R.drawable.list_2);
         if (isAdmin) {
             data.add(R.drawable.list_3);
@@ -98,7 +110,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
     @Override
     protected void initData() {
         super.initData();
-//        mPresenter.loadSignData();
+        mPresenter.loadSignData();
     }
 
     @Override
@@ -149,6 +161,21 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
     public void showData(String data) {
         Logger.e(data);
 //        mTextView.setText(data);
+    }
+
+    @Override
+    public void showInfo() {
+
+
+        if (isAdmin) { // 管理员 姓名 地址
+//            ivTop.setImageResource(R.drawable.top_1);
+
+        } else {
+//            ivTop.setImageResource(R.drawable.top_2);
+
+        }
+
+//        mRecyclerAdapter.add();
     }
 
     @Override

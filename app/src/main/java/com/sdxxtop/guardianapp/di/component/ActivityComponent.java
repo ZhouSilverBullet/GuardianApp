@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.sdxxtop.guardianapp.di.module.ActivityModule;
 import com.sdxxtop.guardianapp.di.qualifier.ActivityScope;
+import com.sdxxtop.guardianapp.ui.activity.ContactActivity;
 import com.sdxxtop.guardianapp.ui.activity.HomeActivity;
 import com.sdxxtop.guardianapp.ui.activity.LoginActivity;
 import com.sdxxtop.guardianapp.ui.activity.NewsDetailsActivity;
@@ -19,4 +20,6 @@ public interface ActivityComponent {
 
     void inject(LoginActivity loginActivity);
     void inject(NewsDetailsActivity newsDetailsActivity);
+    void inject(ContactActivity contactActivity);
+
 }

@@ -1,12 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="84dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:orientation="horizontal"
+    app:cardCornerRadius="5dp">
 
-    <ImageView
-        android:id="@+id/item_iv"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="fitXY" />
-</LinearLayout>
+        android:layout_height="69dp"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <ImageView
+            android:id="@+id/iv_right"
+            android:layout_width="69dp"
+            android:layout_height="69dp"
+            android:src="@drawable/icon_6_home" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="代办任务"
+                android:textColor="@color/color_303030"
+                android:textSize="15sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical"
+                android:paddingBottom="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="新任务:afdasfdaasasfsfsfasfasdf"
+                    android:textColor="@color/color_666666" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="新任务:afdasfdaasasfsfsfasfasdf"
+                    android:textColor="@color/color_666666" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="right"
+                android:layout_marginTop="5dp"
+                android:text="[更多]"
+                android:textColor="@color/color_666666"
+                android:textSize="11sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
+                android:orientation="vertical"
+                android:paddingBottom="5dp">
+
+                <TextView
+                    android:id="@+id/tv_score1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="截止:3.13"
+                    android:textColor="@color/color_F9A15C"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/tv_score2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="截止:3.13"
+                    android:textColor="@color/color_F9A15C"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

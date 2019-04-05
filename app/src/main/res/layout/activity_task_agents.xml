@@ -15,15 +15,20 @@
         app:titleColor="@color/white"
         app:titleValue="代办任务" />
 
-    <ImageView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="fitXY"
-        android:src="@drawable/list_task" />
+        android:layout_height="match_parent"/>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="fitXY"
-        android:src="@drawable/list_task" />
+    <!--<ImageView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:scaleType="fitXY"-->
+        <!--android:src="@drawable/list_task" />-->
+
+    <!--<ImageView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:scaleType="fitXY"-->
+        <!--android:src="@drawable/list_task" />-->
 </LinearLayout>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    app:cardCornerRadius="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="禁止露天烧烤排放"
+                    android:textColor="@color/color_303030"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="地址：北京市草原区京市草原京市草原"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_important"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="重要性:高"
+                    android:textColor="@color/color_red_F23030"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="截止日期：2222-22-22"
+                    android:textSize="10sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_E4E4E4" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/green_bg_style"
+                android:text="事件升级" />
+
+            <TextView
+                style="@style/green_bg_style"
+                android:text="已解决" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

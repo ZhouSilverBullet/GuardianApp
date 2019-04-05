@@ -38,4 +38,13 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("article/article_info")
     Observable<RequestBean> getAllArticleInfo(@Field("data") String data);
+
+    //////////首页/////////
+
+    @FormUrlEncoded
+    @POST("app/index")
+    Observable<RequestBean<NewsBean>> postIndex(@Field("data") String data);
+
+    //////////首页/////////
+
 }

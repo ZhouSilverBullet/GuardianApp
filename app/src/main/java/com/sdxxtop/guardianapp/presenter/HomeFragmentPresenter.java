@@ -76,4 +76,9 @@ public class HomeFragmentPresenter extends RxPresenter<HomeFragmentContract.IVie
                 });
         addSubscribe(subscribe);
     }
+
+    @Override
+    public void loadInfo() {
+
+    }
 }

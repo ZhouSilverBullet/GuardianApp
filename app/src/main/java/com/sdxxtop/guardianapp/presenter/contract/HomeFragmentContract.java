@@ -6,6 +6,8 @@ import com.sdxxtop.guardianapp.base.BaseView;
 public interface HomeFragmentContract {
     interface IView extends BaseView {
         void showData(String data);
+
+        void showInfo();
     }
 
     interface IPresenter extends BasePresenter<IView> {
@@ -15,5 +17,8 @@ public interface HomeFragmentContract {
          * 加载签名的
          */
         void loadSignData();
+
+
+        void loadInfo();
     }
 }

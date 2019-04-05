@@ -12,6 +12,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowNoTitle">true</item>
     </style>
+
     <style name="AppHalfTranslateTheme" parent="AppTheme">
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@color/half_translate</item>
@@ -69,12 +70,30 @@
 
     <style name="text">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">40dp</item>
+        <item name="android:drawablePadding">5dp</item>
+        <item name="android:textColor">@color/color_303030</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">center</item>
     </style>
 
     <style name="AppliedTabLayoutTextStyle">
         <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="green_bg_style">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">3dp</item>
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">3dp</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:background">@drawable/btn_green_solid_bg</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 </resources>
