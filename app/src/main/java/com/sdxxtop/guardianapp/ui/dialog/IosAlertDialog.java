@@ -93,6 +93,22 @@ public class IosAlertDialog {
         return this;
     }
 
+    /**
+     * 让内容上下分别多空格,这样看起来,dialog增加了两行文字的高
+     *
+     * @param msg
+     * @return
+     */
+    public IosAlertDialog setHeightMsg(String msg) {
+        showMsg = true;
+        if ("".equals(msg)) {
+            txt_msg.setText("\n内容\n");
+        } else {
+            txt_msg.setText(new StringBuilder().append("\n").append(msg).append("\n"));
+        }
+        return this;
+    }
+
     public IosAlertDialog setMsg2(String msg) {
         showMsg2 = true;
         if ("".equals(msg)) {

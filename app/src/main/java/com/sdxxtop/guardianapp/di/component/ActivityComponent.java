@@ -6,6 +6,7 @@ import com.sdxxtop.guardianapp.di.module.ActivityModule;
 import com.sdxxtop.guardianapp.di.qualifier.ActivityScope;
 import com.sdxxtop.guardianapp.ui.activity.ContactActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportActivity;
+import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportListActivity;
 import com.sdxxtop.guardianapp.ui.activity.HomeActivity;
 import com.sdxxtop.guardianapp.ui.activity.LoginActivity;
@@ -27,5 +28,6 @@ public interface ActivityComponent {
     void inject(EventReportActivity eventReportActivity);
     void inject(PatrolRecordActivity patrolRecordActivity);
     void inject(EventReportListActivity activity);
+    void inject(EventReportDetailActivity activity);
 
 }

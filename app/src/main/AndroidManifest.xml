@@ -89,6 +89,9 @@
             android:windowSoftInputMode="adjustPan"
             />
         <activity android:name=".ui.activity.EventReportListActivity" />
+        <activity android:name=".ui.activity.EventReportDetailActivity"
+            android:theme="@style/AppNormalTheme"
+            />
 
         <provider
             android:name="androidx.core.content.FileProvider"

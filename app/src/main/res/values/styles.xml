@@ -78,6 +78,17 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="normal_text">
+        <item name="android:textColor">@color/color_303030</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="line_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/color_E4E4E4</item>
+    </style>
+
     <style name="AppliedTabLayoutTextStyle">
         <item name="android:textSize">15sp</item>
     </style>

@@ -102,7 +102,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
                         toReport();
                     }
                 })
-                .setTitle("确定上报事件?")
+                .setHeightMsg("确定上报事件?")
                 .show();
     }
 
