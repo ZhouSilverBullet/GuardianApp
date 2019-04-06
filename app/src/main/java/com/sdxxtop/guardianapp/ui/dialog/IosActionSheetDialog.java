@@ -61,7 +61,7 @@ public class IosActionSheetDialog {
         });
 
         // 定义Dialog布局和参数
-        dialog = new Dialog(context, R.style.loading_dialog);
+        dialog = new Dialog(context, R.style.IosAlertDialogStyle);
         dialog.setContentView(view);
         Window dialogWindow = dialog.getWindow();
         dialogWindow.setGravity(Gravity.LEFT | Gravity.BOTTOM);

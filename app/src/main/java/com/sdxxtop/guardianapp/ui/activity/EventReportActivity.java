@@ -16,6 +16,7 @@ import com.sdxxtop.guardianapp.base.BaseActivity;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.presenter.EventReportPresenter;
 import com.sdxxtop.guardianapp.ui.adapter.EventReportRecyclerAdapter;
+import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
 import com.sdxxtop.guardianapp.ui.widget.SingleDataView;
 import com.sdxxtop.guardianapp.ui.widget.TextAndEditView;
 import com.sdxxtop.guardianapp.ui.widget.TextAndTextView;
@@ -75,9 +76,27 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
             public void onClick(View v) {
 //                UIUtils.showToast("上传成功");
 //                finish();
-                toReport();
+                showReportConfirmDialog();
             }
         });
+    }
+
+    private void showReportConfirmDialog() {
+        new IosAlertDialog(this).builder()
+                .setNegativeButton("", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                })
+                .setPositiveButton("", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        toReport();
+                    }
+                })
+                .setTitle("确定上报事件?")
+                .show();
     }
 
     // todo 网络请求

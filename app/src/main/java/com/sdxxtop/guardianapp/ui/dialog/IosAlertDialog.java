@@ -63,7 +63,7 @@ public class IosAlertDialog {
         img_line.setVisibility(View.GONE);
 
         // 定义Dialog布局和参数
-        dialog = new Dialog(context, R.style.loading_dialog);
+        dialog = new Dialog(context, R.style.IosAlertDialogStyle);
         dialog.setContentView(view);
 
         // 调整dialog背景大小
