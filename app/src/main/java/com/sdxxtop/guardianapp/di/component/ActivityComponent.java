@@ -9,6 +9,7 @@ import com.sdxxtop.guardianapp.ui.activity.EventReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.HomeActivity;
 import com.sdxxtop.guardianapp.ui.activity.LoginActivity;
 import com.sdxxtop.guardianapp.ui.activity.NewsDetailsActivity;
+import com.sdxxtop.guardianapp.ui.activity.PatrolRecordActivity;
 
 import dagger.Component;
 
@@ -23,5 +24,6 @@ public interface ActivityComponent {
     void inject(NewsDetailsActivity newsDetailsActivity);
     void inject(ContactActivity contactActivity);
     void inject(EventReportActivity eventReportActivity);
+    void inject(PatrolRecordActivity patrolRecordActivity);
 
 }

@@ -71,6 +71,7 @@ dependencies {
     implementation ('cn.qqtheme.framework:WheelPicker:1.5.0') {
         exclude group: 'com.android.support'
     }
+    implementation 'com.prolificinteractive:material-calendarview:1.4.3'
 
     implementation rootProject.ext.dependencies["multidex"]
     implementation rootProject.ext.dependencies["junit"]

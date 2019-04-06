@@ -28,6 +28,7 @@ public class TextAndTextView extends LinearLayout {
     private boolean imgIsShow;
     private String textViewValue;
     private String textRightValue;
+    private TextView textRightImage2;
 
     public TextAndTextView(Context context) {
         this(context, null);
@@ -55,6 +56,7 @@ public class TextAndTextView extends LinearLayout {
         textNameText = (TextView) findViewById(R.id.text_and_text_name);
         textRightText = (TextView) findViewById(R.id.text_and_text_right);
         textRightImage = (TextView) findViewById(R.id.text_and_text_right_image);
+        textRightImage2 = (TextView) findViewById(R.id.text_and_text_right_image2);
         textLine = findViewById(R.id.text_and_text_line);
 
         if (!lineIsShow) {
@@ -83,5 +85,11 @@ public class TextAndTextView extends LinearLayout {
 
     public void setShowLine(boolean isShow) {
         textLine.setVisibility(isShow ? VISIBLE : GONE);
+    }
+
+    public void setTextRightImage2Show(boolean isShow) {
+        if (textRightImage2 != null) {
+            textRightImage2.setVisibility(isShow ? VISIBLE : GONE);
+        }
     }
 }

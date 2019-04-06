@@ -43,6 +43,16 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:background="@drawable/next_step" />
+
+        <TextView
+            android:id="@+id/text_and_text_right_image2"
+            android:layout_width="9dp"
+            android:visibility="gone"
+            android:layout_height="8dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/time_more" />
+
     </RelativeLayout>
 
     <View

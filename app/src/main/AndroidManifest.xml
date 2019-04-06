@@ -63,7 +63,9 @@
         <activity android:name="com.sdxxtop.guardianapp.ui.activity.EventReportActivity"/>
         <activity android:name="com.sdxxtop.guardianapp.ui.activity.TaskAgentsActivity"/>
         <activity android:name="com.sdxxtop.guardianapp.ui.activity.ContactActivity"/>
-        <activity android:name="com.sdxxtop.guardianapp.ui.activity.PatrolRecordActivity"/>
+        <activity android:name="com.sdxxtop.guardianapp.ui.activity.PatrolRecordActivity"
+            android:theme="@style/AppNormalTheme"
+            />
         <activity
             android:name="com.sdxxtop.guardianapp.ui.activity.GridMapActivity"
             android:theme="@style/AppNormalTheme"/>
