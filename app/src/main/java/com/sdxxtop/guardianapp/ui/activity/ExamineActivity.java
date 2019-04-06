@@ -51,11 +51,4 @@ public class ExamineActivity extends BaseActivity {
             }
         });
     }
-
-    // https://blog.csdn.net/a872822645/article/details/74482323
-    private void showStatusBar() {
-        WindowManager.LayoutParams attrs = getWindow().getAttributes();
-        attrs.flags &= ~WindowManager.LayoutParams.FLAG_FULLSCREEN;
-        getWindow().setAttributes(attrs);
-    }
 }

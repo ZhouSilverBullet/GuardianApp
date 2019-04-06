@@ -101,6 +101,17 @@ public abstract class BaseActivity extends SwipeBackActivity {
         }
     }
 
+    /**
+     * 当全屏的时候，状态栏继续显示
+     *  调用该方法
+     *  https://blog.csdn.net/a872822645/article/details/74482323
+     */
+    protected void showStatusBar() {
+        WindowManager.LayoutParams attrs = getWindow().getAttributes();
+        attrs.flags &= ~WindowManager.LayoutParams.FLAG_FULLSCREEN;
+        getWindow().setAttributes(attrs);
+    }
+
     protected void initEvent() {
     }
 

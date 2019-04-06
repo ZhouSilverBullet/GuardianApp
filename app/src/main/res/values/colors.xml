@@ -28,6 +28,11 @@
     <color name="color_7ECEF4">#7ECEF4</color>
     <color name="color_8C97CB">#8C97CB</color>
 
+    <color name="alertdialog_line">#c6c6c6</color>
+    <color name="actionsheet_blue">#037BFF</color>
+    <color name="actionsheet_red">#FD4A2E</color>
+    <color name="actionsheet_gray">#8F8F8F</color>
+
     <array name="tab_colors">
         <item>#34B26D</item>
         <item>#34B26D</item>

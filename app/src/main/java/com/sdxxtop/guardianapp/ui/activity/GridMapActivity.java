@@ -103,11 +103,4 @@ public class GridMapActivity extends BaseActivity implements AMap.OnMyLocationCh
         String s = "location " + location.getLongitude() + " + " + location.getLatitude();
         Logger.e(TAG, s);
     }
-
-    // https://blog.csdn.net/a872822645/article/details/74482323
-    private void showStatusBar() {
-        WindowManager.LayoutParams attrs = getWindow().getAttributes();
-        attrs.flags &= ~WindowManager.LayoutParams.FLAG_FULLSCREEN;
-        getWindow().setAttributes(attrs);
-    }
 }
