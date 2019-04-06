@@ -36,20 +36,21 @@ public class LearningFragment extends BaseFragment {
         titleList.add("新闻学习");
         titleList.add("罗庄发布");
         titleList.add("课程");
-        titleList.add("评分");
+//        titleList.add("评分");
         titleList.add("考核");
 
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(NewsListFragment.newInstance(1));
         fragments.add(NewsListFragment.newInstance(2));
         fragments.add(ImageTabFragment.newInstance(R.drawable.course));
-        fragments.add(ImageTabFragment.newInstance(R.drawable.score));
+//        fragments.add(ImageTabFragment.newInstance(R.drawable.score));
         fragments.add(ImageTabFragment.newInstance(R.drawable.exam));
 
         HomePagerAdapter homePagerAdapter = new HomePagerAdapter(getChildFragmentManager(),
                 titleList, fragments);
         mViewPager.setAdapter(homePagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
+        mViewPager.setOffscreenPageLimit(fragments.size());
     }
 
     @Override

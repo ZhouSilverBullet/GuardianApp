@@ -121,6 +121,7 @@ public class VideoPlayActivity extends BaseActivity {
     @Override
     public void setRequestedOrientation(int requestedOrientation) {
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O && isTranslucentOrFloating()) {
+            super.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
             return;
         }
         super.setRequestedOrientation(requestedOrientation);
