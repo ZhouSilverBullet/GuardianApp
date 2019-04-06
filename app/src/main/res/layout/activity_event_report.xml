@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         app:bgColor="@color/green"
         app:leftLayoutIsShow="true"
-        app:rightTextValue="草稿箱"
+        app:rightTextValue="我的上报"
         app:titleColor="@color/white"
         app:titleValue="事件上报" />
 

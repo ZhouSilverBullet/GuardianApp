@@ -1,7 +1,6 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,7 +11,6 @@ import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.sdxxtop.guardianapp.R;
-import com.sdxxtop.guardianapp.base.BaseActivity;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.presenter.EventReportPresenter;
 import com.sdxxtop.guardianapp.ui.adapter.EventReportRecyclerAdapter;
@@ -30,11 +28,12 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qqtheme.framework.picker.OptionPicker;
 
 public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> implements EventReportRecyclerAdapter.HorListener {
+    @BindView(R.id.tv_title)
+    TitleView mTitleView;
     @BindView(R.id.rv)
     RecyclerView mRecyclerView;
     @BindView(R.id.btn_push)
@@ -77,6 +76,14 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 //                UIUtils.showToast("上传成功");
 //                finish();
                 showReportConfirmDialog();
+            }
+        });
+
+        mTitleView.getTvRight().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, EventReportListActivity.class);
+                startActivity(intent);
             }
         });
     }

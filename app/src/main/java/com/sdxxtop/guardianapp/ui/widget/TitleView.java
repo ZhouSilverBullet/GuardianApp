@@ -3,19 +3,24 @@ package com.sdxxtop.guardianapp.ui.widget;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sdxxtop.guardianapp.R;
+import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import androidx.annotation.Nullable;
 
 public class TitleView extends RelativeLayout {
 
+    private boolean layoutIconIsGray;
     private int rightTextColor;
     private String rightTextValue;
     private int bgColor;
@@ -44,6 +49,7 @@ public class TitleView extends RelativeLayout {
         rightTextValue = a.getString(R.styleable.TitleView_rightTextValue);
         rightTextColor = a.getColor(R.styleable.TitleView_rightTextColor, getResources().getColor(R.color.white));
         layoutIsShow = a.getBoolean(R.styleable.TitleView_leftLayoutIsShow, false);
+        layoutIconIsGray = a.getBoolean(R.styleable.TitleView_leftLayoutIconIsGray, false);
         a.recycle();
         init();
     }
@@ -60,7 +66,13 @@ public class TitleView extends RelativeLayout {
         tvRight = findViewById(R.id.tview_right);
         tvRight.setText(rightTextValue);
         tvRight.setTextColor(rightTextColor);
-        if (layoutIsShow) {
+        if (layoutIsShow || layoutIconIsGray) {
+
+            if (layoutIconIsGray) {
+                ImageView view = findViewById(R.id.iv_back);
+                view.setPadding(UIUtils.dip2px(10), UIUtils.dip2px(4), UIUtils.dip2px(4), UIUtils.dip2px(0));
+                view.setImageResource(R.drawable.return_back);
+            }
             linearBack = findViewById(R.id.ll_back);
             linearBack.setVisibility(VISIBLE);
             linearBack.setOnClickListener(new OnClickListener() {
