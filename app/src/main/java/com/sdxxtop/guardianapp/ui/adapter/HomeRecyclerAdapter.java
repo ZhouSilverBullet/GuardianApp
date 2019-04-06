@@ -26,7 +26,17 @@ public class HomeRecyclerAdapter extends BaseQuickAdapter<Integer, BaseViewHolde
     @Override
     protected void convert(BaseViewHolder helper, Integer item) {
         ImageView itemImageView = helper.getView(R.id.iv_right);
+        View view = helper.getView(R.id.ll_bg);
         itemImageView.setImageResource(item);
+        switch (item) {
+            case R.drawable.icon_1_list:
+                view.setBackgroundColor(mContext.getResources().getColor(R.color.color_7ECEF4));
+                break;
+            case R.drawable.icon_2_list:
+                view.setBackgroundColor(mContext.getResources().getColor(R.color.color_8C97CB));
+                break;
+        }
+
 
         helper.getConvertView().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,24 +44,24 @@ public class HomeRecyclerAdapter extends BaseQuickAdapter<Integer, BaseViewHolde
 //                UIUtils.showToast("" + item);
                 Intent intent = null;
                 switch (item) {
-                    case R.drawable.icon_6_home: // 待办任务
+                    case R.drawable.icon_1_list: // 待办任务
                         intent = new Intent(mContext, TaskAgentsActivity.class);
                         break;
-                    case R.drawable.list_2:  //事件上报
+                    case R.drawable.icon_2_list:  //事件上报
                         intent = new Intent(mContext, EventReportActivity.class);
                         break;
-                    case R.drawable.list_3:  // 环保检测
-                        intent = new Intent(mContext, EnvironmentalTestActivity.class);
-                        break;
-                    case R.drawable.list_4:  // 智能传感器
-                        intent = new Intent(mContext, IntelligentSensorActivity.class);
-                        break;
-                    case R.drawable.list_5:  // 统计分析
-                        intent = new Intent(mContext, StatisticsAnalyzeActivity.class);
-                        break;
-                    case R.drawable.list_6:  // 检举举报
-                        intent = new Intent(mContext, ImpeachReportActivity.class);
-                        break;
+//                    case R.drawable.list_3:  // 环保检测
+//                        intent = new Intent(mContext, EnvironmentalTestActivity.class);
+//                        break;
+//                    case R.drawable.list_4:  // 智能传感器
+//                        intent = new Intent(mContext, IntelligentSensorActivity.class);
+//                        break;
+//                    case R.drawable.list_5:  // 统计分析
+//                        intent = new Intent(mContext, StatisticsAnalyzeActivity.class);
+//                        break;
+//                    case R.drawable.list_6:  // 检举举报
+//                        intent = new Intent(mContext, ImpeachReportActivity.class);
+//                        break;
                 }
 
                 if (intent != null) {

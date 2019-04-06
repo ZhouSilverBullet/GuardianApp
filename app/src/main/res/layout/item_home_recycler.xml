@@ -16,11 +16,18 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
-        <ImageView
-            android:id="@+id/iv_right"
+        <LinearLayout
+            android:id="@+id/ll_bg"
+            android:gravity="center"
             android:layout_width="69dp"
-            android:layout_height="69dp"
-            android:src="@drawable/icon_6_home" />
+            android:layout_height="69dp">
+            <ImageView
+                android:id="@+id/iv_right"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/icon_6_home" />
+        </LinearLayout>
+
 
         <RelativeLayout
             android:layout_width="0dp"

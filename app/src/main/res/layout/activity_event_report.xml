@@ -49,11 +49,17 @@
                     android:textSize="11sp" />
             </LinearLayout>
 
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv"
                 android:layout_width="match_parent"
                 android:layout_height="135dp" />
+
+            <com.sdxxtop.guardianapp.ui.widget.TextAndEditView
+                android:id="@+id/taev_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:taev_edit_text_hint="事件重点简述（限制10个字）"
+                app:taev_text_view="事件标题" />
 
             <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
                 android:id="@+id/tatv_query"
@@ -68,13 +74,6 @@
                 android:layout_height="wrap_content"
                 app:tatv_text_right_hint_value="请点击选择"
                 app:tatv_text_view="事件发生地点" />
-
-            <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
-                android:id="@+id/tatv_monitor_message"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tatv_text_right_hint_value="请点击选择"
-                app:tatv_text_view="带入监控信息" />
 
             <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
                 android:id="@+id/tatv_report_path"
@@ -117,6 +116,7 @@
             android:layout_weight="1"
             android:background="@drawable/btn_green_stroke_bg"
             android:text="存草稿"
+            android:visibility="gone"
             android:textColor="@color/green" />
 
         <Button

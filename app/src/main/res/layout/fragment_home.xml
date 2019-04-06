@@ -81,22 +81,22 @@
 
                     <TextView
                         style="@style/text"
-                        android:drawableTop="@drawable/icon_6_home"
+                        android:drawableTop="@drawable/record_home"
                         android:text="查询记录" />
 
                     <TextView
                         style="@style/text"
-                        android:drawableTop="@drawable/icon_6_home"
+                        android:drawableTop="@drawable/icon_list_home"
                         android:text="通讯录" />
 
                     <TextView
                         style="@style/text"
-                        android:drawableTop="@drawable/icon_6_home"
+                        android:drawableTop="@drawable/icon_map_home"
                         android:text="网格地图" />
 
                     <TextView
                         style="@style/text"
-                        android:drawableTop="@drawable/icon_6_home"
+                        android:drawableTop="@drawable/punch_home"
                         android:text="打卡" />
 
                 </LinearLayout>

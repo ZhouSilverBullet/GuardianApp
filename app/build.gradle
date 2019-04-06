@@ -68,6 +68,10 @@ dependencies {
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'me.jessyan:autosize:1.1.2'
+    implementation ('cn.qqtheme.framework:WheelPicker:1.5.0') {
+        exclude group: 'com.android.support'
+    }
+
     implementation rootProject.ext.dependencies["multidex"]
     implementation rootProject.ext.dependencies["junit"]
     implementation rootProject.ext.dependencies["test.runer"]

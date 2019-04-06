@@ -24,6 +24,10 @@
     <color name="color_808080">#808080</color>
     <color name="color_32B16C">#32B16C</color>
 
+
+    <color name="color_7ECEF4">#7ECEF4</color>
+    <color name="color_8C97CB">#8C97CB</color>
+
     <array name="tab_colors">
         <item>#34B26D</item>
         <item>#34B26D</item>

@@ -18,4 +18,11 @@
         <attr name="isLetterCenter" format="boolean"/>
     </declare-styleable>
 
+    <declare-styleable name="TextAndEditView">
+        <attr name="taev_text_view" format="string" />
+        <attr name="taev_edit_text_hint" format="string" />
+        <attr name="taev_end_text_view" format="string" />
+        <attr name="taev_line_is_show" format="boolean" />
+    </declare-styleable>
+
 </resources>

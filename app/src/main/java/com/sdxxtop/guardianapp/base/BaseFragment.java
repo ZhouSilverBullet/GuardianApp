@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sdxxtop.guardianapp.utils.DialogUtil;
 import com.sdxxtop.guardianapp.utils.StatusBarUtil;
 import com.sdxxtop.guardianapp.utils.SystemUtil;
 import com.sdxxtop.guardianapp.app.App;
@@ -20,6 +21,7 @@ public abstract class BaseFragment extends SupportFragment {
 
     protected View mRootView;
     private Unbinder mUnbinder;
+    private DialogUtil mDialogUtil;
 
     @Nullable
     @Override
@@ -38,6 +40,23 @@ public abstract class BaseFragment extends SupportFragment {
         if (mUnbinder != null) {
             mUnbinder.unbind();
             mUnbinder = null;
+        }
+
+        if (mDialogUtil != null) {
+            mDialogUtil = null;
+        }
+    }
+
+    public void showLoadingDialog() {
+        if (mDialogUtil == null) {
+            mDialogUtil = new DialogUtil();
+        }
+        mDialogUtil.showLoadingDialog(getActivity());
+    }
+
+    public void hideLoadingDialog() {
+        if (mDialogUtil != null) {
+            mDialogUtil.hideLoadingDialog();
         }
     }
 

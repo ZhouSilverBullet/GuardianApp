@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <com.amap.api.maps.MapView
+        android:id="@+id/map_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/item_amap_search_root1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_above="@+id/amap_line"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:id="@+id/item_amap_search_text1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="（点击确认地点）"
+            android:textColor="@color/color_303030"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/item_amap_search_title1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/color_666666"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/amap_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/current_search_recyclerview"
+        android:background="@color/color_E4E4E4" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/current_search_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/activity_amap_my_location"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_above="@+id/item_amap_search_root1"
+        android:layout_margin="15dp"
+        android:background="@drawable/amap_location_img_bg"
+        android:padding="5dp"
+        android:src="@drawable/to_location" />
+
+    <LinearLayout
+        android:id="@+id/activity_amap_search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_F4F4F4"
+            android:fitsSystemWindows="true">
+
+            <RelativeLayout
+                android:id="@+id/search_maps_bar"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="5dp">
+
+                <ImageButton
+                    android:id="@+id/dialog_search_back"
+                    android:layout_width="35dp"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
+                    android:adjustViewBounds="true"
+                    android:background="@color/color_F4F4F4"
+                    android:src="@drawable/nav_button_return" />
+
+                <TextView
+                    android:id="@+id/dialog_serach_btn_search"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/shape_view_blue_solid_bg"
+                    android:gravity="center"
+                    android:text="搜索"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    tools:ignore="ContentDescription,RtlHardcoded" />
+
+                <EditText
+                    android:id="@+id/dialog_search_et"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="5dp"
+                    android:layout_toLeftOf="@+id/dialog_serach_btn_search"
+                    android:layout_toRightOf="@+id/dialog_search_back"
+                    android:background="@drawable/amap_search_edit_bg"
+                    android:completionThreshold="1"
+                    android:drawableLeft="@drawable/search"
+                    android:drawablePadding="5dp"
+                    android:dropDownVerticalOffset="1.0dip"
+                    android:hint="请输入关键字"
+                    android:imeOptions="actionSearch|flagNoExtractUi"
+                    android:inputType="text|textAutoComplete"
+                    android:maxHeight="50dp"
+                    android:minHeight="50dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="30dp"
+                    android:singleLine="true"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/amap_img_detele"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:layout_toLeftOf="@+id/dialog_serach_btn_search"
+                    android:src="@drawable/dele"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_E4E4E4" />
+
+        <LinearLayout
+            android:id="@+id/dialog_search_recyclerview_linear"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/dialog_search_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--<Button-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:id="@+id/demo_click"-->
+    <!--/>-->
+</RelativeLayout>

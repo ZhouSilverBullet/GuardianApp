@@ -94,16 +94,16 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
 
     private ArrayList<Integer> getRecyclerData(boolean isAdmin) {
         ArrayList<Integer> data = new ArrayList<>();
-        data.add(R.drawable.icon_6_home);
-        data.add(R.drawable.list_2);
-        if (isAdmin) {
-            data.add(R.drawable.list_3);
-            data.add(R.drawable.list_4);
-            data.add(R.drawable.list_5);
-        } else {
-            data.add(R.drawable.list_6);
-            data.add(R.drawable.list_5);
-        }
+        data.add(R.drawable.icon_1_list);
+        data.add(R.drawable.icon_2_list);
+//        if (isAdmin) {
+//            data.add(R.drawable.list_3);
+//            data.add(R.drawable.list_4);
+//            data.add(R.drawable.list_5);
+//        } else {
+//            data.add(R.drawable.list_6);
+//            data.add(R.drawable.list_5);
+//        }
         return data;
     }
 

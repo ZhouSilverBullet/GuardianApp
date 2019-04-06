@@ -2,10 +2,13 @@ package com.sdxxtop.guardianapp.base;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.sdxxtop.guardianapp.utils.DialogUtil;
 import com.sdxxtop.guardianapp.utils.StatusBarUtil;
+import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import androidx.annotation.Nullable;
 import butterknife.ButterKnife;
@@ -15,11 +18,14 @@ import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 public abstract class BaseActivity extends SwipeBackActivity {
 
     private Unbinder mUnbinder;
+    protected BaseActivity mContext;
+    private DialogUtil mDialogUtil;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayout());
+        mContext = this;
         setSwipeBackEnable(false);
         initStatusBar();
 
@@ -64,12 +70,37 @@ public abstract class BaseActivity extends SwipeBackActivity {
             mUnbinder.unbind();
             mUnbinder = null;
         }
+
+        if (mDialogUtil != null) {
+            mDialogUtil = null;
+        }
     }
     public void statusBar(boolean isDark) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {//Android6.0以上系统
             StatusBarUtil.setDarkStatusIcon(this.getWindow(), isDark);
         }
     }
+
+    public void showToast(String msg) {
+        if (TextUtils.isEmpty(msg)) {
+            return;
+        }
+        UIUtils.showToast(msg);
+    }
+
+    public void showLoadingDialog() {
+        if (mDialogUtil == null) {
+            mDialogUtil = new DialogUtil();
+        }
+        mDialogUtil.showLoadingDialog(this);
+    }
+
+    public void hideLoadingDialog() {
+        if (mDialogUtil != null) {
+            mDialogUtil.hideLoadingDialog();
+        }
+    }
+
     protected void initEvent() {
     }
 

@@ -83,6 +83,10 @@
         <activity android:name="com.sdxxtop.guardianapp.ui.activity.IntelligentSensorActivity"/>
         <activity android:name="com.sdxxtop.guardianapp.ui.activity.EnvironmentalTestActivity"/>
 
+        <activity android:name=".ui.activity.AmapPoiActivity"
+            android:windowSoftInputMode="adjustPan"
+            />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
