@@ -48,23 +48,18 @@
         android:layout_marginBottom="10dp"
         android:text="备注" />
 
-    <EditText
-        android:id="@+id/et_content"
+    <com.sdxxtop.guardianapp.ui.widget.NumberEditTextView
+        android:id="@+id/et_num_content"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:background="@drawable/report_edit_bg"
-        android:gravity="left|top"
-        android:hint="非必填"
-        android:padding="5dp"
-        android:textSize="15sp" />
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/btn_confirm"
         android:layout_width="120dp"
         android:layout_height="34dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="33dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="18dp"
         android:background="@drawable/btn_green_solid_bg"
         android:text="上报"
         android:textColor="@color/white" />

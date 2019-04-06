@@ -72,9 +72,9 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         switch (view.getId()) {
             case R.id.btn_check_success:
                 //1.已经派发,确定的时候
-                showConfirmDialog();
+//                showConfirmDialog();
                 //2.已经反馈,然后弹出验收结果
-//                showPop();
+                showPop();
                 break;
         }
     }

@@ -8,12 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.sdxxtop.guardianapp.R;
+import com.sdxxtop.guardianapp.ui.widget.NumberEditTextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,8 +27,8 @@ public class ERCheckResultWindow extends PopupWindow {
     ImageView ivTimeMore;
     @BindView(R.id.tv_select)
     TextView tvSelect;
-    @BindView(R.id.et_content)
-    EditText etContent;
+    @BindView(R.id.et_num_content)
+    NumberEditTextView etNumContent;
     @BindView(R.id.btn_confirm)
     Button btnConfirm;
     private Activity mActivity;
@@ -42,8 +42,9 @@ public class ERCheckResultWindow extends PopupWindow {
     private void initUI() {
         View view = LayoutInflater.from(mActivity).inflate(R.layout.item_er_check_result_window, null);
         setContentView(view);
-        ButterKnife.bind(getContentView());
+        ButterKnife.bind(this, view);
 
+        etNumContent.setMaxLength(100);
 
         setOnDismissListener(new OnDismissListener() {
             @Override
