@@ -16,8 +16,8 @@ import butterknife.BindView;
 public class ExamineActivity extends BaseActivity {
     @BindView(R.id.tv_title)
     TitleView mTitleView;
-    @BindView(R.id.iv_examine)
-    ImageView mImageView;
+//    @BindView(R.id.iv_examine)
+//    ImageView mImageView;
 
     private List<Integer> imgs;
     private int tempId;
@@ -42,13 +42,13 @@ public class ExamineActivity extends BaseActivity {
         }
 
         tempId = 0;
-
-        mImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tempId++;
-                mImageView.setImageResource(imgs.get(tempId % 4));
-            }
-        });
+//
+//        mImageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                tempId++;
+//                mImageView.setImageResource(imgs.get(tempId % 4));
+//            }
+//        });
     }
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@drawable/report_edit_bg"
+    android:orientation="horizontal"
+    android:paddingLeft="10dp"
+    android:paddingTop="8dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="8dp">
+
+    <FrameLayout
+        android:layout_width="30dp"
+        android:layout_height="30dp">
+
+        <CheckBox
+            android:id="@+id/cb_select"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:button="@drawable/subject_check_box" />
+
+        <TextView
+            android:id="@+id/tv_select_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="A" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_select_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="5dp"
+        android:text="asfasdfasdfasdf"
+        android:textColor="@color/color_303030"
+        android:textSize="11sp" />
+
+</LinearLayout>
