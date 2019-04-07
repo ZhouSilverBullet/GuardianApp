@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_header"
+    android:layout_width="match_parent"
+    android:layout_height="43dp"
+    android:background="@color/color_32B16C"
+    android:gravity="center_vertical"
+    android:paddingLeft="15dp"
+    android:text="课堂正常"
+    android:textColor="@color/white"
+    android:textStyle="bold" />

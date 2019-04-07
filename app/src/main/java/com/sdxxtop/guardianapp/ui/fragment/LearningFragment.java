@@ -3,6 +3,7 @@ package com.sdxxtop.guardianapp.ui.fragment;
 import com.google.android.material.tabs.TabLayout;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseFragment;
+import com.sdxxtop.guardianapp.presenter.contract.CourseListContract;
 import com.sdxxtop.guardianapp.ui.adapter.HomePagerAdapter;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
 
@@ -42,7 +43,8 @@ public class LearningFragment extends BaseFragment {
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(NewsListFragment.newInstance(1));
         fragments.add(NewsListFragment.newInstance(2));
-        fragments.add(ImageTabFragment.newInstance(R.drawable.course));
+        fragments.add(CourseListFragment.newInstance(1));
+//        fragments.add(ImageTabFragment.newInstance(R.drawable.course));
 //        fragments.add(ImageTabFragment.newInstance(R.drawable.score));
         fragments.add(ImageTabFragment.newInstance(R.drawable.exam));
 

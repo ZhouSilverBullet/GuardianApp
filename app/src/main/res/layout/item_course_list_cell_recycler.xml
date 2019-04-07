@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="加强正道简单黑色"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_right_dec"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="20dp"
+            android:text="视频"
+            android:textColor="@color/color_7ECEF4"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <View style="@style/line_style" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+
+        <TextView
+            android:id="@+id/tv_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/btn_green_solid_bg"
+            android:paddingLeft="20dp"
+            android:paddingTop="6dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="6dp"
+            android:text="去学习"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tv_dec"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/tv_btn"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="考试形式：选择题\t\t\t\t人脸识别方法作弊" />
+
+        <TextView
+            android:id="@+id/tv_last_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_dec"
+            android:layout_marginTop="5dp"
+            android:layout_toLeftOf="@id/tv_btn"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="课程最晚考试时间: 03-26" />
+
+    </RelativeLayout>
+
+</LinearLayout>

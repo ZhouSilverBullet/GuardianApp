@@ -2,9 +2,9 @@ package com.sdxxtop.guardianapp.di.component;
 
 import android.app.Activity;
 
-
 import com.sdxxtop.guardianapp.di.module.FragmentModule;
 import com.sdxxtop.guardianapp.di.qualifier.FragmentScope;
+import com.sdxxtop.guardianapp.ui.fragment.CourseListFragment;
 import com.sdxxtop.guardianapp.ui.fragment.HomeFragment;
 import com.sdxxtop.guardianapp.ui.fragment.NewsListFragment;
 
@@ -18,4 +18,5 @@ public interface FragmentComponent {
     void inject(HomeFragment homeFragment);
 
     void inject(NewsListFragment newsListFragment);
+    void inject(CourseListFragment fragment);
 }
