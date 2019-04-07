@@ -35,6 +35,7 @@
                 android:src="@drawable/mine_top" />
 
             <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+                android:id="@+id/tatv_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:tatv_text_view="单位信息"/>

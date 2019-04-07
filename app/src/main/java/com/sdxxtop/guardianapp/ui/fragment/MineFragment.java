@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseFragment;
@@ -93,5 +92,9 @@ public class MineFragment extends BaseFragment {
     public void logout() {
         Intent intent = new Intent(getContext(), LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         getActivity().startActivity(intent);
+    }
+
+    @OnClick(R.id.tatv_message)
+    public void onViewClicked() {
     }
 }
