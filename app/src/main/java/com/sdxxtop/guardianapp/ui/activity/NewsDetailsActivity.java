@@ -45,10 +45,10 @@ public class NewsDetailsActivity extends BaseMvpActivity<NewsDetailPresenter> im
 
     @Override
     protected void initView() {
-        webView.setWebChromeClient(new WebChromeClient(){
+        webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
-                if (newProgress==100){
+                if (newProgress == 100 && progressBar != null) {
                     progressBar.setVisibility(View.GONE);
                 }
             }
@@ -60,7 +60,7 @@ public class NewsDetailsActivity extends BaseMvpActivity<NewsDetailPresenter> im
         webView.setVerticalScrollBarEnabled(false); //垂直不显示
 
         // 设置WebView的客户端
-        webView.setWebViewClient(new WebViewClient(){
+        webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 return false;// 返回false

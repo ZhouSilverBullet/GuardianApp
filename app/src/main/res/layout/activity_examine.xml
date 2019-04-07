@@ -39,7 +39,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginTop="42dp"
+                    android:layout_marginTop="32dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="5dp"
                     android:paddingBottom="10dp"
@@ -123,6 +123,7 @@
                             android:id="@+id/tv_subject_content"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             android:text="列车重量按运行图规定的牵引定数超51T及其以上，连续运行距离超过机车乘务区段的二分之一的货物列车为（  ）列车" />
@@ -135,7 +136,7 @@
                     android:layout_width="46dp"
                     android:layout_height="46dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="19dp"
+                    android:layout_marginTop="9dp"
                     android:elevation="5dp"
                     android:src="@color/white" />
 
@@ -144,7 +145,7 @@
                     android:layout_width="44dp"
                     android:layout_height="44dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:elevation="5dp"
                     android:src="@drawable/tou_xiang" />
 
@@ -153,6 +154,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:orientation="vertical">
 
@@ -179,10 +181,12 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
+                    android:layout_marginTop="20dp"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp">
 
                     <TextView
+                        android:id="@+id/tv_up"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:background="@drawable/examine_btn_gray_bg"
@@ -193,6 +197,7 @@
                         android:textColor="@color/white" />
 
                     <TextView
+                        android:id="@+id/tv_push"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="25dp"
@@ -204,22 +209,17 @@
                         android:textColor="@color/white" />
 
                     <TextView
+                        android:id="@+id/tv_down"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:background="@drawable/examine_btn_gray_bg"
                         android:gravity="center"
-                        android:paddingLeft="8dp"
-                        android:paddingRight="8dp"
+                        android:paddingLeft="13dp"
+                        android:paddingRight="13dp"
                         android:text="跳过"
                         android:textColor="@color/white" />
                 </LinearLayout>
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white" />
-
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         app:bgColor="@color/green"
         app:titleColor="@color/white"
+        app:rightTextValue="退出登录"
         app:titleValue="个人中心"/>
 
     <androidx.core.widget.NestedScrollView
@@ -41,38 +42,38 @@
             <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:tatv_text_view="学习积分说明"/>
+                app:tatv_text_view="我的上报"/>
 
-            <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tatv_text_view="统计分析分数说明"/>
+            <!--<com.sdxxtop.guardianapp.ui.widget.TextAndTextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--app:tatv_text_view="统计分析分数说明"/>-->
 
-            <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tatv_text_view="意见反馈"/>
+            <!--<com.sdxxtop.guardianapp.ui.widget.TextAndTextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--app:tatv_text_view="意见反馈"/>-->
 
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:gravity="center">
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@color/white"-->
+        <!--android:gravity="center">-->
 
-        <TextView
-            android:id="@+id/tv_logout"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/btn_green_corners30_solid_bg"
-            android:gravity="center"
-            android:text="退出"
-            android:textColor="@color/white"
-            android:textSize="20sp"/>
-    </LinearLayout>
+        <!--<TextView-->
+            <!--android:id="@+id/tv_logout"-->
+            <!--android:layout_width="150dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:layout_margin="10dp"-->
+            <!--android:background="@drawable/btn_green_corners30_solid_bg"-->
+            <!--android:gravity="center"-->
+            <!--android:text="退出"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textSize="20sp"/>-->
+    <!--</LinearLayout>-->
 
 </LinearLayout>

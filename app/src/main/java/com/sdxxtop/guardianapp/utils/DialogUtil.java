@@ -23,4 +23,10 @@ public class DialogUtil {
             sLoadingDialog.hide();
         }
     }
+
+    public void closeLoadingDialog() {
+        if (sLoadingDialog != null) {
+            sLoadingDialog.dismiss();
+        }
+    }
 }

@@ -2,16 +2,17 @@ package com.sdxxtop.guardianapp.ui.fragment;
 
 import android.os.Bundle;
 
+import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpFragment;
 import com.sdxxtop.guardianapp.model.bean.LearnNewsBean;
+import com.sdxxtop.guardianapp.presenter.NewsListFragmentPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.NewsListFragmentContract;
 import com.sdxxtop.guardianapp.ui.adapter.NewsListAdapter;
-import com.sdxxtop.guardianapp.R;
-import com.sdxxtop.guardianapp.presenter.NewsListFragmentPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
 public class NewsListFragment extends BaseMvpFragment<NewsListFragmentPresenter> implements NewsListFragmentContract.IView {
+    private static final String TAG = "NewsListFragment";
+
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.smart_refresh)
@@ -31,6 +34,8 @@ public class NewsListFragment extends BaseMvpFragment<NewsListFragmentPresenter>
     private int type = 1;
     /*********  1:下拉刷新,2:上拉加载  *********/
     private int isLoadMore = 1;
+
+    private boolean isFirstLoading;
 
 
     public static NewsListFragment newInstance(int type) {
@@ -56,7 +61,7 @@ public class NewsListFragment extends BaseMvpFragment<NewsListFragmentPresenter>
     protected void initView() {
         if (getArguments() != null) {
             type = getArguments().getInt("type");
-            mPresenter.loadData(0,type);
+//            mPresenter.loadData(0,type);
         }
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -67,7 +72,7 @@ public class NewsListFragment extends BaseMvpFragment<NewsListFragmentPresenter>
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 isLoadMore = 1;
-                mPresenter.loadData(0,type);
+                mPresenter.loadData(0, type);
                 refreshlayout.finishRefresh();
             }
         });
@@ -80,10 +85,33 @@ public class NewsListFragment extends BaseMvpFragment<NewsListFragmentPresenter>
                 if (adapter != null) {
                     itemCount = adapter.getItemCount();
                 }
-                mPresenter.loadData(itemCount,type);
+                mPresenter.loadData(itemCount, type);
                 refreshLayout.finishLoadMore();
             }
         });
+
+        if (getUserVisibleHint()) {
+            loadData();
+            Logger.e("setUserVisibleHint1" , type);
+        }
+    }
+
+    private void loadData() {
+        if (isFirstLoading) {
+            return;
+        }
+        isFirstLoading = true;
+        showLoadingDialog();
+        mPresenter.loadData(0, type);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && mPresenter != null) {
+            loadData();
+            Logger.e("setUserVisibleHint2" , type);
+        }
     }
 
     @Override
@@ -93,10 +121,12 @@ public class NewsListFragment extends BaseMvpFragment<NewsListFragmentPresenter>
         } else {
             adapter.replaceData(data);
         }
+
+        closeLoadingDialog();
     }
 
     @Override
     public void showError(String error) {
-
+        closeLoadingDialog();
     }
 }

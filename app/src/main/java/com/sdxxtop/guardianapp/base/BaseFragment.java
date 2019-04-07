@@ -54,9 +54,10 @@ public abstract class BaseFragment extends SupportFragment {
         mDialogUtil.showLoadingDialog(getActivity());
     }
 
-    public void hideLoadingDialog() {
+    public void closeLoadingDialog() {
         if (mDialogUtil != null) {
-            mDialogUtil.hideLoadingDialog();
+            //如果用hide，会卡界面，fragment里面用dialog就会出现这个问题
+            mDialogUtil.closeLoadingDialog();
         }
     }
 
