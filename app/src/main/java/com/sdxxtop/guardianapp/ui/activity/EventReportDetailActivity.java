@@ -1,5 +1,6 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -74,9 +75,15 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
                 //1.已经派发,确定的时候
 //                showConfirmDialog();
                 //2.已经反馈,然后弹出验收结果
-                showPop();
+//                showPop();
+                skipSecondPush();
                 break;
         }
+    }
+
+    private void skipSecondPush() {
+        Intent intent = new Intent(this, EventReportDetailSecondActivity.class);
+        startActivity(intent);
     }
 
     private void showConfirmDialog() {
