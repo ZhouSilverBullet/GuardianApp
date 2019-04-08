@@ -11,7 +11,6 @@
         android:layout_height="wrap_content"
         app:bgColor="@color/green"
         app:leftLayoutIsShow="true"
-        app:rightTextValue="记录"
         app:titleColor="@color/white"
         app:titleValue="代办任务" />
 
