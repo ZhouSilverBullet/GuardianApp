@@ -27,12 +27,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="90dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="进度界面"
-                    android:textSize="15sp" />
+                <com.sdxxtop.guardianapp.ui.widget.CustomProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
             </RelativeLayout>
 

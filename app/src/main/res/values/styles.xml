@@ -27,15 +27,6 @@
         <item name="android:textSize">16sp</item>
     </style>
 
-    <declare-styleable name="ColorTrackView">
-        <attr name="ctvText" format="string" />
-        <attr name="ctvText_size" format="dimension" />
-        <attr name="ctvText_origin_color" format="color" />
-        <attr name="ctvText_change_color" format="color" />
-        <attr name="ctvProgress" format="float" />
-        <attr name="ctvDirection" format="integer" />
-    </declare-styleable>
-
     <style name="NormalSplash" parent="AppTheme">
         <item name="android:windowBackground">@drawable/welcome_layler_drawable</item>
         <item name="android:windowNoTitle">true</item>
@@ -61,37 +52,6 @@
         <item name="android:taskToBackExitAnimation">@anim/wb_movie_exit_right</item>
     </style>
 
-    <declare-styleable name="TextAndTextView">
-        <attr name="tatv_text_view" format="string" />
-        <attr name="tatv_text_right_value" format="string" />
-        <attr name="tatv_text_right_hint_value" format="string" />
-        <attr name="tatv_text_img_is_show" format="boolean" />
-        <attr name="tatv_line_is_show" format="boolean" />
-    </declare-styleable>
-
-    <style name="text">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:drawablePadding">5dp</item>
-        <item name="android:textColor">@color/color_303030</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:gravity">center</item>
-    </style>
-
-    <style name="normal_text">
-        <item name="android:textColor">@color/color_303030</item>
-        <item name="android:textSize">15sp</item>
-    </style>
-
-    <style name="line_style">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1dp</item>
-        <item name="android:background">@color/color_E4E4E4</item>
-    </style>
-
-    <style name="AppliedTabLayoutTextStyle">
-        <item name="android:textSize">15sp</item>
-    </style>
 
     <style name="green_bg_style">
         <item name="android:layout_marginTop">10dp</item>
