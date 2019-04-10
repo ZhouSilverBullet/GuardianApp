@@ -1,7 +1,9 @@
 package com.sdxxtop.guardianapp.model.http.api;
 
 import com.sdxxtop.guardianapp.model.bean.AutoLoginBean;
+import com.sdxxtop.guardianapp.model.bean.EventIndexBean;
 import com.sdxxtop.guardianapp.model.bean.LoginBean;
+import com.sdxxtop.guardianapp.model.bean.MainIndexBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
 
 import io.reactivex.Observable;
@@ -24,6 +26,14 @@ public interface EnvirApiService {
     @FormUrlEncoded
     @POST("login/autoLogin")
     Observable<RequestBean<AutoLoginBean>> postLoginAutoLogin(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("main/index")
+    Observable<RequestBean<MainIndexBean>> postMainIndex(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("event/index")
+    Observable<RequestBean<EventIndexBean>> postEventIndex(@Field("data") String data);
 
 
 }

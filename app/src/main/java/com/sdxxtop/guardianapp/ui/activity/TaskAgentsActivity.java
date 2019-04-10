@@ -36,4 +36,9 @@ public class TaskAgentsActivity extends BaseActivity {
         strings.add("");
         mAdapter.addData(strings);
     }
+
+    @Override
+    protected void initData() {
+        super.initData();
+    }
 }

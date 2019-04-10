@@ -145,8 +145,6 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         SpUtil.putString(Constants.MOBILE, mobile);
 
         Intent intent = new Intent(this, LoginConfirmActivity.class);
-        String trim = etPhone.getText().toString().trim();
-
         intent.putExtra("isAdmin", true);
         intent.putExtra("phone", mobile);
         intent.putExtra("name", name);

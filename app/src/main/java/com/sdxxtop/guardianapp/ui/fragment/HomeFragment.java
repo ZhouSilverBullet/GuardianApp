@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.orhanobut.logger.Logger;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpFragment;
+import com.sdxxtop.guardianapp.model.bean.MainIndexBean;
 import com.sdxxtop.guardianapp.presenter.HomeFragmentPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.HomeFragmentContract;
 import com.sdxxtop.guardianapp.ui.activity.ContactActivity;
@@ -18,8 +19,10 @@ import com.sdxxtop.guardianapp.ui.activity.MyFaceLivenessActivity;
 import com.sdxxtop.guardianapp.ui.activity.PatrolRecordActivity;
 import com.sdxxtop.guardianapp.ui.adapter.HomeRecyclerAdapter;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
+import com.sdxxtop.guardianapp.utils.GuardianUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,7 +40,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
 
     @BindView(R.id.tv_name)
     TextView tvName;
-     @BindView(R.id.tv_place)
+    @BindView(R.id.tv_place)
     TextView tvPlace;
 
     @BindView(R.id.rv)
@@ -84,9 +87,9 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
         }
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        ArrayList<Integer> data = getRecyclerData(isAdmin);
+//        ArrayList<Integer> data = getRecyclerData(isAdmin);
 
-        mRecyclerAdapter = new HomeRecyclerAdapter(R.layout.item_home_recycler, data);
+        mRecyclerAdapter = new HomeRecyclerAdapter(R.layout.item_home_recycler, new ArrayList<>());
         mRecyclerView.setAdapter(mRecyclerAdapter);
 
     }
@@ -109,7 +112,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
     @Override
     protected void initData() {
         super.initData();
-        mPresenter.loadSignData();
+        mPresenter.loadData();
     }
 
     @Override
@@ -157,8 +160,15 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
     }
 
     @Override
-    public void showData(String data) {
-        Logger.e(data);
+    public void showData(MainIndexBean mainIndexBean) {
+        Logger.e("HomeFragment", mainIndexBean);
+        tvName.setText(mainIndexBean.getName());
+        String jobName = GuardianUtils.getJobName(mainIndexBean.getPosition());
+        String partName = mainIndexBean.getPart_name();
+        tvPlace.setText(new StringBuilder().append(jobName).append(" ").append(partName));
+
+        List<MainIndexBean.EventBean> eventBean = mainIndexBean.getEventBean();
+        mRecyclerAdapter.addData(eventBean);
 //        mTextView.setText(data);
     }
 
