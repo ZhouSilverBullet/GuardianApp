@@ -35,6 +35,11 @@
     <color name="actionsheet_red">#FD4A2E</color>
     <color name="actionsheet_gray">#8F8F8F</color>
 
+
+    <color name="color_5532B16C">#5532B16C</color>
+    <color name="color_558C97CB">#558C97CB</color>
+    <color name="color_55F9A15C">#55F9A15C</color>
+
     <array name="tab_colors">
         <item>#34B26D</item>
         <item>#34B26D</item>
