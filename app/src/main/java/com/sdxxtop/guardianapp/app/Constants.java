@@ -12,5 +12,6 @@ public interface Constants {
     String EXPIRE_TIME = "expire_time";
     String PART_ID = "part_id";
     String USER_ID = "user_id";
+    String MOBILE = "mobile";
 
 }

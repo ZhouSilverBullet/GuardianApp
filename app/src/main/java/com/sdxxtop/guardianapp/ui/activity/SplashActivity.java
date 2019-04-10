@@ -9,6 +9,7 @@ import android.view.KeyEvent;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.app.Constants;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
+import com.sdxxtop.guardianapp.model.bean.AutoLoginBean;
 import com.sdxxtop.guardianapp.presenter.SplashPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.SplashContract;
 import com.sdxxtop.guardianapp.utils.SpUtil;
@@ -32,6 +33,11 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
     }
 
     @Override
+    protected boolean isInitStatusBar() {
+        return false;
+    }
+
+    @Override
     protected int getLayout() {
         return R.layout.activity_splash;
     }
@@ -42,20 +48,16 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
     }
 
     @Override
-    protected void initView() {
-        super.initView();
+    protected void initData() {
+        super.initData();
 
+        mPresenter.autoLogin();
 
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                skipLogin();
-            }
-        }, 1000);
     }
 
-    private void startActivity() {
+    @Override
+    public void autoSuccess(AutoLoginBean autoLoginBean) {
+
         String autoToken = SpUtil.getString(Constants.AUTO_TOKEN);
         if (TextUtils.isEmpty(autoToken)) {
             skipLogin();
@@ -74,8 +76,23 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
             return;
         }
 
+
+        //再进行缓存一遍
+        String auto_token = autoLoginBean.getAuto_token();
+        int expire_time = autoLoginBean.getExpire_time();
+        String name = autoLoginBean.getName();
+        int part_id = autoLoginBean.getPart_id();
+        int userid = autoLoginBean.getUserid();
+
+        SpUtil.putInt(Constants.USER_ID, userid);
+        SpUtil.putInt(Constants.EXPIRE_TIME, expire_time);
+        SpUtil.putInt(Constants.PART_ID, part_id);
+        SpUtil.putString(Constants.AUTO_TOKEN, auto_token);
+
+        //再进行跳转
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
+
     }
 
     private void skipLogin() {
@@ -84,9 +101,15 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onPause() {
+        super.onPause();
         finish();
+    }
+
+    @Override
+    protected void onStop() {
+        finish();
+        super.onStop();
     }
 
     @Override
@@ -99,6 +122,11 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
 
     @Override
     public void showError(String error) {
-
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                skipLogin();
+            }
+        }, 1000);
     }
 }

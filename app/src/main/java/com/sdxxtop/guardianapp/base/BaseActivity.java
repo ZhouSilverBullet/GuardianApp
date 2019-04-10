@@ -27,7 +27,9 @@ public abstract class BaseActivity extends SwipeBackActivity {
         setContentView(getLayout());
         mContext = this;
         setSwipeBackEnable(false);
-        initStatusBar();
+        if (isInitStatusBar()) {
+            initStatusBar();
+        }
 
         mUnbinder = ButterKnife.bind(this);
         initVariables();
@@ -122,6 +124,10 @@ public abstract class BaseActivity extends SwipeBackActivity {
     }
 
     protected void initVariables() {
+    }
+
+    protected boolean isInitStatusBar() {
+        return true;
     }
 
     protected abstract int getLayout();

@@ -1,5 +1,6 @@
 package com.sdxxtop.guardianapp.model.http.api;
 
+import com.sdxxtop.guardianapp.model.bean.AutoLoginBean;
 import com.sdxxtop.guardianapp.model.bean.LoginBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
 
@@ -19,6 +20,10 @@ public interface EnvirApiService {
     @FormUrlEncoded
     @POST("login/mobileLogin")
     Observable<RequestBean<LoginBean>> postLoginMobileLogin(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("login/autoLogin")
+    Observable<RequestBean<AutoLoginBean>> postLoginAutoLogin(@Field("data") String data);
 
 
 }

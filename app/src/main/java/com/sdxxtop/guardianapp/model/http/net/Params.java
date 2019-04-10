@@ -3,6 +3,7 @@ package com.sdxxtop.guardianapp.model.http.net;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.sdxxtop.guardianapp.app.Constants;
 import com.sdxxtop.guardianapp.model.http.util.NetUtil;
 import com.sdxxtop.guardianapp.utils.SpUtil;
 import com.sdxxtop.guardianapp.utils.StringUtil;
@@ -26,24 +27,24 @@ public class Params {
     }
 
     private void defaultValue() {
-//        map.put("ci", SpUtil.getString(HttpConstantValue.COMPANY_ID));
-//        map.put("ui", SpUtil.getString(HttpConstantValue.USER_ID));
+        put("ui", SpUtil.getInt(Constants.USER_ID, 0));
+        put("pi", SpUtil.getInt(Constants.PART_ID, 0));
     }
 
     public String getUserId() {
         String ui = map.get("ui");
         if (TextUtils.isEmpty(ui)) {
-            ui = SpUtil.getString(HttpConstantValue.USER_ID);
+            ui = String.valueOf(SpUtil.getInt(Constants.USER_ID, 0));
         }
         return ui;
     }
 
-    public String getCompanyId() {
-        String ci = map.get("ci");
-        if (TextUtils.isEmpty(ci)) {
-            ci = SpUtil.getString(HttpConstantValue.COMPANY_ID);
+    public String getPartId() {
+        String pi = map.get("ci");
+        if (TextUtils.isEmpty(pi)) {
+            pi = String.valueOf(SpUtil.getInt(Constants.PART_ID, 0));
         }
-        return ci;
+        return pi;
     }
 
     public void removeKey(String key) {

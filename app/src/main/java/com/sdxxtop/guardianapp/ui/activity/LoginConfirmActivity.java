@@ -1,6 +1,7 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +29,7 @@ public class LoginConfirmActivity extends BaseActivity {
     private String phone;
     private String name;
     private String partName;
+    private int position;
 
     @Override
     protected int getLayout() {
@@ -42,6 +44,7 @@ public class LoginConfirmActivity extends BaseActivity {
             phone = getIntent().getStringExtra("phone");
             name = getIntent().getStringExtra("name");
             partName = getIntent().getStringExtra("partName");
+            position = getIntent().getIntExtra("position", 1);
         }
     }
 
@@ -55,11 +58,28 @@ public class LoginConfirmActivity extends BaseActivity {
             tvPhone.setText("13333333333");
         }
         tvCompany.setText(partName);
-        if (isAdmin) {
-            tvJobs.setText("网格员");
-        } else {
-            tvJobs.setText("企业员工");
+
+        handleJob(position);
+    }
+
+    private void handleJob(int position) {
+        //1:网格员 2: 企业员工 3:街道管理员 4:区级管理员
+        String positionName = "";
+        switch (position) {
+            case 1:
+                positionName = "网格员";
+                break;
+            case 2:
+                positionName = "企业员工";
+                break;
+            case 3:
+                positionName = "街道管理员";
+                break;
+            case 4:
+                positionName = "区级管理员";
+                break;
         }
+        tvJobs.setText(positionName);
     }
 
     @Override
@@ -81,8 +101,15 @@ public class LoginConfirmActivity extends BaseActivity {
     }
 
     private void startActivity() {
+        notifyLoginFinish();
         Intent intent = new Intent(this, HomeActivity.class);
         intent.putExtra("isAdmin", isAdmin);
         startActivity(intent);
+        finish();
+    }
+
+    private void notifyLoginFinish() {
+        Intent intent = new Intent(LoginActivity.ACTION_LOGIN_CONFIRM_SUCCESS);
+        sendBroadcast(intent);
     }
 }

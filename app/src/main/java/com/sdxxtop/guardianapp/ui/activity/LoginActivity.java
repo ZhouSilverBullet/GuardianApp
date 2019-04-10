@@ -3,6 +3,7 @@ package com.sdxxtop.guardianapp.ui.activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.Message;
 import android.text.InputFilter;
@@ -20,9 +21,13 @@ import com.sdxxtop.guardianapp.utils.UIUtils;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 
+import java.lang.ref.WeakReference;
+
 import butterknife.BindView;
 
 public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements LoginContract.IView, Handler.Callback {
+    public static final String ACTION_LOGIN_CONFIRM_SUCCESS = "action_login_confirm_success";
+
     @BindView(R.id.btn_login)
     Button btnLogin;
     @BindView(R.id.btn_code)
@@ -33,6 +38,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     EditText etPhone;
     private Handler mHandler;
     private boolean isSending;
+    private LoginReceiver mLoginReceiver;
 
     @Override
     protected void initInject() {
@@ -48,8 +54,20 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     protected void initView() {
         super.initView();
 
+        registerLoginReceiver();
+
         etPhone.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
-        etPhone.setText("18000000000");
+        String mobile = SpUtil.getString(Constants.MOBILE);
+        if (TextUtils.isEmpty(mobile)) {
+            mobile = "18000000000";
+        }
+        etPhone.setText(mobile);
+    }
+
+    private void registerLoginReceiver() {
+        mLoginReceiver = new LoginReceiver(this);
+        IntentFilter intentFilter = new IntentFilter(ACTION_LOGIN_CONFIRM_SUCCESS);
+        registerReceiver(mLoginReceiver, intentFilter);
     }
 
     @Override
@@ -124,7 +142,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         SpUtil.putInt(Constants.EXPIRE_TIME, expireTime);
         SpUtil.putInt(Constants.PART_ID, partId);
         SpUtil.putInt(Constants.USER_ID, userid);
-
+        SpUtil.putString(Constants.MOBILE, mobile);
 
         Intent intent = new Intent(this, LoginConfirmActivity.class);
         String trim = etPhone.getText().toString().trim();
@@ -133,8 +151,9 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         intent.putExtra("phone", mobile);
         intent.putExtra("name", name);
         intent.putExtra("partName", partName);
+        intent.putExtra("position", position);
         startActivity(intent);
-        finish();
+//        finish();
     }
 
     @Override
@@ -161,11 +180,32 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         return true;
     }
 
+    private void toFinish() {
+        if (mLoginReceiver != null) {
+            unregisterReceiver(mLoginReceiver);
+        }
+
+        finish();
+    }
+
     private static class LoginReceiver extends BroadcastReceiver {
+        private WeakReference<LoginActivity> mLoginActivityDef;
+
+        public LoginReceiver(LoginActivity loginActivity) {
+            mLoginActivityDef = new WeakReference<>(loginActivity);
+        }
 
         @Override
         public void onReceive(Context context, Intent intent) {
+            if (intent == null) {
+                return;
+            }
 
+            if (ACTION_LOGIN_CONFIRM_SUCCESS.equals(intent.getAction())) {
+                if (mLoginActivityDef.get() != null) {
+                    mLoginActivityDef.get().toFinish();
+                }
+            }
         }
     }
 }

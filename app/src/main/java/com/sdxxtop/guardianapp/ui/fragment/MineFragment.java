@@ -7,6 +7,7 @@ import android.widget.ImageView;
 
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseFragment;
+import com.sdxxtop.guardianapp.model.db.UserData;
 import com.sdxxtop.guardianapp.ui.activity.LoginActivity;
 import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
@@ -90,6 +91,8 @@ public class MineFragment extends BaseFragment {
     }
 
     public void logout() {
+        UserData.getInstance().logout();
+
         Intent intent = new Intent(getContext(), LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         getActivity().startActivity(intent);
     }
