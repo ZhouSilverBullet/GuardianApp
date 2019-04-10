@@ -26,6 +26,8 @@ public class LoginConfirmActivity extends BaseActivity {
     Button btnNoPeople;
     private boolean isAdmin;
     private String phone;
+    private String name;
+    private String partName;
 
     @Override
     protected int getLayout() {
@@ -38,19 +40,21 @@ public class LoginConfirmActivity extends BaseActivity {
         if (getIntent() != null) {
             isAdmin = getIntent().getBooleanExtra("isAdmin", false);
             phone = getIntent().getStringExtra("phone");
+            name = getIntent().getStringExtra("name");
+            partName = getIntent().getStringExtra("partName");
         }
     }
 
     @Override
     protected void initView() {
         super.initView();
-        tvName.setText("李海龙");
+        tvName.setText(name);
         if (!TextUtils.isEmpty(phone)) {
             tvPhone.setText(phone);
         } else {
             tvPhone.setText("13333333333");
         }
-        tvCompany.setText("网格检测中心");
+        tvCompany.setText(partName);
         if (isAdmin) {
             tvJobs.setText("网格员");
         } else {

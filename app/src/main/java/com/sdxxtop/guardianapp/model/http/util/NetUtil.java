@@ -1,19 +1,26 @@
 package com.sdxxtop.guardianapp.model.http.util;
 
 
+import android.text.TextUtils;
 import android.util.Base64;
 
 import com.orhanobut.logger.Logger;
 import com.sdxxtop.guardianapp.BuildConfig;
 import com.sdxxtop.guardianapp.model.http.net.HttpConstantValue;
 
+import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Map;
+
+import me.jessyan.autosize.utils.LogUtils;
 
 /**
  * 1. map ({(a,1),(b,2),(c,3)}) 转成字符串 str (a=1&b=2&c=3)
@@ -83,5 +90,35 @@ public class NetUtil {
             hex.append(Integer.toHexString(b & 0xFF));
         }
         return hex.toString();
+    }
+
+    public static String getHttpExceptionMsg(Throwable exception, String errorMsg) {
+        String defaultMsg = "未知错误";
+        if (exception != null) {
+            Logger.e("Request Exception:" + exception.getMessage());
+            if (exception instanceof UnknownHostException) {
+                defaultMsg = "您的网络可能有问题,请确认连接上有效网络后重试";
+            } else if (exception instanceof ConnectTimeoutException) {
+                defaultMsg = "连接超时,您的网络可能有问题,请确认连接上有效网络后重试";
+            } else if (exception instanceof SocketTimeoutException) {
+                defaultMsg = "请求超时,您的网络可能有问题,请确认连接上有效网络后重试";
+            } else {
+                defaultMsg = "未知的网络错误, 请重试";
+            }
+        } else {
+            if (!TextUtils.isEmpty(errorMsg)) {
+                Logger.e("Request Exception errorMsg: " + errorMsg);
+                String lowerMsg = errorMsg.toLowerCase(Locale.ENGLISH);
+                if (lowerMsg.contains("java")
+                        || lowerMsg.contains("exception")
+                        || lowerMsg.contains(".net")
+                        || lowerMsg.contains("java")) {
+                    defaultMsg = "未知错误, 请重试";
+                } else {
+                    defaultMsg = "未知错误, 请重试";
+                }
+            }
+        }
+        return defaultMsg;
     }
 }

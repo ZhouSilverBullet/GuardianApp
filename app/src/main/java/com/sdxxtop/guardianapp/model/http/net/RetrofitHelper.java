@@ -1,6 +1,7 @@
 package com.sdxxtop.guardianapp.model.http.net;
 
 
+import com.sdxxtop.guardianapp.model.http.api.EnvirApiService;
 import com.sdxxtop.guardianapp.model.http.net.interceptor.NetInterceptor;
 import com.sdxxtop.guardianapp.model.http.net.interceptor.NoNetInterceptor;
 import com.sdxxtop.guardianapp.BuildConfig;
@@ -21,6 +22,7 @@ public class RetrofitHelper {
 
     private static OkHttpClient okHttpClient;
     private static ApiService apiService;
+    private static EnvirApiService sEnvirApiService;
 
     public static ApiService getNewsApi() {
         initOkHttp();
@@ -34,6 +36,20 @@ public class RetrofitHelper {
                     .create(ApiService.class);
         }
         return apiService;
+    }
+
+    public static EnvirApiService getEnvirApi() {
+        initOkHttp();
+        if (apiService == null) {
+            sEnvirApiService = new Retrofit.Builder()
+                    .baseUrl(EnvirApiService.BASE_URL)
+                    .client(okHttpClient)
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+                    .create(EnvirApiService.class);
+        }
+        return sEnvirApiService;
     }
 
     private static void initOkHttp() {

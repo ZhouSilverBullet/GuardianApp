@@ -34,7 +34,7 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:scrollbarThumbVertical">@drawable/global_scroll_thumb</item>
-        <!--<item name="android:windowAnimationStyle">@style/MyAnimationActivity</item>-->
+        <item name="android:windowAnimationStyle">@style/MyAnimationActivity</item>
     </style>
 
     <style name="MyAnimationActivity">

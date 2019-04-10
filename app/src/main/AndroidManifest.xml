@@ -43,22 +43,22 @@
         <activity
             android:name="com.sdxxtop.guardianapp.ui.activity.SplashActivity"
             android:theme="@style/NormalSplash">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
+            <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--<action android:name="android.intent.action.VIEW" />-->
-            <!--</intent-filter>-->
+            <category android:name="android.intent.category.LAUNCHER" />
+            <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
         </activity>
         <activity
             android:name="com.sdxxtop.guardianapp.ui.activity.LoginActivity"
             android:theme="@style/AppNormalTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN"/>-->
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-                <action android:name="android.intent.action.VIEW"/>
-            </intent-filter>
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+                <!--<action android:name="android.intent.action.VIEW"/>-->
+            <!--</intent-filter>-->
         </activity>
         <activity android:name="com.sdxxtop.guardianapp.ui.activity.EventReportActivity"/>
         <activity android:name="com.sdxxtop.guardianapp.ui.activity.TaskAgentsActivity"/>

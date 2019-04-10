@@ -132,8 +132,8 @@ public class GridMapActivity extends BaseMvpActivity<GridMapPresenter> implement
         PolygonOptions polygonOptions = new PolygonOptions();
         polygonOptions.addAll(list);
         polygonOptions.strokeWidth(15) // 多边形的边框
-                .strokeColor(getResources().getColor(R.color.color_32B16C)) // 边框颜色
-                .fillColor(getResources().getColor(R.color.color_32B16C));   // 多边形的填充色
+                .strokeColor(getResources().getColor(R.color.color_5532B16C)) // 边框颜色
+                .fillColor(getResources().getColor(R.color.color_5532B16C));   // 多边形的填充色
 
         aMap.addPolygon(polygonOptions);
     }
@@ -205,7 +205,7 @@ public class GridMapActivity extends BaseMvpActivity<GridMapPresenter> implement
             if (firstLatLng != null) {
                 list.add(firstLatLng);
             }
-            show(list);
+//            show(list);
         }
     }
 

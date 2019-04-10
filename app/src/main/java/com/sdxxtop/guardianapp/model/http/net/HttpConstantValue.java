@@ -11,4 +11,6 @@ public interface HttpConstantValue {
     String USER_ID = "user_id";
     String DEVICE_NAME = "device_name";
     String DEVICE_NO = "device_no";
+
+
 }

@@ -15,6 +15,7 @@ import com.sdxxtop.guardianapp.ui.activity.HomeActivity;
 import com.sdxxtop.guardianapp.ui.activity.LoginActivity;
 import com.sdxxtop.guardianapp.ui.activity.NewsDetailsActivity;
 import com.sdxxtop.guardianapp.ui.activity.PatrolRecordActivity;
+import com.sdxxtop.guardianapp.ui.activity.SplashActivity;
 
 import dagger.Component;
 
@@ -35,5 +36,6 @@ public interface ActivityComponent {
     void inject(ExamineActivity activity);
     void inject(EventReportDetailSecondActivity activity);
     void inject(GridMapActivity activity);
+    void inject(SplashActivity activity);
 
 }

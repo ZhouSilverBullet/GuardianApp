@@ -11,8 +11,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.sdxxtop.guardianapp.app.Constants;
+import com.sdxxtop.guardianapp.model.bean.LoginBean;
 import com.sdxxtop.guardianapp.presenter.LoginPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.LoginContract;
+import com.sdxxtop.guardianapp.utils.SpUtil;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
@@ -24,6 +27,8 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     Button btnLogin;
     @BindView(R.id.btn_code)
     Button btnCode;
+    @BindView(R.id.et_code)
+    EditText etCode;
     @BindView(R.id.et_phone)
     EditText etPhone;
     private Handler mHandler;
@@ -53,7 +58,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.login();
+                toLogin();
             }
         });
 
@@ -65,6 +70,22 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         });
     }
 
+    private void toLogin() {
+        String trim = etPhone.getText().toString().trim();
+        if (TextUtils.isEmpty(trim)) {
+            UIUtils.showToast("账号不能为空");
+            return;
+        }
+
+        String code = etCode.getText().toString().trim();
+        if (TextUtils.isEmpty(code)) {
+            UIUtils.showToast("验证码不能为空");
+            return;
+        }
+
+        presenter.login(trim, code, "0");
+    }
+
     private void sendCode() {
         if (mHandler == null) {
             mHandler = new Handler(this);
@@ -73,6 +94,13 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         if (!isSending) {
             mHandler.obtainMessage(100, 60).sendToTarget();
             isSending = true;
+
+            String trim = etPhone.getText().toString().trim();
+            if (TextUtils.isEmpty(trim)) {
+                UIUtils.showToast("账号不能为空");
+                return;
+            }
+            presenter.sendCode(trim);
         }
     }
 
@@ -82,16 +110,29 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     }
 
     @Override
-    public void loginSuccess() {
+    public void loginSuccess(LoginBean loginBean) {
+        String autoToken = loginBean.getAuto_token();
+        int expireTime = loginBean.getExpire_time();
+        int partId = loginBean.getPart_id();
+        String partName = loginBean.getPart_name();
+        String name = loginBean.getName();
+        String mobile = loginBean.getMobile();
+        int position = loginBean.getPosition();
+        int userid = loginBean.getUserid();
+
+        SpUtil.putString(Constants.AUTO_TOKEN, autoToken);
+        SpUtil.putInt(Constants.EXPIRE_TIME, expireTime);
+        SpUtil.putInt(Constants.PART_ID, partId);
+        SpUtil.putInt(Constants.USER_ID, userid);
+
+
         Intent intent = new Intent(this, LoginConfirmActivity.class);
         String trim = etPhone.getText().toString().trim();
-        if (TextUtils.isEmpty(trim)) {
-            UIUtils.showToast("账号不能为空");
-            return;
-        }
-        boolean isAdmin = trim.equals("18000000000");
-        intent.putExtra("isAdmin", isAdmin);
-        intent.putExtra("phone", trim);
+
+        intent.putExtra("isAdmin", true);
+        intent.putExtra("phone", mobile);
+        intent.putExtra("name", name);
+        intent.putExtra("partName", partName);
         startActivity(intent);
         finish();
     }
