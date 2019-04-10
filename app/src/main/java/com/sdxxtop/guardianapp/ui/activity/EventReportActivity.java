@@ -112,7 +112,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
         List<File> imagePushPath = getImagePushPath();
 
         showLoadingDialog();
-        presenter.pushReport(imagePushPath);
+        mPresenter.pushReport(imagePushPath);
     }
 
     protected void setPhotoRecycler(RecyclerView recycler) {

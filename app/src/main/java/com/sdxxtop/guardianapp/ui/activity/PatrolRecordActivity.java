@@ -322,7 +322,7 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
         super.onResume();
         //mapview 修改一下加载时间试试
         mapView.onResume();
-        presenter.loadData();
+        mPresenter.loadData();
     }
 
     @Override

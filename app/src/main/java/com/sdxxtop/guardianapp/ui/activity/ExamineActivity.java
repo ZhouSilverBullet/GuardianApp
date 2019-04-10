@@ -79,7 +79,7 @@ public class ExamineActivity extends BaseMvpActivity<ExaminePresenter> implement
     protected void initData() {
         super.initData();
         //加载数据
-        presenter.loadData();
+        mPresenter.loadData();
     }
 
     @OnClick({R.id.tv_up, R.id.tv_push, R.id.tv_down})

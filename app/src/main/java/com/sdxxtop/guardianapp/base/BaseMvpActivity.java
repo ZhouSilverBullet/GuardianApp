@@ -13,13 +13,13 @@ import androidx.annotation.Nullable;
 
 public abstract class BaseMvpActivity<T extends RxPresenter> extends BaseActivity implements BaseView {
     @Inject
-    protected T presenter;
+    protected T mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         initInject();
-        if (presenter != null) {
-            presenter.attachView(this);
+        if (mPresenter != null) {
+            mPresenter.attachView(this);
         }
         super.onCreate(savedInstanceState);
     }
@@ -27,9 +27,9 @@ public abstract class BaseMvpActivity<T extends RxPresenter> extends BaseActivit
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (presenter != null) {
-            presenter.detachView();
-            presenter = null;
+        if (mPresenter != null) {
+            mPresenter.detachView();
+            mPresenter = null;
         }
     }
 

@@ -83,7 +83,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
             return;
         }
 
-        presenter.login(trim, code, "0");
+        mPresenter.login(trim, code, "0");
     }
 
     private void sendCode() {
@@ -100,7 +100,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
                 UIUtils.showToast("账号不能为空");
                 return;
             }
-            presenter.sendCode(trim);
+            mPresenter.sendCode(trim);
         }
     }
 
