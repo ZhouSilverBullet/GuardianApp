@@ -53,10 +53,10 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_gravity="right"
                     android:id="@+id/tv_important"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="right"
                     android:text="重要性:高"
                     android:textColor="@color/color_red_F23030"
                     android:textSize="12sp" />
@@ -82,10 +82,12 @@
             android:orientation="horizontal">
 
             <TextView
+                android:visibility="gone"
                 style="@style/green_bg_style"
                 android:text="事件升级" />
 
             <TextView
+                android:id="@+id/tv_phase"
                 style="@style/green_bg_style"
                 android:text="已解决" />
         </LinearLayout>
