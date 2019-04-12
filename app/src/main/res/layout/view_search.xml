@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/view_search_rl"
+    android:layout_width="match_parent"
+    android:layout_height="58dp"
+    android:background="@color/color_E4E4E4"
+    android:paddingLeft="8dp"
+    android:paddingTop="10dp"
+    android:paddingRight="8dp"
+    android:paddingBottom="10dp">
+
+    <RelativeLayout
+        android:id="@+id/view_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:background="@drawable/contact_search_bg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:drawableLeft="@drawable/search"
+            android:drawablePadding="5dp"
+            android:text="搜索联系人"
+            android:textColor="@color/color_666666"
+            android:textSize="15sp" />
+    </RelativeLayout>
+</RelativeLayout>

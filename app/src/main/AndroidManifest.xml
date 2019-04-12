@@ -38,22 +38,16 @@
         <activity android:name="com.sdxxtop.guardianapp.ui.activity.HomeActivity"
                   android:launchMode="singleTask"
                   android:configChanges="keyboardHidden|orientation|screenSize">
+        </activity>
+        <activity
+            android:name="com.sdxxtop.guardianapp.ui.activity.SplashActivity"
+            android:theme="@style/NormalSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name="com.sdxxtop.guardianapp.ui.activity.SplashActivity"
-            android:theme="@style/NormalSplash">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-                <!--<action android:name="android.intent.action.VIEW" />-->
-            <!--</intent-filter>-->
         </activity>
         <activity
             android:name="com.sdxxtop.guardianapp.ui.activity.LoginActivity"
@@ -99,6 +93,7 @@
             android:theme="@style/AppNormalTheme"
             />
         <activity android:name=".ui.activity.EventReportDetailSecondActivity" />
+        <activity android:name=".ui.ContactSearchActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

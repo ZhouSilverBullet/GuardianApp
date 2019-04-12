@@ -7,6 +7,7 @@ import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
 import com.sdxxtop.guardianapp.model.http.net.Params;
 import com.sdxxtop.guardianapp.model.http.util.RxUtils;
 import com.sdxxtop.guardianapp.presenter.contract.ContactContract;
+import com.sdxxtop.guardianapp.presenter.contract.ContactSearchContract;
 
 import java.util.List;
 
@@ -15,13 +16,14 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 
-public class ContactPresenter extends RxPresenter<ContactContract.IView> implements ContactContract.IPresenter {
+public class ContactSearchPresenter extends RxPresenter<ContactSearchContract.IView> implements ContactSearchContract.IPresenter {
     @Inject
-    public ContactPresenter() {
+    public ContactSearchPresenter() {
     }
 
-    public void loadData() {
+    public void loadData(String key) {
         Params params = new Params();
+        params.put("sh", key);
         Observable<RequestBean<ContactIndexBean>> observable = getEnvirApi().postContactIndex(params.getData());
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<ContactIndexBean>() {
             @Override

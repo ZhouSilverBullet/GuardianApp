@@ -32,6 +32,7 @@ public class AMapFindLocation implements AMapLocationListener {
                 locationCompanyListener.onAddress(amapLocation);
             }finally {
                 removeLocationCompanyListener();
+                mlocationClient.stopLocation();
             }
         }
     }

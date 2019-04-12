@@ -6,12 +6,15 @@ import com.sdxxtop.guardianapp.model.bean.ContactIndexBean;
 
 import java.util.List;
 
-public interface ContactContract {
+/**
+ * 用来copy使用的
+ */
+public interface ContactSearchContract {
     interface IView extends BaseView {
         void showList(List<ContactIndexBean.ContactBean> contactBean);
     }
 
-    interface IPresenter extends BasePresenter<ContactContract.IView> {
+    interface IPresenter extends BasePresenter<IView> {
 
     }
 }

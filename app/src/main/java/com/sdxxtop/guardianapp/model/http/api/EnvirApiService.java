@@ -1,6 +1,7 @@
 package com.sdxxtop.guardianapp.model.http.api;
 
 import com.sdxxtop.guardianapp.model.bean.AutoLoginBean;
+import com.sdxxtop.guardianapp.model.bean.ContactIndexBean;
 import com.sdxxtop.guardianapp.model.bean.EventIndexBean;
 import com.sdxxtop.guardianapp.model.bean.EventReadBean;
 import com.sdxxtop.guardianapp.model.bean.InitBean;
@@ -76,6 +77,17 @@ public interface EnvirApiService {
     @FormUrlEncoded
     @POST("event/modify")
     Observable<RequestBean> postEventModify(@Field("data") String data);
+
+
+
+
+    @FormUrlEncoded
+    @POST("contact/index")
+    Observable<RequestBean<ContactIndexBean>> postContactIndex(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("contact/search")
+    Observable<RequestBean<ContactIndexBean>> postContactSearch(@Field("data") String data);
 
 
 }
