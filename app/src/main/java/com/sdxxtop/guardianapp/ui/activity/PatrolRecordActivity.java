@@ -3,13 +3,8 @@ package com.sdxxtop.guardianapp.ui.activity;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.PopupWindow;
-import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -33,8 +28,8 @@ import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.amap.api.services.geocoder.RegeocodeResult;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.sdxxtop.guardianapp.R;
-import com.sdxxtop.guardianapp.base.BaseActivity;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
+import com.sdxxtop.guardianapp.model.bean.SignLogBean;
 import com.sdxxtop.guardianapp.presenter.PatrolPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.PatrolContract;
 import com.sdxxtop.guardianapp.ui.adapter.PatrolMapAdapter;
@@ -42,7 +37,10 @@ import com.sdxxtop.guardianapp.ui.pop.StatSelectionDateWindow;
 import com.sdxxtop.guardianapp.ui.widget.TextAndTextView;
 import com.sdxxtop.guardianapp.utils.Date2Util;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.Nullable;
@@ -59,13 +57,14 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
 
     private OnLocationChangedListener mListener;
     private AMapLocationClient mlocationClient;
-    private List<LatLng> curLatlngList = new ArrayList<>();
+    private List<SignLogBean.SignBean> curLatlngList = new ArrayList<>();
     private boolean isMoveCamera;
     //如果 map 已经加载完成，这样的话就可以画地图了
     private boolean isMapLoad;
     //网络加载完成的数据标识
     private boolean isInternetDataLoad;
     private Polyline polyline;
+    private String todayDate;
 
     @Override
     protected int getLayout() {
@@ -122,7 +121,7 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
         // 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         aMap.setMyLocationEnabled(true);
         MyLocationStyle myLocationStyle = new MyLocationStyle();
-        myLocationStyle.showMyLocation(true);
+        myLocationStyle.showMyLocation(false);
         myLocationStyle.interval(2000);
         myLocationStyle.myLocationIcon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
                 .decodeResource(getResources(), R.drawable.map_1)));
@@ -138,11 +137,11 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
             double latitude = 0;
             double longitude = 0;
             for (int i = 0; i < curLatlngList.size(); i++) {
-                LatLng lng = curLatlngList.get(i);
+                LatLng lng = curLatlngList.get(i).getLatLng();
                 latitude += lng.latitude;
                 longitude += lng.longitude;
                 if (i == curLatlngList.size() - 1) {
-                    getadress(lng);
+                    getadress(lng, curLatlngList.get(i).getAddress());
                 }
             }
             aMap.setInfoWindowAdapter(new PatrolMapAdapter());
@@ -154,7 +153,7 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
     }
 
     //解析指定坐标的地址
-    public void getadress(LatLng latLng) {
+    public void getadress(LatLng latLng, String address) {
         GeocodeSearch geocodeSearch = new GeocodeSearch(mContext);//地址查询器
 
         //设置查询参数,
@@ -169,7 +168,7 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
                 String s = regeocodeResult.getRegeocodeAddress().getFormatAddress();
                 double latitude = regeocodeResult.getRegeocodeQuery().getPoint().getLatitude();
                 double longitude = regeocodeResult.getRegeocodeQuery().getPoint().getLongitude();
-                makepoint(latitude, longitude, s);
+                makepoint(latitude, longitude, address);
             }
 
             //根据地址获取坐标信息是调用
@@ -255,12 +254,12 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
             // 获取轨迹坐标点
             PolylineOptions polt = new PolylineOptions();
             for (int i = 0; i < curLatlngList.size(); i++) {
-                polt.add(curLatlngList.get(i));
+                polt.add(curLatlngList.get(i).getLatLng());
             }
             polt.width(10).geodesic(false).color(Color.parseColor("#EB6100"));
             polyline = aMap.addPolyline(polt);
         }
-//        moveToPath();
+        moveToPath();
     }
 
     @Override
@@ -269,9 +268,27 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
     }
 
     @Override
-    public void showData(String data) {
+    public void showData(SignLogBean signLogBean) {
 //        ExerciseBean.DataBean data = bean.getData();
-//        isInternetDataLoad = true;
+
+
+        //每次请求刷新一次
+        if (curLatlngList.size() > 0) {
+            curLatlngList.clear();
+        }
+
+        List<SignLogBean.SignBean> signBeanList = signLogBean.getSign();
+        if (signBeanList != null) {
+            curLatlngList.addAll(signBeanList);
+        }
+
+        aMap.clear();
+
+        isInternetDataLoad = true;
+        if (isMapLoad) {
+            drawMapLine();
+        }
+
 //        if (data != null) {
 //            addressList = data.getAddress();
 //            if (addressList != null && addressList.size() > 0) {
@@ -322,7 +339,7 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
         super.onResume();
         //mapview 修改一下加载时间试试
         mapView.onResume();
-        mPresenter.loadData();
+        mPresenter.loadData(todayDate);
     }
 
     @Override
@@ -342,6 +359,7 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
 
     private StatSelectionDateWindow selectionDateWindow;
     private String chooseDay;
+
     /**
      * 选择日期的pop
      */
@@ -356,10 +374,20 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
                     chooseDay = date;
                     tatvDate.getTextRightText().setText(Date2Util.getFormatDate(chooseDay));
 //                    mPresenter.kaoqinMore(getUserID(), studentID, date);
+                    mPresenter.loadData(date);
                     selectionDateWindow.dismiss();
                 }
             });
         }
         selectionDateWindow.showAtLocation(getLayoutInflater().inflate(R.layout.activity_patrol_record, null), Gravity.BOTTOM, 0, 0);
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        Date date = Calendar.getInstance().getTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        todayDate = simpleDateFormat.format(date);
+        tatvDate.getTextRightText().setText("今天");
     }
 }

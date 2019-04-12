@@ -7,7 +7,9 @@ import com.sdxxtop.guardianapp.model.bean.InitBean;
 import com.sdxxtop.guardianapp.model.bean.LoginBean;
 import com.sdxxtop.guardianapp.model.bean.MainIndexBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
+import com.sdxxtop.guardianapp.model.bean.SignLogBean;
 
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -38,6 +40,7 @@ public interface EnvirApiService {
     @POST("login/autoLogin")
     Observable<RequestBean<AutoLoginBean>> postLoginAutoLogin(@Field("data") String data);
 
+    ////////////// 首页 ////////////
     @FormUrlEncoded
     @POST("main/index")
     Observable<RequestBean<MainIndexBean>> postMainIndex(@Field("data") String data);
@@ -45,6 +48,12 @@ public interface EnvirApiService {
     @FormUrlEncoded
     @POST("main/sign")
     Observable<RequestBean> postMainSign(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("main/signlog")
+    Observable<RequestBean<SignLogBean>> postMainSignLog(@Field("data") String data);
+
+    //////////////首页 ////////////
 
 
     @FormUrlEncoded
