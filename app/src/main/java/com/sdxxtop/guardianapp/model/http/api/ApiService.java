@@ -18,7 +18,8 @@ import retrofit2.http.Query;
 public interface ApiService {
     //https://blog.csdn.net/jiao_zg/article/details/77897748
 //    String BASE_URL = "http://app.sdxxtop.com/api/";
-    String BASE_URL = "http://manage.sdxxtop.com/api/";
+//    String BASE_URL = "http://manage.sdxxtop.com/api/";
+    String BASE_URL = EnvirApiService.BASE_URL;
     String GET_ARTICLE_LIST = "api/news/feed/v62/?refer=1&count=20&loc_mode=4&device_id=34960436458&iid=13136511752";
 
     @GET("home")
