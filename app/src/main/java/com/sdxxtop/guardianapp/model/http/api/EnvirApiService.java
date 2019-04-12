@@ -6,6 +6,7 @@ import com.sdxxtop.guardianapp.model.bean.EventReadBean;
 import com.sdxxtop.guardianapp.model.bean.InitBean;
 import com.sdxxtop.guardianapp.model.bean.LoginBean;
 import com.sdxxtop.guardianapp.model.bean.MainIndexBean;
+import com.sdxxtop.guardianapp.model.bean.MainMapBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
 import com.sdxxtop.guardianapp.model.bean.SignLogBean;
 
@@ -52,6 +53,10 @@ public interface EnvirApiService {
     @FormUrlEncoded
     @POST("main/signlog")
     Observable<RequestBean<SignLogBean>> postMainSignLog(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("main/map")
+    Observable<RequestBean<MainMapBean>> postMainMap(@Field("data") String data);
 
     //////////////首页 ////////////
 

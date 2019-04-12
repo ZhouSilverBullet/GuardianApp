@@ -1,13 +1,25 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
 import android.Manifest;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.PixelFormat;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.NinePatchDrawable;
 import android.location.Location;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.MotionEvent;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.maps.model.PolygonOptions;
 import com.amap.api.services.core.LatLonPoint;
@@ -15,16 +27,22 @@ import com.amap.api.services.district.DistrictItem;
 import com.amap.api.services.district.DistrictResult;
 import com.amap.api.services.district.DistrictSearch;
 import com.amap.api.services.district.DistrictSearchQuery;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.luck.picture.lib.permissions.RxPermissions;
 import com.orhanobut.logger.Logger;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
+import com.sdxxtop.guardianapp.model.bean.MainMapBean;
 import com.sdxxtop.guardianapp.presenter.GridMapPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.GridMapContract;
+import com.sdxxtop.guardianapp.ui.adapter.GridMapAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import butterknife.BindView;
 import io.reactivex.functions.Consumer;
@@ -38,6 +56,7 @@ public class GridMapActivity extends BaseMvpActivity<GridMapPresenter> implement
     private RxPermissions mRxPermissions;
 
     private boolean isFirst;
+    private GridMapAdapter mAdapter;
 
     @Override
     protected void initInject() {
@@ -76,19 +95,25 @@ public class GridMapActivity extends BaseMvpActivity<GridMapPresenter> implement
         aMap = mMapView.getMap();
         MyLocationStyle myLocationStyle = new MyLocationStyle();//初始化定位蓝点样式类myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）如果不设置myLocationType，默认也会执行此种模式。
 //        myLocationStyle.interval(); //设置连续定位模式下的定位间隔，只在连续定位模式下生效，单次定位模式下不会生效。单位为毫秒。
-        myLocationStyle.showMyLocation(true);
+//        myLocationStyle.showMyLocation(true);
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);
         aMap.setMyLocationStyle(myLocationStyle);//设置定位蓝点的Style
-        aMap.getUiSettings().setMyLocationButtonEnabled(true); //设置默认定位按钮是否显示，非必需设置。
-        aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
+        aMap.getUiSettings().setMyLocationButtonEnabled(false); //设置默认定位按钮是否显示，非必需设置。
+//        aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
 
-        aMap.moveCamera(CameraUpdateFactory.zoomTo(15));
-        aMap.setOnMyLocationChangeListener(this);
-
-        search("朝阳区");
-        search("海淀区");
+        aMap.moveCamera(CameraUpdateFactory.zoomTo(10));
+//        aMap.setOnMyLocationChangeListener(this);
 
         aMap.setOnMapClickListener(this);
+
+        mAdapter = new GridMapAdapter();
+        aMap.setInfoWindowAdapter(mAdapter);
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        mPresenter.postMap();
     }
 
     @Override
@@ -128,7 +153,7 @@ public class GridMapActivity extends BaseMvpActivity<GridMapPresenter> implement
     }
 
     @Override
-    public void showPolygon(List<LatLng> list) {
+    public void showPolygon(MainMapBean.UserBean userBean, List<LatLng> list) {
         PolygonOptions polygonOptions = new PolygonOptions();
         polygonOptions.addAll(list);
         polygonOptions.strokeWidth(15) // 多边形的边框
@@ -136,6 +161,58 @@ public class GridMapActivity extends BaseMvpActivity<GridMapPresenter> implement
                 .fillColor(getResources().getColor(R.color.color_5532B16C));   // 多边形的填充色
 
         aMap.addPolygon(polygonOptions);
+
+        String middle = userBean.getMiddle();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Glide.with(mContext).load(userBean.getImg()).into(new SimpleTarget<Drawable>() {
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                        if (!TextUtils.isEmpty(middle)) {
+                            String[] split = middle.split(",");
+                            if (split.length > 1) {
+                                LatLng latLng = new LatLng(Double.parseDouble(split[1]), Double.parseDouble(split[0]));
+                                MarkerOptions markerOptions = new MarkerOptions();
+                                Bitmap bitmap = drawable2Bitmap(resource);
+
+                                Bitmap bm = Bitmap.createScaledBitmap(bitmap, 150, 150, true);
+                                Log.i("GitMap", "压缩后图片的大小" + (bm.getByteCount() / 1024) + "KB宽度为"
+                                        + bm.getWidth() + "高度为" + bm.getHeight());
+
+                                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(bm));
+                                markerOptions.position(latLng).title("").snippet(userBean.getAddress());
+                                aMap.addMarker(markerOptions);
+                                aMap.moveCamera(CameraUpdateFactory.changeLatLng(latLng));
+//                                mAdapter.notifyAll();
+                            }
+                        }
+                    }
+                });
+            }
+        });
+
+
+    }
+
+    Bitmap drawable2Bitmap(Drawable drawable) {
+        if (drawable instanceof BitmapDrawable) {
+            return ((BitmapDrawable) drawable).getBitmap();
+        } else if (drawable instanceof NinePatchDrawable) {
+            Bitmap bitmap = Bitmap
+                    .createBitmap(
+                            drawable.getIntrinsicWidth(),
+                            drawable.getIntrinsicHeight(),
+                            drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
+                                    : Bitmap.Config.RGB_565);
+            Canvas canvas = new Canvas(bitmap);
+            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(),
+                    drawable.getIntrinsicHeight());
+            drawable.draw(canvas);
+            return bitmap;
+        } else {
+            return null;
+        }
     }
 
     private void search(String keywords) {
@@ -219,10 +296,17 @@ public class GridMapActivity extends BaseMvpActivity<GridMapPresenter> implement
 //        markerOptions.position(latLng);
 //        aMap.addMarker(markerOptions);
 //        aMap.moveCamera(CameraUpdateFactory.changeLatLng(latLng));
+
     }
+
 
     @Override
     public void showError(String error) {
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
 }

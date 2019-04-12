@@ -73,6 +73,7 @@
             />
         <activity
             android:name="com.sdxxtop.guardianapp.ui.activity.GridMapActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppNormalTheme"/>
         <activity android:name="com.sdxxtop.guardianapp.ui.activity.ExamineActivity"/>
         <activity android:name="com.sdxxtop.guardianapp.ui.activity.NewsDetailsActivity"/>
