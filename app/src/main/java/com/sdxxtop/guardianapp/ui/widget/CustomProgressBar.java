@@ -95,7 +95,7 @@ public class CustomProgressBar extends RelativeLayout {
      * 设置状态
      */
     public void setStatus(int status, List<String> date) {
-        setStatus(status);
+        setStatus(status - 1);
         setDateStatus(date);
         this.invalidate();
     }
@@ -115,6 +115,7 @@ public class CustomProgressBar extends RelativeLayout {
     }
 
     private void setStatus(int status) {
+        tvText4.setText("已完成");
         switch (status) {
             case 0:   // 已受理
                 img1.setImageDrawable(getResources().getDrawable(R.drawable.details));
@@ -130,7 +131,7 @@ public class CustomProgressBar extends RelativeLayout {
                 img2.setImageDrawable(getResources().getDrawable(R.drawable.details));
                 img3.setImageDrawable(getResources().getDrawable(R.drawable.progress_status_normal));
                 img4.setImageDrawable(getResources().getDrawable(R.drawable.progress_status_normal));
-                tvLine1.setBackgroundColor(Color.parseColor("#3295F9"));
+                tvLine1.setBackgroundColor(Color.parseColor("#32B16C"));
                 tvLine2.setBackgroundColor(Color.parseColor("#DEEAE3"));
                 tvLine3.setBackgroundColor(Color.parseColor("#DEEAE3"));
                 break;
@@ -139,8 +140,8 @@ public class CustomProgressBar extends RelativeLayout {
                 img2.setImageDrawable(getResources().getDrawable(R.drawable.details));
                 img3.setImageDrawable(getResources().getDrawable(R.drawable.details));
                 img4.setImageDrawable(getResources().getDrawable(R.drawable.progress_status_normal));
-                tvLine1.setBackgroundColor(Color.parseColor("#3295F9"));
-                tvLine2.setBackgroundColor(Color.parseColor("#3295F9"));
+                tvLine1.setBackgroundColor(Color.parseColor("#32B16C"));
+                tvLine2.setBackgroundColor(Color.parseColor("#32B16C"));
                 tvLine3.setBackgroundColor(Color.parseColor("#DEEAE3"));
                 break;
 
@@ -150,9 +151,22 @@ public class CustomProgressBar extends RelativeLayout {
                 img3.setImageDrawable(getResources().getDrawable(R.drawable.details));
                 img4.setImageDrawable(getResources().getDrawable(R.drawable.details));
 
-                tvLine1.setBackgroundColor(Color.parseColor("#3295F9"));
-                tvLine2.setBackgroundColor(Color.parseColor("#3295F9"));
-                tvLine3.setBackgroundColor(Color.parseColor("#3295F9"));
+                tvLine1.setBackgroundColor(Color.parseColor("#32B16C"));
+                tvLine2.setBackgroundColor(Color.parseColor("#32B16C"));
+                tvLine3.setBackgroundColor(Color.parseColor("#32B16C"));
+                break;
+
+            case 4:  // 受理失败
+                img1.setImageDrawable(getResources().getDrawable(R.drawable.details));
+                img2.setImageDrawable(getResources().getDrawable(R.drawable.details));
+                img3.setImageDrawable(getResources().getDrawable(R.drawable.details));
+                img4.setImageDrawable(getResources().getDrawable(R.drawable.event_progress_show_error));
+
+                tvLine1.setBackgroundColor(Color.parseColor("#32B16C"));
+                tvLine2.setBackgroundColor(Color.parseColor("#32B16C"));
+                tvLine3.setBackgroundColor(Color.parseColor("#32B16C"));
+
+                tvText4.setText("受理失败");
                 break;
 
         }

@@ -1,5 +1,7 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
+import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -32,6 +34,8 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
     @BindView(R.id.btn_push)
     Button btnPush;
     private SingleDataView mSingleDataView;
+    private String mEventId;
+    private ArrayList<String> mList;
 
     @Override
     protected int getLayout() {
@@ -48,6 +52,15 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
 
     }
 
+    @Override
+    protected void initVariables() {
+        super.initVariables();
+        Intent intent = getIntent();
+        if (intent != null) {
+            mEventId = intent.getStringExtra("eventId");
+        }
+    }
+
     @OnClick({R.id.iv_time_more, R.id.tv_select, R.id.btn_push})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -56,17 +69,35 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
                 showSelect();
                 break;
             case R.id.btn_push:
+                push();
                 break;
         }
     }
 
+    private void push() {
+        if (mList == null) {
+            showToast("请选择验收通过类型");
+            return;
+        }
+
+        String editValue = etNumContent.getEditValue();
+        if (TextUtils.isEmpty(editValue)) {
+            showToast("请填写编辑内容");
+            return;
+        }
+
+        String selectType = tvSelect.getText().toString().trim();
+        int i = mList.indexOf(selectType) + 4;
+        mPresenter.modify(mEventId, i, editValue);
+    }
+
     private void showSelect() {
         if (mSingleDataView == null) {
-            ArrayList<String> list = new ArrayList<>();
-            list.add("验证通过");
-            list.add("验证不通过");
+            mList = new ArrayList<>();
+            mList.add("验证通过");
+            mList.add("验证不通过");
 
-            mSingleDataView = new SingleDataView(this, list);
+            mSingleDataView = new SingleDataView(this, mList);
         }
 
         mSingleDataView.setOnItemPickListener(new OptionPicker.OnOptionPickListener() {
@@ -77,5 +108,12 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
         });
 
         mSingleDataView.show();
+    }
+
+    @Override
+    public void modifyRefresh() {
+        showToast("提交成功");
+        setResult(200);
+        finish();
     }
 }

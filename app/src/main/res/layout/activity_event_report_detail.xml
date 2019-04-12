@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -28,14 +29,16 @@
                 android:layout_height="90dp">
 
                 <com.sdxxtop.guardianapp.ui.widget.CustomProgressBar
+                    android:id="@+id/cpb_progress"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp">
 
@@ -43,7 +46,7 @@
                     style="@style/normal_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="时间标题" />
+                    android:text="事件标题" />
 
                 <TextView
                     android:id="@+id/tv_content_title"
@@ -59,8 +62,8 @@
                     android:id="@+id/rv"
                     android:layout_width="match_parent"
                     android:layout_height="105dp"
-                    android:layout_below="@id/tv_content_title" />
-
+                    android:layout_below="@id/tv_content_title"
+                    android:visibility="gone" />
 
                 <RelativeLayout
                     android:id="@+id/rl_time"
@@ -170,6 +173,75 @@
                     android:layout_below="@id/rl_report_path"
                     android:text="街道下水道严重度堵塞，导致地面积水严重，影响车辆和行人正常通行，请尽快安排处理。" />
             </RelativeLayout>
+
+            <View
+                android:id="@+id/v_line"
+                style="@style/line_style"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_distributed_time"
+                style="@style/normal_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="10dp"
+                android:visibility="gone"
+                tools:text="派发时间"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_jiejue_time"
+                style="@style/normal_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="10dp"
+                android:visibility="gone"
+                tools:text="派发时间"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_yanshou_time"
+                style="@style/normal_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="10dp"
+                android:visibility="gone"
+                tools:text="派发时间"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_yanshou_result"
+                style="@style/normal_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="10dp"
+                android:visibility="gone"
+                tools:text="派发时间"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_remark"
+                style="@style/normal_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="10dp"
+                android:visibility="gone"
+                tools:text="派发时间"
+                tools:visibility="visible" />
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
@@ -180,6 +252,7 @@
         android:layout_margin="15dp"
         android:background="@drawable/btn_green_solid_bg"
         android:text="验收通过"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:visibility="gone" />
 
 </LinearLayout>

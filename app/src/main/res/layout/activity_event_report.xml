@@ -82,15 +82,11 @@
                 app:tatv_text_right_hint_value="请点击选择"
                 app:tatv_text_view="上报路径" />
 
-            <EditText
+            <com.sdxxtop.guardianapp.ui.widget.NumberEditTextView
+                android:id="@+id/net_content"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_margin="15dp"
-                android:background="@drawable/report_edit_bg"
-                android:gravity="left|top"
-                android:hint="事件描述......"
-                android:padding="5dp"
-                android:textSize="15sp" />
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
@@ -116,8 +112,8 @@
             android:layout_weight="1"
             android:background="@drawable/btn_green_stroke_bg"
             android:text="存草稿"
-            android:visibility="gone"
-            android:textColor="@color/green" />
+            android:textColor="@color/green"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/btn_push"

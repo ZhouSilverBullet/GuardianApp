@@ -13,12 +13,15 @@ import com.luck.picture.lib.entity.LocalMedia;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.presenter.EventReportPresenter;
+import com.sdxxtop.guardianapp.presenter.contract.EventReportContract;
 import com.sdxxtop.guardianapp.ui.adapter.EventReportRecyclerAdapter;
 import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
+import com.sdxxtop.guardianapp.ui.widget.NumberEditTextView;
 import com.sdxxtop.guardianapp.ui.widget.SingleDataView;
 import com.sdxxtop.guardianapp.ui.widget.TextAndEditView;
 import com.sdxxtop.guardianapp.ui.widget.TextAndTextView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
+import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -31,7 +34,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.qqtheme.framework.picker.OptionPicker;
 
-public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> implements EventReportRecyclerAdapter.HorListener {
+public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> implements EventReportRecyclerAdapter.HorListener, EventReportContract.IView {
     @BindView(R.id.tv_title)
     TitleView mTitleView;
     @BindView(R.id.rv)
@@ -48,8 +51,13 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     @BindView(R.id.taev_title)
     TextAndEditView taevTitle;
 
+    @BindView(R.id.net_content)
+    NumberEditTextView netContent;
+
     private EventReportRecyclerAdapter mAdapter;
     private List<LocalMedia> localMediaList = new ArrayList<>();
+    //金纬度
+    private String lonLng;
 
     @Override
     protected int getLayout() {
@@ -59,12 +67,14 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     @Override
     protected void initView() {
         super.initView();
-        setSwipeBackEnable(true);
+//        setSwipeBackEnable(true);
 
         setPhotoRecycler(mRecyclerView);
 
         InputFilter[] filters = {new InputFilter.LengthFilter(10)};
         taevTitle.getEditText().setFilters(filters);
+
+        netContent.setEditHint("请填写事件描述");
     }
 
     @Override
@@ -109,10 +119,52 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     // todo 网络请求
     private void toReport() {
 
-        List<File> imagePushPath = getImagePushPath();
+        String title = taevTitle.getEditText().getText().toString().trim();
+        if (TextUtils.isEmpty(title)) {
+            showToast("请填写标题");
+            return;
+        }
+
+        //查询方式
+        String queryName = tatvQuery.getRightTVString();
+        if (queryData == null || TextUtils.isEmpty(queryName)) {
+            showToast("请选择查询方式");
+            return;
+        }
+        int queryType = queryData.indexOf(queryName) + 1;
+
+        //上报路径
+        String pathName = tatvReportPath.getRightTVString();
+        if (reportPathData == null || TextUtils.isEmpty(queryName)) {
+            showToast("请选择上报路径");
+            return;
+        }
+        int pathType = reportPathData.indexOf(pathName) + 1;
+
+        String place = tatvHappen.getRightTVString();
+        if (TextUtils.isEmpty(place) || TextUtils.isEmpty(lonLng)) {
+            showToast("请选择地址");
+            return;
+        }
+
+        String editValue = netContent.getEditValue();
+        if (TextUtils.isEmpty(editValue)) {
+            showToast("请填写事件描述内容");
+            return;
+        }
 
         showLoadingDialog();
-        mPresenter.pushReport(imagePushPath);
+
+        List<File> imagePushPath = getImagePushPath();
+        mPresenter.pushReport(title, pathType, queryType, place, lonLng, editValue, imagePushPath);
+    }
+
+    @Override
+    public void pushSuccess(String eventId) {
+        hideLoadingDialog();
+        Intent intent = new Intent(this, EventReportDetailActivity.class);
+        intent.putExtra("eventId", eventId);
+        startActivity(intent);
     }
 
     protected void setPhotoRecycler(RecyclerView recycler) {
@@ -203,6 +255,8 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
             }
         } else if (requestCode == 100 && resultCode == 10087 && data != null) {
             String address = data.getStringExtra("ad");
+            String lt = data.getStringExtra("lt");
+            lonLng = lt;
             tatvHappen.getTextRightText().setText(address);
         }
     }
@@ -318,6 +372,6 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 
     @Override
     public void showError(String error) {
-
+        hideLoadingDialog();
     }
 }

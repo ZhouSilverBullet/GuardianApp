@@ -99,7 +99,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
 
     public void hideLoadingDialog() {
         if (mDialogUtil != null) {
-            mDialogUtil.hideLoadingDialog();
+            mDialogUtil.closeLoadingDialog();
         }
     }
 

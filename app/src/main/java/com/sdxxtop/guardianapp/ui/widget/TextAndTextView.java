@@ -92,4 +92,8 @@ public class TextAndTextView extends LinearLayout {
             textRightImage2.setVisibility(isShow ? VISIBLE : GONE);
         }
     }
+
+    public String getRightTVString() {
+        return textRightText.getText().toString().trim();
+    }
 }

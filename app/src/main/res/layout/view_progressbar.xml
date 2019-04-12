@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -80,7 +81,7 @@
                 <TextView
                     android:id="@+id/tv_text_1"
                     style="@style/progress_text_dec"
-                    android:text="已受理" />
+                    android:text="已提交" />
 
                 <TextView
                     android:id="@+id/tv_date_1"
@@ -99,7 +100,7 @@
                 <TextView
                     android:id="@+id/tv_date_2"
                     style="@style/progress_text_date"
-                    android:text="03.23 12:12:56" />
+                    tools:text="03.23 12:12:56" />
             </LinearLayout>
 
             <LinearLayout style="@style/progress_layout_weight">
@@ -112,7 +113,7 @@
                 <TextView
                     android:id="@+id/tv_date_3"
                     style="@style/progress_text_date"
-                    android:text="03.23 12:12:56" />
+                    tools:text="03.23 12:12:56" />
             </LinearLayout>
 
             <LinearLayout style="@style/progress_layout_weight">
@@ -125,7 +126,7 @@
                 <TextView
                     android:id="@+id/tv_date_4"
                     style="@style/progress_text_date"
-                    android:text="03.23 12:12:56" />
+                    tools:text="03.23 12:12:56" />
             </LinearLayout>
 
 

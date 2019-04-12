@@ -42,7 +42,7 @@ public class NumberEditTextView extends RelativeLayout implements TextWatcher {
 
         init();
         //default
-        maxLength = 200;
+        maxLength = 100;
 
         settingView();
     }
@@ -145,6 +145,10 @@ public class NumberEditTextView extends RelativeLayout implements TextWatcher {
     public void setMaxLength(int maxLength) {
         this.maxLength = maxLength;
         etContent.setText("");
+    }
+
+    public void setEditHint(String hint) {
+        etContent.setHint(hint);
     }
 
     public String getEditValue() {

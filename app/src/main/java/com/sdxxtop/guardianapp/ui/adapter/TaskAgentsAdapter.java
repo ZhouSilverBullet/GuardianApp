@@ -1,11 +1,13 @@
 package com.sdxxtop.guardianapp.ui.adapter;
 
+import android.view.View;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.model.bean.EventIndexBean;
+import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity;
 
 public class TaskAgentsAdapter extends BaseQuickAdapter<EventIndexBean.EventBean, BaseViewHolder> {
     public TaskAgentsAdapter(int layoutResId) {
@@ -60,5 +62,12 @@ public class TaskAgentsAdapter extends BaseQuickAdapter<EventIndexBean.EventBean
                 break;
         }
         tvPhase.setText(strStatus);
+
+        helper.getConvertView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventReportDetailActivity.startDetailActivity(v.getContext(), String.valueOf(item.getEvent_id()));
+            }
+        });
     }
 }

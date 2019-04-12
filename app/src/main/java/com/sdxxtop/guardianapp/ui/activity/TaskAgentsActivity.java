@@ -56,14 +56,14 @@ public class TaskAgentsActivity extends BaseMvpActivity<TaskAgentsPresenter> imp
             @Override
             public void onLoadMore(RefreshLayout refreshLayout) {
                 if (mPresenter != null) {
-                    mPresenter.loadData(mAdapter.getData().size());
+                    mPresenter.loadData(mAdapter.getData().size(), 1);
                 }
             }
 
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
                 if (mPresenter != null) {
-                    mPresenter.loadData(0);
+                    mPresenter.loadData(0, 1);
                 }
             }
         });

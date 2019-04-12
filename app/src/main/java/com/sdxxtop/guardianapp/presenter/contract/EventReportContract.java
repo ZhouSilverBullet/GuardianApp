@@ -5,7 +5,7 @@ import com.sdxxtop.guardianapp.base.BaseView;
 
 public interface EventReportContract {
     interface IView extends BaseView {
-
+        void pushSuccess(String eventId);
     }
 
     interface IPresenter extends BasePresenter<IView> {

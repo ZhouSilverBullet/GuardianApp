@@ -22,9 +22,9 @@ public class TaskAgentsPresenter extends RxPresenter<TaskAgentsContract.IView> i
 
 
     @Override
-    public void loadData(int page) {
+    public void loadData(int page, int type /* 1.事件上报，2.我的事件*/) {
         Params params = new Params();
-        params.put("et", "1");
+        params.put("et", type);
         Observable<RequestBean<EventIndexBean>> observable = getEnvirApi().postEventIndex(params.getData());
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EventIndexBean>() {
             @Override

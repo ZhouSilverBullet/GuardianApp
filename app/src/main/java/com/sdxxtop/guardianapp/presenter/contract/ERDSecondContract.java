@@ -8,7 +8,7 @@ import com.sdxxtop.guardianapp.base.BaseView;
  */
 public interface ERDSecondContract {
     interface IView extends BaseView {
-
+        void modifyRefresh();
     }
 
     interface IPresenter extends BasePresenter<IView> {

@@ -11,6 +11,6 @@ public interface TaskAgentsContract {
 
     interface IPresenter extends BasePresenter<IView> {
 
-        void loadData(int page);
+        void loadData(int page, int type);
     }
 }
