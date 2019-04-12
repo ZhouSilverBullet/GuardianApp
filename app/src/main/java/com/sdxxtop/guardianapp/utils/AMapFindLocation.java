@@ -26,10 +26,13 @@ public class AMapFindLocation implements AMapLocationListener {
 
     @Override
     public void onLocationChanged(AMapLocation amapLocation) {
-
         if (locationCompanyListener != null) {
-            locationCompanyListener.onAddress(amapLocation);
-            removeLocationCompanyListener();
+            try{
+                //防止onAddress出现异常了，仍然可以释放locationCompanyListener
+                locationCompanyListener.onAddress(amapLocation);
+            }finally {
+                removeLocationCompanyListener();
+            }
         }
     }
 

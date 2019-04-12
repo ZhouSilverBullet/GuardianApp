@@ -104,8 +104,8 @@ public class FaceLivenessActivity extends AppCompatActivity implements
     protected int mPreviewDegree;
     // 监听系统音量广播
     protected BroadcastReceiver mVolumeReceiver;
-    private TextView tvLocation;
-    private View btnCard;
+    protected TextView tvLocation;
+    protected View btnCard;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -548,18 +548,12 @@ public class FaceLivenessActivity extends AppCompatActivity implements
         }
         mSuccessView.setVisibility(isShow ? View.VISIBLE : View.INVISIBLE);
         if (isShow) {
-            AMapFindLocation instance = AMapFindLocation.getInstance();
-            instance.location();
-            instance.setLocationCompanyListener(new AMapFindLocation.LocationCompanyListener() {
-                @Override
-                public void onAddress(AMapLocation address) {
-                    String address1 = address.getAddress();
-                    tvLocation.setText(address1);
-                    btnCard.setVisibility(View.VISIBLE);
-                }
-            });
-
+            showFaceSuccess();
         }
+    }
+
+    public void showFaceSuccess() {
+
     }
 
     private void saveImage(HashMap<String, String> imageMap) {

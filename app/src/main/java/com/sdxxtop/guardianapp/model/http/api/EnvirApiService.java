@@ -43,6 +43,11 @@ public interface EnvirApiService {
     Observable<RequestBean<MainIndexBean>> postMainIndex(@Field("data") String data);
 
     @FormUrlEncoded
+    @POST("main/sign")
+    Observable<RequestBean> postMainSign(@Field("data") String data);
+
+
+    @FormUrlEncoded
     @POST("event/index")
     Observable<RequestBean<EventIndexBean>> postEventIndex(@Field("data") String data);
 

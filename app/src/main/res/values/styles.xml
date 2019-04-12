@@ -2,8 +2,8 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="AppNormalTheme">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/color_32B16C</item>
+        <item name="colorPrimaryDark">@color/color_32B16C</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
