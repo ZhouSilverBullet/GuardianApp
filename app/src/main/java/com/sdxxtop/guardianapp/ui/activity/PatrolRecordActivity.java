@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -53,6 +54,8 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
     TextAndTextView tatvDate;
     @BindView(R.id.map_view)
     MapView mapView;
+    @BindView(R.id.tv_position)
+    TextView tvPosition;
     private AMap aMap;
 
     private OnLocationChangedListener mListener;
@@ -271,6 +274,10 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
     public void showData(SignLogBean signLogBean) {
 //        ExerciseBean.DataBean data = bean.getData();
 
+        int distance = signLogBean.getDistance();
+        int num = signLogBean.getNum();
+
+        tvPosition.setText("共" + distance + "米 打卡" + num + "次");
 
         //每次请求刷新一次
         if (curLatlngList.size() > 0) {
