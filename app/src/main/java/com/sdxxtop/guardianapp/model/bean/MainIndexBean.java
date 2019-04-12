@@ -15,6 +15,7 @@ public class MainIndexBean {
      */
 
     private String name;
+    private String img;
     private int position;
     private String part_name;
     private int is_face;
@@ -35,6 +36,14 @@ public class MainIndexBean {
 
     public void setPosition(int position) {
         this.position = position;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public String getPart_name() {

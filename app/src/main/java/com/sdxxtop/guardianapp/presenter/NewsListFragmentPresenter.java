@@ -44,6 +44,7 @@ public class NewsListFragmentPresenter extends RxPresenter<NewsListFragmentContr
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
+                        mView.showError("");
                         Logger.e( "--- " + throwable.toString());
                     }
                 });

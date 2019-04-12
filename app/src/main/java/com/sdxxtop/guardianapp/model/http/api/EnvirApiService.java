@@ -10,6 +10,7 @@ import com.sdxxtop.guardianapp.model.bean.MainIndexBean;
 import com.sdxxtop.guardianapp.model.bean.MainMapBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
 import com.sdxxtop.guardianapp.model.bean.SignLogBean;
+import com.sdxxtop.guardianapp.model.bean.UcenterIndexBean;
 
 import java.util.List;
 import java.util.Map;
@@ -88,6 +89,16 @@ public interface EnvirApiService {
     @FormUrlEncoded
     @POST("contact/search")
     Observable<RequestBean<ContactIndexBean>> postContactSearch(@Field("data") String data);
+
+
+
+    @FormUrlEncoded
+    @POST("ucenter/index")
+    Observable<RequestBean<UcenterIndexBean>> postUcenterIndex(@Field("data") String data);
+
+    @Multipart
+    @POST("ucenter/modImg")
+    Observable<RequestBean> postUcenterModImg(@PartMap Map<String, RequestBody> data);
 
 
 }

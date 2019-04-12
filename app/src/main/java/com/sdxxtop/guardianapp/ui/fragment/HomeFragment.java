@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.orhanobut.logger.Logger;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpFragment;
@@ -165,10 +166,12 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
         tvName.setText(mainIndexBean.getName());
         String jobName = GuardianUtils.getJobName(mainIndexBean.getPosition());
         String partName = mainIndexBean.getPart_name();
-        tvPlace.setText(new StringBuilder().append(jobName).append(" ").append(partName));
+        tvPlace.setText(new StringBuilder().append(partName).append(" ").append(jobName));
 
         List<MainIndexBean.EventBean> eventBean = mainIndexBean.getEventBean();
         mRecyclerAdapter.addData(eventBean);
+
+        Glide.with(this).load(mainIndexBean.getImg()).into(civHeader);
 //        mTextView.setText(data);
     }
 

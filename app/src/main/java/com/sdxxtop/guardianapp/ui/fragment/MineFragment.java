@@ -1,26 +1,48 @@
 package com.sdxxtop.guardianapp.ui.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.config.PictureMimeType;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.sdxxtop.guardianapp.R;
-import com.sdxxtop.guardianapp.base.BaseFragment;
+import com.sdxxtop.guardianapp.base.BaseMvpFragment;
+import com.sdxxtop.guardianapp.model.bean.UcenterIndexBean;
 import com.sdxxtop.guardianapp.model.db.UserData;
+import com.sdxxtop.guardianapp.presenter.MinePresenter;
+import com.sdxxtop.guardianapp.presenter.contract.MineContract;
 import com.sdxxtop.guardianapp.ui.activity.LoginActivity;
 import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
+import com.sdxxtop.guardianapp.utils.UIUtils;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MineFragment extends BaseFragment {
+public class MineFragment extends BaseMvpFragment<MinePresenter> implements MineContract.IView {
     @BindView(R.id.tv_title)
     TitleView mTitleView;
-    @BindView(R.id.iv_top)
-    ImageView ivTop;
+    @BindView(R.id.tv_name)
+    TextView tvName;
+    @BindView(R.id.tv_place)
+    TextView tvPlace;
+    @BindView(R.id.civ_header)
+    CircleImageView civHeader;
+
     private boolean isAdmin;
+
+    private int IMAGE_STORE = 100;
 
     public static MineFragment newInstance(boolean isAdmin) {
 
@@ -44,11 +66,6 @@ public class MineFragment extends BaseFragment {
             isAdmin = getArguments().getBoolean("isAdmin");
         }
 
-        if (isAdmin) {
-            ivTop.setImageResource(R.drawable.mine_top);
-        } else {
-            ivTop.setImageResource(R.drawable.mine_top_2);
-        }
 
         topViewPadding(mTitleView);
     }
@@ -62,6 +79,12 @@ public class MineFragment extends BaseFragment {
                 logoutDialog();
             }
         });
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        mPresenter.loadData();
     }
 
     private void logoutDialog() {
@@ -97,7 +120,68 @@ public class MineFragment extends BaseFragment {
         getActivity().startActivity(intent);
     }
 
-    @OnClick(R.id.tatv_message)
-    public void onViewClicked() {
+    @Override
+    protected void initInject() {
+        getFragmentComponent().inject(this);
+    }
+
+    @Override
+    public void showError(String error) {
+
+    }
+
+    @Override
+    public void showList(UcenterIndexBean indexBean) {
+        String img = indexBean.getImg();
+        Glide.with(this).load(img).into(civHeader);
+        tvName.setText(indexBean.getName());
+        tvPlace.setText(new StringBuilder().append(indexBean.getPart_name()).append(" ").append(indexBean.getStringPosition()));
+    }
+
+    @OnClick({R.id.civ_header, R.id.tatv_message})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.civ_header:
+                PictureSelector.create(this).openGallery(PictureMimeType.ofImage())
+                        .cropCompressQuality(90)
+                        .minimumCompressSize(200)
+                        .withAspectRatio(1, 1)
+                        .enableCrop(true)
+                        .showCropFrame(false)
+                        .showCropGrid(false)
+                        .circleDimmedLayer(true)
+                        .compress(true).selectionMode(PictureConfig.SINGLE).maxSelectNum(1).forResult(IMAGE_STORE);
+
+                break;
+            case R.id.tatv_message:
+                break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == IMAGE_STORE) {
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
+                if (selectList != null && selectList.size() > 0) {
+                    LocalMedia media = selectList.get(0);
+                    String path = media.getCompressPath();
+                    if (TextUtils.isEmpty(path)) {
+                        path = media.getCutPath();
+                    }
+                    if (!TextUtils.isEmpty(path)) {
+                        mPresenter.changeIcon(path);
+                    } else {
+                        UIUtils.showToast("上传头像失败");
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void changeIconSuccess() {
+        mPresenter.loadData();
     }
 }

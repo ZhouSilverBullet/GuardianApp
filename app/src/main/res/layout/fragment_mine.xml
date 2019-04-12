@@ -1,80 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/green"
-              android:fitsSystemWindows="true"
-              android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/half_green_bg"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
     <com.sdxxtop.guardianapp.ui.widget.TitleView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:bgColor="@color/green"
-        app:titleColor="@color/white"
+        app:bgColor="@color/transparent"
         app:rightTextValue="退出登录"
-        app:titleValue="个人中心"/>
+        app:titleColor="@color/white"
+        app:titleValue="个人中心" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/white">
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/iv_top"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-                android:src="@drawable/mine_top" />
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/white" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="5dp"
+                    android:paddingBottom="10dp"
+                    app:cardCornerRadius="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical"
+                            android:paddingBottom="15dp">
+
+                            <TextView
+                                android:id="@+id/tv_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="25dp"
+                                android:text="李海龙"
+                                android:textColor="@color/color_303030"
+                                android:textSize="10sp" />
+
+                            <TextView
+                                android:id="@+id/tv_place"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="网格员"
+                                android:textColor="@color/color_303030"
+                                android:textSize="10sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="9dp"
+                    android:elevation="5dp"
+                    android:src="@color/white" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/civ_header"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:elevation="5dp"
+                    android:src="@drawable/tou_xiang" />
+
+            </FrameLayout>
+
 
             <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
                 android:id="@+id/tatv_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:tatv_text_view="单位信息"/>
+                app:tatv_text_view="单位信息" />
 
             <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:tatv_text_view="我的上报"/>
+                app:tatv_text_view="我的上报" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/white" />
 
             <!--<com.sdxxtop.guardianapp.ui.widget.TextAndTextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--app:tatv_text_view="统计分析分数说明"/>-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:tatv_text_view="统计分析分数说明"/>-->
 
             <!--<com.sdxxtop.guardianapp.ui.widget.TextAndTextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--app:tatv_text_view="意见反馈"/>-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:tatv_text_view="意见反馈"/>-->
 
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 
     <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:background="@color/white"-->
-        <!--android:gravity="center">-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@color/white"-->
+    <!--android:gravity="center">-->
 
-        <!--<TextView-->
-            <!--android:id="@+id/tv_logout"-->
-            <!--android:layout_width="150dp"-->
-            <!--android:layout_height="50dp"-->
-            <!--android:layout_margin="10dp"-->
-            <!--android:background="@drawable/btn_green_corners30_solid_bg"-->
-            <!--android:gravity="center"-->
-            <!--android:text="退出"-->
-            <!--android:textColor="@color/white"-->
-            <!--android:textSize="20sp"/>-->
+    <!--<TextView-->
+    <!--android:id="@+id/tv_logout"-->
+    <!--android:layout_width="150dp"-->
+    <!--android:layout_height="50dp"-->
+    <!--android:layout_margin="10dp"-->
+    <!--android:background="@drawable/btn_green_corners30_solid_bg"-->
+    <!--android:gravity="center"-->
+    <!--android:text="退出"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:textSize="20sp"/>-->
     <!--</LinearLayout>-->
 
 </LinearLayout>
