@@ -10,11 +10,15 @@ import android.widget.ImageView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
+import com.luck.picture.lib.permissions.RxPermissions;
 import com.orhanobut.logger.Logger;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
+import com.sdxxtop.guardianapp.model.bean.InitBean;
 import com.sdxxtop.guardianapp.presenter.HomePresenter;
 import com.sdxxtop.guardianapp.presenter.contract.HomeContract;
+import com.sdxxtop.guardianapp.ui.dialog.DownloadAppDialog;
+import com.sdxxtop.guardianapp.ui.dialog.DownloadDialog;
 import com.sdxxtop.guardianapp.ui.fragment.HomeFragment;
 import com.sdxxtop.guardianapp.ui.fragment.LearningFragment;
 import com.sdxxtop.guardianapp.ui.fragment.MineFragment;
@@ -131,5 +135,19 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        mPresenter.initApp();
+    }
+
+    @Override
+    public void showInit(InitBean initBean) {
+        if (initBean != null) {
+            DownloadDialog downloadDialog = new DownloadDialog(this, initBean, new RxPermissions(this));
+            downloadDialog.show();
+        }
     }
 }

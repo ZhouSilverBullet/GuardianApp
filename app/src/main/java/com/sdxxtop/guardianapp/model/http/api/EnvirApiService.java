@@ -3,6 +3,7 @@ package com.sdxxtop.guardianapp.model.http.api;
 import com.sdxxtop.guardianapp.model.bean.AutoLoginBean;
 import com.sdxxtop.guardianapp.model.bean.EventIndexBean;
 import com.sdxxtop.guardianapp.model.bean.EventReadBean;
+import com.sdxxtop.guardianapp.model.bean.InitBean;
 import com.sdxxtop.guardianapp.model.bean.LoginBean;
 import com.sdxxtop.guardianapp.model.bean.MainIndexBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
@@ -20,6 +21,10 @@ import retrofit2.http.PartMap;
 public interface EnvirApiService {
 
     String BASE_URL = "http://envir.sdxxtop.com/api/";
+
+    @FormUrlEncoded
+    @POST("app/init")
+    Observable<RequestBean<InitBean>> postAppInit(@Field("data") String data);
 
     @FormUrlEncoded
     @POST("login/sendCode")
