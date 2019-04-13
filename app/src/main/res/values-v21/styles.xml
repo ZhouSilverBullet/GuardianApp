@@ -1,7 +1,7 @@
 <resources>
 
     <style name="NormalSplash" parent="AppTheme">
-        <item name="android:windowBackground">@drawable/welcome_layler_drawable</item>
+        <item name="android:windowBackground">@drawable/splash_icon</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="windowNoTitle">true</item>
