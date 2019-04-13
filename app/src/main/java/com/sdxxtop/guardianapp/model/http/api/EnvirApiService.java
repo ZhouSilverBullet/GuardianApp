@@ -10,6 +10,9 @@ import com.sdxxtop.guardianapp.model.bean.MainIndexBean;
 import com.sdxxtop.guardianapp.model.bean.MainMapBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
 import com.sdxxtop.guardianapp.model.bean.SignLogBean;
+import com.sdxxtop.guardianapp.model.bean.StudyCheckBean;
+import com.sdxxtop.guardianapp.model.bean.StudyCourseBean;
+import com.sdxxtop.guardianapp.model.bean.StudyQuestionBean;
 import com.sdxxtop.guardianapp.model.bean.UcenterIndexBean;
 
 import java.util.List;
@@ -22,6 +25,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PartMap;
+import retrofit2.http.Path;
 
 public interface EnvirApiService {
 
@@ -80,8 +84,6 @@ public interface EnvirApiService {
     Observable<RequestBean> postEventModify(@Field("data") String data);
 
 
-
-
     @FormUrlEncoded
     @POST("contact/index")
     Observable<RequestBean<ContactIndexBean>> postContactIndex(@Field("data") String data);
@@ -91,7 +93,6 @@ public interface EnvirApiService {
     Observable<RequestBean<ContactIndexBean>> postContactSearch(@Field("data") String data);
 
 
-
     @FormUrlEncoded
     @POST("ucenter/index")
     Observable<RequestBean<UcenterIndexBean>> postUcenterIndex(@Field("data") String data);
@@ -99,6 +100,32 @@ public interface EnvirApiService {
     @Multipart
     @POST("ucenter/modImg")
     Observable<RequestBean> postUcenterModImg(@PartMap Map<String, RequestBody> data);
+
+    /**
+     * exam
+     * course
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("study/{name}")
+    Observable<RequestBean<StudyCourseBean>> postStudyCourse(@Path("name") String name, @Field("data") String data);
+
+    /**
+     * exam
+     * course
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("study/question")
+    Observable<RequestBean<StudyQuestionBean>> postStudyQuestion(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("study/check")
+    Observable<RequestBean> postStudyCheck(@Field("data") String data);
 
 
 }

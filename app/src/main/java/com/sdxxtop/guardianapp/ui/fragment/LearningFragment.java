@@ -44,9 +44,10 @@ public class LearningFragment extends BaseFragment {
         fragments.add(NewsListFragment.newInstance(1));
         fragments.add(NewsListFragment.newInstance(2));
         fragments.add(CourseListFragment.newInstance(1));
+        fragments.add(CourseListFragment.newInstance(2));
 //        fragments.add(ImageTabFragment.newInstance(R.drawable.course));
 //        fragments.add(ImageTabFragment.newInstance(R.drawable.score));
-        fragments.add(ImageTabFragment.newInstance(R.drawable.exam));
+//        fragments.add(ImageTabFragment.newInstance(R.drawable.exam));
 
         HomePagerAdapter homePagerAdapter = new HomePagerAdapter(getChildFragmentManager(),
                 titleList, fragments);
