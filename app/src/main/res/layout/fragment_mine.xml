@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/half_green_bg"
+    android:background="@drawable/half_login_bg"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
@@ -40,7 +40,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginTop="42dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="5dp"
                     android:paddingBottom="10dp"
@@ -85,7 +85,7 @@
                     android:layout_width="46dp"
                     android:layout_height="46dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="9dp"
+                    android:layout_marginTop="19dp"
                     android:elevation="5dp"
                     android:src="@color/white" />
 
@@ -94,7 +94,7 @@
                     android:layout_width="44dp"
                     android:layout_height="44dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:elevation="5dp"
                     android:src="@drawable/tou_xiang" />
 
