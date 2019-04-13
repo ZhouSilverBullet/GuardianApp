@@ -14,4 +14,10 @@ public interface Constants {
     String USER_ID = "user_id";
     String MOBILE = "mobile";
 
+    /**
+     *
+     * 我认为图片地址不应该存本地
+     */
+    String USER_IMG = "user_img";
+
 }

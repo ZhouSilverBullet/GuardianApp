@@ -13,6 +13,7 @@ import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.sdxxtop.guardianapp.R;
+import com.sdxxtop.guardianapp.app.Constants;
 import com.sdxxtop.guardianapp.base.BaseMvpFragment;
 import com.sdxxtop.guardianapp.model.bean.UcenterIndexBean;
 import com.sdxxtop.guardianapp.model.db.UserData;
@@ -23,6 +24,7 @@ import com.sdxxtop.guardianapp.ui.activity.LoginActivity;
 import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
 import com.sdxxtop.guardianapp.ui.pop.QuitGroupPopView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
+import com.sdxxtop.guardianapp.utils.SpUtil;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import java.util.List;
@@ -134,7 +136,10 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     @Override
     public void showList(UcenterIndexBean indexBean) {
         String img = indexBean.getImg();
-        Glide.with(this).load(img).into(civHeader);
+        if (!TextUtils.isEmpty(img)) {
+            SpUtil.putString(Constants.USER_IMG, img);
+            Glide.with(this).load(img).into(civHeader);
+        }
         tvName.setText(indexBean.getName());
         tvPlace.setText(new StringBuilder().append(indexBean.getPart_name()).append(" ").append(indexBean.getStringPosition()));
     }

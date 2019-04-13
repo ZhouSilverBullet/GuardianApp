@@ -3,6 +3,7 @@ package com.sdxxtop.guardianapp.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.orhanobut.logger.Logger;
 import com.sdxxtop.guardianapp.R;
+import com.sdxxtop.guardianapp.app.Constants;
 import com.sdxxtop.guardianapp.base.BaseMvpFragment;
 import com.sdxxtop.guardianapp.model.bean.MainIndexBean;
 import com.sdxxtop.guardianapp.presenter.HomeFragmentPresenter;
@@ -21,6 +23,7 @@ import com.sdxxtop.guardianapp.ui.activity.PatrolRecordActivity;
 import com.sdxxtop.guardianapp.ui.adapter.HomeRecyclerAdapter;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
 import com.sdxxtop.guardianapp.utils.GuardianUtils;
+import com.sdxxtop.guardianapp.utils.SpUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -170,8 +173,11 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
 
         List<MainIndexBean.EventBean> eventBean = mainIndexBean.getEventBean();
         mRecyclerAdapter.addData(eventBean);
-
-        Glide.with(this).load(mainIndexBean.getImg()).into(civHeader);
+        String img = mainIndexBean.getImg();
+        if (!TextUtils.isEmpty(img)) {
+            SpUtil.putString(Constants.USER_IMG, img);
+            Glide.with(this).load(img).into(civHeader);
+        }
 //        mTextView.setText(data);
     }
 

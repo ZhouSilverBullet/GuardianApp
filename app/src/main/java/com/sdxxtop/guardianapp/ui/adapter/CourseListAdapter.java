@@ -99,7 +99,7 @@ public class CourseListAdapter extends BaseMultiItemQuickAdapter<BaseCourseDataB
                     String endTime = bean.getEnd_time();
                     tvLastTime.setText("课程最晚考试时间: " + handleTime(endTime));
 
-                    tvBtn.setText("去学习");
+
                     int type = bean.getType();
                     if (type == 1) {
                         tvRightDec.setText("文章");
@@ -110,6 +110,8 @@ public class CourseListAdapter extends BaseMultiItemQuickAdapter<BaseCourseDataB
                     //1.参加了，2.没参加
                     int is_exam = bean.getIs_exam();
                     if (is_exam == 1) {
+                        tvBtn.setText("考试结束");
+                        tvBtn.setBackgroundResource(R.drawable.btn_gray_solid_bg);
                         helper.getConvertView().setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -117,11 +119,14 @@ public class CourseListAdapter extends BaseMultiItemQuickAdapter<BaseCourseDataB
                             }
                         });
                     } else {
+                        tvBtn.setText("现在考试");
+                        tvBtn.setBackgroundResource(R.drawable.btn_green_solid_bg);
                         helper.getConvertView().setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 Intent intent = new Intent(mContext, ExamineActivity.class);
                                 intent.putExtra("examId", ((ExamCellBean) item).getExam_id());
+                                intent.putExtra("examTime", ((ExamCellBean) item).getExam_time());
                                 mContext.startActivity(intent);
                             }
                         });

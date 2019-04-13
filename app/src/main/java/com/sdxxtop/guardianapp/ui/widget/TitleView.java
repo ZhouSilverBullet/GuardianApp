@@ -89,4 +89,13 @@ public class TitleView extends RelativeLayout {
     public TextView getTvRight() {
         return tvRight;
     }
+
+    /**
+     * 需要的时候，重新把返回键的监听改一下
+     *
+     * @param listener
+     */
+    public void resetBackListener(OnClickListener listener) {
+        linearBack.setOnClickListener(listener);
+    }
 }

@@ -37,6 +37,7 @@ public class NewsListFragmentPresenter extends RxPresenter<NewsListFragmentContr
                             if (requestBean.getCode()==200){
                                 mView.showData((List<LearnNewsBean>) requestBean.getData());
                             }else{
+                                mView.showError("");
                                 UIUtils.showToast(requestBean.getMsg());
                             }
                         }

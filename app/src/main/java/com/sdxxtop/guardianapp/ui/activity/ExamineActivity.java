@@ -1,19 +1,25 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.sdxxtop.guardianapp.R;
+import com.sdxxtop.guardianapp.app.Constants;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.model.bean.StudyCheckBean;
 import com.sdxxtop.guardianapp.model.bean.StudyQuestionBean;
 import com.sdxxtop.guardianapp.presenter.ExaminePresenter;
 import com.sdxxtop.guardianapp.presenter.contract.ExamineContract;
+import com.sdxxtop.guardianapp.ui.control.ExamineTimeCountdown;
+import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
 import com.sdxxtop.guardianapp.ui.widget.SubjectItemView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
 import com.sdxxtop.guardianapp.utils.GuardianUtils;
+import com.sdxxtop.guardianapp.utils.SpUtil;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import java.util.List;
@@ -22,7 +28,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ExamineActivity extends BaseMvpActivity<ExaminePresenter> implements ExamineContract.IView, SubjectItemView.OnSubjectClickListener {
+public class ExamineActivity extends BaseMvpActivity<ExaminePresenter> implements ExamineContract.IView, SubjectItemView.OnSubjectClickListener, ExamineTimeCountdown.CompleteListener {
     @BindView(R.id.tv_title)
     TitleView mTitleView;
     @BindView(R.id.tv_face)
@@ -63,6 +69,9 @@ public class ExamineActivity extends BaseMvpActivity<ExaminePresenter> implement
     private volatile int mNumber;
     private volatile int mQuestionId;
     private volatile int mQuestionNum;
+    private String mExamTime;
+    private ExamineTimeCountdown mTimeCountdown;
+    private int mScore;
 
     @Override
     protected int getLayout() {
@@ -73,6 +82,7 @@ public class ExamineActivity extends BaseMvpActivity<ExaminePresenter> implement
     protected void initVariables() {
         super.initVariables();
         mExamId = getIntent().getIntExtra("examId", 0);
+        mExamTime = getIntent().getStringExtra("examTime");
     }
 
     @Override
@@ -91,6 +101,42 @@ public class ExamineActivity extends BaseMvpActivity<ExaminePresenter> implement
         selectB.setOnSubjectClickListener(this);
         selectC.setOnSubjectClickListener(this);
         selectD.setOnSubjectClickListener(this);
+
+        mTitleView.resetBackListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFinishDialog();
+            }
+        });
+    }
+
+    private void showFinishDialog() {
+        new IosAlertDialog(this)
+                .builder()
+                .setTitle("提示")
+                .setMsg("是否退出这次考试")
+                .setNegativeButton("", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                })
+                .setPositiveButton("", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                })
+                .show();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            showFinishDialog();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
@@ -99,6 +145,25 @@ public class ExamineActivity extends BaseMvpActivity<ExaminePresenter> implement
         //加载数据
 
         loadData(mExamId, 1, "0");
+
+        //开始倒计时
+        mTimeCountdown = new ExamineTimeCountdown(tvShowTime, this);
+        mTimeCountdown.start(mExamTime);
+
+        //头像显示
+        String img = SpUtil.getString(Constants.USER_IMG);
+        if (!TextUtils.isEmpty(img)) {
+            Glide.with(this).load(img).into(civHeader);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mTimeCountdown != null) {
+            mTimeCountdown.destroy();
+            mTimeCountdown = null;
+        }
     }
 
     private void loadData(int examId, int number, String attendId) {
@@ -243,10 +308,41 @@ public class ExamineActivity extends BaseMvpActivity<ExaminePresenter> implement
 
         //1.是 2.否
         mIsLast = bean.getIs_last() == 1;
+        mScore = bean.getScore();
     }
 
     @Override
     public void pushQuestionSuccess(StudyCheckBean studyCheckBean) {
-        loadData(mExamId, mNumber + 1, mAttendId);
+        if (mIsLast) { //最后一题了
+            showLastDialog();
+        } else { //不是最后一题继续答题
+            loadData(mExamId, mNumber + 1, mAttendId);
+        }
+    }
+
+    private void showLastDialog() {
+        new IosAlertDialog(this)
+                .builder()
+                .setMsg("本次考试得分")
+                .setMsg2(String.valueOf(mScore))
+                .setPositiveButton("", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                })
+                .setDismissListener(new IosAlertDialog.DialogDismissListener() {
+                    @Override
+                    public void dismiss() {
+                        finish();
+                    }
+                })
+                .show();
+    }
+
+    @Override
+    public void onComplete() {
+        //完成考试了
+        showLastDialog();
     }
 }
