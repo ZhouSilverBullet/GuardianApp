@@ -1,14 +1,18 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
 import android.Manifest;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 
 import com.amap.api.location.AMapLocation;
 import com.baidu.idl.face.platform.ui.FaceLivenessActivity;
 import com.luck.picture.lib.permissions.RxPermissions;
+import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.presenter.FaceLivenessPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.FaceLivenessContract;
+import com.sdxxtop.guardianapp.ui.widget.TitleView;
 import com.sdxxtop.guardianapp.utils.AMapFindLocation;
 import com.sdxxtop.guardianapp.utils.DialogUtil;
 import com.sdxxtop.guardianapp.utils.UIUtils;
@@ -22,6 +26,7 @@ public class MyFaceLivenessActivity extends FaceLivenessActivity implements Face
     protected FaceLivenessPresenter mPresenter;
 
     private DialogUtil mDialogUtil;
+    private boolean mIsFace;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,6 +36,16 @@ public class MyFaceLivenessActivity extends FaceLivenessActivity implements Face
         }
 
         super.onCreate(savedInstanceState);
+
+        if (getIntent() != null) {
+            mIsFace = getIntent().getBooleanExtra("isFace", true);
+        }
+
+        TitleView titleView = findViewById(R.id.tv_title);
+        if (!mIsFace) {
+            titleView.setTitleValue("注册");
+        }
+
         mRxPermissions = new RxPermissions(this);
         mRxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE
                 , Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION).subscribe(new Consumer<Boolean>() {
@@ -67,30 +82,39 @@ public class MyFaceLivenessActivity extends FaceLivenessActivity implements Face
     }
 
     @Override
-    public void showFaceSuccess() {
+    public void showFaceSuccess(Bitmap bitmap) {
         showLoadingDialog();
 
-        AMapFindLocation instance = AMapFindLocation.getInstance();
-        instance.location();
-        instance.setLocationCompanyListener(new AMapFindLocation.LocationCompanyListener() {
-            @Override
-            public void onAddress(AMapLocation address) {
-                double longitude = address.getLongitude();
-                double latitude = address.getLatitude();
-                String value = longitude + "," + latitude;
-                String address1 = address.getAddress();
+        if (!mIsFace) {
+            goToRegister(bitmap);
+            return;
+        }
 
-                mPresenter.face(value, address1);
-            }
-        });
+        mPresenter.loginFace(bitmap);
+    }
+
+    private void goToRegister(Bitmap bitmap) {
+        if (bitmap ==null) {
+            UIUtils.showToast("注册失败");
+            return;
+        }
+        mPresenter.rigesterFace(bitmap);
     }
 
     @Override
     public void faceSuccess(String address) {
         hideLoadingDialog();
+
         UIUtils.showToast("打卡成功");
         tvLocation.setText(address);
         btnCard.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void faceRegisterSuccess(String address) {
+        UIUtils.showToast("注册成功");
+        setResult(100);
+        finish();
     }
 
     @Override

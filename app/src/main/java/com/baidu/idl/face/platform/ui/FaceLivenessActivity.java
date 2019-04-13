@@ -548,11 +548,11 @@ public class FaceLivenessActivity extends AppCompatActivity implements
         }
         mSuccessView.setVisibility(isShow ? View.VISIBLE : View.INVISIBLE);
         if (isShow) {
-            showFaceSuccess();
+//            showFaceSuccess();
         }
     }
 
-    public void showFaceSuccess() {
+    public void showFaceSuccess(Bitmap bitmap) {
 
     }
 
@@ -566,6 +566,8 @@ public class FaceLivenessActivity extends AppCompatActivity implements
             iv.setImageBitmap(bmp);
             mImageLayout.addView(iv, new LinearLayout.LayoutParams(300, 300));
         }
+
+        showFaceSuccess(bmp);
     }
 
     private static Bitmap base64ToBitmap(String base64Data) {

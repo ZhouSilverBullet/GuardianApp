@@ -9,6 +9,7 @@ import com.sdxxtop.guardianapp.base.BaseView;
 public interface FaceLivenessContract {
     interface IView extends BaseView {
         void faceSuccess(String address);
+        void faceRegisterSuccess(String address);
     }
 
     interface IPresenter extends BasePresenter<IView> {

@@ -128,4 +128,13 @@ public interface EnvirApiService {
     Observable<RequestBean> postStudyCheck(@Field("data") String data);
 
 
+    @Multipart
+    @POST("face/reg")
+    Observable<RequestBean> postFaceReg(@PartMap Map<String, RequestBody> data);
+
+    @Multipart
+    @POST("face/verify")
+    Observable<RequestBean> postFaceVerify(@PartMap Map<String, RequestBody> data);
+
+
 }

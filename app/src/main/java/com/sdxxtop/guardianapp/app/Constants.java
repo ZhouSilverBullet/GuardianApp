@@ -5,6 +5,7 @@ import java.io.File;
 public interface Constants {
     String PATH_DATA = App.getInstance().getCacheDir().getAbsolutePath() + File.separator + "data";
     String PATH_CACHE = App.getInstance().getCacheDir().getAbsolutePath() + File.separator + "NetCache";
+    String PATH_IMG = App.getInstance().getCacheDir().getAbsolutePath() + File.separator + "img";
 
     public static String COMPANY_JIN_WEIDU = "company_jin_weidu";
 

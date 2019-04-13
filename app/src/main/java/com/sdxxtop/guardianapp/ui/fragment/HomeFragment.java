@@ -21,6 +21,7 @@ import com.sdxxtop.guardianapp.ui.activity.GridMapActivity;
 import com.sdxxtop.guardianapp.ui.activity.MyFaceLivenessActivity;
 import com.sdxxtop.guardianapp.ui.activity.PatrolRecordActivity;
 import com.sdxxtop.guardianapp.ui.adapter.HomeRecyclerAdapter;
+import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
 import com.sdxxtop.guardianapp.utils.GuardianUtils;
 import com.sdxxtop.guardianapp.utils.SpUtil;
@@ -53,6 +54,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
     LinearLayout mllContainer;
     private boolean isAdmin;
     private HomeRecyclerAdapter mRecyclerAdapter;
+    private boolean mIsFace;
 
     public static HomeFragment newInstance(boolean isAdmin) {
 
@@ -147,7 +149,12 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
                             break;
                         case 3:
 //                            UIUtils.showToast("打卡");
-                            intent = new Intent(getContext(), MyFaceLivenessActivity.class);
+                            if (mIsFace) {
+                                intent = new Intent(getContext(), MyFaceLivenessActivity.class);
+                                intent.putExtra("isFace", true);
+                            } else {
+                                toFace();
+                            }
                             break;
                     }
                     if (intent != null) {
@@ -156,6 +163,30 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
                 }
             });
         }
+    }
+
+    private void toFace() {
+        new IosAlertDialog(getActivity())
+                .builder()
+                .setTitle("提示")
+                .setMsg("您还没注册人脸，是否去注册人脸")
+                .setPositiveButton("", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getContext(), MyFaceLivenessActivity.class);
+                        intent.putExtra("isFace", false);
+                        startActivityForResult(intent, 100);
+                    }
+                })
+                .setNegativeButton("", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                })
+                .show();
+
+
     }
 
     @Override
@@ -172,12 +203,14 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
         tvPlace.setText(new StringBuilder().append(partName).append(" ").append(jobName));
 
         List<MainIndexBean.EventBean> eventBean = mainIndexBean.getEventBean();
-        mRecyclerAdapter.addData(eventBean);
+        mRecyclerAdapter.replaceData(eventBean);
         String img = mainIndexBean.getImg();
         if (!TextUtils.isEmpty(img)) {
             SpUtil.putString(Constants.USER_IMG, img);
             Glide.with(this).load(img).into(civHeader);
         }
+        // 1.注册成功 2.注册失败
+        mIsFace = mainIndexBean.getIs_face() == 1;
 //        mTextView.setText(data);
     }
 
@@ -204,4 +237,11 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100 && resultCode == 100) {
+            mPresenter.loadData();
+        }
+    }
 }
