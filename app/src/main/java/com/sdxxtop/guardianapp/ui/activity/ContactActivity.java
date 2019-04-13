@@ -15,7 +15,13 @@ import com.sdxxtop.guardianapp.ui.adapter.ContactAdapter;
 import com.sdxxtop.guardianapp.ui.widget.SearchView;
 import com.sdxxtop.guardianapp.ui.widget.SideIndexBar;
 import com.sdxxtop.guardianapp.utils.ItemDivider;
+import com.sdxxtop.guardianapp.utils.pinyin.CharacterParser;
+import com.sdxxtop.guardianapp.utils.pinyin.PinyinComparator;
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -33,6 +39,11 @@ public class ContactActivity extends BaseMvpActivity<ContactPresenter> implement
     SearchView mSearchView;
     private ContactAdapter mAdapter;
 
+    CharacterParser characterParser = CharacterParser.getInstance();
+    PinyinComparator pinyinComparator = new PinyinComparator();
+    List<ContactIndexBean.ContactBean> beanList = new ArrayList<>();
+
+
     @Override
     protected int getLayout() {
         return R.layout.activity_contact;
@@ -48,6 +59,10 @@ public class ContactActivity extends BaseMvpActivity<ContactPresenter> implement
             @Override
             public void onChanged(String s, int position) {
                 Log.e("SideIndexBar", s + " position:" + position);
+                int posi = mAdapter.getPositionForSection(s.charAt(0));
+                if (posi != -1 && mRecyclerView.getLayoutManager() instanceof LinearLayoutManager) {
+                    ((LinearLayoutManager) mRecyclerView.getLayoutManager()).scrollToPositionWithOffset(posi, 0);
+                }
             }
         });
 
@@ -56,6 +71,17 @@ public class ContactActivity extends BaseMvpActivity<ContactPresenter> implement
 
         mAdapter = new ContactAdapter(R.layout.item_contact_recycler);
         mRecyclerView.setAdapter(mAdapter);
+
+        StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration(mAdapter); //绑定之前的adapter
+
+        mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                headersDecor.invalidateHeaders();
+            }
+        });
+
+        mRecyclerView.addItemDecoration(headersDecor);
     }
 
     @Override
@@ -87,7 +113,37 @@ public class ContactActivity extends BaseMvpActivity<ContactPresenter> implement
     }
 
     @Override
-    public void showList(List<ContactIndexBean.ContactBean> contactBean) {
-        mAdapter.addData(contactBean);
+    public void showList(List<ContactIndexBean.ContactBean> contactBeanList) {
+        if (beanList != null && beanList.size() > 0) {
+            beanList.clear();
+        }
+
+        for (ContactIndexBean.ContactBean contactBean : contactBeanList) {
+            String pinyin = characterParser.getSelling(contactBean.getName());
+            String sortString = pinyin.substring(0, 1).toUpperCase();
+
+            if (sortString.matches("[A-Z]")) {
+                contactBean.sortLetters = sortString.toUpperCase();
+            } else {
+                contactBean.sortLetters = "#";
+            }
+            beanList.add(contactBean);
+        }
+
+
+        Collections.sort(beanList, pinyinComparator);
+
+        //计算mSideIndexBar的个数
+        LinkedHashSet<String> set = new LinkedHashSet<>();
+        for (ContactIndexBean.ContactBean contactBean : beanList) {
+            set.add(contactBean.sortLetters);
+        }
+        StringBuilder sb = new StringBuilder();
+        for (String s : set) {
+            sb.append(s);
+        }
+        mSideIndexBar.setLetters(sb.toString());
+
+        mAdapter.addData(beanList);
     }
 }

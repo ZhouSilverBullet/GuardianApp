@@ -72,6 +72,7 @@ dependencies {
         exclude group: 'com.android.support'
     }
     implementation 'com.prolificinteractive:material-calendarview:1.4.3'
+    implementation 'com.timehop.stickyheadersrecyclerview:library:0.4.3'
 
     implementation rootProject.ext.dependencies["multidex"]
     implementation rootProject.ext.dependencies["junit"]

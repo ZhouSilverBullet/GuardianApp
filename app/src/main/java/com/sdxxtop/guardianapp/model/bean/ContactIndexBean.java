@@ -29,6 +29,8 @@ public class ContactIndexBean {
         private String img;
         private String part_name;
 
+        public String sortLetters;
+
         public int getUserid() {
             return userid;
         }

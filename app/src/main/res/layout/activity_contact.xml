@@ -25,7 +25,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginRight="30dp" />
 
         <!--<ImageView-->
         <!--android:layout_width="match_parent"-->
@@ -39,11 +40,11 @@
             android:layout_alignParentRight="true"
             android:paddingTop="30dp"
             android:paddingBottom="30dp"
-            app:isBoldface="true"
+            app:isBoldface="false"
             app:isLetterCenter="true"
             app:letterColor="@color/green"
             app:letterSize="15sp"
-            app:selectBackground="@color/half_translate"
+            app:selectBackground="@color/transparent"
             app:selectLetterColor="@color/black" />
 
 
