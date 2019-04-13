@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.luck.picture.lib.PictureSelector;
@@ -19,8 +18,10 @@ import com.sdxxtop.guardianapp.model.bean.UcenterIndexBean;
 import com.sdxxtop.guardianapp.model.db.UserData;
 import com.sdxxtop.guardianapp.presenter.MinePresenter;
 import com.sdxxtop.guardianapp.presenter.contract.MineContract;
+import com.sdxxtop.guardianapp.ui.activity.EventReportListActivity;
 import com.sdxxtop.guardianapp.ui.activity.LoginActivity;
 import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
+import com.sdxxtop.guardianapp.ui.pop.QuitGroupPopView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 
@@ -138,7 +139,7 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
         tvPlace.setText(new StringBuilder().append(indexBean.getPart_name()).append(" ").append(indexBean.getStringPosition()));
     }
 
-    @OnClick({R.id.civ_header, R.id.tatv_message})
+    @OnClick({R.id.civ_header, R.id.tatv_message,R.id.tatv_report})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.civ_header:
@@ -154,6 +155,10 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
 
                 break;
             case R.id.tatv_message:
+                new QuitGroupPopView(getActivity(), mRootView, "海龙化工集团", "");
+                break;
+            case R.id.tatv_report:
+                startActivity(new Intent(getActivity(), EventReportListActivity.class));
                 break;
         }
     }

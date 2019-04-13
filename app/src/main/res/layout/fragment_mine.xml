@@ -108,6 +108,7 @@
                 app:tatv_text_view="单位信息" />
 
             <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+                android:id="@+id/tatv_report"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:tatv_text_view="我的上报" />
