@@ -110,7 +110,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         }
 
         if (!isSending) {
-            mHandler.obtainMessage(100, 60).sendToTarget();
+
             isSending = true;
 
             String trim = etPhone.getText().toString().trim();
@@ -137,19 +137,25 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         String mobile = loginBean.getMobile();
         int position = loginBean.getPosition();
         int userid = loginBean.getUserid();
+        String img = loginBean.getImg();
 
-        SpUtil.putString(Constants.AUTO_TOKEN, autoToken);
-        SpUtil.putInt(Constants.EXPIRE_TIME, expireTime);
-        SpUtil.putInt(Constants.PART_ID, partId);
-        SpUtil.putInt(Constants.USER_ID, userid);
-        SpUtil.putString(Constants.MOBILE, mobile);
+//        SpUtil.putString(Constants.AUTO_TOKEN, autoToken);
+//        SpUtil.putInt(Constants.EXPIRE_TIME, expireTime);
+//        SpUtil.putInt(Constants.PART_ID, partId);
+//        SpUtil.putInt(Constants.USER_ID, userid);
+//        SpUtil.putString(Constants.MOBILE, mobile);
 
         Intent intent = new Intent(this, LoginConfirmActivity.class);
         intent.putExtra("isAdmin", true);
+        intent.putExtra("autoToken", autoToken);
+        intent.putExtra("expireTime", expireTime);
+        intent.putExtra("partId", partId);
+        intent.putExtra("userid", userid);
         intent.putExtra("phone", mobile);
         intent.putExtra("name", name);
         intent.putExtra("partName", partName);
         intent.putExtra("position", position);
+        intent.putExtra("img", img);
         startActivity(intent);
 //        finish();
     }
@@ -184,6 +190,16 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         }
 
         finish();
+    }
+
+    @Override
+    public void sendCodeSuccess() {
+        mHandler.obtainMessage(100, 60).sendToTarget();
+    }
+
+    @Override
+    public void sendCodeError() {
+        isSending = false;
     }
 
     private static class LoginReceiver extends BroadcastReceiver {

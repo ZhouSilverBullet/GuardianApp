@@ -7,6 +7,8 @@ import com.sdxxtop.guardianapp.model.bean.LoginBean;
 public interface LoginContract {
     interface IView extends BaseView {
         void loginSuccess(LoginBean loginBean);
+        void sendCodeSuccess();
+        void sendCodeError();
     }
 
     interface IPresenter extends BasePresenter<LoginContract.IView> {

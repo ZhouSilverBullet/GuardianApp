@@ -15,6 +15,13 @@
         <item name="android:textSize">15sp</item>
     </style>
 
+    <style name="confirm_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textColor">@color/color_838282</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
     <style name="line_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>

@@ -36,15 +36,28 @@
                 <LinearLayout
                     android:layout_width="260dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal">
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/lv_line1"
+                        android:layout_width="90dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="53dp"
-                        android:text="姓\t\t\t\t\t\t名:"
-                        android:textColor="@color/color_838282"
-                        android:textSize="18sp" />
+                        android:layout_marginRight="53dp">
+
+                        <TextView
+                            style="@style/confirm_text"
+                            android:text="姓" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            style="@style/confirm_text"
+                            android:text="名：" />
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/tv_name"
@@ -67,13 +80,34 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/lv_line2"
+                        android:layout_width="90dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="53dp"
-                        android:text="手\t\t机\t\t号:"
-                        android:textColor="@color/color_838282"
-                        android:textSize="18sp" />
+                        android:layout_marginRight="53dp">
+
+                        <TextView
+                            style="@style/confirm_text"
+                            android:text="手" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            style="@style/confirm_text"
+                            android:text="机" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            style="@style/confirm_text"
+                            android:text="号：" />
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/tv_phone"
@@ -97,10 +131,11 @@
                     android:layout_gravity="center_horizontal">
 
                     <TextView
+                        android:id="@+id/tv_line3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="53dp"
-                        android:text="工作单位:"
+                        android:text="工作单位："
                         android:textColor="@color/color_838282"
                         android:textSize="18sp" />
 
@@ -125,13 +160,25 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/lv_line4"
+                        android:layout_width="90dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="53dp"
-                        android:text="岗\t\t\t\t\t\t位:"
-                        android:textColor="@color/color_838282"
-                        android:textSize="18sp" />
+                        android:layout_marginRight="53dp">
+
+                        <TextView
+                            style="@style/confirm_text"
+                            android:text="岗" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            style="@style/confirm_text"
+                            android:text="位：" />
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/tv_jobs"
@@ -157,7 +204,7 @@
                     android:layout_marginTop="38dp"
                     android:layout_marginRight="30dp"
                     android:background="@drawable/btn_green_corners30_solid_bg"
-                    android:text="确定本人"
+                    android:text="确认本人"
                     android:textColor="@color/white" />
 
                 <Button
@@ -175,6 +222,7 @@
         </androidx.cardview.widget.CardView>
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civ_img"
             android:layout_width="95dp"
             android:layout_height="95dp"
             android:layout_gravity="center_horizontal"

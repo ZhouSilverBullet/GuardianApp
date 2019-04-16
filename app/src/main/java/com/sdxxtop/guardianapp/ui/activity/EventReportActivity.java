@@ -135,7 +135,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 
         //上报路径
         String pathName = tatvReportPath.getRightTVString();
-        if (reportPathData == null || TextUtils.isEmpty(queryName)) {
+        if (reportPathData == null || TextUtils.isEmpty(pathName)) {
             showToast("请选择上报路径");
             return;
         }
@@ -312,8 +312,8 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
         if (reportPathData == null) {
             reportPathData = new ArrayList<>();
             reportPathData.add("环保局");
-            reportPathData.add("城管局");
             reportPathData.add("安监局");
+            reportPathData.add("城管局");
             reportPathData.add("住建局");
         }
 

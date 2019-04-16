@@ -51,11 +51,13 @@ public class LoginPresenter extends RxPresenter<LoginContract.IView> implements 
         Disposable disposable = RxUtils.handleHttp(observable, new IRequestCallback<RequestBean>() {
             @Override
             public void onSuccess(RequestBean requestBean) {
+                mView.sendCodeSuccess();
                 UIUtils.showToast("发送成功");
             }
 
             @Override
             public void onFailure(int code, String error) {
+                mView.sendCodeError();
                 UIUtils.showToast(error);
             }
         });

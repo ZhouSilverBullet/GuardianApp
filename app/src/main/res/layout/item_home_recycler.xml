@@ -101,21 +101,21 @@
                     android:id="@+id/tv_score1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:gravity="right"
                     android:text="截止:3.13"
                     android:textColor="@color/color_F9A15C"
                     android:textSize="10sp"
-                    android:gravity="right"
-                    android:layout_gravity="right"
                     android:visibility="invisible" />
 
                 <TextView
                     android:id="@+id/tv_score2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="截止:3.13"
-                    android:gravity="right"
                     android:layout_gravity="right"
+                    android:layout_marginTop="5dp"
+                    android:gravity="right"
+                    android:text="截止:3.13"
                     android:textColor="@color/color_F9A15C"
                     android:textSize="10sp"
                     android:visibility="invisible" />

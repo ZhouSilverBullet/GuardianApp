@@ -21,6 +21,7 @@ public class LoginBean {
     private int position;
     private String part_name;
     private int part_id;
+    private String img;
 
     public String getAuto_token() {
         return auto_token;
@@ -84,5 +85,13 @@ public class LoginBean {
 
     public void setPart_id(int part_id) {
         this.part_id = part_id;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 }
