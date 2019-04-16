@@ -74,7 +74,7 @@ public class ContactSearchActivity extends BaseMvpActivity<ContactSearchPresente
         if (!TextUtils.isEmpty(s)) {
             mPresenter.loadData(s.toString());
         } else {
-            mAdapter.addData(new ArrayList<>());
+            mAdapter.replaceData(new ArrayList<>());
         }
     }
 
