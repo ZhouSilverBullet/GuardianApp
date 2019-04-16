@@ -82,7 +82,7 @@
                     <TextView
                         style="@style/text"
                         android:drawableTop="@drawable/record_home"
-                        android:text="查询记录" />
+                        android:text="巡查记录" />
 
                     <TextView
                         style="@style/text"

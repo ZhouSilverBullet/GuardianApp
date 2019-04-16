@@ -47,7 +47,7 @@ public class HomeRecyclerAdapter extends BaseQuickAdapter<MainIndexBean.EventBea
 
         switch (item.type) {
             case MainIndexBean.EventBean.TYPE_PENDING:
-                tvTitle.setText("代办任务");
+                tvTitle.setText("待办任务");
                 if (item.mPendingEventBean != null) {
                     for (MainIndexBean.PendingEventBean pendingEventBean : item.mPendingEventBean) {
                         EventData eventData = new EventData();

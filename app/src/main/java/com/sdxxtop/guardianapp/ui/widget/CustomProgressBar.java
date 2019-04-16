@@ -2,6 +2,7 @@ package com.sdxxtop.guardianapp.ui.widget;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -15,6 +16,9 @@ import android.widget.TextView;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -24,6 +28,9 @@ import java.util.List;
  * Desc:
  */
 public class CustomProgressBar extends RelativeLayout {
+
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private SimpleDateFormat sdf2 = new SimpleDateFormat("MM.dd HH:mm:ss");
 
     private ImageView img1;
     private ImageView img2;
@@ -96,20 +103,21 @@ public class CustomProgressBar extends RelativeLayout {
      */
     public void setStatus(int status, List<String> date) {
         setStatus(status - 1);
-        setDateStatus(date);
+        setDateStatus(status - 1, date);
         this.invalidate();
     }
 
-    private void setDateStatus(List<String> date) {
-        switch (date.size() - 1) {
+    private void setDateStatus(int curStatus, List<String> date) {
+        switch (curStatus) {
+            case 4:
             case 3:
-                tvDate4.setText(date.get(3));
+                tvDate4.setText(parseShowDate(date.get(3)));
             case 2:
-                tvDate3.setText(date.get(2));
+                tvDate3.setText(parseShowDate(date.get(2)));
             case 1:
-                tvDate2.setText(date.get(1));
+                tvDate2.setText(parseShowDate(date.get(1)));
             case 0:
-                tvDate1.setText(date.get(0));
+                tvDate1.setText(parseShowDate(date.get(0)));
                 break;
         }
     }
@@ -172,4 +180,17 @@ public class CustomProgressBar extends RelativeLayout {
         }
     }
 
+    private String parseShowDate(String strDate) {
+        if (TextUtils.isEmpty(strDate)) {
+            return "";
+        }
+
+        try {
+            Date date = sdf.parse(strDate);
+            return sdf2.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 }

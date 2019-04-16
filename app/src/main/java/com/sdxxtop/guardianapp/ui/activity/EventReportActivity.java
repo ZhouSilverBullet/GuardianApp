@@ -162,7 +162,8 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     @Override
     public void pushSuccess(String eventId) {
         hideLoadingDialog();
-        Intent intent = new Intent(this, EventReportDetailActivity.class);
+        UIUtils.showToast("上报成功");
+        Intent intent = new Intent(this, EventReportListActivity.class);
         intent.putExtra("eventId", eventId);
         startActivity(intent);
     }
