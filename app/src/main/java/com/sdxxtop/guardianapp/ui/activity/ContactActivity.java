@@ -10,7 +10,7 @@ import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.model.bean.ContactIndexBean;
 import com.sdxxtop.guardianapp.presenter.ContactPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.ContactContract;
-import com.sdxxtop.guardianapp.ui.ContactSearchActivity;
+import com.sdxxtop.guardianapp.ui.activity.ContactSearchActivity;
 import com.sdxxtop.guardianapp.ui.adapter.ContactAdapter;
 import com.sdxxtop.guardianapp.ui.widget.SearchView;
 import com.sdxxtop.guardianapp.ui.widget.SideIndexBar;

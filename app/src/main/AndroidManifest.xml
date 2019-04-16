@@ -94,7 +94,7 @@
             android:theme="@style/AppNormalTheme"
             />
         <activity android:name=".ui.activity.EventReportDetailSecondActivity" />
-        <activity android:name=".ui.ContactSearchActivity" />
+        <activity android:name=".ui.activity.ContactSearchActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

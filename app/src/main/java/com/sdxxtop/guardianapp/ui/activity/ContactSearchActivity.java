@@ -1,4 +1,4 @@
-package com.sdxxtop.guardianapp.ui;
+package com.sdxxtop.guardianapp.ui.activity;
 
 import android.text.Editable;
 import android.text.TextUtils;

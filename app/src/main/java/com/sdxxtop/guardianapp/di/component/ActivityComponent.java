@@ -4,7 +4,7 @@ import android.app.Activity;
 
 import com.sdxxtop.guardianapp.di.module.ActivityModule;
 import com.sdxxtop.guardianapp.di.qualifier.ActivityScope;
-import com.sdxxtop.guardianapp.ui.ContactSearchActivity;
+import com.sdxxtop.guardianapp.ui.activity.ContactSearchActivity;
 import com.sdxxtop.guardianapp.ui.activity.ContactActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity;
