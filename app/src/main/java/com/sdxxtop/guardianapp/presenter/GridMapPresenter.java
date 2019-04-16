@@ -96,7 +96,7 @@ public class GridMapPresenter extends RxPresenter<GridMapContract.IView> impleme
     }
 
 
-    private void parseData(MainMapBean.UserBean middle, String lanLan) {
+    private void parseData(int index, MainMapBean.UserBean middle, String lanLan) {
         if (TextUtils.isEmpty(lanLan)) {
             return;
         }
@@ -120,7 +120,7 @@ public class GridMapPresenter extends RxPresenter<GridMapContract.IView> impleme
         if (firstLatLng != null) {
             list.add(firstLatLng);
         }
-        mView.showPolygon(middle, list);
+        mView.showPolygon(index, middle, list);
     }
 
     private void parseData(DistrictItem districtItem) {
@@ -180,8 +180,9 @@ public class GridMapPresenter extends RxPresenter<GridMapContract.IView> impleme
         public void run() {
             for (MainMapBean.UserBean userBean : user) {
                 String lonLon = userBean.getLonLon();
+                int i = user.indexOf(userBean);
                 if (!TextUtils.isEmpty(lonLon) && presenterDef.get() != null) {
-                    presenterDef.get().parseData(userBean, lonLon);
+                    presenterDef.get().parseData(i, userBean, lonLon);
                 }
             }
         }

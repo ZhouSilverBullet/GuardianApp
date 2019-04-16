@@ -37,7 +37,7 @@ public class LoginPresenter extends RxPresenter<LoginContract.IView> implements 
 
             @Override
             public void onFailure(int code, String error) {
-
+                UIUtils.showToast(error);
             }
         });
         addSubscribe(disposable);

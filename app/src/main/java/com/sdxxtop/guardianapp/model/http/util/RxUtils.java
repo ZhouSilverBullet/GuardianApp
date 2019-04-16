@@ -37,9 +37,9 @@ public class RxUtils {
                         if (requestBean.getCode() == 200) {
                             return createData(requestBean);
                         } else if (!TextUtils.isEmpty(requestBean.getMsg())) {
-                            return Observable.error(new ApiException(requestBean.getMsg()));
+                            return Observable.error(new ApiException(requestBean.getCode(), requestBean.getMsg()));
                         } else {
-                            return Observable.error(new ApiException("error"));
+                            return Observable.error(new ApiException(-99, "获取数据为空"));
                         }
                     }
                 });
@@ -114,7 +114,11 @@ public class RxUtils {
             @Override
             public void accept(Throwable throwable) throws Exception {
                 if (requestCallback != null) {
-                    requestCallback.onFailure(-100, NetUtil.getHttpExceptionMsg(throwable, ""));
+                    if (throwable instanceof ApiException) {
+                        requestCallback.onFailure(((ApiException) throwable).getCode(), throwable.getMessage());
+                    } else {
+                        requestCallback.onFailure(-100, NetUtil.getHttpExceptionMsg(throwable, ""));
+                    }
                 }
             }
         };

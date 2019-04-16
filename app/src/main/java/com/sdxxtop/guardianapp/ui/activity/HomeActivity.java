@@ -1,5 +1,6 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
+import android.Manifest;
 import android.animation.Animator;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -27,6 +28,7 @@ import com.sdxxtop.guardianapp.utils.ReflectUtils;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.functions.Consumer;
 import me.yokeyword.fragmentation.SupportFragment;
 
 public class HomeActivity extends BaseMvpActivity<HomePresenter> implements HomeContract.IView {
@@ -36,6 +38,7 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
     private int prePosition;
     private SupportFragment[] mFragments = new SupportFragment[3];
     private boolean isAdmin;
+    private RxPermissions mRxPermissions;
 
     @Override
     protected int getLayout() {
@@ -65,6 +68,15 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
         initAHNavigation();
 
         switchFragment(0);
+
+        mRxPermissions = new RxPermissions(this);
+        mRxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION).subscribe(new Consumer<Boolean>() {
+            @Override
+            public void accept(Boolean aBoolean) throws Exception {
+
+            }
+        });
     }
 
     private void initAHNavigation() {

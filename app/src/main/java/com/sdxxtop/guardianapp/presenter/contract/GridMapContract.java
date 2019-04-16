@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface GridMapContract {
     interface IView extends BaseView {
-        void showPolygon(MainMapBean.UserBean middle, List<LatLng> list);
+        void showPolygon(int index, MainMapBean.UserBean middle, List<LatLng> list);
     }
 
     interface IPresenter extends BasePresenter<IView> {

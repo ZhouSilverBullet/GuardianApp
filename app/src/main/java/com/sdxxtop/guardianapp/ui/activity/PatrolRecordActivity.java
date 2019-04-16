@@ -233,7 +233,7 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
 //                moveToPath();
 //                drawMapLine();
             } else {
-                showToast("定位失败");
+//                showToast("定位失败");
             }
         }
     }
@@ -274,7 +274,7 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
     public void showData(SignLogBean signLogBean) {
 //        ExerciseBean.DataBean data = bean.getData();
 
-        int distance = signLogBean.getDistance();
+        double distance = signLogBean.getDistance();
         int num = signLogBean.getNum();
 
         tvPosition.setText("共" + distance + "米 打卡" + num + "次");

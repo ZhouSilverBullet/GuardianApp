@@ -153,7 +153,7 @@ public class GridMapActivity extends BaseMvpActivity<GridMapPresenter> implement
     }
 
     @Override
-    public void showPolygon(MainMapBean.UserBean userBean, List<LatLng> list) {
+    public void showPolygon(int index, MainMapBean.UserBean userBean, List<LatLng> list) {
         PolygonOptions polygonOptions = new PolygonOptions();
         polygonOptions.addAll(list);
         polygonOptions.strokeWidth(15) // 多边形的边框
@@ -183,7 +183,9 @@ public class GridMapActivity extends BaseMvpActivity<GridMapPresenter> implement
                                 markerOptions.icon(BitmapDescriptorFactory.fromBitmap(bm));
                                 markerOptions.position(latLng).title("").snippet(userBean.getAddress());
                                 aMap.addMarker(markerOptions);
-                                aMap.moveCamera(CameraUpdateFactory.changeLatLng(latLng));
+                                if (index == 0) {
+                                    aMap.moveCamera(CameraUpdateFactory.changeLatLng(latLng));
+                                }
 //                                mAdapter.notifyAll();
                             }
                         }

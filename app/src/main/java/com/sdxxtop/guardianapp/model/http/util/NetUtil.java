@@ -20,8 +20,6 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.Map;
 
-import me.jessyan.autosize.utils.LogUtils;
-
 /**
  * 1. map ({(a,1),(b,2),(c,3)}) 转成字符串 str (a=1&b=2&c=3)
  * 2. str = str + appkey
