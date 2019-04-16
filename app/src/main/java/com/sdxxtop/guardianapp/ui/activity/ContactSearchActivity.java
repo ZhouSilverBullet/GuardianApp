@@ -3,7 +3,9 @@ package com.sdxxtop.guardianapp.ui.activity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
@@ -23,6 +25,8 @@ import butterknife.BindView;
 public class ContactSearchActivity extends BaseMvpActivity<ContactSearchPresenter> implements ContactSearchContract.IView, TextWatcher {
     @BindView(R.id.et_search)
     EditText etSearch;
+    @BindView(R.id.tv_cancel)
+    TextView tvCancel;
 
     @BindView(R.id.rv)
     RecyclerView mRecyclerView;
@@ -52,6 +56,13 @@ public class ContactSearchActivity extends BaseMvpActivity<ContactSearchPresente
     protected void initEvent() {
         super.initEvent();
         etSearch.addTextChangedListener(this);
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //清除
+                etSearch.setText("");
+            }
+        });
     }
 
     @Override
@@ -73,8 +84,10 @@ public class ContactSearchActivity extends BaseMvpActivity<ContactSearchPresente
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         if (!TextUtils.isEmpty(s)) {
             mPresenter.loadData(s.toString());
+            tvCancel.setVisibility(View.VISIBLE);
         } else {
             mAdapter.replaceData(new ArrayList<>());
+            tvCancel.setVisibility(View.GONE);
         }
     }
 

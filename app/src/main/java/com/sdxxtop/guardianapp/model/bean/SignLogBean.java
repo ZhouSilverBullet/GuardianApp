@@ -15,7 +15,7 @@ public class SignLogBean {
      */
 
     private int num;
-    private double distance;
+    private String distance;
     private List<SignBean> sign;
 
     public int getNum() {
@@ -26,11 +26,11 @@ public class SignLogBean {
         this.num = num;
     }
 
-    public double getDistance() {
+    public String getDistance() {
         return distance;
     }
 
-    public void setDistance(double distance) {
+    public void setDistance(String distance) {
         this.distance = distance;
     }
 

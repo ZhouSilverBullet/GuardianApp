@@ -169,8 +169,8 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
         new IosAlertDialog(getActivity())
                 .builder()
                 .setTitle("提示")
-                .setMsg("您还没注册人脸，是否去注册人脸")
-                .setPositiveButton("", new View.OnClickListener() {
+                .setMsg("您还没有注册人脸信息，请先录入人脸信息")
+                .setPositiveButton("录入", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(getContext(), MyFaceLivenessActivity.class);

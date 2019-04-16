@@ -1,6 +1,7 @@
 package com.sdxxtop.guardianapp.ui.adapter;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -53,10 +54,11 @@ public class HomeRecyclerAdapter extends BaseQuickAdapter<MainIndexBean.EventBea
                         EventData eventData = new EventData();
                         eventData.end_date = pendingEventBean.getEnd_date();
                         eventData.title = pendingEventBean.getTitle();
+                        eventData.status = pendingEventBean.getStatus();
                         eventDataList.add(eventData);
                     }
                 }
-                handleTaskStatus(tvTask1, tvTask2, tvScore1, tvScore2, eventDataList);
+                handleTaskStatus(MainIndexBean.EventBean.TYPE_PENDING, tvTask1, tvTask2, tvScore1, tvScore2, eventDataList);
                 itemImageView.setImageResource(R.drawable.icon_1_list);
                 view.setBackgroundColor(mContext.getResources().getColor(R.color.color_7ECEF4));
 
@@ -69,10 +71,11 @@ public class HomeRecyclerAdapter extends BaseQuickAdapter<MainIndexBean.EventBea
                         EventData eventData = new EventData();
                         eventData.end_date = pendingEventBean.getEnd_date();
                         eventData.title = pendingEventBean.getTitle();
+                        eventData.status = pendingEventBean.getStatus();
                         eventDataList.add(eventData);
                     }
                 }
-                handleTaskStatus(tvTask1, tvTask2, tvScore1, tvScore2, eventDataList);
+                handleTaskStatus(MainIndexBean.EventBean.TYPE_ADD, tvTask1, tvTask2, tvScore1, tvScore2, eventDataList);
 
 
                 itemImageView.setImageResource(R.drawable.icon_2_list);
@@ -114,7 +117,7 @@ public class HomeRecyclerAdapter extends BaseQuickAdapter<MainIndexBean.EventBea
         });
     }
 
-    private void handleTaskStatus(TextView tvTask1, TextView tvTask2,
+    private void handleTaskStatus(int type, TextView tvTask1, TextView tvTask2,
                                   TextView tvScore1, TextView tvScore2, List<EventData> eventDataList) {
         switch (eventDataList.size()) {
             case 0:
@@ -132,21 +135,93 @@ public class HomeRecyclerAdapter extends BaseQuickAdapter<MainIndexBean.EventBea
         }
 
         if (eventDataList.size() == 1) {
-            tvTask1.setText(eventDataList.get(0).title);
+            String appendValue = "新任务：";
+            if (type == MainIndexBean.EventBean.TYPE_ADD) {
+                appendValue = getAddValue(eventDataList.get(0).status);
+            } else {
+                appendValue = getAppendValue(eventDataList.get(0).status);
+            }
+
+            if (!TextUtils.isEmpty(appendValue)) {
+                tvTask1.setText(appendValue + eventDataList.get(0).title);
+            } else {
+                tvTask1.setVisibility(View.GONE);
+            }
             handleScore(tvScore1, eventDataList.get(0).end_date);
         } else if (eventDataList.size() >= 2) {
-            tvTask1.setText(eventDataList.get(0).title);
+
+            String appendValue = "新任务：";
+            String appendValue2 = "新任务：";
+
+            if (type == MainIndexBean.EventBean.TYPE_ADD) {
+                appendValue = getAddValue(eventDataList.get(0).status);
+                appendValue2 = getAddValue(eventDataList.get(1).status);
+            } else {
+                appendValue = getAppendValue(eventDataList.get(0).status);
+                appendValue2 = getAppendValue(eventDataList.get(1).status);
+            }
+
+            if (!TextUtils.isEmpty(appendValue)) {
+                tvTask1.setText(appendValue + eventDataList.get(0).title);
+            } else {
+                tvTask1.setVisibility(View.GONE);
+            }
             handleScore(tvScore1, eventDataList.get(0).end_date);
 
-            tvTask2.setText(eventDataList.get(1).title);
+            if (!TextUtils.isEmpty(appendValue2)) {
+                tvTask2.setText(appendValue2 + eventDataList.get(1).title);
+            } else {
+                tvTask2.setVisibility(View.GONE);
+            }
             handleScore(tvScore2, eventDataList.get(1).end_date);
         }
 
     }
 
+    private String getAppendValue(int status) {
+        String value = "";
+        switch (status) {
+            case 1:
+                value = "新任务：";
+                break;
+            case 2:
+                value = "新任务：";
+                break;
+//            case 3:
+//                value = "新反馈：";
+//                break;
+//            //受理事变
+//            default:
+//                value = "新完成：";
+//                break;
+        }
+        return value;
+    }
+
+    private String getAddValue(int status) {
+        String value = "";
+        switch (status) {
+            case 1:
+                value = "新提交：";
+                break;
+            case 2:
+                value = "新派发：";
+                break;
+            case 3:
+                value = "新反馈：";
+                break;
+            //受理事变
+            default:
+                value = "新完成：";
+                break;
+        }
+        return value;
+    }
+
     public static class EventData {
         public String title;
         public String end_date;
+        public int status;
     }
 
 

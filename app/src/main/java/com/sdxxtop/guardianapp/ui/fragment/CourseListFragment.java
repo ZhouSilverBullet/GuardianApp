@@ -12,6 +12,7 @@ import com.sdxxtop.guardianapp.model.bean.course.ExamCellBean;
 import com.sdxxtop.guardianapp.presenter.CourseListPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.CourseListContract;
 import com.sdxxtop.guardianapp.ui.adapter.CourseListAdapter;
+import com.sdxxtop.guardianapp.utils.GuardianUtils;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -115,9 +116,9 @@ public class CourseListFragment extends BaseMvpFragment<CourseListPresenter> imp
     @Override
     public void showList(List<CourseCellBean> courseBeanList) {
         //分类
-        Map<Integer, List<CourseCellBean>> map = new LinkedHashMap<>();
+        Map<String, List<CourseCellBean>> map = new LinkedHashMap<>();
         for (CourseCellBean courseBean : courseBeanList) {
-            int type = courseBean.getType();
+            String type = courseBean.getClassify_name();
             List<CourseCellBean> beanList = map.get(type);
             if (beanList == null) {
                 beanList = new ArrayList<>();
@@ -130,7 +131,8 @@ public class CourseListFragment extends BaseMvpFragment<CourseListPresenter> imp
 
         //重新转载数据
         List<BaseCourseDataBean> list = new ArrayList<>();
-        for (Integer integer : map.keySet()) {
+        int size = 0;
+        for (String integer : map.keySet()) {
             List<CourseCellBean> tempList = map.get(integer);
 
             if (tempList == null) {  //取出来数据为空
@@ -143,6 +145,8 @@ public class CourseListFragment extends BaseMvpFragment<CourseListPresenter> imp
                 if (i == 0) { //设置头
                     CourseHeaderBean e = new CourseHeaderBean();
                     e.strHeader = courseCellBean.getClassify_name();
+                    e.color = GuardianUtils.getColor(size);
+                    size++;
                     list.add(e);
                 }
                 if (isCourse) {
@@ -174,9 +178,9 @@ public class CourseListFragment extends BaseMvpFragment<CourseListPresenter> imp
     @Override
     public void showExam(List<ExamCellBean> examCellBeans) {
         //分类
-        Map<Integer, List<ExamCellBean>> map = new LinkedHashMap<>();
+        Map<String, List<ExamCellBean>> map = new LinkedHashMap<>();
         for (ExamCellBean courseBean : examCellBeans) {
-            int type = courseBean.getType();
+            String type = courseBean.getClassify_name();
             List<ExamCellBean> beanList = map.get(type);
             if (beanList == null) {
                 beanList = new ArrayList<>();
@@ -189,7 +193,8 @@ public class CourseListFragment extends BaseMvpFragment<CourseListPresenter> imp
 
         //重新转载数据
         List<BaseCourseDataBean> list = new ArrayList<>();
-        for (Integer integer : map.keySet()) {
+        int size = 0;
+        for (String integer : map.keySet()) {
             List<ExamCellBean> tempList = map.get(integer);
 
             if (tempList == null) {  //取出来数据为空
@@ -202,6 +207,8 @@ public class CourseListFragment extends BaseMvpFragment<CourseListPresenter> imp
                 if (i == 0) { //设置头
                     CourseHeaderBean e = new CourseHeaderBean();
                     e.strHeader = courseCellBean.getClassify_name();
+                    e.color = GuardianUtils.getColor(size);
+                    size++;
                     list.add(e);
                 }
 

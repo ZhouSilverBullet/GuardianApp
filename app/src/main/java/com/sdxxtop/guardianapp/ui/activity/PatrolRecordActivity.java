@@ -38,6 +38,7 @@ import com.sdxxtop.guardianapp.ui.pop.StatSelectionDateWindow;
 import com.sdxxtop.guardianapp.ui.widget.TextAndTextView;
 import com.sdxxtop.guardianapp.utils.Date2Util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -274,9 +275,9 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
     public void showData(SignLogBean signLogBean) {
 //        ExerciseBean.DataBean data = bean.getData();
 
-        double distance = signLogBean.getDistance();
-        int num = signLogBean.getNum();
+        String distance = signLogBean.getDistance();
 
+        int num = signLogBean.getNum();
         tvPosition.setText("共" + distance + "米 打卡" + num + "次");
 
         //每次请求刷新一次
@@ -379,7 +380,7 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
                 public void onSelector(String date, CalendarDay calendarDay) {
                     // 请求网络
                     chooseDay = date;
-                    tatvDate.getTextRightText().setText(Date2Util.getFormatDate(chooseDay));
+                    tatvDate.getTextRightText().setText(getFormatDate(chooseDay));
 //                    mPresenter.kaoqinMore(getUserID(), studentID, date);
                     mPresenter.loadData(date);
                     selectionDateWindow.dismiss();
@@ -396,5 +397,20 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         todayDate = simpleDateFormat.format(date);
         tatvDate.getTextRightText().setText("今天");
+    }
+
+    public String getFormatDate(String sDate) {
+        if (sDate.equals(Date2Util.getDate())) {
+            return "今天";
+        }
+        String formatDate = "";
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy.MM.dd");
+        try {
+            formatDate = sdf2.format(sdf1.parse(sDate));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return formatDate;
     }
 }

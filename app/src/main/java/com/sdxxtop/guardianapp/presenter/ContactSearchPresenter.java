@@ -24,7 +24,7 @@ public class ContactSearchPresenter extends RxPresenter<ContactSearchContract.IV
     public void loadData(String key) {
         Params params = new Params();
         params.put("sh", key);
-        Observable<RequestBean<ContactIndexBean>> observable = getEnvirApi().postContactIndex(params.getData());
+        Observable<RequestBean<ContactIndexBean>> observable = getEnvirApi().postContactSearch(params.getData());
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<ContactIndexBean>() {
             @Override
             public void onSuccess(ContactIndexBean contactIndexBean) {

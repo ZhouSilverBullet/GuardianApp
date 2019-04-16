@@ -108,6 +108,9 @@ public class MyFaceLivenessActivity extends FaceLivenessActivity implements Face
         UIUtils.showToast("打卡成功");
         tvLocation.setText(address);
         btnCard.setVisibility(View.VISIBLE);
+
+        //打卡完成返回首页
+        finish();
     }
 
     @Override

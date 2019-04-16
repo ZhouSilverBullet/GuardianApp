@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tatv_text_img_is_show="false"
-        app:tatv_text_view="今日巡查逻路径" />
+        app:tatv_text_view="今日巡查路径" />
 
     <RelativeLayout
         android:layout_width="match_parent"

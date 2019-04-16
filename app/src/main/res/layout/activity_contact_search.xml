@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -7,24 +8,33 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
+    <com.sdxxtop.guardianapp.ui.widget.TitleView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:leftLayoutIconIsGray="true"
+        app:titleValue="搜索联系人" />
+
     <RelativeLayout
         android:id="@+id/rl_search_background"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@color/color_E4E4E4">
+        android:layout_height="58dp"
+        android:animateLayoutChanges="true"
+        android:background="@color/color_E4E4E4"
+        android:paddingLeft="8dp"
+        android:paddingTop="10dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="10dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
-            android:background="@color/white"
-            android:paddingLeft="10dp">
+            android:background="@drawable/contact_search_bg">
 
             <EditText
                 android:id="@+id/et_search"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
                 android:background="@null"
@@ -47,7 +57,8 @@
             android:paddingRight="15dp"
             android:text="取消"
             android:textColor="@color/color_32B16C"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:visibility="gone" />
     </RelativeLayout>
 
 

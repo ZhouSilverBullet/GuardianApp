@@ -1,6 +1,7 @@
 package com.sdxxtop.guardianapp.ui.adapter;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -44,6 +45,7 @@ public class CourseListAdapter extends BaseMultiItemQuickAdapter<BaseCourseDataB
                 if (item instanceof CourseHeaderBean) {
                     TextView tvHeader = helper.getView(R.id.tv_header);
                     tvHeader.setText(((CourseHeaderBean) item).strHeader);
+                    tvHeader.setBackgroundColor(Color.parseColor(((CourseHeaderBean) item).color));
                 }
                 break;
             case BaseCourseDataBean.TYPE_CELL:
