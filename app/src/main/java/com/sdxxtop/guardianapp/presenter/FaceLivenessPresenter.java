@@ -139,8 +139,8 @@ public class FaceLivenessPresenter extends RxPresenter<FaceLivenessContract.IVie
 
     private void loginFace(File imgFile) {
 
-        UIUtils.showToast("人脸创建" + imgFile);
         if (imgFile == null) {
+            UIUtils.showToast("人脸图片失败");
             return;
         }
 

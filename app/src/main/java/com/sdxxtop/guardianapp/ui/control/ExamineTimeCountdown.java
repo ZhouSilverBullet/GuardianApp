@@ -84,14 +84,14 @@ public class ExamineTimeCountdown implements Handler.Callback {
      * @return
      */
     private String getShowTime(long longTime) {
-        long hh = longTime / 60 / 60 % 60;
-        long mm = longTime / 60 % 60;
+//        long hh = longTime / 60 / 60 % 60;
+        long mm = longTime / 60;
         long ss = longTime % 60;
 
-        String hour = hh > 10 ? String.valueOf(hh) : "0" + hh;
+//        String hour = hh > 10 ? String.valueOf(hh) : "0" + hh;
         String minute = mm > 10 ? String.valueOf(mm) : "0" + mm;
-//        String second = ss > 10 ? String.valueOf(ss) : "0" + ss;
-        return hour + ":" + minute /*+ ":" + second*/;
+        String second = ss > 10 ? String.valueOf(ss) : "0" + ss;
+        return /*hour + ":" +*/ minute + ":" + second;
     }
 
     /**

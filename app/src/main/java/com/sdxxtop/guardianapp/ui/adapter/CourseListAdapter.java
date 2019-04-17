@@ -9,18 +9,28 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sdxxtop.guardianapp.R;
+import com.sdxxtop.guardianapp.model.bean.RequestBean;
+import com.sdxxtop.guardianapp.model.bean.StudyQuestionBean;
 import com.sdxxtop.guardianapp.model.bean.course.BaseCourseDataBean;
 import com.sdxxtop.guardianapp.model.bean.course.CourseCellBean;
 import com.sdxxtop.guardianapp.model.bean.course.CourseHeaderBean;
 import com.sdxxtop.guardianapp.model.bean.course.ExamCellBean;
+import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
+import com.sdxxtop.guardianapp.model.http.net.Params;
+import com.sdxxtop.guardianapp.model.http.net.RetrofitHelper;
+import com.sdxxtop.guardianapp.model.http.util.RxUtils;
 import com.sdxxtop.guardianapp.ui.activity.ExamineActivity;
 import com.sdxxtop.guardianapp.ui.activity.NewsDetailsActivity;
 import com.sdxxtop.guardianapp.ui.activity.VideoPlayActivity;
+import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
 
 public class CourseListAdapter extends BaseMultiItemQuickAdapter<BaseCourseDataBean, BaseViewHolder> {
 
@@ -83,8 +93,8 @@ public class CourseListAdapter extends BaseMultiItemQuickAdapter<BaseCourseDataB
                                 mContext.startActivity(intent);
                             } else {
                                 Intent intent = new Intent(mContext, VideoPlayActivity.class);
-                                intent.putExtra("video_path",((CourseCellBean) item).getUrl());
-                                intent.putExtra("title",((CourseCellBean) item).getTitle());
+                                intent.putExtra("video_path", ((CourseCellBean) item).getUrl());
+                                intent.putExtra("title", ((CourseCellBean) item).getTitle());
                                 mContext.startActivity(intent);
                             }
                         }
@@ -126,10 +136,9 @@ public class CourseListAdapter extends BaseMultiItemQuickAdapter<BaseCourseDataB
                         helper.getConvertView().setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent intent = new Intent(mContext, ExamineActivity.class);
-                                intent.putExtra("examId", ((ExamCellBean) item).getExam_id());
-                                intent.putExtra("examTime", ((ExamCellBean) item).getExam_time());
-                                mContext.startActivity(intent);
+
+                                skipExam(((ExamCellBean) item).getExam_id(), ((ExamCellBean) item).getExam_time());
+
                             }
                         });
                     }
@@ -142,6 +151,30 @@ public class CourseListAdapter extends BaseMultiItemQuickAdapter<BaseCourseDataB
 
                 break;
         }
+    }
+
+    private void skipExam(int exam_id, String exam_time) {
+        Params params = new Params();
+        params.put("ei", exam_id);
+        params.put("nm", 1);
+        params.put("ai", 0);
+        Observable<RequestBean<StudyQuestionBean>> observable =  RetrofitHelper.getEnvirApi().postStudyQuestion(params.getData());
+        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<StudyQuestionBean>() {
+            @Override
+            public void onSuccess(StudyQuestionBean studyQuestionBean) {
+                //成功了就跳转
+                Intent intent = new Intent(mContext, ExamineActivity.class);
+                intent.putExtra("examId", exam_id);
+                intent.putExtra("examTime", exam_time);
+                mContext.startActivity(intent);
+            }
+
+            @Override
+            public void onFailure(int code, String error) {
+                UIUtils.showToast(error);
+            }
+        });
+
     }
 
     private String handleTime(String examTime) {

@@ -47,14 +47,10 @@ public class ExamineActivity extends BaseMvpActivity<ExaminePresenter> implement
     TextView tvSubjectContent;
     @BindView(R.id.civ_header)
     CircleImageView civHeader;
-    @BindView(R.id.siv_a)
-    SubjectItemView selectA;
-    @BindView(R.id.siv_b)
-    SubjectItemView selectB;
-    @BindView(R.id.siv_c)
-    SubjectItemView selectC;
-    @BindView(R.id.siv_d)
-    SubjectItemView selectD;
+
+    @BindView(R.id.ll_subject)
+    LinearLayout llSubject;
+
     @BindView(R.id.tv_up)
     TextView tvUp;
     @BindView(R.id.tv_push)
@@ -97,10 +93,10 @@ public class ExamineActivity extends BaseMvpActivity<ExaminePresenter> implement
     @Override
     protected void initEvent() {
         super.initEvent();
-        selectA.setOnSubjectClickListener(this);
-        selectB.setOnSubjectClickListener(this);
-        selectC.setOnSubjectClickListener(this);
-        selectD.setOnSubjectClickListener(this);
+//        selectA.setOnSubjectClickListener(this);
+//        selectB.setOnSubjectClickListener(this);
+//        selectC.setOnSubjectClickListener(this);
+//        selectD.setOnSubjectClickListener(this);
 
         mTitleView.resetBackListener(new View.OnClickListener() {
             @Override
@@ -197,32 +193,16 @@ public class ExamineActivity extends BaseMvpActivity<ExaminePresenter> implement
 
     private void pushQuestion() {
         String answer = "";
-        if (isSingle) {
-            if (selectA.isCheck()) {
-                answer = "A";
+
+        for (int i = 0; i < llSubject.getChildCount(); i++) {
+            SubjectItemView childAt = (SubjectItemView) llSubject.getChildAt(i);
+            if (childAt.isCheck()) {
+                answer = childAt.getSelectValue() + ",";
             }
-            if (selectB.isCheck()) {
-                answer = "B";
-            }
-            if (selectC.isCheck()) {
-                answer = "C";
-            }
-            if (selectD.isCheck()) {
-                answer = "D";
-            }
-        } else {
-            if (selectA.isCheck()) {
-                answer = "A";
-            }
-            if (selectB.isCheck()) {
-                answer = "," + "B";
-            }
-            if (selectC.isCheck()) {
-                answer = "," + "C";
-            }
-            if (selectD.isCheck()) {
-                answer = "," + "D";
-            }
+        }
+
+        if (answer.length() > 0) {
+            answer = answer.substring(0, answer.length() - 1);
         }
 
         if (TextUtils.isEmpty(answer)) {
@@ -234,10 +214,12 @@ public class ExamineActivity extends BaseMvpActivity<ExaminePresenter> implement
     }
 
     public void resetSelectStatus() {
-        selectA.setCheck(false);
-        selectB.setCheck(false);
-        selectC.setCheck(false);
-        selectD.setCheck(false);
+        for (int i = 0; i < llSubject.getChildCount(); i++) {
+            View childAt = llSubject.getChildAt(i);
+            if (childAt instanceof SubjectItemView) {
+                ((SubjectItemView) childAt).setCheck(false);
+            }
+        }
     }
 
     @Override
@@ -260,41 +242,14 @@ public class ExamineActivity extends BaseMvpActivity<ExaminePresenter> implement
     @Override
     public void showData(StudyQuestionBean bean) {
         //刷新一下选择的状态
-        resetSelectStatus();
+//        resetSelectStatus();
 
         List<String> question = bean.getQuestion();
         int type = bean.getType();
         isSingle = type == 1;
         String anwer = bean.getAnwer();
-        int index = GuardianUtils.getQuestionIndex(anwer);
-        switch (question.size() - 1) {
-            case 3:
-                selectD.setSelectIndexContent(SubjectItemView.TYPE_D, question.get(3));
-            case 2:
-                selectC.setSelectIndexContent(SubjectItemView.TYPE_C, question.get(2));
-            case 1:
-                selectB.setSelectIndexContent(SubjectItemView.TYPE_B, question.get(1));
-            case 0:
-                selectA.setSelectIndexContent(SubjectItemView.TYPE_A, question.get(0));
-        }
 
-        if (index != -1) {
-            switch (index) {
-                case 0:
-                    selectA.setCheck(true);
-                    break;
-                case 1:
-                    selectB.setCheck(true);
-                    break;
-                case 2:
-                    selectC.setCheck(true);
-                    break;
-                case 3:
-                    selectD.setCheck(true);
-                    break;
-            }
-        }
-
+        handleSelect(anwer, question);
 
         mAttendId = bean.getAttend_id();
         mNumber = bean.getNumber();
@@ -302,13 +257,43 @@ public class ExamineActivity extends BaseMvpActivity<ExaminePresenter> implement
 
         mQuestionNum = bean.getQuestion_num();
         tvSubject.setText("第" + mNumber + "/" + mQuestionNum + "题");
-        tvShowTime.setText("时间todo");
+//        tvShowTime.setText("");
         tvSubjectType.setText(isSingle ? "单选题目" : "多选题目");
         tvSubjectContent.setText(bean.getTitle());
 
         //1.是 2.否
         mIsLast = bean.getIs_last() == 1;
         mScore = bean.getScore();
+    }
+
+    private void handleSelect(String anwer, List<String> question) {
+        llSubject.removeAllViews();
+        if (question == null) {
+            return;
+        }
+
+        for (int i = 0; i < question.size(); i++) {
+            SubjectItemView subjectItemView = new SubjectItemView(this);
+            subjectItemView.setOnSubjectClickListener(this);
+            subjectItemView.setSelectIndexContent(i, question.get(i));
+            llSubject.addView(subjectItemView);
+        }
+
+        int childCount = llSubject.getChildCount();
+        //计算是否选中
+        if (!TextUtils.isEmpty(anwer)) {
+            if (anwer.startsWith(",") && anwer.length() > 1) {
+                anwer = anwer.substring(1, anwer.length());
+            }
+            String[] split = anwer.split(",");
+            for (String strIndex : split) {
+                int index = GuardianUtils.getQuestionIndex(strIndex);
+                if (index < childCount) {
+                    ((SubjectItemView) llSubject.getChildAt(index)).setCheck(true);
+                }
+            }
+        }
+
     }
 
     @Override

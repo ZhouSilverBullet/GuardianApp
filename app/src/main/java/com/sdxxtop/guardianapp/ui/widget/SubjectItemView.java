@@ -1,6 +1,7 @@
 package com.sdxxtop.guardianapp.ui.widget;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.CheckBox;
@@ -8,6 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.sdxxtop.guardianapp.R;
+import com.sdxxtop.guardianapp.utils.GuardianUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -68,30 +70,15 @@ public class SubjectItemView extends FrameLayout {
     public void setSelectIndexContent(int index, String content) {
         String value = getSelectValue(index);
         tvSelectValue.setText(value);
+        if (!TextUtils.isEmpty(content)) {
+            content = content.replace("\n", "");
+        }
         tvSelectContent.setText(content);
     }
 
 
     private String getSelectValue(int index) {
-        String value;
-        switch (index) {
-            case TYPE_A:
-                value = "A";
-                break;
-            case TYPE_B:
-                value = "B";
-                break;
-            case TYPE_C:
-                value = "C";
-                break;
-            case TYPE_D:
-                value = "D";
-                break;
-            default:
-                value = "A";
-                break;
-        }
-        return value;
+        return GuardianUtils.getQuestionIndex(index);
     }
 
     public boolean isCheck() {
@@ -100,6 +87,10 @@ public class SubjectItemView extends FrameLayout {
 
     public void setCheck(boolean isCheck) {
         cbSelect.setChecked(isCheck);
+    }
+
+    public String getSelectValue() {
+        return tvSelectValue.getText().toString().trim();
     }
 
     private OnSubjectClickListener mOnSubjectClickListener;

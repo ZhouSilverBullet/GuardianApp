@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/half_login_bg"
     android:orientation="vertical">
 
@@ -16,213 +16,195 @@
         app:titleColor="@color/white"
         app:titleValue="安全考试" />
 
-    <androidx.core.widget.NestedScrollView
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:id="@+id/ll_nes_root"
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="80dp"
+            android:layout_gravity="bottom"
+            android:background="@color/white" />
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/white" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="32dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginBottom="5dp"
-                    android:paddingBottom="10dp"
-                    app:cardCornerRadius="5dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center_horizontal"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/tv_face"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="25dp"
-                                android:text="人脸识别中"
-                                android:textColor="@color/color_303030"
-                                android:textSize="10sp" />
-
-                            <TextView
-                                android:id="@+id/tv_face_status"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="状态: 正常"
-                                android:textColor="@color/color_303030"
-                                android:textSize="10sp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/ll_container"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp">
-
-                            <TextView
-                                android:id="@+id/tv_subject"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/btn_green_corners30_stroke_bg"
-                                android:paddingLeft="15dp"
-                                android:paddingTop="5dp"
-                                android:paddingRight="15dp"
-                                android:paddingBottom="5dp"
-                                android:text="第1部分 第2/50题"
-                                android:textColor="@color/color_333333"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:id="@+id/tv_show_time"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:text="考试时间: 29:00"
-                                android:textColor="@color/color_303030"
-                                android:textSize="11sp" />
-                        </LinearLayout>
-
-                        <TextView
-                            android:id="@+id/tv_subject_type"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:text="单选题目"
-                            android:textColor="@color/color_303030"
-                            android:textSize="11sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/tv_subject_content"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            tools:text="列车重量按运行图规定的牵引定数超51T及其以上，连续运行距离超过机车乘务区段的二分之一的货物列车为（  ）列车" />
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="46dp"
-                    android:layout_height="46dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="9dp"
-                    android:elevation="5dp"
-                    android:src="@color/white" />
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/civ_header"
-                    android:layout_width="44dp"
-                    android:layout_height="44dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:elevation="5dp"
-                    android:src="@drawable/tou_xiang" />
-
-            </FrameLayout>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="5dp"
+            android:paddingBottom="10dp"
+            app:cardCornerRadius="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
-
-                <com.sdxxtop.guardianapp.ui.widget.SubjectItemView
-                    android:id="@+id/siv_a"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <com.sdxxtop.guardianapp.ui.widget.SubjectItemView
-                    android:id="@+id/siv_b"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <com.sdxxtop.guardianapp.ui.widget.SubjectItemView
-                    android:id="@+id/siv_c"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <com.sdxxtop.guardianapp.ui.widget.SubjectItemView
-                    android:id="@+id/siv_d"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_marginTop="20dp"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp">
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_up"
+                        android:id="@+id/tv_face"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/examine_btn_gray_bg"
-                        android:gravity="center"
-                        android:paddingLeft="8dp"
-                        android:paddingRight="8dp"
-                        android:text="上一题"
-                        android:textColor="@color/white" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp"
+                        android:text="人脸识别中"
+                        android:textColor="@color/color_303030"
+                        android:textSize="10sp" />
 
                     <TextView
-                        android:id="@+id/tv_push"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="25dp"
-                        android:layout_marginRight="25dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/examine_btn_blue_bg"
-                        android:gravity="center"
-                        android:text="确认答案"
-                        android:textColor="@color/white" />
-
-                    <TextView
-                        android:id="@+id/tv_down"
+                        android:id="@+id/tv_face_status"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/examine_btn_gray_bg"
-                        android:gravity="center"
-                        android:paddingLeft="13dp"
-                        android:paddingRight="13dp"
-                        android:text="跳过"
-                        android:textColor="@color/white" />
+                        android:layout_height="wrap_content"
+                        android:text="状态: 正常"
+                        android:textColor="@color/color_303030"
+                        android:textSize="10sp" />
+
                 </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+                <LinearLayout
+                    android:id="@+id/ll_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <TextView
+                        android:id="@+id/tv_subject"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/btn_green_corners30_stroke_bg"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="5dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="5dp"
+                        android:text="第1部分 第2/50题"
+                        android:textColor="@color/color_333333"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_show_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="考试时间: 29:00"
+                        android:textColor="@color/color_303030"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_subject_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="单选题目"
+                    android:textColor="@color/color_303030"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_subject_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    tools:text="列车重量按运行图规定的牵引定数超51T及其以上，连续运行距离超过机车乘务区段的二分之一的货物列车为（  ）列车" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="9dp"
+            android:elevation="5dp"
+            android:src="@color/white" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civ_header"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:elevation="5dp"
+            android:src="@drawable/tou_xiang" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:id="@+id/ll_subject"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"/>
+        </androidx.core.widget.NestedScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="30dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+
+            <TextView
+                android:id="@+id/tv_up"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/examine_btn_gray_bg"
+                android:gravity="center"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:text="上一题"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_push"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_weight="1"
+                android:background="@drawable/examine_btn_blue_bg"
+                android:gravity="center"
+                android:text="确认答案"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_down"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/examine_btn_gray_bg"
+                android:gravity="center"
+                android:paddingLeft="13dp"
+                android:paddingRight="13dp"
+                android:text="跳过"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

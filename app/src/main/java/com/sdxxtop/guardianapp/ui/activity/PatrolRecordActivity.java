@@ -148,9 +148,9 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
                 LatLng lng = curLatlngList.get(i).getLatLng();
                 latitude += lng.latitude;
                 longitude += lng.longitude;
-                if (i == curLatlngList.size() - 1) {
-                    getadress(lng, curLatlngList.get(i).getAddress());
-                }
+//                if (i == curLatlngList.size() - 1) {
+                getadress(lng, curLatlngList.get(i).getAddress());
+//                }
             }
             aMap.setInfoWindowAdapter(new PatrolMapAdapter());
 

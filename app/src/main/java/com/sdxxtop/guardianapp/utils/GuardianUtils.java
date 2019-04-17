@@ -15,9 +15,28 @@ public class GuardianUtils {
         questionIndex.add("B");
         questionIndex.add("C");
         questionIndex.add("D");
-//        questionIndex.add("E");
-//        questionIndex.add("F");
-//        questionIndex.add("G");
+        questionIndex.add("E");
+        questionIndex.add("F");
+        questionIndex.add("G");
+        questionIndex.add("H");
+        questionIndex.add("I");
+        questionIndex.add("J");
+        questionIndex.add("K");
+        questionIndex.add("L");
+        questionIndex.add("M");
+        questionIndex.add("N");
+        questionIndex.add("O");
+        questionIndex.add("P");
+        questionIndex.add("Q");
+        questionIndex.add("R");
+        questionIndex.add("S");
+        questionIndex.add("T");
+        questionIndex.add("U");
+        questionIndex.add("V");
+        questionIndex.add("W");
+        questionIndex.add("X");
+        questionIndex.add("Y");
+        questionIndex.add("Z");
     }
 
 
@@ -41,8 +60,18 @@ public class GuardianUtils {
         return positionName;
     }
 
+    public static String getQuestionIndex(int position) {
+        if (position >= questionIndex.size()) {
+            return "Z";
+        }
+
+        if (position < 0) {
+            return "A";
+        }
+        return questionIndex.get(position);
+    }
+
     public static int getQuestionIndex(String anwer) {
-        //1:网格员 2: 企业员工 3:街道管理员 4:区级管理员
         return questionIndex.indexOf(anwer);
     }
 

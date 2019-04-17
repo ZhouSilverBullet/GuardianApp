@@ -7,6 +7,7 @@ import com.sdxxtop.guardianapp.model.bean.StudyCheckBean;
 import com.sdxxtop.guardianapp.model.bean.StudyQuestionBean;
 import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
 import com.sdxxtop.guardianapp.model.http.net.Params;
+import com.sdxxtop.guardianapp.model.http.net.RetrofitHelper;
 import com.sdxxtop.guardianapp.model.http.util.RxUtils;
 import com.sdxxtop.guardianapp.presenter.contract.ExamineContract;
 import com.sdxxtop.guardianapp.presenter.contract.HomeContract;
@@ -36,7 +37,7 @@ public class ExaminePresenter extends RxPresenter<ExamineContract.IView> impleme
 
             @Override
             public void onFailure(int code, String error) {
-
+                UIUtils.showToast(error);
             }
         });
 
