@@ -1,8 +1,12 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
 import android.content.Intent;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.sdxxtop.guardianapp.R;
@@ -28,15 +32,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
-public class ContactActivity extends BaseMvpActivity<ContactPresenter> implements ContactContract.IView {
+public class ContactActivity extends BaseMvpActivity<ContactPresenter> implements ContactContract.IView, TextWatcher {
     @BindView(R.id.index_bar)
     SideIndexBar mSideIndexBar;
     @BindView(R.id.text_dialog)
     TextView mText;
     @BindView(R.id.rv)
     RecyclerView mRecyclerView;
-    @BindView(R.id.sv_search)
-    SearchView mSearchView;
+//    @BindView(R.id.sv_search)
+//    SearchView mSearchView;
+    @BindView(R.id.et_search)
+    EditText etSearch;
+    @BindView(R.id.tv_cancel)
+    TextView tvCancel;
+
     private ContactAdapter mAdapter;
 
     CharacterParser characterParser = CharacterParser.getInstance();
@@ -87,11 +96,20 @@ public class ContactActivity extends BaseMvpActivity<ContactPresenter> implement
     @Override
     protected void initEvent() {
         super.initEvent();
-        mSearchView.setOnClickListener(new View.OnClickListener() {
+//        mSearchView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(v.getContext(), ContactSearchActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+
+        etSearch.addTextChangedListener(this);
+        tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ContactSearchActivity.class);
-                startActivity(intent);
+                //清除
+                etSearch.setText("");
             }
         });
     }
@@ -114,6 +132,15 @@ public class ContactActivity extends BaseMvpActivity<ContactPresenter> implement
 
     @Override
     public void showList(List<ContactIndexBean.ContactBean> contactBeanList) {
+        handleData(contactBeanList, true);
+    }
+
+    @Override
+    public void showSearchList(List<ContactIndexBean.ContactBean> contactBean) {
+        handleData(contactBean, false);
+    }
+
+    private void handleData(List<ContactIndexBean.ContactBean> contactBeanList, boolean isShowBar) {
         if (beanList != null && beanList.size() > 0) {
             beanList.clear();
         }
@@ -144,6 +171,35 @@ public class ContactActivity extends BaseMvpActivity<ContactPresenter> implement
         }
         mSideIndexBar.setLetters(sb.toString());
 
-        mAdapter.addData(beanList);
+        if (isShowBar) {
+            mSideIndexBar.setVisibility(View.VISIBLE);
+            mAdapter.addData(beanList);
+        } else {
+            mAdapter.replaceData(beanList);
+        }
+
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if (!TextUtils.isEmpty(s)) {
+            mPresenter.searchData(s.toString());
+            tvCancel.setVisibility(View.VISIBLE);
+            mSideIndexBar.setVisibility(View.GONE);
+        } else {
+            mPresenter.loadData();
+//            mAdapter.replaceData(new ArrayList<>());
+            tvCancel.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
     }
 }

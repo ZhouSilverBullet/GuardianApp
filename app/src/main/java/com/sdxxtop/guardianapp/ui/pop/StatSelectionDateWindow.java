@@ -47,6 +47,7 @@ public class StatSelectionDateWindow extends PopupWindow {
     private LinearLayout imageRight;
     private LinearLayout imageLeft;
     private View include;
+    private boolean mIsShowHide = true;
 
     /**
      * @param activity
@@ -54,6 +55,21 @@ public class StatSelectionDateWindow extends PopupWindow {
      * @param isStat       统计的时候头部只显示 xxxx年xx日
      */
     public StatSelectionDateWindow(Activity activity, boolean isShowBottom, boolean isStat) {
+        this.mContext = activity;
+        this.isShowBottom = isShowBottom;
+        this.isStat = isStat;
+        init();
+        defaultStyle(activity);
+    }
+
+    /**
+     * @param activity
+     * @param isShowBottom
+     * @param isStat       统计的时候头部只显示 xxxx年xx日
+     */
+    public StatSelectionDateWindow(Activity activity, boolean isShowBottom,
+                                   boolean isShowHide, boolean isStat) {
+        mIsShowHide = isShowHide;
         this.mContext = activity;
         this.isShowBottom = isShowBottom;
         this.isStat = isStat;
@@ -255,6 +271,9 @@ public class StatSelectionDateWindow extends PopupWindow {
     }
 
     private void setShowBackground(float alpha) {
+        if (!mIsShowHide) {
+            return;
+        }
         WindowManager.LayoutParams lp = mContext.getWindow().getAttributes();
         lp.alpha = alpha;
         mContext.getWindow().setAttributes(lp);

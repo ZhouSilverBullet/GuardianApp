@@ -440,18 +440,18 @@ public class FaceLivenessActivity extends AppCompatActivity implements
     }
 
     private LivenessTypeEnum getLivenessTypeEnum() {
-        Random random = new Random();
-        int i = random.nextInt(100);
-        if (i < 20) {
-            return LivenessTypeEnum.Eye;
-        } else if (i < 40) {
-            return LivenessTypeEnum.HeadLeft;
-        } else if (i < 70) {
-            return LivenessTypeEnum.HeadRight;
-        } else if (i <= 100) {
-            return LivenessTypeEnum.HeadLeftOrRight;
-        }
-        return LivenessTypeEnum.HeadLeftOrRight;
+//        Random random = new Random();
+//        int i = random.nextInt(100);
+//        if (i < 20) {
+//            return LivenessTypeEnum.Eye;
+//        } else if (i < 40) {
+//            return LivenessTypeEnum.HeadLeft;
+//        } else if (i < 70) {
+//            return LivenessTypeEnum.HeadRight;
+//        } else if (i <= 100) {
+//            return LivenessTypeEnum.HeadLeftOrRight;
+//        }
+        return LivenessTypeEnum.Eye;
     }
 
     @Override

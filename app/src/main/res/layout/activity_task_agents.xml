@@ -12,7 +12,7 @@
         app:bgColor="@color/green"
         app:leftLayoutIsShow="true"
         app:titleColor="@color/white"
-        app:titleValue="代办任务" />
+        app:titleValue="待办任务" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/srl_layout"

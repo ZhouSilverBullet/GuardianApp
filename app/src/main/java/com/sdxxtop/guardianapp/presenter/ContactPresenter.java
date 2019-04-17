@@ -38,4 +38,23 @@ public class ContactPresenter extends RxPresenter<ContactContract.IView> impleme
         addSubscribe(disposable);
     }
 
+    public void searchData(String key) {
+        Params params = new Params();
+        params.put("sh", key);
+        Observable<RequestBean<ContactIndexBean>> observable = getEnvirApi().postContactSearch(params.getData());
+        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<ContactIndexBean>() {
+            @Override
+            public void onSuccess(ContactIndexBean contactIndexBean) {
+                List<ContactIndexBean.ContactBean> user = contactIndexBean.getUser();
+                mView.showSearchList(user);
+            }
+
+            @Override
+            public void onFailure(int code, String error) {
+
+            }
+        });
+        addSubscribe(disposable);
+    }
+
 }

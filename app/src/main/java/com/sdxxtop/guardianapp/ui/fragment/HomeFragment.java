@@ -169,7 +169,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
         new IosAlertDialog(getActivity())
                 .builder()
                 .setTitle("提示")
-                .setMsg("您还没有注册人脸信息，请先录入人脸信息")
+                .setMsg("您还没注册人脸信息，是否去录入")
                 .setPositiveButton("录入", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

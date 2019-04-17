@@ -122,6 +122,8 @@ public class MyFaceLivenessActivity extends FaceLivenessActivity implements Face
 
     @Override
     public void showError(String error) {
+        UIUtils.showToast(error);
         hideLoadingDialog();
+        recreate();
     }
 }

@@ -91,7 +91,7 @@ public class FaceLivenessPresenter extends RxPresenter<FaceLivenessContract.IVie
     private void rigister(File imgFile) {
 
         ImageParams params = new ImageParams();
-        params.addCompressImagePath("img",imgFile, App.getInstance().getCacheDir() + "/img.png", 80);
+        params.addCompressImagePath("img", imgFile, App.getInstance().getCacheDir() + "/img.png", 80);
         Observable<RequestBean> observable = getEnvirApi().postFaceReg(params.getImgData());
         Disposable disposable = RxUtils.handleHttp(observable, new IRequestCallback<RequestBean>() {
             @Override
@@ -139,8 +139,13 @@ public class FaceLivenessPresenter extends RxPresenter<FaceLivenessContract.IVie
 
     private void loginFace(File imgFile) {
 
+        UIUtils.showToast("人脸创建" + imgFile);
+        if (imgFile == null) {
+            return;
+        }
+
         ImageParams params = new ImageParams();
-        params.addCompressImagePath("img",imgFile, App.getInstance().getCacheDir() + "/img.png", 80);
+        params.addCompressImagePath("img", imgFile, App.getInstance().getCacheDir() + "/img.png", 80);
         Observable<RequestBean> observable = getEnvirApi().postFaceVerify(params.getImgData());
         Disposable disposable = RxUtils.handleHttp(observable, new IRequestCallback<RequestBean>() {
             @Override

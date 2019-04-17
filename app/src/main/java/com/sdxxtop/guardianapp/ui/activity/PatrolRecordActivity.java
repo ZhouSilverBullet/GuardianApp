@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
@@ -57,6 +58,9 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
     MapView mapView;
     @BindView(R.id.tv_position)
     TextView tvPosition;
+    @BindView(R.id.v_half_bg)
+    View vHalfBg;
+
     private AMap aMap;
 
     private OnLocationChangedListener mListener;
@@ -373,7 +377,7 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
      */
     private void showSelectDateWindow() {
         if (selectionDateWindow == null) {
-            selectionDateWindow = new StatSelectionDateWindow(this, false, true);
+            selectionDateWindow = new StatSelectionDateWindow(this, false, false, true);
 
             selectionDateWindow.setSelectorDateListener(new StatSelectionDateWindow.SelectorDateListener() {
                 @Override
@@ -386,7 +390,15 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
                     selectionDateWindow.dismiss();
                 }
             });
+
+            selectionDateWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    vHalfBg.setVisibility(View.GONE);
+                }
+            });
         }
+        vHalfBg.setVisibility(View.VISIBLE);
         selectionDateWindow.showAtLocation(getLayoutInflater().inflate(R.layout.activity_patrol_record, null), Gravity.BOTTOM, 0, 0);
     }
 
@@ -396,12 +408,12 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
         Date date = Calendar.getInstance().getTime();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         todayDate = simpleDateFormat.format(date);
-        tatvDate.getTextRightText().setText("今天");
+        tatvDate.getTextRightText().setText("今日");
     }
 
     public String getFormatDate(String sDate) {
         if (sDate.equals(Date2Util.getDate())) {
-            return "今天";
+            return "今日";
         }
         String formatDate = "";
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");

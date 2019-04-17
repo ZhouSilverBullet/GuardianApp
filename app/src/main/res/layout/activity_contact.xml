@@ -3,6 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/half_green_bg"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <com.sdxxtop.guardianapp.ui.widget.TitleView
@@ -13,14 +16,63 @@
         app:titleColor="@color/white"
         app:titleValue="罗庄网格管理通讯录" />
 
-    <com.sdxxtop.guardianapp.ui.widget.SearchView
-        android:id="@+id/sv_search"
+    <!--<com.sdxxtop.guardianapp.ui.widget.SearchView-->
+    <!--android:id="@+id/sv_search"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content" />-->
+
+    <RelativeLayout
+        android:id="@+id/rl_search_background"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="58dp"
+        android:animateLayoutChanges="true"
+        android:background="@color/color_E4E4E4"
+        android:focusableInTouchMode="true"
+        android:paddingLeft="8dp"
+        android:paddingTop="10dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/contact_search_bg">
+
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:background="@null"
+                android:drawableLeft="@drawable/search"
+                android:drawablePadding="8dp"
+                android:gravity="center_vertical"
+                android:hint="搜索"
+                android:imeOptions="actionSearch"
+                android:singleLine="true"
+                android:textColor="@color/color_333333"
+                android:textSize="15sp" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="15dp"
+            android:text="取消"
+            android:textColor="@color/color_32B16C"
+            android:textSize="15sp"
+            android:visibility="gone" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv"
