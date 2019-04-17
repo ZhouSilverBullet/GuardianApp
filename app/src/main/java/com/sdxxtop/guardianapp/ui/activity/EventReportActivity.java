@@ -119,33 +119,41 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     // todo 网络请求
     private void toReport() {
 
+        List<File> imagePushPath = getImagePushPath();
+        if (imagePushPath == null || imagePushPath.size() ==0) {
+            showToast("请选择图片");
+            return;
+        }
+
         String title = taevTitle.getEditText().getText().toString().trim();
         if (TextUtils.isEmpty(title)) {
-            showToast("请填写标题");
+            showToast("请填写事件标题");
             return;
         }
 
-        //查询方式
+        //发现方式
         String queryName = tatvQuery.getRightTVString();
         if (queryData == null || TextUtils.isEmpty(queryName)) {
-            showToast("请选择查询方式");
+            showToast("请选择发现方式");
             return;
         }
+
+        //发生地点
+        String place = tatvHappen.getRightTVString();
+        if (TextUtils.isEmpty(place) || TextUtils.isEmpty(lonLng)) {
+            showToast("请选择发生地点");
+            return;
+        }
+
         int queryType = queryData.indexOf(queryName) + 1;
 
-        //上报路径
+        //主管部门
         String pathName = tatvReportPath.getRightTVString();
         if (reportPathData == null || TextUtils.isEmpty(pathName)) {
-            showToast("请选择上报路径");
+            showToast("请选择主管部门");
             return;
         }
         int pathType = reportPathData.indexOf(pathName) + 1;
-
-        String place = tatvHappen.getRightTVString();
-        if (TextUtils.isEmpty(place) || TextUtils.isEmpty(lonLng)) {
-            showToast("请选择地址");
-            return;
-        }
 
         String editValue = netContent.getEditValue();
         if (TextUtils.isEmpty(editValue)) {
@@ -155,7 +163,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 
         showLoadingDialog();
 
-        List<File> imagePushPath = getImagePushPath();
+
         mPresenter.pushReport(title, pathType, queryType, place, lonLng, editValue, imagePushPath);
     }
 
@@ -166,6 +174,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
         Intent intent = new Intent(this, EventReportListActivity.class);
         intent.putExtra("eventId", eventId);
         startActivity(intent);
+        finish();
     }
 
     protected void setPhotoRecycler(RecyclerView recycler) {

@@ -16,6 +16,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
+        android:background="@color/color_98D4B3"
         android:layout_height="match_parent">
 
         <androidx.cardview.widget.CardView

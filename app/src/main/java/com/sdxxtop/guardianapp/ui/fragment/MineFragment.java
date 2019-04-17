@@ -46,6 +46,8 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     private boolean isAdmin;
 
     private int IMAGE_STORE = 100;
+    private String mPartName;
+    private String partUnit; //什么单位
 
     public static MineFragment newInstance(boolean isAdmin) {
 
@@ -142,9 +144,23 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
         }
         tvName.setText(indexBean.getName());
         tvPlace.setText(new StringBuilder().append(indexBean.getPart_name()).append(" ").append(indexBean.getStringPosition()));
+        mPartName = indexBean.getPart_name();
+        int type = indexBean.getType();
+        switch (type) { //1:区级 2: 乡镇 3:企业
+            case 1:
+                partUnit = "区级单位";
+                break;
+            case 2:
+                partUnit = "乡镇单位";
+                break;
+            case 3:
+                partUnit = "企业单位";
+                break;
+
+        }
     }
 
-    @OnClick({R.id.civ_header, R.id.tatv_message,R.id.tatv_report})
+    @OnClick({R.id.civ_header, R.id.tatv_message, R.id.tatv_report})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.civ_header:
@@ -160,7 +176,7 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
 
                 break;
             case R.id.tatv_message:
-                new QuitGroupPopView(getActivity(), mRootView, "海龙化工集团", "");
+                new QuitGroupPopView(getActivity(), mRootView, mPartName, partUnit);
                 break;
             case R.id.tatv_report:
                 startActivity(new Intent(getActivity(), EventReportListActivity.class));

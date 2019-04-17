@@ -59,7 +59,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         etPhone.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
         String mobile = SpUtil.getString(Constants.MOBILE);
         if (TextUtils.isEmpty(mobile)) {
-            mobile = "18000000000";
+            mobile = "";
         }
         etPhone.setText(mobile);
     }

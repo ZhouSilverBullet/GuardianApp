@@ -50,11 +50,11 @@ public class QuitGroupPopView extends PopupWindow {
         quitGroup = (TextView) view.findViewById(R.id.quit_group);
         quitDec = (TextView) view.findViewById(R.id.quit_dec);
         quitGroup.setText(quitTextValue);
-        if (TextUtils.isEmpty(quitDecValue)) {
+//        if (TextUtils.isEmpty(quitDecValue)) {
             quitDec.setVisibility(View.GONE);
-        } else {
-            quitDec.setText(quitDecValue);
-        }
+//        } else {
+//            quitDec.setText(quitDecValue);
+//        }
         quitGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,7 +65,10 @@ public class QuitGroupPopView extends PopupWindow {
             }
         });
 
-        view.findViewById(R.id.exit_quit).setOnClickListener(new View.OnClickListener() {
+        TextView exitQuitText = view.findViewById(R.id.exit_quit);
+        exitQuitText.setText(quitDecValue);
+
+        exitQuitText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
