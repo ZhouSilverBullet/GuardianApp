@@ -8,6 +8,10 @@ public class GuardianUtils {
     private final static String[] colorList = new String[]{"#7ECEF4", "#8C97CB", "#89C997",
             "#52C67A", "#3296FA", "#9396FA", "#FCBA28", "#AD8EA3", "#4E76E4", "#9D7DFA", "#D37FF1", "#4D97F0", "#FC716C", "#55BEF5"};
 
+    private final static String[] colorHalfList = new String[]{"#557ECEF4", "#558C97CB", "#5589C997",
+            "#5552C67A", "#553296FA", "#559396FA", "#55FCBA28", "#55AD8EA3", "#554E76E4", "#559D7DFA", "#55D37FF1", "#554D97F0", "#55FC716C", "#5555BEF5"};
+
+
     public static final List<String> questionIndex = new ArrayList<>();
 
     static {
@@ -84,5 +88,9 @@ public class GuardianUtils {
             position = 0;
         }
         return colorList[position];
+    }
+
+    public static String getHalfColor(int position) {
+        return colorHalfList[position % colorHalfList.length];
     }
 }

@@ -3,6 +3,7 @@ package com.sdxxtop.guardianapp.ui.activity;
 import android.Manifest;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -38,6 +39,7 @@ import com.sdxxtop.guardianapp.model.bean.MainMapBean;
 import com.sdxxtop.guardianapp.presenter.GridMapPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.GridMapContract;
 import com.sdxxtop.guardianapp.ui.adapter.GridMapAdapter;
+import com.sdxxtop.guardianapp.utils.GuardianUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -156,9 +158,10 @@ public class GridMapActivity extends BaseMvpActivity<GridMapPresenter> implement
     public void showPolygon(int index, MainMapBean.UserBean userBean, List<LatLng> list) {
         PolygonOptions polygonOptions = new PolygonOptions();
         polygonOptions.addAll(list);
+        int parseColor = Color.parseColor(GuardianUtils.getHalfColor(index));
         polygonOptions.strokeWidth(15) // 多边形的边框
-                .strokeColor(getResources().getColor(R.color.color_5532B16C)) // 边框颜色
-                .fillColor(getResources().getColor(R.color.color_5532B16C));   // 多边形的填充色
+                .strokeColor(parseColor) // 边框颜色
+                .fillColor(parseColor);   // 多边形的填充色
 
         aMap.addPolygon(polygonOptions);
 
