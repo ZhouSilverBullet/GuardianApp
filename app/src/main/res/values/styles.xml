@@ -31,7 +31,7 @@
     </style>
 
     <style name="NormalSplash" parent="AppTheme">
-        <item name="android:windowBackground">@drawable/splash_icon</item>
+        <item name="android:windowBackground">@drawable/splash_layer_icon</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="windowNoTitle">true</item>

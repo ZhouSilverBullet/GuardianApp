@@ -89,26 +89,38 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
         SpUtil.putInt(Constants.PART_ID, part_id);
         SpUtil.putString(Constants.AUTO_TOKEN, auto_token);
 
-        //再进行跳转
-        Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(mContext, HomeActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }, 6000);
 
     }
 
     private void skipLogin() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(mContext, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }, 6000);
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        finish();
+//        finish();
     }
 
     @Override
     protected void onStop() {
-        finish();
+//        finish();
         super.onStop();
     }
 
@@ -122,11 +134,6 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
 
     @Override
     public void showError(String error) {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                skipLogin();
-            }
-        }, 1000);
+        skipLogin();
     }
 }

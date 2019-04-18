@@ -3,40 +3,72 @@
     xmlns:weibo="http://schemas.android.com/apk/res-auto"
     android:id="@+id/flSplash"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@drawable/splash_icon">
+    android:layout_height="fill_parent">
 
     <!--<ImageView-->
-        <!--android:id="@+id/image_channal_icon"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_marginTop="20.0dip"-->
-        <!--android:layout_marginRight="20.0dip"-->
-        <!--android:src="@mipmap/channel_logo" />-->
+    <!--android:id="@+id/image_channal_icon"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_marginTop="20.0dip"-->
+    <!--android:layout_marginRight="20.0dip"-->
+    <!--android:src="@mipmap/channel_logo" />-->
 
     <!--<ImageView-->
-        <!--android:id="@+id/image_logo"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_marginBottom="22dp"-->
-        <!--android:src="@mipmap/welcome_android_logo" />-->
+    <!--android:id="@+id/image_logo"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_marginBottom="22dp"-->
+    <!--android:src="@mipmap/welcome_android_logo" />-->
 
-    <!--<ImageView-->
-        <!--android:id="@+id/image_slogan"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_marginTop="136.0dip"-->
-        <!--android:src="@mipmap/welcome_android_slogan" />-->
+
+    <ImageView
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/splash_icon" />
+
+    <TextView
+        android:id="@+id/image_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="22dp"
+        android:text="罗庄区人民政府\n罗庄区大数据局 "
+        android:textColor="@color/color_303030"
+        android:textSize="17sp" />
+
+    <ImageView
+        android:id="@+id/image_slogan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="136.0dip"
+        android:src="@mipmap/logo" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/image_slogan"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:text="智慧罗庄"
+        android:textColor="@color/color_303030"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
 
     <!--<LinearLayout-->
-        <!--android:id="@+id/loading_fragment"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@id/image_slogan"-->
-        <!--android:orientation="vertical" />-->
+    <!--android:id="@+id/loading_fragment"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@id/image_slogan"-->
+    <!--android:orientation="vertical" />-->
+
+
 </RelativeLayout>
