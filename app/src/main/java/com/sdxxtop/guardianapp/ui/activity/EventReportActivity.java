@@ -74,7 +74,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
         InputFilter[] filters = {new InputFilter.LengthFilter(10)};
         taevTitle.getEditText().setFilters(filters);
 
-        netContent.setEditHint("请填写事件描述");
+        netContent.setEditHint("");
     }
 
     @Override
@@ -207,6 +207,22 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
         }
     }
 
+    /**
+     * 提交的时候不进行清除本身的localMediaList数据
+     *
+     * @return
+     */
+    public List<LocalMedia> getRemoveLocalListTemp() {
+        List<LocalMedia> tempLocalMedia =  new ArrayList<>();
+        for (int i = 0; i < localMediaList.size(); i++) {
+            if (localMediaList.get(i).getDuration() != -100) {
+                tempLocalMedia.add(localMediaList.get(i));
+                break;
+            }
+        }
+        return tempLocalMedia;
+    }
+
     public void goGallery() {
         removeLocalListTemp();
 
@@ -279,14 +295,15 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 
     //图片上传
     protected List<File> getImagePushPath() {
-        removeLocalListTemp();
+
+        List<LocalMedia> localListTemp = getRemoveLocalListTemp();
         //设置相片
         List<File> imgList = new ArrayList<>();
-        if (localMediaList != null && localMediaList.size() > 0) {
-            for (int i = 0; i < localMediaList.size(); i++) {
-                String path = localMediaList.get(i).getPath();
+        if (localListTemp != null && localListTemp.size() > 0) {
+            for (int i = 0; i < localListTemp.size(); i++) {
+                String path = localListTemp.get(i).getPath();
                 if (TextUtils.isEmpty(path)) {
-                    path = localMediaList.get(i).getCompressPath();
+                    path = localListTemp.get(i).getCompressPath();
                 }
                 imgList.add(new File(path));
             }

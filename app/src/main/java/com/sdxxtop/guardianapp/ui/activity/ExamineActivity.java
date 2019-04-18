@@ -68,6 +68,7 @@ public class ExamineActivity extends BaseMvpActivity<ExaminePresenter> implement
     private String mExamTime;
     private ExamineTimeCountdown mTimeCountdown;
     private int mScore;
+    private String mTitle;
 
     @Override
     protected int getLayout() {
@@ -79,6 +80,7 @@ public class ExamineActivity extends BaseMvpActivity<ExaminePresenter> implement
         super.initVariables();
         mExamId = getIntent().getIntExtra("examId", 0);
         mExamTime = getIntent().getStringExtra("examTime");
+        mTitle = getIntent().getStringExtra("title");
     }
 
     @Override
@@ -87,7 +89,9 @@ public class ExamineActivity extends BaseMvpActivity<ExaminePresenter> implement
 
         statusBar(false);
         showStatusBar();
-
+        if (!TextUtils.isEmpty(mTitle)) {
+            mTitleView.setTitleValue(mTitle);
+        }
     }
 
     @Override

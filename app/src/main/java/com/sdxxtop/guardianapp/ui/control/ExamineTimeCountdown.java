@@ -89,8 +89,8 @@ public class ExamineTimeCountdown implements Handler.Callback {
         long ss = longTime % 60;
 
 //        String hour = hh > 10 ? String.valueOf(hh) : "0" + hh;
-        String minute = mm > 10 ? String.valueOf(mm) : "0" + mm;
-        String second = ss > 10 ? String.valueOf(ss) : "0" + ss;
+        String minute = mm >= 10 ? String.valueOf(mm) : "0" + mm;
+        String second = ss >= 10 ? String.valueOf(ss) : "0" + ss;
         return /*hour + ":" +*/ minute + ":" + second;
     }
 

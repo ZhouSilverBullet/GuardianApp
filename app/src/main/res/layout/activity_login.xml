@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="85dp"
-        android:text="罗庄区"
+        android:text="智慧罗庄"
         android:textColor="@color/white"
         android:textSize="25sp" />
 
@@ -55,6 +55,13 @@
                 android:textColor="@color/white"
                 android:textColorHint="@color/color_E4E4E4" />
 
+            <ImageView
+                android:id="@+id/iv_phone_del"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/login_delete" />
+
             <Button
                 android:id="@+id/btn_code"
                 android:layout_width="wrap_content"
@@ -93,6 +100,14 @@
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textColorHint="@color/color_E4E4E4" />
+
+            <ImageView
+                android:id="@+id/iv_code_del"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/login_delete"
+                android:visibility="invisible" />
 
         </LinearLayout>
 

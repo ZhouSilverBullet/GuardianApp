@@ -2,6 +2,9 @@ package com.sdxxtop.guardianapp.ui.fragment;
 
 import android.os.Bundle;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpFragment;
 import com.sdxxtop.guardianapp.model.bean.course.BaseCourseDataBean;
@@ -26,6 +29,8 @@ import butterknife.BindView;
 public class CourseListFragment extends BaseMvpFragment<CourseListPresenter> implements CourseListContract.IView {
     @BindView(R.id.rv)
     RecyclerView mRecyclerView;
+    @BindView(R.id.srl_layout)
+    SmartRefreshLayout mSmartRefreshLayout;
     private CourseListAdapter mAdapter;
     private int mType;
     //是否是课堂
@@ -65,6 +70,15 @@ public class CourseListFragment extends BaseMvpFragment<CourseListPresenter> imp
         mAdapter = new CourseListAdapter();
         mAdapter.setCourse(isCourse);
         mRecyclerView.setAdapter(mAdapter);
+
+        mSmartRefreshLayout.setEnableLoadMore(false);
+        mSmartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshLayout) {
+                String namePath = isCourse ? "course" : "exam";
+                mPresenter.loadData(namePath);
+            }
+        });
 
 //        ArrayList<BaseCourseDataBean> list = new ArrayList<>();
 //        list.add(new CourseHeaderBean());
@@ -168,6 +182,10 @@ public class CourseListFragment extends BaseMvpFragment<CourseListPresenter> imp
             }
         }
         mAdapter.replaceData(list);
+
+        if (mSmartRefreshLayout != null) {
+            mSmartRefreshLayout.finishRefresh();
+        }
     }
 
     /**
@@ -217,6 +235,10 @@ public class CourseListFragment extends BaseMvpFragment<CourseListPresenter> imp
             }
         }
         mAdapter.replaceData(list);
+
+        if (mSmartRefreshLayout != null) {
+            mSmartRefreshLayout.finishRefresh();
+        }
     }
 
 //    private void handleData(List<BaseCourseDataBean> list,) {

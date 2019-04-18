@@ -23,7 +23,7 @@ public class TaskAgentsAdapter extends BaseQuickAdapter<EventIndexBean.EventBean
         TextView tvPhase = helper.getView(R.id.tv_phase);
 
         tvTitle.setText(item.getTitle());
-        tvAddress.setText(item.getPlace());
+        tvAddress.setText("地址：" + item.getPlace());
         int importantType = item.getImportant_type();
         StringBuilder sb = new StringBuilder().append("重要性：");
         switch (importantType) { //1:低 2:中 3:高
@@ -33,7 +33,7 @@ public class TaskAgentsAdapter extends BaseQuickAdapter<EventIndexBean.EventBean
             case 2:
                 sb.append("中");
                 break;
-            case 3:
+            default:
                 sb.append("高");
                 break;
         }
@@ -41,7 +41,7 @@ public class TaskAgentsAdapter extends BaseQuickAdapter<EventIndexBean.EventBean
         tvImportant.setText(sb);
 
         String endDate = item.getEnd_date();
-        tvDate.setText(endDate);
+        tvDate.setText("截止日期：" + endDate);
 
         String strStatus = "";
         switch (item.getStatus()) { //状态(1:带派发 2:待解决 3:待验收 4:验收通过 5:验收不通过)

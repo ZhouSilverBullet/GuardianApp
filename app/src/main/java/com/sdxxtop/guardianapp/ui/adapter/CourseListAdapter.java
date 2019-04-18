@@ -84,7 +84,7 @@ public class CourseListAdapter extends BaseMultiItemQuickAdapter<BaseCourseDataB
                         tvRightDec.setText("视频");
                     }
 
-                    helper.getConvertView().setOnClickListener(new View.OnClickListener() {
+                    tvBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             if (type == 1) {
@@ -106,10 +106,10 @@ public class CourseListAdapter extends BaseMultiItemQuickAdapter<BaseCourseDataB
                     ExamCellBean bean = (ExamCellBean) item;
                     tvTitle.setText(bean.getTitle());
 
-                    tvDec.setText("考试形式：选择题    人脸识别方法作弊");
+                    tvDec.setText("考试形式：选择题    人脸识别防作弊");
 
                     String endTime = bean.getEnd_time();
-                    tvLastTime.setText("课程最晚考试时间: " + handleTime(endTime));
+                    tvLastTime.setText("课程最晚考试日期: " + handleHistoryTime(endTime));
 
 
                     int type = bean.getType();
@@ -124,7 +124,7 @@ public class CourseListAdapter extends BaseMultiItemQuickAdapter<BaseCourseDataB
                     if (is_exam == 1) {
                         tvBtn.setText("考试结束");
                         tvBtn.setBackgroundResource(R.drawable.btn_gray_solid_bg);
-                        helper.getConvertView().setOnClickListener(new View.OnClickListener() {
+                        tvBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
 
@@ -133,11 +133,11 @@ public class CourseListAdapter extends BaseMultiItemQuickAdapter<BaseCourseDataB
                     } else {
                         tvBtn.setText("现在考试");
                         tvBtn.setBackgroundResource(R.drawable.btn_green_solid_bg);
-                        helper.getConvertView().setOnClickListener(new View.OnClickListener() {
+                        tvBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
 
-                                skipExam(((ExamCellBean) item).getExam_id(), ((ExamCellBean) item).getExam_time());
+                                skipExam(((ExamCellBean) item).getTitle(),((ExamCellBean) item).getExam_id(), ((ExamCellBean) item).getExam_time());
 
                             }
                         });
@@ -153,7 +153,7 @@ public class CourseListAdapter extends BaseMultiItemQuickAdapter<BaseCourseDataB
         }
     }
 
-    private void skipExam(int exam_id, String exam_time) {
+    private void skipExam(String title,int exam_id, String exam_time) {
         Params params = new Params();
         params.put("ei", exam_id);
         params.put("nm", 1);
@@ -166,6 +166,7 @@ public class CourseListAdapter extends BaseMultiItemQuickAdapter<BaseCourseDataB
                 Intent intent = new Intent(mContext, ExamineActivity.class);
                 intent.putExtra("examId", exam_id);
                 intent.putExtra("examTime", exam_time);
+                intent.putExtra("title", title);
                 mContext.startActivity(intent);
             }
 
@@ -184,6 +185,23 @@ public class CourseListAdapter extends BaseMultiItemQuickAdapter<BaseCourseDataB
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat sdf2 = new SimpleDateFormat("MM.dd日");
+        try {
+            Date date = sdf.parse(examTime);
+            return sdf2.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+    }
+
+    private String handleHistoryTime(String examTime) {
+        if (TextUtils.isEmpty(examTime)) {
+            return "";
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("MM-dd");
         try {
             Date date = sdf.parse(examTime);
             return sdf2.format(date);

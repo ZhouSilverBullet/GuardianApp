@@ -11,11 +11,13 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.sdxxtop.guardianapp.app.Constants;
 import com.sdxxtop.guardianapp.model.bean.LoginBean;
 import com.sdxxtop.guardianapp.presenter.LoginPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.LoginContract;
+import com.sdxxtop.guardianapp.ui.control.DelTextWatcher;
 import com.sdxxtop.guardianapp.utils.SpUtil;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 import com.sdxxtop.guardianapp.R;
@@ -36,6 +38,10 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     EditText etCode;
     @BindView(R.id.et_phone)
     EditText etPhone;
+    @BindView(R.id.iv_phone_del)
+    ImageView ivPhoneDel;
+    @BindView(R.id.iv_code_del)
+    ImageView ivCodeDel;
     private Handler mHandler;
     private boolean isSending;
     private LoginReceiver mLoginReceiver;
@@ -86,6 +92,9 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
                 sendCode();
             }
         });
+
+        etPhone.addTextChangedListener(new DelTextWatcher(etPhone, ivPhoneDel));
+        etCode.addTextChangedListener(new DelTextWatcher(etCode, ivCodeDel));
     }
 
     private void toLogin() {
