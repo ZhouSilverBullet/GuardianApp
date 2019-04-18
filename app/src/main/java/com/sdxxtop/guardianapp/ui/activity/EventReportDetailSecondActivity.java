@@ -82,8 +82,9 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
 
         String editValue = etNumContent.getEditValue();
         if (TextUtils.isEmpty(editValue)) {
-            showToast("请填写编辑内容");
-            return;
+//            showToast("请填写编辑内容");
+//            return;
+            editValue = "";
         }
 
         String selectType = tvSelect.getText().toString().trim();

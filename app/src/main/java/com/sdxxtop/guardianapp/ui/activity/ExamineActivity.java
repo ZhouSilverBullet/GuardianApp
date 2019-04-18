@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.app.Constants;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
+import com.sdxxtop.guardianapp.model.bean.ExamineFinishBean;
 import com.sdxxtop.guardianapp.model.bean.StudyCheckBean;
 import com.sdxxtop.guardianapp.model.bean.StudyQuestionBean;
 import com.sdxxtop.guardianapp.presenter.ExaminePresenter;
@@ -67,7 +68,7 @@ public class ExamineActivity extends BaseMvpActivity<ExaminePresenter> implement
     private volatile int mQuestionNum;
     private String mExamTime;
     private ExamineTimeCountdown mTimeCountdown;
-    private int mScore;
+    private String mScore;
     private String mTitle;
 
     @Override
@@ -267,7 +268,7 @@ public class ExamineActivity extends BaseMvpActivity<ExaminePresenter> implement
 
         //1.是 2.否
         mIsLast = bean.getIs_last() == 1;
-        mScore = bean.getScore();
+//        mScore = bean.getScore();
     }
 
     private void handleSelect(String anwer, List<String> question) {
@@ -303,7 +304,8 @@ public class ExamineActivity extends BaseMvpActivity<ExaminePresenter> implement
     @Override
     public void pushQuestionSuccess(StudyCheckBean studyCheckBean) {
         if (mIsLast) { //最后一题了
-            showLastDialog();
+//            showLastDialog();
+            finishLoad();
         } else { //不是最后一题继续答题
             loadData(mExamId, mNumber + 1, mAttendId);
         }
@@ -313,7 +315,7 @@ public class ExamineActivity extends BaseMvpActivity<ExaminePresenter> implement
         new IosAlertDialog(this)
                 .builder()
                 .setMsg("本次考试得分")
-                .setMsg2(String.valueOf(mScore))
+                .setMsg2(mScore)
                 .setPositiveButton("", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -329,9 +331,24 @@ public class ExamineActivity extends BaseMvpActivity<ExaminePresenter> implement
                 .show();
     }
 
+    private void finishLoad() {
+        mPresenter.finishData(mExamId, mAttendId);
+    }
+
+    @Override
+    public void finishSuccess(ExamineFinishBean finishBean) {
+        mScore = finishBean.getScore();
+        showLastDialog();
+    }
+
+    @Override
+    public void finishFailure() {
+        finish();
+    }
+
     @Override
     public void onComplete() {
         //完成考试了
-        showLastDialog();
+        finishLoad();
     }
 }

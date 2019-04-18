@@ -9,5 +9,6 @@
         android:id="@+id/iv_img"
         android:layout_width="95dp"
         android:layout_height="95dp"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:transitionName="photo_view" />
 </LinearLayout>

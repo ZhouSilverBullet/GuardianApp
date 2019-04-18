@@ -1,12 +1,14 @@
 package com.sdxxtop.guardianapp.ui.adapter;
 
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sdxxtop.guardianapp.R;
+import com.sdxxtop.guardianapp.ui.activity.PhotoViewActivity;
 
 import java.util.List;
 
@@ -23,5 +25,11 @@ public class ImageHorizontalAdapter extends BaseQuickAdapter<String, BaseViewHol
         if (!TextUtils.isEmpty(item)) {
             Glide.with(mContext).load(item).into(imageView);
         }
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PhotoViewActivity.start(mContext, item);
+            }
+        });
     }
 }

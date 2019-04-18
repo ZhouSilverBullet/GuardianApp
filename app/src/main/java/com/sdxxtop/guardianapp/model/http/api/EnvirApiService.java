@@ -4,6 +4,7 @@ import com.sdxxtop.guardianapp.model.bean.AutoLoginBean;
 import com.sdxxtop.guardianapp.model.bean.ContactIndexBean;
 import com.sdxxtop.guardianapp.model.bean.EventIndexBean;
 import com.sdxxtop.guardianapp.model.bean.EventReadBean;
+import com.sdxxtop.guardianapp.model.bean.ExamineFinishBean;
 import com.sdxxtop.guardianapp.model.bean.InitBean;
 import com.sdxxtop.guardianapp.model.bean.LoginBean;
 import com.sdxxtop.guardianapp.model.bean.MainIndexBean;
@@ -126,6 +127,10 @@ public interface EnvirApiService {
     @FormUrlEncoded
     @POST("study/check")
     Observable<RequestBean> postStudyCheck(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("study/finish")
+    Observable<RequestBean<ExamineFinishBean>> postStudyFinish(@Field("data") String data);
 
 
     @Multipart

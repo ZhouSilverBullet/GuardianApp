@@ -118,6 +118,11 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
     @Override
     protected void initData() {
         super.initData();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         mPresenter.loadData();
     }
 

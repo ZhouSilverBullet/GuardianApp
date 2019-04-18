@@ -2,6 +2,7 @@ package com.sdxxtop.guardianapp.presenter;
 
 
 import com.sdxxtop.guardianapp.base.RxPresenter;
+import com.sdxxtop.guardianapp.model.bean.ExamineFinishBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
 import com.sdxxtop.guardianapp.model.bean.StudyCheckBean;
 import com.sdxxtop.guardianapp.model.bean.StudyQuestionBean;
@@ -69,4 +70,24 @@ public class ExaminePresenter extends RxPresenter<ExamineContract.IView> impleme
         addSubscribe(disposable);
     }
 
+    public void finishData(int examId, String attendId) {
+        Params params = new Params();
+        params.put("ei", examId);
+        params.put("ai", attendId);
+        Observable<RequestBean<ExamineFinishBean>> observable = getEnvirApi().postStudyFinish(params.getData());
+        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<ExamineFinishBean>() {
+            @Override
+            public void onSuccess(ExamineFinishBean finishBean) {
+                mView.finishSuccess(finishBean);
+            }
+
+            @Override
+            public void onFailure(int code, String error) {
+                mView.finishFailure();
+                UIUtils.showToast(error);
+            }
+        });
+
+        addSubscribe(disposable);
+    }
 }

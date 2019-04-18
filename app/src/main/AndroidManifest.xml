@@ -100,6 +100,9 @@
             android:theme="@style/AppNormalTheme" />
         <activity android:name=".ui.activity.EventReportDetailSecondActivity" />
         <activity android:name=".ui.activity.ContactSearchActivity" />
+        <activity
+            android:name=".ui.activity.PhotoViewActivity"
+            android:theme="@style/full_screen_splash" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
