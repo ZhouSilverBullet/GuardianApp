@@ -1,5 +1,7 @@
 package com.sdxxtop.guardianapp.model.bean;
 
+import com.sdxxtop.guardianapp.utils.GuardianUtils;
+
 public class UcenterIndexBean {
     /**
      * "name" : 周周
@@ -76,21 +78,6 @@ public class UcenterIndexBean {
 
     //1:网格员 2: 企业员工 3:街道管理员 4:区级管理员
     public String getStringPosition() {
-        String strPosi;
-        switch (getPosition()) {
-            case 2:
-                strPosi = "网格员";
-                break;
-            case 3:
-                strPosi = "街道管理员";
-                break;
-            case 4:
-                strPosi = "区级管理员";
-                break;
-            default:
-                strPosi = "网格员";
-                break;
-        }
-        return strPosi;
+        return GuardianUtils.getJobName(getPosition());
     }
 }

@@ -115,6 +115,7 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
         super.onHiddenChanged(hidden);
         if (!hidden) {
             statusBar(false);
+            mPresenter.loadData();
         }
     }
 

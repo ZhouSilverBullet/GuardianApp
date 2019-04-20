@@ -217,7 +217,6 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
         for (int i = 0; i < localMediaList.size(); i++) {
             if (localMediaList.get(i).getDuration() != -100) {
                 tempLocalMedia.add(localMediaList.get(i));
-                break;
             }
         }
         return tempLocalMedia;

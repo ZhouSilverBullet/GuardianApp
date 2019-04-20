@@ -184,7 +184,7 @@ public class GridMapActivity extends BaseMvpActivity<GridMapPresenter> implement
                                         + bm.getWidth() + "高度为" + bm.getHeight());
 
                                 markerOptions.icon(BitmapDescriptorFactory.fromBitmap(bm));
-                                markerOptions.position(latLng).title("").snippet(userBean.getAddress());
+                                markerOptions.position(latLng).title("").snippet(userBean.getName());
                                 aMap.addMarker(markerOptions);
                                 if (index == 0) {
                                     aMap.moveCamera(CameraUpdateFactory.changeLatLng(latLng));

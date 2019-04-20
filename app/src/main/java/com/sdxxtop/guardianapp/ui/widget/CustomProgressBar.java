@@ -174,7 +174,7 @@ public class CustomProgressBar extends RelativeLayout {
                 tvLine2.setBackgroundColor(Color.parseColor("#32B16C"));
                 tvLine3.setBackgroundColor(Color.parseColor("#32B16C"));
 
-                tvText4.setText("受理失败");
+                tvText4.setText("未通过");
                 break;
 
         }

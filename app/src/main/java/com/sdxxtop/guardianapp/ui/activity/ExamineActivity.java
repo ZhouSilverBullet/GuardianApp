@@ -70,6 +70,7 @@ public class ExamineActivity extends BaseMvpActivity<ExaminePresenter> implement
     private ExamineTimeCountdown mTimeCountdown;
     private String mScore;
     private String mTitle;
+    private String mAnwer;
 
     @Override
     protected int getLayout() {
@@ -202,7 +203,7 @@ public class ExamineActivity extends BaseMvpActivity<ExaminePresenter> implement
         for (int i = 0; i < llSubject.getChildCount(); i++) {
             SubjectItemView childAt = (SubjectItemView) llSubject.getChildAt(i);
             if (childAt.isCheck()) {
-                answer = childAt.getSelectValue() + ",";
+                answer += childAt.getSelectValue() + ",";
             }
         }
 
@@ -265,7 +266,12 @@ public class ExamineActivity extends BaseMvpActivity<ExaminePresenter> implement
 //        tvShowTime.setText("");
         tvSubjectType.setText(isSingle ? "单选题目" : "多选题目");
         tvSubjectContent.setText(bean.getTitle());
-
+        mAnwer = bean.getAnwer();
+        if (TextUtils.isEmpty(mAnwer)) {
+            tvPush.setVisibility(View.VISIBLE);
+        } else {
+            tvPush.setVisibility(View.INVISIBLE);
+        }
         //1.是 2.否
         mIsLast = bean.getIs_last() == 1;
 //        mScore = bean.getScore();
@@ -277,10 +283,12 @@ public class ExamineActivity extends BaseMvpActivity<ExaminePresenter> implement
             return;
         }
 
+        boolean isClick = TextUtils.isEmpty(anwer);
         for (int i = 0; i < question.size(); i++) {
             SubjectItemView subjectItemView = new SubjectItemView(this);
             subjectItemView.setOnSubjectClickListener(this);
             subjectItemView.setSelectIndexContent(i, question.get(i));
+            subjectItemView.setItemViewClickable(isClick);
             llSubject.addView(subjectItemView);
         }
 
@@ -293,7 +301,7 @@ public class ExamineActivity extends BaseMvpActivity<ExaminePresenter> implement
             String[] split = anwer.split(",");
             for (String strIndex : split) {
                 int index = GuardianUtils.getQuestionIndex(strIndex);
-                if (index < childCount) {
+                if (index < childCount && index >= 0) {
                     ((SubjectItemView) llSubject.getChildAt(index)).setCheck(true);
                 }
             }

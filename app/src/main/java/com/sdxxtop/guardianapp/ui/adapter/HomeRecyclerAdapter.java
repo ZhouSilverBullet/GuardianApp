@@ -144,10 +144,12 @@ public class HomeRecyclerAdapter extends BaseQuickAdapter<MainIndexBean.EventBea
 
             if (!TextUtils.isEmpty(appendValue)) {
                 tvTask1.setText(appendValue + eventDataList.get(0).title);
+                tvScore1.setVisibility(View.VISIBLE);
+                handleScore(tvScore1, eventDataList.get(0).end_date);
             } else {
                 tvTask1.setVisibility(View.GONE);
+                tvScore1.setVisibility(View.INVISIBLE);
             }
-            handleScore(tvScore1, eventDataList.get(0).end_date);
         } else if (eventDataList.size() >= 2) {
 
             String appendValue = "新任务：";
@@ -163,17 +165,21 @@ public class HomeRecyclerAdapter extends BaseQuickAdapter<MainIndexBean.EventBea
 
             if (!TextUtils.isEmpty(appendValue)) {
                 tvTask1.setText(appendValue + eventDataList.get(0).title);
+                tvScore1.setVisibility(View.VISIBLE);
+                handleScore(tvScore1, eventDataList.get(0).end_date);
             } else {
                 tvTask1.setVisibility(View.GONE);
+                tvScore1.setVisibility(View.INVISIBLE);
             }
-            handleScore(tvScore1, eventDataList.get(0).end_date);
 
             if (!TextUtils.isEmpty(appendValue2)) {
                 tvTask2.setText(appendValue2 + eventDataList.get(1).title);
+                tvScore2.setVisibility(View.VISIBLE);
+                handleScore(tvScore2, eventDataList.get(1).end_date);
             } else {
                 tvTask2.setVisibility(View.GONE);
+                tvScore2.setVisibility(View.INVISIBLE);
             }
-            handleScore(tvScore2, eventDataList.get(1).end_date);
         }
 
     }
@@ -187,13 +193,13 @@ public class HomeRecyclerAdapter extends BaseQuickAdapter<MainIndexBean.EventBea
             case 2:
                 value = "新任务：";
                 break;
-//            case 3:
-//                value = "新反馈：";
-//                break;
+            case 3:
+                value = "新任务：";
+                break;
 //            //受理事变
-//            default:
-//                value = "新完成：";
-//                break;
+            default:
+                value = "新任务：";
+                break;
         }
         return value;
     }
@@ -226,14 +232,18 @@ public class HomeRecyclerAdapter extends BaseQuickAdapter<MainIndexBean.EventBea
 
 
     public void handleScore(TextView tv, String strDate) {
+        if (TextUtils.isEmpty(strDate)) {
+            tv.setVisibility(View.INVISIBLE);
+            return;
+        }
         try {
             Date date = simpleDateFormat.parse(strDate);
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
             int day = calendar.get(Calendar.DATE);
             int month = calendar.get(Calendar.MONTH) + 1;
-            tv.setVisibility(View.VISIBLE);
-            tv.setText(new StringBuilder().append("截止:").append(month).append(".").append(day));
+//            tv.setVisibility(View.VISIBLE);
+            tv.setText(new StringBuilder().append("截止：").append(month).append(".").append(day));
         } catch (ParseException e) {
             e.printStackTrace();
             tv.setVisibility(View.INVISIBLE);

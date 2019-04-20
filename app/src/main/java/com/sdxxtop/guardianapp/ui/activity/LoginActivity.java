@@ -173,7 +173,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     public boolean handleMessage(Message msg) {
         int value = (int) msg.obj;
         if (btnCode != null) {
-            btnCode.setText("获取验证码" + value);
+            btnCode.setText("" + value);
             btnCode.setTextColor(getResources().getColor(R.color.color_999999));
         }
 

@@ -30,6 +30,7 @@ public class SubjectItemView extends FrameLayout {
     TextView tvSelectContent;
     @BindView(R.id.cb_select)
     CheckBox cbSelect;
+    private boolean mClickable;
 
     public SubjectItemView(@NonNull Context context) {
         this(context, null);
@@ -54,6 +55,9 @@ public class SubjectItemView extends FrameLayout {
 
     @OnClick(R.id.ll_root)
     public void onViewClicked() {
+        if (!mClickable) {
+            return;
+        }
         boolean isCheck = !cbSelect.isChecked();
         if (mOnSubjectClickListener != null) {
             mOnSubjectClickListener.onSubjectClick(this, isCheck);
@@ -87,6 +91,10 @@ public class SubjectItemView extends FrameLayout {
 
     public void setCheck(boolean isCheck) {
         cbSelect.setChecked(isCheck);
+    }
+
+    public void setItemViewClickable(boolean clickable) {
+        mClickable = clickable;
     }
 
     public String getSelectValue() {
