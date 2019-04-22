@@ -46,10 +46,11 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import butterknife.BindView;
 import io.reactivex.functions.Consumer;
 
-public class GridMapActivity extends BaseMvpActivity<GridMapPresenter> implements AMap.OnMyLocationChangeListener, AMap.OnMapClickListener, GridMapContract.IView {
+public class GridMapActivity extends BaseMvpActivity<GridMapPresenter> implements AMap.OnMyLocationChangeListener, AMap.OnMapClickListener, GridMapContract.IView, AMap.OnMarkerClickListener {
     private static final String TAG = "GridMapActivity";
 
     @BindView(R.id.gmap)
@@ -110,6 +111,7 @@ public class GridMapActivity extends BaseMvpActivity<GridMapPresenter> implement
 
         mAdapter = new GridMapAdapter();
         aMap.setInfoWindowAdapter(mAdapter);
+        aMap.setOnMarkerClickListener(this);
     }
 
     @Override
@@ -301,7 +303,9 @@ public class GridMapActivity extends BaseMvpActivity<GridMapPresenter> implement
 //        markerOptions.position(latLng);
 //        aMap.addMarker(markerOptions);
 //        aMap.moveCamera(CameraUpdateFactory.changeLatLng(latLng));
-
+        if (tempMarker != null && tempMarker.isInfoWindowShown()) {
+            tempMarker.hideInfoWindow();
+        }
     }
 
 
@@ -313,5 +317,18 @@ public class GridMapActivity extends BaseMvpActivity<GridMapPresenter> implement
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
+    }
+
+    private Marker tempMarker;
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        tempMarker = marker;
+        if (marker.isInfoWindowShown()) {
+            marker.hideInfoWindow();
+        } else {
+            marker.showInfoWindow();
+        }
+        return true;
     }
 }
