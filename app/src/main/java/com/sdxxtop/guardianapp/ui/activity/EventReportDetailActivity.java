@@ -38,6 +38,8 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
     TextView tvContentTitle;
     @BindView(R.id.rv)
     RecyclerView rv;
+    @BindView(R.id.rv2)
+    RecyclerView rv2;
     @BindView(R.id.tv_time)
     TextView tvTime;
     @BindView(R.id.tv_check_method)
@@ -68,6 +70,8 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
 
     private String mEventId;
     private ImageHorizontalAdapter mAdapter;
+    //显示check的图片
+    private ImageHorizontalAdapter mCheckAdapter;
 
     @Override
     protected void initInject() {
@@ -94,6 +98,10 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         rv.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         mAdapter = new ImageHorizontalAdapter(R.layout.item_image_horizontal_view, new ArrayList<>());
         rv.setAdapter(mAdapter);
+
+        rv2.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        mCheckAdapter = new ImageHorizontalAdapter(R.layout.item_image_horizontal_view, new ArrayList<>());
+        rv2.setAdapter(mCheckAdapter);
     }
 
     @Override
@@ -175,6 +183,9 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         cpbProgress.setStatus(status, dateStrList);
         //图片加载
         handleImg(eventReadBean.getImg());
+
+        //check的图片加载
+        handleCheckImg(eventReadBean.getCheck_img());
 
         tvContentTitle.setText(eventReadBean.getTitle());
         tvTime.setText(eventReadBean.getAdd_time());
@@ -322,6 +333,16 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         rv.setVisibility(View.VISIBLE);
         String[] split = img.split(",");
         mAdapter.replaceData(Arrays.asList(split));
+    }
+
+    private void handleCheckImg(String checkImg) {
+        if (TextUtils.isEmpty(checkImg)) {
+            rv2.setVisibility(View.GONE);
+            return;
+        }
+        rv2.setVisibility(View.VISIBLE);
+        String[] split = checkImg.split(",");
+        mCheckAdapter.replaceData(Arrays.asList(split));
     }
 
     private List<String> getStrList(EventReadBean eventReadBean) {

@@ -16,12 +16,14 @@ import com.sdxxtop.guardianapp.model.bean.StudyCourseBean;
 import com.sdxxtop.guardianapp.model.bean.StudyQuestionBean;
 import com.sdxxtop.guardianapp.model.bean.UcenterIndexBean;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -80,9 +82,9 @@ public interface EnvirApiService {
     @POST("event/read")
     Observable<RequestBean<EventReadBean>> postEventRead(@Field("data") String data);
 
-    @FormUrlEncoded
+    @Multipart
     @POST("event/modify")
-    Observable<RequestBean> postEventModify(@Field("data") String data);
+    Observable<RequestBean> postEventModify(@PartMap HashMap<String, RequestBody> data);
 
 
     @FormUrlEncoded

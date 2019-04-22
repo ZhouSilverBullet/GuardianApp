@@ -7,15 +7,21 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
+import com.luck.picture.lib.entity.LocalMedia;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.presenter.ERDSecondPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.ERDSecondContract;
 import com.sdxxtop.guardianapp.ui.widget.NumberEditTextView;
+import com.sdxxtop.guardianapp.ui.widget.SelectHoriPhotoView;
 import com.sdxxtop.guardianapp.ui.widget.SingleDataView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -31,6 +37,8 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
     TextView tvSelect;
     @BindView(R.id.et_num_content)
     NumberEditTextView etNumContent;
+    @BindView(R.id.shpv_view)
+    SelectHoriPhotoView mShpvView;
     @BindView(R.id.btn_push)
     Button btnPush;
     private SingleDataView mSingleDataView;
@@ -39,7 +47,7 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
 
     @Override
     protected int getLayout() {
-        return R.layout.activity_event_report_detail_second;
+        return R.layout.activity_eventa_report_detail_second;
     }
 
     @Override
@@ -89,7 +97,10 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
 
         String selectType = tvSelect.getText().toString().trim();
         int i = mList.indexOf(selectType) + 4;
-        mPresenter.modify(mEventId, i, editValue);
+
+        List<File> imagePushPath = mShpvView.getImagePushPath();
+
+        mPresenter.modify(mEventId, i, editValue, imagePushPath);
     }
 
     private void showSelect() {
@@ -109,6 +120,14 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
         });
 
         mSingleDataView.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (mShpvView != null) {
+            mShpvView.callActivityResult(requestCode, resultCode, data);
+        }
     }
 
     @Override

@@ -5,10 +5,15 @@ import com.sdxxtop.guardianapp.model.bean.EventReadBean;
 import com.sdxxtop.guardianapp.model.bean.MainIndexBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
 import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
+import com.sdxxtop.guardianapp.model.http.net.ImageParams;
 import com.sdxxtop.guardianapp.model.http.net.Params;
 import com.sdxxtop.guardianapp.model.http.util.RxUtils;
 import com.sdxxtop.guardianapp.presenter.contract.EventReportDetailContract;
 import com.sdxxtop.guardianapp.utils.UIUtils;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -39,11 +44,17 @@ public class EventReportDetailPresenter extends RxPresenter<EventReportDetailCon
     }
 
     public void modify(String eventId, int status, String extra) {
-        Params params = new Params();
+        modify(eventId, status, extra, new ArrayList<>());
+    }
+
+    public void modify(String eventId, int status, String extra, List<File> imagePushPath) {
+        ImageParams params = new ImageParams();
         params.put("ei", eventId);
-        params.put("st",status);
+        params.put("st", status);
         params.put("et", extra);
-        Observable<RequestBean> observable = getEnvirApi().postEventModify(params.getData());
+
+        params.addImagePathList("img[]", imagePushPath);
+        Observable<RequestBean> observable = getEnvirApi().postEventModify(params.getImgData());
         Disposable disposable = RxUtils.handleHttp(observable, new IRequestCallback<RequestBean>() {
             @Override
             public void onSuccess(RequestBean requestBean) {

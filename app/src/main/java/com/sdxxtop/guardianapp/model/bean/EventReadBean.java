@@ -43,6 +43,8 @@ public class EventReadBean {
     private int is_modify;
     private int is_finish;
 
+    private String check_img;
+
     public int getEvent_id() {
         return event_id;
     }
@@ -193,5 +195,13 @@ public class EventReadBean {
 
     public void setFinish_time(String finish_time) {
         this.finish_time = finish_time;
+    }
+
+    public String getCheck_img() {
+        return check_img;
+    }
+
+    public void setCheck_img(String check_img) {
+        this.check_img = check_img;
     }
 }

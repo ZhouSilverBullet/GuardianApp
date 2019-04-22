@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/half_green_bg"
+    android:background="@color/white"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <com.sdxxtop.guardianapp.ui.widget.TitleView
@@ -65,6 +67,11 @@
 
         <com.sdxxtop.guardianapp.ui.widget.NumberEditTextView
             android:id="@+id/et_num_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.sdxxtop.guardianapp.ui.widget.SelectHoriPhotoView
+            android:id="@+id/shpv_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
