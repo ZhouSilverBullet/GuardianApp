@@ -16,8 +16,11 @@ import com.sdxxtop.guardianapp.utils.SpUtil;
 
 import androidx.annotation.Nullable;
 
+import me.jessyan.autosize.AutoSize;
+import me.jessyan.autosize.internal.CancelAdapt;
 
-public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements SplashContract.IView {
+
+public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements SplashContract.IView, CancelAdapt {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

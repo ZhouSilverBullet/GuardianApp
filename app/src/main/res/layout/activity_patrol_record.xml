@@ -18,14 +18,14 @@
             app:bgColor="@color/green"
             app:leftLayoutIsShow="true"
             app:titleColor="@color/white"
-            app:titleValue="巡查记录" />
+            app:titleValue="工作轨迹" />
 
         <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
             android:id="@+id/tatv_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tatv_text_img_is_show="false"
-            app:tatv_text_view="今日巡查路径" />
+            app:tatv_text_view="工作轨迹" />
 
         <RelativeLayout
             android:layout_width="match_parent"

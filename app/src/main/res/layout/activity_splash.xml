@@ -26,21 +26,20 @@
 
 
     <ImageView
-        android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/splash_icon" />
+        android:scaleType="fitXY"
+        android:src="@drawable/splash_layer_icon" />
 
-    <TextView
+    <ImageView
         android:id="@+id/image_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="22dp"
-        android:text="罗庄区人民政府\n罗庄区大数据局 "
-        android:textColor="@color/color_303030"
-        android:textSize="17sp" />
+        android:src="@drawable/splash_bottom_text" />
+
 
     <ImageView
         android:id="@+id/image_slogan"
@@ -48,19 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="136.0dip"
-        android:src="@mipmap/logo" />
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/image_slogan"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:text="智慧罗庄"
-        android:textColor="@color/color_303030"
-        android:textSize="22sp"
-        android:textStyle="bold" />
+        android:src="@drawable/logo_text" />
 
 
     <!--<LinearLayout-->

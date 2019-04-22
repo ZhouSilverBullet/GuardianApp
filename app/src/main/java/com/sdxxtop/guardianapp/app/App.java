@@ -36,6 +36,7 @@ public class App extends BaseApp {
         initLogger();
         AppSession.getInstance().init(this);
         initBaiduFace();
+        CrashHandler.getInstance().init(this);
     }
 
     private void initBaiduFace() {

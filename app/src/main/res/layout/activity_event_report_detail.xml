@@ -102,7 +102,7 @@
                         style="@style/normal_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="巡查方式" />
+                        android:text="发现方式" />
 
                     <TextView
                         android:id="@+id/tv_check_method"
@@ -127,7 +127,7 @@
                         style="@style/normal_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="事件发生地点" />
+                        android:text="发生地点" />
 
                     <TextView
                         android:id="@+id/tv_happen"
@@ -152,7 +152,7 @@
                         style="@style/normal_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="上报路径" />
+                        android:text="主管部门" />
 
                     <TextView
                         android:id="@+id/tv_report_path"
