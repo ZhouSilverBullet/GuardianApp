@@ -47,7 +47,7 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
 
     @Override
     protected int getLayout() {
-        return R.layout.activity_eventa_report_detail_second;
+        return R.layout.activity_event_report_detail_second;
     }
 
     @Override
