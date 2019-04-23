@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.zhousaito.plugin.publishApp'
 
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
@@ -49,6 +50,24 @@ android {
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
     }
+
+    //360打包时需要加入这个，否则manifest文件中有警告会停止打包
+    lintOptions {
+        abortOnError false
+    }
+}
+
+//360多渠道打包
+publishAppInfo {
+    qihuPath = "/jiagu/jiagu.jar"
+    keyStorePath = "/GrardianAppKey.keystore"
+    keyStorePass = "zhidian020166"
+    keyStoreKeyAlias = "zhidian"
+    keyStoreKeyAliasPass = "zhidian020166"
+    //这个渠道路径暂时用不上
+    channelPath = "/apk"
+    //输出的位置
+    outputPath = "/jiaguapk"
 }
 
 dependencies {

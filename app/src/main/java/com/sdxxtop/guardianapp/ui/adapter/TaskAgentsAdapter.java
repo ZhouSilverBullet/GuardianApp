@@ -44,7 +44,7 @@ public class TaskAgentsAdapter extends BaseQuickAdapter<EventIndexBean.EventBean
         tvDate.setText("截止日期：" + endDate);
 
         String strStatus = "";
-        switch (item.getStatus()) { //状态(1:带派发 2:待解决 3:待验收 4:验收通过 5:验收不通过)
+        switch (item.getStatus()) { //状态(1:待派发 2:待解决 3:待验收 4:验收通过 5:验收未通过)
             case 2:
                 strStatus = "待解决";
                 break;
@@ -55,10 +55,10 @@ public class TaskAgentsAdapter extends BaseQuickAdapter<EventIndexBean.EventBean
                 strStatus = "验收通过";
                 break;
             case 5:
-                strStatus = "验收不通过";
+                strStatus = "验收未通过";
                 break;
             default:
-                strStatus = "带派发";
+                strStatus = "待派发";
                 break;
         }
         tvPhase.setText(strStatus);
