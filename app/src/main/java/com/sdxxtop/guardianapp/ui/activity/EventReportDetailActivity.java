@@ -282,10 +282,10 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         String strPath;
         switch (pathType) {
             case 2:
-                strPath = "城管局";
+                strPath = "安监局";
                 break;
             case 3:
-                strPath = "安监局";
+                strPath = "城管局";
                 break;
             case 4:
                 strPath = "住建局";

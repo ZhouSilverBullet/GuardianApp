@@ -17,3 +17,5 @@
 app/release/
 
 app/jiaguapk/
+
+app/jiagu/\.cache/
