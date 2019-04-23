@@ -73,9 +73,9 @@ public class NewsDetailsActivity extends BaseMvpActivity<NewsDetailPresenter> im
         // 让JavaScript可以自动打开windows
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         // 设置缓存
-        webSettings.setAppCacheEnabled(true);
+        webSettings.setAppCacheEnabled(false);
         // 设置缓存模式,一共有四种模式
-        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+//        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         // 设置缓存路径
 //        webSettings.setAppCachePath("");
         // 支持缩放(适配到当前屏幕)

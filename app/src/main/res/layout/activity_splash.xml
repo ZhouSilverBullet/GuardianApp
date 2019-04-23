@@ -25,29 +25,29 @@
     <!--android:src="@mipmap/welcome_android_logo" />-->
 
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:src="@drawable/splash_layer_icon" />
+    <!--<ImageView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:scaleType="fitXY"-->
+        <!--android:src="@drawable/splash_layer_icon" />-->
 
-    <ImageView
-        android:id="@+id/image_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="22dp"
-        android:src="@drawable/splash_bottom_text" />
+    <!--<ImageView-->
+        <!--android:id="@+id/image_logo"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginBottom="22dp"-->
+        <!--android:src="@drawable/splash_bottom_text" />-->
 
 
-    <ImageView
-        android:id="@+id/image_slogan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="136.0dip"
-        android:src="@drawable/logo_text" />
+    <!--<ImageView-->
+        <!--android:id="@+id/image_slogan"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="136.0dip"-->
+        <!--android:src="@drawable/logo_text" />-->
 
 
     <!--<LinearLayout-->
