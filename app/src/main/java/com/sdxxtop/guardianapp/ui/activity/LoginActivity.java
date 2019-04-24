@@ -128,15 +128,14 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
             mHandler = new Handler(this);
         }
 
+        String trim = etPhone.getText().toString().trim();
+        if (TextUtils.isEmpty(trim)) {
+            UIUtils.showToast("账号不能为空");
+            return;
+        }
+
         if (!isSending) {
-
             isSending = true;
-
-            String trim = etPhone.getText().toString().trim();
-            if (TextUtils.isEmpty(trim)) {
-                UIUtils.showToast("账号不能为空");
-                return;
-            }
             mPresenter.sendCode(trim);
         }
     }

@@ -78,7 +78,9 @@
             android:theme="@style/AppNormalTheme" />
         <activity android:name="com.sdxxtop.guardianapp.ui.activity.ExamineActivity" />
         <activity android:name="com.sdxxtop.guardianapp.ui.activity.NewsDetailsActivity" />
-        <activity android:name="com.sdxxtop.guardianapp.ui.activity.LoginConfirmActivity" />
+        <activity
+            android:name="com.sdxxtop.guardianapp.ui.activity.LoginConfirmActivity"
+            android:launchMode="singleTask" />
         <activity
             android:name="com.sdxxtop.guardianapp.ui.activity.VideoPlayActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
