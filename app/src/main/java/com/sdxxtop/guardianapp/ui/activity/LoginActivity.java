@@ -6,12 +6,16 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Html;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.sdxxtop.guardianapp.app.Constants;
 import com.sdxxtop.guardianapp.model.bean.LoginBean;
@@ -32,8 +36,14 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
 
     @BindView(R.id.btn_login)
     Button btnLogin;
-    @BindView(R.id.btn_code)
-    Button btnCode;
+    @BindView(R.id.fl_code)
+    FrameLayout flCode;
+    @BindView(R.id.tv_code)
+    TextView tvCode;
+    @BindView(R.id.ll_code)
+    LinearLayout llCode;
+    @BindView(R.id.tv_time)
+    TextView tvTime;
     @BindView(R.id.et_code)
     EditText etCode;
     @BindView(R.id.et_phone)
@@ -86,7 +96,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
             }
         });
 
-        btnCode.setOnClickListener(new View.OnClickListener() {
+        flCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sendCode();
@@ -172,25 +182,38 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     @Override
     public boolean handleMessage(Message msg) {
         int value = (int) msg.obj;
-        if (btnCode != null) {
-            btnCode.setText("" + value);
-            btnCode.setTextColor(getResources().getColor(R.color.color_999999));
+        if (tvCode != null) {
+            handleCode(value);
         }
 
         if (value == 0) {
             isSending = false;
-            if (btnCode != null) {
-                btnCode.setText("获取验证码");
-                btnCode.setTextColor(getResources().getColor(R.color.color_303030));
-            }
+            handleCode(value);
         } else {
             Message message = Message.obtain();
             message.what = 100;
             message.obj = value - 1;
-            mHandler.sendMessageDelayed(message, 1000);
+            if (mHandler != null) {
+                mHandler.sendMessageDelayed(message, 1000);
+            }
         }
 
         return true;
+    }
+
+    private void handleCode(int value) {
+        if (tvCode == null || llCode == null) {
+            return;
+        }
+        if (isSending) {
+            tvTime.setText(String.valueOf(value));
+            tvCode.setVisibility(View.INVISIBLE);
+            llCode.setVisibility(View.VISIBLE);
+        } else {
+            tvCode.setVisibility(View.VISIBLE);
+            llCode.setVisibility(View.INVISIBLE);
+        }
+
     }
 
     private void toFinish() {
@@ -202,8 +225,19 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mHandler != null) {
+            mHandler.removeMessages(100);
+            mHandler = null;
+        }
+    }
+
+    @Override
     public void sendCodeSuccess() {
-        mHandler.obtainMessage(100, 60).sendToTarget();
+        if (mHandler != null) {
+            mHandler.obtainMessage(100, 60).sendToTarget();
+        }
     }
 
     @Override

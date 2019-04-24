@@ -181,8 +181,13 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
                 }
             }
             if (appCacheDir == null) {
+                appCacheDir = mContext.getExternalCacheDir();
+            }
+
+            if (appCacheDir == null) {
                 appCacheDir = mContext.getCacheDir();
             }
+
             if (appCacheDir == null) {
                 appCacheDir = new File("/data/data/" + mContext.getPackageName());
             }

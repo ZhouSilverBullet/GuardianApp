@@ -24,6 +24,7 @@ import com.sdxxtop.guardianapp.ui.adapter.HomeRecyclerAdapter;
 import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
 import com.sdxxtop.guardianapp.utils.GuardianUtils;
+import com.sdxxtop.guardianapp.utils.SkipMapUtils;
 import com.sdxxtop.guardianapp.utils.SpUtil;
 
 import java.util.ArrayList;
@@ -142,6 +143,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
                     switch (j) {
                         case 0:
 //                            UIUtils.showToast("查询记录");
+//                            SkipMapUtils.invokingGD(v.getContext(),"北京天池家园酒店","39.989652", "116.476604");
                             intent = new Intent(getContext(), PatrolRecordActivity.class);
                             break;
                         case 1:

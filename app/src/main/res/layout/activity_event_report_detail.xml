@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -136,8 +137,16 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:maxWidth="200dp"
+                        android:paddingRight="15dp"
                         android:singleLine="true"
                         android:text="巡逻sad" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/data_right" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -183,32 +192,101 @@
                 android:visibility="gone"
                 tools:visibility="visible" />
 
-            <TextView
-                android:id="@+id/tv_distributed_time"
-                style="@style/normal_text"
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_distributed_time"
+                    style="@style/normal_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:visibility="gone"
+                    tools:text="派发时间"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tv_distributed_result"
+                    style="@style/normal_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:visibility="gone"
+                    tools:text="派发人"
+                    tools:visibility="visible" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_end_time"
+                    style="@style/normal_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:visibility="visible"
+                    tools:text="截止日期"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tv_end_point"
+                    style="@style/normal_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:visibility="visible"
+                    tools:text="事件重要性：高"
+                    tools:visibility="visible" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/v_line_1"
+                style="@style/line_style"
                 android:layout_marginBottom="10dp"
                 android:visibility="gone"
-                tools:text="派发时间"
                 tools:visibility="visible" />
 
             <TextView
                 android:id="@+id/tv_jiejue_time"
                 style="@style/normal_text"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="10dp"
                 android:visibility="gone"
-                tools:text="派发时间"
+                tools:text="解决反馈时间"
                 tools:visibility="visible" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv3"
+                android:layout_width="match_parent"
+                android:layout_height="105dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="10dp"
+                android:visibility="gone" />
+
             <TextView
-                android:id="@+id/tv_yanshou_time"
+                android:id="@+id/tv_jiejue_remark"
                 style="@style/normal_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -216,20 +294,57 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="10dp"
                 android:visibility="gone"
-                tools:text="派发时间"
+                tools:text="备注:asfas"
                 tools:visibility="visible" />
 
-            <TextView
-                android:id="@+id/tv_yanshou_result"
-                style="@style/normal_text"
+            <View
+                android:id="@+id/v_line_2"
+                style="@style/line_style"
+                android:layout_marginBottom="10dp"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_yanshou_time"
+                    style="@style/normal_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:visibility="gone"
+                    tools:text="验收时间:"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tv_yanshou_result"
+                    style="@style/normal_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:visibility="gone"
+                    tools:text="验收结果：验收通过"
+                    tools:visibility="visible" />
+            </LinearLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv2"
+                android:layout_width="match_parent"
+                android:layout_height="105dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="10dp"
-                android:visibility="gone"
-                tools:text="派发时间"
-                tools:visibility="visible" />
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_remark"
@@ -240,17 +355,9 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="10dp"
                 android:visibility="gone"
-                tools:text="派发时间"
+                tools:text="备注:asfas"
                 tools:visibility="visible" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv2"
-                android:layout_width="match_parent"
-                android:layout_height="105dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="10dp"
-                android:visibility="gone" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

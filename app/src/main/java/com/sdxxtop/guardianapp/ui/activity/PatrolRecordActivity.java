@@ -47,6 +47,7 @@ import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.Nullable;
+
 import butterknife.BindView;
 
 public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> implements PatrolContract.IView, AMapLocationListener, LocationSource, AMap
@@ -73,6 +74,11 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
     private boolean isInternetDataLoad;
     private Polyline polyline;
     private String todayDate;
+
+    //是否定位
+    private boolean isPositionLoadFinish;
+    //下载数据为空
+    private boolean isLoadEmpty;
 
     @Override
     protected int getLayout() {
@@ -226,15 +232,23 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
 
     }
 
+    //定位获取到的临时经纬度
+    private LatLng curLatlng;
+
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
         if (mListener != null && aMapLocation != null) {
             if (aMapLocation.getErrorCode() == 0) {
                 mListener.onLocationChanged(aMapLocation);
-//                curLatlng = new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude());
-//                searchLatlonPoint = new LatLonPoint(curLatlng.latitude, curLatlng.longitude);
-//                aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(curLatlng, 16f));
-//                curLatlngList.add(curLatlng);
+
+                curLatlng = new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude());
+                //加载完毕定位
+                isPositionLoadFinish = true;
+                //此时数据已经回来了，且为空就定位开始
+                if (isLoadEmpty) {
+                    moveToCamera();
+                }
+
 //                moveToPath();
 //                drawMapLine();
             } else {
@@ -292,6 +306,13 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
         List<SignLogBean.SignBean> signBeanList = signLogBean.getSign();
         if (signBeanList != null) {
             curLatlngList.addAll(signBeanList);
+
+            if (signBeanList.size() == 0) {
+                isLoadEmpty = true;
+                if (isPositionLoadFinish) {
+                    moveToCamera();
+                }
+            }
         }
 
         aMap.clear();
@@ -300,6 +321,7 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
         if (isMapLoad) {
             drawMapLine();
         }
+
 
 //        if (data != null) {
 //            addressList = data.getAddress();
@@ -338,6 +360,16 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
 //                }
 //            }
 //        }
+    }
+
+    /**
+     * 当没有数据的时候，定位到当前位置
+     */
+    private synchronized void moveToCamera() {
+        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(curLatlng, 16f));
+        isLoadEmpty = false;
+        //load只会加载一次，所以不改变状态
+//        isPositionLoadFinish = false;
     }
 
     @Override

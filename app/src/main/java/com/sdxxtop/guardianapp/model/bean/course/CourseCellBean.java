@@ -16,8 +16,8 @@ public class CourseCellBean extends BaseCourseDataBean {
     private int course_id;
     private int classify_id;
     private String title;
-    private int class_time;
-    private int study_time;
+    private String class_time;
+    private String study_time;
     private String exam_time;
     private int type;
     private String classify_name;
@@ -52,19 +52,19 @@ public class CourseCellBean extends BaseCourseDataBean {
         this.title = title;
     }
 
-    public int getClass_time() {
+    public String getClass_time() {
         return class_time;
     }
 
-    public void setClass_time(int class_time) {
+    public void setClass_time(String class_time) {
         this.class_time = class_time;
     }
 
-    public int getStudy_time() {
+    public String getStudy_time() {
         return study_time;
     }
 
-    public void setStudy_time(int study_time) {
+    public void setStudy_time(String study_time) {
         this.study_time = study_time;
     }
 

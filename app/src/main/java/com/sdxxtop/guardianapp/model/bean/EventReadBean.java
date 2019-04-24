@@ -44,6 +44,10 @@ public class EventReadBean {
     private int is_finish;
 
     private String check_img;
+    private String finish_img;
+    private String finish_desc;
+    private String longitude;
+    private String send_name;
 
     public int getEvent_id() {
         return event_id;
@@ -203,5 +207,37 @@ public class EventReadBean {
 
     public void setCheck_img(String check_img) {
         this.check_img = check_img;
+    }
+
+    public String getFinish_img() {
+        return finish_img;
+    }
+
+    public void setFinish_img(String finish_img) {
+        this.finish_img = finish_img;
+    }
+
+    public String getFinish_desc() {
+        return finish_desc;
+    }
+
+    public void setFinish_desc(String finish_desc) {
+        this.finish_desc = finish_desc;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getSend_name() {
+        return send_name;
+    }
+
+    public void setSend_name(String send_name) {
+        this.send_name = send_name;
     }
 }

@@ -36,6 +36,7 @@
             android:value="1985905fa798941ad45e429a5bbd97e0" />
 
         <service android:name="com.amap.api.location.APSService" />
+        <service android:name=".service.PatrolRecordService" />
 
         <meta-data
             android:name="max_aspect"

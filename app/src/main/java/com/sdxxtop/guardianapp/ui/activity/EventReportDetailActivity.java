@@ -15,16 +15,22 @@ import com.sdxxtop.guardianapp.presenter.contract.EventReportDetailContract;
 import com.sdxxtop.guardianapp.ui.adapter.ImageHorizontalAdapter;
 import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
 import com.sdxxtop.guardianapp.ui.pop.ERCheckResultWindow;
+import com.sdxxtop.guardianapp.ui.pop.SelectMapPopView;
 import com.sdxxtop.guardianapp.ui.widget.CustomProgressBar;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
+import com.sdxxtop.guardianapp.utils.SkipMapUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -40,6 +46,8 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
     RecyclerView rv;
     @BindView(R.id.rv2)
     RecyclerView rv2;
+    @BindView(R.id.rv3)
+    RecyclerView rv3;
     @BindView(R.id.tv_time)
     TextView tvTime;
     @BindView(R.id.tv_check_method)
@@ -54,10 +62,22 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
     Button btnCheckSuccess;
     @BindView(R.id.v_line)
     View vLine;
+    @BindView(R.id.v_line_1)
+    View vLine1;
+    @BindView(R.id.v_line_2)
+    View vLine2;
     @BindView(R.id.tv_distributed_time)
     TextView tvDistributedTime;
+    @BindView(R.id.tv_distributed_result)
+    TextView tvDistributedResult;
+    @BindView(R.id.tv_end_time)
+    TextView tvEndTime;
+    @BindView(R.id.tv_end_point)
+    TextView tvEndPoint;
     @BindView(R.id.tv_jiejue_time)
     TextView tvJiejueTime;
+    @BindView(R.id.tv_jiejue_remark)
+    TextView tvJiejueRemark;
     @BindView(R.id.tv_yanshou_time)
     TextView tvYanshouTime;
     @BindView(R.id.tv_yanshou_result)
@@ -70,6 +90,8 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
 
     private String mEventId;
     private ImageHorizontalAdapter mAdapter;
+    //先反馈问题
+    private ImageHorizontalAdapter mFinishAdapter;
     //显示check的图片
     private ImageHorizontalAdapter mCheckAdapter;
 
@@ -102,6 +124,10 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         rv2.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         mCheckAdapter = new ImageHorizontalAdapter(R.layout.item_image_horizontal_view, new ArrayList<>());
         rv2.setAdapter(mCheckAdapter);
+
+        rv3.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        mFinishAdapter = new ImageHorizontalAdapter(R.layout.item_image_horizontal_view, new ArrayList<>());
+        rv3.setAdapter(mFinishAdapter);
     }
 
     @Override
@@ -115,7 +141,10 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
 
     }
 
-    @OnClick({R.id.btn_check_success})
+    private String address = "";
+    private String longitude = "";
+
+    @OnClick({R.id.btn_check_success, R.id.rl_happen})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_check_success:
@@ -124,18 +153,52 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
                 //2.已经反馈,然后弹出验收结果
 //                showPop();
                 if (eventStatus == 2) {
-                    showConfirmDialog();
+//                    showConfirmDialog();
+                    skipSecondPush(EventReportDetailSecondActivity.TYPE_FINISH);
                 } else if (eventStatus == 3) {
-                    skipSecondPush();
+                    skipSecondPush(EventReportDetailSecondActivity.TYPE_REPORT);
                 }
+
+                break;
+            case R.id.rl_happen:
+                if (TextUtils.isEmpty(address)) {
+                    return;
+                }
+
+                if (TextUtils.isEmpty(longitude)) {
+                    showToast("经纬度为空");
+                    return;
+                }
+
+                String[] split = longitude.split(",");
+                if (split.length != 2) {
+                    showToast("经纬度不合法");
+                    return;
+                }
+
+
+                SelectMapPopView selectMapPopView =
+                        new SelectMapPopView(this, findViewById(R.id.ll_root_layout), "高德地图", "百度地图");
+                selectMapPopView.setSelectMapClickListener(new SelectMapPopView.SelectMapClickListener() {
+                    @Override
+                    public void clickToGaode() {
+                        SkipMapUtils.goToGaodeMap(mContext, address, split[1], split[0]);
+                    }
+
+                    @Override
+                    public void clickToBaidu() {
+                        SkipMapUtils.goToBaiduMap(mContext, address, split[1], split[0]);
+                    }
+                });
 
                 break;
         }
     }
 
-    private void skipSecondPush() {
+    private void skipSecondPush(int type) {
         Intent intent = new Intent(this, EventReportDetailSecondActivity.class);
         intent.putExtra("eventId", mEventId);
+        intent.putExtra("eventType", type);
         startActivityForResult(intent, 100);
     }
 
@@ -177,6 +240,9 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
 
         btnCheckSuccess.setVisibility(View.GONE);
 
+        address = eventReadBean.getPlace();
+        longitude = eventReadBean.getLongitude();
+
         int status = eventReadBean.getStatus();
         List<String> dateStrList = getStrList(eventReadBean);
         //显示进度条状态
@@ -186,6 +252,9 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
 
         //check的图片加载
         handleCheckImg(eventReadBean.getCheck_img());
+
+        //返回的图片加载
+        handleFinishImg(eventReadBean.getFinish_img());
 
         tvContentTitle.setText(eventReadBean.getTitle());
         tvTime.setText(eventReadBean.getAdd_time());
@@ -199,18 +268,19 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         String sendTime = eventReadBean.getSend_time();
         if (!TextUtils.isEmpty(sendTime) && status > 1) {
             isShowLine = true;
-            StringBuilder append = new StringBuilder().append("派发时间：").append(sendTime);
+            StringBuilder append = new StringBuilder().append("派发时间：").append(handleTime(sendTime));
             handleTV(tvDistributedTime, append.toString());
         } else {
             tvDistributedTime.setVisibility(View.GONE);
         }
+        tvDistributedResult.setText("派发人：" + eventReadBean.getSend_name());
+
 
         String finishTime1 = eventReadBean.getFinish_time();
         //由于后台会发送1000-01-01 00：00：00 所以 加入了 status 的判断
         if (!TextUtils.isEmpty(finishTime1) && status > 2) {
-
             isShowLine = true;
-            StringBuilder finishTime = new StringBuilder().append("解决反馈时间：").append(finishTime1);
+            StringBuilder finishTime = new StringBuilder().append("解决反馈时间：").append(handleTime(finishTime1));
             handleTV(tvJiejueTime, finishTime.toString());
         } else {
             tvJiejueTime.setVisibility(View.GONE);
@@ -219,18 +289,29 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         String checkTime = eventReadBean.getCheck_time();
         if (!TextUtils.isEmpty(checkTime) && status > 3) {
             isShowLine = true;
-            StringBuilder yanshouTime = new StringBuilder().append("验收时间：").append(checkTime);
+            StringBuilder yanshouTime = new StringBuilder().append("验收时间：").append(handleTime(checkTime));
             handleTV(tvYanshouTime, yanshouTime.toString());
         } else {
             tvYanshouTime.setVisibility(View.GONE);
         }
 
-        if (status > 2 || isShowLine) {
+        if (status >= 2) {
             vLine.setVisibility(View.VISIBLE);
         } else {
             vLine.setVisibility(View.GONE);
         }
 
+        if (status >= 3) {
+            vLine1.setVisibility(View.VISIBLE);
+        } else {
+            vLine1.setVisibility(View.GONE);
+        }
+
+        if (status >= 4) {
+            vLine2.setVisibility(View.VISIBLE);
+        } else {
+            vLine2.setVisibility(View.GONE);
+        }
 
         //1.是已经解决 2.未解决
         if (eventReadBean.getIs_finish() == 1) {
@@ -263,6 +344,14 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
             tvRemark.setVisibility(View.INVISIBLE);
         }
 
+        String finishDesc = eventReadBean.getFinish_desc();
+        if (!TextUtils.isEmpty(finishDesc)) {
+            tvJiejueRemark.setText("解决问题描述：" + finishDesc);
+            tvJiejueRemark.setVisibility(View.VISIBLE);
+        } else {
+            tvJiejueRemark.setVisibility(View.INVISIBLE);
+        }
+
         switch (status) {
             case 4:
                 tvYanshouResult.setText("验收结果：验收通过");
@@ -276,6 +365,22 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
                 tvYanshouResult.setVisibility(View.INVISIBLE);
                 break;
         }
+
+
+        tvEndTime.setText("截止日期：" + handleShortTime(eventReadBean.getEnd_date()));
+        switch (eventReadBean.getImportant_type()) { //事件重要性(1:低 2:中 3:高)
+            case 1:
+                tvEndPoint.setText("事件重要性：低");
+                break;
+            case 2:
+                tvEndPoint.setText("事件重要性：中");
+                break;
+            default:
+                tvEndPoint.setText("事件重要性：高");
+                break;
+        }
+
+
     }
 
     private void handlePath(int pathType) {
@@ -345,6 +450,16 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         mCheckAdapter.replaceData(Arrays.asList(split));
     }
 
+    private void handleFinishImg(String checkImg) {
+        if (TextUtils.isEmpty(checkImg)) {
+            rv3.setVisibility(View.GONE);
+            return;
+        }
+        rv3.setVisibility(View.VISIBLE);
+        String[] split = checkImg.split(",");
+        mFinishAdapter.replaceData(Arrays.asList(split));
+    }
+
     private List<String> getStrList(EventReadBean eventReadBean) {
         List<String> list = new ArrayList<>();
         String addTime = eventReadBean.getAdd_time();
@@ -370,6 +485,39 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         return list;
     }
 
+    private String handleTime(String time) {
+        if (TextUtils.isEmpty(time)) {
+            return "";
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy.MM.dd");
+        try {
+            Date date = sdf.parse(time);
+            return sdf2.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+    }
+
+    private String handleShortTime(String time) {
+        if (TextUtils.isEmpty(time)) {
+            return "";
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy.MM.dd");
+        try {
+            Date date = sdf.parse(time);
+            return sdf2.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+    }
 
     public static void startDetailActivity(Context context, String eventId) {
         Intent intent = new Intent(context, EventReportDetailActivity.class);

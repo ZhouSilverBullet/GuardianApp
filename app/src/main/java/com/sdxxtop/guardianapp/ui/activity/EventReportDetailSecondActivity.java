@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -29,6 +30,11 @@ import cn.qqtheme.framework.picker.OptionPicker;
 
 public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPresenter> implements ERDSecondContract.IView {
 
+    //彻底检查完成
+    public static final int TYPE_REPORT = 1;
+    //反馈完成
+    public static final int TYPE_FINISH = 2;
+
     @BindView(R.id.tv_title)
     TitleView tvTitle;
     @BindView(R.id.iv_time_more)
@@ -41,9 +47,20 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
     SelectHoriPhotoView mShpvView;
     @BindView(R.id.btn_push)
     Button btnPush;
+
+    @BindView(R.id.tv_content_title)
+    TextView tvContentTitle;
+    @BindView(R.id.rl_layout)
+    RelativeLayout rlLayout;
+    @BindView(R.id.tv_remark)
+    TextView tvRemark;
+    @BindView(R.id.tv_photo_title)
+    TextView tvPhotoTitle;
+
     private SingleDataView mSingleDataView;
     private String mEventId;
     private ArrayList<String> mList;
+    private int mEventType;
 
     @Override
     protected int getLayout() {
@@ -66,6 +83,16 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
         Intent intent = getIntent();
         if (intent != null) {
             mEventId = intent.getStringExtra("eventId");
+            mEventType = intent.getIntExtra("eventType", TYPE_REPORT);
+        }
+
+        if (mEventType == TYPE_FINISH) {
+            tvRemark.setText("解决问题的简要描述");
+            rlLayout.setVisibility(View.GONE);
+            tvTitle.setTitleValue("解决反馈");
+            tvPhotoTitle.setVisibility(View.VISIBLE);
+        } else {
+            tvPhotoTitle.setVisibility(View.GONE);
         }
     }
 
@@ -83,7 +110,8 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
     }
 
     private void push() {
-        if (mList == null) {
+        boolean isFinish = mEventType == TYPE_FINISH;
+        if (mList == null && !isFinish) { //是完成的状态的情况不进入这个选择
             showToast("请选择验收通过类型");
             return;
         }
@@ -95,12 +123,17 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
             editValue = "";
         }
 
-        String selectType = tvSelect.getText().toString().trim();
-        int i = mList.indexOf(selectType) + 4;
-
         List<File> imagePushPath = mShpvView.getImagePushPath();
 
-        mPresenter.modify(mEventId, i, editValue, imagePushPath);
+        if (isFinish) {
+            mPresenter.modify(mEventId, 3, editValue, imagePushPath);
+        } else {  //走彻底完成的逻辑
+
+            String selectType = tvSelect.getText().toString().trim();
+            int i = mList.indexOf(selectType) + 4;
+
+            mPresenter.modify(mEventId, i, editValue, imagePushPath);
+        }
     }
 
     private void showSelect() {

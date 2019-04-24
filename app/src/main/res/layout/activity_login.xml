@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_bg"
@@ -62,14 +63,49 @@
                 android:layout_marginRight="10dp"
                 android:background="@drawable/login_delete" />
 
-            <Button
-                android:id="@+id/btn_code"
-                android:layout_width="wrap_content"
+            <FrameLayout
+                android:id="@+id/fl_code"
+                android:layout_width="80dp"
                 android:layout_height="30dp"
-                android:background="@drawable/white_send_code_bg"
-                android:text="获取验证码"
-                android:textColor="@color/color_303030"
-                android:textSize="10sp" />
+                android:background="@drawable/white_send_code_bg">
+
+                <TextView
+                    android:id="@+id/tv_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:text="获取验证码"
+                    android:textColor="@color/color_303030"
+                    android:textSize="10sp"
+                    tools:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/ll_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="invisible"
+                    tools:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/tv_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="60"
+                        android:textColor="@color/color_999999"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="1dp"
+                        android:text="s"
+                        android:textColor="@color/color_999999"
+                        android:textSize="9sp" />
+                </LinearLayout>
+            </FrameLayout>
+
         </LinearLayout>
 
         <View

@@ -5,6 +5,7 @@ import com.sdxxtop.guardianapp.utils.PictureUtil;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -32,11 +33,11 @@ import okhttp3.RequestBody;
  */
 
 public class ImageParams extends Params {
-    private HashMap<String, RequestBody> imgMap;
+    private LinkedHashMap<String, RequestBody> imgMap;
 
     public ImageParams() {
         super();
-        imgMap = new HashMap<>();
+        imgMap = new LinkedHashMap<>();
     }
 
     /**

@@ -2,6 +2,7 @@ package com.sdxxtop.guardianapp.ui.activity;
 
 import android.Manifest;
 import android.animation.Animator;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
@@ -18,6 +19,7 @@ import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.model.bean.InitBean;
 import com.sdxxtop.guardianapp.presenter.HomePresenter;
 import com.sdxxtop.guardianapp.presenter.contract.HomeContract;
+import com.sdxxtop.guardianapp.service.PatrolRecordService;
 import com.sdxxtop.guardianapp.ui.dialog.DownloadAppDialog;
 import com.sdxxtop.guardianapp.ui.dialog.DownloadDialog;
 import com.sdxxtop.guardianapp.ui.fragment.HomeFragment;
@@ -70,13 +72,28 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
         switchFragment(0);
 
         mRxPermissions = new RxPermissions(this);
-        mRxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION).subscribe(new Consumer<Boolean>() {
+        mRxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Consumer<Boolean>() {
             @Override
             public void accept(Boolean aBoolean) throws Exception {
 
             }
         });
+
+        mRxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION).subscribe(new Consumer<Boolean>() {
+            @Override
+            public void accept(Boolean aBoolean) throws Exception {
+                if (aBoolean) {
+                    startPatrolService();
+                }
+            }
+        });
+    }
+
+    private void startPatrolService() {
+        Logger.e("开启了服务");
+        Intent intent = new Intent(this, PatrolRecordService.class);
+        startService(intent);
     }
 
     private void initAHNavigation() {
