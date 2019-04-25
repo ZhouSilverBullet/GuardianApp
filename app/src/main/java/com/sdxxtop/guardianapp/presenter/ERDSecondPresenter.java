@@ -40,6 +40,7 @@ public class ERDSecondPresenter extends RxPresenter<ERDSecondContract.IView> imp
             @Override
             public void onFailure(int code, String error) {
                 UIUtils.showToast(error);
+                mView.showError(error);
             }
         });
         addSubscribe(disposable);

@@ -74,7 +74,7 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
 
     @Override
     public void showError(String error) {
-
+        hideLoadingDialog();
     }
 
     @Override
@@ -112,7 +112,7 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
     private void push() {
         boolean isFinish = mEventType == TYPE_FINISH;
         if (mList == null && !isFinish) { //是完成的状态的情况不进入这个选择
-            showToast("请选择验收通过类型");
+            showToast("请选择验收结果");
             return;
         }
 
@@ -125,6 +125,7 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
 
         List<File> imagePushPath = mShpvView.getImagePushPath();
 
+        showLoadingDialog();
         if (isFinish) {
             mPresenter.modify(mEventId, 3, editValue, imagePushPath);
         } else {  //走彻底完成的逻辑
@@ -165,6 +166,7 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
 
     @Override
     public void modifyRefresh() {
+        showLoadingDialog();
         showToast("提交成功");
         setResult(200);
         finish();

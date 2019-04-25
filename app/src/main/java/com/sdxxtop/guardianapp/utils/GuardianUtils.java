@@ -14,6 +14,8 @@ public class GuardianUtils {
 
     public static final List<String> questionIndex = new ArrayList<>();
 
+    public static final List<String> sAeraList = new ArrayList<>();
+
     static {
         questionIndex.add("A");
         questionIndex.add("B");
@@ -43,6 +45,14 @@ public class GuardianUtils {
         questionIndex.add("Z");
     }
 
+    static {
+        sAeraList.add("罗庄环保分局");
+        sAeraList.add("安委会");
+        sAeraList.add("城市管理局");
+        sAeraList.add("应急局");
+        sAeraList.add("城管委");
+        sAeraList.add("盛庄街道");
+    }
 
     public static String getJobName(int position) {
         //1:网格员 2: 企业员工 3:街道管理员 4:区级管理员
@@ -62,6 +72,32 @@ public class GuardianUtils {
                 break;
         }
         return positionName;
+    }
+
+    public static String getAeraName(int pathType) {
+        //1:罗庄环保分局  2:安委会 3: 城市管理局 4:应急局 5.城管委  6.  盛庄街道
+        String strPath;
+        switch (pathType) {
+            case 2:
+                strPath = "安委会";
+                break;
+            case 3:
+                strPath = "城市管理局";
+                break;
+            case 4:
+                strPath = "应急局";
+                break;
+            case 5:
+                strPath = "城管委";
+                break;
+            case 6:
+                strPath = "盛庄街道";
+                break;
+            default:
+                strPath = "罗庄环保分局";
+                break;
+        }
+        return strPath;
     }
 
     public static String getQuestionIndex(int position) {

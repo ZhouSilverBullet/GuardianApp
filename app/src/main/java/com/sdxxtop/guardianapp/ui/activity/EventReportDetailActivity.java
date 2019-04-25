@@ -18,6 +18,7 @@ import com.sdxxtop.guardianapp.ui.pop.ERCheckResultWindow;
 import com.sdxxtop.guardianapp.ui.pop.SelectMapPopView;
 import com.sdxxtop.guardianapp.ui.widget.CustomProgressBar;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
+import com.sdxxtop.guardianapp.utils.GuardianUtils;
 import com.sdxxtop.guardianapp.utils.SkipMapUtils;
 
 import java.text.ParseException;
@@ -260,7 +261,7 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         tvTime.setText(eventReadBean.getAdd_time());
         handlePatrol(eventReadBean.getPatrol_type());
         tvHappen.setText(eventReadBean.getPlace());
-        handlePath(eventReadBean.getPath_type());
+        handlePath(eventReadBean.getPart_name());
         tvDescription.setText(new StringBuilder().append("事件简要描述：").append(eventReadBean.getContent()));
 
         boolean isShowLine = false;
@@ -273,8 +274,14 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         } else {
             tvDistributedTime.setVisibility(View.GONE);
         }
-        tvDistributedResult.setText("派发人：" + eventReadBean.getSend_name());
 
+        String sendName = eventReadBean.getSend_name();
+        if (!TextUtils.isEmpty(sendName)) {
+            tvDistributedResult.setText("派发人：" + sendName);
+            tvDistributedResult.setVisibility(View.VISIBLE);
+        } else {
+            tvDistributedResult.setVisibility(View.GONE);
+        }
 
         String finishTime1 = eventReadBean.getFinish_time();
         //由于后台会发送1000-01-01 00：00：00 所以 加入了 status 的判断
@@ -349,7 +356,7 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
             tvJiejueRemark.setText("解决问题描述：" + finishDesc);
             tvJiejueRemark.setVisibility(View.VISIBLE);
         } else {
-            tvJiejueRemark.setVisibility(View.INVISIBLE);
+            tvJiejueRemark.setVisibility(View.GONE);
         }
 
         switch (status) {
@@ -367,39 +374,29 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         }
 
 
-        tvEndTime.setText("截止日期：" + handleShortTime(eventReadBean.getEnd_date()));
-        switch (eventReadBean.getImportant_type()) { //事件重要性(1:低 2:中 3:高)
-            case 1:
-                tvEndPoint.setText("事件重要性：低");
-                break;
-            case 2:
-                tvEndPoint.setText("事件重要性：中");
-                break;
-            default:
-                tvEndPoint.setText("事件重要性：高");
-                break;
+        if (status >= 2) {
+            tvEndTime.setText("截止日期：" + handleShortTime(eventReadBean.getEnd_date()));
+            switch (eventReadBean.getImportant_type()) { //事件重要性(1:低 2:中 3:高)
+                case 1:
+                    tvEndPoint.setText("事件重要性：低");
+                    break;
+                case 2:
+                    tvEndPoint.setText("事件重要性：中");
+                    break;
+                default:
+                    tvEndPoint.setText("事件重要性：高");
+                    break;
+            }
+        } else {
+            tvEndTime.setVisibility(View.GONE);
+            tvEndPoint.setVisibility(View.GONE);
         }
 
 
     }
 
-    private void handlePath(int pathType) {
-        String strPath;
-        switch (pathType) {
-            case 2:
-                strPath = "安监局";
-                break;
-            case 3:
-                strPath = "城管局";
-                break;
-            case 4:
-                strPath = "住建局";
-                break;
-            default:
-                strPath = "环保局";
-                break;
-        }
-        tvReportPath.setText(strPath);
+    private void handlePath(String partName) {
+        tvReportPath.setText(partName);
     }
 
     private void handlePatrol(int patrolType) {

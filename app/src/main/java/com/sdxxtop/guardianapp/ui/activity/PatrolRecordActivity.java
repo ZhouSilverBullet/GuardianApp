@@ -2,7 +2,10 @@ package com.sdxxtop.guardianapp.ui.activity;
 
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.PopupWindow;
@@ -44,7 +47,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.Nullable;
 
@@ -126,7 +131,12 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
             public void onCameraChangeFinish(CameraPosition cameraPosition) {
                 if (!isMoveCamera) {
                     isMoveCamera = true;
-                    moveToPath();
+                    AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            moveToPath();
+                        }
+                    });
                 }
             }
         });
@@ -143,26 +153,41 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
         myLocationStyle.radiusFillColor(Color.TRANSPARENT);
         aMap.setMyLocationStyle(myLocationStyle);
         aMap.setMyLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);
+
+        aMap.setInfoWindowAdapter(new PatrolMapAdapter());
     }
 
     private void moveToPath() {
+        Map<String,SignLogBean.SignBean> tempList = new HashMap<>();
+
         if (curLatlngList != null && curLatlngList.size() > 0) {
-            int size = curLatlngList.size();
+            for (SignLogBean.SignBean signBean : curLatlngList) {
+                tempList.put(signBean.getAddress(), signBean);
+            }
+
+            double size = tempList.size();
             double latitude = 0;
             double longitude = 0;
-            for (int i = 0; i < curLatlngList.size(); i++) {
-                LatLng lng = curLatlngList.get(i).getLatLng();
+            for (String s : tempList.keySet()) {
+                SignLogBean.SignBean signBean = tempList.get(s);
+                LatLng lng = signBean.getLatLng();
                 latitude += lng.latitude;
                 longitude += lng.longitude;
 //                if (i == curLatlngList.size() - 1) {
-                getadress(lng, curLatlngList.get(i).getAddress());
-//                }
+                getadress(lng, signBean.getAddress());
             }
-            aMap.setInfoWindowAdapter(new PatrolMapAdapter());
 
-            LatLng centerLatLng = new LatLng(latitude / size, longitude / size);
+            final double finalLatitude = latitude;
+            final double finalLongitude = longitude;
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    LatLng centerLatLng = new LatLng(finalLatitude / size, finalLongitude / size);
 
-            aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(centerLatLng, 16f));
+                    aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(centerLatLng, 16f));
+                }
+            });
+
         }
     }
 
@@ -272,16 +297,22 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
 
     //地图上面画线
     private void drawMapLine() {
-        if (curLatlngList != null && curLatlngList.size() > 0) {
-            // 获取轨迹坐标点
-            PolylineOptions polt = new PolylineOptions();
-            for (int i = 0; i < curLatlngList.size(); i++) {
-                polt.add(curLatlngList.get(i).getLatLng());
+        AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
+            @Override
+            public void run() {
+                if (curLatlngList != null && curLatlngList.size() > 0) {
+                    // 获取轨迹坐标点
+                    PolylineOptions polt = new PolylineOptions();
+                    for (int i = 0; i < curLatlngList.size(); i++) {
+                        polt.add(curLatlngList.get(i).getLatLng());
+                    }
+                    polt.width(10).geodesic(false).color(Color.parseColor("#EB6100"));
+                    polyline = aMap.addPolyline(polt);
+                }
+                moveToPath();
             }
-            polt.width(10).geodesic(false).color(Color.parseColor("#EB6100"));
-            polyline = aMap.addPolyline(polt);
-        }
-        moveToPath();
+        });
+
     }
 
     @Override

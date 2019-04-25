@@ -10,6 +10,7 @@ import com.sdxxtop.guardianapp.model.bean.LoginBean;
 import com.sdxxtop.guardianapp.model.bean.MainIndexBean;
 import com.sdxxtop.guardianapp.model.bean.MainMapBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
+import com.sdxxtop.guardianapp.model.bean.ShowPartBean;
 import com.sdxxtop.guardianapp.model.bean.SignLogBean;
 import com.sdxxtop.guardianapp.model.bean.StudyCheckBean;
 import com.sdxxtop.guardianapp.model.bean.StudyCourseBean;
@@ -86,6 +87,9 @@ public interface EnvirApiService {
     @POST("event/modify")
     Observable<RequestBean> postEventModify(@PartMap HashMap<String, RequestBody> data);
 
+    @FormUrlEncoded
+    @POST("event/showPart")
+    Observable<RequestBean<ShowPartBean>> postEventShowPart(@Field("data") String data);
 
     @FormUrlEncoded
     @POST("contact/index")

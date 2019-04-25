@@ -3,6 +3,7 @@ package com.sdxxtop.guardianapp.presenter;
 import com.google.gson.internal.LinkedTreeMap;
 import com.sdxxtop.guardianapp.base.RxPresenter;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
+import com.sdxxtop.guardianapp.model.bean.ShowPartBean;
 import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
 import com.sdxxtop.guardianapp.model.http.net.ImageParams;
 import com.sdxxtop.guardianapp.model.http.net.Params;
@@ -52,6 +53,27 @@ public class EventReportPresenter extends RxPresenter<EventReportContract.IView>
             public void onFailure(int code, String error) {
                 UIUtils.showToast(error);
                 mView.showError(error);
+            }
+        });
+        addSubscribe(disposable);
+    }
+
+    public void loadAera() {
+        Params params = new Params();
+        Observable<RequestBean<ShowPartBean>> observable = getEnvirApi().postEventShowPart(params.getData());
+        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<ShowPartBean>() {
+            @Override
+            public void onSuccess(ShowPartBean showPartBean) {
+//                mView.modifyRefresh();
+                List<ShowPartBean.PartBean> part = showPartBean.getPart();
+                if ( part != null) {
+                    mView.showPart(part);
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String error) {
+//                UIUtils.showToast(error);
             }
         });
         addSubscribe(disposable);

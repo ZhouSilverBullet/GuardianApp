@@ -77,7 +77,7 @@ public class ImageParams extends Params {
     public void addImagePathList(String imgPar, List<File> pathList) {
         for (int i = 0; i < pathList.size(); i++) {
 //            addImagePath(imgPar, pathList.get(i));
-            addCompressImagePath(imgPar, pathList.get(pathList.size() - i - 1), App.getContext().getCacheDir() + "/img" + i + ".png", 80);
+            addCompressImagePath(imgPar, pathList.get(i), App.getContext().getCacheDir() + "/img" + i + ".png", 80);
         }
     }
 

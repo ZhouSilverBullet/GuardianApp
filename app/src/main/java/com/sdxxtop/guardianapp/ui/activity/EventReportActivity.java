@@ -12,6 +12,7 @@ import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
+import com.sdxxtop.guardianapp.model.bean.ShowPartBean;
 import com.sdxxtop.guardianapp.presenter.EventReportPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.EventReportContract;
 import com.sdxxtop.guardianapp.ui.adapter.EventReportRecyclerAdapter;
@@ -21,6 +22,7 @@ import com.sdxxtop.guardianapp.ui.widget.SingleDataView;
 import com.sdxxtop.guardianapp.ui.widget.TextAndEditView;
 import com.sdxxtop.guardianapp.ui.widget.TextAndTextView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
+import com.sdxxtop.guardianapp.utils.GuardianUtils;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import java.io.File;
@@ -30,6 +32,7 @@ import java.util.List;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.qqtheme.framework.picker.OptionPicker;
@@ -58,6 +61,8 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     private List<LocalMedia> localMediaList = new ArrayList<>();
     //金纬度
     private String lonLng;
+    private List<ShowPartBean.PartBean> mPartList;
+    private int mSelectPartId;
 
     @Override
     protected int getLayout() {
@@ -98,6 +103,12 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
         });
     }
 
+    @Override
+    protected void initData() {
+        super.initData();
+        mPresenter.loadAera();
+    }
+
     private void showReportConfirmDialog() {
         new IosAlertDialog(this).builder()
                 .setNegativeButton("", new View.OnClickListener() {
@@ -120,7 +131,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     private void toReport() {
 
         List<File> imagePushPath = getImagePushPath();
-        if (imagePushPath == null || imagePushPath.size() ==0) {
+        if (imagePushPath == null || imagePushPath.size() == 0) {
             showToast("请选择图片");
             return;
         }
@@ -149,11 +160,11 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 
         //主管部门
         String pathName = tatvReportPath.getRightTVString();
-        if (reportPathData == null || TextUtils.isEmpty(pathName)) {
+        if (reportPathData == null || TextUtils.isEmpty(pathName) || mSelectPartId == 0) {
             showToast("请选择主管部门");
             return;
         }
-        int pathType = reportPathData.indexOf(pathName) + 1;
+        int pathType = mSelectPartId;
 
         String editValue = netContent.getEditValue();
         if (TextUtils.isEmpty(editValue)) {
@@ -175,6 +186,11 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
         intent.putExtra("eventId", eventId);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void showPart(List<ShowPartBean.PartBean> par) {
+        mPartList = par;
     }
 
     protected void setPhotoRecycler(RecyclerView recycler) {
@@ -213,7 +229,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
      * @return
      */
     public List<LocalMedia> getRemoveLocalListTemp() {
-        List<LocalMedia> tempLocalMedia =  new ArrayList<>();
+        List<LocalMedia> tempLocalMedia = new ArrayList<>();
         for (int i = 0; i < localMediaList.size(); i++) {
             if (localMediaList.get(i).getDuration() != -100) {
                 tempLocalMedia.add(localMediaList.get(i));
@@ -334,12 +350,16 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     private List<String> reportPathData;
 
     private void selectReportPath() {
+        if (mPartList == null) {
+            showToast("数据拉去中...");
+            return;
+        }
+
         if (reportPathData == null) {
             reportPathData = new ArrayList<>();
-            reportPathData.add("环保局");
-            reportPathData.add("安监局");
-            reportPathData.add("城管局");
-            reportPathData.add("住建局");
+            for (ShowPartBean.PartBean partBean : mPartList) {
+                reportPathData.add(partBean.getPart_name());
+            }
         }
 
         showReportPathSelect(reportPathData);
@@ -372,6 +392,15 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
             @Override
             public void onOptionPicked(int index, String item) {
                 tatvReportPath.getTextRightText().setText(item);
+                if (mPartList != null) {
+                    for (ShowPartBean.PartBean partBean : mPartList) {
+                        if (item.equals(partBean.getPart_name())) {
+                            mSelectPartId = partBean.getPart_id();
+                            return;
+                        }
+                    }
+                }
+                mSelectPartId = 0;
             }
         });
         singleReportPathDataView.show();
