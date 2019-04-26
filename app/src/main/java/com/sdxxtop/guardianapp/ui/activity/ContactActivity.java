@@ -30,6 +30,7 @@ import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 
 public class ContactActivity extends BaseMvpActivity<ContactPresenter> implements ContactContract.IView, TextWatcher {
@@ -39,7 +40,7 @@ public class ContactActivity extends BaseMvpActivity<ContactPresenter> implement
     TextView mText;
     @BindView(R.id.rv)
     RecyclerView mRecyclerView;
-//    @BindView(R.id.sv_search)
+    //    @BindView(R.id.sv_search)
 //    SearchView mSearchView;
     @BindView(R.id.et_search)
     EditText etSearch;
@@ -68,6 +69,9 @@ public class ContactActivity extends BaseMvpActivity<ContactPresenter> implement
             @Override
             public void onChanged(String s, int position) {
                 Log.e("SideIndexBar", s + " position:" + position);
+                if (mAdapter == null) {
+                    return;
+                }
                 int posi = mAdapter.getPositionForSection(s.charAt(0));
                 if (posi != -1 && mRecyclerView.getLayoutManager() instanceof LinearLayoutManager) {
                     ((LinearLayoutManager) mRecyclerView.getLayoutManager()).scrollToPositionWithOffset(posi, 0);
@@ -86,7 +90,9 @@ public class ContactActivity extends BaseMvpActivity<ContactPresenter> implement
         mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
-                headersDecor.invalidateHeaders();
+                if (headersDecor != null) {
+                    headersDecor.invalidateHeaders();
+                }
             }
         });
 

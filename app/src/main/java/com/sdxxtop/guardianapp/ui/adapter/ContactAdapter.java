@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.model.bean.ContactIndexBean;
+import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,9 +44,27 @@ public class ContactAdapter extends BaseQuickAdapter<ContactIndexBean.ContactBea
         helper.getConvertView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + item.getMobile()));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
+                new IosAlertDialog(mContext)
+                        .builder()
+                        .setMsg(item.getMobile())
+                        .setPositiveButton("呼叫", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" +  item.getMobile()));
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                mContext. startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("取消", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                //填写事件
+                            }
+                        }).show();
+//
+//                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + item.getMobile()));
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                mContext.startActivity(intent);
             }
         });
     }

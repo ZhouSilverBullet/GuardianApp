@@ -11,6 +11,9 @@ import java.util.Comparator;
 public class PinyinComparator implements Comparator<ContactIndexBean.ContactBean> {
 
     public int compare(ContactIndexBean.ContactBean o1, ContactIndexBean.ContactBean o2) {
+        if (o1 == null || o2 == null) {
+            return -1;
+        }
         if ("@".equals(o1.sortLetters)
                 || "#".equals(o2.sortLetters)) {
             return -1;

@@ -93,7 +93,7 @@ dependencies {
     implementation 'com.prolificinteractive:material-calendarview:1.4.3'
     implementation 'com.timehop.stickyheadersrecyclerview:library:0.4.3'
 
-    implementation rootProject.ext.dependencies["multidex"]
+    implementation 'androidx.multidex:multidex:2.0.1'
     implementation rootProject.ext.dependencies["junit"]
     implementation rootProject.ext.dependencies["test.runer"]
     implementation rootProject.ext.dependencies["gson"]
@@ -109,10 +109,10 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
     implementation rootProject.ext.dependencies["dagger"]
     annotationProcessor rootProject.ext.dependencies["dagger-compiler"]
-    implementation 'com.amap.api:3dmap:6.2.0'
+    implementation 'com.amap.api:3dmap:6.8.0'
     implementation 'com.amap.api:map2d:5.2.0'
-    implementation 'com.amap.api:search:6.1.0'
-    implementation 'com.amap.api:location:4.0.1'
+    implementation 'com.amap.api:search:6.5.0.1'
+    implementation 'com.amap.api:location:4.5.1'
     api project(path: ':faceplatform')
 //    # 必选，可兼容市面上绝大部分设备
     implementation 'com.github.dueeeke.dkplayer:dkplayer-java:2.5.5'
