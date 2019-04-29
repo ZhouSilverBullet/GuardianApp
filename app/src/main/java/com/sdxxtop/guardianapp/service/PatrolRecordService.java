@@ -85,6 +85,7 @@ public class PatrolRecordService extends Service implements Handler.Callback {
         Params params = new Params();
         params.put("slt", lanLan);
         params.put("ad", address);
+        params.put("st", "2");
         Observable<RequestBean> observable = RetrofitHelper.getEnvirApi().postMainSign(params.getData());
         //直接跑子线程中干活就行了
         mDisposable = observable.subscribeOn(Schedulers.io()).subscribe(new Consumer<RequestBean>() {

@@ -41,6 +41,7 @@ public class FaceLivenessPresenter extends RxPresenter<FaceLivenessContract.IVie
         Params params = new Params();
         params.put("slt", lanLan);
         params.put("ad", address);
+        params.put("st", "1");
         Observable<RequestBean> observable = getEnvirApi().postMainSign(params.getData());
         Disposable disposable = RxUtils.handleHttp(observable, new IRequestCallback<RequestBean>() {
             @Override
