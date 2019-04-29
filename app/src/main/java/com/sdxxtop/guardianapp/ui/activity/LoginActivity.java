@@ -110,7 +110,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     private void toLogin() {
         String trim = etPhone.getText().toString().trim();
         if (TextUtils.isEmpty(trim)) {
-            UIUtils.showToast("账号不能为空");
+            UIUtils.showToast("请输入正确的手机号码");
             return;
         }
 
@@ -130,7 +130,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
 
         String trim = etPhone.getText().toString().trim();
         if (TextUtils.isEmpty(trim)) {
-            UIUtils.showToast("账号不能为空");
+            UIUtils.showToast("请输入正确的手机号码");
             return;
         }
 

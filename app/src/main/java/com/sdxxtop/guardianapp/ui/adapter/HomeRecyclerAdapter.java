@@ -123,14 +123,20 @@ public class HomeRecyclerAdapter extends BaseQuickAdapter<MainIndexBean.EventBea
             case 0:
                 tvTask1.setVisibility(View.INVISIBLE);
                 tvTask2.setVisibility(View.INVISIBLE);
+                tvScore1.setVisibility(View.INVISIBLE);
+                tvScore2.setVisibility(View.INVISIBLE);
                 break;
             case 1:
                 tvTask1.setVisibility(View.VISIBLE);
                 tvTask2.setVisibility(View.INVISIBLE);
+                tvScore1.setVisibility(View.VISIBLE);
+                tvScore2.setVisibility(View.INVISIBLE);
                 break;
             case 2:
                 tvTask1.setVisibility(View.VISIBLE);
                 tvTask2.setVisibility(View.VISIBLE);
+                tvScore1.setVisibility(View.VISIBLE);
+                tvScore2.setVisibility(View.VISIBLE);
                 break;
         }
 
