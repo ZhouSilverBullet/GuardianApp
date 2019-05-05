@@ -49,7 +49,7 @@ public class SystemUtil {
         Uri localUri;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            localUri = FileProvider.getUriForFile(context, context.getPackageName() + ".FileProvider", new File(filePath));
+            localUri = FileProvider.getUriForFile(context, context.getPackageName() + ".provider", new File(filePath));
             intent.setDataAndType(localUri, "application/vnd.android.package-archive");
         } else {
             intent.addCategory("android.intent.category.DEFAULT");
