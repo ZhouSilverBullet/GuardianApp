@@ -179,16 +179,16 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
 
 
                 SelectMapPopView selectMapPopView =
-                        new SelectMapPopView(this, findViewById(R.id.ll_root_layout), "高德地图", "百度地图");
+                        new SelectMapPopView(this, findViewById(R.id.ll_root_layout), "高德地图（推荐）", "百度地图");
                 selectMapPopView.setSelectMapClickListener(new SelectMapPopView.SelectMapClickListener() {
                     @Override
                     public void clickToGaode() {
-                        SkipMapUtils.goToGaodeMap(mContext, address, split[1], split[0]);
+                        SkipMapUtils.goToGaodeMap3(mContext, address, split[1], split[0]);
                     }
 
                     @Override
                     public void clickToBaidu() {
-                        SkipMapUtils.goToBaiduMap(mContext, address, split[1], split[0]);
+                        SkipMapUtils.goToBaiduMap3(mContext, address, split[1], split[0]);
                     }
                 });
 

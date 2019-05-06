@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.amap.api.maps.model.LatLng;
+import com.orhanobut.logger.Logger;
 import com.sdxxtop.guardianapp.app.App;
 
 import java.io.File;
@@ -17,27 +18,15 @@ import java.net.URISyntaxException;
  * @Date: 2019-04-24 14:42
  * @Version 1.0
  * @UserWhat what
+ *
+ * 两个官方文档
+ *
+ * https://lbs.amap.com/api/amap-mobile/guide/android/marker
+ *
+ * http://lbsyun.baidu.com/index.php?title=uri/api/android
+ *
  */
 public class SkipMapUtils {
-    public void invokingBD(Context context, String position) {
-
-        //  com.baidu.BaiduMap这是高德地图的包名
-        //调起百度地图客户端try {
-        Intent intent = null;
-        try {
-            String uri = "intent://map/direction?origin=latlng:0,0|name:我的位置&destination=" + "需要导航的地址" + "&mode=drivingion=" + "城市" + "&referer=Autohome|GasStation#Intent;scheme=bdapp;package=com.baidu.BaiduMap;end";
-
-            intent = Intent.getIntent(uri);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        if (isInstallByread("com.baidu.BaiduMap")) {
-            context.startActivity(intent); //启动调用
-            Log.e("GasStation", "百度地图客户端已经安装");
-        } else {
-            Toast.makeText(App.getContext(), "没有安装百度地图客户端", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     /**
      * 跳转百度地图
@@ -56,21 +45,55 @@ public class SkipMapUtils {
         context.startActivity(intent); // 启动调用
     }
 
-
-    public static void invokingGD(Context context, String address, String lat, String lon) {
-
-        //  com.autonavi.minimap这是高德地图的包名
-        Intent intent = new Intent("android.intent.action.VIEW"/*,android.net.Uri.parse("androidamap://navi?sourceApplication=应用名称&lat="+ "&dev=0")*/);
-        intent.setPackage("com.autonavi.minimap");
-//        intent.setData(Uri.parse("androidamap://poi?sourceApplication=softname&keywords="+ 需要导航的地址));
-        intent.setData(Uri.parse("amapuri://poi/detail?poiname=" + address + "&lat=" + lat + "&lon=" + lon));
-
-        if (isInstallByread("com.autonavi.minimap")) {
-            context.startActivity(intent);
-            Log.e("GasStation", "高德地图客户端已经安装");
-        } else {
-            Toast.makeText(App.getContext(), "没有安装高德地图客户端", Toast.LENGTH_SHORT).show();
+    /**
+     * 跳转百度地图
+     *
+     * baidumap://map/direction
+     *
+     * 一定要加入 coord_type=gcj02 定位才是正确的
+     */
+    public static void goToBaiduMap2(Context context, String address, String lat, String lon) {
+        if (!isInstallByread("com.baidu.BaiduMap")) {
+            UIUtils.showToast("请先安装百度地图客户端");
+            return;
         }
+        Intent intent = new Intent();
+        intent.setData(Uri.parse("baidumap://map/direction?destination=latlng:"
+                + lat + ","
+                + lon + "|name:" + address + // 终点
+                "&mode=driving" + // 导航路线方式
+                "&coord_type=gcj02"+
+                "&src=" + App.getContext().getPackageName()));
+        context.startActivity(intent); // 启动调用
+    }
+
+ /**
+     * 跳转百度地图
+     *
+     * baidumap://map/direction
+     *
+     * 一定要加入 coord_type=gcj02 定位才是正确的
+  *
+  * i1.setData(Uri.parse("baidumap://map/marker?location=40.057406655722,116.2964407172&title=Marker&content=makeamarker&traffic=on&src=andr.baidu.openAPIdemo"));
+  *
+  * startActivity(i1);
+     */
+    public static void goToBaiduMap3(Context context, String address, String lat, String lon) {
+        if (!isInstallByread("com.baidu.BaiduMap")) {
+            UIUtils.showToast("请先安装百度地图客户端");
+            return;
+        }
+        Intent intent = new Intent();
+        String uriString = "baidumap://map/marker?location="
+                + lat + ","
+                + lon + "&title=" + address + // 终点
+                "&traffic=on" +
+                "&coord_type=gcj02" +
+                "&src=" + App.getContext().getPackageName();
+
+        intent.setData(Uri.parse(uriString));
+        Logger.e(uriString);
+        context.startActivity(intent); // 启动调用
     }
 
     /**
@@ -81,16 +104,69 @@ public class SkipMapUtils {
             UIUtils.showToast("请先安装高德地图客户端");
             return;
         }
-        LatLng endPoint = GCJ2BD(new LatLng(Double.parseDouble(lat), Double.parseDouble(lon)));//坐标转换
+//        LatLng endPoint = GCJ2BD(new LatLng(Double.parseDouble(lat), Double.parseDouble(lon)));//坐标转换
         StringBuffer stringBuffer = new StringBuffer("androidamap://navi?sourceApplication=").append("amap");
-        stringBuffer.append("&lat=").append(endPoint.latitude)
-                .append("&lon=").append(endPoint.longitude).append("&keywords=" + address)
+        stringBuffer.append("&lat=").append(Double.parseDouble(lat))
+                .append("&lon=").append(Double.parseDouble(lon)).append("&keywords=" + address)
                 .append("&dev=").append(0)
                 .append("&style=").append(2);
         Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(stringBuffer.toString()));
         intent.setPackage("com.autonavi.minimap");
         context.startActivity(intent);
     }
+
+    /**
+     * 跳转高德地图
+     * 规划
+     * act=android.intent.action.VIEW
+     * cat=android.intent.category.DEFAULT
+     * dat=amapuri://route/plan/?sid=BGVIS1&slat=39.92848272&slon=116.39560823&sname=A&did=BGVIS2&dlat=39.98848272&dlon=116.47560823&dname=B&dev=0&t=0
+     * pkg=com.autonavi.minimap
+     *
+     * amapuri://route/plan/?dlat=39.98848272&dlon=116.47560823&dev=0&t=0
+     */
+    public static void goToGaodeMap2(Context context, String address, String lat, String lon) {
+        if (!isInstallByread("com.autonavi.minimap")) {
+            UIUtils.showToast("请先安装高德地图客户端");
+            return;
+        }
+//        LatLng endPoint = GCJ2BD(new LatLng(Double.parseDouble(lat), Double.parseDouble(lon)));//坐标转换
+        StringBuffer stringBuffer = new StringBuffer("amapuri://route/plan/?sourceApplication=").append("amap");
+        stringBuffer.append("&dlat=").append(Double.parseDouble(lat))
+                .append("&dlon=").append(Double.parseDouble(lon))
+                .append("&dname=").append(address)
+                .append("&dev=0&t=0");
+        Logger.e(stringBuffer.toString());
+        Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(stringBuffer.toString()));
+        intent.setPackage("com.autonavi.minimap");
+        context.startActivity(intent);
+    }
+
+    /**
+     * 跳转高德地图
+     * 标注
+     * act=android.intent.action.VIEW
+     * cat=android.intent.category.DEFAULT
+     *
+     * androidamap://viewMap?sourceApplication=appname&poiname=abc&lat=36.2&lon=116.1&dev=0
+     */
+    public static void goToGaodeMap3(Context context, String address, String lat, String lon) {
+        if (!isInstallByread("com.autonavi.minimap")) {
+            UIUtils.showToast("请先安装高德地图客户端");
+            return;
+        }
+//        LatLng endPoint = GCJ2BD(new LatLng(Double.parseDouble(lat), Double.parseDouble(lon)));//坐标转换
+        StringBuffer stringBuffer = new StringBuffer("androidamap://viewMap?sourceApplication=").append("amap");
+        stringBuffer.append("&lat=").append(Double.parseDouble(lat))
+                .append("&lon=").append(Double.parseDouble(lon))
+                .append("&poiname=").append(address)
+                .append("&dev=0");
+        Logger.e(stringBuffer.toString());
+        Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(stringBuffer.toString()));
+        intent.setPackage("com.autonavi.minimap");
+        context.startActivity(intent);
+    }
+
 //
 //---------------------
 //    作者：Ever69

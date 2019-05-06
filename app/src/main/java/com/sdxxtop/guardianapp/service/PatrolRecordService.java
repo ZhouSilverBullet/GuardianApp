@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.text.TextUtils;
 
 import androidx.annotation.Nullable;
 
 import com.amap.api.location.AMapLocation;
+import com.orhanobut.logger.Logger;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
 import com.sdxxtop.guardianapp.model.http.net.Params;
 import com.sdxxtop.guardianapp.model.http.net.RetrofitHelper;
@@ -68,9 +70,14 @@ public class PatrolRecordService extends Service implements Handler.Callback {
             public void onAddress(AMapLocation address) {
                 double longitude = address.getLongitude();
                 double latitude = address.getLatitude();
-                String value = longitude + "," + latitude;
                 String address1 = address.getAddress();
 
+                if (longitude == 0.0 || latitude == 0.0 || TextUtils.isEmpty(address1)) {
+                    Logger.e("获取经纬度为0或者地址不对，就放弃这次访问");
+                    return;
+                }
+
+                String value = longitude + "," + latitude;
                 face(value, address1);
             }
         });

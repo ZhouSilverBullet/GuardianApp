@@ -326,8 +326,9 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
 
         String distance = signLogBean.getDistance();
 
-        int num = signLogBean.getNum();
-        tvPosition.setText("共" + distance + "米 打卡" + num + "次");
+//        int num = signLogBean.getNum();
+//        tvPosition.setText("共" + distance + "米 打卡" + num + "次");
+        tvPosition.setText("共" + distance + "米");
 
         //每次请求刷新一次
         if (curLatlngList.size() > 0) {

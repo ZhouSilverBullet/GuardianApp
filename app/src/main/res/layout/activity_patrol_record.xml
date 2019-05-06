@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@+id/tv_position"
                 android:singleLine="true"
-                android:text="路径长度及打卡次数"
+                android:text="路径长度"
                 android:textColor="@color/color_333333"
                 android:textSize="17sp" />
         </RelativeLayout>

@@ -351,7 +351,10 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 
     private void selectReportPath() {
         if (mPartList == null) {
-            showToast("数据拉去中...");
+            showToast("数据拉取中...");
+            if (mPresenter != null) { //再拉去一次
+                mPresenter.loadAera();
+            }
             return;
         }
 
