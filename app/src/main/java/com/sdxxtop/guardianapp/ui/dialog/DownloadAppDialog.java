@@ -107,6 +107,12 @@ public class DownloadAppDialog implements DialogInterface.OnKeyListener {
                     return;
                 }
 
+                if (response.code() != 200) {
+                    showToast("获取下载内容失败，请稍后重试");
+                    dismiss();
+                    return;
+                }
+
                 //判断文件是否存在
                 if (checkFile(contentLength)) {
                     return;
