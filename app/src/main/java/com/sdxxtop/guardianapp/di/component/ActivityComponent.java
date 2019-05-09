@@ -10,7 +10,10 @@ import com.sdxxtop.guardianapp.ui.activity.EventReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportDetailSecondActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportListActivity;
+import com.sdxxtop.guardianapp.ui.activity.EventStatistyActivity;
 import com.sdxxtop.guardianapp.ui.activity.ExamineActivity;
+import com.sdxxtop.guardianapp.ui.activity.GrantCompanyReportActivity;
+import com.sdxxtop.guardianapp.ui.activity.GrantEventReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.GridMapActivity;
 import com.sdxxtop.guardianapp.ui.activity.HomeActivity;
 import com.sdxxtop.guardianapp.ui.activity.LoginActivity;
@@ -41,5 +44,8 @@ public interface ActivityComponent {
     void inject(SplashActivity activity);
     void inject(TaskAgentsActivity activity);
     void inject(ContactSearchActivity activity);
+    void inject(GrantEventReportActivity activity);
+    void inject(EventStatistyActivity activity);
+    void inject(GrantCompanyReportActivity activity);
 
 }

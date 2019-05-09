@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/half_login_bg"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/half_login_bg"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical">
 
     <com.sdxxtop.guardianapp.ui.widget.TitleView
         android:id="@+id/tv_title"
@@ -14,7 +14,7 @@
         app:bgColor="@color/transparent"
         app:rightTextValue="退出登录"
         app:titleColor="@color/white"
-        app:titleValue="个人中心" />
+        app:titleValue="个人中心"/>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -34,7 +34,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_gravity="bottom"
-                    android:background="@color/white" />
+                    android:background="@color/white"/>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -65,7 +65,7 @@
                                 android:layout_marginTop="25dp"
                                 android:text="李海龙"
                                 android:textColor="@color/color_303030"
-                                android:textSize="10sp" />
+                                android:textSize="10sp"/>
 
                             <TextView
                                 android:id="@+id/tv_place"
@@ -73,7 +73,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="网格员"
                                 android:textColor="@color/color_303030"
-                                android:textSize="10sp" />
+                                android:textSize="10sp"/>
 
                         </LinearLayout>
 
@@ -87,7 +87,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="19dp"
                     android:elevation="5dp"
-                    android:src="@color/white" />
+                    android:src="@color/white"/>
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/civ_header"
@@ -96,7 +96,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
                     android:elevation="5dp"
-                    android:src="@drawable/tou_xiang" />
+                    android:src="@drawable/tou_xiang"/>
 
             </FrameLayout>
 
@@ -105,18 +105,36 @@
                 android:id="@+id/tatv_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:tatv_text_view="单位信息" />
+                app:tatv_text_view="单位信息"/>
 
             <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
                 android:id="@+id/tatv_report"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:tatv_text_view="我的上报" />
+                app:tatv_text_view="我的上报"/>
+
+            <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+                android:id="@+id/event_report"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tatv_text_view="事件报告"/>
+
+            <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+                android:id="@+id/grid_member_report"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tatv_text_view="网格员报告"/>
+
+            <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+                android:id="@+id/company_report"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tatv_text_view="企业报告"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:background="@color/white" />
+                android:background="@color/white"/>
 
             <!--<com.sdxxtop.guardianapp.ui.widget.TextAndTextView-->
             <!--android:layout_width="match_parent"-->

@@ -20,6 +20,8 @@ import com.sdxxtop.guardianapp.model.db.UserData;
 import com.sdxxtop.guardianapp.presenter.MinePresenter;
 import com.sdxxtop.guardianapp.presenter.contract.MineContract;
 import com.sdxxtop.guardianapp.ui.activity.EventReportListActivity;
+import com.sdxxtop.guardianapp.ui.activity.GrantCompanyReportActivity;
+import com.sdxxtop.guardianapp.ui.activity.GrantEventReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.LoginActivity;
 import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
 import com.sdxxtop.guardianapp.ui.pop.QuitGroupPopView;
@@ -161,7 +163,7 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
         }
     }
 
-    @OnClick({R.id.civ_header, R.id.tatv_message, R.id.tatv_report})
+    @OnClick({R.id.civ_header, R.id.tatv_message, R.id.tatv_report,R.id.event_report,R.id.grid_member_report,R.id.company_report})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.civ_header:
@@ -181,6 +183,19 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
                 break;
             case R.id.tatv_report:
                 startActivity(new Intent(getActivity(), EventReportListActivity.class));
+                break;
+            case R.id.event_report:
+                startActivity(new Intent(getActivity(), GrantEventReportActivity.class));
+                break;
+            case R.id.grid_member_report: // 网格员报告
+                Intent gridMemberIntent = new Intent(getActivity(), GrantCompanyReportActivity.class);
+                gridMemberIntent.putExtra("reportType",1);
+                startActivity(gridMemberIntent);
+                break;
+            case R.id.company_report:     // 企业报告
+                Intent CompanyIntent = new Intent(getActivity(), GrantCompanyReportActivity.class);
+                CompanyIntent.putExtra("reportType",2);
+                startActivity(CompanyIntent);
                 break;
         }
     }

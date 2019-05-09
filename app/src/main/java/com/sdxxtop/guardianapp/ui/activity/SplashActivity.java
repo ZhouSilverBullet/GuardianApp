@@ -17,8 +17,6 @@ import com.sdxxtop.guardianapp.presenter.contract.SplashContract;
 import com.sdxxtop.guardianapp.utils.SpUtil;
 
 import androidx.annotation.Nullable;
-
-import me.jessyan.autosize.AutoSize;
 import me.jessyan.autosize.internal.CancelAdapt;
 
 
@@ -67,7 +65,11 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
     protected void initData() {
         super.initData();
 
-        mPresenter.autoLogin();
+        Intent intent = new Intent(mContext, HomeActivity.class);
+        startActivity(intent);
+        finish();
+
+//        mPresenter.autoLogin();
 
     }
 

@@ -26,6 +26,10 @@
         <attr name="taev_line_is_show" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="PieChartview">
+        <attr name="pie_title" format="string" />
+    </declare-styleable>
+
     <declare-styleable name="TextAndTextView">
         <attr name="tatv_text_view" format="string" />
         <attr name="tatv_text_right_value" format="string" />
