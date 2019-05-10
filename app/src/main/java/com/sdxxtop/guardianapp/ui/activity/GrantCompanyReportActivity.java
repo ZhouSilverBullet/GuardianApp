@@ -1,7 +1,10 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.amap.api.maps.AMap;
@@ -15,9 +18,13 @@ import com.amap.api.maps.model.MarkerOptions;
 import com.luck.picture.lib.permissions.RxPermissions;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
+import com.sdxxtop.guardianapp.model.bean.TabTextBean;
 import com.sdxxtop.guardianapp.presenter.GCRPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.GCRContract;
 import com.sdxxtop.guardianapp.ui.adapter.GridMarkerAdapter;
+import com.sdxxtop.guardianapp.ui.pop.AreaSelectPopWindow;
+import com.sdxxtop.guardianapp.ui.widget.CustomAreaSelectView;
+import com.sdxxtop.guardianapp.ui.widget.TabTextView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
 import com.sdxxtop.guardianapp.utils.MarkerImgLoad;
 import com.sdxxtop.guardianapp.utils.MarkerSign;
@@ -39,6 +46,8 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
     LinearLayout llLayout;
     @BindView(R.id.map_view)
     MapView mMapView;
+    @BindView(R.id.casv_view)
+    CustomAreaSelectView casvView;
 
 
     private RxPermissions mRxPermissions;
@@ -47,30 +56,39 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
     private GridMarkerAdapter mAdapter;
     private MarkerImgLoad markerImgLoad;
     private final LatLng centerLocation = new LatLng(40.035613, 116.313903);
+    private int reportType;
 
     @Override
     protected int getLayout() {
         return R.layout.activity_grant_company_report;
     }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mMapView.onCreate(savedInstanceState);
 //        showStatusBar();
     }
-    
+
     @Override
     protected void initView() {
         super.initView();
-        int reportType = getIntent().getIntExtra("reportType", -1);
-        if (reportType==1){
+        reportType = getIntent().getIntExtra("reportType", -1);
+        if (reportType == 1) {
             title.setTitleValue("网格员报告");
             title.getTvRight().setText("巡逻详情");
-        }else if (reportType==2){
+        } else if (reportType == 2) {
             title.setTitleValue("企业报告");
             title.getTvRight().setText("企业详情");
         }
-
+        title.getTvRight().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GrantCompanyReportActivity.this, GACEventDetailActivity.class);
+                intent.putExtra("reportType", reportType);
+                startActivity(intent);
+            }
+        });
         mRxPermissions = new RxPermissions(this);
         mRxPermissions.request(Manifest.permission.ACCESS_COARSE_LOCATION).subscribe(new Consumer<Boolean>() {
             @Override
@@ -81,6 +99,52 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
             }
         });
 
+        casvView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<String> data = new ArrayList<>();
+                data.add("罗庄街道");
+                data.add("盛庄街道");
+                data.add("王庄街道");
+                data.add("李庄街道");
+                data.add("赵庄街道");
+                data.add("赵庄街道");
+                data.add("赵庄街道");
+                data.add("赵庄街道");
+                data.add("赵庄街道");
+                data.add("赵庄街道");
+                data.add("赵庄街道");
+                new AreaSelectPopWindow(GrantCompanyReportActivity.this, casvView.llAreaLayout, data, casvView.tvArea);
+            }
+        });
+
+        addTabView();
+
+    }
+
+    //添加详情标签
+    private void addTabView() {
+        List<TabTextBean> list = new ArrayList<>();
+        if (reportType==1){
+            list.add(new TabTextBean(1, "23", "总人数"));
+            list.add(new TabTextBean(2, "566", "巡逻总距离(km)"));
+            list.add(new TabTextBean(3, "777", "巡逻总时长(h)"));
+        }else if (reportType==2){
+            list.add(new TabTextBean(1, "23", "企业数"));
+            list.add(new TabTextBean(2, "566", "安全管理员数"));
+            list.add(new TabTextBean(3, "777", "学习考试培训次数"));
+            list.add(new TabTextBean(4, "001", "上报自查次数"));
+        }
+        for (int i = 0; i < list.size(); i++) {
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
+            layoutParams.setMargins(5, 5, 5, 5);
+            TabTextBean tabTextBean = list.get(i);
+            TabTextView tabTextView = new TabTextView(this);
+            tabTextView.setPadding(0,10,0,10);
+            tabTextView.setLayoutParams(layoutParams);
+            tabTextView.setValue(tabTextBean.getTitle(), tabTextBean.getDesc());
+            llLayout.addView(tabTextView);
+        }
     }
 
     private void initMap() {
@@ -96,13 +160,13 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
         mAdapter = new GridMarkerAdapter(this);
         mAMap.setInfoWindowAdapter(mAdapter);
 
-        markerImgLoad = new MarkerImgLoad(this);
+        markerImgLoad = new MarkerImgLoad(this,reportType);
         moveMapToPosition(centerLocation);
         mAMap.setOnMarkerClickListener(new AMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
                 tempMarker = marker;
-                if (marker.getObject().getClass().equals(MarkerSign.class)){
+                if (marker.getObject().getClass().equals(MarkerSign.class)) {
                     if (marker.isInfoWindowShown()) {
                         marker.hideInfoWindow();
                     } else {
@@ -217,4 +281,5 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
             });
         }
     }
+
 }

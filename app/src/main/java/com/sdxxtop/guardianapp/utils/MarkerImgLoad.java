@@ -31,11 +31,13 @@ public class MarkerImgLoad {
     public static final String TAG = "MarkerImgLoad";
 
     private Activity mContext;
+    private int reportType;
     private BitmapDescriptor bitmapDescriptor;
     private ArrayList<BitmapDescriptor> iconList = new ArrayList();
 
-    public MarkerImgLoad(Activity context) {
+    public MarkerImgLoad(Activity context,int reportType) {
         this.mContext = context;
+        this.reportType = reportType;
     }
 
     /**
@@ -60,7 +62,7 @@ public class MarkerImgLoad {
                 markerOptions.icon(bitmapDescriptor);
 
                 String marker = "Marker";
-                String json = "[{" +
+                String json = "[{"+"'reportType':'"+ reportType +"'," +
                         "'title':'"+ marker +"',"+
                         "'url':'"+url+
                         "'}]";

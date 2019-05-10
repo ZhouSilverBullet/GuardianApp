@@ -21,12 +21,4 @@
 
     </RelativeLayout>
 
-    <TextView
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:textColor="#FF0000"
-        android:text="999"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
 </RelativeLayout>

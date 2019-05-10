@@ -14,6 +14,7 @@
         app:leftLayoutIconIsGray="true"/>
 
     <LinearLayout
+        android:gravity="center_vertical"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,18 +22,17 @@
         android:padding="10dp">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="已处理事件总数：78989"
             android:textColor="@color/black"
             android:textSize="15sp"/>
 
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
-            android:drawableRight="@drawable/icon_2_home"
-            android:text="全区"/>
+        <com.sdxxtop.guardianapp.ui.widget.CustomAreaSelectView
+            android:id="@+id/casv_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 

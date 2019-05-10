@@ -4,21 +4,25 @@ import android.app.Activity;
 
 import com.sdxxtop.guardianapp.di.module.ActivityModule;
 import com.sdxxtop.guardianapp.di.qualifier.ActivityScope;
-import com.sdxxtop.guardianapp.ui.activity.ContactSearchActivity;
 import com.sdxxtop.guardianapp.ui.activity.ContactActivity;
+import com.sdxxtop.guardianapp.ui.activity.ContactSearchActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportDetailSecondActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportListActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventStatistyActivity;
 import com.sdxxtop.guardianapp.ui.activity.ExamineActivity;
+import com.sdxxtop.guardianapp.ui.activity.GACEventDetailActivity;
 import com.sdxxtop.guardianapp.ui.activity.GrantCompanyReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.GrantEventReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.GridMapActivity;
 import com.sdxxtop.guardianapp.ui.activity.HomeActivity;
 import com.sdxxtop.guardianapp.ui.activity.LoginActivity;
 import com.sdxxtop.guardianapp.ui.activity.NewsDetailsActivity;
+import com.sdxxtop.guardianapp.ui.activity.PatrolPathActivity;
 import com.sdxxtop.guardianapp.ui.activity.PatrolRecordActivity;
+import com.sdxxtop.guardianapp.ui.activity.SafeStaffDetail2Activity;
+import com.sdxxtop.guardianapp.ui.activity.SafeStaffDetailActivity;
 import com.sdxxtop.guardianapp.ui.activity.SplashActivity;
 import com.sdxxtop.guardianapp.ui.activity.TaskAgentsActivity;
 
@@ -47,5 +51,9 @@ public interface ActivityComponent {
     void inject(GrantEventReportActivity activity);
     void inject(EventStatistyActivity activity);
     void inject(GrantCompanyReportActivity activity);
+    void inject(PatrolPathActivity activity);
+    void inject(GACEventDetailActivity activity);
+    void inject(SafeStaffDetailActivity activity);
+    void inject(SafeStaffDetail2Activity activity);
 
 }

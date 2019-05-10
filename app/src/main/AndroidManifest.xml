@@ -28,6 +28,14 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.activity.SafeStaffDetail2Activity">
+        </activity>
+        <activity android:name=".ui.activity.SafeStaffDetailActivity">
+        </activity>
+        <activity android:name=".ui.activity.GACEventDetailActivity">
+        </activity>
+        <activity android:name=".ui.activity.PatrolPathActivity">
+        </activity>
         <activity android:name=".ui.activity.GrantCompanyReportActivity">
         </activity>
         <activity android:name=".ui.activity.EventStatistyActivity">

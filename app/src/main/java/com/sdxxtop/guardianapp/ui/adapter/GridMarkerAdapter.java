@@ -1,10 +1,11 @@
 package com.sdxxtop.guardianapp.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amap.api.maps.AMap;
@@ -12,6 +13,7 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.bumptech.glide.Glide;
 import com.sdxxtop.guardianapp.R;
+import com.sdxxtop.guardianapp.ui.activity.PatrolPathActivity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -23,18 +25,18 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Date: 2019/5/8
  * Desc:
  */
-public class GridMarkerAdapter implements AMap.InfoWindowAdapter, View.OnClickListener {
+public class GridMarkerAdapter implements AMap.InfoWindowAdapter {
 
     private Context mContext;
     private LatLng latLng;
-    private LinearLayout call;
-    private LinearLayout navigation;
     private CircleImageView img;
     private TextView nameTV;
     private TextView addrTV;
+    private RelativeLayout rlLayout;
     private String snippet;
     private String agentName;
     private String url;
+    private int reportType;
 
     public GridMarkerAdapter(Context context) {
         this.mContext = context;
@@ -60,13 +62,20 @@ public class GridMarkerAdapter implements AMap.InfoWindowAdapter, View.OnClickLi
 
     private View initView() {
         View view = LayoutInflater.from(mContext).inflate(R.layout.view_infowindow, null);
-        navigation = view.findViewById(R.id.navigation_LL);
-        call = view.findViewById(R.id.call_LL);
         nameTV = view.findViewById(R.id.name);
         addrTV = view.findViewById(R.id.addr);
         img = view.findViewById(R.id.img);
-        navigation.setOnClickListener(this);
-        call.setOnClickListener(this);
+        rlLayout = view.findViewById(R.id.rl_layout);
+
+        rlLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, PatrolPathActivity.class);
+                intent.putExtra("id",agentName);
+                intent.putExtra("reportType",reportType);
+                mContext.startActivity(intent);
+            }
+        });
 
         nameTV.setText(agentName);
         addrTV.setText(String.format("地址：%1$s", snippet));
@@ -75,17 +84,6 @@ public class GridMarkerAdapter implements AMap.InfoWindowAdapter, View.OnClickLi
         return view;
     }
 
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        switch (id) {
-            case R.id.navigation_LL:  //点击导航
-                break;
-
-            case R.id.call_LL:  //点击打电话
-                break;
-        }
-    }
 
     private void parseJSONWithJSONObject(String jsonData) {
         try {
@@ -96,6 +94,7 @@ public class GridMarkerAdapter implements AMap.InfoWindowAdapter, View.OnClickLi
                 //循环遍历，依次取出JSONObject对象
                 //用getInt和getString方法取出对应键值
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
+                reportType = jsonObject.getInt("reportType");
                 url = jsonObject.getString("url");
                 agentName = jsonObject.getString("title");
             }

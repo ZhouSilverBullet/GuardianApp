@@ -1,6 +1,7 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -11,6 +12,8 @@ import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.presenter.EventStatistyPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.EventStatistyContract;
 import com.sdxxtop.guardianapp.ui.adapter.EventStatistyListAdapter;
+import com.sdxxtop.guardianapp.ui.pop.AreaSelectPopWindow;
+import com.sdxxtop.guardianapp.ui.widget.CustomAreaSelectView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
 
 import java.util.ArrayList;
@@ -28,6 +31,8 @@ public class EventStatistyActivity extends BaseMvpActivity<EventStatistyPresente
     RecyclerView recyclerView;
     @BindView(R.id.smart_refresh)
     SmartRefreshLayout smartRefresh;
+    @BindView(R.id.casv_view)
+    CustomAreaSelectView casvView;
 
     private List<String> list = new ArrayList<>();
     private EventStatistyListAdapter adapter;
@@ -36,7 +41,6 @@ public class EventStatistyActivity extends BaseMvpActivity<EventStatistyPresente
     protected int getLayout() {
         return R.layout.activity_ecent_statistics;
     }
-
 
 
     @SuppressLint("WrongConstant")
@@ -62,7 +66,7 @@ public class EventStatistyActivity extends BaseMvpActivity<EventStatistyPresente
                 break;
         }
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayout.VERTICAL,false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayout.VERTICAL, false));
         adapter = new EventStatistyListAdapter(R.layout.item_event_statisty, null);
         recyclerView.setAdapter(adapter);
 
@@ -83,13 +87,32 @@ public class EventStatistyActivity extends BaseMvpActivity<EventStatistyPresente
         });
 
         smartRefresh.autoRefresh();
+
+        casvView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<String> data = new ArrayList<>();
+                data.add("罗庄街道");
+                data.add("盛庄街道");
+                data.add("王庄街道");
+                data.add("李庄街道");
+                data.add("赵庄街道");
+                data.add("赵庄街道");
+                data.add("赵庄街道");
+                data.add("赵庄街道");
+                data.add("赵庄街道");
+                data.add("赵庄街道");
+                data.add("赵庄街道");
+                new AreaSelectPopWindow(EventStatistyActivity.this,casvView.llAreaLayout,data,casvView.tvArea);
+            }
+        });
     }
 
     @Override
     protected void initData() {
         super.initData();
         for (int i = 0; i < 10; i++) {
-            list.add("环保局:356"+(i+1));
+            list.add("环保局:356" + (i + 1));
         }
     }
 
@@ -102,5 +125,4 @@ public class EventStatistyActivity extends BaseMvpActivity<EventStatistyPresente
     public void showError(String error) {
 
     }
-
 }
