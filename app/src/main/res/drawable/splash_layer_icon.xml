@@ -7,7 +7,7 @@
     <item android:bottom="22dp">
         <bitmap
             android:gravity="bottom|center"
-            android:src="@drawable/splash_bottom_text" />
+            android:src="@drawable/splash_bottom_text_2" />
     </item>
 
     <item android:top="136.0dip">

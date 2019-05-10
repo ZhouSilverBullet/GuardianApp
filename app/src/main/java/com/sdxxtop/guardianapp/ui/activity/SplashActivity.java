@@ -65,11 +65,7 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
     protected void initData() {
         super.initData();
 
-        Intent intent = new Intent(mContext, HomeActivity.class);
-        startActivity(intent);
-        finish();
-
-//        mPresenter.autoLogin();
+        mPresenter.autoLogin();
 
     }
 

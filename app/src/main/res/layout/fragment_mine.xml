@@ -114,18 +114,21 @@
                 app:tatv_text_view="我的上报"/>
 
             <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+                android:visibility="gone"
                 android:id="@+id/event_report"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:tatv_text_view="事件报告"/>
 
             <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+                android:visibility="gone"
                 android:id="@+id/grid_member_report"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:tatv_text_view="网格员报告"/>
 
             <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+                android:visibility="gone"
                 android:id="@+id/company_report"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
