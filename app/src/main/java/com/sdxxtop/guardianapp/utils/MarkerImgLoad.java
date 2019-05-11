@@ -16,8 +16,6 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.sdxxtop.guardianapp.R;
 
-import java.util.ArrayList;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.annotations.Nullable;
@@ -33,7 +31,6 @@ public class MarkerImgLoad {
     private Activity mContext;
     private int reportType;
     private BitmapDescriptor bitmapDescriptor;
-    private ArrayList<BitmapDescriptor> iconList = new ArrayList();
 
     public MarkerImgLoad(Activity context,int reportType) {
         this.mContext = context;
@@ -53,25 +50,40 @@ public class MarkerImgLoad {
         markerOptions.setFlat(true);
         markerOptions.anchor(0.5f, 0.5f);
         markerOptions.position(new LatLng(latLng.latitude, latLng.longitude));
-        customizeMarkerIcon(url, new OnMarkerIconLoadListener() {
-            @Override
-            public void markerIconLoadingFinished(View view) {
-                //bitmapDescriptor = BitmapDescriptorFactory.fromView(view);
-                iconList.add(0,bitmapDescriptor);
-                markerOptions.position(latLng);
-                markerOptions.icon(bitmapDescriptor);
+        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(convertViewToBitmap(LayoutInflater.from(mContext).inflate(R.layout.marker_bg, null))));
+        markerOptions.position(latLng);
+        String marker = "Marker";
+        String job = reportType==1?"网格员":"安全员";
+        String json = "[{"+
+                "'reportType':'"+ reportType +"'," +
+                "'title':'"+ marker +"',"+
+                "'url':'"+url+"',"+
+                "'company':'"+"xxx公司"+"',"+
+                "'job':'"+job+
+                "'}]";
 
-                String marker = "Marker";
-                String json = "[{"+"'reportType':'"+ reportType +"'," +
-                        "'title':'"+ marker +"',"+
-                        "'url':'"+url+
-                        "'}]";
+        markerOptions.title(json);
+        markerOptions.snippet("四川省成都市青羊区一环路二段靠近千百味冷锅串串,小吃姮好吃,成都地方气温热");
+        listener.showMarkerIcon(markerOptions, sign);
 
-                markerOptions.title(json);
-                markerOptions.snippet("四川省成都市青羊区一环路二段靠近千百味冷锅串串,小吃姮好吃,成都地方气温热");
-                listener.showMarkerIcon(markerOptions, sign);
-            }
-        });
+//        customizeMarkerIcon(url, new OnMarkerIconLoadListener() {
+//            @Override
+//            public void markerIconLoadingFinished(View view) {
+//                //bitmapDescriptor = BitmapDescriptorFactory.fromView(view);
+//                markerOptions.position(latLng);
+//                markerOptions.icon(bitmapDescriptor);
+//
+//                String marker = "Marker";
+//                String json = "[{"+"'reportType':'"+ reportType +"'," +
+//                        "'title':'"+ marker +"',"+
+//                        "'url':'"+url+
+//                        "'}]";
+//
+//                markerOptions.title(json);
+//                markerOptions.snippet("四川省成都市青羊区一环路二段靠近千百味冷锅串串,小吃姮好吃,成都地方气温热");
+//                listener.showMarkerIcon(markerOptions, sign);
+//            }
+//        });
     }
 
     /**

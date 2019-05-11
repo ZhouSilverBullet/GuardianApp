@@ -4,58 +4,76 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <com.sdxxtop.guardianapp.ui.widget.TitleView
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:leftLayoutIconIsGray="true"
-        app:titleValue="安全员详情"/>
+        app:leftLayoutIconIsGray="true"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_E0E0E0"/>
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:text="银都铝业"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@color/color_E0E0E0"/>
+
+    <com.sdxxtop.guardianapp.ui.widget.GERTimeSelectView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
 
     <LinearLayout
+        android:id="@+id/ll_layout_temp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="银都铝业"
-            android:textColor="@color/black"
-            android:textStyle="bold"/>
-
-        <com.sdxxtop.guardianapp.ui.widget.GERTimeSelectView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"/>
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/layout_report_tab_bg"
+        android:orientation="horizontal"
+        android:weightSum="4"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginBottom="15dp"
         android:text="巡逻详情"
-        android:textColor="@color/black"
-        android:textSize="17sp"
-        android:textStyle="bold"/>
+        android:textColor="@color/color_292929"
+        android:textSize="15sp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:paddingLeft="3dp"
-        android:paddingRight="3dp"
-        android:orientation="horizontal">
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="#FAFBFF"
+        android:orientation="horizontal"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp">
 
         <TextView
             android:layout_width="0dp"
@@ -64,8 +82,7 @@
             android:gravity="center"
             android:text="巡逻日期"
             android:textColor="@color/black"
-            android:textSize="@dimen/sp_14"
-            android:textStyle="bold"/>
+            android:textSize="13sp"/>
 
         <TextView
             android:layout_width="0dp"
@@ -74,8 +91,7 @@
             android:gravity="center"
             android:text="巡逻时长（h）"
             android:textColor="@color/black"
-            android:textSize="@dimen/sp_14"
-            android:textStyle="bold"/>
+            android:textSize="13sp"/>
 
         <TextView
             android:layout_width="0dp"
@@ -84,20 +100,22 @@
             android:gravity="center"
             android:text="巡逻距离（km）"
             android:textColor="@color/black"
-            android:textSize="@dimen/sp_14"
-            android:textStyle="bold"/>
+            android:textSize="13sp"/>
     </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="#e2e2e2"/>
+        android:layout_height="1dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@color/color_E0E0E0"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="#FAFBFF"/>
 
 </LinearLayout>

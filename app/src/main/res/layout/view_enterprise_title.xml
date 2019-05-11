@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_text_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="企业名称"
+            android:textColor="@color/color_313131"
+            android:textSize="11sp"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:gravity="center"
+                android:id="@+id/tv_text_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="所属区域"
+                android:textColor="@color/color_313131"
+                android:textSize="11sp"/>
+
+            <ImageView
+                android:layout_width="9dp"
+                android:layout_height="8dp"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/time_more"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:gravity="center"
+                android:id="@+id/tv_text_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="安全管理员人数"
+                android:textColor="@color/color_313131"
+                android:textSize="11sp"/>
+
+            <ImageView
+                android:layout_width="9dp"
+                android:layout_height="8dp"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/time_more"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:gravity="center"
+                android:id="@+id/tv_text_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="学习培训总次数"
+                android:textColor="@color/color_313131"
+                android:textSize="11sp"/>
+
+            <ImageView
+                android:layout_width="9dp"
+                android:layout_height="8dp"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/time_more"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:gravity="center"
+                android:maxLines="2"
+                android:id="@+id/tv_text_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="上报自查总次数"
+                android:textColor="@color/color_313131"
+                android:textSize="11sp"/>
+
+            <ImageView
+                android:layout_width="9dp"
+                android:layout_height="8dp"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/time_more"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

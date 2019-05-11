@@ -1,25 +1,24 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
 import android.content.Intent;
-import android.text.TextPaint;
-import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
+import com.sdxxtop.guardianapp.model.bean.TabTextBean;
 import com.sdxxtop.guardianapp.presenter.GERPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.GERContract;
 import com.sdxxtop.guardianapp.ui.widget.PieChartView;
+import com.sdxxtop.guardianapp.ui.widget.TabTextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
-public class GrantEventReportActivity extends BaseMvpActivity<GERPresenter> implements GERContract.IView {
-
-
-    String[] status = new String[]{"已上报", "待处理", "处理中", "已处理", "已完成"};
-    String[] enevtNum = new String[]{"890", "22", "007", "100", "800"};
+public class GrantEventReportActivity extends BaseMvpActivity<GERPresenter> implements GERContract.IView, TabTextView.OnTabClickListener {
 
     @BindView(R.id.ll_layout)
     LinearLayout llLayout;
@@ -45,77 +44,35 @@ public class GrantEventReportActivity extends BaseMvpActivity<GERPresenter> impl
     }
 
     private void addLinearLayout() {
-        for (int i = 0; i < 5; i++) {
-            //LinearLayout默认是水平(0)居中，现在改为垂直居中
-            //实例化一个LinearLayout
-            LinearLayout linearLayout = new LinearLayout(this);
-            linearLayout.setOrientation(LinearLayout.VERTICAL);
-            //设置LinearLayout属性(宽和高)
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT, 1);
-            //设置边距
-            layoutParams.setMargins(5, 10, 5, 10);
-            //将以上的属性赋给LinearLayout
-            linearLayout.setLayoutParams(layoutParams);
-            linearLayout.setGravity(Gravity.CENTER);
-            linearLayout.setTag(i + 1);
-            linearLayout.setBackgroundColor(getResources().getColor(R.color.white));
-
-            linearLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (v.getTag() != null) {
-                        int id = (int) v.getTag();
-                        skipStatisticsById(id);
-                    }
-                }
-            });
-
-            //实例化一个TextView
-            TextView tv = new TextView(this);
-            //设置宽高以及权重
-            LinearLayout.LayoutParams tvParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            tvParams.setMargins(0, 10, 0, 0);
-            //设置textview垂直居中
-            tvParams.gravity = Gravity.CENTER;
-            tv.setLayoutParams(tvParams);
-            tv.setTextSize(18);
-            tv.setTextColor(getResources().getColor(R.color.black));
-            tv.setText(enevtNum[i]);
-            TextPaint paint = tv.getPaint();
-            paint.setFakeBoldText(true);
-            linearLayout.addView(tv);
-
-            //实例化一个TextView
-            TextView tv_status = new TextView(this);
-            //设置宽高以及权重
-            LinearLayout.LayoutParams tvParams2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            tvParams2.setMargins(0, 0, 0, 10);
-            //设置textview垂直居中
-            tvParams2.gravity = Gravity.CENTER;
-            tv_status.setLayoutParams(tvParams2);
-            tv_status.setTextSize(14);
-            tv_status.setTextColor(getResources().getColor(R.color.black));
-            tv_status.setText(status[i]);
-            linearLayout.addView(tv_status);
-
-            llLayout.addView(linearLayout);
+        List<TabTextBean> data =  new ArrayList<>();
+        data.add(new TabTextBean(1,"890","已上报"));
+        data.add(new TabTextBean(2,"222","待处理"));
+        data.add(new TabTextBean(3,"007","处理中"));
+        data.add(new TabTextBean(4,"100","已处理"));
+        data.add(new TabTextBean(5,"800","已完成"));
+        for (int i = 0; i < data.size(); i++) {
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
+            TabTextBean tabTextBean = data.get(i);
+            TabTextView tabTextView = new TabTextView(this);
+            tabTextView.setLayoutParams(layoutParams);
+            tabTextView.setValue(tabTextBean.getTitle(), tabTextBean.getDesc());
+            tabTextView.setOnTabClickListener(i,this);
+            if (i==data.size()-1){
+                tabTextView.tvLine.setVisibility(View.GONE);
+            }
+            llLayout.addView(tabTextView);
         }
-    }
-
-    /**
-     * 跳转activity
-     *
-     * @param id 跳转类型
-     */
-    private void skipStatisticsById(int id) {
-        Intent intent = new Intent(this, EventStatistyActivity.class);
-        intent.putExtra("eventId", id);
-        startActivity(intent);
     }
 
     @Override
     public void showError(String error) {
 
+    }
+
+    @Override
+    public void onTabClick(int num) {
+        Intent intent = new Intent(this, EventStatistyActivity.class);
+        intent.putExtra("eventId", num);
+        startActivity(intent);
     }
 }

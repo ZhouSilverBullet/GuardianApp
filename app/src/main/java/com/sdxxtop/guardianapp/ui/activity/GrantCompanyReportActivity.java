@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdate;
@@ -23,7 +24,6 @@ import com.sdxxtop.guardianapp.presenter.GCRPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.GCRContract;
 import com.sdxxtop.guardianapp.ui.adapter.GridMarkerAdapter;
 import com.sdxxtop.guardianapp.ui.pop.AreaSelectPopWindow;
-import com.sdxxtop.guardianapp.ui.widget.CustomAreaSelectView;
 import com.sdxxtop.guardianapp.ui.widget.TabTextView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
 import com.sdxxtop.guardianapp.utils.MarkerImgLoad;
@@ -34,6 +34,7 @@ import java.util.List;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
+import butterknife.OnClick;
 import io.reactivex.functions.Consumer;
 
 import static com.sdxxtop.guardianapp.utils.MarkerUtil.addSimulatedData;
@@ -42,12 +43,18 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
 
     @BindView(R.id.title)
     TitleView title;
-    @BindView(R.id.ll_layout)
-    LinearLayout llLayout;
+    @BindView(R.id.ll_layout_3)
+    LinearLayout llLayout3;
+    @BindView(R.id.ll_layout_4)
+    LinearLayout llLayout4;
     @BindView(R.id.map_view)
     MapView mMapView;
-    @BindView(R.id.casv_view)
-    CustomAreaSelectView casvView;
+    @BindView(R.id.tv_area)
+    TextView tvArea;
+    @BindView(R.id.ll_area_layout)
+    LinearLayout llAreaLayout;
+    @BindView(R.id.ll_containor_temp)
+    LinearLayout llContainorTemp;
 
 
     private RxPermissions mRxPermissions;
@@ -84,8 +91,15 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
         title.getTvRight().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(GrantCompanyReportActivity.this, GACEventDetailActivity.class);
-                intent.putExtra("reportType", reportType);
+                Intent intent = null;
+                if (reportType == 1) {
+                    intent = new Intent(GrantCompanyReportActivity.this, GACPatrolDetailActivity.class);  // 轨迹详情
+                } else if (reportType == 2) {
+                    intent = new Intent(GrantCompanyReportActivity.this, GACEventDetailActivity.class);   // 企业详情
+                }
+                if (intent == null) {
+                    return;
+                }
                 startActivity(intent);
             }
         });
@@ -99,25 +113,6 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
             }
         });
 
-        casvView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                List<String> data = new ArrayList<>();
-                data.add("罗庄街道");
-                data.add("盛庄街道");
-                data.add("王庄街道");
-                data.add("李庄街道");
-                data.add("赵庄街道");
-                data.add("赵庄街道");
-                data.add("赵庄街道");
-                data.add("赵庄街道");
-                data.add("赵庄街道");
-                data.add("赵庄街道");
-                data.add("赵庄街道");
-                new AreaSelectPopWindow(GrantCompanyReportActivity.this, casvView.llAreaLayout, data, casvView.tvArea);
-            }
-        });
-
         addTabView();
 
     }
@@ -125,25 +120,31 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
     //添加详情标签
     private void addTabView() {
         List<TabTextBean> list = new ArrayList<>();
-        if (reportType==1){
+        if (reportType == 1) {
             list.add(new TabTextBean(1, "23", "总人数"));
             list.add(new TabTextBean(2, "566", "巡逻总距离(km)"));
             list.add(new TabTextBean(3, "777", "巡逻总时长(h)"));
-        }else if (reportType==2){
+        } else if (reportType == 2) {
             list.add(new TabTextBean(1, "23", "企业数"));
             list.add(new TabTextBean(2, "566", "安全管理员数"));
-            list.add(new TabTextBean(3, "777", "学习考试培训次数"));
+            list.add(new TabTextBean(3, "777", "考试培训次数"));
             list.add(new TabTextBean(4, "001", "上报自查次数"));
         }
         for (int i = 0; i < list.size(); i++) {
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
-            layoutParams.setMargins(5, 5, 5, 5);
             TabTextBean tabTextBean = list.get(i);
             TabTextView tabTextView = new TabTextView(this);
-            tabTextView.setPadding(0,10,0,10);
             tabTextView.setLayoutParams(layoutParams);
             tabTextView.setValue(tabTextBean.getTitle(), tabTextBean.getDesc());
-            llLayout.addView(tabTextView);
+            if (i == list.size() - 1) {
+                tabTextView.tvLine.setVisibility(View.GONE);
+            }
+            if (reportType == 1) {
+                llLayout3.addView(tabTextView);
+            } else if (reportType == 2) {
+                llLayout4.addView(tabTextView);
+            }
+
         }
     }
 
@@ -160,7 +161,7 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
         mAdapter = new GridMarkerAdapter(this);
         mAMap.setInfoWindowAdapter(mAdapter);
 
-        markerImgLoad = new MarkerImgLoad(this,reportType);
+        markerImgLoad = new MarkerImgLoad(this, reportType);
         moveMapToPosition(centerLocation);
         mAMap.setOnMarkerClickListener(new AMap.OnMarkerClickListener() {
             @Override
@@ -282,4 +283,20 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
         }
     }
 
+    @OnClick(R.id.ll_area_layout)
+    public void onViewClicked() {
+        List<String> data = new ArrayList<>();
+        data.add("罗庄街道");
+        data.add("盛庄街道");
+        data.add("王庄街道");
+        data.add("李庄街道");
+        data.add("赵庄街道");
+        data.add("赵庄街道");
+        data.add("赵庄街道");
+        data.add("赵庄街道");
+        data.add("赵庄街道");
+        data.add("赵庄街道");
+        data.add("赵庄街道");
+        new AreaSelectPopWindow(GrantCompanyReportActivity.this, llContainorTemp, data, tvArea);
+    }
 }

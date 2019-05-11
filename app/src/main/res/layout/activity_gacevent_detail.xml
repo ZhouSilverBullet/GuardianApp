@@ -4,19 +4,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <com.sdxxtop.guardianapp.ui.widget.TitleView
+        app:titleValue="企业详情"
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:leftLayoutIconIsGray="true"/>
 
+    <TextView
+        android:background="@color/color_E0E0E0"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="5dp">
+        android:orientation="horizontal">
 
         <com.sdxxtop.guardianapp.ui.widget.CustomAreaSelectView
             android:gravity="center"
@@ -34,65 +40,18 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <com.sdxxtop.guardianapp.ui.widget.EnterpriseTabTitleView
+        android:layout_marginBottom="6dp"
+        android:layout_marginTop="17dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:gravity="center"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="企业名称"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp_14"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="所属区域"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp_14"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="安全管理员人数"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp_14"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="学习培训总次数"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp_14"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="上报自查总次数"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp_14"/>
-
-    </LinearLayout>
+        android:layout_height="wrap_content"/>
 
     <TextView
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
         android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="#e2e2e2"/>
+        android:layout_height="1dp"
+        android:background="@color/color_E0E0E0"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

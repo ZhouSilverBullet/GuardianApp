@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amap.api.maps.AMap;
@@ -31,11 +30,15 @@ public class GridMarkerAdapter implements AMap.InfoWindowAdapter {
     private LatLng latLng;
     private CircleImageView img;
     private TextView nameTV;
-    private TextView addrTV;
-    private RelativeLayout rlLayout;
+    private TextView tvJobs;
+    private TextView tvCompany;
+
+
     private String snippet;
     private String agentName;
     private String url;
+    private String company;
+    private String job;
     private int reportType;
 
     public GridMarkerAdapter(Context context) {
@@ -63,11 +66,11 @@ public class GridMarkerAdapter implements AMap.InfoWindowAdapter {
     private View initView() {
         View view = LayoutInflater.from(mContext).inflate(R.layout.view_infowindow, null);
         nameTV = view.findViewById(R.id.name);
-        addrTV = view.findViewById(R.id.addr);
+        tvJobs = view.findViewById(R.id.tv_jobs);
+        tvCompany = view.findViewById(R.id.tv_company);
         img = view.findViewById(R.id.img);
-        rlLayout = view.findViewById(R.id.rl_layout);
 
-        rlLayout.setOnClickListener(new View.OnClickListener() {
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, PatrolPathActivity.class);
@@ -78,8 +81,8 @@ public class GridMarkerAdapter implements AMap.InfoWindowAdapter {
         });
 
         nameTV.setText(agentName);
-        addrTV.setText(String.format("地址：%1$s", snippet));
-
+        tvJobs.setText(job);
+        tvCompany.setText(company);
         Glide.with(mContext).load(url).into(img);
         return view;
     }
@@ -97,6 +100,8 @@ public class GridMarkerAdapter implements AMap.InfoWindowAdapter {
                 reportType = jsonObject.getInt("reportType");
                 url = jsonObject.getString("url");
                 agentName = jsonObject.getString("title");
+                company = jsonObject.getString("company");
+                job = jsonObject.getString("job");
             }
         } catch (Exception e) {
             e.printStackTrace();

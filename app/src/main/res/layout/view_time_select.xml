@@ -2,32 +2,49 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:gravity="center_vertical"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <TextView
+            android:textSize="15sp"
+            android:id="@+id/tv_start_time"
+            android:padding="10dp"
+            android:gravity="center"
+            android:textColor="@color/color_E0E0E0"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="选择起始时间"/>
+
+        <TextView
+            android:background="#E0E0E0"
+            android:layout_width="20dp"
+            android:layout_height="1dp"/>
+
+        <TextView
+            android:textSize="15sp"
+            android:id="@+id/tv_end_time"
+            android:padding="10dp"
+            android:gravity="center"
+            android:textColor="@color/color_E0E0E0"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="选择终止时间"/>
+
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/tv_start_time"
-        android:padding="10dp"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="选择起始时间"/>
-
-    <TextView
-        android:background="@color/black"
-        android:layout_width="50dp"
-        android:layout_height="5dp"/>
-
-    <TextView
-        android:id="@+id/tv_end_time"
-        android:padding="10dp"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="选择终止时间"/>
+        android:background="@color/color_E0E0E0"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
 </LinearLayout>

@@ -13,12 +13,14 @@ import com.sdxxtop.guardianapp.ui.activity.EventReportListActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventStatistyActivity;
 import com.sdxxtop.guardianapp.ui.activity.ExamineActivity;
 import com.sdxxtop.guardianapp.ui.activity.GACEventDetailActivity;
+import com.sdxxtop.guardianapp.ui.activity.GACPatrolDetailActivity;
 import com.sdxxtop.guardianapp.ui.activity.GrantCompanyReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.GrantEventReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.GridMapActivity;
 import com.sdxxtop.guardianapp.ui.activity.HomeActivity;
 import com.sdxxtop.guardianapp.ui.activity.LoginActivity;
 import com.sdxxtop.guardianapp.ui.activity.NewsDetailsActivity;
+import com.sdxxtop.guardianapp.ui.activity.PartEventListActivity;
 import com.sdxxtop.guardianapp.ui.activity.PatrolPathActivity;
 import com.sdxxtop.guardianapp.ui.activity.PatrolRecordActivity;
 import com.sdxxtop.guardianapp.ui.activity.SafeStaffDetail2Activity;
@@ -55,5 +57,7 @@ public interface ActivityComponent {
     void inject(GACEventDetailActivity activity);
     void inject(SafeStaffDetailActivity activity);
     void inject(SafeStaffDetail2Activity activity);
+    void inject(PartEventListActivity activity);
+    void inject(GACPatrolDetailActivity activity);
 
 }

@@ -1,64 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="wrap_content"
-              android:layout_height="90dp"
-              android:background="#0000"
-              android:orientation="horizontal">
+              android:layout_height="wrap_content"
+              android:background="@color/translate"
+              android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/rl_layout"
-        android:layout_width="209dp"
-        android:layout_height="90dp"
-        android:background="@drawable/inforwindow_bg"
-        android:orientation="vertical">
+    <LinearLayout
+        android:background="@drawable/shape_map_marker_green_bg"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_centerVertical="true"
-            android:layout_marginTop="3dp"
             android:id="@+id/img"
-            android:layout_marginLeft="10dp"
-            android:layout_width="35dp"
-            android:layout_height="38dp"/>
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"/>
 
         <LinearLayout
-            android:gravity="center_vertical"
-            android:layout_toRightOf="@+id/img"
-            android:orientation="vertical"
+            android:layout_marginRight="11dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/img"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
-                android:text="机上挤上机上挤上"
-                android:gravity="center_vertical"
                 android:id="@+id/name"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:textColor="#333333"
-                android:textSize="14sp"/>
+                android:gravity="center_vertical"
+                android:text="张三"
+                android:textColor="#ffffff"
+                android:textSize="10sp"/>
 
             <TextView
-                android:layout_marginBottom="10dp"
-                android:text="好书法看到回复杰卡斯喝咖啡和卡诉讼费仅仅是快放假啦"
-                android:id="@+id/addr"
-                android:layout_width="match_parent"
+                android:id="@+id/tv_jobs"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="10dp"
                 android:ellipsize="end"
-                android:lines="2"
-                android:textColor="#666666"
-                android:textSize="12sp"/>
+                android:text="安全员"
+                android:textColor="#ffffff"
+                android:textSize="10sp"/>
+
+            <TextView
+                android:id="@+id/tv_company"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:text="xxx公司"
+                android:textColor="#ffffff"
+                android:textSize="10sp"/>
 
         </LinearLayout>
+    </LinearLayout>
 
-    </RelativeLayout>
-
-    <!--用来偏移inforwindow的位置-->
     <TextView
-        android:layout_width="38dp"
-        android:layout_height="match_parent"/>
-
+        android:background="@color/translate"
+        android:layout_width="1dp"
+        android:layout_height="5dp"/>
 </LinearLayout>

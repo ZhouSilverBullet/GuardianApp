@@ -1,39 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
     <LinearLayout
         android:id="@+id/ll_area_layout"
-        android:layout_width="100dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/report_select_time_bg"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:background="#32B16C"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="2dp"
-        android:paddingTop="3dp"
-        android:paddingRight="2dp"
-        android:paddingBottom="3dp">
+        android:paddingLeft="10dp"
+        android:paddingTop="9dp"
+        android:paddingBottom="9dp">
 
         <TextView
-            android:textColor="@color/black"
-            android:textSize="12sp"
-            android:textStyle="bold"
             android:id="@+id/tv_area"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:text="全区"/>
+            android:text="全区"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"/>
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="9dp"
+            android:layout_height="8dp"
+            android:layout_marginRight="8dp"
             android:src="@drawable/time_more"/>
-
     </LinearLayout>
 
 </LinearLayout>

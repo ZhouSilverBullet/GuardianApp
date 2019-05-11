@@ -25,6 +25,8 @@ public class TabTextView extends LinearLayout {
     TextView tvTitle;
     @BindView(R.id.tv_description)
     TextView tvDescription;
+    @BindView(R.id.tv_line)
+    public TextView tvLine;
 
     public TabTextView(Context context) {
         this(context, null);

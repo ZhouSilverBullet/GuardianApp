@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
@@ -11,6 +12,11 @@
         android:layout_height="wrap_content"
         app:leftLayoutIconIsGray="true"
         app:titleValue="事件上报"/>
+
+    <TextView
+        android:background="@color/color_E0E0E0"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -27,47 +33,51 @@
                 android:layout_height="wrap_content"/>
 
             <TextView
+                android:padding="16dp"
+                android:textSize="15sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
                 android:text="事件总数统计"
-                android:textColor="@color/black"/>
+                android:textColor="@color/color_292929"/>
 
             <LinearLayout
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/layout_report_tab_bg"
                 android:id="@+id/ll_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
                 android:orientation="horizontal"
                 android:weightSum="5">
-
             </LinearLayout>
 
             <TextView
+                android:paddingLeft="16dp"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:padding="10dp"
                 android:text="上报事件分类统计"
-                android:textColor="@color/black"
-                android:textSize="14sp"/>
+                android:textColor="@color/color_292929"
+                android:textSize="15sp"/>
 
 
             <com.sdxxtop.guardianapp.ui.widget.PieChartView
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:background="#FAFBFF"
                 android:id="@+id/pie_chart1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:pie_title="上报事件统计"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/alertdialog_line"/>
-
             <com.sdxxtop.guardianapp.ui.widget.PieChartView
+                android:layout_marginBottom="20dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:background="#FAFBFF"
+                android:layout_marginTop="10dp"
                 android:id="@+id/pie_chart2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

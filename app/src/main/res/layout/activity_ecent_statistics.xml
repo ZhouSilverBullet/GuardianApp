@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/alertdialog_line"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <com.sdxxtop.guardianapp.ui.widget.TitleView
@@ -13,47 +13,67 @@
         android:layout_height="wrap_content"
         app:leftLayoutIconIsGray="true"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_E0E0E0"/>
+
     <LinearLayout
-        android:gravity="center_vertical"
-        android:background="@color/white"
+        android:id="@+id/ll_containor_temp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp">
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_weight="1"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="15dp"
+            android:id="@+id/tv_event_num"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="已处理事件总数：78989"
-            android:textColor="@color/black"
+            android:textColor="@color/color_313131"
             android:textSize="15sp"/>
 
-        <com.sdxxtop.guardianapp.ui.widget.CustomAreaSelectView
-            android:id="@+id/casv_view"
+        <LinearLayout
+            android:id="@+id/ll_area_layout"
+            android:gravity="center_vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_marginLeft="15dp"
+                android:id="@+id/tv_area"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="全区"
+                android:textColor="@color/color_313131"
+                android:textSize="15sp"/>
+
+            <ImageView
+                android:layout_marginRight="18dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="9dp"
+                android:layout_height="8dp"
+                android:src="@drawable/time_more"/>
+        </LinearLayout>
 
     </LinearLayout>
 
-    <TextView
-        android:background="@color/actionsheet_gray"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"/>
-
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:layout_marginTop="20dp"
         android:id="@+id/smart_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:background="@color/white"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp"
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:background="@color/white"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

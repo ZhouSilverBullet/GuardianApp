@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.activity.GrantCompanyReportActivity">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <com.sdxxtop.guardianapp.ui.widget.TitleView
         android:id="@+id/title"
@@ -17,43 +17,93 @@
         app:rightTextValue="巡逻详情"
         app:titleValue="网格员报告"/>
 
-    <LinearLayout
-        android:id="@+id/ll_layout"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"/>
+        android:layout_height="1dp"
+        android:background="@color/color_E0E0E0"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/ll_layout_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/layout_report_tab_bg"
+            android:orientation="horizontal"
+            android:weightSum="3">
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_layout_4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/layout_report_tab_bg"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/ll_containor_temp"
+        android:paddingBottom="12dp"
+        android:paddingTop="20dp"
+        android:paddingLeft="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp">
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="网格员实时定位图"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            android:textStyle="bold"/>
+            android:textColor="@color/color_313131"
+            android:textSize="15sp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="（在线人数678人）"
-            android:textColor="@color/black"
-            android:textSize="10sp"
-            android:textStyle="bold"/>
+            android:textColor="@color/actionsheet_gray"
+            android:textSize="13sp"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
 
-        <com.sdxxtop.guardianapp.ui.widget.CustomAreaSelectView
-            android:id="@+id/casv_view"
+        <LinearLayout
+            android:id="@+id/ll_area_layout"
+            android:gravity="center_vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_marginLeft="15dp"
+                android:id="@+id/tv_area"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="全区"
+                android:textColor="@color/color_313131"
+                android:textSize="15sp"/>
+
+            <ImageView
+                android:layout_marginRight="18dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="9dp"
+                android:layout_height="8dp"
+                android:src="@drawable/time_more"/>
+        </LinearLayout>
 
     </LinearLayout>
 

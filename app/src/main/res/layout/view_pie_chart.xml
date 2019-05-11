@@ -10,15 +10,15 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:text="上报事件统计"
-        android:textColor="@color/black"
-        android:textSize="@dimen/sp_14"
-        android:textStyle="bold"/>
+        android:textColor="@color/color_292929"
+        android:textSize="@dimen/sp_14"/>
 
     <com.github.mikephil.charting.charts.PieChart
+        android:layout_marginBottom="10dp"
         android:id="@+id/pie_chart"
         android:layout_width="match_parent"
-        android:layout_height="260dp"/>
+        android:layout_height="230dp"/>
 
 </LinearLayout>
