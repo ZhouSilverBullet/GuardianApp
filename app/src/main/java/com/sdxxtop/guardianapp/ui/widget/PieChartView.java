@@ -21,11 +21,12 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
 import com.sdxxtop.guardianapp.R;
+import com.sdxxtop.guardianapp.model.bean.GERPIndexBean;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
@@ -44,7 +45,7 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
 
     private String title;
 
-    protected String[] mParties = new String[] {"环保局", "城管局", "应急局", "盛庄街道"};
+    protected String[] mParties = new String[]{"环保局", "城管局", "应急局", "盛庄街道"};
 
 
     public PieChartView(Context context) {
@@ -68,9 +69,9 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
         LayoutInflater.from(getContext()).inflate(R.layout.view_pie_chart, this, true);
         ButterKnife.bind(this);
 
-        if (!TextUtils.isEmpty(title)){
+        if (!TextUtils.isEmpty(title)) {
             tvTitle.setText(title);
-        }else{
+        } else {
             tvTitle.setVisibility(View.GONE);
         }
 
@@ -98,51 +99,52 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
         pieChart.setRotationEnabled(false);
         pieChart.setHighlightPerTapEnabled(true);
 
-        pieChart. setDrawEntryLabels(false);   // 不绘制x的值   x:罗庄,y:25%
+        pieChart.setDrawEntryLabels(false);   // 不绘制x的值   x:罗庄,y:25%
         // pieChart.setUnit(" €");
         // pieChart.setDrawUnitsInChart(true);
 
         // add a selection listener
         pieChart.setOnChartValueSelectedListener(this);
-        setData(4, 100);
         pieChart.animateY(1400, Easing.EaseInOutQuad);
 
         Legend l = pieChart.getLegend();
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
         l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-        l.setDrawInside(false);
-        l.setTextSize(14f);
-        l.setFormSize(10f);
+        l.setTextSize(10f);
+        l.setFormSize(7f);
         l.setXEntrySpace(7f);
         l.setYEntrySpace(0f);
         l.setYOffset(3f);
+        l.setWordWrapEnabled(true);
 
         // entry label styling
         pieChart.setEntryLabelColor(Color.WHITE);
 //        pieChart.setEntryLabelTypeface(mTfRegular);
         pieChart.setEntryLabelTextSize(12f);
+        pieChart.setNoDataText("暂无数据");
     }
 
     @Override
     public void onValueSelected(Entry e, Highlight h) {
-        Log.e("onValueSelected:",""+e.toString());
+        Log.e("onValueSelected:", "" + e.toString());
     }
 
     @Override
     public void onNothingSelected() {
-        Log.e("onNothingSelected:","被点击了");
+        Log.e("onNothingSelected:", "被点击了");
     }
 
-    public void setData(int count, float range) {
-        float mult = range;
+    private void setData(List<GERPIndexBean.EventInfoBean> dataList) {
         ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
-        for (int i = 0; i < count ; i++) {
-            entries.add(new PieEntry((float) ((Math.random() * mult) + mult / 5),mParties[i % mParties.length]));
+        ArrayList<Integer> colors = new ArrayList<Integer>();
+        for (int i = 0; i < dataList.size(); i++) {
+            GERPIndexBean.EventInfoBean item = dataList.get(i);
+            entries.add(new PieEntry(item.getCount(),item.getPart_name()));
+            colors.add(Color.parseColor(item.getColor()));
         }
 
         PieDataSet dataSet = new PieDataSet(entries, "");
-
         dataSet.setDrawIcons(false);
         dataSet.setSliceSpace(3f);
         dataSet.setIconsOffset(new MPPointF(0, 40));
@@ -150,27 +152,8 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
         dataSet.setDrawValues(false);  // 不画值
 
         // add a lot of colors
-
-        ArrayList<Integer> colors = new ArrayList<Integer>();
-
-        for (int c : ColorTemplate.VORDIPLOM_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.JOYFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.COLORFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.LIBERTY_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.PASTEL_COLORS)
-            colors.add(c);
-
-        colors.add(ColorTemplate.getHoloBlue());
-
         dataSet.setColors(colors);
+
         //dataSet.setSelectionShift(0f);
 
         PieData data = new PieData(dataSet);
@@ -185,4 +168,14 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
 
         pieChart.invalidate();
     }
+
+    public void setPieData(List<GERPIndexBean.EventInfoBean> data){
+        if (data!=null&&data.size()>0){
+            setData(data);
+        }else{
+            pieChart.removeAllViews();
+            pieChart.setData(null);
+        }
+    }
+
 }

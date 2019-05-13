@@ -7,7 +7,6 @@ import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.presenter.GACEPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.GCRContract;
 import com.sdxxtop.guardianapp.ui.adapter.GACEDetailAdapter;
-import com.sdxxtop.guardianapp.ui.pop.AreaSelectPopWindow;
 import com.sdxxtop.guardianapp.ui.widget.CustomAreaSelectView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
 
@@ -77,14 +76,14 @@ public class GACEventDetailActivity extends BaseMvpActivity<GACEPresenter> imple
         casvLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AreaSelectPopWindow(GACEventDetailActivity.this,casvLeft.llAreaLayout,data,casvLeft.tvArea);
+//                new AreaSelectPopWindow(GACEventDetailActivity.this,casvLeft.llAreaLayout,data,casvLeft.tvArea);
             }
         });
 
         casvRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AreaSelectPopWindow(GACEventDetailActivity.this,casvRight.llAreaLayout,data,casvRight.tvArea);
+//                new AreaSelectPopWindow(GACEventDetailActivity.this,casvRight.llAreaLayout,data,casvRight.tvArea);
             }
         });
     }

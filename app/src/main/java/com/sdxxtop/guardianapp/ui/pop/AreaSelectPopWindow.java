@@ -13,6 +13,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.sdxxtop.guardianapp.R;
+import com.sdxxtop.guardianapp.model.bean.EventListBean;
 
 import java.util.List;
 
@@ -27,16 +28,27 @@ public class AreaSelectPopWindow extends PopupWindow {
     private LayoutInflater inflater;
     private View viewLayout;
     private TextView tagTextView;
+    private TextView tvBg;
     private Activity activity;
-    private List<String> mData;
-    private View view;
+    private List<EventListBean.CompleteInfo> mData;
+    private OnPopItemClickListener mListener;
 
-    public AreaSelectPopWindow(Activity activity, View viewLayout, List<String> data,TextView textView) {
+    public AreaSelectPopWindow(Activity activity, View viewLayout, List<EventListBean.CompleteInfo> data, TextView textView) {
         this.activity = activity;
         inflater = LayoutInflater.from(activity);
         this.viewLayout = viewLayout;
         this.mData = data;
         this.tagTextView = textView;
+        initView();
+    }
+
+    public AreaSelectPopWindow(Activity activity, View viewLayout, List<EventListBean.CompleteInfo> data, TextView textView, TextView textView2) {
+        this.activity = activity;
+        inflater = LayoutInflater.from(activity);
+        this.viewLayout = viewLayout;
+        this.mData = data;
+        this.tagTextView = textView;
+        this.tvBg = textView2;
         initView();
     }
 
@@ -56,19 +68,37 @@ public class AreaSelectPopWindow extends PopupWindow {
 
         showAsDropDown(viewLayout, 0, 0);
 //        toWindowBackground(activity, 0.6f);
+        if (tvBg != null) {
+            tvBg.setVisibility(View.VISIBLE);
+        }
 
+        tvBg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tvBg != null) {
+                    tvBg.setVisibility(View.GONE);
+                }
+            }
+        });
 
         setOnDismissListener(new OnDismissListener() {
             @Override
             public void onDismiss() {
 //                setShowBackground(1.f);
+                if (tvBg != null) {
+                    tvBg.setVisibility(View.GONE);
+                }
             }
         });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                tagTextView.setText(mData.get(position));
+                if (mListener != null) {
+                    EventListBean.CompleteInfo completeInfo = mData.get(position);
+                    mListener.onPopItemClick(completeInfo.getPart_id());
+//                    tagTextView.setText(completeInfo.getPart_name());
+                }
                 dismiss();
             }
         });
@@ -88,6 +118,16 @@ public class AreaSelectPopWindow extends PopupWindow {
     }
 
 
+    public void setOnPopItemClickListener(OnPopItemClickListener listener) {
+        this.mListener = listener;
+    }
+
+    public interface OnPopItemClickListener {
+        void onPopItemClick(int part_typeid);
+    }
+
+
+    /************************** 适配器 ********************************************/
     class ListAdapter extends BaseAdapter {
 
         @Override
@@ -96,7 +136,7 @@ public class AreaSelectPopWindow extends PopupWindow {
         }
 
         @Override
-        public String getItem(int position) {
+        public EventListBean.CompleteInfo getItem(int position) {
             return mData.get(position);
         }
 
@@ -116,7 +156,7 @@ public class AreaSelectPopWindow extends PopupWindow {
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
-            viewHolder.tvArea.setText(getItem(position));
+            viewHolder.tvArea.setText(getItem(position).getPart_name());
             return convertView;
         }
     }

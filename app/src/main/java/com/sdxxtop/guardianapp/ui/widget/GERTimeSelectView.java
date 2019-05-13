@@ -2,6 +2,7 @@ package com.sdxxtop.guardianapp.ui.widget;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -12,14 +13,16 @@ import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectChangeListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.sdxxtop.guardianapp.R;
+import com.sdxxtop.guardianapp.utils.UIUtils;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -38,8 +41,14 @@ public class GERTimeSelectView extends LinearLayout {
     TextView tvStartTime;
     @BindView(R.id.tv_end_time)
     TextView tvEndTime;
+
     private TimePickerView pvLeftTime;
     private TimePickerView pvRightTime;
+
+    private String startTime;
+    private String endTime;
+
+    private OnTimeChooseListener mLisenter;
 
     public GERTimeSelectView(Context context) {
         this(context, null);
@@ -70,7 +79,7 @@ public class GERTimeSelectView extends LinearLayout {
                 }
                 break;
             case R.id.tv_end_time:
-                if (pvRightTime!= null) {
+                if (pvRightTime != null) {
                     pvRightTime.show();
                 }
                 break;
@@ -81,9 +90,16 @@ public class GERTimeSelectView extends LinearLayout {
         pvLeftTime = new TimePickerBuilder(getContext(), new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {
-                Toast.makeText(getContext(), getTime(date), Toast.LENGTH_SHORT).show();
-                tvStartTime.setText(getTime(date));
-                tvStartTime.setTextColor(getResources().getColor(R.color.black));
+                startTime = getTime(date);
+                if (!TextUtils.isEmpty(endTime)) {  // 判断是否选择结束时间
+                    compare_date(startTime, endTime);
+                } else {
+                    tvStartTime.setText(startTime);
+                    tvStartTime.setTextColor(getResources().getColor(R.color.black));
+                }
+                if (!TextUtils.isEmpty(startTime)&&!TextUtils.isEmpty(endTime)){
+                    mLisenter.onTimeSelect(getFormatTime(startTime),getFormatTime(endTime));
+                }
             }
         }).setTimeSelectChangeListener(new OnTimeSelectChangeListener() {
             @Override
@@ -118,9 +134,17 @@ public class GERTimeSelectView extends LinearLayout {
         pvRightTime = new TimePickerBuilder(getContext(), new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {
-                Toast.makeText(getContext(), getTime(date), Toast.LENGTH_SHORT).show();
-                tvEndTime.setText(getTime(date));
-                tvEndTime.setTextColor(getResources().getColor(R.color.black));
+                endTime = getTime(date);
+                if (!TextUtils.isEmpty(startTime)) {  // 开始时间没选择  直接展示结束时间
+                    compare_date(startTime,endTime );
+                } else {
+                    tvEndTime.setText(endTime);
+                    tvEndTime.setTextColor(getResources().getColor(R.color.black));
+                }
+
+                if (!TextUtils.isEmpty(startTime)&&!TextUtils.isEmpty(endTime)){
+                    mLisenter.onTimeSelect(getFormatTime(startTime),getFormatTime(endTime));
+                }
             }
         }).setTimeSelectChangeListener(new OnTimeSelectChangeListener() {
             @Override
@@ -150,11 +174,62 @@ public class GERTimeSelectView extends LinearLayout {
         }
     }
 
+
     private String getTime(Date date) {//可根据需要自行截取数据显示
         Log.d("getTime()", "choice date millis: " + date.getTime());
 //        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         return format.format(date);
+    }
+
+
+    public void compare_date(String date1, String date2) {
+        String startTime = date1;
+        String endTime = date2;
+
+        DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+        Date start = null;
+        try {
+            start = df.parse(startTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return;
+        }
+        Date end = null;
+        try {
+            end = df.parse(endTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return;
+        }
+        if (start.getTime() > end.getTime()) {
+            UIUtils.showToast("开始时间不能大于结束时间");
+            return;
+        }
+        tvStartTime.setText(date1);
+        tvEndTime.setText(date2);
+        tvStartTime.setTextColor(getResources().getColor(R.color.black));
+        tvEndTime.setTextColor(getResources().getColor(R.color.black));
+    }
+
+    public String getFormatTime(String time){
+        return time.replaceAll("/","-")+" 00:00:00";
+    }
+
+    public String getSelectTime(int type){
+        if (type==1){
+            return startTime;
+        }else{
+            return endTime;
+        }
+    }
+
+    public interface OnTimeChooseListener{
+        void onTimeSelect(String startTime,String endTime);
+    }
+
+    public void setOnTimeSelectListener(OnTimeChooseListener listener){
+        this.mLisenter = listener;
     }
 
 }

@@ -5,6 +5,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:background="@color/color_E0E0E0"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
     <ListView
         android:scrollbars="none"
         android:divider="@null"

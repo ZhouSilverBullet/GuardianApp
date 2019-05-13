@@ -2,19 +2,20 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/translate"
     android:layout_height="wrap_content"
+    android:background="@color/translate"
     android:orientation="vertical">
 
     <LinearLayout
-        android:paddingBottom="15dp"
-        android:paddingTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="#FFFFFF"
         android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp">
 
         <TextView
+            android:id="@+id/tv_part_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -24,6 +25,7 @@
             android:textSize="13sp"/>
 
         <TextView
+            android:id="@+id/tv_part_event_num"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -33,6 +35,7 @@
             android:textSize="13sp"/>
 
         <TextView
+            android:id="@+id/tv_event_status"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -44,10 +47,10 @@
     </LinearLayout>
 
     <TextView
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
-        android:background="@color/color_E0E0E0"
         android:layout_width="match_parent"
-        android:layout_height="1dp"/>
+        android:layout_height="1dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@color/color_E0E0E0"/>
 
 </LinearLayout>

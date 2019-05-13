@@ -5,7 +5,6 @@ import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.presenter.GACPPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.GACPContract;
 import com.sdxxtop.guardianapp.ui.adapter.GACEDetailAdapter;
-import com.sdxxtop.guardianapp.ui.pop.AreaSelectPopWindow;
 import com.sdxxtop.guardianapp.ui.widget.CustomAreaSelectView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
 
@@ -55,7 +54,7 @@ public class GACPatrolDetailActivity extends BaseMvpActivity<GACPPresenter> impl
         data.add("赵庄街道");
         data.add("赵庄街道");
         data.add("赵庄街道");
-        new AreaSelectPopWindow(GACPatrolDetailActivity.this, casvView.llAreaLayout, data, casvView.tvArea);
+//        new AreaSelectPopWindow(GACPatrolDetailActivity.this, casvView.llAreaLayout, data, casvView.tvArea);
     }
 
     @Override

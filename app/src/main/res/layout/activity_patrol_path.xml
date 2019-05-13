@@ -12,87 +12,60 @@
         android:layout_height="wrap_content"
         app:leftLayoutIconIsGray="true"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_E0E0E0"/>
+
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/layout_report_tab_bg"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:background="@drawable/report_select_time_bg"
-            android:padding="5dp"
-            android:layout_width="wrap_content"
+        <com.sdxxtop.guardianapp.ui.widget.TabTextView
+            android:id="@+id/ttv_1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:layout_weight="1"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="78989"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="18dp"
+            android:background="#FFFFFF"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="巡逻总距离(km)"
-                android:textColor="@color/black"
-                android:textSize="14sp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:background="@drawable/report_select_time_bg"
-            android:padding="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
+        <com.sdxxtop.guardianapp.ui.widget.TabTextView
+            android:id="@+id/ttv_2"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:layout_weight="1"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="78989"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="18dp"
+            android:background="#FFFFFF"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="巡逻总时长(h)"
-                android:textColor="@color/black"
-                android:textSize="14sp"/>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:background="@drawable/report_select_time_bg"
-            android:layout_marginLeft="20dp"
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:text="2019年04月01日"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"/>
-
-            <ImageView
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/map_1"
-                android:layout_width="20dp"
-                android:layout_height="20dp"/>
-        </LinearLayout>
+        <TextView
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:id="@+id/tv_end_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="选择时间"
+            android:textColor="@color/color_313131"
+            android:textSize="15sp"/>
     </LinearLayout>
-
-    <View
-        android:background="#e2e2e2"
-        android:layout_width="match_parent"
-        android:layout_height="5dp"/>
 
     <com.amap.api.maps.MapView
         android:id="@+id/map_view"

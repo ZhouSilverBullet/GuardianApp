@@ -1,5 +1,7 @@
 package com.sdxxtop.guardianapp.utils;
 
+import android.util.Log;
+
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import java.text.DateFormat;
@@ -889,4 +891,10 @@ public class DateUtil {
         return daysAgo;
     }
 
+    public static String getTime(Date date) {//可根据需要自行截取数据显示
+        Log.d("getTime()", "choice date millis: " + date.getTime());
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        return format.format(date);
+    }
 }

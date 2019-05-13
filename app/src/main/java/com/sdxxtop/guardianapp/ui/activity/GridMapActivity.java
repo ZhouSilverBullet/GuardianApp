@@ -12,7 +12,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.MotionEvent;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
@@ -46,7 +45,6 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import butterknife.BindView;
 import io.reactivex.functions.Consumer;
 

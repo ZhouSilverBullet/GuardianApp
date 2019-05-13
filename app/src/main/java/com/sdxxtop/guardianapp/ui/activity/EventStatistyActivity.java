@@ -6,10 +6,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
+import com.sdxxtop.guardianapp.model.bean.EventListBean;
 import com.sdxxtop.guardianapp.presenter.EventStatistyPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.EventStatistyContract;
 import com.sdxxtop.guardianapp.ui.adapter.EventStatistyListAdapter;
@@ -36,13 +35,19 @@ public class EventStatistyActivity extends BaseMvpActivity<EventStatistyPresente
     TextView tvEventNum;
     @BindView(R.id.tv_area)
     TextView tvArea;
+    @BindView(R.id.tv_bg)
+    TextView tvBg;
     @BindView(R.id.ll_area_layout)
     LinearLayout llAreaLayout;
     @BindView(R.id.ll_containor_temp)
     LinearLayout llContainorTemp;
 
-    private List<String> list = new ArrayList<>();
     private EventStatistyListAdapter adapter;
+    private List<EventListBean.CompleteInfo> part = new ArrayList<>();
+    private int eventId;
+    private int part_typeid = 0;  // 选择区的标识
+    private String tempText = "";  // 用来拼接count
+
 
     @Override
     protected int getLayout() {
@@ -54,66 +59,47 @@ public class EventStatistyActivity extends BaseMvpActivity<EventStatistyPresente
     @Override
     protected void initView() {
         super.initView();
-        int eventId = getIntent().getIntExtra("eventId", -1);
+        smartRefresh.setEnableRefresh(false);
+        smartRefresh.setEnableLoadMore(false);
+        eventId = getIntent().getIntExtra("event_type", 0);
 
         switch (eventId) {
             case 0:
                 title.setTitleValue("已上报事件统计");
-                tvEventNum.setText("已上报事件总数：890");
+                tempText="已上报事件总数：";
                 break;
             case 1:
                 title.setTitleValue("待处理事件统计");
-                tvEventNum.setText("待处理事件总数：222");
+                tempText="待处理事件总数：";
                 break;
             case 2:
                 title.setTitleValue("处理中事件统计");
-                tvEventNum.setText("处理中事件总数：007");
+                tempText="处理中事件总数：";
                 break;
             case 3:
                 title.setTitleValue("已处理事件统计");
-                tvEventNum.setText("已处理报事件总数：100");
+                tempText="已处理报事件总数：";
                 break;
             case 4:
                 title.setTitleValue("事件统计");
-                tvEventNum.setText("已完成事件总数：800");
+                tempText="已完成事件总数：";
                 break;
         }
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayout.VERTICAL, false));
         adapter = new EventStatistyListAdapter(R.layout.item_event_statisty, null);
         recyclerView.setAdapter(adapter);
-
-        smartRefresh.setOnRefreshListener(new OnRefreshLoadMoreListener() {
-            @Override
-            public void onLoadMore(RefreshLayout refreshLayout) {
-                smartRefresh.finishRefresh();
-                smartRefresh.finishLoadMore();
-            }
-
-            @Override
-            public void onRefresh(RefreshLayout refreshLayout) {
-
-                adapter.replaceData(list);
-                smartRefresh.finishRefresh();
-                smartRefresh.finishLoadMore();
-            }
-        });
-
-        smartRefresh.autoRefresh();
-
     }
 
     @Override
     protected void initData() {
         super.initData();
-        for (int i = 0; i < 10; i++) {
-            list.add("环保局:356" + (i + 1));
-        }
+        mPresenter.eventlist(eventId, part_typeid);
     }
 
     @Override
     protected void initInject() {
-
+        getActivityComponent().inject(this);
     }
 
     @Override
@@ -123,18 +109,22 @@ public class EventStatistyActivity extends BaseMvpActivity<EventStatistyPresente
 
     @OnClick(R.id.ll_area_layout)
     public void onViewClicked(View view) {
-        List<String> data = new ArrayList<>();
-        data.add("罗庄街道");
-        data.add("盛庄街道");
-        data.add("王庄街道");
-        data.add("李庄街道");
-        data.add("赵庄街道");
-        data.add("赵庄街道");
-        data.add("赵庄街道");
-        data.add("赵庄街道");
-        data.add("赵庄街道");
-        data.add("赵庄街道");
-        data.add("赵庄街道");
-        new AreaSelectPopWindow(EventStatistyActivity.this, llContainorTemp, data, tvArea);
+        AreaSelectPopWindow popWindow = new AreaSelectPopWindow(EventStatistyActivity.this, llContainorTemp, part, tvArea,tvBg);
+        popWindow.setOnPopItemClickListener(new AreaSelectPopWindow.OnPopItemClickListener() {
+            @Override
+            public void onPopItemClick(int part_typeid) {
+                mPresenter.eventlist(eventId, part_typeid);
+            }
+        });
+    }
+
+    @Override
+    public void showListData(EventListBean listBean) {
+        part.clear();
+        tvArea.setText(listBean.getEvent_name()+"");
+        tvEventNum.setText(tempText+listBean.getCount());
+        part.add(new EventListBean.CompleteInfo(0,"全部",0));
+        part.addAll(listBean.getPart());
+        adapter.replaceData(listBean.getCompleteInfo());
     }
 }

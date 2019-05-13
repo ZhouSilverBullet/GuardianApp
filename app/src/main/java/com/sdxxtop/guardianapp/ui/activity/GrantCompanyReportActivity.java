@@ -23,7 +23,6 @@ import com.sdxxtop.guardianapp.model.bean.TabTextBean;
 import com.sdxxtop.guardianapp.presenter.GCRPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.GCRContract;
 import com.sdxxtop.guardianapp.ui.adapter.GridMarkerAdapter;
-import com.sdxxtop.guardianapp.ui.pop.AreaSelectPopWindow;
 import com.sdxxtop.guardianapp.ui.widget.TabTextView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
 import com.sdxxtop.guardianapp.utils.MarkerImgLoad;
@@ -297,6 +296,6 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
         data.add("赵庄街道");
         data.add("赵庄街道");
         data.add("赵庄街道");
-        new AreaSelectPopWindow(GrantCompanyReportActivity.this, llContainorTemp, data, tvArea);
+//        new AreaSelectPopWindow(GrantCompanyReportActivity.this, llContainorTemp, data, tvArea);
     }
 }

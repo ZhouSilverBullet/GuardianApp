@@ -27,12 +27,12 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_marginLeft="15dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="15dp"
             android:id="@+id/tv_event_num"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="16dp"
             android:layout_weight="1"
             android:text="已处理事件总数：78989"
             android:textColor="@color/color_313131"
@@ -40,40 +40,52 @@
 
         <LinearLayout
             android:id="@+id/ll_area_layout"
-            android:gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_marginLeft="15dp"
                 android:id="@+id/tv_area"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
                 android:text="全区"
                 android:textColor="@color/color_313131"
                 android:textSize="15sp"/>
 
             <ImageView
-                android:layout_marginRight="18dp"
-                android:layout_marginLeft="10dp"
                 android:layout_width="9dp"
                 android:layout_height="8dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="18dp"
                 android:src="@drawable/time_more"/>
         </LinearLayout>
 
     </LinearLayout>
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/smart_refresh"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/smart_refresh"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"/>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"/>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+        <TextView
+            android:id="@+id/tv_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#CC000000"
+            android:visibility="gone"/>
+    </RelativeLayout>
 
 </LinearLayout>

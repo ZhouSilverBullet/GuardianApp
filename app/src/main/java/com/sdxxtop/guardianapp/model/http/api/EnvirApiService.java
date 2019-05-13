@@ -3,28 +3,28 @@ package com.sdxxtop.guardianapp.model.http.api;
 import com.sdxxtop.guardianapp.model.bean.AutoLoginBean;
 import com.sdxxtop.guardianapp.model.bean.ContactIndexBean;
 import com.sdxxtop.guardianapp.model.bean.EventIndexBean;
+import com.sdxxtop.guardianapp.model.bean.EventListBean;
 import com.sdxxtop.guardianapp.model.bean.EventReadBean;
 import com.sdxxtop.guardianapp.model.bean.ExamineFinishBean;
+import com.sdxxtop.guardianapp.model.bean.GERPIndexBean;
 import com.sdxxtop.guardianapp.model.bean.InitBean;
 import com.sdxxtop.guardianapp.model.bean.LoginBean;
 import com.sdxxtop.guardianapp.model.bean.MainIndexBean;
 import com.sdxxtop.guardianapp.model.bean.MainMapBean;
+import com.sdxxtop.guardianapp.model.bean.PartEventListBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
 import com.sdxxtop.guardianapp.model.bean.ShowPartBean;
 import com.sdxxtop.guardianapp.model.bean.SignLogBean;
-import com.sdxxtop.guardianapp.model.bean.StudyCheckBean;
 import com.sdxxtop.guardianapp.model.bean.StudyCourseBean;
 import com.sdxxtop.guardianapp.model.bean.StudyQuestionBean;
 import com.sdxxtop.guardianapp.model.bean.UcenterIndexBean;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.http.Field;
-import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -147,5 +147,15 @@ public interface EnvirApiService {
     @POST("face/verify")
     Observable<RequestBean> postFaceVerify(@PartMap Map<String, RequestBody> data);
 
+    @FormUrlEncoded
+    @POST("eventreport/index")
+    Observable<RequestBean<GERPIndexBean>> postIndex(@Field("data") String data);
 
+    @FormUrlEncoded
+    @POST("eventreport/eventlist")
+    Observable<RequestBean<EventListBean>> postEventlist(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("eventreport/eventdetails")
+    Observable<RequestBean<PartEventListBean>> postPartEventList(@Field("data") String data);
 }
