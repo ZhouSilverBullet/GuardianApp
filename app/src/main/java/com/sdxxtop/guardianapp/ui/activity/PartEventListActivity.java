@@ -1,5 +1,8 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
+import android.view.View;
+import android.widget.LinearLayout;
+
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -7,6 +10,7 @@ import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.model.bean.EventListBean;
 import com.sdxxtop.guardianapp.model.bean.PartEventListBean;
+import com.sdxxtop.guardianapp.model.bean.compar.PartEventListCompar;
 import com.sdxxtop.guardianapp.presenter.PELPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.PELContract;
 import com.sdxxtop.guardianapp.ui.adapter.PartEventListAdapter;
@@ -16,6 +20,7 @@ import com.sdxxtop.guardianapp.ui.widget.GERTimeSelectView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,14 +40,17 @@ public class PartEventListActivity extends BaseMvpActivity<PELPresenter> impleme
     SmartRefreshLayout smartRefresh;
     @BindView(R.id.gertsv_view)
     GERTimeSelectView gertsvView;
+    @BindView(R.id.ll_containor_temp)
+    LinearLayout llContainorTemp;
 
     private List<EventListBean.CompleteInfo> data = new ArrayList<>();
 
     private PartEventListAdapter adapter;
     private String part_id;  // 部门id
     private int event_type = 0;
-    private String startTime, endTime;
-    private int start_page = 0;
+    private String pushStartTime, pushEndTime;
+    private int start_page;  // 分页请求
+    private boolean isOrder; // 排序
 
     @Override
     protected int getLayout() {
@@ -74,12 +82,16 @@ public class PartEventListActivity extends BaseMvpActivity<PELPresenter> impleme
         smartRefresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshLayout) {
-                mPresenter.postPartEventList(adapter.getItemCount(), part_id, startTime, endTime, event_type);
+                if (adapter != null) {
+                    start_page = adapter.getItemCount();
+                    mPresenter.postPartEventList(start_page, part_id, pushStartTime, pushEndTime, event_type);
+                }
             }
 
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
-                mPresenter.postPartEventList(0, part_id, startTime, endTime, event_type);
+                start_page = 0;
+                mPresenter.postPartEventList(0, part_id, pushStartTime, pushEndTime, event_type);
             }
         });
         smartRefresh.autoRefresh();
@@ -87,6 +99,8 @@ public class PartEventListActivity extends BaseMvpActivity<PELPresenter> impleme
         gertsvView.setOnTimeSelectListener(new GERTimeSelectView.OnTimeChooseListener() {
             @Override
             public void onTimeSelect(String startTime, String endTime) {
+                pushStartTime = startTime;
+                pushEndTime = endTime;
                 mPresenter.postPartEventList(adapter.getItemCount(), part_id, startTime, endTime, event_type);
             }
         });
@@ -97,9 +111,19 @@ public class PartEventListActivity extends BaseMvpActivity<PELPresenter> impleme
 
     }
 
-    @OnClick(R.id.casv_view)
-    public void onViewClicked() {
-        new AreaSelectPopWindow(PartEventListActivity.this, casvView.llAreaLayout, data, casvView.tvArea);
+    @OnClick({R.id.casv_view, R.id.ll_containor_temp})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.casv_view:
+                new AreaSelectPopWindow(PartEventListActivity.this, casvView.llAreaLayout, data, casvView.tvArea);
+                break;
+            case R.id.ll_containor_temp:
+                List<PartEventListBean.ClData> data = adapter.getData();
+                Collections.sort(data,new PartEventListCompar(isOrder));
+                adapter.replaceData(data);
+                isOrder=!isOrder;
+                break;
+        }
     }
 
     @Override

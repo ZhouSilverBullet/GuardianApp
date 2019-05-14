@@ -44,33 +44,19 @@ public class TabTextView extends LinearLayout {
     private void initView() {
         View inflate = LayoutInflater.from(getContext()).inflate(R.layout.view_detail_tab_text, this, true);
         ButterKnife.bind(this);
-        inflate.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (num==-1){
-                    return;
-                }
-                mListener.onTabClick(num);
-            }
-        });
+//        inflate.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (num==-1){
+//                    return;
+//                }
+//                mListener.onTabClick(num);
+//            }
+//        });
     }
 
     public void setValue(String title, String description) {
         tvTitle.setText(TextUtils.isEmpty(title) ? "" : title);
         tvDescription.setText(TextUtils.isEmpty(description) ? "" : description);
-    }
-
-
-
-    private OnTabClickListener mListener;
-    private int num = -1;
-
-    public void setOnTabClickListener(int num, OnTabClickListener listener) {
-        this.mListener = listener;
-        this.num = num;
-    }
-
-    public interface OnTabClickListener {
-        void onTabClick(int num);
     }
 }

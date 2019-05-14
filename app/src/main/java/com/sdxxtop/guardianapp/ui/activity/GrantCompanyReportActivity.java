@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,6 +13,7 @@ import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.luck.picture.lib.permissions.RxPermissions;
@@ -23,7 +23,7 @@ import com.sdxxtop.guardianapp.model.bean.TabTextBean;
 import com.sdxxtop.guardianapp.presenter.GCRPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.GCRContract;
 import com.sdxxtop.guardianapp.ui.adapter.GridMarkerAdapter;
-import com.sdxxtop.guardianapp.ui.widget.TabTextView;
+import com.sdxxtop.guardianapp.ui.widget.CustomEventLayout;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
 import com.sdxxtop.guardianapp.utils.MarkerImgLoad;
 import com.sdxxtop.guardianapp.utils.MarkerSign;
@@ -38,14 +38,12 @@ import io.reactivex.functions.Consumer;
 
 import static com.sdxxtop.guardianapp.utils.MarkerUtil.addSimulatedData;
 
-public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> implements GCRContract.IView, AMap.OnMapLoadedListener {
+public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> implements GCRContract.IView, AMap.OnMapLoadedListener, CustomEventLayout.OnTabClickListener {
 
     @BindView(R.id.title)
     TitleView title;
-    @BindView(R.id.ll_layout_3)
-    LinearLayout llLayout3;
-    @BindView(R.id.ll_layout_4)
-    LinearLayout llLayout4;
+    @BindView(R.id.cel_view)
+    CustomEventLayout celView;
     @BindView(R.id.map_view)
     MapView mMapView;
     @BindView(R.id.tv_area)
@@ -67,6 +65,17 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
     @Override
     protected int getLayout() {
         return R.layout.activity_grant_company_report;
+    }
+
+
+    @Override
+    protected void initInject() {
+        getActivityComponent().inject(this);
+    }
+
+    @Override
+    public void showError(String error) {
+
     }
 
     @Override
@@ -129,22 +138,8 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
             list.add(new TabTextBean(3, "777", "考试培训次数"));
             list.add(new TabTextBean(4, "001", "上报自查次数"));
         }
-        for (int i = 0; i < list.size(); i++) {
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
-            TabTextBean tabTextBean = list.get(i);
-            TabTextView tabTextView = new TabTextView(this);
-            tabTextView.setLayoutParams(layoutParams);
-            tabTextView.setValue(tabTextBean.getTitle(), tabTextBean.getDesc());
-            if (i == list.size() - 1) {
-                tabTextView.tvLine.setVisibility(View.GONE);
-            }
-            if (reportType == 1) {
-                llLayout3.addView(tabTextView);
-            } else if (reportType == 2) {
-                llLayout4.addView(tabTextView);
-            }
-
-        }
+        celView.addLayout(list);
+        celView.setOnTabClickListener(this);
     }
 
     private void initMap() {
@@ -214,17 +209,6 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
     }
 
     @Override
-    protected void initInject() {
-
-    }
-
-    @Override
-    public void showError(String error) {
-
-    }
-
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         //在activity执行onDestroy时执行mapView.onDestroy()，销毁地图
@@ -280,6 +264,16 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
                 }
             });
         }
+        LatLngBounds bounds = getLatLngBounds(locations);
+        mAMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 30));
+    }
+
+    private LatLngBounds getLatLngBounds(  List<LatLng> list) {
+        LatLngBounds.Builder b = LatLngBounds.builder();
+        for (int i = 0; i < list.size(); i++) {
+            b.include(list.get(i));
+        }
+        return b.build();
     }
 
     @OnClick(R.id.ll_area_layout)
@@ -297,5 +291,19 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
         data.add("赵庄街道");
         data.add("赵庄街道");
 //        new AreaSelectPopWindow(GrantCompanyReportActivity.this, llContainorTemp, data, tvArea);
+    }
+
+    @Override
+    public void onTabClick(int num) {
+        Intent intent = null;
+        if (reportType == 1) {
+            intent = new Intent(GrantCompanyReportActivity.this, GACPatrolDetailActivity.class);  // 轨迹详情
+        } else if (reportType == 2) {
+            intent = new Intent(GrantCompanyReportActivity.this, GACEventDetailActivity.class);   // 企业详情
+        }
+        if (intent == null) {
+            return;
+        }
+        startActivity(intent);
     }
 }

@@ -41,24 +41,21 @@ public class PartEventListAdapter extends BaseQuickAdapter<PartEventListBean.ClD
             }
         });
     }
-    //0、所有事件 1、待处理事件 2、处理事件中 3、已处理事件 4、验收通过
+    // 1-4   需求现在是已完成、待处理、处理中、已处理
     public String getStatus(int status){
         String str = "";
         switch (status){
-            case 0:
-                str = "已上报";
-                break;
             case 1:
-                str = "待处理";
+                str = "已完成";
                 break;
             case 2:
-                str = "处理中";
+                str = "待处理";
                 break;
             case 3:
-                str = "已处理";
+                str = "处理中";
                 break;
             case 4:
-                str = "已完成";
+                str = "已处理";
                 break;
         }
         return str;

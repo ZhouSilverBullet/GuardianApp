@@ -1,9 +1,6 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
 import android.content.Intent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
@@ -11,19 +8,19 @@ import com.sdxxtop.guardianapp.model.bean.GERPIndexBean;
 import com.sdxxtop.guardianapp.model.bean.TabTextBean;
 import com.sdxxtop.guardianapp.presenter.GERPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.GERContract;
+import com.sdxxtop.guardianapp.ui.widget.CustomEventLayout;
 import com.sdxxtop.guardianapp.ui.widget.GERTimeSelectView;
 import com.sdxxtop.guardianapp.ui.widget.PieChartView;
-import com.sdxxtop.guardianapp.ui.widget.TabTextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 
-public class GrantEventReportActivity extends BaseMvpActivity<GERPresenter> implements GERContract.IView, TabTextView.OnTabClickListener {
+public class GrantEventReportActivity extends BaseMvpActivity<GERPresenter> implements GERContract.IView, CustomEventLayout.OnTabClickListener {
 
-    @BindView(R.id.ll_layout)
-    LinearLayout llLayout;
+    @BindView(R.id.cel_view)
+    CustomEventLayout celView;
     @BindView(R.id.pie_chart1)
     PieChartView pieChart1;
     @BindView(R.id.pie_chart2)
@@ -52,6 +49,16 @@ public class GrantEventReportActivity extends BaseMvpActivity<GERPresenter> impl
         });
         pieChart1.setPieData(null);
         pieChart2.setPieData(null);
+
+        celView.setOnTabClickListener(this);
+
+        List<TabTextBean> data = new ArrayList<>();
+        data.add(new TabTextBean(0, "--", "已上报"));
+        data.add(new TabTextBean(1, "--", "待处理"));
+        data.add(new TabTextBean(2, "--", "处理中"));
+        data.add(new TabTextBean(3, "--", "已处理"));
+        data.add(new TabTextBean(4, "--", "已完成"));
+        celView.addLayout(data);
     }
 
     @Override
@@ -82,23 +89,12 @@ public class GrantEventReportActivity extends BaseMvpActivity<GERPresenter> impl
 
     private void addLinearLayout(GERPIndexBean indexBean) {
         List<TabTextBean> data = new ArrayList<>();
-        llLayout.removeAllViews();
         data.add(new TabTextBean(0, String.valueOf(indexBean.getCount()), "已上报"));
         data.add(new TabTextBean(1, String.valueOf(indexBean.getWait_for()), "待处理"));
         data.add(new TabTextBean(2, String.valueOf(indexBean.getTo_solved()), "处理中"));
         data.add(new TabTextBean(3, String.valueOf(indexBean.getAdopt()), "已处理"));
         data.add(new TabTextBean(4, String.valueOf(indexBean.getPending()), "已完成"));
-        for (int i = 0; i < data.size(); i++) {
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
-            TabTextBean tabTextBean = data.get(i);
-            TabTextView tabTextView = new TabTextView(this);
-            tabTextView.setLayoutParams(layoutParams);
-            tabTextView.setValue(tabTextBean.getTitle(), tabTextBean.getDesc());
-            tabTextView.setOnTabClickListener(i, this);
-            if (i == data.size() - 1) {
-                tabTextView.tvLine.setVisibility(View.GONE);
-            }
-            llLayout.addView(tabTextView);
-        }
+        celView.addLayout(data);
     }
+
 }

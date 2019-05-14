@@ -37,12 +37,12 @@ public class PartEventListBean {
         return cl_data;
     }
 
-    public static class ClData{
-      private int event_id;
-      private int part_id;
-      private String title;
-      private String add_time;
-      private int status;
+    public static class ClData {
+        private int event_id;
+        private int part_id;
+        private String title;
+        private String add_time;
+        private int status;
 
         public int getEvent_id() {
             return event_id;
@@ -83,9 +83,10 @@ public class PartEventListBean {
         public void setStatus(int status) {
             this.status = status;
         }
+
     }
 
-    public static class PartName{
+    public static class PartName {
         private String part_name;
 
         public String getPart_name() {

@@ -1,9 +1,6 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
 import android.content.Intent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sdxxtop.guardianapp.R;
@@ -12,7 +9,7 @@ import com.sdxxtop.guardianapp.model.bean.TabTextBean;
 import com.sdxxtop.guardianapp.presenter.SafeStaffDetailPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.SafeStaffDetailContract;
 import com.sdxxtop.guardianapp.ui.adapter.SafeStaffDetailAdapter;
-import com.sdxxtop.guardianapp.ui.widget.TabTextView;
+import com.sdxxtop.guardianapp.ui.widget.CustomEventLayout;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
 
 import java.util.ArrayList;
@@ -22,10 +19,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
-public class SafeStaffDetailActivity extends BaseMvpActivity<SafeStaffDetailPresenter> implements SafeStaffDetailContract, TabTextView.OnTabClickListener {
+public class SafeStaffDetailActivity extends BaseMvpActivity<SafeStaffDetailPresenter> implements SafeStaffDetailContract, CustomEventLayout.OnTabClickListener {
 
-    @BindView(R.id.ll_layout_temp)
-    LinearLayout llLayoutTemp;
+    @BindView(R.id.cel_view)
+    CustomEventLayout celView;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.tv_name)
@@ -72,20 +69,9 @@ public class SafeStaffDetailActivity extends BaseMvpActivity<SafeStaffDetailPres
             list.add(new TabTextBean(4, "5", "打卡次数"));
         }
 
-        for (int i = 0; i < list.size(); i++) {
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams
-                    .MATCH_PARENT, 1);
-            TabTextBean tabTextBean = list.get(i);
-            TabTextView tabTextView = new TabTextView(this);
-            tabTextView.setLayoutParams(layoutParams);
-            tabTextView.setValue(tabTextBean.getTitle(), tabTextBean.getDesc());
-            tabTextView.setOnTabClickListener(i,this);
-            llLayoutTemp.addView(tabTextView);
-            if (i == list.size() - 1) {
-                tabTextView.tvLine.setVisibility(View.GONE);
-            }
-            data.add("" + i);
-        }
+        celView.addLayout(list);
+        celView.setOnTabClickListener(this);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         SafeStaffDetailAdapter adapter = new SafeStaffDetailAdapter(R.layout.item_sfae_staff_view, data, 1);
         recyclerView.setAdapter(adapter);

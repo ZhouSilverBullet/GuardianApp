@@ -116,6 +116,8 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
 
         LatLonPoint latLonPoint = new LatLonPoint(30.67, 104.06);
 
+        addMarker();
+
         //起点图标
         aMap.addMarker(new MarkerOptions()
                 .position(AMapUtil.convertToLatLng(latLonPoint))
@@ -127,7 +129,6 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
                 .position(AMapUtil.convertToLatLng(latLonPointEnd))
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.end)));
 
-        addMarker();
         LatLngBounds bounds = getLatLngBounds();
         aMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 30));
     }

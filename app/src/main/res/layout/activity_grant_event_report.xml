@@ -41,16 +41,15 @@
                 android:textColor="@color/color_292929"
                 android:textSize="15sp"/>
 
-            <LinearLayout
-                android:id="@+id/ll_layout"
+            <com.sdxxtop.guardianapp.ui.widget.CustomEventLayout
+                android:id="@+id/cel_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:background="@drawable/layout_report_tab_bg"
-                android:orientation="horizontal"
-                android:weightSum="5">
-            </LinearLayout>
+                android:orientation="horizontal">
+            </com.sdxxtop.guardianapp.ui.widget.CustomEventLayout>
 
             <TextView
                 android:layout_width="match_parent"

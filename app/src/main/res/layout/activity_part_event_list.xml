@@ -36,14 +36,15 @@
             android:layout_height="wrap_content"/>
 
         <LinearLayout
+            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:orientation="horizontal"
-            android:paddingTop="16dp"
-            android:paddingBottom="15dp">
+            android:orientation="horizontal">
 
             <TextView
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="15dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -62,8 +63,9 @@
                 android:textSize="13sp"/>
 
             <LinearLayout
+                android:id="@+id/ll_containor_temp"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center">
 

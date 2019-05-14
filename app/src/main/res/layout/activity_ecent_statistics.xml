@@ -34,7 +34,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginBottom="16dp"
             android:layout_weight="1"
-            android:text="已处理事件总数：78989"
+            android:text="已处理事件总数："
             android:textColor="@color/color_313131"
             android:textSize="15sp"/>
 
@@ -81,11 +81,11 @@
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
         <TextView
+            android:visibility="gone"
+            android:background="#99000000"
             android:id="@+id/tv_bg"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#CC000000"
-            android:visibility="gone"/>
+            android:layout_height="match_parent"/>
     </RelativeLayout>
 
 </LinearLayout>

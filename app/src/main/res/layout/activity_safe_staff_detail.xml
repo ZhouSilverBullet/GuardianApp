@@ -44,16 +44,15 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
 
-    <LinearLayout
-        android:id="@+id/ll_layout_temp"
+    <com.sdxxtop.guardianapp.ui.widget.CustomEventLayout
+        android:id="@+id/cel_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="11dp"
         android:layout_marginRight="15dp"
         android:background="@drawable/layout_report_tab_bg"
-        android:orientation="horizontal"
-        android:weightSum="4"/>
+        android:orientation="horizontal"/>
 
     <TextView
         android:layout_width="match_parent"

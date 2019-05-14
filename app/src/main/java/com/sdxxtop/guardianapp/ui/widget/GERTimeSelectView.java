@@ -91,14 +91,13 @@ public class GERTimeSelectView extends LinearLayout {
             @Override
             public void onTimeSelect(Date date, View v) {
                 startTime = getTime(date);
-                if (!TextUtils.isEmpty(endTime)) {  // 判断是否选择结束时间
-                    compare_date(startTime, endTime);
+                if (!TextUtils.isEmpty(endTime)) {  // 已选择结束时间
+                    if (compare_date(startTime, endTime)) {  // 时间规则可用
+                        mLisenter.onTimeSelect(getFormatTime(startTime), getFormatTime(endTime));
+                    }
                 } else {
                     tvStartTime.setText(startTime);
                     tvStartTime.setTextColor(getResources().getColor(R.color.black));
-                }
-                if (!TextUtils.isEmpty(startTime)&&!TextUtils.isEmpty(endTime)){
-                    mLisenter.onTimeSelect(getFormatTime(startTime),getFormatTime(endTime));
                 }
             }
         }).setTimeSelectChangeListener(new OnTimeSelectChangeListener() {
@@ -136,14 +135,12 @@ public class GERTimeSelectView extends LinearLayout {
             public void onTimeSelect(Date date, View v) {
                 endTime = getTime(date);
                 if (!TextUtils.isEmpty(startTime)) {  // 开始时间没选择  直接展示结束时间
-                    compare_date(startTime,endTime );
+                    if (compare_date(startTime, endTime)) {
+                        mLisenter.onTimeSelect(getFormatTime(startTime), getFormatTime(endTime));
+                    }
                 } else {
                     tvEndTime.setText(endTime);
                     tvEndTime.setTextColor(getResources().getColor(R.color.black));
-                }
-
-                if (!TextUtils.isEmpty(startTime)&&!TextUtils.isEmpty(endTime)){
-                    mLisenter.onTimeSelect(getFormatTime(startTime),getFormatTime(endTime));
                 }
             }
         }).setTimeSelectChangeListener(new OnTimeSelectChangeListener() {
@@ -164,7 +161,7 @@ public class GERTimeSelectView extends LinearLayout {
 
             params.leftMargin = 0;
             params.rightMargin = 0;
-            pvLeftTime.getDialogContainerLayout().setLayoutParams(params);
+            pvRightTime.getDialogContainerLayout().setLayoutParams(params);
 
             Window dialogWindow = mDialog.getWindow();
             if (dialogWindow != null) {
@@ -182,8 +179,7 @@ public class GERTimeSelectView extends LinearLayout {
         return format.format(date);
     }
 
-
-    public void compare_date(String date1, String date2) {
+    public boolean compare_date(String date1, String date2) {
         String startTime = date1;
         String endTime = date2;
 
@@ -193,42 +189,44 @@ public class GERTimeSelectView extends LinearLayout {
             start = df.parse(startTime);
         } catch (ParseException e) {
             e.printStackTrace();
-            return;
+            return false;
         }
         Date end = null;
         try {
             end = df.parse(endTime);
         } catch (ParseException e) {
             e.printStackTrace();
-            return;
+            return false;
         }
         if (start.getTime() > end.getTime()) {
             UIUtils.showToast("开始时间不能大于结束时间");
-            return;
+            return false;
         }
         tvStartTime.setText(date1);
         tvEndTime.setText(date2);
         tvStartTime.setTextColor(getResources().getColor(R.color.black));
         tvEndTime.setTextColor(getResources().getColor(R.color.black));
+
+        return true;
     }
 
-    public String getFormatTime(String time){
-        return time.replaceAll("/","-")+" 00:00:00";
+    public String getFormatTime(String time) {
+        return time.replaceAll("/", "-") + " 00:00:00";
     }
 
-    public String getSelectTime(int type){
-        if (type==1){
+    public String getSelectTime(int type) {
+        if (type == 1) {
             return startTime;
-        }else{
+        } else {
             return endTime;
         }
     }
 
-    public interface OnTimeChooseListener{
-        void onTimeSelect(String startTime,String endTime);
+    public interface OnTimeChooseListener {
+        void onTimeSelect(String startTime, String endTime);
     }
 
-    public void setOnTimeSelectListener(OnTimeChooseListener listener){
+    public void setOnTimeSelectListener(OnTimeChooseListener listener) {
         this.mLisenter = listener;
     }
 

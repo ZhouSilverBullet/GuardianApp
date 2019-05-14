@@ -59,6 +59,8 @@ public class AreaSelectPopWindow extends PopupWindow {
         setBackgroundDrawable(new ColorDrawable());
         setWidth(viewLayout.getWidth());
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        //添加弹出、弹入的动画
+        setAnimationStyle(R.style.Popupwindow);
 
         View view = inflater.inflate(R.layout.pop_area_select, null);
         setContentView(view);
