@@ -4,14 +4,12 @@ import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.presenter.GACPPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.GACPContract;
-import com.sdxxtop.guardianapp.ui.adapter.GACEDetailAdapter;
 import com.sdxxtop.guardianapp.ui.widget.CustomAreaSelectView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -60,12 +58,12 @@ public class GACPatrolDetailActivity extends BaseMvpActivity<GACPPresenter> impl
     @Override
     protected void initView() {
         super.initView();
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            list.add("环保局:356" + (i + 1));
-        }
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        GACEDetailAdapter adapter = new GACEDetailAdapter(R.layout.item_gace_view, list,1);
-        recyclerView.setAdapter(adapter);
+//        List<String> list = new ArrayList<>();
+//        for (int i = 0; i < 10; i++) {
+//            list.add("环保局:356" + (i + 1));
+//        }
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        GACEDetailAdapter adapter = new GACEDetailAdapter(R.layout.item_gace_view, list,1);
+//        recyclerView.setAdapter(adapter);
     }
 }

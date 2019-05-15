@@ -34,12 +34,12 @@ public class GridMarkerAdapter implements AMap.InfoWindowAdapter {
     private TextView tvCompany;
 
 
-    private String snippet;
-    private String agentName;
     private String url;
-    private String company;
-    private String job;
     private int reportType;
+    private String name;
+    private int userid;
+    private String part_name;
+    private String position;
 
     public GridMarkerAdapter(Context context) {
         this.mContext = context;
@@ -59,7 +59,6 @@ public class GridMarkerAdapter implements AMap.InfoWindowAdapter {
 
     private void initData(Marker marker) {
         latLng = marker.getPosition();
-        snippet = marker.getSnippet();
         parseJSONWithJSONObject(marker.getTitle());
     }
 
@@ -74,15 +73,17 @@ public class GridMarkerAdapter implements AMap.InfoWindowAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, PatrolPathActivity.class);
-                intent.putExtra("id",agentName);
+                intent.putExtra("name",name);
                 intent.putExtra("reportType",reportType);
+                intent.putExtra("userid",userid);
                 mContext.startActivity(intent);
             }
         });
 
-        nameTV.setText(agentName);
-        tvJobs.setText(job);
-        tvCompany.setText(company);
+        nameTV.setText(name);
+        tvJobs.setText(position);
+        tvCompany.setText(part_name);
+
         Glide.with(mContext).load(url).into(img);
         return view;
     }
@@ -98,10 +99,11 @@ public class GridMarkerAdapter implements AMap.InfoWindowAdapter {
                 //用getInt和getString方法取出对应键值
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 reportType = jsonObject.getInt("reportType");
+                name = jsonObject.getString("name");
+                userid = jsonObject.getInt("userid");
                 url = jsonObject.getString("url");
-                agentName = jsonObject.getString("title");
-                company = jsonObject.getString("company");
-                job = jsonObject.getString("job");
+                position = jsonObject.getString("position");
+                part_name = jsonObject.getString("part_name");
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -43,7 +43,7 @@ public class EventStatistyActivity extends BaseMvpActivity<EventStatistyPresente
     LinearLayout llContainorTemp;
 
     private EventStatistyListAdapter adapter;
-    private List<EventListBean.CompleteInfo> part = new ArrayList<>();
+    private List<AreaSelectPopWindow.PopWindowDataBean> popWondowData = new ArrayList<>();
     private int eventId;
     private int part_typeid = 0;  // 选择区的标识
     private String tempText = "";  // 用来拼接count
@@ -109,10 +109,10 @@ public class EventStatistyActivity extends BaseMvpActivity<EventStatistyPresente
 
     @OnClick(R.id.ll_area_layout)
     public void onViewClicked(View view) {
-        AreaSelectPopWindow popWindow = new AreaSelectPopWindow(EventStatistyActivity.this, llContainorTemp, part, tvArea,tvBg);
+        AreaSelectPopWindow popWindow = new AreaSelectPopWindow(EventStatistyActivity.this, llContainorTemp, popWondowData, tvArea,tvBg);
         popWindow.setOnPopItemClickListener(new AreaSelectPopWindow.OnPopItemClickListener() {
             @Override
-            public void onPopItemClick(int part_typeid) {
+            public void onPopItemClick(int part_typeid,String partName ) {
                 mPresenter.eventlist(eventId, part_typeid);
             }
         });
@@ -120,11 +120,14 @@ public class EventStatistyActivity extends BaseMvpActivity<EventStatistyPresente
 
     @Override
     public void showListData(EventListBean listBean) {
-        part.clear();
+        popWondowData.clear();
         tvArea.setText(listBean.getEvent_name()+"");
         tvEventNum.setText(tempText+listBean.getCount());
-        part.add(new EventListBean.CompleteInfo(0,"全部",0));
-        part.addAll(listBean.getPart());
+        if (listBean.getPart()!=null&&listBean.getPart().size()>0){
+            for (EventListBean.CompleteInfo completeInfo : listBean.getPart()) {
+                popWondowData.add(new AreaSelectPopWindow.PopWindowDataBean(completeInfo.getPart_id(),completeInfo.getPart_name()));
+            }
+        }
         adapter.replaceData(listBean.getCompleteInfo());
     }
 }

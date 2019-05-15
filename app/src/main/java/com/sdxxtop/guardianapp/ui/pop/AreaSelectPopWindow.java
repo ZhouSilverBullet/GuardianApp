@@ -13,7 +13,6 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.sdxxtop.guardianapp.R;
-import com.sdxxtop.guardianapp.model.bean.EventListBean;
 
 import java.util.List;
 
@@ -30,10 +29,10 @@ public class AreaSelectPopWindow extends PopupWindow {
     private TextView tagTextView;
     private TextView tvBg;
     private Activity activity;
-    private List<EventListBean.CompleteInfo> mData;
+    private List<PopWindowDataBean> mData;
     private OnPopItemClickListener mListener;
 
-    public AreaSelectPopWindow(Activity activity, View viewLayout, List<EventListBean.CompleteInfo> data, TextView textView) {
+    public AreaSelectPopWindow(Activity activity, View viewLayout, List<PopWindowDataBean> data, TextView textView) {
         this.activity = activity;
         inflater = LayoutInflater.from(activity);
         this.viewLayout = viewLayout;
@@ -42,7 +41,7 @@ public class AreaSelectPopWindow extends PopupWindow {
         initView();
     }
 
-    public AreaSelectPopWindow(Activity activity, View viewLayout, List<EventListBean.CompleteInfo> data, TextView textView, TextView textView2) {
+    public AreaSelectPopWindow(Activity activity, View viewLayout, List<PopWindowDataBean> data, TextView textView, TextView textView2) {
         this.activity = activity;
         inflater = LayoutInflater.from(activity);
         this.viewLayout = viewLayout;
@@ -74,14 +73,14 @@ public class AreaSelectPopWindow extends PopupWindow {
             tvBg.setVisibility(View.VISIBLE);
         }
 
-        tvBg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (tvBg != null) {
+        if (tvBg != null) {
+            tvBg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                     tvBg.setVisibility(View.GONE);
                 }
-            }
-        });
+            });
+        }
 
         setOnDismissListener(new OnDismissListener() {
             @Override
@@ -97,8 +96,8 @@ public class AreaSelectPopWindow extends PopupWindow {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (mListener != null) {
-                    EventListBean.CompleteInfo completeInfo = mData.get(position);
-                    mListener.onPopItemClick(completeInfo.getPart_id());
+                    PopWindowDataBean item = mData.get(position);
+                    mListener.onPopItemClick(item.getPartId(), item.getPartName());
 //                    tagTextView.setText(completeInfo.getPart_name());
                 }
                 dismiss();
@@ -125,7 +124,7 @@ public class AreaSelectPopWindow extends PopupWindow {
     }
 
     public interface OnPopItemClickListener {
-        void onPopItemClick(int part_typeid);
+        void onPopItemClick(int partTypeid, String partName);
     }
 
 
@@ -138,7 +137,7 @@ public class AreaSelectPopWindow extends PopupWindow {
         }
 
         @Override
-        public EventListBean.CompleteInfo getItem(int position) {
+        public PopWindowDataBean getItem(int position) {
             return mData.get(position);
         }
 
@@ -158,13 +157,40 @@ public class AreaSelectPopWindow extends PopupWindow {
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
-            viewHolder.tvArea.setText(getItem(position).getPart_name());
+            viewHolder.tvArea.setText(getItem(position).getPartName());
             return convertView;
         }
     }
 
     class ViewHolder {
         private TextView tvArea;
+    }
+
+    /************************** 区域选择器数据bean ********************************************/
+    public static class PopWindowDataBean {
+        private int partId;
+        private String partName;
+
+        public PopWindowDataBean(int partId, String partName) {
+            this.partId = partId;
+            this.partName = partName;
+        }
+
+        public int getPartId() {
+            return partId;
+        }
+
+        public void setPartId(int partId) {
+            this.partId = partId;
+        }
+
+        public String getPartName() {
+            return partName;
+        }
+
+        public void setPartName(String partName) {
+            this.partName = partName;
+        }
     }
 
 }

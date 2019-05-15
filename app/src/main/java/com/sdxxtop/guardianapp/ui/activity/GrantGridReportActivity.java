@@ -20,10 +20,10 @@ import com.amap.api.maps.model.MarkerOptions;
 import com.luck.picture.lib.permissions.RxPermissions;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
-import com.sdxxtop.guardianapp.model.bean.EnterpriseIndexBean;
+import com.sdxxtop.guardianapp.model.bean.GridreportIndexBean;
 import com.sdxxtop.guardianapp.model.bean.TabTextBean;
-import com.sdxxtop.guardianapp.presenter.GCRPresenter;
-import com.sdxxtop.guardianapp.presenter.contract.GCRContract;
+import com.sdxxtop.guardianapp.presenter.GGRPresenter;
+import com.sdxxtop.guardianapp.presenter.contract.GGRContract;
 import com.sdxxtop.guardianapp.ui.adapter.GridMarkerAdapter;
 import com.sdxxtop.guardianapp.ui.pop.AreaSelectPopWindow;
 import com.sdxxtop.guardianapp.ui.widget.CustomEventLayout;
@@ -39,8 +39,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.functions.Consumer;
 
-public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> implements GCRContract.IView, AMap.OnMapLoadedListener,
+public class GrantGridReportActivity extends BaseMvpActivity<GGRPresenter> implements GGRContract.IView, AMap.OnMapLoadedListener,
         CustomEventLayout.OnTabClickListener {
+
 
     @BindView(R.id.title)
     TitleView title;
@@ -70,13 +71,12 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
     private int part_typeid = 0;  // 区域选择默认值
     private List<AreaSelectPopWindow.PopWindowDataBean> popWondowData = new ArrayList<>();
     private boolean isMapLoadSuccess, isMapDataLoadSuccess;   // 地图加载完成标识/地图数据加载完成标识
-    private List<EnterpriseIndexBean.UserInfo> userInfos;
+    private List<GridreportIndexBean.GridNowInfo> userInfos;
 
     @Override
     protected int getLayout() {
-        return R.layout.activity_grant_company_report;
+        return R.layout.activity_grant_grid_report;
     }
-
 
     @Override
     protected void initInject() {
@@ -98,18 +98,19 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
     @Override
     protected void initData() {
         super.initData();
-        mPresenter.enterpriseIndex(part_typeid);
+        mPresenter.gridreportIndex(part_typeid);
     }
 
     @Override
     protected void initView() {
         super.initView();
-        title.setTitleValue("企业报告");
-        title.getTvRight().setText("企业详情");
+        title.setTitleValue("网格员报告");
+        title.getTvRight().setText("巡逻详情");
+
         title.getTvRight().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(GrantCompanyReportActivity.this, GACEventDetailActivity.class);   // 企业详情
+                Intent intent = new Intent(GrantGridReportActivity.this, GACPatrolDetailActivity.class);  // 轨迹详情
                 startActivity(intent);
             }
         });
@@ -128,14 +129,14 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
     }
 
     //添加详情标签
-    private void addTabView(EnterpriseIndexBean bean) {
+    private void addTabView(GridreportIndexBean bean) {
         if (bean == null)
             return;
         List<TabTextBean> list = new ArrayList<>();
-        list.add(new TabTextBean(1, String.valueOf(bean.getPart_count()), "企业数"));
-        list.add(new TabTextBean(2, String.valueOf(bean.getUser_count()), "安全管理员数"));
-        list.add(new TabTextBean(3, String.valueOf(bean.getTrai_count()), "考试培训次数"));
-        list.add(new TabTextBean(4, String.valueOf(bean.getReport_info()), "上报自查次数"));
+        list.add(new TabTextBean(1, String.valueOf(bean.getGrid_count()), "总人数"));
+        list.add(new TabTextBean(2, String.valueOf(bean.getGrid_distance()), "巡逻总距离(km)"));
+        list.add(new TabTextBean(3, String.valueOf(bean.getGrid_sign_time()), "巡逻总时长(h)"));
+
         celView.addLayout(list);
         celView.setOnTabClickListener(this);
     }
@@ -249,7 +250,7 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
      * by moos on 2018/01/12
      * func:批量添加自定义marker到地图上
      */
-    private void addCustomMarkersToMap(List<EnterpriseIndexBean.UserInfo> data) {
+    private void addCustomMarkersToMap(List<GridreportIndexBean.GridNowInfo> data) {
         if (data == null)
             return;
         if (isMapLoadSuccess && isMapDataLoadSuccess) {
@@ -277,38 +278,39 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
     }
 
     private void initPopWindows() {
-        AreaSelectPopWindow popWindow = new AreaSelectPopWindow(GrantCompanyReportActivity.this, llContainorTemp, popWondowData, tvArea, tvBg);
+        AreaSelectPopWindow popWindow = new AreaSelectPopWindow(GrantGridReportActivity.this, llContainorTemp, popWondowData, tvArea, tvBg);
         popWindow.setOnPopItemClickListener(new AreaSelectPopWindow.OnPopItemClickListener() {
             @Override
             public void onPopItemClick(int partTypeid, String partName) {
                 part_typeid = partTypeid;
-                mPresenter.enterpriseIndex(part_typeid);
+                mPresenter.gridreportIndex(part_typeid);
             }
         });
     }
 
     @Override
     public void onTabClick(int num) {
-        Intent intent = new Intent(GrantCompanyReportActivity.this, GACEventDetailActivity.class);   // 企业详情
+        Intent intent = new Intent(GrantGridReportActivity.this, GACPatrolDetailActivity.class);  // 轨迹详情
         startActivity(intent);
     }
 
     @Override
-    public void showData(EnterpriseIndexBean bean) {
+    public void showData(GridreportIndexBean bean) {
         mAMap.clear();
-        tvNowCount.setText("（在线人数" + bean.getNow_count() + "人）");
+        tvNowCount.setText("（在线人数" + bean.getGrid_now_count() + "人）");
         tvArea.setText(bean.getEvent_name());
         addTabView(bean);
         popWondowData.clear();
-        if (bean.getPart_info() != null && bean.getPart_info().size() > 0) {
-            for (EnterpriseIndexBean.PartInfo partInfo : bean.getPart_info()) {
-                popWondowData.add(new AreaSelectPopWindow.PopWindowDataBean(partInfo.getPart_id(), partInfo.getPart_name()));
+        if (bean.getPart() != null && bean.getPart().size() > 0) {
+            for (GridreportIndexBean.GridPartBean gridPartBean : bean.getPart()) {
+                popWondowData.add(new AreaSelectPopWindow.PopWindowDataBean(gridPartBean.getPart_id(), gridPartBean.getPart_name()));
             }
         }
-        if (bean.getUser_info() != null && bean.getUser_info().size() > 0) {
+        if (bean.getGrid_now_info() != null && bean.getGrid_now_info().size() > 0) {
             isMapDataLoadSuccess = true;
-            userInfos = bean.getUser_info();
+            userInfos = bean.getGrid_now_info();
             addCustomMarkersToMap(userInfos);
         }
     }
+
 }

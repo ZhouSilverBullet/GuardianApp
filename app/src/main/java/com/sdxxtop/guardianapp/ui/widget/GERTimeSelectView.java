@@ -93,6 +93,7 @@ public class GERTimeSelectView extends LinearLayout {
                 startTime = getTime(date);
                 if (!TextUtils.isEmpty(endTime)) {  // 已选择结束时间
                     if (compare_date(startTime, endTime)) {  // 时间规则可用
+                        if (mLisenter==null)return;
                         mLisenter.onTimeSelect(getFormatTime(startTime), getFormatTime(endTime));
                     }
                 } else {
@@ -136,6 +137,7 @@ public class GERTimeSelectView extends LinearLayout {
                 endTime = getTime(date);
                 if (!TextUtils.isEmpty(startTime)) {  // 开始时间没选择  直接展示结束时间
                     if (compare_date(startTime, endTime)) {
+                        if (mLisenter==null)return;
                         mLisenter.onTimeSelect(getFormatTime(startTime), getFormatTime(endTime));
                     }
                 } else {

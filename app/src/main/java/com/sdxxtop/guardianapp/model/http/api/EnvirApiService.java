@@ -2,11 +2,17 @@ package com.sdxxtop.guardianapp.model.http.api;
 
 import com.sdxxtop.guardianapp.model.bean.AutoLoginBean;
 import com.sdxxtop.guardianapp.model.bean.ContactIndexBean;
+import com.sdxxtop.guardianapp.model.bean.EnterpriseCompanyBean;
+import com.sdxxtop.guardianapp.model.bean.EnterpriseIndexBean;
+import com.sdxxtop.guardianapp.model.bean.EnterpriseSecurityBean;
+import com.sdxxtop.guardianapp.model.bean.EnterpriseTrailBean;
+import com.sdxxtop.guardianapp.model.bean.EnterpriseUserdetailsBean;
 import com.sdxxtop.guardianapp.model.bean.EventIndexBean;
 import com.sdxxtop.guardianapp.model.bean.EventListBean;
 import com.sdxxtop.guardianapp.model.bean.EventReadBean;
 import com.sdxxtop.guardianapp.model.bean.ExamineFinishBean;
 import com.sdxxtop.guardianapp.model.bean.GERPIndexBean;
+import com.sdxxtop.guardianapp.model.bean.GridreportIndexBean;
 import com.sdxxtop.guardianapp.model.bean.InitBean;
 import com.sdxxtop.guardianapp.model.bean.LoginBean;
 import com.sdxxtop.guardianapp.model.bean.MainIndexBean;
@@ -158,4 +164,29 @@ public interface EnvirApiService {
     @FormUrlEncoded
     @POST("eventreport/eventdetails")
     Observable<RequestBean<PartEventListBean>> postPartEventList(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("enterprise/index")
+    Observable<RequestBean<EnterpriseIndexBean>> postEnterpriseIndex(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("enterprise/company")
+    Observable<RequestBean<EnterpriseCompanyBean>> postEnterpriseCompany(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("enterprise/security")
+    Observable<RequestBean<EnterpriseSecurityBean>> postEnterpriseSecurity(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("enterprise/trail")
+    Observable<RequestBean<EnterpriseTrailBean>> postEnterpriseTrail(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("enterprise/userdetails")
+    Observable<RequestBean<EnterpriseUserdetailsBean>> postEnterpriseUserdetails(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("gridreport/index")
+    Observable<RequestBean<GridreportIndexBean>> postGridreportIndex(@Field("data") String data);
+
 }

@@ -22,6 +22,7 @@ import com.sdxxtop.guardianapp.presenter.contract.MineContract;
 import com.sdxxtop.guardianapp.ui.activity.EventReportListActivity;
 import com.sdxxtop.guardianapp.ui.activity.GrantCompanyReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.GrantEventReportActivity;
+import com.sdxxtop.guardianapp.ui.activity.GrantGridReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.LoginActivity;
 import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
 import com.sdxxtop.guardianapp.ui.pop.QuitGroupPopView;
@@ -188,13 +189,11 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
                 startActivity(new Intent(getActivity(), GrantEventReportActivity.class));
                 break;
             case R.id.grid_member_report: // 网格员报告
-                Intent gridMemberIntent = new Intent(getActivity(), GrantCompanyReportActivity.class);
-                gridMemberIntent.putExtra("reportType",1);
+                Intent gridMemberIntent = new Intent(getActivity(), GrantGridReportActivity.class);
                 startActivity(gridMemberIntent);
                 break;
             case R.id.company_report:     // 企业报告
                 Intent CompanyIntent = new Intent(getActivity(), GrantCompanyReportActivity.class);
-                CompanyIntent.putExtra("reportType",2);
                 startActivity(CompanyIntent);
                 break;
         }

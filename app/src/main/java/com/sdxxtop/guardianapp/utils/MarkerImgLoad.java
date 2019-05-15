@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -15,6 +16,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.sdxxtop.guardianapp.R;
+import com.sdxxtop.guardianapp.model.bean.EnterpriseIndexBean;
+import com.sdxxtop.guardianapp.model.bean.GridreportIndexBean;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.annotations.NonNull;
@@ -29,12 +32,10 @@ public class MarkerImgLoad {
     public static final String TAG = "MarkerImgLoad";
 
     private Activity mContext;
-    private int reportType;
     private BitmapDescriptor bitmapDescriptor;
 
-    public MarkerImgLoad(Activity context,int reportType) {
+    public MarkerImgLoad(Activity context) {
         this.mContext = context;
-        this.reportType = reportType;
     }
 
     /**
@@ -53,13 +54,10 @@ public class MarkerImgLoad {
         markerOptions.icon(BitmapDescriptorFactory.fromBitmap(convertViewToBitmap(LayoutInflater.from(mContext).inflate(R.layout.marker_bg, null))));
         markerOptions.position(latLng);
         String marker = "Marker";
-        String job = reportType==1?"网格员":"安全员";
         String json = "[{"+
-                "'reportType':'"+ reportType +"'," +
                 "'title':'"+ marker +"',"+
                 "'url':'"+url+"',"+
                 "'company':'"+"xxx公司"+"',"+
-                "'job':'"+job+
                 "'}]";
 
         markerOptions.title(json);
@@ -88,6 +86,94 @@ public class MarkerImgLoad {
 
     /**
      * by moos on 2018/01/12
+     * func:添加单个自定义marker
+     *
+     * @param sign   marker标记
+     */
+    public void addCustomMarker(EnterpriseIndexBean.UserInfo userInfo, final MarkerSign sign, OnMarkerListener listener) {
+        LatLng latLng = getLatLng(userInfo.getLongitude());
+        final MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.setFlat(true);
+//        markerOptions.anchor(0.5f, 0.5f);
+        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(convertViewToBitmap(LayoutInflater.from(mContext).inflate(R.layout.marker_bg, null))));
+        markerOptions.position(latLng);
+        String json = "[{"+
+                "'name':'"+ userInfo.getName() +"',"+
+                "'userid':'"+ userInfo.getUserid() +"',"+
+                "'url':'"+userInfo.getImg()+"',"+
+                "'part_name':'"+userInfo.getPart_name()+"',"+
+                "'position':'"+userInfo.getPosition()+
+                "'}]";
+
+        markerOptions.title(json);
+        listener.showMarkerIcon(markerOptions, sign);
+
+//        customizeMarkerIcon(url, new OnMarkerIconLoadListener() {
+//            @Override
+//            public void markerIconLoadingFinished(View view) {
+//                //bitmapDescriptor = BitmapDescriptorFactory.fromView(view);
+//                markerOptions.position(latLng);
+//                markerOptions.icon(bitmapDescriptor);
+//
+//                String marker = "Marker";
+//                String json = "[{"+"'reportType':'"+ reportType +"'," +
+//                        "'title':'"+ marker +"',"+
+//                        "'url':'"+url+
+//                        "'}]";
+//
+//                markerOptions.title(json);
+//                markerOptions.snippet("四川省成都市青羊区一环路二段靠近千百味冷锅串串,小吃姮好吃,成都地方气温热");
+//                listener.showMarkerIcon(markerOptions, sign);
+//            }
+//        });
+    }
+
+    /**
+     * by moos on 2018/01/12
+     * func:添加单个自定义marker
+     *
+     * @param sign   marker标记
+     */
+    public void addCustomMarker(GridreportIndexBean.GridNowInfo userInfo, final MarkerSign sign, OnMarkerListener listener) {
+        final MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.setFlat(true);
+//        markerOptions.anchor(0.5f, 0.5f);
+        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(convertViewToBitmap(LayoutInflater.from(mContext).inflate(R.layout.marker_bg, null))));
+        markerOptions.position(userInfo.getLatlng());
+        String json = "[{"+
+                "'name':'"+ userInfo.getName() +"',"+
+                "'userid':'"+ userInfo.getUserid() +"',"+
+                "'url':'"+userInfo.getImg()+"',"+
+                "'part_name':'"+userInfo.getPart_name()+"',"+
+//                "'position':'"+userInfo.getPosition()+
+                "'}]";
+
+        markerOptions.title(json);
+        listener.showMarkerIcon(markerOptions, sign);
+
+//        customizeMarkerIcon(url, new OnMarkerIconLoadListener() {
+//            @Override
+//            public void markerIconLoadingFinished(View view) {
+//                //bitmapDescriptor = BitmapDescriptorFactory.fromView(view);
+//                markerOptions.position(latLng);
+//                markerOptions.icon(bitmapDescriptor);
+//
+//                String marker = "Marker";
+//                String json = "[{"+"'reportType':'"+ reportType +"'," +
+//                        "'title':'"+ marker +"',"+
+//                        "'url':'"+url+
+//                        "'}]";
+//
+//                markerOptions.title(json);
+//                markerOptions.snippet("四川省成都市青羊区一环路二段靠近千百味冷锅串串,小吃姮好吃,成都地方气温热");
+//                listener.showMarkerIcon(markerOptions, sign);
+//            }
+//        });
+    }
+
+
+    /**
+     * by moos on 2018/01/12
      * func:定制化marker的图标
      *
      * @return
@@ -105,6 +191,16 @@ public class MarkerImgLoad {
                         listener.markerIconLoadingFinished(markerView);
                     }
                 });
+    }
+
+    public static LatLng getLatLng(String str){
+        if (!TextUtils.isEmpty(str)){
+            String[] split = str.split(",");
+            double v = Double.parseDouble(split[1]);
+            double v1 = Double.parseDouble(split[0]);
+            return new LatLng(v,v1);
+        }
+        return null;
     }
 
 

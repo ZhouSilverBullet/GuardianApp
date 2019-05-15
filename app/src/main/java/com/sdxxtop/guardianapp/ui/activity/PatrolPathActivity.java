@@ -20,7 +20,6 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.PolylineOptions;
-import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.geocoder.GeocodeSearch;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectChangeListener;
@@ -28,13 +27,13 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
-import com.sdxxtop.guardianapp.model.bean.SignLogBean;
+import com.sdxxtop.guardianapp.model.bean.EnterpriseTrailBean;
 import com.sdxxtop.guardianapp.presenter.PatrolPathPresenter;
-import com.sdxxtop.guardianapp.presenter.contract.PatrolContract;
+import com.sdxxtop.guardianapp.presenter.contract.PatrolPathContract;
 import com.sdxxtop.guardianapp.ui.widget.TabTextView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
-import com.sdxxtop.guardianapp.utils.AMapUtil;
 import com.sdxxtop.guardianapp.utils.DateUtil;
+import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,7 +45,7 @@ import butterknife.OnClick;
 
 import static com.sdxxtop.guardianapp.utils.MarkerImgLoad.convertViewToBitmap;
 
-public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> implements PatrolContract.IView {
+public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> implements PatrolPathContract.IView {
 
     @BindView(R.id.title)
     TitleView title;
@@ -63,7 +62,8 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
     private GeocodeSearch geocoderSearch;
 
     private AMap aMap;
-    private List<LatLng> list;
+    private List<LatLng> list = new ArrayList<>();
+    private int userid;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,18 +77,53 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
     }
 
     @Override
+    protected void initInject() {
+        getActivityComponent().inject(this);
+    }
+
+    @Override
+    public void showError(String error) {
+        ttv1.setValue("--", "巡逻总距离(km)");
+        ttv2.setValue("--", "巡逻总时长(km)");
+        if (aMap != null) {
+            aMap.clear();
+        }
+        UIUtils.showToast(error);
+    }
+
+    @Override
     protected void initView() {
         super.initView();
-        String id = getIntent().getStringExtra("id");
-        int reportType = getIntent().getIntExtra("reportType", -1);
-        title.setTitleValue(id + "巡逻报告");
+        String name = getIntent().getStringExtra("name");
+        userid = getIntent().getIntExtra("userid", -1);
+        title.setTitleValue(name + "巡逻报告");
 
-        ttv1.setValue("789789", "巡逻总距离(km)");
-        ttv2.setValue("789789", "巡逻总时长(km)");
+        ttv1.setValue("--", "巡逻总距离(km)");
+        ttv2.setValue("--", "巡逻总时长(km)");
         ttv2.tvLine.setVisibility(View.GONE);
         ttv1.tvLine.setVisibility(View.GONE);
 
         initMap();
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        mPresenter.enterpriseTrail(userid, "");
+    }
+
+    @Override
+    public void showData(EnterpriseTrailBean bean) {
+        aMap.clear();
+        list.clear();
+        ttv1.setValue(String.valueOf(bean.getDistance()), "巡逻总距离(km)");
+        ttv2.setValue(String.valueOf(bean.getTotal_time()), "巡逻总时长(km)");
+        if (bean.getTrail_info() != null && bean.getTrail_info().size() > 0) {
+            for (EnterpriseTrailBean.TrailInfo trailInfo : bean.getTrail_info()) {
+                list.add(trailInfo.getLatLng());
+            }
+            setUpMap(bean.getTrail_info());
+        }
     }
 
     /**
@@ -98,78 +133,70 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
         if (aMap == null) {
             aMap = mMapView.getMap();
             geocoderSearch = new GeocodeSearch(this);
-            setUpMap();
         }
     }
 
 
-    private void setUpMap() {
-        list = showListLat();
+    /**
+     * 画线
+     *
+     * @param data
+     */
+    private void setUpMap(List<EnterpriseTrailBean.TrailInfo> data) {
         //起点位置和  地图界面大小控制
-        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(list.get(0), 7));
+//        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(list.get(0), 7));
         aMap.setMapTextZIndex(2);
         // 绘制一条带有纹理的直线
         //手动数据测试
         //.add(new LatLng(26.57, 106.71),new LatLng(26.14,105.55),new LatLng(26.58, 104.82), new LatLng(30.67, 104.06))
         //添加到地图
         aMap.addPolyline(new PolylineOptions().addAll(list).color(getResources().getColor(R.color.green)).width(7).setDottedLine(false).geodesic(false));
-
-        LatLonPoint latLonPoint = new LatLonPoint(30.67, 104.06);
-
-        addMarker();
-
+        if (list.size() > 2) {
+            addMarker(data);
+        }
         //起点图标
         aMap.addMarker(new MarkerOptions()
-                .position(AMapUtil.convertToLatLng(latLonPoint))
+                .position(list.get(0))
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.start)));
 
         //终点坐标
-        LatLonPoint latLonPointEnd = new LatLonPoint(29.89, 107.7);
-        aMap.addMarker(new MarkerOptions()
-                .position(AMapUtil.convertToLatLng(latLonPointEnd))
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.end)));
+        if (list.size() > 0) {
+            aMap.addMarker(new MarkerOptions()
+                    .position(list.get(list.size() - 1))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.end)));
+        }
 
         LatLngBounds bounds = getLatLngBounds();
         aMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 30));
     }
 
-    private void addMarker() {
+    /**
+     * 绘制marker
+     *
+     * @param data
+     */
+    private void addMarker(List<EnterpriseTrailBean.TrailInfo> data) {
         for (int i = 1; i < list.size() - 1; i++) {
             //起点图标
             aMap.addMarker(new MarkerOptions()
                     .position(list.get(i))
                     .anchor(0.5f, 0.15f)  // icon偏移量
 //                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_success)));
-                    .icon(customizeMarkerIcon()));
+                    .icon(customizeMarkerIcon(data.get(i))));
         }
     }
 
-    private BitmapDescriptor customizeMarkerIcon() {
+    private BitmapDescriptor customizeMarkerIcon(EnterpriseTrailBean.TrailInfo trailInfo) {
         final View markerView = LayoutInflater.from(mContext).inflate(R.layout.view_with_time, null);
         TextView time = markerView.findViewById(R.id.tv_time);
-//        time.setVisibility(View.GONE);
-        time.setText("2019/04/03 \n" + "12:08:12");
+        String signTime = trailInfo.getSign_time();
+        time.setText(DateUtil.getFormatMapTime(signTime));
         BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(convertViewToBitmap(markerView));
         if (bitmapDescriptor != null) {
             return bitmapDescriptor;
         } else {
             return BitmapDescriptorFactory.fromResource(R.mipmap.ic_success);
         }
-    }
-
-    @Override
-    protected void initInject() {
-
-    }
-
-    @Override
-    public void showData(SignLogBean signLogBean) {
-
-    }
-
-    @Override
-    public void showError(String error) {
-
     }
 
     @Override
@@ -201,29 +228,6 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
         //在activity执行onSaveInstanceState时执行mapView.onSaveInstanceState (outState)，保存地图当前的状态
         mMapView.onSaveInstanceState(outState);
     }
-
-
-    /***
-     *经纬度集合
-     */
-    private List<LatLng> showListLat() {
-        List<LatLng> points = new ArrayList<LatLng>();
-        for (int i = 0; i < coords.length; i += 2) {
-            points.add(new LatLng(coords[i + 1], coords[i]));
-        }
-        return points;
-    }
-
-    private double[] coords = {
-            104.06, 30.67,
-            104.32, 30.88,
-            104.94, 30.57,
-            103.29, 30.2,
-            103.81, 30.97,
-            104.73, 31.48,
-            106.06, 30.8,
-            107.7, 29.89
-    };
 
     private LatLngBounds getLatLngBounds() {
         LatLngBounds.Builder b = LatLngBounds.builder();
@@ -261,6 +265,7 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
             public void onTimeSelect(Date date, View v) {
                 tvEndTime.setText(DateUtil.getTime(date));
                 tvEndTime.setTextColor(getResources().getColor(R.color.black));
+                mPresenter.enterpriseTrail(userid, DateUtil.getTime(date).replaceAll("/", "-") + " 00:00:00");
             }
         }).setTimeSelectChangeListener(new OnTimeSelectChangeListener() {
             @Override

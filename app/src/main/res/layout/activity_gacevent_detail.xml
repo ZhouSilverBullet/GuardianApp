@@ -8,16 +8,16 @@
     android:orientation="vertical">
 
     <com.sdxxtop.guardianapp.ui.widget.TitleView
-        app:titleValue="企业详情"
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:leftLayoutIconIsGray="true"/>
+        app:leftLayoutIconIsGray="true"
+        app:titleValue="企业详情"/>
 
     <TextView
-        android:background="@color/color_E0E0E0"
         android:layout_width="match_parent"
-        android:layout_height="1dp"/>
+        android:layout_height="1dp"
+        android:background="@color/color_E0E0E0"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,37 +25,56 @@
         android:orientation="horizontal">
 
         <com.sdxxtop.guardianapp.ui.widget.CustomAreaSelectView
-            android:gravity="center"
             android:id="@+id/casv_left"
-            android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"/>
 
         <com.sdxxtop.guardianapp.ui.widget.CustomAreaSelectView
-            android:gravity="center"
             android:id="@+id/casv_right"
-            android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"/>
 
     </LinearLayout>
 
-    <com.sdxxtop.guardianapp.ui.widget.EnterpriseTabTitleView
-        android:layout_marginBottom="6dp"
-        android:layout_marginTop="17dp"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent">
 
-    <TextView
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/color_E0E0E0"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+            <com.sdxxtop.guardianapp.ui.widget.EnterpriseTabTitleView
+                android:id="@+id/ett_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:layout_marginBottom="6dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@color/color_E0E0E0"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#99000000"
+            android:visibility="gone"/>
+    </RelativeLayout>
 
 </LinearLayout>

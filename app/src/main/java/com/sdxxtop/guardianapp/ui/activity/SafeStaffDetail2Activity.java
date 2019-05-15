@@ -6,9 +6,11 @@ import android.widget.TextView;
 
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
+import com.sdxxtop.guardianapp.model.bean.EnterpriseSecurityBean;
+import com.sdxxtop.guardianapp.model.bean.EnterpriseUserdetailsBean;
 import com.sdxxtop.guardianapp.presenter.SafeStaffDetail2Presenter;
-import com.sdxxtop.guardianapp.presenter.contract.SafeStaffDetailContract;
-import com.sdxxtop.guardianapp.ui.adapter.SafeStaffDetailAdapter;
+import com.sdxxtop.guardianapp.presenter.contract.SafeStaffDetail2Contract;
+import com.sdxxtop.guardianapp.ui.adapter.SafeStaffDetail2Adapter;
 import com.sdxxtop.guardianapp.ui.widget.GERTimeSelectView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
 
@@ -19,7 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
-public class SafeStaffDetail2Activity extends BaseMvpActivity<SafeStaffDetail2Presenter> implements SafeStaffDetailContract.IView {
+public class SafeStaffDetail2Activity extends BaseMvpActivity<SafeStaffDetail2Presenter> implements SafeStaffDetail2Contract.IView {
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -34,6 +36,11 @@ public class SafeStaffDetail2Activity extends BaseMvpActivity<SafeStaffDetail2Pr
     @BindView(R.id.ll_detail_layout)
     LinearLayout llDetailLayout;
 
+    private int partId;
+    private SafeStaffDetail2Adapter adapter;
+
+    private List<EnterpriseSecurityBean.SignData> data = new ArrayList<>();
+
     @Override
     protected int getLayout() {
         return R.layout.activity_safe_staff_detail2;
@@ -41,7 +48,7 @@ public class SafeStaffDetail2Activity extends BaseMvpActivity<SafeStaffDetail2Pr
 
     @Override
     protected void initInject() {
-
+        getActivityComponent().inject(this);
     }
 
     @Override
@@ -50,9 +57,17 @@ public class SafeStaffDetail2Activity extends BaseMvpActivity<SafeStaffDetail2Pr
     }
 
     @Override
+    protected void initData() {
+        super.initData();
+        mPresenter.enterpriseUserdetails(partId);
+    }
+
+    @Override
     protected void initView() {
         super.initView();
         int type = getIntent().getIntExtra("type", 0);
+        String titleValue = getIntent().getStringExtra("title");
+        partId = getIntent().getIntExtra("partId", 0);
         if (type == 1) {  // 网格员
             title.setTitleValue("上报事件");
             tvName.setVisibility(View.GONE);
@@ -62,19 +77,19 @@ public class SafeStaffDetail2Activity extends BaseMvpActivity<SafeStaffDetail2Pr
         } else if (type == 2) {  // 企业
             title.setTitleValue("安全员详情");
             tvName.setVisibility(View.VISIBLE);
-            tvName.setText("银都铝业");
+            tvName.setText(titleValue);
             gertsvView.setVisibility(View.GONE);
             llEventLayout.setVisibility(View.GONE);
             llDetailLayout.setVisibility(View.VISIBLE);
         }
 
-        List<String> data = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            data.add("pp");
-        }
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        SafeStaffDetailAdapter adapter = new SafeStaffDetailAdapter(R.layout.item_sfae_staff_view, data, type);
+        adapter = new SafeStaffDetail2Adapter(R.layout.item_sfae_staff_view, null);
         recyclerView.setAdapter(adapter);
     }
 
+    @Override
+    public void showData(EnterpriseUserdetailsBean bean) {
+        adapter.replaceData(bean.getUserinfo());
+    }
 }

@@ -8,7 +8,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
-import com.sdxxtop.guardianapp.model.bean.EventListBean;
 import com.sdxxtop.guardianapp.model.bean.PartEventListBean;
 import com.sdxxtop.guardianapp.model.bean.compar.PartEventListCompar;
 import com.sdxxtop.guardianapp.presenter.PELPresenter;
@@ -43,7 +42,7 @@ public class PartEventListActivity extends BaseMvpActivity<PELPresenter> impleme
     @BindView(R.id.ll_containor_temp)
     LinearLayout llContainorTemp;
 
-    private List<EventListBean.CompleteInfo> data = new ArrayList<>();
+    private List<AreaSelectPopWindow.PopWindowDataBean> popWondowData = new ArrayList<>();
 
     private PartEventListAdapter adapter;
     private String part_id;  // 部门id
@@ -115,7 +114,7 @@ public class PartEventListActivity extends BaseMvpActivity<PELPresenter> impleme
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.casv_view:
-                new AreaSelectPopWindow(PartEventListActivity.this, casvView.llAreaLayout, data, casvView.tvArea);
+                new AreaSelectPopWindow(PartEventListActivity.this, casvView.llAreaLayout, popWondowData, casvView.tvArea);
                 break;
             case R.id.ll_containor_temp:
                 List<PartEventListBean.ClData> data = adapter.getData();
@@ -137,10 +136,9 @@ public class PartEventListActivity extends BaseMvpActivity<PELPresenter> impleme
         } else {
             adapter.addData(bean.getCl_data());
         }
-        data.clear();
-        data.add(new EventListBean.CompleteInfo(0, "全区", -1));
+        popWondowData.clear();
         for (int i = 0; i < bean.getPart_name().size(); i++) {
-            data.add(new EventListBean.CompleteInfo(0, bean.getPart_name().get(i).getPart_name(), -1));
+            popWondowData.add(new AreaSelectPopWindow.PopWindowDataBean(0,bean.getPart_name().get(i).getPart_name()));
         }
     }
 }

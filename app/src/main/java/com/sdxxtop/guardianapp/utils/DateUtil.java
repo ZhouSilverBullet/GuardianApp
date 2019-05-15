@@ -171,6 +171,7 @@ public class DateUtil {
     /**
      * 月份小于10 带0
      * student 学生考勤  xx月xx日
+     *
      * @param dateDay
      * @return
      */
@@ -896,5 +897,18 @@ public class DateUtil {
 //        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         return format.format(date);
+    }
+
+    public static String getFormatMapTime(String signTime) {
+        String str = "";
+        try {
+            String[] split = signTime.split(" ");
+            str += split[0].replace("-", "/");
+            str +="\n";
+            str += split[1];
+        } catch (Exception e) {
+            str = "";
+        }
+        return str;
     }
 }
