@@ -26,6 +26,7 @@ import com.sdxxtop.guardianapp.ui.activity.GrantGridReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.LoginActivity;
 import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
 import com.sdxxtop.guardianapp.ui.pop.QuitGroupPopView;
+import com.sdxxtop.guardianapp.ui.widget.TextAndTextView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
 import com.sdxxtop.guardianapp.utils.SpUtil;
 import com.sdxxtop.guardianapp.utils.UIUtils;
@@ -45,6 +46,12 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     TextView tvPlace;
     @BindView(R.id.civ_header)
     CircleImageView civHeader;
+    @BindView(R.id.company_report)
+    TextAndTextView companyReport;
+    @BindView(R.id.grid_member_report)
+    TextAndTextView gridMemberReport;
+    @BindView(R.id.event_report)
+    TextAndTextView eventReport;
 
     private boolean isAdmin;
 
@@ -160,7 +167,16 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
             case 3:
                 partUnit = "企业单位";
                 break;
+        }
 
+        if (indexBean.getPosition()==3||indexBean.getPosition()==4){
+            companyReport.setVisibility(View.VISIBLE);
+            gridMemberReport.setVisibility(View.VISIBLE);
+            eventReport.setVisibility(View.VISIBLE);
+        }else{
+            companyReport.setVisibility(View.GONE);
+            gridMemberReport.setVisibility(View.GONE);
+            eventReport.setVisibility(View.GONE);
         }
     }
 
