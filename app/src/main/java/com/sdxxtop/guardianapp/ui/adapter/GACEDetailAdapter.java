@@ -42,6 +42,7 @@ public class GACEDetailAdapter extends BaseQuickAdapter<EnterpriseCompanyBean.Pa
                 Intent intent = new Intent(mContext, SafeStaffDetailActivity.class);
                 intent.putExtra("id", item.getPart_id());
                 intent.putExtra("type", 2);
+                intent.putExtra("name", item.getPart_name());
                 mContext.startActivity(intent);
             }
         });

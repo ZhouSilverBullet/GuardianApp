@@ -88,7 +88,8 @@ public class GridreportUserreportActivity extends BaseMvpActivity<GridreportUser
         gertsvView.setOnTimeSelectListener(new GERTimeSelectView.OnTimeChooseListener() {
             @Override
             public void onTimeSelect(String startTime, String endTime) {
-                mPresenter.gridreportUserreport(GridreportUserreportActivity.this.part_userid, startTime, endTime, 0);
+                start_page = 0;
+                mPresenter.gridreportUserreport(GridreportUserreportActivity.this.part_userid, startTime, endTime, start_page);
             }
         });
     }

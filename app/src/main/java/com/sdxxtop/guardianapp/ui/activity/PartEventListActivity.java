@@ -90,7 +90,7 @@ public class PartEventListActivity extends BaseMvpActivity<PELPresenter> impleme
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
                 start_page = 0;
-                mPresenter.postPartEventList(0, part_id, pushStartTime, pushEndTime, event_type);
+                mPresenter.postPartEventList(start_page, part_id, pushStartTime, pushEndTime, event_type);
             }
         });
         smartRefresh.autoRefresh();
@@ -98,9 +98,10 @@ public class PartEventListActivity extends BaseMvpActivity<PELPresenter> impleme
         gertsvView.setOnTimeSelectListener(new GERTimeSelectView.OnTimeChooseListener() {
             @Override
             public void onTimeSelect(String startTime, String endTime) {
+                start_page = 0;
                 pushStartTime = startTime;
                 pushEndTime = endTime;
-                mPresenter.postPartEventList(adapter.getItemCount(), part_id, startTime, endTime, event_type);
+                mPresenter.postPartEventList(start_page, part_id, startTime, endTime, event_type);
             }
         });
 

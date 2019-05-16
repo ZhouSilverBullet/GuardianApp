@@ -28,6 +28,8 @@ public class GrantEventReportActivity extends BaseMvpActivity<GERPresenter> impl
     @BindView(R.id.time_select)
     GERTimeSelectView timeSelect;
 
+    private String mStartTime,mEndTime;
+
     @Override
     protected int getLayout() {
         return R.layout.activity_grant_event_report;
@@ -44,7 +46,9 @@ public class GrantEventReportActivity extends BaseMvpActivity<GERPresenter> impl
         timeSelect.setOnTimeSelectListener(new GERTimeSelectView.OnTimeChooseListener() {
             @Override
             public void onTimeSelect(String startTime, String endTime) {
-                mPresenter.index(startTime,endTime);
+                mStartTime =startTime;
+                mEndTime = endTime;
+                mPresenter.index(mStartTime,mEndTime);
             }
         });
         pieChart1.setPieData(null);
@@ -64,8 +68,7 @@ public class GrantEventReportActivity extends BaseMvpActivity<GERPresenter> impl
     @Override
     protected void initData() {
         super.initData();
-//        mPresenter.index(timeSelect.getSelectTime(1), timeSelect.getSelectTime(2));
-        mPresenter.index("","");
+        mPresenter.index(mStartTime,mEndTime);
     }
 
     @Override
