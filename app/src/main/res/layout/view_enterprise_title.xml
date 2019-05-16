@@ -7,10 +7,10 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:gravity="center">
 
         <TextView
             android:id="@+id/tv_text_1"
@@ -23,16 +23,19 @@
             android:textSize="11sp"/>
 
         <LinearLayout
+            android:id="@+id/ll_containor_2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
 
             <TextView
-                android:gravity="center"
                 android:id="@+id/tv_text_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="所属区域"
                 android:textColor="@color/color_313131"
                 android:textSize="11sp"/>
@@ -45,16 +48,19 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_containor_3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
 
             <TextView
-                android:gravity="center"
                 android:id="@+id/tv_text_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="安全管理员人数"
                 android:textColor="@color/color_313131"
                 android:textSize="11sp"/>
@@ -65,17 +71,21 @@
                 android:layout_marginLeft="5dp"
                 android:src="@drawable/time_more"/>
         </LinearLayout>
+
         <LinearLayout
+            android:id="@+id/ll_containor_4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
 
             <TextView
-                android:gravity="center"
                 android:id="@+id/tv_text_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="学习培训总次数"
                 android:textColor="@color/color_313131"
                 android:textSize="11sp"/>
@@ -86,18 +96,22 @@
                 android:layout_marginLeft="5dp"
                 android:src="@drawable/time_more"/>
         </LinearLayout>
+
         <LinearLayout
+            android:id="@+id/ll_containor_5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
 
             <TextView
-                android:gravity="center"
-                android:maxLines="2"
                 android:id="@+id/tv_text_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
+                android:maxLines="2"
                 android:text="上报自查总次数"
                 android:textColor="@color/color_313131"
                 android:textSize="11sp"/>

@@ -18,6 +18,7 @@ import com.sdxxtop.guardianapp.ui.activity.GrantCompanyReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.GrantEventReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.GrantGridReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.GridMapActivity;
+import com.sdxxtop.guardianapp.ui.activity.GridreportUserreportActivity;
 import com.sdxxtop.guardianapp.ui.activity.HomeActivity;
 import com.sdxxtop.guardianapp.ui.activity.LoginActivity;
 import com.sdxxtop.guardianapp.ui.activity.NewsDetailsActivity;
@@ -61,5 +62,6 @@ public interface ActivityComponent {
     void inject(PartEventListActivity activity);
     void inject(GACPatrolDetailActivity activity);
     void inject(GrantGridReportActivity activity);
+    void inject(GridreportUserreportActivity activity);
 
 }

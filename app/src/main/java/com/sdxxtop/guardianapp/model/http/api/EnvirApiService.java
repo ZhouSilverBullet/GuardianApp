@@ -13,6 +13,9 @@ import com.sdxxtop.guardianapp.model.bean.EventReadBean;
 import com.sdxxtop.guardianapp.model.bean.ExamineFinishBean;
 import com.sdxxtop.guardianapp.model.bean.GERPIndexBean;
 import com.sdxxtop.guardianapp.model.bean.GridreportIndexBean;
+import com.sdxxtop.guardianapp.model.bean.GridreportOperatorBean;
+import com.sdxxtop.guardianapp.model.bean.GridreportPatrolBean;
+import com.sdxxtop.guardianapp.model.bean.GridreportUserreportBean;
 import com.sdxxtop.guardianapp.model.bean.InitBean;
 import com.sdxxtop.guardianapp.model.bean.LoginBean;
 import com.sdxxtop.guardianapp.model.bean.MainIndexBean;
@@ -182,11 +185,27 @@ public interface EnvirApiService {
     Observable<RequestBean<EnterpriseTrailBean>> postEnterpriseTrail(@Field("data") String data);
 
     @FormUrlEncoded
+    @POST("gridreport/trail")
+    Observable<RequestBean<EnterpriseTrailBean>> postGridreportTrail(@Field("data") String data);
+
+    @FormUrlEncoded
     @POST("enterprise/userdetails")
     Observable<RequestBean<EnterpriseUserdetailsBean>> postEnterpriseUserdetails(@Field("data") String data);
 
     @FormUrlEncoded
     @POST("gridreport/index")
     Observable<RequestBean<GridreportIndexBean>> postGridreportIndex(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("gridreport/patrol")
+    Observable<RequestBean<GridreportPatrolBean>> postGridreportPatrol(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("gridreport/operator")
+    Observable<RequestBean<GridreportOperatorBean>> postGridreportOperator(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("gridreport/userreport")
+    Observable<RequestBean<GridreportUserreportBean>> postGridreportUserreport(@Field("data") String data);
 
 }

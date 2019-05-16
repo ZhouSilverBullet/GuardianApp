@@ -1,11 +1,13 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
 import android.content.Intent;
+import android.view.View;
 import android.widget.TextView;
 
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.model.bean.EnterpriseSecurityBean;
+import com.sdxxtop.guardianapp.model.bean.GridreportOperatorBean;
 import com.sdxxtop.guardianapp.model.bean.TabTextBean;
 import com.sdxxtop.guardianapp.presenter.SafeStaffDetailPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.SafeStaffDetailContract;
@@ -22,7 +24,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
-public class SafeStaffDetailActivity extends BaseMvpActivity<SafeStaffDetailPresenter> implements SafeStaffDetailContract.IView, CustomEventLayout.OnTabClickListener {
+public class SafeStaffDetailActivity extends BaseMvpActivity<SafeStaffDetailPresenter> implements SafeStaffDetailContract.IView,
+        CustomEventLayout.OnTabClickListener {
 
     @BindView(R.id.cel_view)
     CustomEventLayout celView;
@@ -42,6 +45,7 @@ public class SafeStaffDetailActivity extends BaseMvpActivity<SafeStaffDetailPres
     List<TabTextBean> list = new ArrayList<>();
     private SafeStaffDetailAdapter adapter;
     private String event_name;
+    private String name; // 网格员姓名
 
     @Override
     protected int getLayout() {
@@ -55,31 +59,36 @@ public class SafeStaffDetailActivity extends BaseMvpActivity<SafeStaffDetailPres
 
     @Override
     public void showError(String error) {
+        celView.setVisibility(View.GONE);
         UIUtils.showToast(error);
     }
 
     @Override
     protected void initData() {
         super.initData();
-        mPresenter.enterpriseSecurity(resultId,"","");
+        if (type == 1) {  // 网格员
+            mPresenter.gridreportOperator(resultId, "", "");
+        } else if (type == 2) {  // 企业
+            mPresenter.enterpriseSecurity(resultId, "", "");
+        }
     }
 
     @Override
     protected void initView() {
         super.initView();
-
         resultId = getIntent().getIntExtra("id", 0);
         type = getIntent().getIntExtra("type", 0);
+        name = getIntent().getStringExtra("name");
 
         if (type == 1) {  //网格员
-            tvName.setText("");
+            tvName.setText("网格员：" + name);
             title.setTitleValue("网格员详情");
             list.add(new TabTextBean(1, "--", "上报事件数"));
             list.add(new TabTextBean(2, "--", "处理事件数"));
             list.add(new TabTextBean(3, "--", "完成事件数"));
             list.add(new TabTextBean(4, "--", "打卡数"));
         } else if (type == 2) {  //企业
-            tvName.setText("");
+            tvName.setText(name);
             title.setTitleValue("安全员详情");
             list.add(new TabTextBean(1, "--", "安全管理员人数"));
             list.add(new TabTextBean(2, "--", "学习培训次数"));
@@ -97,36 +106,56 @@ public class SafeStaffDetailActivity extends BaseMvpActivity<SafeStaffDetailPres
         gertsvView.setOnTimeSelectListener(new GERTimeSelectView.OnTimeChooseListener() {
             @Override
             public void onTimeSelect(String startTime, String endTime) {
-                mPresenter.enterpriseSecurity(resultId,startTime,endTime);
+                if (type == 1) {  // 网格员
+                    mPresenter.gridreportOperator(resultId, startTime, endTime);
+                } else if (type == 2) {  // 企业
+                    mPresenter.enterpriseSecurity(resultId, startTime, endTime);
+                }
             }
         });
     }
 
     @Override
     public void onTabClick(int num) {
-        Intent intent = new Intent(this, SafeStaffDetail2Activity.class);
-        intent.putExtra("type",type);
-        intent.putExtra("partId",resultId);
-        intent.putExtra("title",event_name);
-        startActivity(intent);
+        if (type==1){// 网格员
+            Intent intent = new Intent(this, GridreportUserreportActivity.class);
+            intent.putExtra("part_userid", resultId);
+            startActivity(intent);
+        }else if (type==2){// 企业
+            Intent intent = new Intent(this, SafeStaffDetail2Activity.class);
+            intent.putExtra("type", type);
+            intent.putExtra("partId", resultId);
+            intent.putExtra("title", event_name);
+            startActivity(intent);
+        }
     }
 
     @Override
     public void showData(EnterpriseSecurityBean bean) {
         event_name = bean.getEvent_name();
         tvName.setText(event_name);
-        addTabTextLayout(bean);
+
+        list.clear();
+        list.add(new TabTextBean(1, String.valueOf(bean.getUser_count()), "安全管理员人数"));
+        list.add(new TabTextBean(2, String.valueOf(bean.getTrai_count()), "学习培训次数"));
+        list.add(new TabTextBean(3, String.valueOf(bean.getReport_info()), "上报自查次数"));
+        list.add(new TabTextBean(4, String.valueOf(bean.getPart_count()), "打卡次数"));
+        celView.addLayout(list);
+
         adapter.replaceData(bean.getSign_data());
     }
 
-    private void addTabTextLayout(EnterpriseSecurityBean bean) {
+    @Override
+    public void showGridData(GridreportOperatorBean bean) {
+        tvName.setText("网格员：" + name);
+
         list.clear();
-        if (bean!=null){
-            list.add(new TabTextBean(1, String.valueOf(bean.getUser_count()), "安全管理员人数"));
-            list.add(new TabTextBean(2,  String.valueOf(bean.getTrai_count()), "学习培训次数"));
-            list.add(new TabTextBean(3,  String.valueOf(bean.getReport_info()), "上报自查次数"));
-            list.add(new TabTextBean(4,  String.valueOf(bean.getPart_count()), "打卡次数"));
-            celView.addLayout(list);
-        }
+        list.add(new TabTextBean(1, String.valueOf(bean.getReport_count()), "上报事件数"));
+        list.add(new TabTextBean(2, String.valueOf(bean.getAdopt()), "处理事件数"));
+        list.add(new TabTextBean(3, String.valueOf(bean.getPending()), "完成事件数"));
+        list.add(new TabTextBean(4, String.valueOf(bean.getPart_count()), "打卡数"));
+        celView.addLayout(list);
+
+        adapter.replaceData(bean.getSign_data());
     }
 }

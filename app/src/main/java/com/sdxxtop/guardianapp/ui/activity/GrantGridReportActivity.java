@@ -30,6 +30,7 @@ import com.sdxxtop.guardianapp.ui.widget.CustomEventLayout;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
 import com.sdxxtop.guardianapp.utils.MarkerImgLoad;
 import com.sdxxtop.guardianapp.utils.MarkerSign;
+import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +86,7 @@ public class GrantGridReportActivity extends BaseMvpActivity<GGRPresenter> imple
 
     @Override
     public void showError(String error) {
-
+        UIUtils.showToast(error);
     }
 
     @Override
@@ -154,7 +155,7 @@ public class GrantGridReportActivity extends BaseMvpActivity<GGRPresenter> imple
         mAMap.setInfoWindowAdapter(mAdapter);
 
         markerImgLoad = new MarkerImgLoad(this);
-        moveMapToPosition(centerLocation);
+
         mAMap.setOnMarkerClickListener(new AMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
@@ -191,7 +192,7 @@ public class GrantGridReportActivity extends BaseMvpActivity<GGRPresenter> imple
         CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(
                 new CameraPosition(
                         latLng,//新的中心点坐标
-                        16,    //新的缩放级别
+                        13,    //新的缩放级别
                         0,     //俯仰角0°~45°（垂直与地图时为0）
                         0      //偏航角 0~360° (正北方为0)
                 ));
@@ -265,9 +266,10 @@ public class GrantGridReportActivity extends BaseMvpActivity<GGRPresenter> imple
                         marker.setObject(sign);
                     }
                 });
-                builder.include(markerImgLoad.getLatLng(data.get(i).getLongitude()));
+//                builder.include(markerImgLoad.getLatLng(data.get(i).getLongitude()));
             }
-            mAMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 30));
+//            mAMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 30));
+            moveMapToPosition(markerImgLoad.getLatLng(data.get(0).getLongitude()));
         }
     }
 
@@ -312,5 +314,4 @@ public class GrantGridReportActivity extends BaseMvpActivity<GGRPresenter> imple
             addCustomMarkersToMap(userInfos);
         }
     }
-
 }

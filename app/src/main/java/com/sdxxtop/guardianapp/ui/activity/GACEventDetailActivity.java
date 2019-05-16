@@ -75,7 +75,7 @@ public class GACEventDetailActivity extends BaseMvpActivity<GACEPresenter> imple
         });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new GACEDetailAdapter(R.layout.item_gace_view, null, 2);
+        adapter = new GACEDetailAdapter(R.layout.item_gace_view, null);
         recyclerView.setAdapter(adapter);
 
         casvLeft.setOnClickListener(new View.OnClickListener() {

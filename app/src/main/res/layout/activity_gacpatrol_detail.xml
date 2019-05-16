@@ -26,7 +26,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <com.sdxxtop.guardianapp.ui.widget.GridreportPatrolTabTitleView
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/gptt_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -50,10 +58,10 @@
             android:paddingBottom="15dp">
 
             <TextView
-                android:drawablePadding="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/time_more"
+                android:drawablePadding="5dp"
                 android:gravity="center"
                 android:text="所属单位"
                 android:textColor="@color/color_313131"
@@ -69,10 +77,10 @@
             android:paddingBottom="15dp">
 
             <TextView
-                android:drawablePadding="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/time_more"
+                android:drawablePadding="5dp"
                 android:gravity="center"
                 android:text="巡逻天数"
                 android:textColor="@color/color_313131"
@@ -88,10 +96,10 @@
             android:paddingBottom="15dp">
 
             <TextView
-                android:drawablePadding="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/time_more"
+                android:drawablePadding="5dp"
                 android:gravity="center"
                 android:text="所属单位"
                 android:textColor="@color/color_313131"
@@ -101,15 +109,33 @@
     </LinearLayout>
 
     <TextView
-        android:layout_marginRight="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
         android:layout_marginLeft="15dp"
-        android:background="@color/color_E0E0E0"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"/>
+        android:layout_marginRight="15dp"
+        android:background="@color/color_E0E0E0"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent">
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/smart_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+        <TextView
+            android:id="@+id/tv_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#99000000"
+            android:visibility="gone"/>
+    </RelativeLayout>
 
 </LinearLayout>

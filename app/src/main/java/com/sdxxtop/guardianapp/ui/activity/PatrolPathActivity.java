@@ -1,6 +1,7 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -64,6 +65,8 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
     private AMap aMap;
     private List<LatLng> list = new ArrayList<>();
     private int userid;
+    private int reportType;  // 网格员:1  / 企业 :2
+    private String name;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -94,8 +97,9 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
     @Override
     protected void initView() {
         super.initView();
-        String name = getIntent().getStringExtra("name");
+        name = getIntent().getStringExtra("name");
         userid = getIntent().getIntExtra("userid", -1);
+        reportType = getIntent().getIntExtra("reportType", -1);
         title.setTitleValue(name + "巡逻报告");
 
         ttv1.setValue("--", "巡逻总距离(km)");
@@ -109,21 +113,7 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
     @Override
     protected void initData() {
         super.initData();
-        mPresenter.enterpriseTrail(userid, "");
-    }
-
-    @Override
-    public void showData(EnterpriseTrailBean bean) {
-        aMap.clear();
-        list.clear();
-        ttv1.setValue(String.valueOf(bean.getDistance()), "巡逻总距离(km)");
-        ttv2.setValue(String.valueOf(bean.getTotal_time()), "巡逻总时长(km)");
-        if (bean.getTrail_info() != null && bean.getTrail_info().size() > 0) {
-            for (EnterpriseTrailBean.TrailInfo trailInfo : bean.getTrail_info()) {
-                list.add(trailInfo.getLatLng());
-            }
-            setUpMap(bean.getTrail_info());
-        }
+        mPresenter.enterpriseTrail(userid, "",reportType);
     }
 
     /**
@@ -241,8 +231,12 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ttv_1:
-                break;
             case R.id.ttv_2:
+                Intent intent = new Intent(this,SafeStaffDetailActivity.class);
+                intent.putExtra("id",userid);
+                intent.putExtra("type",reportType);
+                intent.putExtra("name",name);
+                startActivity(intent);
                 break;
             case R.id.tv_end_time: // 选择时间
                 if (pvTime == null) {
@@ -254,7 +248,19 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
                 break;
         }
     }
-
+    @Override
+    public void showData(EnterpriseTrailBean bean) {
+        aMap.clear();
+        list.clear();
+        ttv1.setValue(String.valueOf(bean.getDistance()), "巡逻总距离(km)");
+        ttv2.setValue(String.valueOf(bean.getTotal_time()), "巡逻总时长(km)");
+        if (bean.getTrail_info() != null && bean.getTrail_info().size() > 0) {
+            for (EnterpriseTrailBean.TrailInfo trailInfo : bean.getTrail_info()) {
+                list.add(trailInfo.getLatLng());
+            }
+            setUpMap(bean.getTrail_info());
+        }
+    }
 
     /**
      * 初始化时间选择控件
@@ -265,7 +271,7 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
             public void onTimeSelect(Date date, View v) {
                 tvEndTime.setText(DateUtil.getTime(date));
                 tvEndTime.setTextColor(getResources().getColor(R.color.black));
-                mPresenter.enterpriseTrail(userid, DateUtil.getTime(date).replaceAll("/", "-") + " 00:00:00");
+                mPresenter.enterpriseTrail(userid, DateUtil.getTime(date).replaceAll("/", "-") + " 00:00:00",reportType);
             }
         }).setTimeSelectChangeListener(new OnTimeSelectChangeListener() {
             @Override

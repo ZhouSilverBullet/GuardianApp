@@ -87,8 +87,7 @@ public class MarkerImgLoad {
     /**
      * by moos on 2018/01/12
      * func:添加单个自定义marker
-     *
-     * @param sign   marker标记
+     *     企业
      */
     public void addCustomMarker(EnterpriseIndexBean.UserInfo userInfo, final MarkerSign sign, OnMarkerListener listener) {
         LatLng latLng = getLatLng(userInfo.getLongitude());
@@ -101,6 +100,7 @@ public class MarkerImgLoad {
                 "'name':'"+ userInfo.getName() +"',"+
                 "'userid':'"+ userInfo.getUserid() +"',"+
                 "'url':'"+userInfo.getImg()+"',"+
+                "'reportType':'"+ 2 +"',"+
                 "'part_name':'"+userInfo.getPart_name()+"',"+
                 "'position':'"+userInfo.getPosition()+
                 "'}]";
@@ -131,8 +131,7 @@ public class MarkerImgLoad {
     /**
      * by moos on 2018/01/12
      * func:添加单个自定义marker
-     *
-     * @param sign   marker标记
+     *      网格员
      */
     public void addCustomMarker(GridreportIndexBean.GridNowInfo userInfo, final MarkerSign sign, OnMarkerListener listener) {
         final MarkerOptions markerOptions = new MarkerOptions();
@@ -143,9 +142,10 @@ public class MarkerImgLoad {
         String json = "[{"+
                 "'name':'"+ userInfo.getName() +"',"+
                 "'userid':'"+ userInfo.getUserid() +"',"+
+                "'reportType':'"+ 1 +"',"+
                 "'url':'"+userInfo.getImg()+"',"+
-                "'part_name':'"+userInfo.getPart_name()+"',"+
-//                "'position':'"+userInfo.getPosition()+
+                "'part_name':'"+""+"',"+
+                "'position':'"+userInfo.getPart_name()+
                 "'}]";
 
         markerOptions.title(json);

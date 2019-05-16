@@ -65,7 +65,6 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
     private Marker tempMarker;
     private GridMarkerAdapter mAdapter;
     private MarkerImgLoad markerImgLoad;
-    private final LatLng centerLocation = new LatLng(40.035613, 116.313903);
 
     private int part_typeid = 0;  // 区域选择默认值
     private List<AreaSelectPopWindow.PopWindowDataBean> popWondowData = new ArrayList<>();
@@ -123,8 +122,6 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
             }
         });
 
-        addTabView(null);
-
     }
 
     //添加详情标签
@@ -153,7 +150,6 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
         mAMap.setInfoWindowAdapter(mAdapter);
 
         markerImgLoad = new MarkerImgLoad(this);
-        moveMapToPosition(centerLocation);
         mAMap.setOnMarkerClickListener(new AMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
@@ -190,7 +186,7 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
         CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(
                 new CameraPosition(
                         latLng,//新的中心点坐标
-                        16,    //新的缩放级别
+                        13,    //新的缩放级别
                         0,     //俯仰角0°~45°（垂直与地图时为0）
                         0      //偏航角 0~360° (正北方为0)
                 ));
@@ -264,9 +260,9 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
                         marker.setObject(sign);
                     }
                 });
-                builder.include(markerImgLoad.getLatLng(data.get(i).getLongitude()));
+//                builder.include(markerImgLoad.getLatLng(data.get(i).getLongitude()));
             }
-            mAMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 30));
+            moveMapToPosition(markerImgLoad.getLatLng(data.get(0).getLongitude()));
         }
     }
 

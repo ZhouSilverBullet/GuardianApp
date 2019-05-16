@@ -23,12 +23,17 @@ public class PatrolPathPresenter extends RxPresenter<PatrolPathContract.IView> i
     }
 
 
-    public void enterpriseTrail(int userid,String start_time) {
+    public void enterpriseTrail(int userid,String start_time,int reportType) {
         Params params = new Params();
         params.put("puid", userid);
         params.put("st", start_time);
+        Observable<RequestBean<EnterpriseTrailBean>> observable = null;
+        if (reportType==1){ // 网格员
+            observable = getEnvirApi().postGridreportTrail(params.getData());
+        }else if (reportType==2){  // 企业
+            observable = getEnvirApi().postEnterpriseTrail(params.getData());
+        }
 
-        Observable<RequestBean<EnterpriseTrailBean>> observable = getEnvirApi().postEnterpriseTrail(params.getData());
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EnterpriseTrailBean>() {
             @Override
             public void onSuccess(EnterpriseTrailBean bean) {

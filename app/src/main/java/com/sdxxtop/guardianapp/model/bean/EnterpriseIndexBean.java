@@ -1,5 +1,7 @@
 package com.sdxxtop.guardianapp.model.bean;
 
+import com.amap.api.maps.model.LatLng;
+
 import java.util.List;
 
 /**
@@ -112,6 +114,10 @@ public class EnterpriseIndexBean {
         private String position;
         private String part_name;
         private String longitude;
+
+        public LatLng getLatLng() {
+            return new LatLng(Double.parseDouble(longitude.split(",")[1]),Double.parseDouble(longitude.split(",")[1]));
+        }
 
         public int getUserid() {
             return userid;

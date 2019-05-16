@@ -45,7 +45,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="企业位图分布"
+            android:text="网格员实时定位图"
             android:textColor="@color/color_313131"
             android:textSize="15sp"/>
 

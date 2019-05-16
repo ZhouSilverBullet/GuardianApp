@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class EnterpriseTrailBean {
     private List<GridSign> grid_sign;
-
+    
     private double distance;
     private double total_time;
     private List<TrailInfo> trail_info;

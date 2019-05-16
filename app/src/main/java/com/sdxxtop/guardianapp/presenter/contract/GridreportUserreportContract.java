@@ -2,19 +2,15 @@ package com.sdxxtop.guardianapp.presenter.contract;
 
 import com.sdxxtop.guardianapp.base.BasePresenter;
 import com.sdxxtop.guardianapp.base.BaseView;
-import com.sdxxtop.guardianapp.model.bean.EnterpriseSecurityBean;
-import com.sdxxtop.guardianapp.model.bean.GridreportOperatorBean;
+import com.sdxxtop.guardianapp.model.bean.GridreportUserreportBean;
 
 /**
  * 用来copy使用的
  */
-public interface SafeStaffDetailContract {
+public interface GridreportUserreportContract {
     interface IView extends BaseView {
 
-        void showData(EnterpriseSecurityBean bean);
-
-        void showGridData(GridreportOperatorBean bean);
-
+        void showData(GridreportUserreportBean bean);
     }
 
     interface IPresenter extends BasePresenter<IView> {

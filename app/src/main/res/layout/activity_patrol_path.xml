@@ -31,7 +31,7 @@
         <com.sdxxtop.guardianapp.ui.widget.TabTextView
             android:id="@+id/ttv_1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"/>
 
         <TextView
@@ -42,7 +42,7 @@
         <com.sdxxtop.guardianapp.ui.widget.TabTextView
             android:id="@+id/ttv_2"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"/>
 
         <TextView

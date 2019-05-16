@@ -2,6 +2,7 @@ package com.sdxxtop.guardianapp.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,13 +74,15 @@ public class GridMarkerAdapter implements AMap.InfoWindowAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, PatrolPathActivity.class);
-                intent.putExtra("name",name);
-                intent.putExtra("reportType",reportType);
-                intent.putExtra("userid",userid);
+                intent.putExtra("name", name);
+                intent.putExtra("reportType", reportType);
+                intent.putExtra("userid", userid);
                 mContext.startActivity(intent);
             }
         });
 
+        tvJobs.setVisibility(TextUtils.isEmpty(position) ? View.GONE:View.VISIBLE);
+        tvCompany.setVisibility(TextUtils.isEmpty(part_name) ? View.GONE:View.VISIBLE);
         nameTV.setText(name);
         tvJobs.setText(position);
         tvCompany.setText(part_name);
@@ -98,12 +101,12 @@ public class GridMarkerAdapter implements AMap.InfoWindowAdapter {
                 //循环遍历，依次取出JSONObject对象
                 //用getInt和getString方法取出对应键值
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                reportType = jsonObject.getInt("reportType");
                 name = jsonObject.getString("name");
                 userid = jsonObject.getInt("userid");
                 url = jsonObject.getString("url");
                 position = jsonObject.getString("position");
                 part_name = jsonObject.getString("part_name");
+                reportType = jsonObject.getInt("reportType");
             }
         } catch (Exception e) {
             e.printStackTrace();
