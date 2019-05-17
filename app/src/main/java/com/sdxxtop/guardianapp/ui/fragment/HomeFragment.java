@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.orhanobut.logger.Logger;
 import com.sdxxtop.guardianapp.R;
@@ -23,15 +26,13 @@ import com.sdxxtop.guardianapp.ui.activity.PatrolRecordActivity;
 import com.sdxxtop.guardianapp.ui.adapter.HomeRecyclerAdapter;
 import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
+import com.sdxxtop.guardianapp.utils.GpsUtils;
 import com.sdxxtop.guardianapp.utils.GuardianUtils;
-import com.sdxxtop.guardianapp.utils.SkipMapUtils;
 import com.sdxxtop.guardianapp.utils.SpUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -156,11 +157,18 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
                             break;
                         case 3:
 //                            UIUtils.showToast("打卡");
-                            if (mIsFace) {
-                                intent = new Intent(getContext(), MyFaceLivenessActivity.class);
-                                intent.putExtra("isFace", true);
+
+                            //判断一次打卡，gps是否打开
+                            if (GpsUtils.isOPen(getContext())) {
+                                if (mIsFace) {
+                                    intent = new Intent(getContext(), MyFaceLivenessActivity.class);
+                                    intent.putExtra("isFace", true);
+                                } else {
+                                    toFace();
+                                }
                             } else {
-                                toFace();
+
+                                GpsUtils.showCode332ErrorDialog(getContext());
                             }
                             break;
                     }
