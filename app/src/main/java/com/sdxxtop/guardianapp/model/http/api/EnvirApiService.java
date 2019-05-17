@@ -42,7 +42,8 @@ import retrofit2.http.Path;
 
 public interface EnvirApiService {
 
-    String BASE_URL = "http://envir.sdxxtop.com/api/";
+    String BASE_URL = "http://envir.test.sdxxtop.com/api/";
+//    String BASE_URL = "http://envir.sdxxtop.com/api/";
 
     @FormUrlEncoded
     @POST("app/init")

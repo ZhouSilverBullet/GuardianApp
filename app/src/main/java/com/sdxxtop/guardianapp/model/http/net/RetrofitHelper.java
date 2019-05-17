@@ -52,6 +52,7 @@ public class RetrofitHelper {
         return sEnvirApiService;
     }
 
+
     private static void initOkHttp() {
         if (okHttpClient != null) {
             return;
