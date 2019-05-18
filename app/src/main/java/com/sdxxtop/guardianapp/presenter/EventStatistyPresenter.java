@@ -23,11 +23,11 @@ public class EventStatistyPresenter extends RxPresenter<EventStatistyContract.IV
     }
 
 
-    public void eventlist(int event_type,int part_typeid) {
+    public void eventlist(int event_type,int part_typeid,String startTime,String endTime) {
         Params params = new Params();
         params.put("pt", part_typeid);
-        params.put("st", "");
-        params.put("et", "");
+        params.put("st", startTime);
+        params.put("et", endTime);
         params.put("ety", event_type);
 
         Observable<RequestBean<EventListBean>> observable = getEnvirApi().postEventlist(params.getData());

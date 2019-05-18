@@ -37,7 +37,7 @@ public class GridreportUserreportActivity extends BaseMvpActivity<GridreportUser
     SmartRefreshLayout smartRefresh;
 
     private int part_userid;  //查看的用户id
-    private String start_time, endTime;  //查看的用户id
+    private String start_time, end_time;  //查看的用户id
     private int start_page;
     private GridreportUserreportAdapter adapter;
     private boolean isOrder;  // 是否倒序
@@ -69,13 +69,13 @@ public class GridreportUserreportActivity extends BaseMvpActivity<GridreportUser
             @Override
             public void onLoadMore(RefreshLayout refreshLayout) {
                 start_page = adapter.getItemCount();
-                mPresenter.gridreportUserreport(GridreportUserreportActivity.this.part_userid, start_time, endTime, start_page);
+                mPresenter.gridreportUserreport(GridreportUserreportActivity.this.part_userid, start_time, end_time, start_page);
             }
 
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
                 start_page = 0;
-                mPresenter.gridreportUserreport(GridreportUserreportActivity.this.part_userid, start_time, endTime, start_page);
+                mPresenter.gridreportUserreport(GridreportUserreportActivity.this.part_userid, start_time, end_time, start_page);
             }
         });
 
@@ -89,7 +89,9 @@ public class GridreportUserreportActivity extends BaseMvpActivity<GridreportUser
             @Override
             public void onTimeSelect(String startTime, String endTime) {
                 start_page = 0;
-                mPresenter.gridreportUserreport(GridreportUserreportActivity.this.part_userid, startTime, endTime, start_page);
+                start_time = startTime;
+                end_time = endTime;
+                mPresenter.gridreportUserreport(GridreportUserreportActivity.this.part_userid, start_time, end_time, start_page);
             }
         });
     }

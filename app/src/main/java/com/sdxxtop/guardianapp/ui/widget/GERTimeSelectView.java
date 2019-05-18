@@ -24,6 +24,7 @@ import com.sdxxtop.guardianapp.utils.UIUtils;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import androidx.annotation.Nullable;
@@ -38,15 +39,15 @@ import butterknife.OnClick;
  */
 public class GERTimeSelectView extends LinearLayout {
     @BindView(R.id.tv_start_time)
-    TextView tvStartTime;
+    public TextView tvStartTime;
     @BindView(R.id.tv_end_time)
-    TextView tvEndTime;
+    public TextView tvEndTime;
 
     private TimePickerView pvLeftTime;
     private TimePickerView pvRightTime;
 
-    private String startTime;
-    private String endTime;
+    private String startTime = "";
+    private String endTime = "";
 
     private OnTimeChooseListener mLisenter;
 
@@ -75,15 +76,29 @@ public class GERTimeSelectView extends LinearLayout {
         switch (view.getId()) {
             case R.id.tv_start_time:
                 if (pvLeftTime != null) {
+                    pvLeftTime.setDate(getData(startTime));
                     pvLeftTime.show();
                 }
                 break;
             case R.id.tv_end_time:
                 if (pvRightTime != null) {
+                    pvLeftTime.setDate(getData(endTime));
                     pvRightTime.show();
                 }
                 break;
         }
+    }
+
+    private Calendar getData(String time) {
+        Calendar instance = Calendar.getInstance();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date parse = format.parse(time);
+            instance.setTime(parse);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return instance;
     }
 
     private void initLeftTimePicker() {//Dialog 模式下，在底部弹出
@@ -93,7 +108,7 @@ public class GERTimeSelectView extends LinearLayout {
                 startTime = getTime(date);
                 if (!TextUtils.isEmpty(endTime)) {  // 已选择结束时间
                     if (compare_date(startTime, endTime)) {  // 时间规则可用
-                        if (mLisenter==null)return;
+                        if (mLisenter == null) return;
                         mLisenter.onTimeSelect(getFormatTime(startTime), getFormatTime(endTime));
                     }
                 } else {
@@ -137,7 +152,7 @@ public class GERTimeSelectView extends LinearLayout {
                 endTime = getTime(date);
                 if (!TextUtils.isEmpty(startTime)) {  // 开始时间没选择  直接展示结束时间
                     if (compare_date(startTime, endTime)) {
-                        if (mLisenter==null)return;
+                        if (mLisenter == null) return;
                         mLisenter.onTimeSelect(getFormatTime(startTime), getFormatTime(endTime));
                     }
                 } else {
@@ -153,6 +168,7 @@ public class GERTimeSelectView extends LinearLayout {
         }).setType(new boolean[]{true, true, true, false, false, false})
                 .isDialog(true) //默认设置false ，内部实现将DecorView 作为它的父控件。
                 .build();
+
 
         Dialog mDialog = pvRightTime.getDialog();
         if (mDialog != null) {
@@ -222,6 +238,11 @@ public class GERTimeSelectView extends LinearLayout {
         } else {
             return endTime;
         }
+    }
+
+    public void setTime(String start_time, String end_time) {
+        this.startTime = start_time;
+        this.endTime = end_time;
     }
 
     public interface OnTimeChooseListener {

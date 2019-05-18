@@ -6,19 +6,32 @@
     android:orientation="vertical">
 
     <TextView
-        android:layout_marginLeft="10dp"
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="15dp"
         android:text="上报事件统计"
         android:textColor="@color/color_292929"
         android:textSize="@dimen/sp_14"/>
 
-    <com.github.mikephil.charting.charts.PieChart
-        android:layout_marginBottom="10dp"
-        android:id="@+id/pie_chart"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="230dp"/>
+        android:layout_height="230dp"
+        android:layout_marginBottom="10dp">
 
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pie_chart"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"/>
+
+        <TextView
+            android:id="@+id/tv_nodata"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FAFBFF"
+            android:gravity="center"
+            android:text="暂无数据"
+            android:textColor="@color/actionsheet_red"/>
+    </RelativeLayout>
 </LinearLayout>

@@ -44,7 +44,7 @@
                         android:id="@+id/lv_line1"
                         android:layout_width="90dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="53dp">
+                        android:layout_marginRight="35dp">
 
                         <TextView
                             style="@style/confirm_text"
@@ -64,7 +64,7 @@
                         android:id="@+id/tv_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="111111111111111"
+                        android:text="12346576577"
                         android:textColor="@color/color_303030"
                         android:textSize="18sp" />
                 </LinearLayout>
@@ -85,7 +85,7 @@
                         android:id="@+id/lv_line2"
                         android:layout_width="90dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="53dp">
+                        android:layout_marginRight="35dp">
 
                         <TextView
                             style="@style/confirm_text"
@@ -114,7 +114,7 @@
                         android:id="@+id/tv_phone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="111111111111111"
+                        android:text="99898989898"
                         android:textColor="@color/color_303030"
                         android:textSize="18sp" />
                 </LinearLayout>
@@ -135,7 +135,7 @@
                         android:id="@+id/tv_line3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="53dp"
+                        android:layout_marginRight="35dp"
                         android:text="工作单位："
                         android:textColor="@color/color_838282"
                         android:textSize="18sp" />
@@ -165,7 +165,7 @@
                         android:id="@+id/lv_line4"
                         android:layout_width="90dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="53dp">
+                        android:layout_marginRight="35dp">
 
                         <TextView
                             style="@style/confirm_text"

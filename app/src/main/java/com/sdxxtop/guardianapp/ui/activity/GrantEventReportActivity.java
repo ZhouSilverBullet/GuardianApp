@@ -80,6 +80,8 @@ public class GrantEventReportActivity extends BaseMvpActivity<GERPresenter> impl
     public void onTabClick(int num) {
         Intent intent = new Intent(this, EventStatistyActivity.class);
         intent.putExtra("event_type", num);
+        intent.putExtra("startTime", mStartTime);
+        intent.putExtra("endTime", mEndTime);
         startActivity(intent);
     }
 

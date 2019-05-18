@@ -1,5 +1,6 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -47,7 +48,7 @@ public class PartEventListActivity extends BaseMvpActivity<PELPresenter> impleme
     private PartEventListAdapter adapter;
     private String part_id;  // 部门id
     private int event_type = 0;
-    private String pushStartTime, pushEndTime;
+    private String start_time, end_time;
     private int start_page;  // 分页请求
     private boolean isOrder; // 排序
 
@@ -75,6 +76,19 @@ public class PartEventListActivity extends BaseMvpActivity<PELPresenter> impleme
     protected void initView() {
         super.initView();
         part_id = getIntent().getStringExtra("part_id");
+        start_time = getIntent().getStringExtra("startTime");
+        end_time = getIntent().getStringExtra("endTime");
+        event_type = getIntent().getIntExtra("status", 0);
+
+        if (!TextUtils.isEmpty(start_time) && !TextUtils.isEmpty(end_time)) {
+            gertsvView.tvStartTime.setTextColor(getResources().getColor(R.color.black));
+            gertsvView.tvEndTime.setTextColor(getResources().getColor(R.color.black));
+            gertsvView.tvStartTime.setText(start_time.split(" ")[0].replace("-", "/"));
+            gertsvView.tvEndTime.setText(end_time.split(" ")[0].replace("-", "/"));
+
+            gertsvView.setTime(start_time, end_time);
+        }
+
         title.setTitleValue(getIntent().getStringExtra("part_name") + "事件");
         smartRefresh.setEnableLoadMore(true);
         smartRefresh.setEnableRefresh(true);
@@ -83,14 +97,14 @@ public class PartEventListActivity extends BaseMvpActivity<PELPresenter> impleme
             public void onLoadMore(RefreshLayout refreshLayout) {
                 if (adapter != null) {
                     start_page = adapter.getItemCount();
-                    mPresenter.postPartEventList(start_page, part_id, pushStartTime, pushEndTime, event_type);
+                    mPresenter.postPartEventList(start_page, part_id, start_time, end_time, event_type);
                 }
             }
 
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
                 start_page = 0;
-                mPresenter.postPartEventList(start_page, part_id, pushStartTime, pushEndTime, event_type);
+                mPresenter.postPartEventList(start_page, part_id, start_time, end_time, event_type);
             }
         });
         smartRefresh.autoRefresh();
@@ -99,9 +113,9 @@ public class PartEventListActivity extends BaseMvpActivity<PELPresenter> impleme
             @Override
             public void onTimeSelect(String startTime, String endTime) {
                 start_page = 0;
-                pushStartTime = startTime;
-                pushEndTime = endTime;
-                mPresenter.postPartEventList(start_page, part_id, startTime, endTime, event_type);
+                start_time = startTime;
+                end_time = endTime;
+                mPresenter.postPartEventList(start_page, part_id, start_time, end_time, event_type);
             }
         });
 
@@ -119,9 +133,9 @@ public class PartEventListActivity extends BaseMvpActivity<PELPresenter> impleme
                 break;
             case R.id.ll_containor_temp:
                 List<PartEventListBean.ClData> data = adapter.getData();
-                Collections.sort(data,new PartEventListCompar(isOrder));
+                Collections.sort(data, new PartEventListCompar(isOrder));
                 adapter.replaceData(data);
-                isOrder=!isOrder;
+                isOrder = !isOrder;
                 break;
         }
     }
@@ -139,7 +153,7 @@ public class PartEventListActivity extends BaseMvpActivity<PELPresenter> impleme
         }
         popWondowData.clear();
         for (int i = 0; i < bean.getPart_name().size(); i++) {
-            popWondowData.add(new AreaSelectPopWindow.PopWindowDataBean(0,bean.getPart_name().get(i).getPart_name()));
+            popWondowData.add(new AreaSelectPopWindow.PopWindowDataBean(0, bean.getPart_name().get(i).getPart_name()));
         }
     }
 }

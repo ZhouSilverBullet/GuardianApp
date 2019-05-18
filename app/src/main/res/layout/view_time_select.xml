@@ -21,7 +21,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="选择起始时间"/>
+            android:text="请选择起始时间"/>
 
         <TextView
             android:background="#E0E0E0"
@@ -37,7 +37,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="选择终止时间"/>
+            android:text="请选择终止时间"/>
 
     </LinearLayout>
 

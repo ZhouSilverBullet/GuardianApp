@@ -2,7 +2,6 @@ package com.sdxxtop.guardianapp.ui.pop;
 
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,7 +60,7 @@ public class QuitGroupPopView extends PopupWindow {
                 if (runnable != null) {
                     runnable.run();
                 }
-                dismiss();
+//                dismiss();
             }
         });
 
@@ -71,7 +70,7 @@ public class QuitGroupPopView extends PopupWindow {
         exitQuitText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dismiss();
+//                dismiss();
             }
         });
 

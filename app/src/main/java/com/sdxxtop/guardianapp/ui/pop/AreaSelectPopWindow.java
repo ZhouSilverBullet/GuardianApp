@@ -1,6 +1,7 @@
 package com.sdxxtop.guardianapp.ui.pop;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,8 @@ public class AreaSelectPopWindow extends PopupWindow {
     private List<PopWindowDataBean> mData;
     private OnPopItemClickListener mListener;
 
+    private int selectPartId = -1;
+
     public AreaSelectPopWindow(Activity activity, View viewLayout, List<PopWindowDataBean> data, TextView textView) {
         this.activity = activity;
         inflater = LayoutInflater.from(activity);
@@ -52,6 +55,14 @@ public class AreaSelectPopWindow extends PopupWindow {
     }
 
     private void initView() {
+        if (mData!=null&&mData.size()>0){
+            for (PopWindowDataBean mDatum : mData) {
+                if (tagTextView.getText().equals(mDatum.getPartName())){
+                    selectPartId = mDatum.getPartId();
+                }
+            }
+        }
+
         setTouchable(true);
         setOutsideTouchable(true);
         setFocusable(true);
@@ -65,7 +76,9 @@ public class AreaSelectPopWindow extends PopupWindow {
         setContentView(view);
 
         ListView listView = view.findViewById(R.id.listView);
-        listView.setAdapter(new ListAdapter());
+        ListAdapter adapter = new ListAdapter();
+        listView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
         showAsDropDown(viewLayout, 0, 0);
 //        toWindowBackground(activity, 0.6f);
@@ -99,6 +112,7 @@ public class AreaSelectPopWindow extends PopupWindow {
                     PopWindowDataBean item = mData.get(position);
                     mListener.onPopItemClick(item.getPartId(), item.getPartName());
 //                    tagTextView.setText(completeInfo.getPart_name());
+                    selectPartId = item.getPartId();
                 }
                 dismiss();
             }
@@ -143,7 +157,7 @@ public class AreaSelectPopWindow extends PopupWindow {
 
         @Override
         public long getItemId(int position) {
-            return 0;
+            return position;
         }
 
         @Override
@@ -157,7 +171,13 @@ public class AreaSelectPopWindow extends PopupWindow {
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
-            viewHolder.tvArea.setText(getItem(position).getPartName());
+            PopWindowDataBean item = getItem(position);
+            if (selectPartId != -1 && selectPartId == item.getPartId()) {
+                viewHolder.tvArea.setTextColor(Color.parseColor("#32B16C"));
+            }else{
+                viewHolder.tvArea.setTextColor(Color.parseColor("#292929"));
+            }
+            viewHolder.tvArea.setText(item.getPartName());
             return convertView;
         }
     }

@@ -42,6 +42,8 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
     TextView tvTitle;
     @BindView(R.id.pie_chart)
     PieChart pieChart;
+    @BindView(R.id.tv_nodata)
+    TextView tvDodata;
 
     private String title;
 
@@ -171,7 +173,14 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
 
     public void setPieData(List<GERPIndexBean.EventInfoBean> data){
         if (data!=null&&data.size()>0){
-            setData(data);
+            for (GERPIndexBean.EventInfoBean datum : data) {
+                if (datum.getCount()!=0){
+                    setData(data);
+                    tvDodata.setVisibility(View.GONE);
+                    return;
+                }
+            }
+            tvDodata.setVisibility(View.VISIBLE);
         }else{
             pieChart.removeAllViews();
             pieChart.setData(null);

@@ -27,10 +27,9 @@ public class PartEventListAdapter extends BaseQuickAdapter<PartEventListBean.ClD
 
     @Override
     protected void convert(BaseViewHolder helper, PartEventListBean.ClData item) {
-
-        helper.setText(R.id.tv_event_status,getStatus(item.getStatus()));
-        helper.setText(R.id.tv_part_name,item.getTitle());
-        helper.setText(R.id.tv_part_event_num,item.getAdd_time());
+        helper.setText(R.id.tv_event_status, getStatus(item.getStatus()));
+        helper.setText(R.id.tv_part_name, item.getTitle());
+        helper.setText(R.id.tv_part_event_num, item.getAdd_time());
 
         helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,21 +40,22 @@ public class PartEventListAdapter extends BaseQuickAdapter<PartEventListBean.ClD
             }
         });
     }
-    // 1-4   需求现在是已完成、待处理、处理中、已处理
-    public String getStatus(int status){
+
+    // 1 待处理  2、处理中  3已处理  4是已完成
+    public String getStatus(int status) {
         String str = "";
-        switch (status){
+        switch (status) {
             case 1:
-                str = "已完成";
-                break;
-            case 2:
                 str = "待处理";
                 break;
-            case 3:
+            case 2:
                 str = "处理中";
                 break;
-            case 4:
+            case 3:
                 str = "已处理";
+                break;
+            case 4:
+                str = "已完成";
                 break;
         }
         return str;

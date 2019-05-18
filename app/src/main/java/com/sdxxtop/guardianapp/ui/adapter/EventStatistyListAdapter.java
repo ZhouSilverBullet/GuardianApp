@@ -20,6 +20,9 @@ import androidx.annotation.Nullable;
  */
 public class EventStatistyListAdapter extends BaseQuickAdapter<EventListBean.CompleteInfo, BaseViewHolder> {
 
+    private String mStartTime,mEndTime;
+    private int mStatus;
+
     public EventStatistyListAdapter(int layoutResId, @Nullable List<EventListBean.CompleteInfo> data) {
         super(layoutResId, data);
     }
@@ -36,8 +39,18 @@ public class EventStatistyListAdapter extends BaseQuickAdapter<EventListBean.Com
                 Intent intent = new Intent(mContext, PartEventListActivity.class);
                 intent.putExtra("part_name", item.getPart_name());
                 intent.putExtra("part_id", String.valueOf(item.getPart_id()));
+                intent.putExtra("status", mStatus);
+                intent.putExtra("startTime", mStartTime);
+                intent.putExtra("endTime", mEndTime);
+
                 mContext.startActivity(intent);
             }
         });
+    }
+
+    public void setTime(String startTime, String endTime,int status) {
+        this.mStartTime = startTime;
+        this.mEndTime = endTime;
+        this.mStatus = status;
     }
 }

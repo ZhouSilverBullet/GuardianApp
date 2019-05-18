@@ -47,6 +47,7 @@ public class EventStatistyActivity extends BaseMvpActivity<EventStatistyPresente
     private int eventId;
     private int part_typeid = 0;  // 选择区的标识
     private String tempText = "";  // 用来拼接count
+    private String startTime,endTime;
 
 
     @Override
@@ -62,6 +63,8 @@ public class EventStatistyActivity extends BaseMvpActivity<EventStatistyPresente
         smartRefresh.setEnableRefresh(false);
         smartRefresh.setEnableLoadMore(false);
         eventId = getIntent().getIntExtra("event_type", 0);
+        startTime = getIntent().getStringExtra("startTime");
+        endTime = getIntent().getStringExtra("endTime");
 
         switch (eventId) {
             case 0:
@@ -94,7 +97,7 @@ public class EventStatistyActivity extends BaseMvpActivity<EventStatistyPresente
     @Override
     protected void initData() {
         super.initData();
-        mPresenter.eventlist(eventId, part_typeid);
+        mPresenter.eventlist(eventId, part_typeid,startTime,endTime);
     }
 
     @Override
@@ -113,7 +116,7 @@ public class EventStatistyActivity extends BaseMvpActivity<EventStatistyPresente
         popWindow.setOnPopItemClickListener(new AreaSelectPopWindow.OnPopItemClickListener() {
             @Override
             public void onPopItemClick(int part_typeid,String partName ) {
-                mPresenter.eventlist(eventId, part_typeid);
+                mPresenter.eventlist(eventId, part_typeid,startTime,endTime);
             }
         });
     }
@@ -129,5 +132,6 @@ public class EventStatistyActivity extends BaseMvpActivity<EventStatistyPresente
             }
         }
         adapter.replaceData(listBean.getCompleteInfo());
+        adapter.setTime(startTime,endTime,eventId);
     }
 }

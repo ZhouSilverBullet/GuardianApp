@@ -15,16 +15,22 @@
         android:paddingBottom="15dp">
 
         <TextView
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"
+            android:singleLine="true"
             android:id="@+id/tv_part_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="环保局"
+            android:text="..."
             android:textColor="@color/color_313131"
             android:textSize="13sp"/>
 
         <TextView
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"
+            android:singleLine="true"
             android:id="@+id/tv_part_event_num"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

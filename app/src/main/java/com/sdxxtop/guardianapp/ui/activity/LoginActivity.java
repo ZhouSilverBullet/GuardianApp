@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.Message;
-import android.text.Html;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.View;
@@ -17,15 +16,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.app.Constants;
+import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.model.bean.LoginBean;
 import com.sdxxtop.guardianapp.presenter.LoginPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.LoginContract;
 import com.sdxxtop.guardianapp.ui.control.DelTextWatcher;
 import com.sdxxtop.guardianapp.utils.SpUtil;
 import com.sdxxtop.guardianapp.utils.UIUtils;
-import com.sdxxtop.guardianapp.R;
-import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 
 import java.lang.ref.WeakReference;
 
@@ -78,6 +77,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
             mobile = "";
         }
         etPhone.setText(mobile);
+        etPhone.setSelection(mobile.length());
     }
 
     private void registerLoginReceiver() {
