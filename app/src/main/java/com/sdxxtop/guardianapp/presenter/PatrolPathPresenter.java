@@ -23,7 +23,7 @@ public class PatrolPathPresenter extends RxPresenter<PatrolPathContract.IView> i
     }
 
 
-    public void enterpriseTrail(int userid,String start_time,int reportType) {
+    public void enterpriseTrail(String userid,String start_time,int reportType) {
         Params params = new Params();
         params.put("puid", userid);
         params.put("st", start_time);

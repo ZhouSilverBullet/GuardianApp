@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:leftLayoutIconIsGray="true"
-        app:rightTextColor="@color/blue"
+        app:rightTextColor="#32B16C"
         app:rightTextValue="巡逻详情"
         app:titleValue="网格员报告"/>
 
@@ -64,12 +64,13 @@
 
         <LinearLayout
             android:id="@+id/ll_area_layout"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
+            android:gravity="center_vertical|right"
             android:orientation="horizontal">
 
             <TextView
+                android:singleLine="true"
                 android:id="@+id/tv_area"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -82,7 +83,7 @@
                 android:layout_width="9dp"
                 android:layout_height="8dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="18dp"
+                android:layout_marginRight="10dp"
                 android:src="@drawable/time_more"/>
         </LinearLayout>
 

@@ -24,7 +24,6 @@ import com.sdxxtop.guardianapp.model.bean.EnterpriseIndexBean;
 import com.sdxxtop.guardianapp.model.bean.TabTextBean;
 import com.sdxxtop.guardianapp.presenter.GCRPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.GCRContract;
-import com.sdxxtop.guardianapp.ui.adapter.GridMarkerAdapter;
 import com.sdxxtop.guardianapp.ui.pop.AreaSelectPopWindow;
 import com.sdxxtop.guardianapp.ui.widget.CustomEventLayout;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
@@ -62,8 +61,6 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
 
     private RxPermissions mRxPermissions;
     private AMap mAMap;
-    private Marker tempMarker;
-    private GridMarkerAdapter mAdapter;
     private MarkerImgLoad markerImgLoad;
 
     private int part_typeid = 0;  // 区域选择默认值
@@ -146,31 +143,20 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
             mAMap.setMaxZoomLevel(20);
         }
 
-        mAdapter = new GridMarkerAdapter(this);
-        mAMap.setInfoWindowAdapter(mAdapter);
+//        mAdapter = new GridMarkerAdapter(this);
+//        mAMap.setInfoWindowAdapter(mAdapter);
 
         markerImgLoad = new MarkerImgLoad(this);
         mAMap.setOnMarkerClickListener(new AMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                tempMarker = marker;
-                if (marker.getObject().getClass().equals(MarkerSign.class)) {
-                    if (marker.isInfoWindowShown()) {
-                        marker.hideInfoWindow();
-                    } else {
-                        marker.showInfoWindow();
-                    }
-                }
-                mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), mAMap.getCameraPosition().zoom));
+                MarkerOptions options = marker.getOptions();
+                Intent intent = new Intent(mContext, PatrolPathActivity.class);
+                intent.putExtra("name", options.getSnippet());
+                intent.putExtra("reportType", 2);
+                intent.putExtra("userid", options.getTitle());
+                mContext.startActivity(intent);
                 return true;
-            }
-        });
-        mAMap.setOnMapClickListener(new AMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                if (tempMarker != null && tempMarker.isInfoWindowShown()) {
-                    tempMarker.hideInfoWindow();
-                }
             }
         });
     }
@@ -186,7 +172,7 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
         CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(
                 new CameraPosition(
                         latLng,//新的中心点坐标
-                        13,    //新的缩放级别
+                        20,    //新的缩放级别
                         0,     //俯仰角0°~45°（垂直与地图时为0）
                         0      //偏航角 0~360° (正北方为0)
                 ));
@@ -285,8 +271,8 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
 
     @Override
     public void onTabClick(int num) {
-        Intent intent = new Intent(GrantCompanyReportActivity.this, GACEventDetailActivity.class);   // 企业详情
-        startActivity(intent);
+//        Intent intent = new Intent(GrantCompanyReportActivity.this, GACEventDetailActivity.class);   // 企业详情
+//        startActivity(intent);
     }
 
     @Override

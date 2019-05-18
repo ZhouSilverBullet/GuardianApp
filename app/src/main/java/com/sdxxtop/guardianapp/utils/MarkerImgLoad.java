@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import com.amap.api.maps.model.BitmapDescriptor;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
@@ -54,10 +55,10 @@ public class MarkerImgLoad {
         markerOptions.icon(BitmapDescriptorFactory.fromBitmap(convertViewToBitmap(LayoutInflater.from(mContext).inflate(R.layout.marker_bg, null))));
         markerOptions.position(latLng);
         String marker = "Marker";
-        String json = "[{"+
-                "'title':'"+ marker +"',"+
-                "'url':'"+url+"',"+
-                "'company':'"+"xxx公司"+"',"+
+        String json = "[{" +
+                "'title':'" + marker + "'," +
+                "'url':'" + url + "'," +
+                "'company':'" + "xxx公司" + "'," +
                 "'}]";
 
         markerOptions.title(json);
@@ -87,90 +88,104 @@ public class MarkerImgLoad {
     /**
      * by moos on 2018/01/12
      * func:添加单个自定义marker
-     *     企业
+     * 企业
      */
     public void addCustomMarker(EnterpriseIndexBean.UserInfo userInfo, final MarkerSign sign, OnMarkerListener listener) {
         LatLng latLng = getLatLng(userInfo.getLongitude());
         final MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.setFlat(true);
-//        markerOptions.anchor(0.5f, 0.5f);
-        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(convertViewToBitmap(LayoutInflater.from(mContext).inflate(R.layout.marker_bg, null))));
-        markerOptions.position(latLng);
-        String json = "[{"+
-                "'name':'"+ userInfo.getName() +"',"+
-                "'userid':'"+ userInfo.getUserid() +"',"+
-                "'url':'"+userInfo.getImg()+"',"+
-                "'reportType':'"+ 2 +"',"+
-                "'part_name':'"+userInfo.getPart_name()+"',"+
-                "'position':'"+userInfo.getPosition()+
-                "'}]";
-
-        markerOptions.title(json);
-        listener.showMarkerIcon(markerOptions, sign);
-
-//        customizeMarkerIcon(url, new OnMarkerIconLoadListener() {
-//            @Override
-//            public void markerIconLoadingFinished(View view) {
-//                //bitmapDescriptor = BitmapDescriptorFactory.fromView(view);
-//                markerOptions.position(latLng);
-//                markerOptions.icon(bitmapDescriptor);
-//
-//                String marker = "Marker";
-//                String json = "[{"+"'reportType':'"+ reportType +"'," +
-//                        "'title':'"+ marker +"',"+
-//                        "'url':'"+url+
-//                        "'}]";
-//
-//                markerOptions.title(json);
-//                markerOptions.snippet("四川省成都市青羊区一环路二段靠近千百味冷锅串串,小吃姮好吃,成都地方气温热");
-//                listener.showMarkerIcon(markerOptions, sign);
-//            }
-//        });
+        customizeMarkerIcon(userInfo, new OnMarkerIconLoadListener() {
+            @Override
+            public void markerIconLoadingFinished(View view) {
+                markerOptions.position(latLng);
+                markerOptions.title(String.valueOf(userInfo.getUserid()));
+                markerOptions.snippet(userInfo.getName());
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(convertViewToBitmap(view)));
+                listener.showMarkerIcon(markerOptions, sign);
+            }
+        });
     }
 
     /**
      * by moos on 2018/01/12
      * func:添加单个自定义marker
-     *      网格员
+     * 网格员
      */
     public void addCustomMarker(GridreportIndexBean.GridNowInfo userInfo, final MarkerSign sign, OnMarkerListener listener) {
         final MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.setFlat(true);
-//        markerOptions.anchor(0.5f, 0.5f);
-        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(convertViewToBitmap(LayoutInflater.from(mContext).inflate(R.layout.marker_bg, null))));
-        markerOptions.position(userInfo.getLatlng());
-        String json = "[{"+
-                "'name':'"+ userInfo.getName() +"',"+
-                "'userid':'"+ userInfo.getUserid() +"',"+
-                "'reportType':'"+ 1 +"',"+
-                "'url':'"+userInfo.getImg()+"',"+
-                "'part_name':'"+""+"',"+
-                "'position':'"+userInfo.getPart_name()+
-                "'}]";
 
-        markerOptions.title(json);
         listener.showMarkerIcon(markerOptions, sign);
-
-//        customizeMarkerIcon(url, new OnMarkerIconLoadListener() {
-//            @Override
-//            public void markerIconLoadingFinished(View view) {
-//                //bitmapDescriptor = BitmapDescriptorFactory.fromView(view);
-//                markerOptions.position(latLng);
-//                markerOptions.icon(bitmapDescriptor);
-//
-//                String marker = "Marker";
-//                String json = "[{"+"'reportType':'"+ reportType +"'," +
-//                        "'title':'"+ marker +"',"+
-//                        "'url':'"+url+
-//                        "'}]";
-//
-//                markerOptions.title(json);
-//                markerOptions.snippet("四川省成都市青羊区一环路二段靠近千百味冷锅串串,小吃姮好吃,成都地方气温热");
-//                listener.showMarkerIcon(markerOptions, sign);
-//            }
-//        });
+        customizeMarkerIcon(userInfo, new OnMarkerIconLoadListener() {
+            @Override
+            public void markerIconLoadingFinished(View view) {
+                markerOptions.position(userInfo.getLatlng());
+                markerOptions.title(String.valueOf(userInfo.getUserid()));
+                markerOptions.snippet(userInfo.getName());
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(convertViewToBitmap(view)));
+                listener.showMarkerIcon(markerOptions, sign);
+            }
+        });
     }
 
+
+    /**
+     * by moos on 2018/01/12
+     * func:定制化marker的图标
+     * 企业
+     *
+     * @return
+     */
+    private void customizeMarkerIcon(EnterpriseIndexBean.UserInfo userInfo, final OnMarkerIconLoadListener listener) {
+        final View markerView = LayoutInflater.from(mContext).inflate(R.layout.marker_bg, null);
+        final CircleImageView icon = markerView.findViewById(R.id.img);
+        final TextView tvCompany = markerView.findViewById(R.id.tv_company);
+        final TextView name = markerView.findViewById(R.id.name);
+        final TextView tv_jobs = markerView.findViewById(R.id.tv_jobs);
+
+        tvCompany.setText(userInfo.getPart_name());
+        name.setText(userInfo.getName());
+        tv_jobs.setText(userInfo.getPosition());
+
+        Glide.with(mContext)
+                .load(userInfo.getImg())
+                .into(new SimpleTarget<Drawable>(100, 100) {
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                        icon.setImageDrawable(resource);
+                        listener.markerIconLoadingFinished(markerView);
+                    }
+                });
+    }
+
+    /**
+     * by moos on 2018/01/12
+     * func:定制化marker的图标
+     * 网格员
+     *
+     * @return
+     */
+    private void customizeMarkerIcon(GridreportIndexBean.GridNowInfo userInfo, final OnMarkerIconLoadListener listener) {
+        final View markerView = LayoutInflater.from(mContext).inflate(R.layout.marker_bg, null);
+        final CircleImageView icon = markerView.findViewById(R.id.img);
+        final TextView tvCompany = markerView.findViewById(R.id.tv_company);
+        final TextView name = markerView.findViewById(R.id.name);
+        final TextView tv_jobs = markerView.findViewById(R.id.tv_jobs);
+        tv_jobs.setVisibility(View.GONE);
+
+        tvCompany.setText(userInfo.getPart_name());
+        name.setText(userInfo.getName());
+
+        Glide.with(mContext)
+                .load(userInfo.getImg())
+                .into(new SimpleTarget<Drawable>(100, 100) {
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                        icon.setImageDrawable(resource);
+                        listener.markerIconLoadingFinished(markerView);
+                    }
+                });
+    }
 
     /**
      * by moos on 2018/01/12
@@ -193,12 +208,12 @@ public class MarkerImgLoad {
                 });
     }
 
-    public static LatLng getLatLng(String str){
-        if (!TextUtils.isEmpty(str)){
+    public static LatLng getLatLng(String str) {
+        if (!TextUtils.isEmpty(str)) {
             String[] split = str.split(",");
             double v = Double.parseDouble(split[1]);
             double v1 = Double.parseDouble(split[0]);
-            return new LatLng(v,v1);
+            return new LatLng(v, v1);
         }
         return null;
     }

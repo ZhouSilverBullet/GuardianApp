@@ -41,12 +41,13 @@
 
         <LinearLayout
             android:id="@+id/ll_area_layout"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
+            android:gravity="center_vertical|right"
             android:orientation="horizontal">
 
             <TextView
+                android:singleLine="true"
                 android:id="@+id/tv_area"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

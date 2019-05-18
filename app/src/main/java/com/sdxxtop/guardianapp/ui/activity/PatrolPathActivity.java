@@ -64,7 +64,7 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
 
     private AMap aMap;
     private List<LatLng> list = new ArrayList<>();
-    private int userid;
+    private String userid;
     private int reportType;  // 网格员:1  / 企业 :2
     private String name;
 
@@ -98,7 +98,7 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
     protected void initView() {
         super.initView();
         name = getIntent().getStringExtra("name");
-        userid = getIntent().getIntExtra("userid", -1);
+        userid = getIntent().getStringExtra("userid");
         reportType = getIntent().getIntExtra("reportType", -1);
         title.setTitleValue(name + "巡逻报告");
 
@@ -233,7 +233,7 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
             case R.id.ttv_1:
             case R.id.ttv_2:
                 Intent intent = new Intent(this,SafeStaffDetailActivity.class);
-                intent.putExtra("id",userid);
+                intent.putExtra("id",Integer.parseInt(userid));
                 intent.putExtra("type",reportType);
                 intent.putExtra("name",name);
                 startActivity(intent);

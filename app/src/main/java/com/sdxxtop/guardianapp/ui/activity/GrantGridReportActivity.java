@@ -24,7 +24,6 @@ import com.sdxxtop.guardianapp.model.bean.GridreportIndexBean;
 import com.sdxxtop.guardianapp.model.bean.TabTextBean;
 import com.sdxxtop.guardianapp.presenter.GGRPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.GGRContract;
-import com.sdxxtop.guardianapp.ui.adapter.GridMarkerAdapter;
 import com.sdxxtop.guardianapp.ui.pop.AreaSelectPopWindow;
 import com.sdxxtop.guardianapp.ui.widget.CustomEventLayout;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
@@ -64,10 +63,7 @@ public class GrantGridReportActivity extends BaseMvpActivity<GGRPresenter> imple
 
     private RxPermissions mRxPermissions;
     private AMap mAMap;
-    private Marker tempMarker;
-    private GridMarkerAdapter mAdapter;
     private MarkerImgLoad markerImgLoad;
-    private final LatLng centerLocation = new LatLng(40.035613, 116.313903);
 
     private int part_typeid = 0;  // 区域选择默认值
     private List<AreaSelectPopWindow.PopWindowDataBean> popWondowData = new ArrayList<>();
@@ -151,32 +147,21 @@ public class GrantGridReportActivity extends BaseMvpActivity<GGRPresenter> imple
             mAMap.setMaxZoomLevel(20);
         }
 
-        mAdapter = new GridMarkerAdapter(this);
-        mAMap.setInfoWindowAdapter(mAdapter);
+//        mAdapter = new GridMarkerAdapter(this);
+//        mAMap.setInfoWindowAdapter(mAdapter);
 
         markerImgLoad = new MarkerImgLoad(this);
 
         mAMap.setOnMarkerClickListener(new AMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                tempMarker = marker;
-                if (marker.getObject().getClass().equals(MarkerSign.class)) {
-                    if (marker.isInfoWindowShown()) {
-                        marker.hideInfoWindow();
-                    } else {
-                        marker.showInfoWindow();
-                    }
-                }
-                mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), mAMap.getCameraPosition().zoom));
+                MarkerOptions options = marker.getOptions();
+                Intent intent = new Intent(mContext, PatrolPathActivity.class);
+                intent.putExtra("name", options.getSnippet());
+                intent.putExtra("reportType", 1);
+                intent.putExtra("userid", options.getTitle());
+                mContext.startActivity(intent);
                 return true;
-            }
-        });
-        mAMap.setOnMapClickListener(new AMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                if (tempMarker != null && tempMarker.isInfoWindowShown()) {
-                    tempMarker.hideInfoWindow();
-                }
             }
         });
     }
@@ -292,8 +277,8 @@ public class GrantGridReportActivity extends BaseMvpActivity<GGRPresenter> imple
 
     @Override
     public void onTabClick(int num) {
-        Intent intent = new Intent(GrantGridReportActivity.this, GACPatrolDetailActivity.class);  // 轨迹详情
-        startActivity(intent);
+//        Intent intent = new Intent(GrantGridReportActivity.this, GACPatrolDetailActivity.class);  // 轨迹详情
+//        startActivity(intent);
     }
 
     @Override

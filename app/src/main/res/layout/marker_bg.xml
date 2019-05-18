@@ -1,24 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="11dp"
-                android:layout_height="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center">
+
+    <LinearLayout
+        android:id="@+id/ll_containor"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_map_marker_green_bg"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="11dp"
+            android:layout_toRightOf="@+id/img"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="张三"
+                android:textColor="#ffffff"
+                android:textSize="10sp"/>
+
+            <TextView
+                android:id="@+id/tv_jobs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="安全员"
+                android:textColor="#ffffff"
+                android:textSize="10sp"/>
+
+            <TextView
+                android:id="@+id/tv_company"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="xxx公司"
+                android:textColor="#ffffff"
+                android:textSize="10sp"/>
+
+        </LinearLayout>
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="11dp"
         android:layout_height="15dp"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/ll_containor"
+        android:layout_alignParentLeft="true"
         android:layout_centerHorizontal="true"
         android:background="@drawable/map_1">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:visibility="gone"
             android:id="@+id/marker_item_icon"
             android:layout_width="11dp"
             android:layout_height="15dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="1dp"
-            android:src="@drawable/userheadholder"/>
+            android:src="@drawable/userheadholder"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 
