@@ -159,17 +159,18 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
 //                            UIUtils.showToast("打卡");
 
                             //判断一次打卡，gps是否打开
-                            if (GpsUtils.isOPen(getContext())) {
-                                if (mIsFace) {
+
+                            if (mIsFace) {
+                                if (GpsUtils.isOPen(getContext())) {
                                     intent = new Intent(getContext(), MyFaceLivenessActivity.class);
                                     intent.putExtra("isFace", true);
                                 } else {
-                                    toFace();
+                                    GpsUtils.showCode332ErrorDialog(getContext());
                                 }
                             } else {
-
-                                GpsUtils.showCode332ErrorDialog(getContext());
+                                toFace();
                             }
+
                             break;
                     }
                     if (intent != null) {
