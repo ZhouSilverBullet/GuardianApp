@@ -1,6 +1,7 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
@@ -25,7 +26,7 @@ import com.sdxxtop.guardianapp.ui.adapter.EventReportRecyclerAdapter;
 import com.sdxxtop.guardianapp.ui.adapter.EventSearchTitleAdapter;
 import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
 import com.sdxxtop.guardianapp.ui.widget.NumberEditTextView;
-import com.sdxxtop.guardianapp.ui.widget.SingleDataView;
+import com.sdxxtop.guardianapp.ui.widget.SingleStyleView;
 import com.sdxxtop.guardianapp.ui.widget.TextAndEditView;
 import com.sdxxtop.guardianapp.ui.widget.TextAndTextView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
@@ -40,7 +41,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.qqtheme.framework.picker.OptionPicker;
 
 public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> implements EventReportRecyclerAdapter.HorListener, EventReportContract.IView {
     @BindView(R.id.tv_title)
@@ -78,6 +78,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     private EventSearchTitleAdapter adapter;
 
     private boolean isSearchEnable = true;
+    private SingleStyleView singleStyleView;
 
     @Override
     protected int getLayout() {
@@ -103,6 +104,9 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 isSearchEnable = false;
+                mSelectPartId = 0;
+                tatvReportPath.getTextRightText().setText("请点击选择");
+                tatvReportPath.getTextRightText().setTextColor(Color.parseColor("#999999"));
                 EventSearchTitleBean.KeyInfo item = (EventSearchTitleBean.KeyInfo) adapter.getItem(position);
                 taevTitle.getEditText().setText(item.getKeyword());
                 taevTitle.getEditText().setSelection(item.getKeyword().length());
@@ -139,9 +143,9 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (isSearchEnable){
+                if (isSearchEnable) {
                     mPresenter.searchTitle(s.toString().trim());
-                }else{
+                } else {
                     isSearchEnable = true;
                 }
             }
@@ -263,7 +267,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
             llSearchDataLayout.setVisibility(View.GONE);
         }
 
-        if (bean.getPart_info()!=null&&bean.getPart_info().size()>0){
+        if (bean.getPart_info() != null && bean.getPart_info().size() > 0) {
             mPartList = bean.getPart_info();
         }
     }
@@ -419,10 +423,9 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     }
 
 
-    private SingleDataView singleDataView;
-    private SingleDataView singleReportPathDataView;
+    private SingleStyleView singleReportPathDataView;
     private List<String> queryData;
-    private List<String> reportPathData;
+    private List<String> reportPathData = new ArrayList<>();
 
     private void selectReportPath() {
         if (mPartList == null) {
@@ -432,12 +435,9 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
             }
             return;
         }
-
-        if (reportPathData == null) {
-            reportPathData = new ArrayList<>();
-            for (ShowPartBean.PartBean partBean : mPartList) {
-                reportPathData.add(partBean.getPart_name());
-            }
+        reportPathData.clear();
+        for (ShowPartBean.PartBean partBean : mPartList) {
+            reportPathData.add(partBean.getPart_name());
         }
 
         showReportPathSelect(reportPathData);
@@ -461,41 +461,44 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
         showQuerySelect(queryData);
     }
 
+
     private void showReportPathSelect(List<String> queryData) {
         if (singleReportPathDataView == null) {
-            singleReportPathDataView = new SingleDataView(this, queryData);
-        }
+            singleReportPathDataView = new SingleStyleView(this, queryData);
 
-        singleReportPathDataView.setOnItemPickListener(new OptionPicker.OnOptionPickListener() {
-            @Override
-            public void onOptionPicked(int index, String item) {
-                tatvReportPath.getTextRightText().setText(item);
-                if (mPartList != null) {
-                    for (ShowPartBean.PartBean partBean : mPartList) {
-                        if (item.equals(partBean.getPart_name())) {
-                            mSelectPartId = partBean.getPart_id();
-                            return;
+            singleReportPathDataView.setOnItemSelectLintener(new SingleStyleView.OnItemSelectLintener() {
+                @Override
+                public void onItemSelect(String result) {
+                    tatvReportPath.getTextRightText().setText(result);
+                    tatvReportPath.getTextRightText().setTextColor(getResources().getColor(R.color.black));
+                    if (mPartList != null) {
+                        for (ShowPartBean.PartBean partBean : mPartList) {
+                            if (result.equals(partBean.getPart_name())) {
+                                mSelectPartId = partBean.getPart_id();
+                                return;
+                            }
                         }
                     }
+                    mSelectPartId = 0;
                 }
-                mSelectPartId = 0;
-            }
-        });
+            });
+        }
+
+        singleReportPathDataView.replaceData(queryData);
         singleReportPathDataView.show();
     }
 
     private void showQuerySelect(List<String> queryData) {
-        if (singleDataView == null) {
-            singleDataView = new SingleDataView(this, queryData);
+        if (singleStyleView == null) {
+            singleStyleView = new SingleStyleView(this, queryData);
+            singleStyleView.setOnItemSelectLintener(new SingleStyleView.OnItemSelectLintener() {
+                @Override
+                public void onItemSelect(String result) {
+                    tatvQuery.getTextRightText().setText(result);
+                }
+            });
         }
-
-        singleDataView.setOnItemPickListener(new OptionPicker.OnOptionPickListener() {
-            @Override
-            public void onOptionPicked(int index, String item) {
-                tatvQuery.getTextRightText().setText(item);
-            }
-        });
-        singleDataView.show();
+        singleStyleView.show();
     }
 
     @Override

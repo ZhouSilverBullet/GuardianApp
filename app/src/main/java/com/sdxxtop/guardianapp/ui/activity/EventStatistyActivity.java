@@ -67,23 +67,23 @@ public class EventStatistyActivity extends BaseMvpActivity<EventStatistyPresente
         switch (eventId) {
             case 0:
                 title.setTitleValue("已上报事件统计");
-                tempText="已上报事件总数：";
+                tempText="已上报事件统计：";
                 break;
             case 1:
                 title.setTitleValue("待处理事件统计");
-                tempText="待处理事件总数：";
+                tempText="待处理事件统计：";
                 break;
             case 2:
                 title.setTitleValue("处理中事件统计");
-                tempText="处理中事件总数：";
+                tempText="处理中事件统计：";
                 break;
             case 3:
                 title.setTitleValue("已处理事件统计");
-                tempText="已处理报事件总数：";
+                tempText="已处理报事件统计：";
                 break;
             case 4:
                 title.setTitleValue("已完成事件统计");
-                tempText="已完成事件总数：";
+                tempText="已完成事件统计：";
                 break;
         }
 

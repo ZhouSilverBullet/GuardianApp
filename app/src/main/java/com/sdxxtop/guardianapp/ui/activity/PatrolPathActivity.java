@@ -1,13 +1,16 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.amap.api.location.AMapLocation;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
@@ -18,6 +21,7 @@ import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.PolylineOptions;
 import com.amap.api.services.geocoder.GeocodeSearch;
+import com.luck.picture.lib.permissions.RxPermissions;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
@@ -29,6 +33,7 @@ import com.sdxxtop.guardianapp.ui.widget.TabTextView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
 import com.sdxxtop.guardianapp.utils.Date2Util;
 import com.sdxxtop.guardianapp.utils.DateUtil;
+import com.sdxxtop.guardianapp.utils.LocationUtil;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import java.text.SimpleDateFormat;
@@ -38,6 +43,7 @@ import java.util.List;
 import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.functions.Consumer;
 
 import static com.sdxxtop.guardianapp.utils.MarkerImgLoad.convertViewToBitmap;
 
@@ -63,6 +69,7 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
     private int reportType;  // 网格员:1  / 企业 :2
     private String name;
     private StatSelectionDateWindow selectionDateWindow;
+    private RxPermissions mRxPermissions;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -103,7 +110,16 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
         ttv2.tvLine.setVisibility(View.GONE);
         ttv1.tvLine.setVisibility(View.GONE);
 
-        initMap();
+        mRxPermissions = new RxPermissions(this);
+        mRxPermissions.request(Manifest.permission.ACCESS_COARSE_LOCATION).subscribe(new Consumer<Boolean>() {
+            @Override
+            public void accept(Boolean aBoolean) throws Exception {
+                if (aBoolean) {
+                    initMap();
+                    initLocation();
+                }
+            }
+        });
     }
 
     @Override
@@ -122,6 +138,26 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
         }
     }
 
+    /**
+     * 定位
+     */
+    private void initLocation() {
+        LocationUtil locationUtil = new LocationUtil();
+        locationUtil.startLocate(this);
+        locationUtil.setLocationCallBack(new LocationUtil.ILocationCallBack() {
+            @Override
+            public void callBack(String str, double lat, double lgt, AMapLocation amapLocation) {
+                if (amapLocation != null && amapLocation.getErrorCode() == 0) {
+                    locationUtil.stopLocation();
+                    LatLng curLatlng = new LatLng(amapLocation.getLatitude(), amapLocation.getLongitude());
+                    aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(curLatlng, 16f));
+                } else {
+                    String errText = "定位失败," + amapLocation.getErrorCode() + ": " + amapLocation.getErrorInfo();
+                    Log.e("AmapErr", errText);
+                }
+            }
+        });
+    }
 
     /**
      * 画线
@@ -163,13 +199,13 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
         //起点图标
         aMap.addMarker(new MarkerOptions()
                 .position(list.get(0))
-                .icon(customizeMarkerIconLastAndFirst(data.get(0),"起点")));
+                .icon(customizeMarkerIconLastAndFirst(data.get(0), "起点")));
 
         //终点坐标
         if (list.size() > 0) {
             aMap.addMarker(new MarkerOptions()
                     .position(list.get(list.size() - 1))
-                    .icon(customizeMarkerIconLastAndFirst(data.get(data.size()-1),"终点")));
+                    .icon(customizeMarkerIconLastAndFirst(data.get(data.size() - 1), "终点")));
         }
     }
 
@@ -185,7 +221,8 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
             return BitmapDescriptorFactory.fromResource(R.mipmap.ic_success);
         }
     }
-    private BitmapDescriptor customizeMarkerIconLastAndFirst(EnterpriseTrailBean.TrailInfo trailInfo,String str) {
+
+    private BitmapDescriptor customizeMarkerIconLastAndFirst(EnterpriseTrailBean.TrailInfo trailInfo, String str) {
         final View markerView = LayoutInflater.from(mContext).inflate(R.layout.view_map_with_time, null);
         TextView time = markerView.findViewById(R.id.tv_time);
         TextView tv_title = markerView.findViewById(R.id.tv_title);

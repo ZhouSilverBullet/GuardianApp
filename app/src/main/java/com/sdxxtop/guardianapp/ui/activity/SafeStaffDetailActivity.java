@@ -46,6 +46,7 @@ public class SafeStaffDetailActivity extends BaseMvpActivity<SafeStaffDetailPres
     private SafeStaffDetailAdapter adapter;
     private String event_name;
     private String name; // 网格员姓名
+    private String start_time,end_time;
 
     @Override
     protected int getLayout() {
@@ -106,10 +107,12 @@ public class SafeStaffDetailActivity extends BaseMvpActivity<SafeStaffDetailPres
         gertsvView.setOnTimeSelectListener(new GERTimeSelectView.OnTimeChooseListener() {
             @Override
             public void onTimeSelect(String startTime, String endTime) {
+                start_time = startTime;
+                end_time = endTime;
                 if (type == 1) {  // 网格员
-                    mPresenter.gridreportOperator(resultId, startTime, endTime);
+                    mPresenter.gridreportOperator(resultId, start_time, end_time);
                 } else if (type == 2) {  // 企业
-                    mPresenter.enterpriseSecurity(resultId, startTime, endTime);
+                    mPresenter.enterpriseSecurity(resultId, start_time, end_time);
                 }
             }
         });
@@ -129,6 +132,8 @@ public class SafeStaffDetailActivity extends BaseMvpActivity<SafeStaffDetailPres
             intent.putExtra("type", type);
             intent.putExtra("partId", resultId);
             intent.putExtra("title", event_name);
+            intent.putExtra("startTime", start_time);
+            intent.putExtra("endTime", end_time);
             startActivity(intent);
         }
     }

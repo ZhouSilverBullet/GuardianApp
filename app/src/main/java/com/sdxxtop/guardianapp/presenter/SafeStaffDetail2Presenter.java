@@ -23,9 +23,11 @@ public class SafeStaffDetail2Presenter extends RxPresenter<SafeStaffDetail2Contr
     }
 
 
-    public void enterpriseUserdetails(int partId) {
+    public void enterpriseUserdetails(int partId,String startTime,String endTime) {
         Params params = new Params();
         params.put("pai", partId);
+        params.put("st", startTime);
+        params.put("et", endTime);
 
         Observable<RequestBean<EnterpriseUserdetailsBean>> observable = getEnvirApi().postEnterpriseUserdetails(params.getData());
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EnterpriseUserdetailsBean>() {

@@ -29,7 +29,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="16dp"
-            android:text="银都铝业"
+            android:text="..."
             android:textColor="@color/color_292929"
             android:textSize="15sp"/>
 
