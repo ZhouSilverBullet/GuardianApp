@@ -163,4 +163,8 @@
         <item name="android:windowExitAnimation">@anim/window_back</item>
     </style>
 
+    <style name="CustomTextAppearance">
+        <item name="android:textColor">@color/blue</item>
+    </style>
+
 </resources>

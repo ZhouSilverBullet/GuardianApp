@@ -1,6 +1,7 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sdxxtop.guardianapp.R;
@@ -40,6 +41,8 @@ public class GACEventDetailActivity extends BaseMvpActivity<GACEPresenter> imple
     TextView tvBg;
     @BindView(R.id.ett_view)
     EnterpriseTabTitleView ettView;
+    @BindView(R.id.ll_containor)
+    LinearLayout llContainor;
 
     private GACEDetailAdapter adapter;
     private List<AreaSelectPopWindow.PopWindowDataBean> leftData = new ArrayList<>();
@@ -64,7 +67,7 @@ public class GACEventDetailActivity extends BaseMvpActivity<GACEPresenter> imple
     @Override
     protected void initView() {
         super.initView();
-
+        casvRight.tvArea.setText("全部");
         ettView.setOnTextClickListener(new EnterpriseTabTitleView.OnTextClickListener() {
             @Override
             public void onTextClick(int num, boolean isOrder) {
@@ -81,10 +84,11 @@ public class GACEventDetailActivity extends BaseMvpActivity<GACEPresenter> imple
         casvLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AreaSelectPopWindow popWindow = new AreaSelectPopWindow(GACEventDetailActivity.this, casvLeft.llAreaLayout, leftData, casvLeft.tvArea, tvBg);
+                AreaSelectPopWindow popWindow = new AreaSelectPopWindow(GACEventDetailActivity.this, llContainor, leftData, casvLeft.tvArea, tvBg);
                 popWindow.setOnPopItemClickListener(new AreaSelectPopWindow.OnPopItemClickListener() {
                     @Override
                     public void onPopItemClick(int partTypeid, String partName) {
+                        casvLeft.tvArea.setText(partName);
                         part_typeid = partTypeid;
                         mPresenter.enterpriseCompany(part_typeid, parent_id);
                     }
@@ -95,10 +99,11 @@ public class GACEventDetailActivity extends BaseMvpActivity<GACEPresenter> imple
         casvRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AreaSelectPopWindow popWindow = new AreaSelectPopWindow(GACEventDetailActivity.this, casvRight.llAreaLayout, rightData, casvRight.tvArea, tvBg);
+                AreaSelectPopWindow popWindow = new AreaSelectPopWindow(GACEventDetailActivity.this, llContainor, rightData, casvRight.tvArea, tvBg);
                 popWindow.setOnPopItemClickListener(new AreaSelectPopWindow.OnPopItemClickListener() {
                     @Override
                     public void onPopItemClick(int partTypeid, String partName) {
+                        casvRight.tvArea.setText(partName);
                         parent_id = partTypeid;
                         mPresenter.enterpriseCompany(part_typeid, parent_id);
                     }
@@ -115,16 +120,15 @@ public class GACEventDetailActivity extends BaseMvpActivity<GACEPresenter> imple
 
     @Override
     public void showData(EnterpriseCompanyBean bean) {
-        casvLeft.tvArea.setText(bean.getEvent_name());
-        casvRight.tvArea.setText(bean.getParent_name());
         adapter.replaceData(bean.getPart_info());
-
+        leftData.clear();
+        rightData.clear();
         for (int i = 0; i < bean.getUser_part().size(); i++) {
             EnterpriseCompanyBean.PartData partData = bean.getUser_part().get(i);
             leftData.add(new AreaSelectPopWindow.PopWindowDataBean(partData.getPart_id(), partData.getPart_name()));
         }
         for (int i = 0; i < bean.getPart_data().size(); i++) {
-            EnterpriseCompanyBean.PartData partData = bean.getUser_part().get(i);
+            EnterpriseCompanyBean.PartData partData = bean.getPart_data().get(i);
             rightData.add(new AreaSelectPopWindow.PopWindowDataBean(partData.getPart_id(), partData.getPart_name()));
         }
     }

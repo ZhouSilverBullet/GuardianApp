@@ -23,8 +23,8 @@ public class SafeStaffDetailAdapter extends BaseQuickAdapter<EnterpriseSecurityB
     @Override
     protected void convert(BaseViewHolder helper, EnterpriseSecurityBean.SignData item) {
         helper.setText(R.id.tv_time, item.getSign_time());
-        helper.setText(R.id.tv_distance, String.valueOf(item.getDistance()));
-        helper.setText(R.id.tv_duration, String.valueOf(item.getDuration()));
+        helper.setText(R.id.tv_duration, String.valueOf(item.getDistance()));
+        helper.setText(R.id.tv_distance, String.valueOf(item.getDuration()));
         helper.setGone(R.id.tv_sign_num, false);
     }
 }

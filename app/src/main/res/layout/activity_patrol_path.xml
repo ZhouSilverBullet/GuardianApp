@@ -51,18 +51,18 @@
             android:background="#FFFFFF"/>
 
         <TextView
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp"
             android:id="@+id/tv_end_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="10dp"
             android:layout_weight="1"
             android:background="@color/white"
             android:gravity="center"
             android:padding="10dp"
-            android:text="选择时间"
+            android:text="今日"
             android:textColor="@color/color_313131"
             android:textSize="15sp"/>
     </LinearLayout>

@@ -32,6 +32,6 @@
             android:background="#FAFBFF"
             android:gravity="center"
             android:text="暂无数据"
-            android:textColor="@color/actionsheet_red"/>
+            android:textColor="@color/color_313131"/>
     </RelativeLayout>
 </LinearLayout>

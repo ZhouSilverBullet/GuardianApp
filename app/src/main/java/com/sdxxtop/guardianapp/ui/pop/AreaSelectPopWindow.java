@@ -33,7 +33,7 @@ public class AreaSelectPopWindow extends PopupWindow {
     private List<PopWindowDataBean> mData;
     private OnPopItemClickListener mListener;
 
-    private int selectPartId = -1;
+    private int selectPartId = 0;
 
     public AreaSelectPopWindow(Activity activity, View viewLayout, List<PopWindowDataBean> data, TextView textView) {
         this.activity = activity;
@@ -111,7 +111,6 @@ public class AreaSelectPopWindow extends PopupWindow {
                 if (mListener != null) {
                     PopWindowDataBean item = mData.get(position);
                     mListener.onPopItemClick(item.getPartId(), item.getPartName());
-//                    tagTextView.setText(completeInfo.getPart_name());
                     selectPartId = item.getPartId();
                 }
                 dismiss();

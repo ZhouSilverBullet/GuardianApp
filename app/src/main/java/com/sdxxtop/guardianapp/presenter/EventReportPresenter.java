@@ -2,6 +2,7 @@ package com.sdxxtop.guardianapp.presenter;
 
 import com.google.gson.internal.LinkedTreeMap;
 import com.sdxxtop.guardianapp.base.RxPresenter;
+import com.sdxxtop.guardianapp.model.bean.EventSearchTitleBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
 import com.sdxxtop.guardianapp.model.bean.ShowPartBean;
 import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
@@ -66,7 +67,7 @@ public class EventReportPresenter extends RxPresenter<EventReportContract.IView>
             public void onSuccess(ShowPartBean showPartBean) {
 //                mView.modifyRefresh();
                 List<ShowPartBean.PartBean> part = showPartBean.getPart();
-                if ( part != null) {
+                if (part != null) {
                     mView.showPart(part);
                 }
             }
@@ -79,4 +80,21 @@ public class EventReportPresenter extends RxPresenter<EventReportContract.IView>
         addSubscribe(disposable);
     }
 
+    public void searchTitle(String title) {
+        Params params = new Params();
+        params.put("kwd",title);
+        Observable<RequestBean<EventSearchTitleBean>> observable = getEnvirApi().postEventSearch(params.getData());
+        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EventSearchTitleBean>() {
+            @Override
+            public void onSuccess(EventSearchTitleBean Bean) {
+                mView.showSearchData(Bean);
+            }
+
+            @Override
+            public void onFailure(int code, String error) {
+//                UIUtils.showToast(error);
+            }
+        });
+        addSubscribe(disposable);
+    }
 }

@@ -75,8 +75,8 @@ public class EnterpriseSecurityBean {
 
     public static class SignData{
         private String sign_time;
-        private double distance;
-        private double duration;
+        private int distance;
+        private int duration;
 
         public String getSign_time() {
             return sign_time;
@@ -86,19 +86,19 @@ public class EnterpriseSecurityBean {
             this.sign_time = sign_time;
         }
 
-        public double getDistance() {
+        public int getDistance() {
             return distance;
         }
 
-        public void setDistance(double distance) {
+        public void setDistance(int distance) {
             this.distance = distance;
         }
 
-        public double getDuration() {
+        public int getDuration() {
             return duration;
         }
 
-        public void setDuration(double duration) {
+        public void setDuration(int duration) {
             this.duration = duration;
         }
     }

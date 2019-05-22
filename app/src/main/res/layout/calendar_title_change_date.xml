@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:text="2018年1月1日"
-            android:textColor="#333333"
+            android:textColor="@color/blue"
             android:textSize="16sp" />
 
 

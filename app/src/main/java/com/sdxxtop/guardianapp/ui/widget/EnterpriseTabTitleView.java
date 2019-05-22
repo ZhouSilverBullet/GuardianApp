@@ -51,7 +51,7 @@ public class EnterpriseTabTitleView extends LinearLayout implements View.OnClick
         LayoutInflater.from(getContext()).inflate(R.layout.view_enterprise_title, this, true);
         ButterKnife.bind(this);
         tvText1.setText("企业名称");
-        tvText2.setText("所属区域");
+        tvText2.setText("所属单位");
         tvText3.setText("安全管理\n" + "员人数");
         tvText4.setText("学习培训\n" + "总次数");
         tvText5.setText("上报自查\n" + "总次数");

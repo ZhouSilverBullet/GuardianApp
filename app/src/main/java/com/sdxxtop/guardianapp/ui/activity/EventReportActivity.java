@@ -1,28 +1,34 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
 import android.content.Intent;
+import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
+import com.sdxxtop.guardianapp.model.bean.EventSearchTitleBean;
 import com.sdxxtop.guardianapp.model.bean.ShowPartBean;
 import com.sdxxtop.guardianapp.presenter.EventReportPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.EventReportContract;
 import com.sdxxtop.guardianapp.ui.adapter.EventReportRecyclerAdapter;
+import com.sdxxtop.guardianapp.ui.adapter.EventSearchTitleAdapter;
 import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
 import com.sdxxtop.guardianapp.ui.widget.NumberEditTextView;
 import com.sdxxtop.guardianapp.ui.widget.SingleDataView;
 import com.sdxxtop.guardianapp.ui.widget.TextAndEditView;
 import com.sdxxtop.guardianapp.ui.widget.TextAndTextView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
-import com.sdxxtop.guardianapp.utils.GuardianUtils;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import java.io.File;
@@ -32,7 +38,6 @@ import java.util.List;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.qqtheme.framework.picker.OptionPicker;
@@ -54,6 +59,13 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     @BindView(R.id.taev_title)
     TextAndEditView taevTitle;
 
+    @BindView(R.id.ll_search_data_layout)
+    RelativeLayout llSearchDataLayout;
+    @BindView(R.id.title_recycler)
+    RecyclerView titleRecycler;
+    @BindView(R.id.tv_dismiss)
+    TextView tvDismiss;
+
     @BindView(R.id.net_content)
     NumberEditTextView netContent;
 
@@ -63,6 +75,9 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     private String lonLng;
     private List<ShowPartBean.PartBean> mPartList;
     private int mSelectPartId;
+    private EventSearchTitleAdapter adapter;
+
+    private boolean isSearchEnable = true;
 
     @Override
     protected int getLayout() {
@@ -80,6 +95,20 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
         taevTitle.getEditText().setFilters(filters);
 
         netContent.setEditHint("");
+
+        titleRecycler.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new EventSearchTitleAdapter(R.layout.item_text, null);
+        titleRecycler.setAdapter(adapter);
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                isSearchEnable = false;
+                EventSearchTitleBean.KeyInfo item = (EventSearchTitleBean.KeyInfo) adapter.getItem(position);
+                taevTitle.getEditText().setText(item.getKeyword());
+                taevTitle.getEditText().setSelection(item.getKeyword().length());
+                llSearchDataLayout.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override
@@ -99,6 +128,34 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, EventReportListActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        taevTitle.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (isSearchEnable){
+                    mPresenter.searchTitle(s.toString().trim());
+                }else{
+                    isSearchEnable = true;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        tvDismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                llSearchDataLayout.setVisibility(View.GONE);
             }
         });
     }
@@ -174,7 +231,6 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 
         showLoadingDialog();
 
-
         mPresenter.pushReport(title, pathType, queryType, place, lonLng, editValue, imagePushPath);
     }
 
@@ -191,6 +247,25 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     @Override
     public void showPart(List<ShowPartBean.PartBean> par) {
         mPartList = par;
+    }
+
+    /**
+     * 展示标题输入联想
+     *
+     * @param bean
+     */
+    @Override
+    public void showSearchData(EventSearchTitleBean bean) {
+        if (bean.getKey_info() != null && bean.getKey_info().size() > 0) {
+            llSearchDataLayout.setVisibility(View.VISIBLE);
+            adapter.replaceData(bean.getKey_info());
+        } else {
+            llSearchDataLayout.setVisibility(View.GONE);
+        }
+
+        if (bean.getPart_info()!=null&&bean.getPart_info().size()>0){
+            mPartList = bean.getPart_info();
+        }
     }
 
     protected void setPhotoRecycler(RecyclerView recycler) {

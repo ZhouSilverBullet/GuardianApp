@@ -110,7 +110,7 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
                 startActivity(intent);
                 finish();
             }
-        }, 6000);
+        }, 3000);
 
     }
 
@@ -122,7 +122,7 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
                 startActivity(intent);
                 finish();
             }
-        }, 6000);
+        }, 3000);
 
     }
 

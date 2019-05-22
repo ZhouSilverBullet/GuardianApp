@@ -20,6 +20,7 @@
         android:background="@color/color_E0E0E0"/>
 
     <LinearLayout
+        android:id="@+id/ll_containor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">

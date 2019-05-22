@@ -89,7 +89,7 @@ public class SafeStaffDetailActivity extends BaseMvpActivity<SafeStaffDetailPres
             list.add(new TabTextBean(4, "--", "打卡数"));
         } else if (type == 2) {  //企业
             tvName.setText(name);
-            title.setTitleValue("安全员详情");
+            title.setTitleValue("安全员巡逻详情");
             list.add(new TabTextBean(1, "--", "安全管理员人数"));
             list.add(new TabTextBean(2, "--", "学习培训次数"));
             list.add(new TabTextBean(3, "--", "上报自查次数"));
@@ -118,6 +118,9 @@ public class SafeStaffDetailActivity extends BaseMvpActivity<SafeStaffDetailPres
     @Override
     public void onTabClick(int num) {
         if (type==1){// 网格员
+            if (num>1){
+                return;
+            }
             Intent intent = new Intent(this, GridreportUserreportActivity.class);
             intent.putExtra("part_userid", resultId);
             startActivity(intent);

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.amap.api.location.AMapLocation;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdate;
 import com.amap.api.maps.CameraUpdateFactory;
@@ -27,6 +28,7 @@ import com.sdxxtop.guardianapp.presenter.contract.GCRContract;
 import com.sdxxtop.guardianapp.ui.pop.AreaSelectPopWindow;
 import com.sdxxtop.guardianapp.ui.widget.CustomEventLayout;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
+import com.sdxxtop.guardianapp.utils.LocationUtil;
 import com.sdxxtop.guardianapp.utils.MarkerImgLoad;
 import com.sdxxtop.guardianapp.utils.MarkerSign;
 
@@ -53,8 +55,6 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
     TextView tvBg;
     @BindView(R.id.tv_now_count)
     TextView tvNowCount;
-    @BindView(R.id.ll_area_layout)
-    LinearLayout llAreaLayout;
     @BindView(R.id.ll_containor_temp)
     LinearLayout llContainorTemp;
 
@@ -115,10 +115,31 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
             public void accept(Boolean aBoolean) throws Exception {
                 if (aBoolean) {
                     initMap();
+                    initLocation();
                 }
             }
         });
+    }
 
+    /**
+     * 定位
+     */
+    private void initLocation() {
+        LocationUtil locationUtil = new LocationUtil();
+        locationUtil.startLocate(this);
+        locationUtil.setLocationCallBack(new LocationUtil.ILocationCallBack() {
+            @Override
+            public void callBack(String str, double lat, double lgt, AMapLocation amapLocation) {
+                if (amapLocation != null && amapLocation.getErrorCode() == 0) {
+                    locationUtil.stopLocation();
+                    LatLng curLatlng = new LatLng(amapLocation.getLatitude(), amapLocation.getLongitude());
+                    mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(curLatlng, 16f));
+                } else {
+                    String errText = "定位失败," + amapLocation.getErrorCode() + ": " + amapLocation.getErrorInfo();
+                    Log.e("AmapErr", errText);
+                }
+            }
+        });
     }
 
     //添加详情标签
@@ -253,7 +274,7 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
     }
 
 
-    @OnClick(R.id.ll_area_layout)
+    @OnClick(R.id.rl_area_layout)
     public void onViewClicked() {
         initPopWindows();
     }
@@ -263,6 +284,7 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
         popWindow.setOnPopItemClickListener(new AreaSelectPopWindow.OnPopItemClickListener() {
             @Override
             public void onPopItemClick(int partTypeid, String partName) {
+                tvArea.setText(partName);
                 part_typeid = partTypeid;
                 mPresenter.enterpriseIndex(part_typeid);
             }
@@ -279,7 +301,6 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
     public void showData(EnterpriseIndexBean bean) {
         mAMap.clear();
         tvNowCount.setText("（在线人数" + bean.getNow_count() + "人）");
-        tvArea.setText(bean.getEvent_name());
         addTabView(bean);
         popWondowData.clear();
         if (bean.getPart_info() != null && bean.getPart_info().size() > 0) {

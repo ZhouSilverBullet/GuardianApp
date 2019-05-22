@@ -1,15 +1,11 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.FrameLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.amap.api.maps.AMap;
@@ -22,22 +18,21 @@ import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.PolylineOptions;
 import com.amap.api.services.geocoder.GeocodeSearch;
-import com.bigkoo.pickerview.builder.TimePickerBuilder;
-import com.bigkoo.pickerview.listener.OnTimeSelectChangeListener;
-import com.bigkoo.pickerview.listener.OnTimeSelectListener;
-import com.bigkoo.pickerview.view.TimePickerView;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.model.bean.EnterpriseTrailBean;
 import com.sdxxtop.guardianapp.presenter.PatrolPathPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.PatrolPathContract;
+import com.sdxxtop.guardianapp.ui.pop.StatSelectionDateWindow;
 import com.sdxxtop.guardianapp.ui.widget.TabTextView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
+import com.sdxxtop.guardianapp.utils.Date2Util;
 import com.sdxxtop.guardianapp.utils.DateUtil;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.Nullable;
@@ -59,14 +54,15 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
     @BindView(R.id.tv_end_time)
     TextView tvEndTime;
 
-    private TimePickerView pvTime;  // 时间选择控件
     private GeocodeSearch geocoderSearch;
+    private String chooseDay;
 
     private AMap aMap;
     private List<LatLng> list = new ArrayList<>();
     private String userid;
     private int reportType;  // 网格员:1  / 企业 :2
     private String name;
+    private StatSelectionDateWindow selectionDateWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -113,7 +109,7 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
     @Override
     protected void initData() {
         super.initData();
-        mPresenter.enterpriseTrail(userid, "",reportType);
+        mPresenter.enterpriseTrail(userid, "", reportType);
     }
 
     /**
@@ -144,17 +140,6 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
         if (list.size() > 2) {
             addMarker(data);
         }
-        //起点图标
-        aMap.addMarker(new MarkerOptions()
-                .position(list.get(0))
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.start)));
-
-        //终点坐标
-        if (list.size() > 0) {
-            aMap.addMarker(new MarkerOptions()
-                    .position(list.get(list.size() - 1))
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.end)));
-        }
 
         LatLngBounds bounds = getLatLngBounds();
         aMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 30));
@@ -174,6 +159,18 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
 //                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_success)));
                     .icon(customizeMarkerIcon(data.get(i))));
         }
+
+        //起点图标
+        aMap.addMarker(new MarkerOptions()
+                .position(list.get(0))
+                .icon(customizeMarkerIconLastAndFirst(data.get(0),"起点")));
+
+        //终点坐标
+        if (list.size() > 0) {
+            aMap.addMarker(new MarkerOptions()
+                    .position(list.get(list.size() - 1))
+                    .icon(customizeMarkerIconLastAndFirst(data.get(data.size()-1),"终点")));
+        }
     }
 
     private BitmapDescriptor customizeMarkerIcon(EnterpriseTrailBean.TrailInfo trailInfo) {
@@ -181,6 +178,20 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
         TextView time = markerView.findViewById(R.id.tv_time);
         String signTime = trailInfo.getSign_time();
         time.setText(DateUtil.getFormatMapTime(signTime));
+        BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(convertViewToBitmap(markerView));
+        if (bitmapDescriptor != null) {
+            return bitmapDescriptor;
+        } else {
+            return BitmapDescriptorFactory.fromResource(R.mipmap.ic_success);
+        }
+    }
+    private BitmapDescriptor customizeMarkerIconLastAndFirst(EnterpriseTrailBean.TrailInfo trailInfo,String str) {
+        final View markerView = LayoutInflater.from(mContext).inflate(R.layout.view_map_with_time, null);
+        TextView time = markerView.findViewById(R.id.tv_time);
+        TextView tv_title = markerView.findViewById(R.id.tv_title);
+        String signTime = trailInfo.getSign_time();
+        time.setText(DateUtil.getFormatMapTime(signTime));
+        tv_title.setText(str);
         BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(convertViewToBitmap(markerView));
         if (bitmapDescriptor != null) {
             return bitmapDescriptor;
@@ -232,22 +243,18 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
         switch (view.getId()) {
             case R.id.ttv_1:
             case R.id.ttv_2:
-                Intent intent = new Intent(this,SafeStaffDetailActivity.class);
-                intent.putExtra("id",Integer.parseInt(userid));
-                intent.putExtra("type",reportType);
-                intent.putExtra("name",name);
+                Intent intent = new Intent(this, SafeStaffDetailActivity.class);
+                intent.putExtra("id", Integer.parseInt(userid));
+                intent.putExtra("type", reportType);
+                intent.putExtra("name", name);
                 startActivity(intent);
                 break;
             case R.id.tv_end_time: // 选择时间
-                if (pvTime == null) {
-                    initLeftTimePicker();
-                    pvTime.show();
-                } else {
-                    pvTime.show();
-                }
+                showSelectDateWindow();
                 break;
         }
     }
+
     @Override
     public void showData(EnterpriseTrailBean bean) {
         aMap.clear();
@@ -263,42 +270,44 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
     }
 
     /**
-     * 初始化时间选择控件
+     * 选择日期的pop
      */
-    private void initLeftTimePicker() {//Dialog 模式下，在底部弹出
-        pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date, View v) {
-                tvEndTime.setText(DateUtil.getTime(date));
-                tvEndTime.setTextColor(getResources().getColor(R.color.black));
-                mPresenter.enterpriseTrail(userid, DateUtil.getTime(date).replaceAll("/", "-") + " 00:00:00",reportType);
-            }
-        }).setTimeSelectChangeListener(new OnTimeSelectChangeListener() {
-            @Override
-            public void onTimeSelectChanged(Date date) {
-                Log.i("pvLeftTime", "onTimeSelectChanged");
-            }
-        })
-                .setType(new boolean[]{true, true, true, false, false, false})
-                .isDialog(true) //默认设置false ，内部实现将DecorView 作为它的父控件。
-                .build();
+    private void showSelectDateWindow() {
+        if (selectionDateWindow == null) {
+            selectionDateWindow = new StatSelectionDateWindow(this, false, false, true);
 
-        Dialog mDialog = pvTime.getDialog();
-        if (mDialog != null) {
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    Gravity.BOTTOM);
+            selectionDateWindow.setSelectorDateListener(new StatSelectionDateWindow.SelectorDateListener() {
+                @Override
+                public void onSelector(String date, CalendarDay calendarDay) {
+                    // 请求网络
+                    chooseDay = date;
+                    tvEndTime.setText(getFormatDate(chooseDay));
+                    mPresenter.enterpriseTrail(userid, date, reportType);
+                    selectionDateWindow.dismiss();
+                }
+            });
 
-            params.leftMargin = 0;
-            params.rightMargin = 0;
-            pvTime.getDialogContainerLayout().setLayoutParams(params);
-
-            Window dialogWindow = mDialog.getWindow();
-            if (dialogWindow != null) {
-                dialogWindow.setWindowAnimations(com.bigkoo.pickerview.R.style.picker_view_slide_anim);//修改动画样式
-                dialogWindow.setGravity(Gravity.BOTTOM);//改成Bottom,底部显示
-            }
+            selectionDateWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                }
+            });
         }
+        selectionDateWindow.showAtLocation(getLayoutInflater().inflate(R.layout.activity_patrol_path, null), Gravity.BOTTOM, 0, 0);
+    }
+
+    public String getFormatDate(String sDate) {
+        if (sDate.equals(Date2Util.getDate())) {
+            return "今日";
+        }
+        String formatDate = "";
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM/dd");
+        try {
+            formatDate = sdf2.format(sdf1.parse(sDate));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return formatDate;
     }
 }

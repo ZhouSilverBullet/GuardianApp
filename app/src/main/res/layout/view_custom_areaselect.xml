@@ -20,6 +20,7 @@
         android:paddingBottom="9dp">
 
         <TextView
+            android:singleLine="true"
             android:id="@+id/tv_area"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

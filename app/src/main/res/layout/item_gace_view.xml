@@ -20,11 +20,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:singleLine="true"
             android:text="银都铝业"
             android:textColor="@color/color_313131"
             android:textSize="13sp"/>
 
         <TextView
+            android:singleLine="true"
             android:id="@+id/tv_company_row"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

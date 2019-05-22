@@ -69,6 +69,7 @@ public class GACPatrolDetailActivity extends BaseMvpActivity<GACPPresenter> impl
             @Override
             public void onPopItemClick(int partTypeid, String partName) {
                 start_page = 0;
+                casvView.tvArea.setText(partName);
                 part_Typeid = partTypeid;
                 mPresenter.gridreportPatrol(part_Typeid, start_page);
             }

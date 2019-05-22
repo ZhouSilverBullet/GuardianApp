@@ -10,7 +10,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.model.bean.PartEventListBean;
-import com.sdxxtop.guardianapp.model.bean.compar.PartEventListCompar;
 import com.sdxxtop.guardianapp.presenter.PELPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.PELContract;
 import com.sdxxtop.guardianapp.ui.adapter.PartEventListAdapter;
@@ -20,7 +19,6 @@ import com.sdxxtop.guardianapp.ui.widget.GERTimeSelectView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -132,10 +130,15 @@ public class PartEventListActivity extends BaseMvpActivity<PELPresenter> impleme
                 new AreaSelectPopWindow(PartEventListActivity.this, casvView.llAreaLayout, popWondowData, casvView.tvArea);
                 break;
             case R.id.ll_containor_temp:
-                List<PartEventListBean.ClData> data = adapter.getData();
-                Collections.sort(data, new PartEventListCompar(isOrder));
-                adapter.replaceData(data);
-                isOrder = !isOrder;
+//                List<PartEventListBean.ClData> data = adapter.getData();
+//                Collections.sort(data, new PartEventListCompar(isOrder));
+//                adapter.replaceData(data);
+//                isOrder = !isOrder;
+                event_type++;
+                if (event_type>4){
+                    event_type=1;
+                }
+                mPresenter.postPartEventList(0, part_id, start_time, end_time, event_type);
                 break;
         }
     }

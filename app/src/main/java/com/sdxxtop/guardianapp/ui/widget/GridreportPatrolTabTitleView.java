@@ -60,7 +60,7 @@ public class GridreportPatrolTabTitleView extends LinearLayout implements View.O
         ButterKnife.bind(this);
         ll_containor_5.setVisibility(View.GONE);
         tvText1.setText("姓名");
-        tvText2.setText("所属区域");
+        tvText2.setText("所属单位");
         tvText3.setText("巡逻天数");
         tvText4.setText("巡逻距离");
         ll_containor_2.setOnClickListener(this);

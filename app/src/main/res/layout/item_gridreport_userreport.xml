@@ -14,6 +14,7 @@
         android:paddingBottom="16dp">
 
         <TextView
+            android:singleLine="true"
             android:id="@+id/tv_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

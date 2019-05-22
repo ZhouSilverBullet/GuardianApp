@@ -109,11 +109,13 @@ public class StatSelectionDateWindow extends PopupWindow {
 
         Calendar instance = Calendar.getInstance();
 
-        materialCalendarView.state().edit().setMaximumDate(getLastDayOfMonth()).commit();
+        materialCalendarView.state().edit()
+                .setFirstDayOfWeek(2)
+                .setMaximumDate(getLastDayOfMonth()).commit();
         materialCalendarView.setTopbarVisible(false);
         tvTitle = (TextView) view.findViewById(R.id.tv_date);
-
         materialCalendarView.setSelectedDate(instance);
+
 
         if (isStat) {
             tvTitle.setText(DateUtil.getChineseYearAndMonthDate(materialCalendarView.getSelectedDate()));
@@ -176,6 +178,7 @@ public class StatSelectionDateWindow extends PopupWindow {
                 setShowBackground(1.0f);
             }
         });
+
     }
 
     private SelectorDateListener listener;

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/half_green_bg"
-    android:clipToPadding="true"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/half_green_bg"
+              android:clipToPadding="true"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical">
 
     <com.sdxxtop.guardianapp.ui.widget.TitleView
         android:id="@+id/tv_title"
@@ -16,13 +16,14 @@
         app:leftLayoutIsShow="true"
         app:rightTextValue="我的上报"
         app:titleColor="@color/white"
-        app:titleValue="事件上报" />
+        app:titleValue="事件上报"/>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,73 +41,103 @@
                     android:layout_height="wrap_content"
                     android:text="现场照片："
                     android:textColor="@color/color_303030"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="(最多上传照片9张)"
-                    android:textSize="11sp" />
+                    android:textSize="11sp"/>
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv"
                 android:layout_width="match_parent"
-                android:layout_height="135dp" />
+                android:layout_height="135dp"/>
 
             <com.sdxxtop.guardianapp.ui.widget.TextAndEditView
                 android:id="@+id/taev_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:taev_edit_text_hint="事件重点简述（限制10个字）"
-                app:taev_text_view="事件标题" />
+                app:taev_text_view="事件标题"/>
 
-            <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
-                android:id="@+id/tatv_query"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tatv_text_right_hint_value="请点击选择"
-                app:tatv_text_view="发现方式" />
+                android:layout_height="match_parent">
 
-            <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
-                android:id="@+id/tatv_happen"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tatv_text_right_hint_value="请点击选择"
-                app:tatv_text_view="发生地点" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-            <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
-                android:id="@+id/tatv_report_path"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tatv_text_right_hint_value="请点击选择"
-                app:tatv_text_view="主管部门" />
+                    <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+                        android:id="@+id/tatv_query"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:tatv_text_right_hint_value="请点击选择"
+                        app:tatv_text_view="发现方式"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="15dp"
-                android:text="事件简要描述"
-                android:textColor="@color/color_303030"
-                android:textSize="17sp" />
+                    <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+                        android:id="@+id/tatv_happen"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:tatv_text_right_hint_value="请点击选择"
+                        app:tatv_text_view="发生地点"/>
 
-            <com.sdxxtop.guardianapp.ui.widget.NumberEditTextView
-                android:id="@+id/net_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="5dp" />
+                    <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+                        android:id="@+id/tatv_report_path"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:tatv_text_right_hint_value="请点击选择"
+                        app:tatv_text_view="主管部门"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="15dp"
+                        android:text="事件简要描述"
+                        android:textColor="@color/color_303030"
+                        android:textSize="17sp"/>
+
+                    <com.sdxxtop.guardianapp.ui.widget.NumberEditTextView
+                        android:id="@+id/net_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="5dp"/>
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/ll_search_data_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tv_dismiss"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#99000000"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/title_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </RelativeLayout>
+            </RelativeLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/color_dddddd" />
+        android:background="@color/color_dddddd"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -126,7 +157,7 @@
             android:background="@drawable/btn_green_stroke_bg"
             android:text="存草稿"
             android:textColor="@color/green"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/btn_push"
@@ -135,6 +166,6 @@
             android:layout_weight="1"
             android:background="@drawable/btn_green_solid_bg"
             android:text="上报"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"/>
     </LinearLayout>
 </LinearLayout>

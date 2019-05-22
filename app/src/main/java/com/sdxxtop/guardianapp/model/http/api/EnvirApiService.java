@@ -10,6 +10,7 @@ import com.sdxxtop.guardianapp.model.bean.EnterpriseUserdetailsBean;
 import com.sdxxtop.guardianapp.model.bean.EventIndexBean;
 import com.sdxxtop.guardianapp.model.bean.EventListBean;
 import com.sdxxtop.guardianapp.model.bean.EventReadBean;
+import com.sdxxtop.guardianapp.model.bean.EventSearchTitleBean;
 import com.sdxxtop.guardianapp.model.bean.ExamineFinishBean;
 import com.sdxxtop.guardianapp.model.bean.GERPIndexBean;
 import com.sdxxtop.guardianapp.model.bean.GridreportIndexBean;
@@ -100,6 +101,10 @@ public interface EnvirApiService {
     @FormUrlEncoded
     @POST("event/showPart")
     Observable<RequestBean<ShowPartBean>> postEventShowPart(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("event/search")
+    Observable<RequestBean<EventSearchTitleBean>> postEventSearch(@Field("data") String data);
 
     @FormUrlEncoded
     @POST("contact/index")

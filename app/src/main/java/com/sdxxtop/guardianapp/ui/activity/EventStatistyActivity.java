@@ -37,8 +37,6 @@ public class EventStatistyActivity extends BaseMvpActivity<EventStatistyPresente
     TextView tvArea;
     @BindView(R.id.tv_bg)
     TextView tvBg;
-    @BindView(R.id.ll_area_layout)
-    LinearLayout llAreaLayout;
     @BindView(R.id.ll_containor_temp)
     LinearLayout llContainorTemp;
 
@@ -84,7 +82,7 @@ public class EventStatistyActivity extends BaseMvpActivity<EventStatistyPresente
                 tempText="已处理报事件总数：";
                 break;
             case 4:
-                title.setTitleValue("事件统计");
+                title.setTitleValue("已完成事件统计");
                 tempText="已完成事件总数：";
                 break;
         }
@@ -110,7 +108,7 @@ public class EventStatistyActivity extends BaseMvpActivity<EventStatistyPresente
 
     }
 
-    @OnClick(R.id.ll_area_layout)
+    @OnClick(R.id.rl_area_layout)
     public void onViewClicked(View view) {
         AreaSelectPopWindow popWindow = new AreaSelectPopWindow(EventStatistyActivity.this, llContainorTemp, popWondowData, tvArea,tvBg);
         popWindow.setOnPopItemClickListener(new AreaSelectPopWindow.OnPopItemClickListener() {
