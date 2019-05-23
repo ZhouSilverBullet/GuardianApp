@@ -12,17 +12,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.animation.Easing;
-import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.MPPointF;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.model.bean.GERPIndexBean;
+import com.sdxxtop.guardianapp.ui.widget.piechart.MyPieChart;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +42,7 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.pie_chart)
-    PieChart pieChart;
+    MyPieChart pieChart;
     @BindView(R.id.tv_nodata)
     TextView tvDodata;
 
@@ -97,7 +99,7 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
         pieChart.setDrawCenterText(false);
         pieChart.setRotationAngle(0);
         // enable rotation of the chart by touch
-        pieChart.setRotationEnabled(false);
+        pieChart.setRotationEnabled(true);
         pieChart.setHighlightPerTapEnabled(true);
 
         pieChart.setDrawEntryLabels(false);   // 不绘制x的值   x:罗庄,y:25%
@@ -147,7 +149,7 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
 
         PieDataSet dataSet = new PieDataSet(entries, "");
         dataSet.setDrawIcons(false);
-        dataSet.setSliceSpace(3f);
+        dataSet.setSliceSpace(1f);
         dataSet.setIconsOffset(new MPPointF(0, 40));
         dataSet.setSelectionShift(5f);
         dataSet.setDrawValues(true);  // 不画值
@@ -161,10 +163,11 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
         dataSet.setHighlightEnabled(true);
         dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
         dataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);//标签显示在外面，关闭显示在饼图里面
+        dataSet.setValueLineColor(0xff000000);  //设置指示线条颜色,必须设置成这样，才能和饼图区域颜色一致
         //dataSet.setUsingSliceColorAsValueLineColor(true);
 
         PieData data = new PieData(dataSet);
-//        data.setValueFormatter(new PercentFormatter());
+        data.setValueFormatter(new MyPercentFormatter());
         data.setValueTextColor(Color.BLACK);
         data.setValueTextSize(12f);
         data.setHighlightEnabled(true);
@@ -189,6 +192,13 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
         }else{
             pieChart.removeAllViews();
             pieChart.setData(null);
+        }
+    }
+
+    class MyPercentFormatter implements IValueFormatter{
+        @Override
+        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+            return String.valueOf((int)value);
         }
     }
 

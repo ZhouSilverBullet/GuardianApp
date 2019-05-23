@@ -170,7 +170,7 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
         }
 
         if (indexBean.getPosition()==3||indexBean.getPosition()==4){
-            companyReport.setVisibility(View.VISIBLE);
+            companyReport.setVisibility(View.GONE);
             gridMemberReport.setVisibility(View.VISIBLE);
             eventReport.setVisibility(View.VISIBLE);
         }else{

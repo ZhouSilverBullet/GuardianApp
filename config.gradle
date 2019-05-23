@@ -1,40 +1,40 @@
 ext {
-    android = [
-            compileSdkVersion: 28,
-            //这个高版本的AS不需要
-            buildToolsVersion: "26.0.2",
-            applicationId    : "com.sdxxtop.guardianapp",
-            minSdkVersion    : 19,
-            targetSdkVersion : 28,
-            versionCode      : 10005,
-            versionName      : "1.0.5"
-    ]
+        android = [
+                compileSdkVersion: 28,
+                //这个高版本的AS不需要
+                buildToolsVersion: "26.0.2",
+                applicationId    : "com.sdxxtop.guardianapp",
+                minSdkVersion    : 19,
+                targetSdkVersion : 28,
+                versionCode      : 10005,
+                versionName      : "1.0.5"
+        ]
 
-    def dependVersion = [
-            androidx                     : "1.0.0-beta01",
-            constraintlayout             : "1.1.2",
-            material                     : "1.0.0+",
-            ahbottomnavigation           : "2.3.4",
-            SmartRefresh                 : "1.0.5.1",
-            BaseRecyclerViewAdapterHelper: "2.9.46",
+        def dependVersion = [
+                androidx                     : "1.0.0-beta01",
+                constraintlayout             : "1.1.2",
+                material                     : "1.0.0+",
+                ahbottomnavigation           : "2.3.4",
+                SmartRefresh                 : "1.0.5.1",
+                BaseRecyclerViewAdapterHelper: "2.9.46",
 
-            junit                        : "4.12",
-            test_runner                  : "1.1.0-alpha4",
-            test_espresso                : "3.1.0-alpha4",
+                junit                        : "4.12",
+                test_runner                  : "1.1.0-alpha4",
+                test_espresso                : "3.1.0-alpha4",
 
-            gson                         : "2.8.2",
-            retrofit                     : "2.3.0",
-            okhttp                       : "3.12.1",
-            logging_interceptor          : "3.4.1",
+                gson                         : "2.8.2",
+                retrofit                     : "2.3.0",
+                okhttp                       : "3.12.1",
+                logging_interceptor          : "3.4.1",
 
-            dagger                       : "2.8",
-            dagger_compiler              : "2.6",
-            logger                       : "2.2.0",
-            butterknife                  : "10.0.0",
+                dagger                       : "2.8",
+                dagger_compiler              : "2.6",
+                logger                       : "2.2.0",
+                butterknife                  : "10.0.0",
 
-            blockcanary                  : "1.2.1",
-            leakcanary                   : "1.4-beta2"
-    ]
+                blockcanary                  : "1.2.1",
+                leakcanary                   : "1.4-beta2"
+        ]
 
 
     dependencies = [

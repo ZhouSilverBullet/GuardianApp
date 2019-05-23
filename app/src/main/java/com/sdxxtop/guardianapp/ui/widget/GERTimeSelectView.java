@@ -91,7 +91,7 @@ public class GERTimeSelectView extends LinearLayout {
 
     private Calendar getData(String time) {
         Calendar instance = Calendar.getInstance();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         try {
             Date parse = format.parse(time);
             instance.setTime(parse);
@@ -123,7 +123,6 @@ public class GERTimeSelectView extends LinearLayout {
             }
         })
                 .setType(new boolean[]{true, true, true, false, false, false})
-                .isDialog(true) //默认设置false ，内部实现将DecorView 作为它的父控件。
                 .build();
 
         Dialog mDialog = pvLeftTime.getDialog();
@@ -231,6 +230,9 @@ public class GERTimeSelectView extends LinearLayout {
     public String getFormatTime(String time) {
         return time.replaceAll("/", "-") + " 00:00:00";
     }
+    public String getFormatTime2(String time) {
+        return time.split(" ")[0].replaceAll("-", "/");
+    }
 
     public String getSelectTime(int type) {
         if (type == 1) {
@@ -241,8 +243,8 @@ public class GERTimeSelectView extends LinearLayout {
     }
 
     public void setTime(String start_time, String end_time) {
-        this.startTime = start_time;
-        this.endTime = end_time;
+        this.startTime = getFormatTime2(start_time);
+        this.endTime = getFormatTime2(end_time);
     }
 
     public interface OnTimeChooseListener {

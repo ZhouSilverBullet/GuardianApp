@@ -88,25 +88,25 @@ public class GrantEventReportActivity extends BaseMvpActivity<GERPresenter> impl
     @Override
     public void showIndexData(GERPIndexBean indexBean) {
         addLinearLayout(indexBean);
-        List<GERPIndexBean.EventInfoBean> pieOneData = new ArrayList<>();
-        List<GERPIndexBean.EventInfoBean> pieTwoData = new ArrayList<>();
-
-        if (indexBean.getEventInfo()!=null&&indexBean.getEventInfo().size()>0){
-            for (GERPIndexBean.EventInfoBean bean : indexBean.getEventInfo()) {
-                if (bean.getCount()!=0){
-                    pieOneData.add(bean);
-                }
-            }
-        }
-        if (indexBean.getCompleteInfo()!=null&&indexBean.getCompleteInfo().size()>0){
-            for (GERPIndexBean.EventInfoBean bean : indexBean.getCompleteInfo()) {
-                if (bean.getCount()!=0){
-                    pieTwoData.add(bean);
-                }
-            }
-        }
-        pieChart1.setPieData(pieOneData);  // 上报事件统计
-        pieChart2.setPieData(pieTwoData);  //已处理事件统计
+//        List<GERPIndexBean.EventInfoBean> pieOneData = new ArrayList<>();
+//        List<GERPIndexBean.EventInfoBean> pieTwoData = new ArrayList<>();
+//
+//        if (indexBean.getEventInfo()!=null&&indexBean.getEventInfo().size()>0){
+//            for (GERPIndexBean.EventInfoBean bean : indexBean.getEventInfo()) {
+//                if (bean.getCount()!=0){
+//                    pieOneData.add(bean);
+//                }
+//            }
+//        }
+//        if (indexBean.getCompleteInfo()!=null&&indexBean.getCompleteInfo().size()>0){
+//            for (GERPIndexBean.EventInfoBean bean : indexBean.getCompleteInfo()) {
+//                if (bean.getCount()!=0){
+//                    pieTwoData.add(bean);
+//                }
+//            }
+//        }
+        pieChart1.setPieData(indexBean.getEventInfo());  // 上报事件统计
+        pieChart2.setPieData(indexBean.getCompleteInfo());  //已处理事件统计
     }
 
     private void addLinearLayout(GERPIndexBean indexBean) {

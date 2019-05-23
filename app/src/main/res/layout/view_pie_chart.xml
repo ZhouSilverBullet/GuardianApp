@@ -20,7 +20,7 @@
         android:layout_height="230dp"
         android:layout_marginBottom="10dp">
 
-        <com.github.mikephil.charting.charts.PieChart
+        <com.sdxxtop.guardianapp.ui.widget.piechart.MyPieChart
             android:id="@+id/pie_chart"
             android:layout_width="match_parent"
             android:layout_height="230dp"/>

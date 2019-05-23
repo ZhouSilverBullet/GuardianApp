@@ -1,5 +1,6 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -65,6 +66,14 @@ public class GridreportUserreportActivity extends BaseMvpActivity<GridreportUser
         start_time = getIntent().getStringExtra("startTime");
         end_time = getIntent().getStringExtra("endTime");
 
+        if (!TextUtils.isEmpty(start_time) && !TextUtils.isEmpty(end_time)) {
+            gertsvView.tvStartTime.setTextColor(getResources().getColor(R.color.black));
+            gertsvView.tvEndTime.setTextColor(getResources().getColor(R.color.black));
+            gertsvView.tvStartTime.setText(start_time.split(" ")[0].replace("-", "/"));
+            gertsvView.tvEndTime.setText(end_time.split(" ")[0].replace("-", "/"));
+
+            gertsvView.setTime(start_time, end_time);
+        }
 
         smartRefresh.setEnableRefresh(true);
         smartRefresh.setEnableLoadMore(true);

@@ -210,3 +210,4 @@
 -keep class cn.qqtheme.** { *; }
 -dontwarn cn.qqtheme.**
 
+-keep class com.sdxxtop.guardianapp.utils.SystemUtil { *; }
