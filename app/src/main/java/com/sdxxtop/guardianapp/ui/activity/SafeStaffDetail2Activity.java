@@ -1,6 +1,5 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -57,9 +56,7 @@ public class SafeStaffDetail2Activity extends BaseMvpActivity<SafeStaffDetail2Pr
         super.initData();
         String startTime = getIntent().getStringExtra("startTime");
         String endTime = getIntent().getStringExtra("endTime");
-        if (!TextUtils.isEmpty(startTime)&&!TextUtils.isEmpty(endTime)){
-            mPresenter.enterpriseUserdetails(partId,startTime,endTime);
-        }
+        mPresenter.enterpriseUserdetails(partId, startTime, endTime);
     }
 
     @Override

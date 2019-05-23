@@ -46,7 +46,8 @@ public class SafeStaffDetailActivity extends BaseMvpActivity<SafeStaffDetailPres
     private SafeStaffDetailAdapter adapter;
     private String event_name;
     private String name; // 网格员姓名
-    private String start_time,end_time;
+    private String start_time = "";
+    private String end_time = "";
 
     @Override
     protected int getLayout() {
@@ -126,6 +127,8 @@ public class SafeStaffDetailActivity extends BaseMvpActivity<SafeStaffDetailPres
             }
             Intent intent = new Intent(this, GridreportUserreportActivity.class);
             intent.putExtra("part_userid", resultId);
+            intent.putExtra("startTime", start_time);
+            intent.putExtra("endTime", end_time);
             startActivity(intent);
         }else if (type==2){// 企业
             Intent intent = new Intent(this, SafeStaffDetail2Activity.class);

@@ -62,6 +62,9 @@ public class GridreportUserreportActivity extends BaseMvpActivity<GridreportUser
         super.initView();
         title.setTitleValue("上报事件");
         part_userid = getIntent().getIntExtra("part_userid", -1);
+        start_time = getIntent().getStringExtra("startTime");
+        end_time = getIntent().getStringExtra("endTime");
+
 
         smartRefresh.setEnableRefresh(true);
         smartRefresh.setEnableLoadMore(true);

@@ -18,7 +18,6 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.MPPointF;
@@ -82,7 +81,7 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
     }
 
     private void initPieChart() {
-        pieChart.setUsePercentValues(true);
+        pieChart.setUsePercentValues(false);  // 不显示百分比
         pieChart.getDescription().setEnabled(false);
         pieChart.setExtraOffsets(0, 0, 0, -10);
 
@@ -151,20 +150,26 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
         dataSet.setSliceSpace(3f);
         dataSet.setIconsOffset(new MPPointF(0, 40));
         dataSet.setSelectionShift(5f);
-        dataSet.setDrawValues(false);  // 不画值
+        dataSet.setDrawValues(true);  // 不画值
 
         // add a lot of colors
         dataSet.setColors(colors);
 
-        //dataSet.setSelectionShift(0f);
+        dataSet.setValueLinePart1OffsetPercentage(80.0f);
+        dataSet.setValueLinePart1Length(1.5f);
+        dataSet.setValueLinePart2Length(1.0f);
+        dataSet.setHighlightEnabled(true);
+        dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
+        dataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);//标签显示在外面，关闭显示在饼图里面
+        //dataSet.setUsingSliceColorAsValueLineColor(true);
 
         PieData data = new PieData(dataSet);
-        data.setValueFormatter(new PercentFormatter());
-        data.setValueTextSize(11f);
-        data.setValueTextColor(Color.WHITE);
-//        data.setValueTypeface(mTfLight);
-        pieChart.setData(data);
+//        data.setValueFormatter(new PercentFormatter());
+        data.setValueTextColor(Color.BLACK);
+        data.setValueTextSize(12f);
+        data.setHighlightEnabled(true);
 
+        pieChart.setData(data);
         // undo all highlights
         pieChart.highlightValues(null);
 
