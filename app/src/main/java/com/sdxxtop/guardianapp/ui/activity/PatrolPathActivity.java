@@ -12,10 +12,12 @@ import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdate;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.BitmapDescriptor;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.MarkerOptions;
@@ -90,7 +92,7 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
     @Override
     public void showError(String error) {
         ttv1.setValue("--", "巡逻总距离(km)");
-        ttv2.setValue("--", "巡逻总时长(km)");
+        ttv2.setValue("--", "巡逻总时长(h)");
         if (aMap != null) {
             aMap.clear();
         }
@@ -106,7 +108,7 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
         title.setTitleValue(name + "巡逻报告");
 
         ttv1.setValue("--", "巡逻总距离(km)");
-        ttv2.setValue("--", "巡逻总时长(km)");
+        ttv2.setValue("--", "巡逻总时长(h)");
         ttv2.tvLine.setVisibility(View.GONE);
         ttv1.tvLine.setVisibility(View.GONE);
 
@@ -175,10 +177,29 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
         aMap.addPolyline(new PolylineOptions().addAll(list).color(getResources().getColor(R.color.green)).width(7).setDottedLine(false).geodesic(false));
         if (list.size() > 2) {
             addMarker(data);
-        }
+        } else if (list.size() == 1) {
+            //起点图标
+            aMap.addMarker(new MarkerOptions()
+                    .position(list.get(0))
+                    .icon(customizeMarkerIconLastAndFirst(data.get(0), "起点")));
+        } else if (list.size() == 2) {
+            //起点图标
+            aMap.addMarker(new MarkerOptions()
+                    .position(list.get(0))
+                    .icon(customizeMarkerIconLastAndFirst(data.get(0), "起点")));
 
-        LatLngBounds bounds = getLatLngBounds();
-        aMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 30));
+            //终点坐标
+            if (list.size() > 0) {
+                aMap.addMarker(new MarkerOptions()
+                        .position(list.get(list.size() - 1))
+                        .icon(customizeMarkerIconLastAndFirst(data.get(data.size() - 1), "终点")));
+            }
+        }
+        if (list!=null&&list.size()>0){
+            moveMapToPosition(list.get(0));
+        }
+//        LatLngBounds bounds = getLatLngBounds();
+//        CameraUpdateFactory.newLatLngBounds(bounds, 30);
     }
 
     /**
@@ -297,7 +318,7 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
         aMap.clear();
         list.clear();
         ttv1.setValue(String.valueOf(bean.getDistance()), "巡逻总距离(km)");
-        ttv2.setValue(String.valueOf(bean.getTotal_time()), "巡逻总时长(km)");
+        ttv2.setValue(String.valueOf(bean.getTotal_time()), "巡逻总时长(h)");
         if (bean.getTrail_info() != null && bean.getTrail_info().size() > 0) {
             for (EnterpriseTrailBean.TrailInfo trailInfo : bean.getTrail_info()) {
                 list.add(trailInfo.getLatLng());
@@ -331,6 +352,31 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
             });
         }
         selectionDateWindow.showAtLocation(getLayoutInflater().inflate(R.layout.activity_patrol_path, null), Gravity.BOTTOM, 0, 0);
+    }
+
+    /**
+     * by moos on 2018/01/12
+     * func:移动地图视角到某个精确位置
+     *
+     * @param latLng 坐标
+     */
+    private void moveMapToPosition(LatLng latLng) {
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(
+                new CameraPosition(
+                        latLng,//新的中心点坐标
+                        16,    //新的缩放级别
+                        0,     //俯仰角0°~45°（垂直与地图时为0）
+                        0      //偏航角 0~360° (正北方为0)
+                ));
+        aMap.animateCamera(cameraUpdate, 300, new AMap.CancelableCallback() {
+            @Override
+            public void onFinish() {
+            }
+
+            @Override
+            public void onCancel() {
+            }
+        });
     }
 
     public String getFormatDate(String sDate) {

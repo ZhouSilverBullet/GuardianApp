@@ -199,7 +199,7 @@ public class GrantGridReportActivity extends BaseMvpActivity<GGRPresenter> imple
         CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(
                 new CameraPosition(
                         latLng,//新的中心点坐标
-                        13,    //新的缩放级别
+                        16,    //新的缩放级别
                         0,     //俯仰角0°~45°（垂直与地图时为0）
                         0      //偏航角 0~360° (正北方为0)
                 ));

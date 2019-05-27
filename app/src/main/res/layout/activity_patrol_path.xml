@@ -64,7 +64,7 @@
             android:padding="10dp"
             android:text="今日"
             android:textColor="@color/color_313131"
-            android:textSize="15sp"/>
+            android:textSize="13sp"/>
     </LinearLayout>
 
     <com.amap.api.maps.MapView
