@@ -4,7 +4,7 @@
     <style name="text">
         <item name="android:layout_width">0dp</item>
         <item name="android:drawablePadding">5dp</item>
-        <item name="android:textColor">@color/color_303030</item>
+        <item name="android:textColor">@color/color_666666</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">center</item>

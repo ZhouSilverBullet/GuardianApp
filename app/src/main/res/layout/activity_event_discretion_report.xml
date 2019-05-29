@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.activity.EventDiscretionReportActivity">
+
+    <com.sdxxtop.guardianapp.ui.widget.TitleView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:leftLayoutIconIsGray="true"
+        app:rightTextColor="@color/color_313131"
+        app:rightTextValue="我的汇报"
+        app:titleValue="巡查汇报"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15sp"
+                android:paddingTop="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="现场照片/视频："
+                    android:textColor="@color/color_303030"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(最多上传照片/视频9张)"
+                    android:textColor="@color/color_E0E0E0"
+                    android:textSize="11sp"/>
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_gravity="center"
+                android:id="@+id/rv"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"/>
+
+            <com.sdxxtop.guardianapp.ui.widget.TextAndEditView
+                android:id="@+id/taev_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:taev_edit_text_hint="事件重点简述"
+                app:taev_text_view="事件标题"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+                        android:id="@+id/tatv_happen"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:tatv_text_right_hint_value="请点击选择"
+                        app:tatv_text_view="事件发生地点"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="15dp"
+                        android:text="工作描述"
+                        android:textColor="@color/color_303030"
+                        android:textSize="17sp"/>
+
+                    <com.sdxxtop.guardianapp.ui.widget.NumberEditTextView
+                        android:id="@+id/net_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="5dp"/>
+
+                    <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+                        app:tatv_text_img_is_show="false"
+                        android:id="@+id/tatv_end_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:tatv_text_right_hint_value="请选择整改时效"
+                        app:tatv_text_view="整改时限"/>
+
+                    <com.sdxxtop.guardianapp.ui.widget.TextAndCheckBoxView
+                        android:id="@+id/tacbv_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/ll_search_data_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tv_dismiss"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#99000000"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/title_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </RelativeLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_dddddd"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingTop="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="10dp">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_green_stroke_bg"
+            android:text="存草稿"
+            android:textColor="@color/green"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/btn_push"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/btn_green_solid_bg"
+            android:text="上报"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+
+</LinearLayout>

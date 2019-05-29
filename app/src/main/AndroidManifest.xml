@@ -28,6 +28,10 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.activity.EventDiscretionReportActivity">
+        </activity>
+        <activity android:name=".ui.activity.EventDiscretionListActivity">
+        </activity>
         <activity android:name=".ui.activity.GridreportUserreportActivity">
         </activity>
         <activity android:name=".ui.activity.GrantGridReportActivity">

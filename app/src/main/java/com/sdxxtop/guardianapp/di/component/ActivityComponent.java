@@ -6,6 +6,8 @@ import com.sdxxtop.guardianapp.di.module.ActivityModule;
 import com.sdxxtop.guardianapp.di.qualifier.ActivityScope;
 import com.sdxxtop.guardianapp.ui.activity.ContactActivity;
 import com.sdxxtop.guardianapp.ui.activity.ContactSearchActivity;
+import com.sdxxtop.guardianapp.ui.activity.EventDiscretionListActivity;
+import com.sdxxtop.guardianapp.ui.activity.EventDiscretionReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportDetailSecondActivity;
@@ -63,5 +65,7 @@ public interface ActivityComponent {
     void inject(GACPatrolDetailActivity activity);
     void inject(GrantGridReportActivity activity);
     void inject(GridreportUserreportActivity activity);
+    void inject(EventDiscretionListActivity activity);
+    void inject(EventDiscretionReportActivity activity);
 
 }

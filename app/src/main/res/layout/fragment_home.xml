@@ -1,133 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/login_bg"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    tools:context="com.sdxxtop.guardianapp.ui.fragment.HomeFragment">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical"
+              tools:context="com.sdxxtop.guardianapp.ui.fragment.HomeFragment">
 
     <com.sdxxtop.guardianapp.ui.widget.TitleView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:bgColor="@color/transparent"
         app:titleColor="@color/white"
-        app:titleValue="罗庄区" />
+        app:titleValue="罗庄区"/>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <!--<ImageView-->
-        <!--android:id="@+id/iv_top"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:scaleType="fitXY"-->
-        <!--android:src="@drawable/top_1" />-->
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:gravity="center_vertical">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_gravity="bottom"
-            android:background="@color/white" />
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="133dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="42dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="5dp"
-            app:cardCornerRadius="5dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="25dp"
-                        android:text="李海龙"
-                        android:textColor="@color/color_303030" />
-
-                    <TextView
-                        android:id="@+id/tv_place"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="网格员 草原区"
-                        android:textColor="@color/color_303030" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/ll_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp">
-
-                    <TextView
-                        style="@style/text"
-                        android:drawableTop="@drawable/record_home"
-                        android:text="工作轨迹" />
-
-                    <TextView
-                        style="@style/text"
-                        android:drawableTop="@drawable/icon_list_home"
-                        android:text="通讯录" />
-
-                    <TextView
-                        style="@style/text"
-                        android:drawableTop="@drawable/icon_map_home"
-                        android:text="网格地图" />
-
-                    <TextView
-                        style="@style/text"
-                        android:drawableTop="@drawable/punch_home"
-                        android:text="打卡" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="46dp"
-            android:layout_height="46dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="19dp"
-            android:elevation="5dp"
-            android:src="@color/white" />
+            android:id="@+id/tv_part_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="罗庄区"
+            android:textColor="@color/color_313131"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/civ_header"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
             android:elevation="5dp"
-            android:src="@drawable/tou_xiang" />
+            android:src="@drawable/tou_xiang"/>
 
+        <LinearLayout
+            android:id="@+id/ll_containor"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:gravity="center">
 
-    </FrameLayout>
+            <ImageView
+                android:id="@+id/iv_message_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/message_normal"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.youth.banner.Banner
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            style="@style/text"
+            android:drawableTop="@drawable/record_home"
+            android:text="工作轨迹"/>
+
+        <TextView
+            style="@style/text"
+            android:drawableTop="@drawable/icon_list_home"
+            android:text="通讯录"/>
+
+        <TextView
+            style="@style/text"
+            android:drawableTop="@drawable/icon_map_home"
+            android:text="网格地图"/>
+
+        <TextView
+            style="@style/text"
+            android:drawableTop="@drawable/punch_home"
+            android:text="打卡"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="26dp"
+        android:background="@color/color_E0E0E0"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginRight="15dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_event_report"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/add_bg_left"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/add_home"
+                android:drawablePadding="8dp"
+                android:gravity="center"
+                android:text="事件上报"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_event_discretion"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/add_bg_right"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/add_home"
+                android:drawablePadding="8dp"
+                android:gravity="center"
+                android:text="自行处理"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.sdxxtop.guardianapp.ui.widget.ImgAndTextLinearView
+                android:id="@+id/itlv_view_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:iv_icon="@drawable/task_blue"
+                app:tv_task_prefix="新任务："
+                app:tv_task_title="代办任务"/>
+
+            <com.sdxxtop.guardianapp.ui.widget.ImgAndTextLinearView
+                android:id="@+id/itlv_view_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:iv_icon="@drawable/task_yellow"
+                app:tv_task_prefix="新反馈："
+                app:tv_task_title="我的上报"/>
+
+            <com.sdxxtop.guardianapp.ui.widget.ImgAndTextLinearView
+                android:id="@+id/itlv_view_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp"
+                app:iv_icon="@drawable/task_green"
+                app:tv_task_prefix="新任务："
+                app:tv_task_title="我的巡查"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white" />
+        android:background="@color/white"
+        android:visibility="gone"/>
 
 </LinearLayout>

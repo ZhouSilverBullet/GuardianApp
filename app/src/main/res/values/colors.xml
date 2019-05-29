@@ -44,6 +44,7 @@
     <color name="color_5532B16C">#5532B16C</color>
     <color name="color_558C97CB">#558C97CB</color>
     <color name="color_55F9A15C">#55F9A15C</color>
+    <color name="color_f6">#f6f6f6</color>
 
     <array name="tab_colors">
         <item>#34B26D</item>

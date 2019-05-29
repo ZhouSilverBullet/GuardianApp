@@ -7,6 +7,7 @@ import com.sdxxtop.guardianapp.model.bean.EnterpriseIndexBean;
 import com.sdxxtop.guardianapp.model.bean.EnterpriseSecurityBean;
 import com.sdxxtop.guardianapp.model.bean.EnterpriseTrailBean;
 import com.sdxxtop.guardianapp.model.bean.EnterpriseUserdetailsBean;
+import com.sdxxtop.guardianapp.model.bean.EventDiscretionListBean;
 import com.sdxxtop.guardianapp.model.bean.EventIndexBean;
 import com.sdxxtop.guardianapp.model.bean.EventListBean;
 import com.sdxxtop.guardianapp.model.bean.EventReadBean;
@@ -33,11 +34,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 
@@ -89,6 +92,14 @@ public interface EnvirApiService {
     @Multipart
     @POST("event/add")
     Observable<RequestBean> postEventAdd(@PartMap Map<String, RequestBody> data);
+
+    @Multipart
+    @POST("patrol/add")
+    Observable<RequestBean> postPatrolAdd(@PartMap Map<String, RequestBody> data);
+
+    @Multipart
+    @POST("patrol/add")
+    Observable<RequestBean> postPatrolAdd(@Part MultipartBody.Part file);
 
     @FormUrlEncoded
     @POST("event/read")
@@ -213,5 +224,9 @@ public interface EnvirApiService {
     @FormUrlEncoded
     @POST("gridreport/userreport")
     Observable<RequestBean<GridreportUserreportBean>> postGridreportUserreport(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("patrol/index")
+    Observable<RequestBean<EventDiscretionListBean>> postPatrolIndex(@Field("data") String data);
 
 }

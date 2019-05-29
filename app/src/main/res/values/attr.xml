@@ -2,8 +2,8 @@
 <resources>
     <declare-styleable name="TitleView">
         <attr name="titleValue" format="string"/>
-        <attr name="titleColor" format="color" />
-        <attr name="bgColor" format="color" />
+        <attr name="titleColor" format="color"/>
+        <attr name="bgColor" format="color"/>
         <attr name="rightTextValue" format="string"/>
         <attr name="rightTextColor" format="color"/>
         <attr name="leftLayoutIsShow" format="boolean"/>
@@ -20,31 +20,43 @@
     </declare-styleable>
 
     <declare-styleable name="TextAndEditView">
-        <attr name="taev_text_view" format="string" />
-        <attr name="taev_edit_text_hint" format="string" />
-        <attr name="taev_end_text_view" format="string" />
-        <attr name="taev_line_is_show" format="boolean" />
+        <attr name="taev_text_view" format="string"/>
+        <attr name="taev_edit_text_hint" format="string"/>
+        <attr name="taev_end_text_view" format="string"/>
+        <attr name="taev_line_is_show" format="boolean"/>
     </declare-styleable>
 
     <declare-styleable name="PieChartview">
-        <attr name="pie_title" format="string" />
+        <attr name="pie_title" format="string"/>
     </declare-styleable>
 
     <declare-styleable name="TextAndTextView">
-        <attr name="tatv_text_view" format="string" />
-        <attr name="tatv_text_right_value" format="string" />
-        <attr name="tatv_text_right_hint_value" format="string" />
-        <attr name="tatv_text_img_is_show" format="boolean" />
-        <attr name="tatv_line_is_show" format="boolean" />
+        <attr name="tatv_text_view" format="string"/>
+        <attr name="tatv_text_right_value" format="string"/>
+        <attr name="tatv_text_right_hint_value" format="string"/>
+        <attr name="tatv_text_img_is_show" format="boolean"/>
+        <attr name="tatv_line_is_show" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="TextAndCheckBoxView">
+        <attr name="tacbv_text_view" format="string"/>
+        <attr name="tacbv_text_right_value" format="string"/>
+        <attr name="tacbv_line_is_show" format="boolean"/>
     </declare-styleable>
 
     <declare-styleable name="ColorTrackView">
-        <attr name="ctvText" format="string" />
-        <attr name="ctvText_size" format="dimension" />
-        <attr name="ctvText_origin_color" format="color" />
-        <attr name="ctvText_change_color" format="color" />
-        <attr name="ctvProgress" format="float" />
-        <attr name="ctvDirection" format="integer" />
+        <attr name="ctvText" format="string"/>
+        <attr name="ctvText_size" format="dimension"/>
+        <attr name="ctvText_origin_color" format="color"/>
+        <attr name="ctvText_change_color" format="color"/>
+        <attr name="ctvProgress" format="float"/>
+        <attr name="ctvDirection" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="ImgAndTextLinearView">
+        <attr name="tv_task_title" format="string"/>
+        <attr name="tv_task_prefix" format="string"/>
+        <attr name="iv_icon" format="reference"/>
     </declare-styleable>
 
 </resources>

@@ -16,11 +16,30 @@ public class MainIndexBean {
 
     private String name;
     private String img;
+    private String rotation_img;
     private int position;
     private String part_name;
     private int is_face;
     private List<PendingEventBean> pending_event;
     private List<AddEventBean> add_event;
+
+    private List<AddPatrolBean>add_patrol;
+
+    public List<AddPatrolBean> getAdd_patrol() {
+        return add_patrol;
+    }
+
+    public void setAdd_patrol(List<AddPatrolBean> add_patrol) {
+        this.add_patrol = add_patrol;
+    }
+
+    public String getRotation_img() {
+        return rotation_img;
+    }
+
+    public void setRotation_img(String rotation_img) {
+        this.rotation_img = rotation_img;
+    }
 
     public String getName() {
         return name;
@@ -107,10 +126,45 @@ public class MainIndexBean {
          * end_date : 2019-04-11
          * status : 2
          */
-
         private String title;
         private String end_date;
         private int status;
+        private int event_id;
+        private String place;
+        private String add_time;
+        private int userid;
+
+        public int getEvent_id() {
+            return event_id;
+        }
+
+        public void setEvent_id(int event_id) {
+            this.event_id = event_id;
+        }
+
+        public String getPlace() {
+            return place;
+        }
+
+        public void setPlace(String place) {
+            this.place = place;
+        }
+
+        public String getAdd_time() {
+            return add_time;
+        }
+
+        public void setAdd_time(String add_time) {
+            this.add_time = add_time;
+        }
+
+        public int getUserid() {
+            return userid;
+        }
+
+        public void setUserid(int userid) {
+            this.userid = userid;
+        }
 
         public String getTitle() {
             return title;
@@ -145,8 +199,35 @@ public class MainIndexBean {
          */
 
         private String title;
+        private int event_id;
         private String end_date;
         private int status;
+        private String add_time;
+        private String update_time;
+
+        public int getEvent_id() {
+            return event_id;
+        }
+
+        public void setEvent_id(int event_id) {
+            this.event_id = event_id;
+        }
+
+        public String getAdd_time() {
+            return add_time;
+        }
+
+        public void setAdd_time(String add_time) {
+            this.add_time = add_time;
+        }
+
+        public String getUpdate_time() {
+            return update_time;
+        }
+
+        public void setUpdate_time(String update_time) {
+            this.update_time = update_time;
+        }
 
         public String getTitle() {
             return title;
@@ -172,4 +253,43 @@ public class MainIndexBean {
             this.status = status;
         }
     }
+    public static class AddPatrolBean {
+        private String title;
+        private String rectify_date;
+        private int patrol_id;
+        private int status;
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getRectify_date() {
+            return rectify_date;
+        }
+
+        public void setRectify_date(String rectify_date) {
+            this.rectify_date = rectify_date;
+        }
+
+        public int getPatrol_id() {
+            return patrol_id;
+        }
+
+        public void setPatrol_id(int patrol_id) {
+            this.patrol_id = patrol_id;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
+        }
+    }
+
 }
