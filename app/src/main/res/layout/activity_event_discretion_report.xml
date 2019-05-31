@@ -5,18 +5,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
+    android:orientation="vertical"
     tools:context=".ui.activity.EventDiscretionReportActivity">
 
     <com.sdxxtop.guardianapp.ui.widget.TitleView
+        android:id="@+id/titleView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:leftLayoutIconIsGray="true"
         app:rightTextColor="@color/color_313131"
         app:rightTextValue="我的汇报"
         app:titleValue="巡查汇报"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_dddddd"/>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -53,10 +59,10 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_gravity="center"
                 android:id="@+id/rv"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"/>
+                android:layout_height="100dp"
+                android:layout_gravity="center"/>
 
             <com.sdxxtop.guardianapp.ui.widget.TextAndEditView
                 android:id="@+id/taev_title"
@@ -101,10 +107,10 @@
                         android:layout_marginBottom="5dp"/>
 
                     <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
-                        app:tatv_text_img_is_show="false"
                         android:id="@+id/tatv_end_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:tatv_text_img_is_show="false"
                         app:tatv_text_right_hint_value="请选择整改时效"
                         app:tatv_text_view="整改时限"/>
 

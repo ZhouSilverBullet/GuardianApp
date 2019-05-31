@@ -28,6 +28,14 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.activity.CenterMessage2Activity">
+        </activity>
+        <activity android:name=".ui.activity.CenterMessageActivity">
+        </activity>
+        <activity android:name=".ui.activity.ReCheckActivity">
+        </activity>
+        <activity android:name=".ui.activity.PatrolAddDetailActivity">
+        </activity>
         <activity android:name=".ui.activity.EventDiscretionReportActivity">
         </activity>
         <activity android:name=".ui.activity.EventDiscretionListActivity">

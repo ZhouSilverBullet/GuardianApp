@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -15,14 +16,19 @@ import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
+import com.sdxxtop.guardianapp.model.bean.EventSearchTitleBean;
+import com.sdxxtop.guardianapp.model.bean.PatrolAddBean;
 import com.sdxxtop.guardianapp.presenter.EventDiscretionReportPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.EventDiscretionReportContract;
+import com.sdxxtop.guardianapp.ui.adapter.EventSearchTitleAdapter;
 import com.sdxxtop.guardianapp.ui.adapter.GridImageAdapter;
 import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
 import com.sdxxtop.guardianapp.ui.widget.NumberEditTextView;
 import com.sdxxtop.guardianapp.ui.widget.TextAndCheckBoxView;
 import com.sdxxtop.guardianapp.ui.widget.TextAndEditView;
 import com.sdxxtop.guardianapp.ui.widget.TextAndTextView;
+import com.sdxxtop.guardianapp.ui.widget.TitleView;
+import com.sdxxtop.guardianapp.utils.MyTextChangeListener;
 import com.sdxxtop.guardianapp.utils.TimeSelectBottomDialog;
 
 import java.io.File;
@@ -58,6 +64,8 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
     RelativeLayout llSearchDataLayout;
     @BindView(R.id.btn_push)
     Button btnPush;
+    @BindView(R.id.titleView)
+    TitleView titleView;
 
     private String lonLng;//经纬度
     private TimeSelectBottomDialog dialog;
@@ -67,6 +75,8 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
     private List<LocalMedia> allDataList = new ArrayList<>();
 
     private GridImageAdapter adapter;
+    private EventSearchTitleAdapter titleAdapter;
+    private boolean isSearchEnable;
 
     @Override
     protected int getLayout() {
@@ -91,8 +101,54 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
         netContent.setEditHint("");
         netContent.setMaxLength(200);
         setPhotoRecycler(mRecyclerView);
-    }
+        tacbvView.setOnCheckBoxClick(new TextAndCheckBoxView.OnCheckBoxClick() {
+            @Override
+            public void refreshStatus() {
+                tatvEndTime.getTextRightText().setText("");
+                tatvEndTime.getTextRightText().setHint("请选择整改时效");
+            }
+        });
 
+        titleRecycler.setLayoutManager(new LinearLayoutManager(this));
+        titleAdapter = new EventSearchTitleAdapter(R.layout.item_text, null);
+        titleRecycler.setAdapter(titleAdapter);
+        titleAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter titleAdapter, View view, int position) {
+                isSearchEnable = false;
+                EventSearchTitleBean.KeyInfo item = (EventSearchTitleBean.KeyInfo) titleAdapter.getItem(position);
+                taevTitle.getEditText().setText(item.getKeyword());
+                taevTitle.getEditText().setSelection(item.getKeyword().length());
+                llSearchDataLayout.setVisibility(View.GONE);
+            }
+        });
+
+        taevTitle.getEditText().addTextChangedListener(new MyTextChangeListener(new MyTextChangeListener.OnTextChangedListener() {
+            @Override
+            public void textChange(String str) {
+                if (isSearchEnable) {
+                    mPresenter.searchTitle(str);
+                } else {
+                    isSearchEnable = true;
+                }
+            }
+        }));
+
+        tvDismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                llSearchDataLayout.setVisibility(View.GONE);
+            }
+        });
+
+        titleView.getTvRight().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EventDiscretionReportActivity.this, EventDiscretionListActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
 
     @OnClick({R.id.btn_push, R.id.tatv_happen, R.id.tatv_end_time})
     public void onViewClicked(View view) {
@@ -104,11 +160,13 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
                 selectHappen();
                 break;
             case R.id.tatv_end_time:
-                if (dialog != null) {
-                    dialog.show();
-                } else {
-                    dialog = new TimeSelectBottomDialog(this, tatvEndTime.getTextRightText());
-                    dialog.show();
+                if (tacbvView.getEnableClick()) {
+                    if (dialog != null) {
+                        dialog.show();
+                    } else {
+                        dialog = new TimeSelectBottomDialog(this, tatvEndTime.getTextRightText());
+                        dialog.show();
+                    }
                 }
                 break;
         }
@@ -144,32 +202,38 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
     private void toReport() {
         List<File> imagePushPath = getImageOrVideoPushPath(1);
         List<File> videoPushPath = getImageOrVideoPushPath(2);
-        if (imagePushPath.size()==0&&videoPushPath.size()==0){
+        if (imagePushPath.size() == 0 && videoPushPath.size() == 0) {
             showToast("请选择图片或者视频");
             return;
         }
 
-//        String title = taevTitle.getEditText().getText().toString().trim();
-//        if (TextUtils.isEmpty(title)) {
-//            showToast("请填写事件标题");
-//            return;
-//        }
-//
-//        //发生地点
-//        String place = tatvHappen.getRightTVString();
-//        if (TextUtils.isEmpty(place) || TextUtils.isEmpty(lonLng)) {
-//            showToast("请选择发生地点");
-//            return;
-//        }
-//
-//        String editValue = netContent.getEditValue();
-//        if (TextUtils.isEmpty(editValue)) {
-//            showToast("请填写事件描述内容");
-//            return;
-//        }
+        String title = taevTitle.getEditText().getText().toString().trim();
+        if (TextUtils.isEmpty(title)) {
+            showToast("请填写事件标题");
+            return;
+        }
+
+        //发生地点
+        String place = tatvHappen.getRightTVString();
+        if (TextUtils.isEmpty(place) || TextUtils.isEmpty(lonLng)) {
+            showToast("请选择发生地点");
+            return;
+        }
+
+        String editValue = netContent.getEditValue();
+        if (TextUtils.isEmpty(editValue)) {
+            showToast("请填写事件描述内容");
+            return;
+        }
+
+        String endTime = tatvEndTime.getRightTVString();
+        if (tacbvView.getEnableClick() && TextUtils.isEmpty(endTime)) {
+            showToast("请选择整改时效");
+            return;
+        }
 
         showLoadingDialog();
-        mPresenter.pushReport("测试", "西北旺", "116.29198978081635,40.060351722996174", "哈哈哈哈哈哈哈", "2019-05-29", imagePushPath,videoPushPath);
+        mPresenter.pushReport(tacbvView.getEnableClick() ? 1 : 2, title, place, lonLng, editValue, endTime, imagePushPath, videoPushPath);
     }
 
 
@@ -324,6 +388,26 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
         }
         if (bottomSheetDialog != null) {
             bottomSheetDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void skipDetail(PatrolAddBean bean) {
+        hideLoadingDialog();
+        Intent intent = new Intent(this, PatrolAddDetailActivity.class);
+        intent.putExtra("patrol_id", bean.getPatrol_id());
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void showSearchData(EventSearchTitleBean bean) {
+        if (bean.getKey_info() != null && bean.getKey_info().size() > 0) {
+            llSearchDataLayout.setVisibility(View.VISIBLE);
+            titleAdapter.replaceData(bean.getKey_info());
+            hideKeyboard(taevTitle.getEditText());
+        } else {
+            llSearchDataLayout.setVisibility(View.GONE);
         }
     }
 }

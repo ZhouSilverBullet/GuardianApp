@@ -7,7 +7,6 @@ import com.sdxxtop.guardianapp.model.bean.RequestBean;
 import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
 import com.sdxxtop.guardianapp.model.http.net.Params;
 import com.sdxxtop.guardianapp.model.http.util.RxUtils;
-import com.sdxxtop.guardianapp.presenter.contract.HomeContract;
 import com.sdxxtop.guardianapp.presenter.contract.TaskAgentsContract;
 
 import javax.inject.Inject;
@@ -25,6 +24,7 @@ public class TaskAgentsPresenter extends RxPresenter<TaskAgentsContract.IView> i
     public void loadData(int page, int type /* 1.事件上报，2.我的事件*/) {
         Params params = new Params();
         params.put("et", type);
+        params.put("plid", 1);
         Observable<RequestBean<EventIndexBean>> observable = getEnvirApi().postEventIndex(params.getData());
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EventIndexBean>() {
             @Override

@@ -32,12 +32,14 @@
         android:textSize="18sp" />
 
     <TextView
+        android:gravity="center"
+        android:text=""
         android:id="@+id/tview_right"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:paddingRight="12dp"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="15sp" />
 </RelativeLayout>

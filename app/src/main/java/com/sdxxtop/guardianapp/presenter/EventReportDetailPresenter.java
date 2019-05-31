@@ -2,7 +2,6 @@ package com.sdxxtop.guardianapp.presenter;
 
 import com.sdxxtop.guardianapp.base.RxPresenter;
 import com.sdxxtop.guardianapp.model.bean.EventReadBean;
-import com.sdxxtop.guardianapp.model.bean.MainIndexBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
 import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
 import com.sdxxtop.guardianapp.model.http.net.ImageParams;
@@ -55,6 +54,26 @@ public class EventReportDetailPresenter extends RxPresenter<EventReportDetailCon
 
         params.addImagePathList("img[]", imagePushPath);
         Observable<RequestBean> observable = getEnvirApi().postEventModify(params.getImgData());
+        Disposable disposable = RxUtils.handleHttp(observable, new IRequestCallback<RequestBean>() {
+            @Override
+            public void onSuccess(RequestBean requestBean) {
+                mView.modifyRefresh();
+            }
+
+            @Override
+            public void onFailure(int code, String error) {
+                UIUtils.showToast(error);
+            }
+        });
+        addSubscribe(disposable);
+    }
+    public void failed(String eventId,String extra,int status) {
+        ImageParams params = new ImageParams();
+        params.put("ei", eventId);
+        params.put("st", status);
+        params.put("et", extra);
+
+        Observable<RequestBean> observable = getEnvirApi().postEventFailed(params.getImgData());
         Disposable disposable = RxUtils.handleHttp(observable, new IRequestCallback<RequestBean>() {
             @Override
             public void onSuccess(RequestBean requestBean) {

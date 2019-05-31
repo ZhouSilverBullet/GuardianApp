@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sdxxtop.guardianapp.R;
@@ -18,7 +19,6 @@ import com.sdxxtop.guardianapp.ui.pop.ERCheckResultWindow;
 import com.sdxxtop.guardianapp.ui.pop.SelectMapPopView;
 import com.sdxxtop.guardianapp.ui.widget.CustomProgressBar;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
-import com.sdxxtop.guardianapp.utils.GuardianUtils;
 import com.sdxxtop.guardianapp.utils.SkipMapUtils;
 
 import java.text.ParseException;
@@ -31,11 +31,11 @@ import java.util.List;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetailPresenter> implements EventReportDetailContract.IView {
+public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetailPresenter> implements EventReportDetailContract.IView,
+        ERCheckResultWindow.OnConfirmClick {
 
     @BindView(R.id.tv_title)
     TitleView tvTitle;
@@ -61,6 +61,8 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
     TextView tvDescription;
     @BindView(R.id.btn_check_success)
     Button btnCheckSuccess;
+    @BindView(R.id.btn_check_faile)
+    Button btnCheckFaile;
     @BindView(R.id.v_line)
     View vLine;
     @BindView(R.id.v_line_1)
@@ -86,6 +88,18 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
     @BindView(R.id.tv_remark)
     TextView tvRemark;
 
+    /**** 无法解决 ****/
+    @BindView(R.id.v_line_3)
+    View vLine3;
+    @BindView(R.id.ll_containor)
+    LinearLayout llContainor;
+    @BindView(R.id.chuli_time)
+    TextView chuliTime;
+    @BindView(R.id.chuli_result_type)
+    TextView chuliResultType;
+    @BindView(R.id.chuli_result)
+    TextView chuliResult;
+
     //用于提交
     private int eventStatus;
 
@@ -95,6 +109,7 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
     private ImageHorizontalAdapter mFinishAdapter;
     //显示check的图片
     private ImageHorizontalAdapter mCheckAdapter;
+    private ERCheckResultWindow erCheckResultWindow;
 
     @Override
     protected void initInject() {
@@ -145,19 +160,37 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
     private String address = "";
     private String longitude = "";
 
-    @OnClick({R.id.btn_check_success, R.id.rl_happen})
+    @OnClick({R.id.btn_check_success, R.id.rl_happen, R.id.btn_check_faile})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.btn_check_success:
+            case R.id.btn_check_success:  //右边的按钮点击事件
                 //1.已经派发,确定的时候
 //
                 //2.已经反馈,然后弹出验收结果
 //                showPop();
                 if (eventStatus == 2) {
 //                    showConfirmDialog();
-                    skipSecondPush(EventReportDetailSecondActivity.TYPE_FINISH);
+                    skipSecondPush(EventReportDetailSecondActivity.TYPE_SOLVE);
                 } else if (eventStatus == 3) {
-                    skipSecondPush(EventReportDetailSecondActivity.TYPE_REPORT);
+                    skipSecondPush(EventReportDetailSecondActivity.TYPE_CHACK_FAILE);
+                }
+
+                break;
+            case R.id.btn_check_faile:    //左边的按钮点击事件
+                //1.已经派发,确定的时候
+//
+                //2.已经反馈,然后弹出验收结果
+//                showPop();
+                if (eventStatus == 2) {
+                    if (erCheckResultWindow == null) {
+                        erCheckResultWindow = new ERCheckResultWindow(this);
+                        erCheckResultWindow.show(getLayout(), false);
+                        erCheckResultWindow.setOnConfirmClick(this);
+                    } else {
+                        erCheckResultWindow.show(getLayout(), false);
+                    }
+                } else if (eventStatus == 3) {
+                    skipSecondPush(EventReportDetailSecondActivity.TYPE_CHACK_SUCCSESS);
                 }
 
                 break;
@@ -220,7 +253,7 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
                 .setPositiveButton("", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mPresenter.modify(mEventId, eventStatus + 1, "");
+//                        mPresenter.modify(mEventId, eventStatus + 1, "");
                     }
                 }).show();
     }
@@ -238,60 +271,71 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
 
     @Override
     public void readData(EventReadBean eventReadBean) {
-
-        btnCheckSuccess.setVisibility(View.GONE);
-
+        eventStatus = eventReadBean.getStatus();
+        showBottomButton(eventReadBean);
         address = eventReadBean.getPlace();
         longitude = eventReadBean.getLongitude();
-
         int status = eventReadBean.getStatus();
-        List<String> dateStrList = getStrList(eventReadBean);
-        //显示进度条状态
-        cpbProgress.setStatus(status, dateStrList);
-        //图片加载
-        handleImg(eventReadBean.getImg());
+        collectHeadData(eventReadBean);
 
-        //check的图片加载
+        //验收图片地址
         handleCheckImg(eventReadBean.getCheck_img());
-
-        //返回的图片加载
-        handleFinishImg(eventReadBean.getFinish_img());
-
-        tvContentTitle.setText(eventReadBean.getTitle());
-        tvTime.setText(eventReadBean.getAdd_time());
-        handlePatrol(eventReadBean.getPatrol_type());
-        tvHappen.setText(eventReadBean.getPlace());
-        handlePath(eventReadBean.getPart_name());
-        tvDescription.setText(new StringBuilder().append("事件简要描述：").append(eventReadBean.getContent()));
-
         boolean isShowLine = false;
-
-        String sendTime = eventReadBean.getSend_time();
-        if (!TextUtils.isEmpty(sendTime) && status > 1) {
-            isShowLine = true;
-            StringBuilder append = new StringBuilder().append("派发时间：").append(handleTime(sendTime));
-            handleTV(tvDistributedTime, append.toString());
+        /******* 派发  *********/
+        if (eventReadBean.getStatus() > 1) {
+            showPaifaLayout(eventReadBean);
         } else {
+            vLine.setVisibility(View.GONE);
+            tvEndTime.setVisibility(View.GONE);
             tvDistributedTime.setVisibility(View.GONE);
+            tvEndPoint.setVisibility(View.GONE);
         }
+        /******** 派发结束 ********/
 
-        String sendName = eventReadBean.getSend_name();
-        if (!TextUtils.isEmpty(sendName)) {
-            tvDistributedResult.setText("派发人：" + sendName);
-            tvDistributedResult.setVisibility(View.VISIBLE);
+        /******* 解决 *********/
+        //解决图片地址
+        if (eventReadBean.getStatus() > 2) {
+            handleFinish(eventReadBean.getFinish_img(), eventReadBean);
         } else {
-            tvDistributedResult.setVisibility(View.GONE);
-        }
-
-        String finishTime1 = eventReadBean.getFinish_time();
-        //由于后台会发送1000-01-01 00：00：00 所以 加入了 status 的判断
-        if (!TextUtils.isEmpty(finishTime1) && status > 2) {
-            isShowLine = true;
-            StringBuilder finishTime = new StringBuilder().append("解决反馈时间：").append(handleTime(finishTime1));
-            handleTV(tvJiejueTime, finishTime.toString());
-        } else {
+            vLine1.setVisibility(View.GONE);
             tvJiejueTime.setVisibility(View.GONE);
+            tvJiejueRemark.setVisibility(View.GONE);
+            rv3.setVisibility(View.GONE);
         }
+
+        /****** 无法解决的展示状态 *******/
+        if (eventReadBean.getStatus() == 1 && eventReadBean.getSettle_status() == 2) {
+            showPaifaLayout(eventReadBean); // 展示派发
+            rv2.setVisibility(View.GONE);
+            rv3.setVisibility(View.GONE);
+            tvJiejueTime.setVisibility(View.GONE);
+            tvJiejueRemark.setVisibility(View.GONE);
+            tvYanshouTime.setVisibility(View.GONE);
+            tvYanshouResult.setVisibility(View.GONE);
+            tvRemark.setVisibility(View.GONE);
+
+            vLine2.setVisibility(View.GONE);
+            vLine3.setVisibility(View.VISIBLE);
+            llContainor.setVisibility(View.VISIBLE);
+            chuliResultType.setVisibility(View.VISIBLE);
+            tvDistributedResult.setVisibility(View.VISIBLE);
+            if (TextUtils.isEmpty(eventReadBean.getOperate_time())) {
+                chuliTime.setVisibility(View.GONE);
+            } else {
+                chuliTime.setText("处理时间: " + eventReadBean.getOperate_time());
+                chuliTime.setVisibility(View.VISIBLE);
+            }
+            if (TextUtils.isEmpty(eventReadBean.getUnable())) {
+                chuliResult.setVisibility(View.GONE);
+            } else {
+                chuliResult.setText("无法解决原因: " + eventReadBean.getUnable());
+                chuliResult.setVisibility(View.VISIBLE);
+            }
+            cpbProgress.setNoSolveValue(eventReadBean.getSend_time());
+            return;
+        }
+
+        /********解决结束********/
 
         String checkTime = eventReadBean.getCheck_time();
         if (!TextUtils.isEmpty(checkTime) && status > 3) {
@@ -320,28 +364,6 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
             vLine2.setVisibility(View.GONE);
         }
 
-        //1.是已经解决 2.未解决
-        if (eventReadBean.getIs_finish() == 1) {
-            eventStatus = status;
-            switch (status) {
-                case 2:
-                    btnCheckSuccess.setVisibility(View.VISIBLE);
-                    btnCheckSuccess.setText("已解决");
-                    break;
-            }
-        }
-
-        //是否有验收事件权限 1:有 2:否
-        if (eventReadBean.getIs_modify() == 1) {
-            eventStatus = status;
-            switch (status) {
-                case 3:
-                    btnCheckSuccess.setVisibility(View.VISIBLE);
-                    btnCheckSuccess.setText("验收通过");
-                    break;
-
-            }
-        }
 
         String extra = eventReadBean.getExtra();
         if (!TextUtils.isEmpty(extra)) {
@@ -372,27 +394,106 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
                 tvYanshouResult.setVisibility(View.INVISIBLE);
                 break;
         }
+    }
+
+    /************ 派发 ******************/
+    public void showPaifaLayout(EventReadBean eventReadBean) {
+        vLine.setVisibility(View.VISIBLE);
+        tvEndTime.setVisibility(View.VISIBLE);
+        tvDistributedTime.setVisibility(View.VISIBLE);
+        tvEndPoint.setVisibility(View.VISIBLE);
+
+        String sendTime = eventReadBean.getSend_time();
+        if (!TextUtils.isEmpty(sendTime)) {
+            StringBuilder append = new StringBuilder().append("派发时间：").append(handleTime(sendTime));
+            handleTV(tvDistributedTime, append.toString());
+        } else {
+            tvDistributedTime.setVisibility(View.GONE);
+        }
+        tvEndTime.setText("截止日期：" + handleShortTime(eventReadBean.getEnd_date()));
+        switch (eventReadBean.getImportant_type()) { //事件重要性(1:低 2:中 3:高)
+            case 1:
+                tvEndPoint.setText("事件重要性：低");
+                break;
+            case 2:
+                tvEndPoint.setText("事件重要性：中");
+                break;
+            default:
+                tvEndPoint.setText("事件重要性：高");
+                break;
+        }
+    }
+
+    /******** 头部统一显示数据 **********/
+    private void collectHeadData(EventReadBean eventReadBean) {
+        vLine3.setVisibility(View.GONE);
+        llContainor.setVisibility(View.GONE);
+
+        List<String> dateStrList = getStrList(eventReadBean);
+        //显示进度条状态
+        cpbProgress.setStatus(eventReadBean.getStatus(), dateStrList);
+        //图片加载
+        handleImg(eventReadBean.getImg());
+
+        tvContentTitle.setText(eventReadBean.getTitle());
+        tvTime.setText(eventReadBean.getAdd_time());
+        handlePatrol(eventReadBean.getPatrol_type());
+        tvHappen.setText(eventReadBean.getPlace());
+        handlePath(eventReadBean.getPart_name());
+        tvDescription.setText(new StringBuilder().append("事件简要描述：").append(eventReadBean.getContent()));
+
+        /********** 派发人统一是指挥中心 **********/
+//        String sendName = eventReadBean.getSend_name();
+        if (eventReadBean.getStatus() > 1) {
+            tvDistributedResult.setVisibility(View.VISIBLE);
+        } else {
+            tvDistributedResult.setVisibility(View.GONE);
+        }
+    }
 
 
-        if (status >= 2) {
-            tvEndTime.setText("截止日期：" + handleShortTime(eventReadBean.getEnd_date()));
-            switch (eventReadBean.getImportant_type()) { //事件重要性(1:低 2:中 3:高)
-                case 1:
-                    tvEndPoint.setText("事件重要性：低");
-                    break;
+    /*** 底部按钮显示隐藏********/
+    private void showBottomButton(EventReadBean eventReadBean) {
+        //1.是已经解决 2.未解决
+        if (eventReadBean.getIs_finish() == 1) {
+            switch (eventReadBean.getStatus()) {
                 case 2:
-                    tvEndPoint.setText("事件重要性：中");
+                    btnCheckFaile.setTextColor(getResources().getColor(R.color.green));
+                    btnCheckFaile.setVisibility(View.VISIBLE);
+                    btnCheckFaile.setText("无法解决");
+                    btnCheckFaile.setBackgroundResource(R.drawable.btn_white_solid_bg);
+
+                    btnCheckSuccess.setTextColor(getResources().getColor(R.color.white));
+                    btnCheckSuccess.setVisibility(View.VISIBLE);
+                    btnCheckSuccess.setText("已解决");
+                    btnCheckSuccess.setBackgroundResource(R.drawable.btn_green_solid_bg);
                     break;
-                default:
-                    tvEndPoint.setText("事件重要性：高");
+            }
+            return;
+        } else {
+            btnCheckFaile.setVisibility(View.GONE);
+            btnCheckSuccess.setVisibility(View.GONE);
+        }
+
+        //是否有验收事件权限 1:有 2:否
+        if (eventReadBean.getIs_modify() == 1) {
+            switch (eventReadBean.getStatus()) {
+                case 3:
+                    btnCheckFaile.setTextColor(getResources().getColor(R.color.white));
+                    btnCheckFaile.setVisibility(View.VISIBLE);
+                    btnCheckFaile.setText("验收通过");
+                    btnCheckFaile.setBackgroundResource(R.drawable.btn_green_solid_bg);
+
+                    btnCheckSuccess.setTextColor(getResources().getColor(R.color.green));
+                    btnCheckSuccess.setVisibility(View.VISIBLE);
+                    btnCheckSuccess.setText("验收不通过");
+                    btnCheckSuccess.setBackgroundResource(R.drawable.btn_white_solid_bg);
                     break;
             }
         } else {
-            tvEndTime.setVisibility(View.GONE);
-            tvEndPoint.setVisibility(View.GONE);
+            btnCheckFaile.setVisibility(View.GONE);
+            btnCheckSuccess.setVisibility(View.GONE);
         }
-
-
     }
 
     private void handlePath(String partName) {
@@ -447,7 +548,22 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         mCheckAdapter.replaceData(Arrays.asList(split));
     }
 
-    private void handleFinishImg(String checkImg) {
+    /***  解决反馈*********/
+    private void handleFinish(String checkImg, EventReadBean eventReadBean) {
+        vLine1.setVisibility(View.VISIBLE);
+        tvJiejueTime.setVisibility(View.VISIBLE);
+        tvJiejueRemark.setVisibility(View.VISIBLE);
+        rv3.setVisibility(View.VISIBLE);
+
+        String finishTime1 = eventReadBean.getFinish_time();
+        //由于后台会发送1000-01-01 00：00：00 所以 加入了 status 的判断
+        if (!TextUtils.isEmpty(finishTime1) && eventReadBean.getStatus() > 2) {
+            StringBuilder finishTime = new StringBuilder().append("解决反馈时间：").append(handleTime(finishTime1));
+            handleTV(tvJiejueTime, finishTime.toString());
+        } else {
+            tvJiejueTime.setVisibility(View.GONE);
+        }
+
         if (TextUtils.isEmpty(checkImg)) {
             rv3.setVisibility(View.GONE);
             return;
@@ -522,4 +638,11 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         context.startActivity(intent);
     }
 
+    @Override
+    public void onButtonClick(String str) {
+        mPresenter.failed(mEventId, str, 6);
+        if (erCheckResultWindow != null) {
+            erCheckResultWindow.dismiss();
+        }
+    }
 }

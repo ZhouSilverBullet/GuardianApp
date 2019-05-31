@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:clipToPadding="true"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:clipToPadding="true"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical">
 
     <com.sdxxtop.guardianapp.ui.widget.TitleView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:leftLayoutIconIsGray="true"
-        app:titleValue="上报详情" />
+        app:titleValue="上报详情"/>
+
+    <View style="@style/line_style"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,41 +25,15 @@
         android:paddingLeft="15dp"
         android:paddingRight="15dp">
 
-        <RelativeLayout
-            android:id="@+id/rl_layout"
+        <com.sdxxtop.guardianapp.ui.widget.CustomVideoImgSelectView
+            android:layout_marginTop="10dp"
+            android:id="@+id/cvisv_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:layout_height="wrap_content"/>
 
-            <TextView
-                android:id="@+id/tv_content_title"
-                style="@style/normal_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="事件验收结果" />
-
-
-            <ImageView
-                android:id="@+id/iv_time_more"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/time_more" />
-
-
-            <TextView
-                android:id="@+id/tv_select"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:layout_toLeftOf="@id/iv_time_more"
-                android:hint="请选择" />
-        </RelativeLayout>
-
-        <View style="@style/line_style" />
+        <View
+            android:layout_marginTop="15dp"
+            style="@style/line_style"/>
 
         <TextView
             android:id="@+id/tv_remark"
@@ -65,28 +41,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:text="备注" />
+            android:paddingBottom="5dp"
+            android:text="备注"/>
 
         <com.sdxxtop.guardianapp.ui.widget.NumberEditTextView
             android:id="@+id/et_num_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"/>
 
-        <TextView
-            android:id="@+id/tv_photo_title"
-            style="@style/normal_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="已解决现场拍照" />
+        <include layout="@layout/include_button"/>
 
-
-        <com.sdxxtop.guardianapp.ui.widget.SelectHoriPhotoView
-            android:id="@+id/shpv_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <include layout="@layout/include_button" />
     </LinearLayout>
 
 

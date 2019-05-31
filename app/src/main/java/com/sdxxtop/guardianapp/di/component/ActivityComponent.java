@@ -4,6 +4,8 @@ import android.app.Activity;
 
 import com.sdxxtop.guardianapp.di.module.ActivityModule;
 import com.sdxxtop.guardianapp.di.qualifier.ActivityScope;
+import com.sdxxtop.guardianapp.ui.activity.CenterMessage2Activity;
+import com.sdxxtop.guardianapp.ui.activity.CenterMessageActivity;
 import com.sdxxtop.guardianapp.ui.activity.ContactActivity;
 import com.sdxxtop.guardianapp.ui.activity.ContactSearchActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventDiscretionListActivity;
@@ -25,8 +27,10 @@ import com.sdxxtop.guardianapp.ui.activity.HomeActivity;
 import com.sdxxtop.guardianapp.ui.activity.LoginActivity;
 import com.sdxxtop.guardianapp.ui.activity.NewsDetailsActivity;
 import com.sdxxtop.guardianapp.ui.activity.PartEventListActivity;
+import com.sdxxtop.guardianapp.ui.activity.PatrolAddDetailActivity;
 import com.sdxxtop.guardianapp.ui.activity.PatrolPathActivity;
 import com.sdxxtop.guardianapp.ui.activity.PatrolRecordActivity;
+import com.sdxxtop.guardianapp.ui.activity.ReCheckActivity;
 import com.sdxxtop.guardianapp.ui.activity.SafeStaffDetail2Activity;
 import com.sdxxtop.guardianapp.ui.activity.SafeStaffDetailActivity;
 import com.sdxxtop.guardianapp.ui.activity.SplashActivity;
@@ -67,5 +71,9 @@ public interface ActivityComponent {
     void inject(GridreportUserreportActivity activity);
     void inject(EventDiscretionListActivity activity);
     void inject(EventDiscretionReportActivity activity);
+    void inject(PatrolAddDetailActivity activity);
+    void inject(ReCheckActivity activity);
+    void inject(CenterMessageActivity activity);
+    void inject(CenterMessage2Activity activity);
 
 }

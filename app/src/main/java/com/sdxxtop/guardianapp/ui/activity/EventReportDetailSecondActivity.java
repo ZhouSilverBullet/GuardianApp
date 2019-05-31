@@ -4,29 +4,22 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-
-import com.luck.picture.lib.entity.LocalMedia;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.presenter.ERDSecondPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.ERDSecondContract;
+import com.sdxxtop.guardianapp.ui.widget.CustomVideoImgSelectView;
 import com.sdxxtop.guardianapp.ui.widget.NumberEditTextView;
-import com.sdxxtop.guardianapp.ui.widget.SelectHoriPhotoView;
-import com.sdxxtop.guardianapp.ui.widget.SingleDataView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.qqtheme.framework.picker.OptionPicker;
 
 public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPresenter> implements ERDSecondContract.IView {
 
@@ -35,32 +28,28 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
     //反馈完成
     public static final int TYPE_FINISH = 2;
 
-    @BindView(R.id.tv_title)
-    TitleView tvTitle;
-    @BindView(R.id.iv_time_more)
-    ImageView ivTimeMore;
-    @BindView(R.id.tv_select)
-    TextView tvSelect;
+
+    //	事件状态 3、已解决 4、验收通过 5验收不通过 6无法解决
+    public static final int TYPE_SOLVE = 3;  // 3、已解决
+    public static final int TYPE_UNSOLVE = 6;  // 6无法解决
+    public static final int TYPE_CHACK_SUCCSESS = 4;  //4、验收通过
+    public static final int TYPE_CHACK_FAILE = 5;  //5验收不通过
+
+
     @BindView(R.id.et_num_content)
     NumberEditTextView etNumContent;
-    @BindView(R.id.shpv_view)
-    SelectHoriPhotoView mShpvView;
     @BindView(R.id.btn_push)
     Button btnPush;
-
-    @BindView(R.id.tv_content_title)
-    TextView tvContentTitle;
-    @BindView(R.id.rl_layout)
-    RelativeLayout rlLayout;
     @BindView(R.id.tv_remark)
     TextView tvRemark;
-    @BindView(R.id.tv_photo_title)
-    TextView tvPhotoTitle;
+    @BindView(R.id.cvisv_view)
+    CustomVideoImgSelectView cvisvView;
+    @BindView(R.id.tv_title)
+    TitleView tvTitle;
 
-    private SingleDataView mSingleDataView;
     private String mEventId;
-    private ArrayList<String> mList;
     private int mEventType;
+    private boolean isMastNeed;  //内容是否必填
 
     @Override
     protected int getLayout() {
@@ -85,24 +74,32 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
             mEventId = intent.getStringExtra("eventId");
             mEventType = intent.getIntExtra("eventType", TYPE_REPORT);
         }
-
-        if (mEventType == TYPE_FINISH) {
-            tvRemark.setText("解决问题的简要描述");
-            rlLayout.setVisibility(View.GONE);
-            tvTitle.setTitleValue("解决反馈");
-            tvPhotoTitle.setVisibility(View.VISIBLE);
-        } else {
-            tvPhotoTitle.setVisibility(View.GONE);
+        etNumContent.setMaxLength(200);
+        switch (mEventType) {
+            case TYPE_SOLVE: // 3、已解决
+                tvRemark.setText("解决问题的简要描述");
+                etNumContent.setEditHint("非必填");
+                tvTitle.setTitleValue("已解决");
+                isMastNeed = false;
+                break;
+            case TYPE_CHACK_SUCCSESS://4、验收通过
+                tvRemark.setText("简要");
+                etNumContent.setEditHint("非必填");
+                tvTitle.setTitleValue("验收通过");
+                isMastNeed = false;
+                break;
+            case TYPE_CHACK_FAILE://5验收不通过
+                tvRemark.setText("验收不通过原因");
+                tvTitle.setTitleValue("验收不通过");
+                etNumContent.setEditHint("必填");
+                isMastNeed = true;
+                break;
         }
     }
 
-    @OnClick({R.id.iv_time_more, R.id.tv_select, R.id.btn_push})
+    @OnClick({R.id.btn_push})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.iv_time_more:
-            case R.id.tv_select:
-                showSelect();
-                break;
             case R.id.btn_push:
                 push();
                 break;
@@ -110,58 +107,28 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
     }
 
     private void push() {
-        boolean isFinish = mEventType == TYPE_FINISH;
-        if (mList == null && !isFinish) { //是完成的状态的情况不进入这个选择
-            showToast("请选择验收结果");
+
+        List<File> imagePushPath = cvisvView.getImageOrVideoPushPath(1);
+        List<File> videoPushPath = cvisvView.getImageOrVideoPushPath(2);
+
+        if (imagePushPath.size() == 0 && videoPushPath.size() == 0) {
+            showToast("请选择照片或视频");
             return;
         }
 
         String editValue = etNumContent.getEditValue();
-        if (TextUtils.isEmpty(editValue)) {
-//            showToast("请填写编辑内容");
-//            return;
-            editValue = "";
+        if (TextUtils.isEmpty(editValue) && isMastNeed) {
+            showToast("请填写编辑内容");
+            return;
         }
-
-        List<File> imagePushPath = mShpvView.getImagePushPath();
-
         showLoadingDialog();
-        if (isFinish) {
-            mPresenter.modify(mEventId, 3, editValue, imagePushPath);
-        } else {  //走彻底完成的逻辑
-
-            String selectType = tvSelect.getText().toString().trim();
-            int i = mList.indexOf(selectType) + 4;
-
-            mPresenter.modify(mEventId, i, editValue, imagePushPath);
-        }
-    }
-
-    private void showSelect() {
-        if (mSingleDataView == null) {
-            mList = new ArrayList<>();
-            mList.add("验证通过");
-            mList.add("验证不通过");
-
-            mSingleDataView = new SingleDataView(this, mList);
-        }
-
-        mSingleDataView.setOnItemPickListener(new OptionPicker.OnOptionPickListener() {
-            @Override
-            public void onOptionPicked(int index, String item) {
-                tvSelect.setText(item);
-            }
-        });
-
-        mSingleDataView.show();
+        mPresenter.modify(mEventId,mEventType,editValue,imagePushPath,videoPushPath);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (mShpvView != null) {
-            mShpvView.callActivityResult(requestCode, resultCode, data);
-        }
+        cvisvView.callActivityResult(requestCode, resultCode, data);
     }
 
     @Override

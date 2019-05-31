@@ -8,6 +8,7 @@
     android:paddingRight="15dp">
 
     <RelativeLayout
+        android:id="@+id/rl_containor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
@@ -41,6 +42,7 @@
     <View style="@style/line_style" />
 
     <TextView
+        android:id="@+id/tv_title"
         style="@style/normal_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

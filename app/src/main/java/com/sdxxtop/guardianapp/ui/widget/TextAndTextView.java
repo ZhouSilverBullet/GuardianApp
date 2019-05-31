@@ -29,6 +29,7 @@ public class TextAndTextView extends LinearLayout {
     private String textViewValue;
     private String textRightValue;
     private TextView textRightImage2;
+    private TextView tvMessgaeCount;
 
     public TextAndTextView(Context context) {
         this(context, null);
@@ -57,6 +58,7 @@ public class TextAndTextView extends LinearLayout {
         textRightText = (TextView) findViewById(R.id.text_and_text_right);
         textRightImage = (TextView) findViewById(R.id.text_and_text_right_image);
         textRightImage2 = (TextView) findViewById(R.id.text_and_text_right_image2);
+        tvMessgaeCount = (TextView) findViewById(R.id.tv_messgae_count);
         textLine = findViewById(R.id.text_and_text_line);
 
         if (!lineIsShow) {
@@ -95,5 +97,14 @@ public class TextAndTextView extends LinearLayout {
 
     public String getRightTVString() {
         return textRightText.getText().toString().trim();
+    }
+
+    public void setMessageCount(int count) {
+        if (count == 0) {
+            tvMessgaeCount.setVisibility(View.GONE);
+        } else {
+            tvMessgaeCount.setVisibility(View.VISIBLE);
+            tvMessgaeCount.setText(String.valueOf(count));
+        }
     }
 }

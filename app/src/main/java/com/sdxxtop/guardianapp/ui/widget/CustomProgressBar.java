@@ -108,6 +108,10 @@ public class CustomProgressBar extends RelativeLayout {
     }
 
     private void setDateStatus(int curStatus, List<String> date) {
+        tvDate1.setText("");
+        tvDate2.setText("");
+        tvDate3.setText("");
+        tvDate4.setText("");
         switch (curStatus) {
             case 4:
             case 3:
@@ -192,5 +196,17 @@ public class CustomProgressBar extends RelativeLayout {
             e.printStackTrace();
         }
         return "";
+    }
+
+    public void setNoSolveValue(String parfaTime){
+        img1.setImageDrawable(getResources().getDrawable(R.drawable.details));
+        img2.setImageDrawable(getResources().getDrawable(R.drawable.details));
+        img3.setImageDrawable(getResources().getDrawable(R.drawable.event_progress_show_error));
+        img4.setImageDrawable(getResources().getDrawable(R.drawable.progress_status_normal));
+        tvLine1.setBackgroundColor(Color.parseColor("#32B16C"));
+        tvLine2.setBackgroundColor(Color.parseColor("#DEEAE3"));
+        tvLine3.setBackgroundColor(Color.parseColor("#DEEAE3"));
+        tvText3.setText("无法解决");
+        tvDate2.setText(parseShowDate(parfaTime));
     }
 }

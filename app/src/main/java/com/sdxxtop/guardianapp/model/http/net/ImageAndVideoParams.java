@@ -9,7 +9,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import okhttp3.MediaType;
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 /**
@@ -35,7 +34,6 @@ import okhttp3.RequestBody;
 
 public class ImageAndVideoParams extends Params {
     private LinkedHashMap<String, RequestBody> imgAndVideoMap;
-    private LinkedHashMap<String, MultipartBody.Part> imgAndVideoMap2;
 
     public ImageAndVideoParams() {
         super();
@@ -54,11 +52,9 @@ public class ImageAndVideoParams extends Params {
         imgAndVideoMap.put(imgPar + "" + "\";filename=\"" + targetFile.getName(), requestBody);
     }
 
-    public void addCompressVideoPath(String videoPar, File file) {
-        RequestBody requestBody = RequestBody.create(MediaType.parse("movie/*"), file);
-        // MultipartBody.Part封装了接受的key和文件名字和RequestBody
-//        MultipartBody.Part video = MultipartBody.Part.createFormData("videoFile", file.getName(), requestBody);
-        imgAndVideoMap.put(videoPar + "" + "\";filename=\"" + file.getName(), requestBody);
+    public void addCompressVideoPath(String par,File file) {
+        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        imgAndVideoMap.put(par + "\";filename=\"" + file.getName(), requestBody);
     }
 
     /**
@@ -89,14 +85,12 @@ public class ImageAndVideoParams extends Params {
             addCompressImagePath(imgPar, pathList.get(i), App.getContext().getCacheDir() + "/img" + i + ".png", 80);
         }
     }
+
     /**
      * 视频不压缩上传
      */
-    public void addVideoPathList(String imgPar, List<File> pathList) {
-        for (int i = 0; i < pathList.size(); i++) {
-//            addImagePath(imgPar, pathList.get(i));
-            addCompressVideoPath(imgPar, pathList.get(i));
-        }
+    public void addVideoPathList(String vidoPar, List<File> pathList) {
+//        addCompressVideoPath(vidoPar,pathList.get(0));
     }
 
     /**

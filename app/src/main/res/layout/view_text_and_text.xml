@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -12,14 +12,34 @@
         android:paddingLeft="15dp"
         android:paddingRight="15dp">
 
-        <TextView
-            android:id="@+id/text_and_text_name"
+        <RelativeLayout
+            android:id="@+id/rl_containor"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="上班时间"
-            android:textColor="#333333"
-            android:textSize="17sp" />
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/text_and_text_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="上班时间"
+                android:textColor="#333333"
+                android:textSize="17sp"/>
+
+            <TextView
+                android:textColor="@color/white"
+                android:id="@+id/tv_messgae_count"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/text_and_text_name"
+                android:background="@drawable/shape_message_notice_bg"
+                android:gravity="center"
+                android:text="24"
+                android:textSize="9sp"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/text_and_text_right"
@@ -27,14 +47,14 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
-            android:layout_toRightOf="@id/text_and_text_name"
+            android:layout_toRightOf="@id/rl_containor"
             android:background="@null"
             android:ellipsize="end"
             android:gravity="right"
             android:singleLine="true"
             android:text="09:00"
             android:textColor="#999999"
-            android:textSize="17sp" />
+            android:textSize="17sp"/>
 
         <TextView
             android:id="@+id/text_and_text_right_image"
@@ -42,16 +62,16 @@
             android:layout_height="19dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/next_step" />
+            android:background="@drawable/next_step"/>
 
         <TextView
             android:id="@+id/text_and_text_right_image2"
             android:layout_width="9dp"
-            android:visibility="gone"
             android:layout_height="8dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/time_more" />
+            android:background="@drawable/time_more"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 
@@ -59,5 +79,5 @@
         android:id="@+id/text_and_text_line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/color_dddddd" />
+        android:background="@color/color_dddddd"/>
 </LinearLayout>

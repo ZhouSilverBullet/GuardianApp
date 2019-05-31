@@ -20,10 +20,19 @@ public class MainIndexBean {
     private int position;
     private String part_name;
     private int is_face;
+    private int unread_count;
+
     private List<PendingEventBean> pending_event;
     private List<AddEventBean> add_event;
-
     private List<AddPatrolBean>add_patrol;
+
+    public int getUnread_count() {
+        return unread_count;
+    }
+
+    public void setUnread_count(int unread_count) {
+        this.unread_count = unread_count;
+    }
 
     public List<AddPatrolBean> getAdd_patrol() {
         return add_patrol;

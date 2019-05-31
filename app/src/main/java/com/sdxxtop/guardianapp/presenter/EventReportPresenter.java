@@ -6,7 +6,7 @@ import com.sdxxtop.guardianapp.model.bean.EventSearchTitleBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
 import com.sdxxtop.guardianapp.model.bean.ShowPartBean;
 import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
-import com.sdxxtop.guardianapp.model.http.net.ImageParams;
+import com.sdxxtop.guardianapp.model.http.net.ImageAndVideoParams;
 import com.sdxxtop.guardianapp.model.http.net.Params;
 import com.sdxxtop.guardianapp.model.http.util.RxUtils;
 import com.sdxxtop.guardianapp.presenter.contract.EventReportContract;
@@ -27,8 +27,8 @@ public class EventReportPresenter extends RxPresenter<EventReportContract.IView>
 
 
     public void pushReport(String title, int pathType, int patrolType,
-                           String place, String longitude, String content, List<File> imagePushPath) {
-        ImageParams imageParams = new ImageParams();
+                           String place, String longitude, String content, List<File> imagePushPath, List<File> vedioPushPath) {
+        ImageAndVideoParams imageParams = new ImageAndVideoParams();
         imageParams.put("tl", title);
         imageParams.put("pt", pathType);
         imageParams.put("plt", patrolType);
@@ -37,8 +37,11 @@ public class EventReportPresenter extends RxPresenter<EventReportContract.IView>
         imageParams.put("ct", content);
 
         imageParams.addImagePathList("img[]", imagePushPath);
+        if (vedioPushPath != null && vedioPushPath.size() > 0) {
+            imageParams.addCompressVideoPath("video", vedioPushPath.get(0));
+        }
 
-        Observable<RequestBean> observable = getEnvirApi().postEventAdd(imageParams.getImgData());
+        Observable<RequestBean> observable = getEnvirApi().postEventAdd(imageParams.getImgAndVideoData());
         Disposable disposable = RxUtils.handleHttp(observable, new IRequestCallback<RequestBean>() {
             @Override
             public void onSuccess(RequestBean requestBean) {
@@ -82,7 +85,7 @@ public class EventReportPresenter extends RxPresenter<EventReportContract.IView>
 
     public void searchTitle(String title) {
         Params params = new Params();
-        params.put("kwd",title);
+        params.put("kwd", title);
         Observable<RequestBean<EventSearchTitleBean>> observable = getEnvirApi().postEventSearch(params.getData());
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EventSearchTitleBean>() {
             @Override

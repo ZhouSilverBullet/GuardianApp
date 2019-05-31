@@ -52,6 +52,8 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     TextAndTextView gridMemberReport;
     @BindView(R.id.event_report)
     TextAndTextView eventReport;
+    @BindView(R.id.message_center)
+    TextAndTextView messageCenter;
 
     private boolean isAdmin;
 
@@ -178,6 +180,7 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
             gridMemberReport.setVisibility(View.GONE);
             eventReport.setVisibility(View.GONE);
         }
+        messageCenter.setMessageCount(99);
     }
 
     @OnClick({R.id.civ_header, R.id.tatv_message, R.id.tatv_report,R.id.event_report,R.id.grid_member_report,R.id.company_report})

@@ -51,6 +51,44 @@ public class EventReadBean {
 
     private String part_name;
 
+    private int operate_status; //(1:流转 2:联办)
+    private int settle_status;  //(1:验收不通过 2:无法解决)
+
+    private String operate_time;
+    private String unable;
+
+    public String getOperate_time() {
+        return operate_time;
+    }
+
+    public void setOperate_time(String operate_time) {
+        this.operate_time = operate_time;
+    }
+
+    public String getUnable() {
+        return unable;
+    }
+
+    public void setUnable(String unable) {
+        this.unable = unable;
+    }
+
+    public int getOperate_status() {
+        return operate_status;
+    }
+
+    public void setOperate_status(int operate_status) {
+        this.operate_status = operate_status;
+    }
+
+    public int getSettle_status() {
+        return settle_status;
+    }
+
+    public void setSettle_status(int settle_status) {
+        this.settle_status = settle_status;
+    }
+
     public int getEvent_id() {
         return event_id;
     }

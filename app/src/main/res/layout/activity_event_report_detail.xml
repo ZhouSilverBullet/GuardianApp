@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ll_root_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/ll_root_layout"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <com.sdxxtop.guardianapp.ui.widget.TitleView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:leftLayoutIconIsGray="true"
-        app:titleValue="上报详情" />
+        app:titleValue="上报详情"/>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -34,7 +34,7 @@
                 <com.sdxxtop.guardianapp.ui.widget.CustomProgressBar
                     android:id="@+id/cpb_progress"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"/>
 
             </RelativeLayout>
 
@@ -49,7 +49,7 @@
                     style="@style/normal_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="事件标题" />
+                    android:text="事件标题"/>
 
                 <TextView
                     android:id="@+id/tv_content_title"
@@ -59,14 +59,14 @@
                     android:layout_alignParentRight="true"
                     android:maxWidth="200dp"
                     android:singleLine="true"
-                    android:text="下水道堵塞" />
+                    android:text="下水道堵塞"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv"
                     android:layout_width="match_parent"
                     android:layout_height="105dp"
                     android:layout_below="@id/tv_content_title"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
 
                 <RelativeLayout
                     android:id="@+id/rl_time"
@@ -80,7 +80,7 @@
                         style="@style/normal_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="上报时间" />
+                        android:text="上报时间"/>
 
                     <TextView
                         android:id="@+id/tv_time"
@@ -90,7 +90,7 @@
                         android:layout_alignParentRight="true"
                         android:maxWidth="200dp"
                         android:singleLine="true"
-                        android:text="2019.04.01 12:12:56" />
+                        android:text="2019.04.01 12:12:56"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -105,7 +105,7 @@
                         style="@style/normal_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="发现方式" />
+                        android:text="巡查方式"/>
 
                     <TextView
                         android:id="@+id/tv_check_method"
@@ -115,7 +115,7 @@
                         android:layout_alignParentRight="true"
                         android:maxWidth="200dp"
                         android:singleLine="true"
-                        android:text="巡逻" />
+                        android:text="巡逻"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -130,7 +130,7 @@
                         style="@style/normal_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="发生地点" />
+                        android:text="发生地点"/>
 
                     <TextView
                         android:id="@+id/tv_happen"
@@ -141,14 +141,14 @@
                         android:maxWidth="200dp"
                         android:paddingRight="15dp"
                         android:singleLine="true"
-                        android:text="巡逻sad" />
+                        android:text="巡逻sad"/>
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/data_right" />
+                        android:src="@drawable/data_right"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -163,7 +163,7 @@
                         style="@style/normal_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="主管部门" />
+                        android:text="上报路径"/>
 
                     <TextView
                         android:id="@+id/tv_report_path"
@@ -173,7 +173,7 @@
                         android:layout_alignParentRight="true"
                         android:maxWidth="200dp"
                         android:singleLine="true"
-                        android:text="环保局" />
+                        android:text="环保局"/>
                 </RelativeLayout>
 
                 <TextView
@@ -183,7 +183,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/rl_report_path"
                     android:layout_marginTop="5dp"
-                    android:text="街道下水道严重度堵塞，导致地面积水严重，影响车辆和行人正常通行，请尽快安排处理。" />
+                    android:text="街道下水道严重度堵塞，导致地面积水严重，影响车辆和行人正常通行，请尽快安排处理。"/>
             </RelativeLayout>
 
             <View
@@ -192,7 +192,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:visibility="gone"
-                tools:visibility="visible" />
+                tools:visibility="visible"/>
 
 
             <LinearLayout
@@ -210,7 +210,7 @@
                     android:layout_marginBottom="10dp"
                     android:visibility="gone"
                     tools:text="派发时间"
-                    tools:visibility="visible" />
+                    tools:visibility="visible"/>
 
                 <TextView
                     android:id="@+id/tv_distributed_result"
@@ -222,9 +222,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:visibility="gone"
-                    tools:text="派发人"
-                    tools:visibility="visible" />
+                    android:text="派发人:指挥中心"/>
             </LinearLayout>
 
             <LinearLayout
@@ -242,7 +240,7 @@
                     android:layout_marginBottom="10dp"
                     android:visibility="visible"
                     tools:text="截止日期"
-                    tools:visibility="visible" />
+                    tools:visibility="visible"/>
 
                 <TextView
                     android:id="@+id/tv_end_point"
@@ -256,7 +254,7 @@
                     android:gravity="right"
                     android:visibility="visible"
                     tools:text="事件重要性：高"
-                    tools:visibility="visible" />
+                    tools:visibility="visible"/>
             </LinearLayout>
 
             <View
@@ -264,7 +262,7 @@
                 style="@style/line_style"
                 android:layout_marginBottom="10dp"
                 android:visibility="gone"
-                tools:visibility="visible" />
+                tools:visibility="visible"/>
 
             <TextView
                 android:id="@+id/tv_jiejue_time"
@@ -276,7 +274,7 @@
                 android:layout_marginBottom="10dp"
                 android:visibility="gone"
                 tools:text="解决反馈时间"
-                tools:visibility="visible" />
+                tools:visibility="visible"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv3"
@@ -285,7 +283,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="10dp"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/tv_jiejue_remark"
@@ -297,14 +295,14 @@
                 android:layout_marginBottom="10dp"
                 android:visibility="gone"
                 tools:text="备注:asfas"
-                tools:visibility="visible" />
+                tools:visibility="visible"/>
 
             <View
                 android:id="@+id/v_line_2"
                 style="@style/line_style"
                 android:layout_marginBottom="10dp"
                 android:visibility="gone"
-                tools:visibility="visible" />
+                tools:visibility="visible"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -321,7 +319,7 @@
                     android:layout_marginBottom="10dp"
                     android:visibility="gone"
                     tools:text="验收时间:"
-                    tools:visibility="visible" />
+                    tools:visibility="visible"/>
 
                 <TextView
                     android:id="@+id/tv_yanshou_result"
@@ -335,7 +333,7 @@
                     android:gravity="right"
                     android:visibility="gone"
                     tools:text="验收结果：验收通过"
-                    tools:visibility="visible" />
+                    tools:visibility="visible"/>
             </LinearLayout>
 
 
@@ -346,7 +344,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="10dp"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/tv_remark"
@@ -358,20 +356,83 @@
                 android:layout_marginBottom="10dp"
                 android:visibility="gone"
                 tools:text="备注:asfas"
-                tools:visibility="visible" />
+                tools:visibility="visible"/>
 
+            <View
+                android:id="@+id/v_line_3"
+                style="@style/line_style"
+                android:layout_marginBottom="10dp"
+                android:visibility="gone"
+                tools:visibility="visible"/>
 
+            <LinearLayout
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:id="@+id/ll_containor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    android:id="@+id/chuli_time"
+                    style="@style/normal_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="处理时间：2019.05.12  12:12:23"/>
+
+                <TextView
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    android:id="@+id/chuli_result_type"
+                    style="@style/normal_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="处理结果：无法处理"/>
+
+                <TextView
+                    android:id="@+id/chuli_result"
+                    style="@style/normal_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="无法解决原因：无法处理"/>
+
+            </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <Button
-        android:id="@+id/btn_check_success"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:background="@drawable/btn_green_solid_bg"
-        android:text="验收通过"
-        android:textColor="@color/white"
-        android:visibility="gone" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_check_faile"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_white_solid_bg"
+            android:text="无法解决"
+            android:textColor="@color/green"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/btn_check_success"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_green_solid_bg"
+            android:text="验收通过"
+            android:textColor="@color/white"
+            android:visibility="gone"/>
+    </LinearLayout>
 
 </LinearLayout>

@@ -17,6 +17,7 @@ import com.sdxxtop.guardianapp.base.BaseMvpFragment;
 import com.sdxxtop.guardianapp.model.bean.MainIndexBean;
 import com.sdxxtop.guardianapp.presenter.HomeFragmentPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.HomeFragmentContract;
+import com.sdxxtop.guardianapp.ui.activity.CenterMessageActivity;
 import com.sdxxtop.guardianapp.ui.activity.ContactActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventDiscretionReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportActivity;
@@ -136,6 +137,14 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
         itlvView1.setOnClick(1);
         itlvView2.setOnClick(2);
         itlvView3.setOnClick(3);
+
+        llContainor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), CenterMessageActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private ArrayList<Integer> getRecyclerData(boolean isAdmin) {
@@ -298,6 +307,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
         }else{
             itlvView3.setNoDate();
         }
+        ivMessageIcon.setImageResource(mainIndexBean.getUnread_count()==0?R.drawable.message_normal:R.drawable.message_notice);
     }
 
     @Override

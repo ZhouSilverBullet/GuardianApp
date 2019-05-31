@@ -40,9 +40,9 @@ import com.sdxxtop.guardianapp.presenter.contract.PatrolContract;
 import com.sdxxtop.guardianapp.ui.adapter.PatrolMapAdapter;
 import com.sdxxtop.guardianapp.ui.pop.StatSelectionDateWindow;
 import com.sdxxtop.guardianapp.ui.widget.TextAndTextView;
+import com.sdxxtop.guardianapp.ui.widget.calendarSelect.BottomDialogView;
 import com.sdxxtop.guardianapp.utils.Date2Util;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -52,7 +52,6 @@ import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.Nullable;
-
 import butterknife.BindView;
 
 public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> implements PatrolContract.IView, AMapLocationListener, LocationSource, AMap
@@ -84,6 +83,7 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
     private boolean isPositionLoadFinish;
     //下载数据为空
     private boolean isLoadEmpty;
+    private BottomDialogView dialogView;
 
     @Override
     protected int getLayout() {
@@ -101,7 +101,19 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
         tatvDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSelectDateWindow();
+                if (dialogView!=null){
+                    dialogView.show();
+                }else {
+                    dialogView = new BottomDialogView(PatrolRecordActivity.this);
+                    dialogView.setConfirmClickListener(new BottomDialogView.onConfirmClick() {
+                        @Override
+                        public void onClick(String time) {
+                            tatvDate.getTextRightText().setText(time);
+                            mPresenter.loadData(time);
+                        }
+                    });
+                    dialogView.show();
+                }
             }
         });
     }

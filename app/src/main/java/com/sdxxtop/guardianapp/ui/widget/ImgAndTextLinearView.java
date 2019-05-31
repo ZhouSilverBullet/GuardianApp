@@ -16,6 +16,7 @@ import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.ui.activity.EventDiscretionListActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportListActivity;
+import com.sdxxtop.guardianapp.ui.activity.PatrolAddDetailActivity;
 import com.sdxxtop.guardianapp.ui.activity.TaskAgentsActivity;
 
 import java.util.List;
@@ -102,9 +103,9 @@ public class ImgAndTextLinearView extends LinearLayout {
         if (data.size() == 1) {
             llTaskLayout1.setVisibility(View.VISIBLE);
             llTaskLayout2.setVisibility(View.GONE);
-            tvTitle2.setText(data.get(0).getTitle());
-            tvDesc2.setVisibility(TextUtils.isEmpty(data.get(0).getEndTime()) ? View.GONE : View.VISIBLE);
-            tvDesc2.setText(data.get(0).getEndTime());
+            tvTitle1.setText(data.get(0).getTitle());
+            tvDesc1.setVisibility(TextUtils.isEmpty(data.get(0).getEndTime()) ? View.GONE : View.VISIBLE);
+            tvDesc1.setText(data.get(0).getEndTime());
         } else if (data.size() == 2) {
             llTaskLayout1.setVisibility(View.VISIBLE);
             llTaskLayout2.setVisibility(View.VISIBLE);
@@ -171,7 +172,9 @@ public class ImgAndTextLinearView extends LinearLayout {
                 getContext().startActivity(intent);
                 break;
             case 3:
-
+                Intent intentPatrol = new Intent(getContext(), PatrolAddDetailActivity.class);
+                intentPatrol.putExtra("patrol_id", mData.get(position).getEventId());
+                getContext().startActivity(intentPatrol);
                 break;
         }
     }

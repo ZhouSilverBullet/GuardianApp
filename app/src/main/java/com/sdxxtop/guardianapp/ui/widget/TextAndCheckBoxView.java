@@ -71,9 +71,20 @@ public class TextAndCheckBoxView extends LinearLayout {
                 ckNo.setChecked(false);
                 break;
         }
+        if (mListener!=null){
+            mListener.refreshStatus();
+        }
     }
 
     public boolean getEnableClick(){
-        return ckNo.isChecked();
+        return !ckNo.isChecked();   // 否选中 不可点击
+    }
+
+    public interface OnCheckBoxClick{
+        void refreshStatus();
+    }
+    private OnCheckBoxClick mListener;
+    public void setOnCheckBoxClick(OnCheckBoxClick listener){
+        this.mListener = listener;
     }
 }

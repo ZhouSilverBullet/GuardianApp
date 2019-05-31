@@ -23,24 +23,26 @@ import com.sdxxtop.guardianapp.model.bean.LoginBean;
 import com.sdxxtop.guardianapp.model.bean.MainIndexBean;
 import com.sdxxtop.guardianapp.model.bean.MainMapBean;
 import com.sdxxtop.guardianapp.model.bean.PartEventListBean;
+import com.sdxxtop.guardianapp.model.bean.PatrolAddBean;
+import com.sdxxtop.guardianapp.model.bean.PatrolReadBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
 import com.sdxxtop.guardianapp.model.bean.ShowPartBean;
 import com.sdxxtop.guardianapp.model.bean.SignLogBean;
 import com.sdxxtop.guardianapp.model.bean.StudyCourseBean;
 import com.sdxxtop.guardianapp.model.bean.StudyQuestionBean;
 import com.sdxxtop.guardianapp.model.bean.UcenterIndexBean;
+import com.sdxxtop.guardianapp.model.bean.UnreadIndexBean;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 
@@ -95,11 +97,7 @@ public interface EnvirApiService {
 
     @Multipart
     @POST("patrol/add")
-    Observable<RequestBean> postPatrolAdd(@PartMap Map<String, RequestBody> data);
-
-    @Multipart
-    @POST("patrol/add")
-    Observable<RequestBean> postPatrolAdd(@Part MultipartBody.Part file);
+    Observable<RequestBean<PatrolAddBean>> postPatrolAdd(@PartMap Map<String, RequestBody> data);
 
     @FormUrlEncoded
     @POST("event/read")
@@ -108,6 +106,10 @@ public interface EnvirApiService {
     @Multipart
     @POST("event/modify")
     Observable<RequestBean> postEventModify(@PartMap HashMap<String, RequestBody> data);
+
+    @Multipart
+    @POST("event/failed")
+    Observable<RequestBean> postEventFailed(@PartMap HashMap<String, RequestBody> data);
 
     @FormUrlEncoded
     @POST("event/showPart")
@@ -228,5 +230,21 @@ public interface EnvirApiService {
     @FormUrlEncoded
     @POST("patrol/index")
     Observable<RequestBean<EventDiscretionListBean>> postPatrolIndex(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("patrol/read")
+    Observable<RequestBean<PatrolReadBean>> postPatrolRead(@Field("data") String data);
+
+    @Multipart
+    @POST("patrol/handle")
+    Observable<RequestBean> postPatrolHandle(@PartMap Map<String, RequestBody> data);
+
+    @FormUrlEncoded
+    @POST("unread/index")
+    Observable<RequestBean<List<UnreadIndexBean>>> postUnreadIndex(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("unread/newslist")
+    Observable<RequestBean> postUnreadNewslist(@Field("data") String data);
 
 }

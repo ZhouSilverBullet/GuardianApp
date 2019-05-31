@@ -25,6 +25,7 @@ import com.sdxxtop.guardianapp.presenter.contract.EventReportContract;
 import com.sdxxtop.guardianapp.ui.adapter.EventReportRecyclerAdapter;
 import com.sdxxtop.guardianapp.ui.adapter.EventSearchTitleAdapter;
 import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
+import com.sdxxtop.guardianapp.ui.widget.CustomVideoImgSelectView;
 import com.sdxxtop.guardianapp.ui.widget.NumberEditTextView;
 import com.sdxxtop.guardianapp.ui.widget.SingleStyleView;
 import com.sdxxtop.guardianapp.ui.widget.TextAndEditView;
@@ -45,8 +46,6 @@ import butterknife.OnClick;
 public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> implements EventReportRecyclerAdapter.HorListener, EventReportContract.IView {
     @BindView(R.id.tv_title)
     TitleView mTitleView;
-    @BindView(R.id.rv)
-    RecyclerView mRecyclerView;
     @BindView(R.id.btn_push)
     Button btnPush;
 
@@ -69,6 +68,9 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     @BindView(R.id.net_content)
     NumberEditTextView netContent;
 
+    @BindView(R.id.cvisv_view)
+    CustomVideoImgSelectView cvisvView;
+
     private EventReportRecyclerAdapter mAdapter;
     private List<LocalMedia> localMediaList = new ArrayList<>();
     //金纬度
@@ -90,7 +92,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
         super.initView();
 //        setSwipeBackEnable(true);
 
-        setPhotoRecycler(mRecyclerView);
+//        setPhotoRecycler(mRecyclerView);
 
         InputFilter[] filters = {new InputFilter.LengthFilter(10)};
         taevTitle.getEditText().setFilters(filters);
@@ -191,9 +193,11 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     // todo 网络请求
     private void toReport() {
 
-        List<File> imagePushPath = getImagePushPath();
-        if (imagePushPath == null || imagePushPath.size() == 0) {
-            showToast("请选择图片");
+        List<File> imagePushPath = cvisvView.getImageOrVideoPushPath(1);
+        List<File> vedioPushPath = cvisvView.getImageOrVideoPushPath(2);
+
+        if (imagePushPath.size() == 0&& vedioPushPath.size() == 0) {
+            showToast("请选择图片或视频");
             return;
         }
 
@@ -235,7 +239,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 
         showLoadingDialog();
 
-        mPresenter.pushReport(title, pathType, queryType, place, lonLng, editValue, imagePushPath);
+        mPresenter.pushReport(title, pathType, queryType, place, lonLng, editValue, imagePushPath,vedioPushPath);
     }
 
     @Override
@@ -356,23 +360,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
         super.onActivityResult(requestCode, resultCode, data);
         hideLoadingDialog();
         if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case PictureConfig.CHOOSE_REQUEST:
-                    // 图片、视频、音频选择结果回调
-                    List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
-                    if (selectList != null && selectList.size() > 0) {
-                        localMediaList.clear();
-                        int size = selectList.size();
-                        if (size < 9) {
-                            localMediaList.addAll(selectList);
-                            localMediaList.add(getTemp());
-                        } else {
-                            localMediaList.addAll(selectList);
-                        }
-                        onResult(localMediaList);
-                    }
-                    break;
-            }
+            cvisvView.callActivityResult(requestCode,resultCode,data);
         } else if (requestCode == 100 && resultCode == 10087 && data != null) {
             String address = data.getStringExtra("ad");
             String lt = data.getStringExtra("lt");
