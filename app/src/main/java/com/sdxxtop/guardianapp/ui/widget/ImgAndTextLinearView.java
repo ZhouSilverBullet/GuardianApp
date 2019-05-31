@@ -100,6 +100,7 @@ public class ImgAndTextLinearView extends LinearLayout {
 
     public void setData(List<TagEventBean> data) {
         this.mData = data;
+        tvNoData.setVisibility(View.GONE);
         if (data.size() == 1) {
             llTaskLayout1.setVisibility(View.VISIBLE);
             llTaskLayout2.setVisibility(View.GONE);
