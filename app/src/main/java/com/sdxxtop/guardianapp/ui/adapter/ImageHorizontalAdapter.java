@@ -21,13 +21,11 @@ import androidx.annotation.Nullable;
 import static android.os.Environment.DIRECTORY_PICTURES;
 
 public class ImageHorizontalAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
-    private List<String> images = new ArrayList<>();
+
     private List<LocalMedia> selectList = new ArrayList<>();
 
     public ImageHorizontalAdapter(int layoutResId, @Nullable List<String> data) {
         super(layoutResId, data);
-        images.clear();
-        this.images = data;
     }
 
     @Override
@@ -36,15 +34,19 @@ public class ImageHorizontalAdapter extends BaseQuickAdapter<String, BaseViewHol
         if (!TextUtils.isEmpty(item)) {
             Glide.with(mContext).load(item).into(imageView);
         }
+
+        List<String> data = getData();
+        if (data != null && data.size() > 0) {
+            selectList.clear();
+            for (int i = 0; i < data.size(); i++) {
+                LocalMedia localMedia = new LocalMedia();
+                localMedia.setPath(data.get(i));
+                selectList.add(localMedia);
+            }
+        }
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectList.clear();
-                for (int i = 0; i < images.size(); i++) {
-                    LocalMedia localMedia = new LocalMedia();
-                    localMedia.setPath(images.get(i));
-                    selectList.add(localMedia);
-                }
                 PictureSelector.create((Activity) mContext).themeStyle(R.style.picture_default_style).openExternalPreview(helper.getAdapterPosition(),
                         Environment.getExternalStoragePublicDirectory(DIRECTORY_PICTURES).getPath(), selectList);
             }

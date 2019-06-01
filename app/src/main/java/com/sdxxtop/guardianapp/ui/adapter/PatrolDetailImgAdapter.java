@@ -23,22 +23,31 @@ import androidx.annotation.Nullable;
  */
 public class PatrolDetailImgAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
 
+    private List<LocalMedia> selectList = new ArrayList<>();
+
     public PatrolDetailImgAdapter(int layoutResId, @Nullable List<String> data) {
         super(layoutResId, data);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, String item) {
-        helper.setGone(R.id.ll_del,false);
+        helper.setGone(R.id.ll_del, false);
         Glide.with(mContext).load(item).into((ImageView) helper.getView(R.id.fiv));
+        List<String> data = getData();
+        if (data!=null&&data.size()>0){
+            selectList.clear();
+            for (int i = 0; i < data.size(); i++) {
+                LocalMedia localMedia = new LocalMedia();
+                localMedia.setPath(data.get(i));
+                selectList.add(localMedia);
+            }
+        }
+
+
         helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<LocalMedia> selectList = new ArrayList<>();
-                LocalMedia localMedia = new LocalMedia();
-                localMedia.setPath(item);
-                selectList.add(localMedia);
-                PictureSelector.create((Activity) mContext).themeStyle(R.style.picture_default_style).openExternalPreview(0, selectList);
+                PictureSelector.create((Activity) mContext).themeStyle(R.style.picture_default_style).openExternalPreview(helper.getAdapterPosition(), selectList);
             }
         });
     }

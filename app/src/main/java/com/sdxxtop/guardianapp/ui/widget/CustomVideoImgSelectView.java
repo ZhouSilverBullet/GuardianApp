@@ -66,7 +66,6 @@ public class CustomVideoImgSelectView extends LinearLayout implements View.OnCli
         setPhotoRecycler(rv);
     }
 
-
     /************************   初始化  照片/视频 选择   *********************************/
     protected void setPhotoRecycler(RecyclerView recycler) {
         recycler.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -95,6 +94,7 @@ public class CustomVideoImgSelectView extends LinearLayout implements View.OnCli
 
     @Override
     public void onClick(View v) {
+
         if (adapter != null) {
             List<LocalMedia> data = adapter.getData();
             selectImgList.clear();
