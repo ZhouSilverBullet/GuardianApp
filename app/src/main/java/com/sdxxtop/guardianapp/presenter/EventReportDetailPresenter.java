@@ -1,7 +1,7 @@
 package com.sdxxtop.guardianapp.presenter;
 
 import com.sdxxtop.guardianapp.base.RxPresenter;
-import com.sdxxtop.guardianapp.model.bean.EventReadBean;
+import com.sdxxtop.guardianapp.model.bean.EventReadIndexBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
 import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
 import com.sdxxtop.guardianapp.model.http.net.ImageParams;
@@ -27,10 +27,10 @@ public class EventReportDetailPresenter extends RxPresenter<EventReportDetailCon
     public void loadData(String eventId) {
         Params params = new Params();
         params.put("ei", eventId);
-        Observable<RequestBean<EventReadBean>> observable = getEnvirApi().postEventRead(params.getData());
-        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EventReadBean>() {
+        Observable<RequestBean<EventReadIndexBean>> observable = getEnvirApi().postEventRead(params.getData());
+        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EventReadIndexBean>() {
             @Override
-            public void onSuccess(EventReadBean eventReadBean) {
+            public void onSuccess(EventReadIndexBean eventReadBean) {
                 mView.readData(eventReadBean);
             }
 

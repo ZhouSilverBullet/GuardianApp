@@ -8,8 +8,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.luck.picture.lib.entity.LocalMedia;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.model.bean.EventSearchTitleBean;
@@ -29,7 +27,6 @@ import com.sdxxtop.guardianapp.utils.MyTextChangeListener;
 import com.sdxxtop.guardianapp.utils.TimeSelectBottomDialog;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.Nullable;
@@ -65,10 +62,6 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
 
     private String lonLng;//经纬度
     private TimeSelectBottomDialog dialog;
-    private BottomSheetDialog bottomSheetDialog;
-    private List<LocalMedia> selectImgList = new ArrayList<>();
-    private List<LocalMedia> selectVideoList = new ArrayList<>();
-    private List<LocalMedia> allDataList = new ArrayList<>();
 
     private GridImageAdapter adapter;
     private EventSearchTitleAdapter titleAdapter;
@@ -232,9 +225,7 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
     }
 
 
-
     /************************   获取地点/图片/视频 回调 *********************************/
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

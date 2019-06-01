@@ -39,13 +39,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginTop="10dp"
                 android:text="银都铝业例行巡查"
                 android:textColor="#292929"
                 android:textSize="15sp"/>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="5dp"
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
@@ -54,6 +54,7 @@
 
 
             <RelativeLayout
+                android:layout_marginRight="10dp"
                 android:layout_marginLeft="15dp"
                 android:id="@+id/rl_happen"
                 android:layout_width="match_parent"
@@ -130,6 +131,7 @@
                     android:background="@color/color_E0E0E0"/>
 
                 <TextView
+                    android:id="@+id/tv_img_video_desc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"

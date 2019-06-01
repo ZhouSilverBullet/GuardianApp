@@ -10,7 +10,7 @@ import com.sdxxtop.guardianapp.model.bean.EnterpriseUserdetailsBean;
 import com.sdxxtop.guardianapp.model.bean.EventDiscretionListBean;
 import com.sdxxtop.guardianapp.model.bean.EventIndexBean;
 import com.sdxxtop.guardianapp.model.bean.EventListBean;
-import com.sdxxtop.guardianapp.model.bean.EventReadBean;
+import com.sdxxtop.guardianapp.model.bean.EventReadIndexBean;
 import com.sdxxtop.guardianapp.model.bean.EventSearchTitleBean;
 import com.sdxxtop.guardianapp.model.bean.ExamineFinishBean;
 import com.sdxxtop.guardianapp.model.bean.GERPIndexBean;
@@ -102,7 +102,7 @@ public interface EnvirApiService {
 
     @FormUrlEncoded
     @POST("event/read")
-    Observable<RequestBean<EventReadBean>> postEventRead(@Field("data") String data);
+    Observable<RequestBean<EventReadIndexBean>> postEventRead(@Field("data") String data);
 
     @Multipart
     @POST("event/modify")

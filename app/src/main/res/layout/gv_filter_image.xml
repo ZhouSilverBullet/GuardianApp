@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
@@ -35,7 +36,7 @@
         </LinearLayout>
 
         <TextView
-            android:visibility="gone"
+            tools:visibility="visible"
             android:id="@+id/tv_duration"
             android:layout_width="90dp"
             android:layout_height="30dp"
@@ -50,6 +51,24 @@
             android:paddingTop="8dp"
             android:text="00:00"
             android:textColor="@color/white"
-            android:textSize="11sp"/>
+            android:textSize="11sp"
+            android:visibility="gone"/>
+
+        <LinearLayout
+            android:layout_centerInParent="true"
+            tools:visibility="visible"
+            android:visibility="gone"
+            android:id="@+id/rl_containor"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:background="@color/color_E0E0E0"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/video_icon"/>
+        </LinearLayout>
     </RelativeLayout>
+
 </RelativeLayout>

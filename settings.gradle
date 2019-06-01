@@ -1,1 +1,1 @@
-include ':app', ':faceplatform'
+include ':app', ':faceplatform', ':picture_library', ':ucrop'

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
+import com.sdxxtop.guardianapp.model.bean.MediaBean;
 import com.sdxxtop.guardianapp.model.bean.PatrolReadBean;
 import com.sdxxtop.guardianapp.presenter.PatrolAddDetailPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.PatrolAddDetailContract;
@@ -17,7 +18,8 @@ import com.sdxxtop.guardianapp.ui.pop.SelectMapPopView;
 import com.sdxxtop.guardianapp.utils.SkipMapUtils;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,6 +46,8 @@ public class PatrolAddDetailActivity extends BaseMvpActivity<PatrolAddDetailPres
     LinearLayout llCheckLayout;
     @BindView(R.id.ll_containor)
     LinearLayout llContainor;
+    @BindView(R.id.tv_img_video_desc)
+    TextView tvImgVideoDesc;
     @BindView(R.id.btn_push)
     Button btnReCheck;
 
@@ -51,7 +55,8 @@ public class PatrolAddDetailActivity extends BaseMvpActivity<PatrolAddDetailPres
     private PatrolDetailImgAdapter adapter, adapterCheck;
     private String address = "";
     private String longitude = "";
-
+    private List<MediaBean> data = new ArrayList<>();
+    private List<MediaBean> checkData = new ArrayList<>();
 
     @Override
     protected int getLayout() {
@@ -91,6 +96,7 @@ public class PatrolAddDetailActivity extends BaseMvpActivity<PatrolAddDetailPres
     public void showData(PatrolReadBean bean) {
         address = bean.getPlace();
         longitude = bean.getLongitude();
+
         if (bean.getStatus() == 1) {
             llContainor.setVisibility(View.VISIBLE);
         } else {
@@ -100,15 +106,44 @@ public class PatrolAddDetailActivity extends BaseMvpActivity<PatrolAddDetailPres
         tvHappen.setText(bean.getPlace());
         tvContent.setText(bean.getContent());
         tvRectifyDate.setText("整改时限：" + bean.getRectify_date());
-        adapter.replaceData(Arrays.asList(bean.getImg().split(",")));
+
+        //视频
+        data.clear();
+        if (!TextUtils.isEmpty(bean.getVideo())) {
+            data.add(new MediaBean(bean.getVideo(),2));
+        }
+        if (!TextUtils.isEmpty(bean.getImg())){
+            String[] split = bean.getImg().split(",");
+            for (int i = 0; i < split.length; i++) {
+                data.add(new MediaBean(split[i],1));
+            }
+        }
+        adapter.replaceData(data);
 
         /*************** 复查 *****************/
+        llCheckLayout.setVisibility(View.VISIBLE);
         if (TextUtils.isEmpty(bean.getCheck_vedio()) && TextUtils.isEmpty(bean.getCheck_img())) {
+            recyclerviewCheck.setVisibility(View.GONE);
+            tvImgVideoDesc.setVisibility(View.GONE);
             llCheckLayout.setVisibility(View.GONE);
         } else {
             llCheckLayout.setVisibility(View.VISIBLE);
+            recyclerviewCheck.setVisibility(View.VISIBLE);
+            tvImgVideoDesc.setVisibility(View.VISIBLE);
         }
-        adapterCheck.replaceData(Arrays.asList(bean.getCheck_img().split(",")));
+        //复查视频
+        checkData.clear();
+        if (!TextUtils.isEmpty(bean.getCheck_vedio())) {
+            checkData.add(new MediaBean(bean.getCheck_vedio(),2));
+        }
+        if (!TextUtils.isEmpty(bean.getCheck_img())){
+            String[] split = bean.getCheck_img().split(",");
+            for (int i = 0; i < split.length; i++) {
+                checkData.add(new MediaBean(split[i],1));
+            }
+        }
+        adapterCheck.replaceData(checkData);
+
         tvContentCheck.setText(bean.getCheck_content());
 
     }

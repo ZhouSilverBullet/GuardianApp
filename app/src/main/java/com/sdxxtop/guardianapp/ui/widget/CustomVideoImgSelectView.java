@@ -125,6 +125,7 @@ public class CustomVideoImgSelectView extends LinearLayout implements View.OnCli
                         .minimumCompressSize(100)// 小于100kb的图片不压缩
                         .selectionMedia(selectImgList)// 是否传入已选图片
                         .recordVideoSecond(30)
+                        .compress(true)
                         .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
                 break;
             case R.id.tv_video:
@@ -139,6 +140,9 @@ public class CustomVideoImgSelectView extends LinearLayout implements View.OnCli
                         .isZoomAnim(true)// 图片列表点击 缩放效果 默认true
                         .synOrAsy(true)//同步true或异步false 压缩 默认同步
                         .minimumCompressSize(100)// 小于100kb的图片不压缩
+                        .videoQuality(0)
+                        .compress(true)
+                        .recordVideoSecond(20)
                         .selectionMedia(selectVideoList)
                         .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
                 break;
