@@ -13,6 +13,8 @@ import com.sdxxtop.guardianapp.model.bean.PatrolReadBean;
 import com.sdxxtop.guardianapp.presenter.PatrolAddDetailPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.PatrolAddDetailContract;
 import com.sdxxtop.guardianapp.ui.adapter.PatrolDetailImgAdapter;
+import com.sdxxtop.guardianapp.ui.pop.SelectMapPopView;
+import com.sdxxtop.guardianapp.utils.SkipMapUtils;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import java.util.Arrays;
@@ -28,10 +30,10 @@ public class PatrolAddDetailActivity extends BaseMvpActivity<PatrolAddDetailPres
     TextView tvTitle;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    @BindView(R.id.tv_place)
-    TextView tvPlace;
     @BindView(R.id.tv_content)
     TextView tvContent;
+    @BindView(R.id.tv_happen)
+    TextView tvHappen;
     @BindView(R.id.tv_rectify_date)
     TextView tvRectifyDate;
     @BindView(R.id.recyclerview_check)
@@ -47,6 +49,9 @@ public class PatrolAddDetailActivity extends BaseMvpActivity<PatrolAddDetailPres
 
     private int patrol_id;
     private PatrolDetailImgAdapter adapter, adapterCheck;
+    private String address = "";
+    private String longitude = "";
+
 
     @Override
     protected int getLayout() {
@@ -84,13 +89,15 @@ public class PatrolAddDetailActivity extends BaseMvpActivity<PatrolAddDetailPres
 
     @Override
     public void showData(PatrolReadBean bean) {
+        address = bean.getPlace();
+        longitude = bean.getLongitude();
         if (bean.getStatus() == 1) {
             llContainor.setVisibility(View.VISIBLE);
         } else {
             llContainor.setVisibility(View.GONE);
         }
         tvTitle.setText(bean.getTitle());
-        tvPlace.setText("发生地点：" + bean.getPlace());
+        tvHappen.setText(bean.getPlace());
         tvContent.setText(bean.getContent());
         tvRectifyDate.setText("整改时限：" + bean.getRectify_date());
         adapter.replaceData(Arrays.asList(bean.getImg().split(",")));
@@ -106,10 +113,45 @@ public class PatrolAddDetailActivity extends BaseMvpActivity<PatrolAddDetailPres
 
     }
 
-    @OnClick(R.id.btn_push)
-    public void onViewClicked() {
-        Intent intent = new Intent(this,ReCheckActivity.class);
-        intent.putExtra("patrol_id",patrol_id);
-        startActivity(intent);
+    @OnClick({R.id.btn_push, R.id.rl_happen})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_push:
+                Intent intent = new Intent(this, ReCheckActivity.class);
+                intent.putExtra("patrol_id", patrol_id);
+                startActivity(intent);
+                break;
+            case R.id.rl_happen:
+                if (TextUtils.isEmpty(address)) {
+                    return;
+                }
+
+                if (TextUtils.isEmpty(longitude)) {
+                    showToast("经纬度为空");
+                    return;
+                }
+
+                String[] split = longitude.split(",");
+                if (split.length != 2) {
+                    showToast("经纬度不合法");
+                    return;
+                }
+
+                SelectMapPopView selectMapPopView =
+                        new SelectMapPopView(this, findViewById(R.id.ll_root_layout), "高德地图（推荐）", "百度地图");
+                selectMapPopView.setSelectMapClickListener(new SelectMapPopView.SelectMapClickListener() {
+                    @Override
+                    public void clickToGaode() {
+                        SkipMapUtils.goToGaodeMap3(mContext, address, split[1], split[0]);
+                    }
+
+                    @Override
+                    public void clickToBaidu() {
+                        SkipMapUtils.goToBaiduMap3(mContext, address, split[1], split[0]);
+                    }
+                });
+
+                break;
+        }
     }
 }

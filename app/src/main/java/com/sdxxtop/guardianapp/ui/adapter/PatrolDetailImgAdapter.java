@@ -1,14 +1,17 @@
 package com.sdxxtop.guardianapp.ui.adapter;
 
+import android.app.Activity;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.sdxxtop.guardianapp.R;
-import com.sdxxtop.guardianapp.utils.UIUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.Nullable;
@@ -31,7 +34,11 @@ public class PatrolDetailImgAdapter extends BaseQuickAdapter<String, BaseViewHol
         helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIUtils.showToast(item);
+                List<LocalMedia> selectList = new ArrayList<>();
+                LocalMedia localMedia = new LocalMedia();
+                localMedia.setPath(item);
+                selectList.add(localMedia);
+                PictureSelector.create((Activity) mContext).themeStyle(R.style.picture_default_style).openExternalPreview(0, selectList);
             }
         });
     }

@@ -141,7 +141,7 @@ public class BottomDialogView extends Dialog implements View.OnClickListener {
                 Log.e("时间==", "" + item1 + "指针==" + currentItem2);
                 String allTime = item + " " + item1 ;
                 if (mListener != null) {
-                    mListener.onClick(allTime);
+                    mListener.onClick(item,currentItem2);
                 }
                 this.dismiss();
                 break;
@@ -150,7 +150,7 @@ public class BottomDialogView extends Dialog implements View.OnClickListener {
 
 
     public interface onConfirmClick {
-        void onClick(String time);
+        void onClick(String time,int type);
     }
 
     @Override

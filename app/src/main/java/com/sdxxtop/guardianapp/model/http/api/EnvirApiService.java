@@ -32,6 +32,7 @@ import com.sdxxtop.guardianapp.model.bean.StudyCourseBean;
 import com.sdxxtop.guardianapp.model.bean.StudyQuestionBean;
 import com.sdxxtop.guardianapp.model.bean.UcenterIndexBean;
 import com.sdxxtop.guardianapp.model.bean.UnreadIndexBean;
+import com.sdxxtop.guardianapp.model.bean.UnreadNewslistBean;
 
 import java.util.HashMap;
 import java.util.List;
@@ -245,6 +246,6 @@ public interface EnvirApiService {
 
     @FormUrlEncoded
     @POST("unread/newslist")
-    Observable<RequestBean> postUnreadNewslist(@Field("data") String data);
+    Observable<RequestBean<UnreadNewslistBean>> postUnreadNewslist(@Field("data") String data);
 
 }

@@ -10,6 +10,15 @@ public class UnreadIndexBean {
     private int count;
     private String name;
     private String title;
+    private int type;
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public int getCount() {
         return count;

@@ -101,15 +101,23 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
         tatvDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (dialogView!=null){
+                if (dialogView != null) {
                     dialogView.show();
-                }else {
+                } else {
                     dialogView = new BottomDialogView(PatrolRecordActivity.this);
                     dialogView.setConfirmClickListener(new BottomDialogView.onConfirmClick() {
                         @Override
-                        public void onClick(String time) {
-                            tatvDate.getTextRightText().setText(time);
-                            mPresenter.loadData(time);
+                        public void onClick(String time, int type) {
+                            if (type == 0) {
+                                time += " 全天";
+                            } else if (type == 1) {
+                                time += " 8:00 - 12:00";
+                            } else if (type == 2) {
+                                time += " 14:00 - 17:00";
+                            }
+                            int resid = time.indexOf(todayDate);
+                            tatvDate.getTextRightText().setText(resid!=-1?"今日":time);
+                            mPresenter.loadData(time, type);
                         }
                     });
                     dialogView.show();
@@ -170,7 +178,7 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
     }
 
     private void moveToPath() {
-        Map<String,SignLogBean.SignBean> tempList = new HashMap<>();
+        Map<String, SignLogBean.SignBean> tempList = new HashMap<>();
 
         if (curLatlngList != null && curLatlngList.size() > 0) {
             for (SignLogBean.SignBean signBean : curLatlngList) {
@@ -427,7 +435,7 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
         super.onResume();
         //mapview 修改一下加载时间试试
         mapView.onResume();
-        mPresenter.loadData(todayDate);
+        mPresenter.loadData(todayDate, 0);
     }
 
     @Override
@@ -462,7 +470,7 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
                     chooseDay = date;
                     tatvDate.getTextRightText().setText(getFormatDate(chooseDay));
 //                    mPresenter.kaoqinMore(getUserID(), studentID, date);
-                    mPresenter.loadData(date);
+                    mPresenter.loadData(date, 0);
                     selectionDateWindow.dismiss();
                 }
             });

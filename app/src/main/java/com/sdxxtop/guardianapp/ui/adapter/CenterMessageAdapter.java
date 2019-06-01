@@ -47,6 +47,7 @@ public class CenterMessageAdapter extends BaseQuickAdapter<UnreadIndexBean, Base
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, CenterMessage2Activity.class);
                 intent.putExtra("name",item.getName());
+                intent.putExtra("type",item.getType());
                 mContext.startActivity(intent);
             }
         });

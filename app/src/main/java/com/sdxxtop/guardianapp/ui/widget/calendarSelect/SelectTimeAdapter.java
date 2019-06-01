@@ -67,7 +67,7 @@ public class SelectTimeAdapter implements WheelAdapter<String> {
             }
             for (int i = 1; i <= monthTemp; i++) {
                 int monthLastDay = getMonthLastDay(tempYy, i);
-                if (monthTemp != 12) {
+                if (monthTemp == i&&tempYy==yy) {
                     monthLastDay = dd;
                 }
                 for (int j = 1; j <= monthLastDay; j++) {

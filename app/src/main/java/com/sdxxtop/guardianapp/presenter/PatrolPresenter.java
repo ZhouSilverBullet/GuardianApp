@@ -6,11 +6,8 @@ import com.sdxxtop.guardianapp.model.bean.SignLogBean;
 import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
 import com.sdxxtop.guardianapp.model.http.net.Params;
 import com.sdxxtop.guardianapp.model.http.util.RxUtils;
-import com.sdxxtop.guardianapp.presenter.contract.ContactContract;
 import com.sdxxtop.guardianapp.presenter.contract.PatrolContract;
 import com.sdxxtop.guardianapp.utils.UIUtils;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -23,9 +20,10 @@ public class PatrolPresenter extends RxPresenter<PatrolContract.IView> implement
     }
 
 
-    public void loadData(String date) {
+    public void loadData(String date,int type) {
         Params params = new Params();
         params.put("sd", date);
+        params.put("tp", type);
         Observable<RequestBean<SignLogBean>> observable = getEnvirApi().postMainSignLog(params.getData());
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<SignLogBean>() {
             @Override

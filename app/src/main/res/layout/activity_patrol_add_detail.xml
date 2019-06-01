@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="true"
+    android:id="@+id/ll_root_layout"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".ui.activity.PatrolAddDetailActivity">
@@ -52,16 +53,39 @@
                 android:layout_marginRight="10dp"/>
 
 
-            <TextView
-                android:id="@+id/tv_place"
+            <RelativeLayout
+                android:layout_marginLeft="15dp"
+                android:id="@+id/rl_happen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="16dp"
-                android:text="发生地点：山东省临沂市罗庄区盛庄街道八块石村 >"
-                android:textColor="#292929"
-                android:textSize="15sp"/>
+                android:layout_below="@id/rl_check_method"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
+
+                <TextView
+                    style="@style/normal_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="发生地点"/>
+
+                <TextView
+                    android:id="@+id/tv_happen"
+                    style="@style/normal_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:maxWidth="200dp"
+                    android:paddingRight="15dp"
+                    android:singleLine="true"
+                    android:text="巡逻sad"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/data_right"/>
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="wrap_content"

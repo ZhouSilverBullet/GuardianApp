@@ -19,6 +19,15 @@ public class UcenterIndexBean {
     private String img;
     private String part_name;
     private int type;
+    private int unread_count;
+
+    public int getUnread_count() {
+        return unread_count;
+    }
+
+    public void setUnread_count(int unread_count) {
+        this.unread_count = unread_count;
+    }
 
     public String getName() {
         return name;
