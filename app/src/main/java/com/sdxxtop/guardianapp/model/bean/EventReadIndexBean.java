@@ -15,6 +15,7 @@ public class EventReadIndexBean {
     public String add_time;
     public int patrol_type;
     public String place;
+    public String longitude;
     public String content;
     public int status;
 
@@ -29,10 +30,10 @@ public class EventReadIndexBean {
 
     public List<ExtraDateBean> extra_date;//事件的所有派发信息
 
-    //    private List<ExtraBean> extra;//事件的所有无法解决信息
+    public List<ExtraBean> extra;//事件的所有无法解决信息
     public List<SolveBean> solve;//最近一条的解决信息
     public List<ExtraInfoBean> extra_info;//验收不通过
-//    private List<CompletedBean> completed;//已完成
+    public List<CompletedBean> completed;//已完成
 
 
     public static class ExtraDateBean {//事件的所有派发信息

@@ -35,7 +35,7 @@ public class PELPresenter extends RxPresenter<PELContract.IView> implements PELC
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<PartEventListBean>() {
             @Override
             public void onSuccess(PartEventListBean bean) {
-                mView.showData(bean);
+                mView.showData(bean,start_page);
             }
 
             @Override

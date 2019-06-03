@@ -10,7 +10,7 @@ import com.sdxxtop.guardianapp.model.bean.PartEventListBean;
 public interface PELContract {
     interface IView extends BaseView {
 
-        void showData(PartEventListBean bean);
+        void showData(PartEventListBean bean,int start_page);
     }
 
     interface IPresenter extends BasePresenter<IView> {

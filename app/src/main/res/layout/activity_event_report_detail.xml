@@ -62,12 +62,12 @@
                     android:text="下水道堵塞"/>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    tools:visibility="visible"
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="105dp"
                     android:layout_below="@id/tv_content_title"
-                    android:visibility="gone"/>
+                    android:visibility="gone"
+                    tools:visibility="visible"/>
 
                 <RelativeLayout
                     android:id="@+id/rl_time"
@@ -192,92 +192,63 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-            <TextView
-                android:id="@+id/tv_jiejue_time"
-                style="@style/normal_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="10dp"
-                android:visibility="gone"
-                tools:text="解决反馈时间"
-                tools:visibility="visible"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                tools:visibility="visible"
-                android:id="@+id/jiejue_recy"
-                android:layout_width="match_parent"
-                android:layout_height="105dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="10dp"
-                android:visibility="gone"/>
-
-            <TextView
-                android:id="@+id/tv_jiejue_remark"
-                style="@style/normal_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="10dp"
-                android:visibility="gone"
-                tools:text="备注:asfas"
-                tools:visibility="visible"/>
-
-            <View
-                android:id="@+id/v_line_2"
-                style="@style/line_style"
-                android:layout_marginBottom="10dp"
-                android:visibility="gone"
-                tools:visibility="visible"/>
-
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/yanshou_recy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/wufajiejue_recy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
             <LinearLayout
-                android:visibility="gone"
-                tools:visibility="visible"
-                android:id="@+id/ll_containor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="10dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:visibility="gone"
-                    tools:visibility="visible"
-                    android:id="@+id/chuli_time"
+                    android:id="@+id/tv_jiejue_time"
                     style="@style/normal_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="处理时间：2019.05.12  12:12:23"/>
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:visibility="gone"
+                    tools:text="解决反馈时间"
+                    tools:visibility="visible"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/jiejue_recy"
+                    android:layout_width="match_parent"
+                    android:layout_height="105dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:visibility="gone"
+                    tools:visibility="visible"/>
 
                 <TextView
+                    android:id="@+id/tv_jiejue_remark"
+                    style="@style/normal_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="10dp"
                     android:visibility="gone"
-                    tools:visibility="visible"
-                    android:id="@+id/chuli_result_type"
-                    style="@style/normal_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="处理结果：无法处理"/>
+                    tools:text="备注:asfas"
+                    tools:visibility="visible"/>
 
-                <TextView
-                    android:id="@+id/chuli_result"
-                    style="@style/normal_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="无法解决原因：无法处理"/>
-
+                <View
+                    android:id="@+id/v_line_2"
+                    style="@style/line_style"
+                    android:layout_marginBottom="10dp"
+                    android:visibility="gone"
+                    tools:visibility="visible"/>
             </LinearLayout>
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

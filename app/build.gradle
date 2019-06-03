@@ -140,4 +140,7 @@ dependencies {
 
     implementation 'com.youth.banner:banner:1.4.10'
     implementation project(path: ':picture_library')
+
+    implementation 'com.aliyun.ams:alicloud-android-push:3.1.4'
+    implementation 'com.aliyun.ams:alicloud-android-third-push:3.0.6@aar'
 }

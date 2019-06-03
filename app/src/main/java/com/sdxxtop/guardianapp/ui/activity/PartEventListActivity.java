@@ -3,6 +3,7 @@ package com.sdxxtop.guardianapp.ui.activity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -40,15 +41,20 @@ public class PartEventListActivity extends BaseMvpActivity<PELPresenter> impleme
     GERTimeSelectView gertsvView;
     @BindView(R.id.ll_containor_temp)
     LinearLayout llContainorTemp;
+    @BindView(R.id.ll_temp)
+    LinearLayout llTemp;
+    @BindView(R.id.tv_status)
+    TextView tvStatus;
+    @BindView(R.id.tv_bg)
+    TextView tvBg;
 
     private List<AreaSelectPopWindow.PopWindowDataBean> popWondowData = new ArrayList<>();
+    private List<AreaSelectPopWindow.PopWindowDataBean> popWondowStatusData = new ArrayList<>();
 
     private PartEventListAdapter adapter;
     private String part_id;  // 部门id
     private int event_type = 0;
     private String start_time, end_time;
-    private int start_page;  // 分页请求
-    private boolean isOrder; // 排序
 
     @Override
     protected int getLayout() {
@@ -94,15 +100,13 @@ public class PartEventListActivity extends BaseMvpActivity<PELPresenter> impleme
             @Override
             public void onLoadMore(RefreshLayout refreshLayout) {
                 if (adapter != null) {
-                    start_page = adapter.getItemCount();
-                    mPresenter.postPartEventList(start_page, part_id, start_time, end_time, event_type);
+                    mPresenter.postPartEventList(adapter.getItemCount(), part_id, start_time, end_time, event_type);
                 }
             }
 
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
-                start_page = 0;
-                mPresenter.postPartEventList(start_page, part_id, start_time, end_time, event_type);
+                mPresenter.postPartEventList(0, part_id, start_time, end_time, event_type);
             }
         });
         smartRefresh.autoRefresh();
@@ -110,10 +114,9 @@ public class PartEventListActivity extends BaseMvpActivity<PELPresenter> impleme
         gertsvView.setOnTimeSelectListener(new GERTimeSelectView.OnTimeChooseListener() {
             @Override
             public void onTimeSelect(String startTime, String endTime) {
-                start_page = 0;
                 start_time = startTime;
                 end_time = endTime;
-                mPresenter.postPartEventList(start_page, part_id, start_time, end_time, event_type);
+                mPresenter.postPartEventList(0, part_id, start_time, end_time, event_type);
             }
         });
 
@@ -130,21 +133,21 @@ public class PartEventListActivity extends BaseMvpActivity<PELPresenter> impleme
                 new AreaSelectPopWindow(PartEventListActivity.this, casvView.llAreaLayout, popWondowData, casvView.tvArea);
                 break;
             case R.id.ll_containor_temp:
-//                List<PartEventListBean.ClData> data = adapter.getData();
-//                Collections.sort(data, new PartEventListCompar(isOrder));
-//                adapter.replaceData(data);
-//                isOrder = !isOrder;
-                event_type++;
-                if (event_type>4){
-                    event_type=1;
-                }
-                mPresenter.postPartEventList(0, part_id, start_time, end_time, event_type);
+                AreaSelectPopWindow popWindow = new AreaSelectPopWindow(this, llTemp, popWondowStatusData, tvStatus, tvBg,event_type);
+                popWindow.setOnPopItemClickListener(new AreaSelectPopWindow.OnPopItemClickListener() {
+                    @Override
+                    public void onPopItemClick(int part_typeid, String partName) {
+                        tvStatus.setText(partName);
+                        event_type = part_typeid;
+                        mPresenter.postPartEventList(0, part_id, start_time, end_time, event_type);
+                    }
+                });
                 break;
         }
     }
 
     @Override
-    public void showData(PartEventListBean bean) {
+    public void showData(PartEventListBean bean,int start_page) {
         if (smartRefresh != null) {
             smartRefresh.finishLoadMore();
             smartRefresh.finishRefresh();
@@ -158,5 +161,11 @@ public class PartEventListActivity extends BaseMvpActivity<PELPresenter> impleme
         for (int i = 0; i < bean.getPart_name().size(); i++) {
             popWondowData.add(new AreaSelectPopWindow.PopWindowDataBean(0, bean.getPart_name().get(i).getPart_name()));
         }
+        popWondowStatusData.clear();
+        popWondowStatusData.add(new AreaSelectPopWindow.PopWindowDataBean(0, "全部"));
+        popWondowStatusData.add(new AreaSelectPopWindow.PopWindowDataBean(1, "待处理"));
+        popWondowStatusData.add(new AreaSelectPopWindow.PopWindowDataBean(2, "处理中"));
+        popWondowStatusData.add(new AreaSelectPopWindow.PopWindowDataBean(3, "已处理"));
+        popWondowStatusData.add(new AreaSelectPopWindow.PopWindowDataBean(4, "已完成"));
     }
 }

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/v_line"
+        style="@style/line_style"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_containor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/chuli_time"
+            style="@style/normal_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="处理时间：2019.05.12  12:12:23"
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/chuli_result_type"
+            style="@style/normal_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="处理结果：无法处理"
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/chuli_result"
+            style="@style/normal_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="无法解决原因：无法处理"/>
+
+    </LinearLayout>
+
+    <View
+        style="@style/line_style"
+        android:layout_marginBottom="10dp"
+        android:visibility="visible"/>
+
+</LinearLayout>

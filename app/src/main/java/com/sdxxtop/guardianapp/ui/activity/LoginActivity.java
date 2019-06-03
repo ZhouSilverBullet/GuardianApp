@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.InputFilter;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.sdk.android.push.CloudPushService;
+import com.alibaba.sdk.android.push.CommonCallback;
+import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.app.Constants;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
@@ -162,6 +166,17 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
 //        SpUtil.putInt(Constants.PART_ID, partId);
 //        SpUtil.putInt(Constants.USER_ID, userid);
 //        SpUtil.putString(Constants.MOBILE, mobile);
+        CloudPushService pushService = PushServiceFactory.getCloudPushService();
+        pushService.bindPhoneNumber(mobile,new CommonCallback() {
+            @Override
+            public void onSuccess(String response) {
+                Log.e("aliPush", "init cloudchannel success");
+            }
+            @Override
+            public void onFailed(String errorCode, String errorMessage) {
+                Log.e("aliPush", "init cloudchannel failed -- errorcode:" + errorCode + " -- errorMessage:" + errorMessage);
+            }
+        });
 
         Intent intent = new Intent(this, LoginConfirmActivity.class);
         intent.putExtra("isAdmin", true);

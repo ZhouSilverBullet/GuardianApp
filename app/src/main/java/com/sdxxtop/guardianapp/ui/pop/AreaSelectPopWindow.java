@@ -53,6 +53,16 @@ public class AreaSelectPopWindow extends PopupWindow {
         this.tvBg = textView2;
         initView();
     }
+    public AreaSelectPopWindow(Activity activity, View viewLayout, List<PopWindowDataBean> data, TextView textView, TextView textView2,int selectPartId) {
+        this.activity = activity;
+        inflater = LayoutInflater.from(activity);
+        this.viewLayout = viewLayout;
+        this.mData = data;
+        this.tagTextView = textView;
+        this.tvBg = textView2;
+        this.selectPartId = selectPartId;
+        initView();
+    }
 
     private void initView() {
         if (mData!=null&&mData.size()>0){

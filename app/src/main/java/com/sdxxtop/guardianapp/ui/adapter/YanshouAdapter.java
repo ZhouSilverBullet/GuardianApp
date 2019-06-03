@@ -32,7 +32,7 @@ public class YanshouAdapter extends BaseQuickAdapter<EventReadIndexBean.ExtraInf
 
     @Override
     protected void convert(BaseViewHolder helper, EventReadIndexBean.ExtraInfoBean item) {
-        if (helper.getAdapterPosition()>0){
+        if (helper.getAdapterPosition()>=0){
             helper.setGone(R.id.v_line,false);
         }
         helper.setText(R.id.tv_yanshou_time,"验收时间："+handleShortTime(item.getOperate_time()));
@@ -53,7 +53,7 @@ public class YanshouAdapter extends BaseQuickAdapter<EventReadIndexBean.ExtraInf
         RecyclerView recyclerView = helper.getView(R.id.recyclerView);
         if (list.size()>0){
             recyclerView.setVisibility(View.VISIBLE);
-            recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+            recyclerView.setLayoutManager(new LinearLayoutManager(mContext,RecyclerView.HORIZONTAL,false));
             recyclerView.setAdapter(new PatrolDetailImgAdapter(R.layout.gv_filter_image,list));
         }else{
             recyclerView.setVisibility(View.GONE);

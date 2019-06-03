@@ -18,6 +18,7 @@ import com.sdxxtop.guardianapp.presenter.contract.EventReportDetailContract;
 import com.sdxxtop.guardianapp.ui.adapter.ImageHorizontalAdapter;
 import com.sdxxtop.guardianapp.ui.adapter.PaifaAdapter;
 import com.sdxxtop.guardianapp.ui.adapter.PatrolDetailImgAdapter;
+import com.sdxxtop.guardianapp.ui.adapter.WuFaJieJueAdapter;
 import com.sdxxtop.guardianapp.ui.adapter.YanshouAdapter;
 import com.sdxxtop.guardianapp.ui.pop.ERCheckResultWindow;
 import com.sdxxtop.guardianapp.ui.pop.SelectMapPopView;
@@ -79,14 +80,6 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
     TextView tvJiejueRemark;
     @BindView(R.id.v_line_2)
     View vLine2;
-    @BindView(R.id.chuli_time)
-    TextView chuliTime;
-    @BindView(R.id.chuli_result_type)
-    TextView chuliResultType;
-    @BindView(R.id.chuli_result)
-    TextView chuliResult;
-    @BindView(R.id.ll_containor)
-    LinearLayout llContainor;
     @BindView(R.id.btn_check_faile)
     Button btnCheckFaile;
     @BindView(R.id.btn_check_success)
@@ -95,6 +88,8 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
     LinearLayout llRootLayout;
     @BindView(R.id.yanshou_recy)
     RecyclerView yanshou_recy;
+    @BindView(R.id.wufajiejue_recy)
+    RecyclerView wufajiejue_recy;
 
     //用于提交
     private int eventStatus;
@@ -108,6 +103,7 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
     private ERCheckResultWindow erCheckResultWindow;
     private PaifaAdapter paifaAdapter;
     private YanshouAdapter yanshouAdapter;
+    private WuFaJieJueAdapter wuFaJieJueAdapter;
 
     @Override
     protected void initInject() {
@@ -148,6 +144,11 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         yanshou_recy.setLayoutManager(new LinearLayoutManager(this));
         yanshouAdapter = new YanshouAdapter(R.layout.item_yanshou_view, null);
         yanshou_recy.setAdapter(yanshouAdapter);
+
+        /*********** 无法解决 **********/
+        wufajiejue_recy.setLayoutManager(new LinearLayoutManager(this));
+        wuFaJieJueAdapter = new WuFaJieJueAdapter(R.layout.item_wufajiejue_view, null);
+        wufajiejue_recy.setAdapter(wuFaJieJueAdapter);
     }
 
     @Override
@@ -188,6 +189,8 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
 
     @Override
     public void readData(EventReadIndexBean bean) {
+        address = bean.place;
+        longitude = bean.longitude;
         eventStatus = bean.status;
         //显示进度条状态
 
@@ -196,19 +199,46 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
 
         /********* 派发 **********/
         paifaAdapter.replaceData(bean.extra_date);
-        /********* 解决 **********/
-        List<EventReadIndexBean.SolveBean> solve = bean.solve;
-        if (solve != null && solve.size() > 0) {
-            handleFinish(solve.get(0));
-        } else {
-            tvJiejueTime.setVisibility(View.GONE);
-            tvJiejueRemark.setVisibility(View.GONE);
-            jiejue_recy.setVisibility(View.GONE);
-        }
 
         /********* 验收 **********/
         yanshouAdapter.replaceData(bean.extra_info);
-//        cpbProgress.setStatus(bean.status, getTime(bean));
+
+        /********* 无法解决 **********/
+        wuFaJieJueAdapter.replaceData(bean.extra);
+
+        /********* 解决 **********/
+        List<EventReadIndexBean.SolveBean> solve = bean.solve;
+        List<EventReadIndexBean.CompletedBean> completed = bean.completed;
+        if (completed != null && completed.size() > 0) {
+            EventReadIndexBean.CompletedBean completedBean = completed.get(0);
+            handleFinish(completedBean.getOperate_time(), completedBean.getExtra(), completedBean.getImg(), completedBean.getVideo());
+        } else {
+            if (solve != null && solve.size() > 0) {
+                EventReadIndexBean.SolveBean solveBean = solve.get(0);
+                handleFinish(solveBean.getOperate_time(), solveBean.getExtra(), solveBean.getImg(), solveBean.getVideo());
+            } else {
+                tvJiejueTime.setVisibility(View.GONE);
+                tvJiejueRemark.setVisibility(View.GONE);
+                jiejue_recy.setVisibility(View.GONE);
+            }
+        }
+
+        /**********  无法解决  ************/
+
+        if (bean.settle_status == 2) {
+            String parfaTime = "";
+            String wufachuli = "";
+            if (bean.extra_date != null && bean.extra_date.size() > 0) {
+                parfaTime = bean.extra_date.get(bean.extra_date.size() - 1).getSend_time();
+            }
+            if (bean.extra != null && bean.extra.size() > 0) {
+                wufachuli = bean.extra.get(bean.extra.size() - 1).getOperate_time();
+            }
+            cpbProgress.setNoSolveValue(bean.add_time, parfaTime, wufachuli);
+
+        } else {
+            cpbProgress.setStatus(bean.status, getTime(bean));
+        }
     }
 
     private List<String> getTime(EventReadIndexBean bean) {
@@ -226,25 +256,32 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
             case 3:
                 time.add(bean.add_time);
                 if (bean.extra_date != null && bean.extra_date.size() > 0) {
-                    time.add(bean.extra_date.get(bean.extra_date.size() - 1).getSend_time() + " 10:29:19");
+                    time.add(bean.extra_date.get(bean.extra_date.size() - 1).getSend_time());
                 }
                 if (bean.solve != null && bean.solve.size() > 0) {
                     time.add(bean.solve.get(bean.solve.size() - 1).getOperate_time());
                 }
                 break;
             case 4:
+                time.add(bean.add_time);
+                if (bean.extra_date != null && bean.extra_date.size() > 0) {
+                    time.add(bean.extra_date.get(bean.extra_date.size() - 1).getSend_time() + " 10:29:19");
+                }
+                if (bean.solve != null && bean.solve.size() > 0) {
+                    time.add(bean.solve.get(bean.solve.size() - 1).getOperate_time());
+                }
+                if (bean.completed != null && bean.completed.size() > 0) {
+                    time.add(bean.completed.get(bean.completed.size() - 1).getOperate_time());
+                }
                 break;
         }
         return time;
     }
 
-    /************ 派发 ******************/
-
-
     /******** 头部统一显示数据 **********/
     private void collectHeadData(EventReadIndexBean bean) {
         //图片加载
-        bandImgAndVideo(bean.img, bean.video, recyclerView,mAdapter);
+        bandImgAndVideo(bean.img, bean.video, recyclerView, mAdapter);
         tvContentTitle.setText(bean.title);
         tvTime.setText(bean.add_time);
         handlePatrol(bean.patrol_type);
@@ -299,8 +336,7 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
     }
 
     /***  解决反馈*********/
-    private void handleFinish(EventReadIndexBean.SolveBean bean) {
-        String finishTime1 = bean.getOperate_time();
+    private void handleFinish(String finishTime1, String extra, String img, String video) {
         //由于后台会发送1000-01-01 00：00：00 所以 加入了 status 的判断
         if (!TextUtils.isEmpty(finishTime1)) {
             tvJiejueTime.setVisibility(View.VISIBLE);
@@ -309,14 +345,14 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         } else {
             tvJiejueTime.setVisibility(View.GONE);
         }
-        if (!TextUtils.isEmpty(bean.getExtra())) {
+        if (!TextUtils.isEmpty(extra)) {
             tvJiejueRemark.setVisibility(View.VISIBLE);
-            tvJiejueRemark.setText("事件问题描述："+bean.getExtra());
+            tvJiejueRemark.setText("事件问题描述：" + extra);
         } else {
             tvJiejueTime.setVisibility(View.GONE);
         }
 
-        bandImgAndVideo(bean.getImg(),bean.getVideo(),jiejue_recy,mFinishAdapter);
+        bandImgAndVideo(img, video, jiejue_recy, mFinishAdapter);
     }
 
     private void handlePatrol(int patrolType) {
@@ -338,22 +374,22 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         tvCheckMethod.setText(strPatrol);
     }
 
-    private void bandImgAndVideo(String img, String vedio, RecyclerView recyclerView,PatrolDetailImgAdapter adapter) {
+    private void bandImgAndVideo(String img, String vedio, RecyclerView recyclerView, PatrolDetailImgAdapter adapter) {
         List<MediaBean> list = new ArrayList<>();
         if (!TextUtils.isEmpty(vedio)) {
-            list.add(new MediaBean(vedio,2));
+            list.add(new MediaBean(vedio, 2));
         }
 
         if (!TextUtils.isEmpty(img)) {
             String[] split = img.split(",");
             for (int i = 0; i < split.length; i++) {
-                list.add(new MediaBean(split[i],1));
+                list.add(new MediaBean(split[i], 1));
             }
         }
-        if (list.size()>0){
+        if (list.size() > 0) {
             recyclerView.setVisibility(View.VISIBLE);
             adapter.replaceData(list);
-        }else{
+        } else {
             recyclerView.setVisibility(View.GONE);
         }
     }

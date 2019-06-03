@@ -20,7 +20,6 @@ import com.sdxxtop.guardianapp.model.bean.InitBean;
 import com.sdxxtop.guardianapp.presenter.HomePresenter;
 import com.sdxxtop.guardianapp.presenter.contract.HomeContract;
 import com.sdxxtop.guardianapp.service.PatrolRecordService;
-import com.sdxxtop.guardianapp.ui.dialog.DownloadAppDialog;
 import com.sdxxtop.guardianapp.ui.dialog.DownloadDialog;
 import com.sdxxtop.guardianapp.ui.fragment.HomeFragment;
 import com.sdxxtop.guardianapp.ui.fragment.LearningFragment;

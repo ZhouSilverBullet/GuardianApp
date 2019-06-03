@@ -30,23 +30,24 @@
             android:layout_height="wrap_content"/>
 
         <com.sdxxtop.guardianapp.ui.widget.CustomAreaSelectView
-            android:visibility="gone"
             android:id="@+id/casv_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
 
         <LinearLayout
-            android:gravity="center"
+            android:id="@+id/ll_temp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_marginBottom="16dp"
-                android:layout_marginTop="15dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="16dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="事件标题"
@@ -70,6 +71,7 @@
                 android:gravity="center">
 
                 <TextView
+                    android:id="@+id/tv_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableRight="@drawable/time_more"
@@ -88,16 +90,29 @@
             android:layout_marginRight="15dp"
             android:background="@color/color_E0E0E0"/>
 
-        <com.scwang.smartrefresh.layout.SmartRefreshLayout
-            android:id="@+id/smart_refresh"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
+            <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                android:id="@+id/smart_refresh"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+            <TextView
+                android:id="@+id/tv_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#99000000"
+                tools:visibility="visible"
+                android:visibility="gone"/>
+        </RelativeLayout>
 
     </LinearLayout>
 
