@@ -1,4 +1,4 @@
-package com.sdxxtop.guardianapp.ui.messagereceiver;
+package com.sdxxtop.guardianapp.alipush;
 
 import android.content.Context;
 import android.util.Log;
@@ -33,6 +33,7 @@ public class MyMessageReceiver extends MessageReceiver {
     @Override
     protected void onNotificationClickedWithNoAction(Context context, String title, String summary, String extraMap) {
         Log.e("MyMessageReceiver", "onNotificationClickedWithNoAction, title: " + title + ", summary: " + summary + ", extraMap:" + extraMap);
+        skipActivity(context,extraMap);
     }
     @Override
     protected void onNotificationReceivedInApp(Context context, String title, String summary, Map<String, String> extraMap, int openType, String openActivity, String openUrl) {
@@ -41,6 +42,10 @@ public class MyMessageReceiver extends MessageReceiver {
     @Override
     protected void onNotificationRemoved(Context context, String messageId) {
         Log.e("MyMessageReceiver", "onNotificationRemoved");
+    }
+
+    private void skipActivity(Context context,String extraMap){
+        PushCenterActivity.startActivityToReceiver(context, extraMap);
     }
 
 }

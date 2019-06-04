@@ -5,14 +5,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.WindowManager;
 
-import com.alibaba.sdk.android.push.CloudPushService;
-import com.alibaba.sdk.android.push.CommonCallback;
-import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.sdxxtop.guardianapp.R;
+import com.sdxxtop.guardianapp.alipush.AnalyticsHome;
 import com.sdxxtop.guardianapp.app.Constants;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.model.bean.AutoLoginBean;
@@ -75,18 +72,8 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
 
     @Override
     public void autoSuccess(AutoLoginBean autoLoginBean) {
-
-        CloudPushService pushService = PushServiceFactory.getCloudPushService();
-        pushService.bindPhoneNumber(SpUtil.getString(Constants.MOBILE),new CommonCallback() {
-            @Override
-            public void onSuccess(String response) {
-                Log.e("aliPush", "init cloudchannel success");
-            }
-            @Override
-            public void onFailed(String errorCode, String errorMessage) {
-                Log.e("aliPush", "init cloudchannel failed -- errorcode:" + errorCode + " -- errorMessage:" + errorMessage);
-            }
-        });
+        //阿里云推送绑定账号
+        AnalyticsHome.bindAccount(SpUtil.getString(Constants.MOBILE));
 
         String autoToken = SpUtil.getString(Constants.AUTO_TOKEN);
         if (TextUtils.isEmpty(autoToken)) {

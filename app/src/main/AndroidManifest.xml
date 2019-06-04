@@ -111,6 +111,7 @@
         <activity android:name=".ui.activity.EventReportActivity"/>
         <activity android:name=".ui.activity.TaskAgentsActivity"/>
         <activity android:name=".ui.activity.ContactActivity"/>
+        <activity android:name=".alipush.PushCenterActivity"/>
         <activity
             android:name=".ui.activity.PatrolRecordActivity"
             android:theme="@style/AppNormalTheme"/>
@@ -305,7 +306,7 @@
 
         <!-- 消息接收监听器 （用户可自主扩展） -->
         <receiver
-            android:name=".ui.messagereceiver.MyMessageReceiver"
+            android:name=".alipush.MyMessageReceiver"
             android:exported="false"> <!-- 为保证receiver安全，建议设置不可导出，如需对其他应用开放可通过android：permission进行限制 -->
             <intent-filter>
                 <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED" />

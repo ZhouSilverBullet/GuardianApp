@@ -10,7 +10,7 @@ import com.sdxxtop.guardianapp.model.bean.GridreportUserreportBean;
 public interface GridreportUserreportContract {
     interface IView extends BaseView {
 
-        void showData(GridreportUserreportBean bean);
+        void showData(GridreportUserreportBean bean,int start_page);
     }
 
     interface IPresenter extends BasePresenter<IView> {

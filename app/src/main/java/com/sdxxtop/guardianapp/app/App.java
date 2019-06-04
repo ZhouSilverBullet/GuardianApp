@@ -112,7 +112,6 @@ public class App extends BaseApp {
      * @param applicationContext
      */
     private void initCloudChannel(Context applicationContext) {
-        initNotificationChannel();
         // 注册方法会自动判断是否支持小米系统推送，如不支持会跳过注册。
         MiPushRegister.register(applicationContext, "2882303761518019696", "5601801991696");
         // 注册方法会自动判断是否支持华为系统推送，如不支持会跳过注册。
@@ -130,6 +129,7 @@ public class App extends BaseApp {
                 Log.e(TAG, "init cloudchannel failed -- errorcode:" + errorCode + " -- errorMessage:" + errorMessage);
             }
         });
+        initNotificationChannel();
     }
     //Android 8.0以上设备通知接收
     private void initNotificationChannel() {
@@ -146,10 +146,10 @@ public class App extends BaseApp {
             // 配置通知渠道的属性
             mChannel.setDescription(description);
             // 设置通知出现时的闪灯（如果 android 设备支持的话）
-            mChannel.enableLights(true);
+            mChannel.enableLights(false);
             mChannel.setLightColor(Color.RED);
             // 设置通知出现时的震动（如果 android 设备支持的话）
-            mChannel.enableVibration(true);
+            mChannel.enableVibration(false);
             mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
             //最后在notificationmanager中创建该通知渠道
             mNotificationManager.createNotificationChannel(mChannel);

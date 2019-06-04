@@ -251,27 +251,39 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
                 time.add(bean.add_time);
                 if (bean.extra_date != null && bean.extra_date.size() > 0) {
                     time.add(bean.extra_date.get(bean.extra_date.size() - 1).getSend_time() + " 10:29:19");
+                }else{
+                    time.add("");
                 }
                 break;
             case 3:
                 time.add(bean.add_time);
                 if (bean.extra_date != null && bean.extra_date.size() > 0) {
                     time.add(bean.extra_date.get(bean.extra_date.size() - 1).getSend_time());
+                }else{
+                    time.add("");
                 }
                 if (bean.solve != null && bean.solve.size() > 0) {
                     time.add(bean.solve.get(bean.solve.size() - 1).getOperate_time());
+                }else{
+                    time.add("");
                 }
                 break;
             case 4:
                 time.add(bean.add_time);
                 if (bean.extra_date != null && bean.extra_date.size() > 0) {
                     time.add(bean.extra_date.get(bean.extra_date.size() - 1).getSend_time() + " 10:29:19");
+                }else{
+                    time.add("");
                 }
                 if (bean.solve != null && bean.solve.size() > 0) {
                     time.add(bean.solve.get(bean.solve.size() - 1).getOperate_time());
+                }else{
+                    time.add("");
                 }
                 if (bean.completed != null && bean.completed.size() > 0) {
                     time.add(bean.completed.get(bean.completed.size() - 1).getOperate_time());
+                }else{
+                    time.add("");
                 }
                 break;
         }

@@ -395,6 +395,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 
     @OnClick({R.id.tatv_query, R.id.tatv_happen, R.id.tatv_report_path})
     public void onViewClicked(View view) {
+        hideKeyboard(btnPush);
         switch (view.getId()) {
             case R.id.tatv_query:
                 selectQuery();

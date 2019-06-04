@@ -23,19 +23,20 @@ public class GridreportUserreportPresenter extends RxPresenter<GridreportUserrep
     }
 
 
-    public void gridreportUserreport(int part_userid, String startTime, String endTime, int start_page) {
+    public void gridreportUserreport(int part_userid, String startTime, String endTime, int start_page,int event_type) {
         Params params = new Params();
         params.put("puid", part_userid);
         params.put("sp", start_page);
         params.put("st", startTime);
         params.put("et", endTime);
+        params.put("ety", event_type);
 
         Observable<RequestBean<GridreportUserreportBean>> observable = getEnvirApi().postGridreportUserreport(params.getData());
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<GridreportUserreportBean>() {
             @Override
             public void onSuccess(GridreportUserreportBean bean) {
                 if (bean != null) {
-                    mView.showData(bean);
+                    mView.showData(bean,start_page);
                 }
             }
 
