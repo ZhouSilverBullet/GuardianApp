@@ -10,7 +10,10 @@ import java.util.List;
 public class UnreadNewslistBean {
 
     private int event_type;
-    private List<MessageInfoBean> info;
+    private List<EventItemBean> overdue_event;//超期事件
+    private List<EventItemBean> event_expire;//到期事件
+    private List<EventItemBean> whole_event;//待验收事件
+    private List<EventItemBean> reject_data;//驳回事件
 
     public int getEvent_type() {
         return event_type;
@@ -20,22 +23,74 @@ public class UnreadNewslistBean {
         this.event_type = event_type;
     }
 
-    public List<MessageInfoBean> getInfo() {
-        return info;
+    public List<EventItemBean> getOverdue_event() {
+        if (overdue_event!=null&&overdue_event.size()>0){
+            for (EventItemBean eventItemBean : overdue_event) {
+                eventItemBean.setClassify("超期事件");
+            }
+        }
+        return overdue_event;
     }
 
-    public void setInfo(List<MessageInfoBean> info) {
-        this.info = info;
+    public void setOverdue_event(List<EventItemBean> overdue_event) {
+        this.overdue_event = overdue_event;
     }
 
-    public static class MessageInfoBean{
-       private int event_id;
-       private String title;
-       private String update_time;
+    public List<EventItemBean> getEvent_expire() {
+        if (event_expire!=null&&event_expire.size()>0){
+            for (EventItemBean eventItemBean : event_expire) {
+                eventItemBean.setClassify("到期事件");
+            }
+        }
+        return event_expire;
+    }
 
+    public void setEvent_expire(List<EventItemBean> event_expire) {
+        this.event_expire = event_expire;
+    }
 
-       private int patrol_id;
-       private String rectify_date;
+    public List<EventItemBean> getWhole_event() {
+        if (whole_event!=null&&whole_event.size()>0){
+            for (EventItemBean eventItemBean : whole_event) {
+                eventItemBean.setClassify("待验收事件");
+            }
+        }
+        return whole_event;
+    }
+
+    public void setWhole_event(List<EventItemBean> whole_event) {
+        this.whole_event = whole_event;
+    }
+
+    public List<EventItemBean> getReject_data() {
+        if (reject_data!=null&&reject_data.size()>0){
+            for (EventItemBean eventItemBean : reject_data) {
+                eventItemBean.setClassify("驳回事件");
+            }
+        }
+        return reject_data;
+    }
+
+    public void setReject_data(List<EventItemBean> reject_data) {
+        this.reject_data = reject_data;
+    }
+
+    public static class EventItemBean {
+        private String classify;
+        private int event_id;
+        private String title;
+        private String update_time;
+
+        private int patrol_id;
+        private String rectify_date;
+
+        public String getRectify_date() {
+            return rectify_date;
+        }
+
+        public void setRectify_date(String rectify_date) {
+            this.rectify_date = rectify_date;
+        }
 
         public int getPatrol_id() {
             return patrol_id;
@@ -45,12 +100,12 @@ public class UnreadNewslistBean {
             this.patrol_id = patrol_id;
         }
 
-        public String getRectify_date() {
-            return rectify_date;
+        public String getClassify() {
+            return classify;
         }
 
-        public void setRectify_date(String rectify_date) {
-            this.rectify_date = rectify_date;
+        public void setClassify(String classify) {
+            this.classify = classify;
         }
 
         public int getEvent_id() {

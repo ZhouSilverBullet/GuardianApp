@@ -37,7 +37,22 @@ public class CenterMessageAdapter extends BaseQuickAdapter<UnreadIndexAdapterBea
         helper.setText(R.id.tv_title, item.getName());
         helper.setText(R.id.tv_desc, item.getTitle());
         helper.setText(R.id.tv_time, time);
-        helper.setImageResource(R.id.iv_icon, icons[item.getType()-1]);
+
+        switch (item.getType()){
+            case 1:
+                helper.setText(R.id.tv_status, "派");
+                helper.setBackgroundRes(R.id.tv_status, R.drawable.shape_green_bg);
+                break;
+            case 2:
+                helper.setText(R.id.tv_status, "验");
+                helper.setBackgroundRes(R.id.tv_status, R.drawable.shape_blue_bg);
+                break;
+            case 3:
+                helper.setText(R.id.tv_status, "整");
+                helper.setBackgroundRes(R.id.tv_status, R.drawable.shape_orange_bg);
+                break;
+        }
+
         setMsgUnread(item.getCount(),helper.getView(R.id.tv_messgae_count));
 
         helper.itemView.setOnClickListener(new View.OnClickListener() {
