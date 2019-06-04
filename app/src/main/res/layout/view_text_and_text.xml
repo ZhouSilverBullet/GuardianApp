@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical">
 
     <RelativeLayout
@@ -28,18 +28,18 @@
                 android:textSize="17sp"/>
 
             <TextView
-                android:textColor="@color/white"
+                android:layout_marginTop="5dp"
                 android:id="@+id/tv_messgae_count"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:layout_marginTop="5dp"
                 android:layout_toRightOf="@+id/text_and_text_name"
-                android:background="@drawable/shape_message_notice_bg"
+                android:background="@drawable/point1"
                 android:gravity="center"
                 android:text="24"
+                android:textColor="@color/white"
                 android:textSize="9sp"
-                tools:visibility="visible"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                tools:visibility="visible"/>
 
         </RelativeLayout>
 

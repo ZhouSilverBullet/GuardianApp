@@ -7,8 +7,6 @@ import com.sdxxtop.guardianapp.presenter.CenterMessagePresenter;
 import com.sdxxtop.guardianapp.presenter.contract.CenterMessageContract;
 import com.sdxxtop.guardianapp.ui.adapter.CenterMessageAdapter;
 
-import java.util.List;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -50,7 +48,7 @@ public class CenterMessageActivity extends BaseMvpActivity<CenterMessagePresente
     }
 
     @Override
-    public void showData(List<UnreadIndexBean> bean) {
-        adapter.replaceData(bean);
+    public void showData(UnreadIndexBean bean) {
+        adapter.replaceData(bean.getUnreadIndexList());
     }
 }

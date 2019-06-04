@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
-        <bitmap android:src="@drawable/splash_icon" />
+        <!--<bitmap android:src="@drawable/shape_white_bg" />-->
+        <shape>
+            <solid android:color="#fff"/>
+        </shape>
     </item>
 
-    <item android:bottom="22dp">
+    <item android:top="100dp">
+        <bitmap
+            android:gravity="top|center"
+            android:src="@drawable/logo_text_icon" />
+    </item>
+
+    <item android:bottom="100dp">
         <bitmap
             android:gravity="bottom|center"
             android:src="@drawable/splash_bottom_text_2" />
     </item>
 
-    <item android:top="136.0dip">
+    <item android:gravity="center">
         <bitmap
             android:gravity="center|top"
             android:src="@drawable/logo_text" />
     </item>
+
 </layer-list>

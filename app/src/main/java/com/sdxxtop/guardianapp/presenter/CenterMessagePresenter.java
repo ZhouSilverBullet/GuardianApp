@@ -10,8 +10,6 @@ import com.sdxxtop.guardianapp.model.http.util.RxUtils;
 import com.sdxxtop.guardianapp.presenter.contract.CenterMessageContract;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
@@ -29,10 +27,10 @@ public class CenterMessagePresenter extends RxPresenter<CenterMessageContract.IV
     public void unreadIndex() {
         Params params = new Params();
         params.put("plid", 1);
-        Observable<RequestBean<List<UnreadIndexBean>>> observable = getEnvirApi().postUnreadIndex(params.getData());
-        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<List<UnreadIndexBean>>() {
+        Observable<RequestBean<UnreadIndexBean>> observable = getEnvirApi().postUnreadIndex(params.getData());
+        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<UnreadIndexBean>() {
             @Override
-            public void onSuccess(List<UnreadIndexBean> bean) {
+            public void onSuccess(UnreadIndexBean bean) {
                 mView.showData(bean);
             }
 

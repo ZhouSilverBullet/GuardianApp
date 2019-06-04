@@ -35,7 +35,6 @@ import com.sdxxtop.guardianapp.model.bean.UnreadIndexBean;
 import com.sdxxtop.guardianapp.model.bean.UnreadNewslistBean;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -242,7 +241,7 @@ public interface EnvirApiService {
 
     @FormUrlEncoded
     @POST("unread/index")
-    Observable<RequestBean<List<UnreadIndexBean>>> postUnreadIndex(@Field("data") String data);
+    Observable<RequestBean<UnreadIndexBean>> postUnreadIndex(@Field("data") String data);
 
     @FormUrlEncoded
     @POST("unread/newslist")

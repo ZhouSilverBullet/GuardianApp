@@ -63,7 +63,6 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     private String partUnit; //什么单位
 
     public static MineFragment newInstance(boolean isAdmin) {
-
         Bundle args = new Bundle();
         args.putBoolean("isAdmin", isAdmin);
         MineFragment fragment = new MineFragment();
@@ -83,8 +82,6 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
         if (getArguments() != null) {
             isAdmin = getArguments().getBoolean("isAdmin");
         }
-
-
         topViewPadding(mTitleView);
     }
 
@@ -172,11 +169,11 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
                 break;
         }
 
-        if (indexBean.getPosition()==3||indexBean.getPosition()==4){
+        if (indexBean.getPosition() == 3 || indexBean.getPosition() == 4) {
             companyReport.setVisibility(View.GONE);
             gridMemberReport.setVisibility(View.VISIBLE);
             eventReport.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             companyReport.setVisibility(View.GONE);
             gridMemberReport.setVisibility(View.GONE);
             eventReport.setVisibility(View.GONE);
@@ -184,7 +181,7 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
         messageCenter.setMessageCount(indexBean.getUnread_count());
     }
 
-    @OnClick({R.id.civ_header, R.id.tatv_message, R.id.tatv_report,R.id.event_report,R.id.grid_member_report,R.id.company_report,R.id.message_center})
+    @OnClick({R.id.civ_header, R.id.tatv_message, R.id.tatv_report, R.id.event_report, R.id.grid_member_report, R.id.company_report, R.id.message_center})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.civ_header:

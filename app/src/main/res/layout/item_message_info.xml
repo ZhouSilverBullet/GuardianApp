@@ -14,7 +14,7 @@
         android:layout_marginTop="19dp"
         android:layout_marginBottom="19dp"
         android:text="银都化工污水排放不达标任务，已派发给您处理
-请及时处理反馈。 "
+请及时处理反馈。"
         android:textColor="@color/color_313131"
         android:textSize="14sp"/>
 

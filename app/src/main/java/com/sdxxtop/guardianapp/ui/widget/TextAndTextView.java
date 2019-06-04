@@ -99,12 +99,24 @@ public class TextAndTextView extends LinearLayout {
         return textRightText.getText().toString().trim();
     }
 
-    public void setMessageCount(int count) {
-        if (count == 0) {
-            tvMessgaeCount.setVisibility(View.GONE);
+    public void setMessageCount(int unRead) {
+        if (unRead <= 0) {
+            tvMessgaeCount.setVisibility(View.INVISIBLE);
         } else {
             tvMessgaeCount.setVisibility(View.VISIBLE);
-            tvMessgaeCount.setText(String.valueOf(count));
+            String unReadStr = String.valueOf(unRead);
+            if (unRead < 10) {
+                tvMessgaeCount.setBackgroundDrawable(getResources().getDrawable(R.drawable.point1));
+            } else {
+                if (unRead > 99) {
+                    tvMessgaeCount.setBackgroundDrawable(getResources().getDrawable(R.drawable.point2));
+                    unReadStr = "99+";
+                }
+            }
+            if (unRead > 99) {
+                unReadStr = "99+";
+            }
+            tvMessgaeCount.setText(unReadStr);
         }
     }
 }
