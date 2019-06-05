@@ -121,7 +121,6 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
             showToast("请填写编辑内容");
             return;
         }
-        showLoadingDialog();
         mPresenter.modify(mEventId,mEventType,editValue,imagePushPath,videoPushPath);
     }
 

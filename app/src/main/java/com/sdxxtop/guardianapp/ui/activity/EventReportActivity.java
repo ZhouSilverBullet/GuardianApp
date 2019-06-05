@@ -169,7 +169,8 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     @Override
     protected void initData() {
         super.initData();
-        mPresenter.loadAera();
+//        mPresenter.loadAera();
+        mPresenter.searchTitle("");
     }
 
     private void showReportConfirmDialog() {
@@ -236,8 +237,6 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
             showToast("请填写事件描述内容");
             return;
         }
-
-        showLoadingDialog();
 
         mPresenter.pushReport(title, pathType, queryType, place, lonLng, editValue, imagePushPath,vedioPushPath);
     }

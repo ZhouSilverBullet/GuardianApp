@@ -1,6 +1,9 @@
 package com.sdxxtop.guardianapp.presenter;
 
+import android.app.Activity;
+
 import com.google.gson.internal.LinkedTreeMap;
+import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.base.RxPresenter;
 import com.sdxxtop.guardianapp.model.bean.EventSearchTitleBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
@@ -11,6 +14,7 @@ import com.sdxxtop.guardianapp.model.http.net.Params;
 import com.sdxxtop.guardianapp.model.http.util.RxUtils;
 import com.sdxxtop.guardianapp.presenter.contract.EventReportContract;
 import com.sdxxtop.guardianapp.utils.UIUtils;
+import com.sdxxtop.guardianapp.utils.VideoCompressUtil;
 
 import java.io.File;
 import java.util.List;
@@ -21,27 +25,50 @@ import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 
 public class EventReportPresenter extends RxPresenter<EventReportContract.IView> implements EventReportContract.IPresenter {
+
+    private VideoCompressUtil util;
+
     @Inject
     public EventReportPresenter() {
     }
 
 
     public void pushReport(String title, int pathType, int patrolType,
-                           String place, String longitude, String content, List<File> imagePushPath, List<File> vedioPushPath) {
-        ImageAndVideoParams imageParams = new ImageAndVideoParams();
-        imageParams.put("tl", title);
-        imageParams.put("pt", pathType);
-        imageParams.put("plt", patrolType);
-        imageParams.put("pl", place);
-        imageParams.put("lt", longitude);
-        imageParams.put("ct", content);
+                           String place, String longitude, String content, List<File> imagePushPath, List<File> videoPushPath) {
+        ImageAndVideoParams params = new ImageAndVideoParams();
+        params.put("tl", title);
+        params.put("pt", pathType);
+        params.put("plt", patrolType);
+        params.put("pl", place);
+        params.put("lt", longitude);
+        params.put("ct", content);
 
-        imageParams.addImagePathList("img[]", imagePushPath);
-        if (vedioPushPath != null && vedioPushPath.size() > 0) {
-            imageParams.addCompressVideoPath("video", vedioPushPath.get(0));
+        params.addImagePathList("img[]", imagePushPath);
+        if (videoPushPath!=null&&videoPushPath.size()>0){
+            util = new VideoCompressUtil((Activity)mView);
+            File file = videoPushPath.get(0);
+            util.videoCompress(file.getPath());
+
+            util.setOnVideoCompress(new VideoCompressUtil.OnVideoCompress() {
+                @Override
+                public void success(String path) {
+                    ((BaseMvpActivity)mView).showLoadingDialog();
+                    params.addCompressVideoPath("video", new File(path));
+                    request(params);
+                }
+
+                @Override
+                public void fail() {
+                    UIUtils.showToast("压缩失败,请重新尝试");
+                }
+            });
+        }else{
+            request(params);
         }
+    }
 
-        Observable<RequestBean> observable = getEnvirApi().postEventAdd(imageParams.getImgAndVideoData());
+    private void request(ImageAndVideoParams params) {
+        Observable<RequestBean> observable = getEnvirApi().postEventAdd(params.getImgAndVideoData());
         Disposable disposable = RxUtils.handleHttp(observable, new IRequestCallback<RequestBean>() {
             @Override
             public void onSuccess(RequestBean requestBean) {

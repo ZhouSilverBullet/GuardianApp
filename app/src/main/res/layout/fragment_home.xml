@@ -164,7 +164,7 @@
                 android:layout_height="wrap_content"
                 app:iv_icon="@drawable/task_blue"
                 app:tv_task_prefix="新任务："
-                app:tv_task_title="代办任务"/>
+                app:tv_task_title="待办任务"/>
 
             <com.sdxxtop.guardianapp.ui.widget.ImgAndTextLinearView
                 android:id="@+id/itlv_view_2"

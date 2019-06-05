@@ -220,7 +220,6 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
             return;
         }
 
-        showLoadingDialog();
         mPresenter.pushReport(tacbvView.getEnableClick() ? 1 : 2, title, place, lonLng, editValue, endTime, imagePushPath, videoPushPath);
     }
 

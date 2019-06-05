@@ -115,7 +115,7 @@ public class CustomVideoImgSelectView extends LinearLayout implements View.OnCli
                 // 进入相册 以下是例子：不需要的api可以不写
                 PictureSelector.create((Activity) getContext())
                         .openGallery(PictureMimeType.ofImage())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
-                        .maxSelectNum(8)// 最大图片选择数量
+                        .maxSelectNum(selectVideoList.size()==0?9:8)// 最大图片选择数量
                         .imageSpanCount(4)// 每行显示个数
                         .selectionMode(PictureConfig.MULTIPLE)// 多选 or 单选
                         .previewImage(true)// 是否可预览图片

@@ -1,1 +1,1 @@
-include ':app', ':faceplatform', ':picture_library', ':ucrop'
+include ':app', ':faceplatform', ':picture_library', ':ucrop', ':videocompressor'

@@ -143,4 +143,5 @@ dependencies {
 
     implementation 'com.aliyun.ams:alicloud-android-push:3.1.4'
     implementation 'com.aliyun.ams:alicloud-android-third-push:3.0.6@aar'
+    implementation project(path: ':videocompressor')
 }

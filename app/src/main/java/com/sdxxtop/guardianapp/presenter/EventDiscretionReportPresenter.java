@@ -1,6 +1,9 @@
 package com.sdxxtop.guardianapp.presenter;
 
 
+import android.app.Activity;
+
+import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.base.RxPresenter;
 import com.sdxxtop.guardianapp.model.bean.EventSearchTitleBean;
 import com.sdxxtop.guardianapp.model.bean.PatrolAddBean;
@@ -11,6 +14,7 @@ import com.sdxxtop.guardianapp.model.http.net.Params;
 import com.sdxxtop.guardianapp.model.http.util.RxUtils;
 import com.sdxxtop.guardianapp.presenter.contract.EventDiscretionReportContract;
 import com.sdxxtop.guardianapp.utils.UIUtils;
+import com.sdxxtop.guardianapp.utils.VideoCompressUtil;
 
 import java.io.File;
 import java.util.List;
@@ -24,6 +28,9 @@ import io.reactivex.disposables.Disposable;
  * 用来copy使用的
  */
 public class EventDiscretionReportPresenter extends RxPresenter<EventDiscretionReportContract.IView> implements EventDiscretionReportContract.IPresenter {
+
+    private VideoCompressUtil util;
+
     @Inject
     public EventDiscretionReportPresenter() {
     }
@@ -42,25 +49,27 @@ public class EventDiscretionReportPresenter extends RxPresenter<EventDiscretionR
 
         params.addImagePathList("img[]", imagePushPath);
 
-        if (videoPushPath != null && videoPushPath.size() == 1) {
+        if (videoPushPath!=null&&videoPushPath.size()>0){
+            util = new VideoCompressUtil((Activity)mView);
             File file = videoPushPath.get(0);
-            params.addCompressVideoPath("video", file);
+            util.videoCompress(file.getPath());
+
+            util.setOnVideoCompress(new VideoCompressUtil.OnVideoCompress() {
+                @Override
+                public void success(String path) {
+                    ((BaseMvpActivity)mView).showLoadingDialog();
+                    params.addCompressVideoPath("video", new File(path));
+                    request(params);
+                }
+
+                @Override
+                public void fail() {
+                    UIUtils.showToast("压缩失败,请重新尝试");
+                }
+            });
+        }else{
+            request(params);
         }
-
-        Observable<RequestBean<PatrolAddBean>> observable = getEnvirApi().postPatrolAdd(params.getImgAndVideoData());
-        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<PatrolAddBean>() {
-            @Override
-            public void onSuccess(PatrolAddBean bean) {
-                mView.skipDetail(bean);
-            }
-
-            @Override
-            public void onFailure(int code, String error) {
-                UIUtils.showToast(error);
-                mView.showError(error);
-            }
-        });
-        addSubscribe(disposable);
     }
 
     public void searchTitle(String title) {
@@ -76,6 +85,23 @@ public class EventDiscretionReportPresenter extends RxPresenter<EventDiscretionR
             @Override
             public void onFailure(int code, String error) {
 //                UIUtils.showToast(error);
+            }
+        });
+        addSubscribe(disposable);
+    }
+
+    public void request(ImageAndVideoParams params){
+        Observable<RequestBean<PatrolAddBean>> observable = getEnvirApi().postPatrolAdd(params.getImgAndVideoData());
+        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<PatrolAddBean>() {
+            @Override
+            public void onSuccess(PatrolAddBean bean) {
+                mView.skipDetail(bean);
+            }
+
+            @Override
+            public void onFailure(int code, String error) {
+                UIUtils.showToast(error);
+                mView.showError(error);
             }
         });
         addSubscribe(disposable);

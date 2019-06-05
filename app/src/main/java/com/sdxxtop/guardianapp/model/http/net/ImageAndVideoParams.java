@@ -52,7 +52,7 @@ public class ImageAndVideoParams extends Params {
         imgAndVideoMap.put(imgPar + "" + "\";filename=\"" + targetFile.getName(), requestBody);
     }
 
-    public void addCompressVideoPath(String par,File file) {
+    public void addCompressVideoPath(String par, File file) {
         RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         imgAndVideoMap.put(par + "\";filename=\"" + file.getName(), requestBody);
     }

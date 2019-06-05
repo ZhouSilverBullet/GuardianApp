@@ -291,7 +291,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
             List<ImgAndTextLinearView.TagEventBean> data = new ArrayList<>();
             for (int i = 0; i < mainIndexBean.getAdd_event().size(); i++) {
                 MainIndexBean.AddEventBean bean = mainIndexBean.getAdd_event().get(i);
-                data.add(new ImgAndTextLinearView.TagEventBean(bean.getEvent_id(),bean.getTitle(),bean.getEnd_date()));
+                data.add(new ImgAndTextLinearView.TagEventBean(bean.getEvent_id(),bean.getTitle(),""));
             }
             itlvView2.setData(data);
         }else{
