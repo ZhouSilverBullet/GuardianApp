@@ -2,6 +2,7 @@ package com.sdxxtop.guardianapp.ui.pop;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -41,9 +42,16 @@ public class ERCheckResultWindow extends PopupWindow {
 
 
     private Activity mActivity;
+    private View mView;
 
     public ERCheckResultWindow(Activity activity) {
         mActivity = activity;
+        initUI();
+        defaultStyle(activity);
+    }
+    public ERCheckResultWindow(Activity activity,View view) {
+        mActivity = activity;
+        this.mView = view;
         initUI();
         defaultStyle(activity);
     }
@@ -52,13 +60,24 @@ public class ERCheckResultWindow extends PopupWindow {
         View view = LayoutInflater.from(mActivity).inflate(R.layout.item_er_check_result_window, null);
         setContentView(view);
         ButterKnife.bind(this, view);
-
         etNumContent.setMaxLength(100);
+        etNumContent.setEditHint("必填");
+
+        if (mView!=null){
+            mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ERCheckResultWindow.this.dismiss();
+                }
+            });
+        }
 
         setOnDismissListener(new OnDismissListener() {
             @Override
             public void onDismiss() {
-                setShowBackground(1.f);
+//                setShowBackground(1.f);
+                mView.setVisibility(View.GONE);
+                ERCheckResultWindow.this.dismiss();
             }
         });
 
@@ -67,7 +86,8 @@ public class ERCheckResultWindow extends PopupWindow {
     public void show(View parent) {
         showAtLocation(parent, Gravity.BOTTOM, 0, 0);
 
-        setShowBackground(0.5f);
+//        setShowBackground(0.6f);
+        mView.setVisibility(View.VISIBLE);
     }
 
     public void show(int parentLayoutId) {
@@ -94,6 +114,7 @@ public class ERCheckResultWindow extends PopupWindow {
         setHeight(height);
         setFocusable(true);
         setTouchable(true);
+        setBackgroundDrawable(new ColorDrawable());
         setOutsideTouchable(true);
         setAnimationStyle(R.style.ActionSheetDialogAnimation);
     }

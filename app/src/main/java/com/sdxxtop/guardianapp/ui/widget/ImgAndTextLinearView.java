@@ -54,10 +54,6 @@ public class ImgAndTextLinearView extends LinearLayout {
     LinearLayout llTaskLayout1;
     @BindView(R.id.ll_task_layout_2)
     LinearLayout llTaskLayout2;
-    @BindView(R.id.tv_prefix_1)
-    TextView tvPrefix1;
-    @BindView(R.id.tv_prefix_2)
-    TextView tvPrefix2;
 
     private String taskTitle, taskPrefix;
     private Drawable ivIcon;
@@ -86,10 +82,6 @@ public class ImgAndTextLinearView extends LinearLayout {
         ButterKnife.bind(this);
         if (!TextUtils.isEmpty(taskTitle)) {
             tvTaskTitle.setText(taskTitle);
-        }
-        if (!TextUtils.isEmpty(taskPrefix)) {
-            tvPrefix1.setText(taskPrefix);
-            tvPrefix2.setText(taskPrefix);
         }
         if (ivIcon != null) {
             ivIcon1.setImageDrawable(ivIcon);
@@ -180,16 +172,17 @@ public class ImgAndTextLinearView extends LinearLayout {
         }
     }
 
-
     public static class TagEventBean {
         private int eventId;
         private String title;
         private String endTime;
+        private String status;
 
-        public TagEventBean(int eventId, String title, String endTime) {
+        public TagEventBean(int eventId, String title, String endTime,String status) {
             this.eventId = eventId;
             this.title = title;
             this.endTime = endTime;
+            this.status = status;
         }
 
         public int getEventId() {
@@ -201,7 +194,7 @@ public class ImgAndTextLinearView extends LinearLayout {
         }
 
         public String getTitle() {
-            return title;
+            return status+" : "+title;
         }
 
         public void setTitle(String title) {

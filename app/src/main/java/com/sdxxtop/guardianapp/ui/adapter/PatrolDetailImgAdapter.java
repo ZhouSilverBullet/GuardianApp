@@ -62,6 +62,7 @@ public class PatrolDetailImgAdapter extends BaseQuickAdapter<MediaBean, BaseView
             public void onClick(View v) {
                 if (item.getType() == 2) {
                     // 预览视频
+                    PictureSelector.create((Activity) mContext).themeStyle(R.style.picture_default_style);
                     PictureSelector.create((Activity) mContext).externalPictureVideo(selectVideoList.get(0).getPath());
                 } else {
                     int position;

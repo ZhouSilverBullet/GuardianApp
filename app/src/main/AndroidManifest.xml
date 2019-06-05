@@ -84,6 +84,7 @@
         <activity
             android:name=".ui.activity.HomeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/AppNormalTheme"
             android:launchMode="singleTask"/>
         <activity
             android:name=".ui.activity.SplashActivity"

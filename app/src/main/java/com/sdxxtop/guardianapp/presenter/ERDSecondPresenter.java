@@ -3,7 +3,7 @@ package com.sdxxtop.guardianapp.presenter;
 
 import android.app.Activity;
 
-import com.sdxxtop.guardianapp.base.BaseMvpActivity;
+import com.sdxxtop.guardianapp.base.BaseActivity;
 import com.sdxxtop.guardianapp.base.RxPresenter;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
 import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
@@ -44,7 +44,6 @@ public class ERDSecondPresenter extends RxPresenter<ERDSecondContract.IView> imp
             util.setOnVideoCompress(new VideoCompressUtil.OnVideoCompress() {
                 @Override
                 public void success(String path) {
-                    ((BaseMvpActivity)mView).showLoadingDialog();
                     params.addCompressVideoPath("video", new File(path));
                     request(params);
                 }
@@ -60,6 +59,7 @@ public class ERDSecondPresenter extends RxPresenter<ERDSecondContract.IView> imp
     }
 
     private void request(ImageAndVideoParams params) {
+        ((BaseActivity)mView).showLoadingDialog();
         Observable<RequestBean> observable = getEnvirApi().postEventFailed(params.getImgAndVideoData());
         Disposable disposable = RxUtils.handleHttp(observable, new IRequestCallback<RequestBean>() {
             @Override

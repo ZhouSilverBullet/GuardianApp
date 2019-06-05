@@ -2,6 +2,7 @@ package com.sdxxtop.guardianapp.ui.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -41,8 +42,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.functions.Consumer;
 
-public class GrantGridReportActivity extends BaseMvpActivity<GGRPresenter> implements GGRContract.IView, AMap.OnMapLoadedListener,
-        CustomEventLayout.OnTabClickListener {
+public class GrantGridReportActivity extends BaseMvpActivity<GGRPresenter> implements GGRContract.IView, AMap.OnMapLoadedListener {
 
 
     @BindView(R.id.title)
@@ -149,15 +149,19 @@ public class GrantGridReportActivity extends BaseMvpActivity<GGRPresenter> imple
 
     //添加详情标签
     private void addTabView(GridreportIndexBean bean) {
-        if (bean == null)
-            return;
-        List<TabTextBean> list = new ArrayList<>();
-        list.add(new TabTextBean(1, String.valueOf(bean.getGrid_count()), "总人数"));
-        list.add(new TabTextBean(2, String.valueOf(bean.getGrid_distance()), "巡逻总距离(km)"));
-        list.add(new TabTextBean(3, String.valueOf(bean.getGrid_sign_time()), "巡逻总时长(h)"));
-
-        celView.addLayout(list);
-        celView.setOnTabClickListener(this);
+        if (bean == null){
+            List<TabTextBean> list = new ArrayList<>();
+            list.add(new TabTextBean(1, "--", "总人数"));
+            list.add(new TabTextBean(2, "--", "巡逻总距离(km)"));
+            list.add(new TabTextBean(3, "--", "巡逻总时长(h)"));
+            celView.addLayout(list);
+        }else{
+            List<TabTextBean> list = new ArrayList<>();
+            list.add(new TabTextBean(1, String.valueOf(bean.getGrid_count()), "总人数"));
+            list.add(new TabTextBean(2, String.valueOf(bean.getGrid_distance()), "巡逻总距离(km)"));
+            list.add(new TabTextBean(3, String.valueOf(bean.getGrid_sign_time()), "巡逻总时长(h)"));
+            celView.addLayout(list);
+        }
     }
 
     private void initMap() {
@@ -166,7 +170,7 @@ public class GrantGridReportActivity extends BaseMvpActivity<GGRPresenter> imple
             mAMap = mMapView.getMap();
             mAMap.setOnMapLoadedListener(this);
             mAMap.setMinZoomLevel(8);
-            mAMap.setMaxZoomLevel(20);
+//            mAMap.setMaxZoomLevel(20);
         }
 
 //        mAdapter = new GridMarkerAdapter(this);
@@ -262,21 +266,7 @@ public class GrantGridReportActivity extends BaseMvpActivity<GGRPresenter> imple
         if (data == null)
             return;
         if (isMapLoadSuccess && isMapDataLoadSuccess) {
-            LatLngBounds.Builder builder = LatLngBounds.builder();
-            for (int i = 0; i < data.size(); i++) {
-                Log.e("循环列表", "'" + data.get(i).toString());
-                markerImgLoad.addCustomMarker(data.get(i), new MarkerSign(i), new MarkerImgLoad.OnMarkerListener() {
-                    @Override
-                    public void showMarkerIcon(MarkerOptions markerOptions, MarkerSign sign) {
-                        Marker marker;
-                        marker = mAMap.addMarker(markerOptions);
-                        marker.setObject(sign);
-                    }
-                });
-//                builder.include(markerImgLoad.getLatLng(data.get(i).getLongitude()));
-            }
-//            mAMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 30));
-            moveMapToPosition(markerImgLoad.getLatLng(data.get(0).getLongitude()));
+            AsyncTask.THREAD_POOL_EXECUTOR.execute(new MyRunnable(data));
         }
     }
 
@@ -298,12 +288,6 @@ public class GrantGridReportActivity extends BaseMvpActivity<GGRPresenter> imple
     }
 
     @Override
-    public void onTabClick(int num) {
-//        Intent intent = new Intent(GrantGridReportActivity.this, GACPatrolDetailActivity.class);  // 轨迹详情
-//        startActivity(intent);
-    }
-
-    @Override
     public void showData(GridreportIndexBean bean) {
         mAMap.clear();
         tvNowCount.setText("（在线人数" + bean.getGrid_now_count() + "人）");
@@ -319,6 +303,33 @@ public class GrantGridReportActivity extends BaseMvpActivity<GGRPresenter> imple
             isMapDataLoadSuccess = true;
             userInfos = bean.getGrid_now_info();
             addCustomMarkersToMap(userInfos);
+        }
+    }
+
+    class MyRunnable implements Runnable {
+        private List<GridreportIndexBean.GridNowInfo> mData;
+
+        public MyRunnable(List<GridreportIndexBean.GridNowInfo> mData) {
+            this.mData = mData;
+        }
+
+        @Override
+        public void run() {
+            LatLngBounds.Builder builder = LatLngBounds.builder();
+            for (int i = 0; i < mData.size(); i++) {
+                Log.e("循环列表", "'" + mData.get(i).toString());
+                markerImgLoad.addCustomMarker(mData.get(i), new MarkerSign(i), new MarkerImgLoad.OnMarkerListener() {
+                    @Override
+                    public void showMarkerIcon(MarkerOptions markerOptions, MarkerSign sign) {
+                        Marker marker;
+                        marker = mAMap.addMarker(markerOptions);
+                        marker.setObject(sign);
+                    }
+                });
+//                builder.include(markerImgLoad.getLatLng(data.get(i).getLongitude()));
+            }
+//            mAMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 30));
+            moveMapToPosition(markerImgLoad.getLatLng(mData.get(0).getLongitude()));
         }
     }
 }

@@ -104,20 +104,22 @@
                 android:layout_marginTop="12dp"
                 android:text="2、导致地面积水严重 "
                 android:textColor="#292929"
+                android:layout_marginBottom="11dp"
                 android:textSize="15sp"/>
 
             <TextView
+                android:layout_marginBottom="15dp"
                 android:id="@+id/tv_rectify_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="11dp"
                 android:text="整改时限：2019.05.12"
                 android:textColor="#292929"
                 android:textSize="15sp"/>
 
             <LinearLayout
+                tools:visibility="visible"
+                android:visibility="gone"
                 android:id="@+id/ll_check_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -176,6 +178,8 @@
         android:background="@color/color_dddddd"/>
 
     <LinearLayout
+        tools:visibility="visible"
+        android:visibility="gone"
         android:id="@+id/ll_containor"
         android:layout_width="match_parent"
         android:layout_height="65dp"

@@ -21,7 +21,7 @@
 
     <item android:gravity="center">
         <bitmap
-            android:gravity="center|top"
+            android:gravity="center"
             android:src="@drawable/logo_text" />
     </item>
 

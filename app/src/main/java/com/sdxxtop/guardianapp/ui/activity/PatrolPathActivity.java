@@ -2,6 +2,7 @@ package com.sdxxtop.guardianapp.ui.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -22,7 +23,6 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.PolylineOptions;
-import com.amap.api.services.geocoder.GeocodeSearch;
 import com.luck.picture.lib.permissions.RxPermissions;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.sdxxtop.guardianapp.R;
@@ -49,7 +49,7 @@ import io.reactivex.functions.Consumer;
 
 import static com.sdxxtop.guardianapp.utils.MarkerImgLoad.convertViewToBitmap;
 
-public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> implements PatrolPathContract.IView {
+public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> implements PatrolPathContract.IView, AMap.OnMapLoadedListener {
 
     @BindView(R.id.title)
     TitleView title;
@@ -62,7 +62,6 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
     @BindView(R.id.tv_end_time)
     TextView tvEndTime;
 
-    private GeocodeSearch geocoderSearch;
     private String chooseDay;
 
     private AMap aMap;
@@ -127,6 +126,7 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
     @Override
     protected void initData() {
         super.initData();
+        showLoadingDialog();
         mPresenter.enterpriseTrail(userid, "", reportType);
     }
 
@@ -136,8 +136,15 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
     private void initMap() {
         if (aMap == null) {
             aMap = mMapView.getMap();
-            geocoderSearch = new GeocodeSearch(this);
+            aMap.setOnMapLoadedListener(this);
         }
+    }
+
+    /**
+     * 地图加载完成
+     */
+    @Override
+    public void onMapLoaded() {
     }
 
     /**
@@ -195,7 +202,7 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
                         .icon(customizeMarkerIconLastAndFirst(data.get(data.size() - 1), "终点")));
             }
         }
-        if (list!=null&&list.size()>0){
+        if (list != null && list.size() > 0) {
             moveMapToPosition(list.get(0));
         }
 //        LatLngBounds bounds = getLatLngBounds();
@@ -317,13 +324,29 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
     public void showData(EnterpriseTrailBean bean) {
         aMap.clear();
         list.clear();
+        hideLoadingDialog();
         ttv1.setValue(String.valueOf(bean.getDistance()), "巡逻总距离(km)");
         ttv2.setValue(String.valueOf(bean.getTotal_time()), "巡逻总时长(h)");
-        if (bean.getTrail_info() != null && bean.getTrail_info().size() > 0) {
-            for (EnterpriseTrailBean.TrailInfo trailInfo : bean.getTrail_info()) {
-                list.add(trailInfo.getLatLng());
+        List<EnterpriseTrailBean.TrailInfo> trail_info = bean.getTrail_info();
+
+        AsyncTask.THREAD_POOL_EXECUTOR.execute(new MyRunnable(trail_info));
+    }
+
+    class MyRunnable implements Runnable {
+        private List<EnterpriseTrailBean.TrailInfo> mData;
+
+        public MyRunnable(List<EnterpriseTrailBean.TrailInfo> mData) {
+            this.mData = mData;
+        }
+
+        @Override
+        public void run() {
+            if (mData != null && mData.size() > 0) {
+                for (EnterpriseTrailBean.TrailInfo trailInfo : mData) {
+                    list.add(trailInfo.getLatLng());
+                }
+                setUpMap(mData);
             }
-            setUpMap(bean.getTrail_info());
         }
     }
 

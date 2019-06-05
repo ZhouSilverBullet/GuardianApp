@@ -34,6 +34,7 @@
             android:textStyle="bold"/>
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:visibility="gone"
             android:id="@+id/civ_header"
             android:layout_width="35dp"
             android:layout_height="35dp"
@@ -42,6 +43,7 @@
             android:src="@drawable/tou_xiang"/>
 
         <LinearLayout
+            android:layout_marginRight="5dp"
             android:id="@+id/ll_containor"
             android:layout_width="35dp"
             android:layout_height="35dp"
@@ -49,8 +51,8 @@
 
             <ImageView
                 android:id="@+id/iv_message_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="14dp"
+                android:layout_height="16dp"
                 android:src="@drawable/message_normal"/>
         </LinearLayout>
 

@@ -94,6 +94,15 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 
 //        setPhotoRecycler(mRecyclerView);
 
+        if (queryData == null) {
+            queryData = new ArrayList<>();
+            queryData.add("巡检");
+            queryData.add("化验");
+            queryData.add("感应器报警");
+            queryData.add("他人反应");
+        }
+        tatvQuery.getTextRightText().setText(queryData.get(0));
+
         InputFilter[] filters = {new InputFilter.LengthFilter(10)};
         taevTitle.getEditText().setFilters(filters);
 
@@ -197,7 +206,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
         List<File> imagePushPath = cvisvView.getImageOrVideoPushPath(1);
         List<File> vedioPushPath = cvisvView.getImageOrVideoPushPath(2);
 
-        if (imagePushPath.size() == 0&& vedioPushPath.size() == 0) {
+        if (imagePushPath.size() == 0 && vedioPushPath.size() == 0) {
             showToast("请选择图片或视频");
             return;
         }
@@ -238,7 +247,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
             return;
         }
 
-        mPresenter.pushReport(title, pathType, queryType, place, lonLng, editValue, imagePushPath,vedioPushPath);
+        mPresenter.pushReport(title, pathType, queryType, place, lonLng, editValue, imagePushPath, vedioPushPath);
     }
 
     @Override
@@ -359,7 +368,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
         super.onActivityResult(requestCode, resultCode, data);
         hideLoadingDialog();
         if (resultCode == RESULT_OK) {
-            cvisvView.callActivityResult(requestCode,resultCode,data);
+            cvisvView.callActivityResult(requestCode, resultCode, data);
         } else if (requestCode == 100 && resultCode == 10087 && data != null) {
             String address = data.getStringExtra("ad");
             String lt = data.getStringExtra("lt");
@@ -439,13 +448,6 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     }
 
     private void selectQuery() {
-        if (queryData == null) {
-            queryData = new ArrayList<>();
-            queryData.add("巡逻");
-            queryData.add("化验");
-            queryData.add("感应器报警");
-            queryData.add("他人反应");
-        }
         showQuerySelect(queryData);
     }
 

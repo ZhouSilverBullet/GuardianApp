@@ -3,7 +3,7 @@ package com.sdxxtop.guardianapp.presenter;
 
 import android.app.Activity;
 
-import com.sdxxtop.guardianapp.base.BaseMvpActivity;
+import com.sdxxtop.guardianapp.base.BaseActivity;
 import com.sdxxtop.guardianapp.base.RxPresenter;
 import com.sdxxtop.guardianapp.model.bean.EventSearchTitleBean;
 import com.sdxxtop.guardianapp.model.bean.PatrolAddBean;
@@ -57,7 +57,6 @@ public class EventDiscretionReportPresenter extends RxPresenter<EventDiscretionR
             util.setOnVideoCompress(new VideoCompressUtil.OnVideoCompress() {
                 @Override
                 public void success(String path) {
-                    ((BaseMvpActivity)mView).showLoadingDialog();
                     params.addCompressVideoPath("video", new File(path));
                     request(params);
                 }
@@ -91,6 +90,7 @@ public class EventDiscretionReportPresenter extends RxPresenter<EventDiscretionR
     }
 
     public void request(ImageAndVideoParams params){
+        ((BaseActivity)mView).showLoadingDialog();
         Observable<RequestBean<PatrolAddBean>> observable = getEnvirApi().postPatrolAdd(params.getImgAndVideoData());
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<PatrolAddBean>() {
             @Override

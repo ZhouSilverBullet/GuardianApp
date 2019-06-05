@@ -9,7 +9,6 @@ import android.util.Log;
 import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity;
 import com.sdxxtop.guardianapp.ui.activity.PatrolAddDetailActivity;
 
-import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,7 +45,6 @@ public class PushCenterActivity extends AppCompatActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-
         if (intent != null) {
             extraMap = intent.getStringExtra("extraMap");
             if (!TextUtils.isEmpty(extraMap)) {
@@ -105,6 +103,5 @@ public class PushCenterActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 }

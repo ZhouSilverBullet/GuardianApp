@@ -61,15 +61,7 @@
                     android:src="@drawable/task_blue"/>
 
                 <TextView
-                    android:id="@+id/tv_prefix_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="7dp"
-                    android:text="新任务："
-                    android:textColor="@color/color_313131"
-                    android:textSize="13sp"/>
-
-                <TextView
+                    android:layout_marginLeft="5dp"
                     android:id="@+id/tv_title_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -114,15 +106,7 @@
                     android:src="@drawable/task_blue"/>
 
                 <TextView
-                    android:id="@+id/tv_prefix_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="7dp"
-                    android:text="新任务："
-                    android:textColor="@color/color_313131"
-                    android:textSize="13sp"/>
-
-                <TextView
+                    android:layout_marginLeft="5dp"
                     android:id="@+id/tv_title_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

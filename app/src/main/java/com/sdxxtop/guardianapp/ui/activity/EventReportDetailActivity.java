@@ -15,7 +15,6 @@ import com.sdxxtop.guardianapp.model.bean.EventReadIndexBean;
 import com.sdxxtop.guardianapp.model.bean.MediaBean;
 import com.sdxxtop.guardianapp.presenter.EventReportDetailPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.EventReportDetailContract;
-import com.sdxxtop.guardianapp.ui.adapter.ImageHorizontalAdapter;
 import com.sdxxtop.guardianapp.ui.adapter.PaifaAdapter;
 import com.sdxxtop.guardianapp.ui.adapter.PatrolDetailImgAdapter;
 import com.sdxxtop.guardianapp.ui.adapter.WuFaJieJueAdapter;
@@ -72,12 +71,7 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
     TextView tvDescription;
     @BindView(R.id.paifa_recy)
     RecyclerView paifaRecy;
-    @BindView(R.id.tv_jiejue_time)
-    TextView tvJiejueTime;
-    @BindView(R.id.jiejue_recy)
-    RecyclerView jiejue_recy;
-    @BindView(R.id.tv_jiejue_remark)
-    TextView tvJiejueRemark;
+
     @BindView(R.id.v_line_2)
     View vLine2;
     @BindView(R.id.btn_check_faile)
@@ -91,6 +85,29 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
     @BindView(R.id.wufajiejue_recy)
     RecyclerView wufajiejue_recy;
 
+    /*** 解决结果 ****/
+    @BindView(R.id.ll_jiejue_layout)
+    LinearLayout llJiejueLayout;
+    @BindView(R.id.tv_jiejue_time)
+    TextView tvJiejueTime;
+    @BindView(R.id.jiejue_recy)
+    RecyclerView jiejue_recy;
+    @BindView(R.id.tv_jiejue_remark)
+    TextView tvJiejueRemark;
+
+    /*** 验收通过 ****/
+    @BindView(R.id.ll_yanshou_pass)
+    LinearLayout llYanshouPass;
+    @BindView(R.id.tv_yanshou_pass_time)
+    TextView tvYanshouPassTime;
+    @BindView(R.id.yanshou_pass_recy)
+    RecyclerView yanshouPassRecy;
+    @BindView(R.id.tv_yanshou_pass_remark)
+    TextView tvYanshouPassRemark;
+    @BindView(R.id.popwindow_bg)
+    View popwindow_bg;
+
+
     //用于提交
     private int eventStatus;
 
@@ -98,12 +115,11 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
     private PatrolDetailImgAdapter mAdapter;
     //先反馈问题
     private PatrolDetailImgAdapter mFinishAdapter;
-    //显示check的图片
-    private ImageHorizontalAdapter mCheckAdapter;
     private ERCheckResultWindow erCheckResultWindow;
     private PaifaAdapter paifaAdapter;
     private YanshouAdapter yanshouAdapter;
     private WuFaJieJueAdapter wuFaJieJueAdapter;
+    private PatrolDetailImgAdapter yanshouPassAdapter;
 
     @Override
     protected void initInject() {
@@ -149,6 +165,11 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         wufajiejue_recy.setLayoutManager(new LinearLayoutManager(this));
         wuFaJieJueAdapter = new WuFaJieJueAdapter(R.layout.item_wufajiejue_view, null);
         wufajiejue_recy.setAdapter(wuFaJieJueAdapter);
+
+        /*********** 验收通过 **********/
+        yanshouPassRecy.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        yanshouPassAdapter = new PatrolDetailImgAdapter(R.layout.gv_filter_image, new ArrayList<>());
+        yanshouPassRecy.setAdapter(yanshouPassAdapter);
     }
 
     @Override
@@ -206,21 +227,36 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         /********* 无法解决 **********/
         wuFaJieJueAdapter.replaceData(bean.extra);
 
-        /********* 解决 **********/
-        List<EventReadIndexBean.SolveBean> solve = bean.solve;
+        /*********** 验收通过 **********/
         List<EventReadIndexBean.CompletedBean> completed = bean.completed;
         if (completed != null && completed.size() > 0) {
-            EventReadIndexBean.CompletedBean completedBean = completed.get(0);
-            handleFinish(completedBean.getOperate_time(), completedBean.getExtra(), completedBean.getImg(), completedBean.getVideo());
-        } else {
-            if (solve != null && solve.size() > 0) {
-                EventReadIndexBean.SolveBean solveBean = solve.get(0);
-                handleFinish(solveBean.getOperate_time(), solveBean.getExtra(), solveBean.getImg(), solveBean.getVideo());
+            EventReadIndexBean.CompletedBean item = completed.get(0);
+            llYanshouPass.setVisibility(View.VISIBLE);
+            if (TextUtils.isEmpty(item.getExtra())) {
+                tvYanshouPassRemark.setVisibility(View.GONE);
             } else {
-                tvJiejueTime.setVisibility(View.GONE);
-                tvJiejueRemark.setVisibility(View.GONE);
-                jiejue_recy.setVisibility(View.GONE);
+                tvYanshouPassRemark.setVisibility(View.VISIBLE);
+                tvYanshouPassRemark.setText("备注: " + item.getExtra());
             }
+            if (TextUtils.isEmpty(item.getOperate_time())) {
+                tvYanshouPassTime.setVisibility(View.GONE);
+            } else {
+                tvYanshouPassTime.setVisibility(View.VISIBLE);
+                tvYanshouPassTime.setText("验收时间: " + handleTime(item.getOperate_time()));
+            }
+            bandImgAndVideo(item.getImg(), item.getVideo(), yanshouPassRecy, yanshouPassAdapter);
+        } else {
+            llYanshouPass.setVisibility(View.GONE);
+        }
+
+        /********* 解决结果 **********/
+        List<EventReadIndexBean.SolveBean> solve = bean.solve;
+        if (solve != null && solve.size() > 0) {
+            llJiejueLayout.setVisibility(View.VISIBLE);
+            EventReadIndexBean.SolveBean solveBean = solve.get(0);
+            handleFinish(solveBean.getOperate_time(), solveBean.getExtra(), solveBean.getImg(), solveBean.getVideo());
+        } else {
+            llJiejueLayout.setVisibility(View.GONE);
         }
 
         /**********  无法解决  ************/
@@ -251,7 +287,7 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
                 time.add(bean.add_time);
                 if (bean.extra_date != null && bean.extra_date.size() > 0) {
                     time.add(bean.extra_date.get(bean.extra_date.size() - 1).getSend_time() + " 10:29:19");
-                }else{
+                } else {
                     time.add("");
                 }
                 break;
@@ -259,12 +295,12 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
                 time.add(bean.add_time);
                 if (bean.extra_date != null && bean.extra_date.size() > 0) {
                     time.add(bean.extra_date.get(bean.extra_date.size() - 1).getSend_time());
-                }else{
+                } else {
                     time.add("");
                 }
                 if (bean.solve != null && bean.solve.size() > 0) {
                     time.add(bean.solve.get(bean.solve.size() - 1).getOperate_time());
-                }else{
+                } else {
                     time.add("");
                 }
                 break;
@@ -272,17 +308,17 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
                 time.add(bean.add_time);
                 if (bean.extra_date != null && bean.extra_date.size() > 0) {
                     time.add(bean.extra_date.get(bean.extra_date.size() - 1).getSend_time() + " 10:29:19");
-                }else{
+                } else {
                     time.add("");
                 }
                 if (bean.solve != null && bean.solve.size() > 0) {
                     time.add(bean.solve.get(bean.solve.size() - 1).getOperate_time());
-                }else{
+                } else {
                     time.add("");
                 }
                 if (bean.completed != null && bean.completed.size() > 0) {
                     time.add(bean.completed.get(bean.completed.size() - 1).getOperate_time());
-                }else{
+                } else {
                     time.add("");
                 }
                 break;
@@ -290,17 +326,17 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
                 time.add(bean.add_time);
                 if (bean.extra_date != null && bean.extra_date.size() > 0) {
                     time.add(bean.extra_date.get(bean.extra_date.size() - 1).getSend_time() + " 10:29:19");
-                }else{
+                } else {
                     time.add("");
                 }
                 if (bean.solve != null && bean.solve.size() > 0) {
                     time.add(bean.solve.get(bean.solve.size() - 1).getOperate_time());
-                }else{
+                } else {
                     time.add("");
                 }
                 if (bean.completed != null && bean.completed.size() > 0) {
                     time.add(bean.completed.get(bean.completed.size() - 1).getOperate_time());
-                }else{
+                } else {
                     time.add("");
                 }
                 time.add("");
@@ -371,8 +407,7 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         //由于后台会发送1000-01-01 00：00：00 所以 加入了 status 的判断
         if (!TextUtils.isEmpty(finishTime1)) {
             tvJiejueTime.setVisibility(View.VISIBLE);
-            StringBuilder finishTime = new StringBuilder().append("解决反馈时间：").append(handleTime(finishTime1));
-            tvJiejueTime.setText(finishTime);
+            tvJiejueTime.setText("解决反馈时间："+handleTime(finishTime1));
         } else {
             tvJiejueTime.setVisibility(View.GONE);
         }
@@ -380,7 +415,7 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
             tvJiejueRemark.setVisibility(View.VISIBLE);
             tvJiejueRemark.setText("事件问题描述：" + extra);
         } else {
-            tvJiejueTime.setVisibility(View.GONE);
+            tvJiejueRemark.setVisibility(View.GONE);
         }
 
         bandImgAndVideo(img, video, jiejue_recy, mFinishAdapter);
@@ -399,7 +434,7 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
                 strPatrol = "他人反应";
                 break;
             default:
-                strPatrol = "巡逻";
+                strPatrol = "巡检";
                 break;
         }
         tvCheckMethod.setText(strPatrol);
@@ -495,7 +530,7 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
                 //2.已经反馈,然后弹出验收结果
                 if (eventStatus == 2) {
                     if (erCheckResultWindow == null) {
-                        erCheckResultWindow = new ERCheckResultWindow(this);
+                        erCheckResultWindow = new ERCheckResultWindow(this,popwindow_bg);
                         erCheckResultWindow.show(getLayout(), false);
                         erCheckResultWindow.setOnConfirmClick(this);
                     } else {

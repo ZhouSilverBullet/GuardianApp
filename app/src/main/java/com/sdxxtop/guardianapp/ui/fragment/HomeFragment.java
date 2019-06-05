@@ -272,42 +272,42 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
 //        mTextView.setText(data);
 
         /*********** 轮播图 ************/
-        if (!TextUtils.isEmpty(mainIndexBean.getRotation_img())){
+        if (!TextUtils.isEmpty(mainIndexBean.getRotation_img())) {
             List<String> bannerList = Arrays.asList(mainIndexBean.getRotation_img().split(","));
             banner.setImages(bannerList).setImageLoader(new GlideImageLoader()).start();
         }
 
-        if (mainIndexBean.getPending_event()!=null&&mainIndexBean.getPending_event().size()>0){
+        if (mainIndexBean.getPending_event() != null && mainIndexBean.getPending_event().size() > 0) {
             List<ImgAndTextLinearView.TagEventBean> data = new ArrayList<>();
             for (int i = 0; i < mainIndexBean.getPending_event().size(); i++) {
                 MainIndexBean.PendingEventBean bean = mainIndexBean.getPending_event().get(i);
-                data.add(new ImgAndTextLinearView.TagEventBean(bean.getEvent_id(),bean.getTitle(),bean.getEnd_date()));
+                data.add(new ImgAndTextLinearView.TagEventBean(bean.getEvent_id(), bean.getTitle(), bean.getEnd_date(),getStatus(1,bean.getStatus())));
             }
             itlvView1.setData(data);
-        }else{
+        } else {
             itlvView1.setNoDate();
         }
-        if (mainIndexBean.getAdd_event()!=null&&mainIndexBean.getAdd_event().size()>0){
+        if (mainIndexBean.getAdd_event() != null && mainIndexBean.getAdd_event().size() > 0) {
             List<ImgAndTextLinearView.TagEventBean> data = new ArrayList<>();
             for (int i = 0; i < mainIndexBean.getAdd_event().size(); i++) {
                 MainIndexBean.AddEventBean bean = mainIndexBean.getAdd_event().get(i);
-                data.add(new ImgAndTextLinearView.TagEventBean(bean.getEvent_id(),bean.getTitle(),""));
+                data.add(new ImgAndTextLinearView.TagEventBean(bean.getEvent_id(), bean.getTitle(), "",getStatus(2,bean.getStatus())));
             }
             itlvView2.setData(data);
-        }else{
+        } else {
             itlvView2.setNoDate();
         }
-        if (mainIndexBean.getAdd_patrol()!=null&&mainIndexBean.getAdd_patrol().size()>0){
+        if (mainIndexBean.getAdd_patrol() != null && mainIndexBean.getAdd_patrol().size() > 0) {
             List<ImgAndTextLinearView.TagEventBean> data = new ArrayList<>();
             for (int i = 0; i < mainIndexBean.getAdd_patrol().size(); i++) {
                 MainIndexBean.AddPatrolBean bean = mainIndexBean.getAdd_patrol().get(i);
-                data.add(new ImgAndTextLinearView.TagEventBean(bean.getPatrol_id(),bean.getTitle(),bean.getRectify_date()));
+                data.add(new ImgAndTextLinearView.TagEventBean(bean.getPatrol_id(), bean.getTitle(), bean.getRectify_date(),getStatus(3,bean.getStatus())));
             }
             itlvView3.setData(data);
-        }else{
+        } else {
             itlvView3.setNoDate();
         }
-        ivMessageIcon.setImageResource(mainIndexBean.getUnread_count()==0?R.drawable.message_normal:R.drawable.message_notice);
+        ivMessageIcon.setImageResource(mainIndexBean.getUnread_count() == 0 ? R.drawable.message_normal : R.drawable.message_notice);
     }
 
     @Override
@@ -340,5 +340,53 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
         if (requestCode == 100 && resultCode == 100) {
             mPresenter.loadData();
         }
+    }
+
+    public String getStatus(int type, int status) {
+        String str = "";
+        switch (type) {
+            case 1:
+                switch (status) {
+                    case 2:
+                        str = "待解决";
+                        break;
+                    case 3:
+                        str = "待验收";
+                        break;
+                }
+                break;
+            case 2:
+                switch (status) {
+                    case 1:
+                        str = "待派发";
+                        break;
+                    case 2:
+                        str = "待解决";
+                        break;
+                    case 3:
+                        str = "待验收";
+                        break;
+                    case 4:
+                        str = "已完成";
+                        break;
+                    case 5:
+                        str = "驳回";
+                        break;
+                }
+                break;
+            case 3:
+                switch (status) {
+                    case 1:
+                    case 2:
+                        str = "新任务";
+                        break;
+                    case 3:
+                        str = "已完成整改";
+                        break;
+
+                }
+                break;
+        }
+        return str;
     }
 }

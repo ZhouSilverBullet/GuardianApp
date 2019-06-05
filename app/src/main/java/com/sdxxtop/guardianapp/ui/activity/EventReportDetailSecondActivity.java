@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sdxxtop.guardianapp.R;
@@ -38,6 +39,8 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
 
     @BindView(R.id.et_num_content)
     NumberEditTextView etNumContent;
+    @BindView(R.id.et_num_content_2)
+    NumberEditTextView etNumContent2;
     @BindView(R.id.btn_push)
     Button btnPush;
     @BindView(R.id.tv_remark)
@@ -46,6 +49,10 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
     CustomVideoImgSelectView cvisvView;
     @BindView(R.id.tv_title)
     TitleView tvTitle;
+    @BindView(R.id.ll_jiejue_layout)
+    LinearLayout llJiejueLayout;
+    @BindView(R.id.ll_bottom)
+    LinearLayout llBottom;
 
     private String mEventId;
     private int mEventType;
@@ -74,24 +81,29 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
             mEventId = intent.getStringExtra("eventId");
             mEventType = intent.getIntExtra("eventType", TYPE_REPORT);
         }
-        etNumContent.setMaxLength(200);
+
         switch (mEventType) {
             case TYPE_SOLVE: // 3、已解决
+                llJiejueLayout.setVisibility(View.VISIBLE);
+                llBottom.setVisibility(View.GONE);
+
                 tvRemark.setText("解决问题的简要描述");
-                etNumContent.setEditHint("非必填");
-                tvTitle.setTitleValue("已解决");
+                etNumContent.setVisibility(View.GONE);
+                tvTitle.setTitleValue("解决反馈");
                 isMastNeed = false;
                 break;
             case TYPE_CHACK_SUCCSESS://4、验收通过
                 tvRemark.setText("简要");
                 etNumContent.setEditHint("非必填");
                 tvTitle.setTitleValue("验收通过");
+                etNumContent.setMaxLength(200);
                 isMastNeed = false;
                 break;
             case TYPE_CHACK_FAILE://5验收不通过
                 tvRemark.setText("验收不通过原因");
                 tvTitle.setTitleValue("验收不通过");
                 etNumContent.setEditHint("必填");
+                etNumContent.setMaxLength(200);
                 isMastNeed = true;
                 break;
         }
@@ -117,11 +129,22 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
         }
 
         String editValue = etNumContent.getEditValue();
-        if (TextUtils.isEmpty(editValue) && isMastNeed) {
-            showToast("请填写编辑内容");
-            return;
+        String editValue2 = etNumContent2.getEditValue();
+
+        if (mEventType==3){
+            if (TextUtils.isEmpty(editValue2) && isMastNeed) {
+                showToast("请填写编辑内容");
+                return;
+            }
+        }else{
+            if (TextUtils.isEmpty(editValue) && isMastNeed) {
+                showToast("请填写编辑内容");
+                return;
+            }
         }
-        mPresenter.modify(mEventId,mEventType,editValue,imagePushPath,videoPushPath);
+
+
+        mPresenter.modify(mEventId,mEventType,mEventType==3?editValue2:editValue,imagePushPath,videoPushPath);
     }
 
     @Override

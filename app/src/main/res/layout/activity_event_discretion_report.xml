@@ -16,8 +16,8 @@
         android:layout_height="wrap_content"
         app:leftLayoutIconIsGray="true"
         app:rightTextColor="@color/color_313131"
-        app:rightTextValue="我的汇报"
-        app:titleValue="巡查汇报"/>
+        app:rightTextValue="我的处理"
+        app:titleValue="自行处理"/>
 
     <View
         android:layout_width="match_parent"
@@ -47,7 +47,7 @@
                 android:id="@+id/taev_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:taev_edit_text_hint="事件重点简述"
+                app:taev_edit_text_hint="事件重点简述(限制16个字)"
                 app:taev_text_view="事件标题"/>
 
             <RelativeLayout
@@ -153,7 +153,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/btn_green_solid_bg"
-            android:text="上报"
+            android:text="提交"
             android:textColor="@color/white"/>
     </LinearLayout>
 

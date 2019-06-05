@@ -1,6 +1,7 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
 import android.content.Intent;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +16,6 @@ import com.sdxxtop.guardianapp.model.bean.PatrolAddBean;
 import com.sdxxtop.guardianapp.presenter.EventDiscretionReportPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.EventDiscretionReportContract;
 import com.sdxxtop.guardianapp.ui.adapter.EventSearchTitleAdapter;
-import com.sdxxtop.guardianapp.ui.adapter.GridImageAdapter;
 import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
 import com.sdxxtop.guardianapp.ui.widget.CustomVideoImgSelectView;
 import com.sdxxtop.guardianapp.ui.widget.NumberEditTextView;
@@ -63,9 +63,8 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
     private String lonLng;//经纬度
     private TimeSelectBottomDialog dialog;
 
-    private GridImageAdapter adapter;
     private EventSearchTitleAdapter titleAdapter;
-    private boolean isSearchEnable;
+    private boolean isSearchEnable = true;
 
     @Override
     protected int getLayout() {
@@ -85,6 +84,9 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
     @Override
     protected void initView() {
         super.initView();
+        InputFilter[] filters = {new InputFilter.LengthFilter(16)};
+        taevTitle.getEditText().setFilters(filters);
+
         tatvEndTime.setTextRightImage2Show(true);
         dialog = new TimeSelectBottomDialog(this, tatvEndTime.getTextRightText());
         netContent.setEditHint("");
@@ -253,7 +255,6 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
         if (bean.getKey_info() != null && bean.getKey_info().size() > 0) {
             llSearchDataLayout.setVisibility(View.VISIBLE);
             titleAdapter.replaceData(bean.getKey_info());
-            hideKeyboard(taevTitle.getEditText());
         } else {
             llSearchDataLayout.setVisibility(View.GONE);
         }

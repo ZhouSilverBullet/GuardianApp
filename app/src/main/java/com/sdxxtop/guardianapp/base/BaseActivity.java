@@ -16,9 +16,9 @@ import com.sdxxtop.guardianapp.utils.UIUtils;
 import androidx.annotation.Nullable;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
+import me.yokeyword.fragmentation.SupportActivity;
 
-public abstract class BaseActivity extends SwipeBackActivity {
+public abstract class BaseActivity extends SupportActivity {
 
     private Unbinder mUnbinder;
     protected BaseActivity mContext;
@@ -29,7 +29,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
         super.onCreate(savedInstanceState);
         setContentView(getLayout());
         mContext = this;
-        setSwipeBackEnable(false);
+//        setSwipeBackEnable(false);
         if (isInitStatusBar()) {
             initStatusBar();
         }
@@ -80,6 +80,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
             mDialogUtil = null;
         }
     }
+
     public void statusBar(boolean isDark) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {//Android6.0以上系统
             StatusBarUtil.setDarkStatusIcon(this.getWindow(), isDark);
@@ -108,8 +109,8 @@ public abstract class BaseActivity extends SwipeBackActivity {
 
     /**
      * 当全屏的时候，状态栏继续显示
-     *  调用该方法
-     *  https://blog.csdn.net/a872822645/article/details/74482323
+     * 调用该方法
+     * https://blog.csdn.net/a872822645/article/details/74482323
      */
     protected void showStatusBar() {
         WindowManager.LayoutParams attrs = getWindow().getAttributes();
@@ -117,11 +118,11 @@ public abstract class BaseActivity extends SwipeBackActivity {
         getWindow().setAttributes(attrs);
     }
 
-    public static void hideKeyboard(View view){
+    public static void hideKeyboard(View view) {
         InputMethodManager imm = (InputMethodManager) view.getContext()
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
-            imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 

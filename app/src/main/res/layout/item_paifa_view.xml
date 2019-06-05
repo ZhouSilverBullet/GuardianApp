@@ -6,69 +6,56 @@
     android:orientation="vertical">
 
     <View
-        android:layout_marginTop="10dp"
         android:id="@+id/v_line"
         style="@style/line_style"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tv_distributed_time"
+        style="@style/normal_text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="10dp"
+        android:text="派发时间：2019.04.05"/>
 
-        <TextView
-            android:id="@+id/tv_distributed_time"
-            style="@style/normal_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="10dp"
-            android:text="派发时间：2019.04.05"/>
-
-        <TextView
-            android:id="@+id/tv_distributed_result"
-            style="@style/normal_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="10dp"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:text="派发人:指挥中心"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tv_distributed_result"
+        style="@style/normal_text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="1"
+        android:gravity="right"
+        android:text="派发人:指挥中心"/>
 
-        <TextView
-            android:id="@+id/tv_end_time"
-            style="@style/normal_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="10dp"
-            android:text="截止日期"
-            android:visibility="visible"/>
+    <TextView
+        android:id="@+id/tv_end_time"
+        style="@style/normal_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="10dp"
+        android:text="截止日期"
+        android:visibility="visible"/>
 
-        <TextView
-            android:id="@+id/tv_end_point"
-            style="@style/normal_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="10dp"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:text="事件重要性：高"
-            android:visibility="visible"/>
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_end_point"
+        style="@style/normal_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="1"
+        android:gravity="right"
+        android:text="事件重要性：高"
+        android:visibility="visible"/>
 
     <View
         style="@style/line_style"

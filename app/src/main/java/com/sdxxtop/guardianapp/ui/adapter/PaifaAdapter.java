@@ -33,8 +33,8 @@ public class PaifaAdapter extends BaseQuickAdapter<EventReadIndexBean.ExtraDateB
         if (helper.getAdapterPosition()>0){
             helper.setGone(R.id.v_line,false);
         }
-        StringBuilder append = new StringBuilder().append("派发时间：").append(handleTime(item.getSend_time()));
-        helper.setText(R.id.tv_end_time,"截止日期：" + item.getOperate_date());
+        StringBuilder append = new StringBuilder().append("派发时间：").append(item.getSend_time());
+        helper.setText(R.id.tv_end_time,"截止解决日期：" + item.getOperate_date());
         helper.setText(R.id.tv_distributed_time,append.toString());
         showPaifaLayout(item.getImportant_type(),helper.getView(R.id.tv_end_point));
     }
