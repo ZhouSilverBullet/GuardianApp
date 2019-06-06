@@ -287,7 +287,7 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
             case 2:
                 time.add(bean.add_time);
                 if (bean.extra_date != null && bean.extra_date.size() > 0) {
-                    time.add(bean.extra_date.get(bean.extra_date.size() - 1).getSend_time() + " 10:29:19");
+                    time.add(bean.extra_date.get(bean.extra_date.size() - 1).getSend_time());
                 } else {
                     time.add("");
                 }
@@ -308,7 +308,7 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
             case 4:
                 time.add(bean.add_time);
                 if (bean.extra_date != null && bean.extra_date.size() > 0) {
-                    time.add(bean.extra_date.get(bean.extra_date.size() - 1).getSend_time() + " 10:29:19");
+                    time.add(bean.extra_date.get(bean.extra_date.size() - 1).getSend_time());
                 } else {
                     time.add("");
                 }
@@ -326,7 +326,7 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
             case 5:
                 time.add(bean.add_time);
                 if (bean.extra_date != null && bean.extra_date.size() > 0) {
-                    time.add(bean.extra_date.get(bean.extra_date.size() - 1).getSend_time() + " 10:29:19");
+                    time.add(bean.extra_date.get(bean.extra_date.size() - 1).getSend_time());
                 } else {
                     time.add("");
                 }

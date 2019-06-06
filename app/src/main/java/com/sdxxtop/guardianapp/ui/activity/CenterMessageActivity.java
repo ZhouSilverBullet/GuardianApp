@@ -34,8 +34,8 @@ public class CenterMessageActivity extends BaseMvpActivity<CenterMessagePresente
     }
 
     @Override
-    protected void initData() {
-        super.initData();
+    protected void onResume() {
+        super.onResume();
         mPresenter.unreadIndex();
     }
 

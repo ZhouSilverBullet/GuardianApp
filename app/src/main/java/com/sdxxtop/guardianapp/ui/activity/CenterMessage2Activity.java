@@ -67,8 +67,8 @@ public class CenterMessage2Activity extends BaseMvpActivity<CenterMessage2Presen
     }
 
     @Override
-    protected void initData() {
-        super.initData();
+    protected void onResume() {
+        super.onResume();
         mPresenter.unreadNewslist(type);
     }
 

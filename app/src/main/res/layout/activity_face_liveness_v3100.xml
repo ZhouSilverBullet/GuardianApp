@@ -147,7 +147,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
-                android:text="11"
+                android:text=""
                 android:textColor="@color/color_303030"
                 android:textSize="15sp" />
 
