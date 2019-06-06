@@ -194,8 +194,7 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
                         .showCropGrid(false)
                         .circleDimmedLayer(true)
                         .compress(true).selectionMode(PictureConfig.SINGLE).maxSelectNum(1).forResult(IMAGE_STORE);
-
-                break;
+                 break;
             case R.id.tatv_message:
                 new QuitGroupPopView(getActivity(), mRootView, mPartName, partUnit);
                 break;

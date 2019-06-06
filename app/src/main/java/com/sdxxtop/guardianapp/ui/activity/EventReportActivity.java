@@ -67,6 +67,8 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 
     @BindView(R.id.net_content)
     NumberEditTextView netContent;
+    @BindView(R.id.net_content_position)
+    NumberEditTextView netContentPosition;
 
     @BindView(R.id.cvisv_view)
     CustomVideoImgSelectView cvisvView;
@@ -102,6 +104,8 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
             queryData.add("他人反应");
         }
         tatvQuery.getTextRightText().setText(queryData.get(0));
+
+        netContentPosition.setMaxLength(60);
 
         InputFilter[] filters = {new InputFilter.LengthFilter(10)};
         taevTitle.getEditText().setFilters(filters);
@@ -247,7 +251,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
             return;
         }
 
-        mPresenter.pushReport(title, pathType, queryType, place, lonLng, editValue, imagePushPath, vedioPushPath);
+        mPresenter.pushReport(title, pathType, queryType, place, lonLng, editValue, imagePushPath, vedioPushPath,netContentPosition.getEditValue());
     }
 
     @Override

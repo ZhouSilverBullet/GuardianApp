@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:leftLayoutIconIsGray="true"
-        app:titleValue="巡查汇报"/>
+        app:titleValue="复查处理"/>
 
     <View
         android:layout_width="match_parent"

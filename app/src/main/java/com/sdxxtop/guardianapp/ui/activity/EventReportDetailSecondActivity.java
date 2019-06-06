@@ -86,8 +86,9 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
             case TYPE_SOLVE: // 3、已解决
                 llJiejueLayout.setVisibility(View.VISIBLE);
                 llBottom.setVisibility(View.GONE);
-
-                tvRemark.setText("解决问题的简要描述");
+                cvisvView.tvTitle.setText("已解决现场照片/视频:");
+                cvisvView.tvDesc.setText("");
+                tvRemark.setText("解决问题的简要描述:");
                 etNumContent.setVisibility(View.GONE);
                 tvTitle.setTitleValue("解决反馈");
                 isMastNeed = false;
@@ -123,9 +124,11 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
         List<File> imagePushPath = cvisvView.getImageOrVideoPushPath(1);
         List<File> videoPushPath = cvisvView.getImageOrVideoPushPath(2);
 
-        if (imagePushPath.size() == 0 && videoPushPath.size() == 0) {
-            showToast("请选择照片或视频");
-            return;
+        if (mEventType!=3){
+            if (imagePushPath.size() == 0 && videoPushPath.size() == 0) {
+                showToast("请选择照片或视频");
+                return;
+            }
         }
 
         String editValue = etNumContent.getEditValue();

@@ -3,7 +3,6 @@
  */
 package com.baidu.idl.face.platform.ui;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -51,7 +50,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -451,7 +449,7 @@ public class FaceLivenessActivity extends AppCompatActivity implements
 //        } else if (i <= 100) {
 //            return LivenessTypeEnum.HeadLeftOrRight;
 //        }
-        return LivenessTypeEnum.Eye;
+        return LivenessTypeEnum.HeadDown;
     }
 
     @Override

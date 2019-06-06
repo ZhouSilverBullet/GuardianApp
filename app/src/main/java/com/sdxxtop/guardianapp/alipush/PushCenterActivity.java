@@ -59,6 +59,7 @@ public class PushCenterActivity extends AppCompatActivity {
         try {
             JSONObject jsonObject = new JSONObject(extraMap);
             if (!jsonObject.has("type")) {
+                finish();
                 return;
             }
             int type = jsonObject.optInt("type");
@@ -66,6 +67,7 @@ public class PushCenterActivity extends AppCompatActivity {
             switch (type) {
                 case 1:  // 事件
                     if (!jsonObject.has("event_id")) {
+                        finish();
                         return;
                     }
                     intent = new Intent(this, EventReportDetailActivity.class);
@@ -75,6 +77,7 @@ public class PushCenterActivity extends AppCompatActivity {
                     break;
                 case 2:  // 自行处理
                     if (!jsonObject.has("patrol_id")) {
+                        finish();
                         return;
                     }
                     intent = new Intent(this, PatrolAddDetailActivity.class);

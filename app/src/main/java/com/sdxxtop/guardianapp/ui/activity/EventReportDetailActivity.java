@@ -23,6 +23,7 @@ import com.sdxxtop.guardianapp.ui.pop.ERCheckResultWindow;
 import com.sdxxtop.guardianapp.ui.pop.SelectMapPopView;
 import com.sdxxtop.guardianapp.ui.widget.CustomProgressBar;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
+import com.sdxxtop.guardianapp.utils.Date2Util;
 import com.sdxxtop.guardianapp.utils.SkipMapUtils;
 
 import java.text.ParseException;
@@ -72,8 +73,6 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
     @BindView(R.id.paifa_recy)
     RecyclerView paifaRecy;
 
-    @BindView(R.id.v_line_2)
-    View vLine2;
     @BindView(R.id.btn_check_faile)
     Button btnCheckFaile;
     @BindView(R.id.btn_check_success)
@@ -106,6 +105,8 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
     TextView tvYanshouPassRemark;
     @BindView(R.id.popwindow_bg)
     View popwindow_bg;
+    @BindView(R.id.tv_location_desc)
+    TextView tvLocationDesc;
 
 
     //用于提交
@@ -242,7 +243,7 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
                 tvYanshouPassTime.setVisibility(View.GONE);
             } else {
                 tvYanshouPassTime.setVisibility(View.VISIBLE);
-                tvYanshouPassTime.setText("验收时间: " + handleTime(item.getOperate_time()));
+                tvYanshouPassTime.setText("验收时间: " + Date2Util.handleTime(item.getOperate_time()));
             }
             bandImgAndVideo(item.getImg(), item.getVideo(), yanshouPassRecy, yanshouPassAdapter);
         } else {
@@ -350,12 +351,18 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         //图片加载
         bandImgAndVideo(bean.img, bean.video, recyclerView, mAdapter);
         tvContentTitle.setText(bean.title);
-        tvTime.setText(bean.add_time);
+        tvTime.setText(Date2Util.handleTime(bean.add_time));
         handlePatrol(bean.patrol_type);
         tvHappen.setText(bean.place);
         tvReportPath.setText(bean.part_name);
         tvDescription.setText(new StringBuilder().append("事件简要描述：").append(bean.content));
-
+        //定位补充描述
+        if (TextUtils.isEmpty(bean.supplement)){
+            tvLocationDesc.setVisibility(View.GONE);
+        }else{
+            tvLocationDesc.setVisibility(View.VISIBLE);
+            tvLocationDesc.setText("定位补充描述: "+bean.supplement);
+        }
     }
 
     /*** 底部按钮显示隐藏********/
@@ -407,7 +414,7 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         //由于后台会发送1000-01-01 00：00：00 所以 加入了 status 的判断
         if (!TextUtils.isEmpty(finishTime1)) {
             tvJiejueTime.setVisibility(View.VISIBLE);
-            tvJiejueTime.setText("解决反馈时间："+handleTime(finishTime1));
+            tvJiejueTime.setText("解决反馈时间："+ Date2Util.handleTime(finishTime1));
         } else {
             tvJiejueTime.setVisibility(View.GONE);
         }
@@ -458,24 +465,6 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         } else {
             recyclerView.setVisibility(View.GONE);
         }
-    }
-
-
-    private String handleTime(String time) {
-        if (TextUtils.isEmpty(time)) {
-            return "";
-        }
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy.MM.dd");
-        try {
-            Date date = sdf.parse(time);
-            return sdf2.format(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return "";
     }
 
     private String handleShortTime(String time) {

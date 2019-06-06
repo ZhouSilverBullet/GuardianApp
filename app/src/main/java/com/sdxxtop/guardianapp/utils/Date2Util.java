@@ -968,4 +968,21 @@ public class Date2Util {
 
         return result;
     }
+
+    public static String handleTime(String time) {
+        if (TextUtils.isEmpty(time)) {
+            return "";
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date date = sdf.parse(time);
+            return sdf2.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+    }
 }

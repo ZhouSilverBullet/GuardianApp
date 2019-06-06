@@ -12,9 +12,7 @@ public class DialogUtil {
         if (activity == null || activity.isFinishing()) {
             return;
         }
-        if (sLoadingDialog == null) {
-            sLoadingDialog = new LoadingDialog(activity);
-        }
+        sLoadingDialog = new LoadingDialog(activity);
         sLoadingDialog.show();
     }
 
@@ -24,7 +22,7 @@ public class DialogUtil {
         }
     }
 
-    public void closeLoadingDialog() {
+    public void closeLoadingDialog(Activity activity) {
         if (sLoadingDialog != null) {
             sLoadingDialog.dismiss();
         }

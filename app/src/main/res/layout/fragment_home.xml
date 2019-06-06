@@ -18,6 +18,7 @@
         app:titleValue="罗庄区"/>
 
     <LinearLayout
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
@@ -37,7 +38,7 @@
             android:visibility="gone"
             android:id="@+id/civ_header"
             android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:elevation="5dp"
             android:src="@drawable/tou_xiang"/>
@@ -46,7 +47,7 @@
             android:layout_marginRight="5dp"
             android:id="@+id/ll_containor"
             android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_height="match_parent"
             android:gravity="center">
 
             <ImageView
@@ -63,7 +64,7 @@
         android:layout_width="match_parent"
         android:layout_height="140dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="15dp"/>
 
     <LinearLayout
@@ -134,7 +135,6 @@
             android:id="@+id/ll_event_discretion"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="@drawable/add_bg_right"
             android:gravity="center">

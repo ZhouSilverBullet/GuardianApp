@@ -34,7 +34,7 @@ public class EventReportPresenter extends RxPresenter<EventReportContract.IView>
 
 
     public void pushReport(String title, int pathType, int patrolType,
-                           String place, String longitude, String content, List<File> imagePushPath, List<File> videoPushPath) {
+                           String place, String longitude, String content, List<File> imagePushPath, List<File> videoPushPath,String positionDesc) {
         ImageAndVideoParams params = new ImageAndVideoParams();
         params.put("tl", title);
         params.put("pt", pathType);
@@ -42,6 +42,7 @@ public class EventReportPresenter extends RxPresenter<EventReportContract.IView>
         params.put("pl", place);
         params.put("lt", longitude);
         params.put("ct", content);
+        params.put("spt", positionDesc);
 
         params.addImagePathList("img[]", imagePushPath);
         if (videoPushPath!=null&&videoPushPath.size()>0){
@@ -68,7 +69,7 @@ public class EventReportPresenter extends RxPresenter<EventReportContract.IView>
 
     private void request(ImageAndVideoParams params) {
         ((BaseActivity)mView).showLoadingDialog();
-        Observable<RequestBean> observable = getEnvirApi().postEventAdd(params.getImgAndVideoData());
+        Observable<RequestBean> observable = getEnvirLongApi().postEventAdd(params.getImgAndVideoData());
         Disposable disposable = RxUtils.handleHttp(observable, new IRequestCallback<RequestBean>() {
             @Override
             public void onSuccess(RequestBean requestBean) {

@@ -57,7 +57,9 @@ public class CustomEventLayout extends LinearLayout {
             tabTextView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.onTabClick((Integer) tabTextView.getTag());
+                    if (mListener != null) {
+                        mListener.onTabClick((Integer) tabTextView.getTag());
+                    }
                 }
             });
             if (i == data.size() - 1) {

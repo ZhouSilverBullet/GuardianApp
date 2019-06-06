@@ -38,22 +38,6 @@ public class WuFaJieJueAdapter extends BaseQuickAdapter<EventReadIndexBean.Extra
         helper.setText(R.id.chuli_result,"无法解决原因："+item.getExtra());
     }
 
-    private String handleTime(String time) {
-        if (TextUtils.isEmpty(time)) {
-            return "";
-        }
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy.MM.dd");
-        try {
-            Date date = sdf.parse(time);
-            return sdf2.format(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return "";
-    }
     private String handleShortTime(String time) {
         if (TextUtils.isEmpty(time)) {
             return "";

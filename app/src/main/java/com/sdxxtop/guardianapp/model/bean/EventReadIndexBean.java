@@ -26,6 +26,7 @@ public class EventReadIndexBean {
     public int is_modify;
     public int is_finish;
     public String part_name;
+    public String supplement;
 
 
     public List<ExtraDateBean> extra_date;//事件的所有派发信息

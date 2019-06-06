@@ -1,17 +1,19 @@
 package com.sdxxtop.guardianapp.ui.adapter;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.model.bean.UnreadIndexAdapterBean;
 import com.sdxxtop.guardianapp.ui.activity.CenterMessage2Activity;
-import com.sdxxtop.guardianapp.utils.Date2Util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.Nullable;
@@ -24,21 +26,18 @@ import androidx.annotation.Nullable;
 public class CenterMessageAdapter extends BaseQuickAdapter<UnreadIndexAdapterBean, BaseViewHolder> {
 
     private int[] icons = new int[]{R.drawable.center_message_1, R.drawable.center_message_2, R.drawable.center_message_3};
-    private final String time;
 
     public CenterMessageAdapter(int layoutResId, @Nullable List<UnreadIndexAdapterBean> data) {
         super(layoutResId, data);
-        CalendarDay day = new CalendarDay();
-        time = "" + day.getYear() + "." + Date2Util.getZeroTime(day.getMonth() + 1) + "." + Date2Util.getZeroTime(day.getDay());
     }
 
     @Override
     protected void convert(BaseViewHolder helper, UnreadIndexAdapterBean item) {
         helper.setText(R.id.tv_title, item.getName());
         helper.setText(R.id.tv_desc, item.getTitle());
-        helper.setText(R.id.tv_time, time);
+        helper.setText(R.id.tv_time,handleMessageTime(item.getTime()));
 
-        switch (item.getType()){
+        switch (item.getType()) {
             case 1:
                 helper.setText(R.id.tv_status, "派");
                 helper.setBackgroundRes(R.id.tv_status, R.drawable.shape_green_bg);
@@ -53,7 +52,7 @@ public class CenterMessageAdapter extends BaseQuickAdapter<UnreadIndexAdapterBea
                 break;
         }
 
-        setMsgUnread(item.getCount(),helper.getView(R.id.tv_messgae_count));
+        setMsgUnread(item.getCount(), helper.getView(R.id.tv_messgae_count));
 
         helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,5 +88,22 @@ public class CenterMessageAdapter extends BaseQuickAdapter<UnreadIndexAdapterBea
             }
             redCountText.setText(unReadStr);
         }
+    }
+
+    public static String handleMessageTime(String time) {
+        if (TextUtils.isEmpty(time)) {
+            return "";
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy.MM.dd");
+        try {
+            Date date = sdf.parse(time);
+            return sdf2.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return "";
     }
 }

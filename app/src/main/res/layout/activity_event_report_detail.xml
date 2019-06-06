@@ -160,11 +160,23 @@
                             android:src="@drawable/data_right"/>
                     </RelativeLayout>
 
+                    <TextView
+                        android:id="@+id/tv_location_desc"
+                        style="@style/normal_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rl_happen"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="定位补充描述"
+                        android:visibility="gone"
+                        tools:visibility="visible"/>
+
                     <RelativeLayout
                         android:id="@+id/rl_report_path"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/rl_happen"
+                        android:layout_below="@id/tv_location_desc"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp">
 
@@ -197,11 +209,6 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/paifa_recy"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/yanshou_recy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
@@ -256,21 +263,20 @@
                         android:id="@+id/v_line_2"
                         style="@style/line_style"
                         android:layout_marginBottom="10dp"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         tools:visibility="visible"/>
                 </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/yanshou_recy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
                 <LinearLayout
                     android:id="@+id/ll_yanshou_pass"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-
-                    <View
-                        android:id="@+id/v_line"
-                        style="@style/line_style"
-                        android:layout_marginBottom="10dp"
-                        android:visibility="visible"/>
 
                     <TextView
                         android:id="@+id/tv_yanshou_pass_time"

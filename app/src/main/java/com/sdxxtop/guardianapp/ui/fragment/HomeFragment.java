@@ -103,7 +103,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
     @Override
     protected void initView() {
         super.initView();
-        statusBar(false);
+        statusBar(true);
 
         if (getArguments() != null) {
             isAdmin = getArguments().getBoolean("isAdmin");

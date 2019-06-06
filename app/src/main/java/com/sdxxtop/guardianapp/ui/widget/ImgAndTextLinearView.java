@@ -202,7 +202,7 @@ public class ImgAndTextLinearView extends LinearLayout {
         }
 
         public String getEndTime() {
-            return (TextUtils.isEmpty(endTime) || "1000-01-01".equals(endTime)) ? "" : "截止日期：" + endTime;
+            return (TextUtils.isEmpty(endTime) || "1000-01-01".equals(endTime)) ? "" : "截止日期：" + endTime.replace("-","/");
         }
 
         public void setEndTime(String endTime) {

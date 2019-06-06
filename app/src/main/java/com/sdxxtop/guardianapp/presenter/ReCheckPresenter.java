@@ -63,7 +63,7 @@ public class ReCheckPresenter extends RxPresenter<ReCheckContract.IView> impleme
 
     public void request(ImageAndVideoParams params){
         ((BaseActivity)mView).showLoadingDialog();
-        Observable<RequestBean> observable = getEnvirApi().postPatrolHandle(params.getImgAndVideoData());
+        Observable<RequestBean> observable = getEnvirLongApi().postPatrolHandle(params.getImgAndVideoData());
         Disposable disposable = RxUtils.handleHttp(observable, new IRequestCallback<RequestBean>() {
             @Override
             public void onSuccess(RequestBean bean) {

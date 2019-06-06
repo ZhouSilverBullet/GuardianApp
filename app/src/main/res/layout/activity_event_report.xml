@@ -92,6 +92,24 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="15dp"
                         android:layout_marginBottom="5dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:text="定位补充描述"
+                        android:textColor="@color/color_303030"
+                        android:textSize="17sp"/>
+
+                    <com.sdxxtop.guardianapp.ui.widget.NumberEditTextView
+                        android:id="@+id/net_content_position"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="5dp"/>
                 </LinearLayout>
 
                 <RelativeLayout

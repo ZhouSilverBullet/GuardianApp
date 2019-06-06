@@ -35,9 +35,9 @@ import butterknife.ButterKnife;
  */
 public class CustomVideoImgSelectView extends LinearLayout implements View.OnClickListener {
     @BindView(R.id.tv_title)
-    TextView tvTitle;
+    public TextView tvTitle;
     @BindView(R.id.tv_desc)
-    TextView tvDesc;
+    public TextView tvDesc;
     @BindView(R.id.rv)
     RecyclerView rv;
 
@@ -81,7 +81,35 @@ public class CustomVideoImgSelectView extends LinearLayout implements View.OnCli
                 }
             }
         });
+
         recycler.setAdapter(adapter);
+        adapter.setOnItemClickListener(new GridImageAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position, View v) {
+                if (allDataList.size() > 0) {
+                    LocalMedia media = allDataList.get(position);
+                    String pictureType = media.getPictureType();
+                    int mediaType = PictureMimeType.pictureToVideo(pictureType);
+                    switch (mediaType) {
+                        case 1:
+                            // 预览图片 可自定长按保存路径
+                            //PictureSelector.create(MainActivity.this).themeStyle(themeId).externalPicturePreview(position, "/custom_file", selectList);
+                            if (selectVideoList.size() > 0) {
+                                PictureSelector.create((Activity) getContext()).themeStyle(R.style.picture_default_style).openExternalPreview(position - 1,
+                                        selectImgList);
+                            } else {
+                                PictureSelector.create((Activity) getContext()).themeStyle(R.style.picture_default_style).openExternalPreview(position,
+                                        selectImgList);
+                            }
+                            break;
+                        case 2:
+                            // 预览视频
+                            PictureSelector.create((Activity) getContext()).externalPictureVideo(media.getPath());
+                            break;
+                    }
+                }
+            }
+        });
     }
 
     public void initBottomDiaolg() {
@@ -115,7 +143,7 @@ public class CustomVideoImgSelectView extends LinearLayout implements View.OnCli
                 // 进入相册 以下是例子：不需要的api可以不写
                 PictureSelector.create((Activity) getContext())
                         .openGallery(PictureMimeType.ofImage())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
-                        .maxSelectNum(selectVideoList.size()==0?9:8)// 最大图片选择数量
+                        .maxSelectNum(selectVideoList.size() == 0 ? 9 : 8)// 最大图片选择数量
                         .imageSpanCount(4)// 每行显示个数
                         .selectionMode(PictureConfig.MULTIPLE)// 多选 or 单选
                         .previewImage(true)// 是否可预览图片
@@ -140,9 +168,9 @@ public class CustomVideoImgSelectView extends LinearLayout implements View.OnCli
                         .isZoomAnim(true)// 图片列表点击 缩放效果 默认true
                         .synOrAsy(true)//同步true或异步false 压缩 默认同步
                         .minimumCompressSize(100)// 小于100kb的图片不压缩
-                        .videoQuality(0)
+                        .videoQuality(1)
                         .compress(true)
-                        .recordVideoSecond(20)
+                        .recordVideoSecond(30)
                         .selectionMedia(selectVideoList)
                         .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
                 break;
@@ -213,6 +241,10 @@ public class CustomVideoImgSelectView extends LinearLayout implements View.OnCli
         } else {
             return videoList;
         }
+    }
+
+    public void setTvDesc(String value) {
+        tvTitle.setText(value);
     }
 
 }

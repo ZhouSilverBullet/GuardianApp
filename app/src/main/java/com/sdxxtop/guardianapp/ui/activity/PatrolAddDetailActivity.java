@@ -122,7 +122,7 @@ public class PatrolAddDetailActivity extends BaseMvpActivity<PatrolAddDetailPres
 
         /*************** 复查 *****************/
         llCheckLayout.setVisibility(View.VISIBLE);
-        if (TextUtils.isEmpty(bean.getCheck_vedio()) && TextUtils.isEmpty(bean.getCheck_img())) {
+        if (TextUtils.isEmpty(bean.getCheck_video()) && TextUtils.isEmpty(bean.getCheck_img())) {
             recyclerviewCheck.setVisibility(View.GONE);
             tvImgVideoDesc.setVisibility(View.GONE);
             llCheckLayout.setVisibility(View.GONE);
@@ -133,8 +133,8 @@ public class PatrolAddDetailActivity extends BaseMvpActivity<PatrolAddDetailPres
         }
         //复查视频
         checkData.clear();
-        if (!TextUtils.isEmpty(bean.getCheck_vedio())) {
-            checkData.add(new MediaBean(bean.getCheck_vedio(),2));
+        if (!TextUtils.isEmpty(bean.getCheck_video())) {
+            checkData.add(new MediaBean(bean.getCheck_video(),2));
         }
         if (!TextUtils.isEmpty(bean.getCheck_img())){
             String[] split = bean.getCheck_img().split(",");

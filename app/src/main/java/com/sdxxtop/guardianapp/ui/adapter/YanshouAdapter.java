@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.model.bean.EventReadIndexBean;
 import com.sdxxtop.guardianapp.model.bean.MediaBean;
+import com.sdxxtop.guardianapp.utils.Date2Util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,7 +36,7 @@ public class YanshouAdapter extends BaseQuickAdapter<EventReadIndexBean.ExtraInf
         if (helper.getAdapterPosition()>=0){
             helper.setGone(R.id.v_line,false);
         }
-        helper.setText(R.id.tv_yanshou_time,"验收时间："+handleShortTime(item.getOperate_time()));
+        helper.setText(R.id.tv_yanshou_time,"验收时间："+ Date2Util.handleTime(item.getOperate_time()));
         helper.setText(R.id.tv_yanshou_result,"验收结果："+(item.getStatus()==4?"验收通过":"验收不通过"));
         helper.setText(R.id.tv_remark,(item.getStatus()==4?"备注: ":"验收不通过原因: ")+item.getExtra());
 
@@ -60,22 +61,6 @@ public class YanshouAdapter extends BaseQuickAdapter<EventReadIndexBean.ExtraInf
         }
     }
 
-    private String handleTime(String time) {
-        if (TextUtils.isEmpty(time)) {
-            return "";
-        }
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy.MM.dd");
-        try {
-            Date date = sdf.parse(time);
-            return sdf2.format(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return "";
-    }
     private String handleShortTime(String time) {
         if (TextUtils.isEmpty(time)) {
             return "";

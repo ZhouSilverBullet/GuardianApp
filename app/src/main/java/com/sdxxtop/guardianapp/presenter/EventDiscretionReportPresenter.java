@@ -91,7 +91,7 @@ public class EventDiscretionReportPresenter extends RxPresenter<EventDiscretionR
 
     public void request(ImageAndVideoParams params){
         ((BaseActivity)mView).showLoadingDialog();
-        Observable<RequestBean<PatrolAddBean>> observable = getEnvirApi().postPatrolAdd(params.getImgAndVideoData());
+        Observable<RequestBean<PatrolAddBean>> observable = getEnvirLongApi().postPatrolAdd(params.getImgAndVideoData());
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<PatrolAddBean>() {
             @Override
             public void onSuccess(PatrolAddBean bean) {

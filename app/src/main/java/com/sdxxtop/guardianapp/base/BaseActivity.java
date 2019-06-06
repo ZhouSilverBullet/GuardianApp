@@ -103,7 +103,7 @@ public abstract class BaseActivity extends SupportActivity {
 
     public void hideLoadingDialog() {
         if (mDialogUtil != null) {
-            mDialogUtil.closeLoadingDialog();
+            mDialogUtil.closeLoadingDialog(this);
         }
     }
 

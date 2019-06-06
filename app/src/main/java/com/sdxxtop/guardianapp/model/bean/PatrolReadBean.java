@@ -21,12 +21,20 @@ public class PatrolReadBean {
     private String rectify_date;
     /****** 复查 *******/
     private String check_img;
-    private String check_vedio;
+    private String check_video;
     private String check_content;
     private String check_date;
     private String check_time;
     private int status;
 
+
+    public String getCheck_video() {
+        return check_video;
+    }
+
+    public void setCheck_video(String check_video) {
+        this.check_video = check_video;
+    }
 
     public int getPatrol_id() {
         return patrol_id;
@@ -130,14 +138,6 @@ public class PatrolReadBean {
 
     public void setCheck_img(String check_img) {
         this.check_img = check_img;
-    }
-
-    public String getCheck_vedio() {
-        return check_vedio;
-    }
-
-    public void setCheck_vedio(String check_vedio) {
-        this.check_vedio = check_vedio;
     }
 
     public String getCheck_content() {

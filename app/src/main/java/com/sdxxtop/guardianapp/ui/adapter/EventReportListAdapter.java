@@ -1,6 +1,5 @@
 package com.sdxxtop.guardianapp.ui.adapter;
 
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -9,10 +8,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.model.bean.EventIndexBean;
 import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.sdxxtop.guardianapp.utils.Date2Util;
 
 public class EventReportListAdapter extends BaseQuickAdapter<EventIndexBean.EventBean, BaseViewHolder> {
     public EventReportListAdapter(int layoutResId) {
@@ -27,7 +23,7 @@ public class EventReportListAdapter extends BaseQuickAdapter<EventIndexBean.Even
         TextView tvStatus = helper.getView(R.id.tv_status);
 
         tvTitle.setText(item.getTitle());
-        tvTime.setText("上报时间：" + handleTime(item.getAdd_time()));
+        tvTime.setText("上报时间：" + Date2Util.handleTime(item.getAdd_time()));
         tvAddress.setText("事件地点：" + item.getPlace());
         String strStatus = "";
         switch (item.getStatus()) { //状态(1:带派发 2:待解决 3:待验收 4:验收通过 5:验收不通过)
@@ -56,22 +52,5 @@ public class EventReportListAdapter extends BaseQuickAdapter<EventIndexBean.Even
                 EventReportDetailActivity.startDetailActivity(v.getContext(), String.valueOf(item.getEvent_id()));
             }
         });
-    }
-
-    private String handleTime(String time) {
-        if (TextUtils.isEmpty(time)) {
-            return "";
-        }
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
-        try {
-            Date date = sdf.parse(time);
-            return sdf2.format(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return "";
     }
 }

@@ -60,7 +60,7 @@ public class ERDSecondPresenter extends RxPresenter<ERDSecondContract.IView> imp
 
     private void request(ImageAndVideoParams params) {
         ((BaseActivity)mView).showLoadingDialog();
-        Observable<RequestBean> observable = getEnvirApi().postEventFailed(params.getImgAndVideoData());
+        Observable<RequestBean> observable = getEnvirLongApi().postEventFailed(params.getImgAndVideoData());
         Disposable disposable = RxUtils.handleHttp(observable, new IRequestCallback<RequestBean>() {
             @Override
             public void onSuccess(RequestBean requestBean) {

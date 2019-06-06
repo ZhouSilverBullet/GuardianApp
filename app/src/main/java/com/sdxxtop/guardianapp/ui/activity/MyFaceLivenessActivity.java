@@ -1,19 +1,16 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
 import android.Manifest;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 
-import com.amap.api.location.AMapLocation;
 import com.baidu.idl.face.platform.ui.FaceLivenessActivity;
 import com.luck.picture.lib.permissions.RxPermissions;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.presenter.FaceLivenessPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.FaceLivenessContract;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
-import com.sdxxtop.guardianapp.utils.AMapFindLocation;
 import com.sdxxtop.guardianapp.utils.DialogUtil;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 
@@ -68,7 +65,7 @@ public class MyFaceLivenessActivity extends FaceLivenessActivity implements Face
 
     public void hideLoadingDialog() {
         if (mDialogUtil != null) {
-            mDialogUtil.closeLoadingDialog();
+            mDialogUtil.closeLoadingDialog(this);
         }
     }
 

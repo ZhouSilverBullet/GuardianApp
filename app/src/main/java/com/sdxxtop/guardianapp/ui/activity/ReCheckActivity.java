@@ -20,7 +20,7 @@ import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class ReCheckActivity extends BaseMvpActivity<ReCheckPresenter> implements ReCheckContract.IView{
+public class ReCheckActivity extends BaseMvpActivity<ReCheckPresenter> implements ReCheckContract.IView {
 
     @BindView(R.id.cvisv_view)
     CustomVideoImgSelectView cvisvView;
@@ -50,7 +50,7 @@ public class ReCheckActivity extends BaseMvpActivity<ReCheckPresenter> implement
     @Override
     protected void initView() {
         super.initView();
-
+        cvisvView.setTvDesc("现场已整改照片/视频");
         patrolId = getIntent().getIntExtra("patrol_id", 0);
 
         netContent.setEditHint("");
@@ -71,7 +71,7 @@ public class ReCheckActivity extends BaseMvpActivity<ReCheckPresenter> implement
             showToast("请填写事件描述内容");
             return;
         }
-        mPresenter.patrolHandle(editValue,imagePushPath, videoPushPath,patrolId);
+        mPresenter.patrolHandle(editValue, imagePushPath, videoPushPath, patrolId);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class ReCheckActivity extends BaseMvpActivity<ReCheckPresenter> implement
         super.onActivityResult(requestCode, resultCode, data);
         hideLoadingDialog();
         if (resultCode == RESULT_OK) {
-            cvisvView.callActivityResult(requestCode,resultCode,data);
+            cvisvView.callActivityResult(requestCode, resultCode, data);
         }
     }
 
