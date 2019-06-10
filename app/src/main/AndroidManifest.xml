@@ -99,6 +99,7 @@
         </activity>
         <activity
             android:name=".ui.activity.LoginActivity"
+            android:launchMode="singleTask"
             android:theme="@style/AppNormalTheme">
 
             <!-- <intent-filter> -->

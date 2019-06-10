@@ -34,7 +34,7 @@ public class WuFaJieJueAdapter extends BaseQuickAdapter<EventReadIndexBean.Extra
         if (helper.getAdapterPosition()>0){
             helper.setGone(R.id.v_line,false);
         }
-        helper.setText(R.id.chuli_time,"处理时间："+handleShortTime(item.getOperate_time()));
+        helper.setText(R.id.chuli_time,"处理时间："+item.getOperate_time());
         helper.setText(R.id.chuli_result,"无法解决原因："+item.getExtra());
     }
 

@@ -29,12 +29,16 @@ public class SplashPresenter extends RxPresenter<SplashContract.IView> implement
             @Override
             public void onSuccess(AutoLoginBean autoLoginBean) {
                 handleData(autoLoginBean);
-                mView.autoSuccess(autoLoginBean);
+                if (mView != null) {
+                    mView.autoSuccess(autoLoginBean);
+                }
             }
 
             @Override
             public void onFailure(int code, String error) {
-                mView.showError(error);
+                if (mView != null) {
+                    mView.showError(error);
+                }
             }
         });
         addSubscribe(disposable);

@@ -23,6 +23,9 @@ public class DialogUtil {
     }
 
     public void closeLoadingDialog(Activity activity) {
+        if (activity == null || activity.isFinishing()) {
+            return;
+        }
         if (sLoadingDialog != null) {
             sLoadingDialog.dismiss();
         }
