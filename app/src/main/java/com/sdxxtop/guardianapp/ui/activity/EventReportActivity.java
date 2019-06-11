@@ -12,9 +12,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.luck.picture.lib.PictureSelector;
-import com.luck.picture.lib.config.PictureConfig;
-import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
@@ -43,7 +40,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> implements EventReportRecyclerAdapter.HorListener, EventReportContract.IView {
+public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> implements EventReportContract.IView {
     @BindView(R.id.tv_title)
     TitleView mTitleView;
     @BindView(R.id.btn_push)
@@ -126,6 +123,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
                 taevTitle.getEditText().setText(item.getKeyword());
                 taevTitle.getEditText().setSelection(item.getKeyword().length());
                 llSearchDataLayout.setVisibility(View.GONE);
+//                mPresenter.searchTitle(item.getKeyword());
             }
         });
     }
@@ -158,11 +156,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (isSearchEnable) {
-                    mPresenter.searchTitle(s.toString().trim());
-                } else {
-                    isSearchEnable = true;
-                }
+                mPresenter.searchTitle(s.toString().trim());
             }
 
             @Override
@@ -251,7 +245,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
             return;
         }
 
-        mPresenter.pushReport(title, pathType, queryType, place, lonLng, editValue, imagePushPath, vedioPushPath,netContentPosition.getEditValue());
+        mPresenter.pushReport(title, pathType, queryType, place, lonLng, editValue, imagePushPath, vedioPushPath, netContentPosition.getEditValue());
     }
 
     @Override
@@ -276,94 +270,19 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
      */
     @Override
     public void showSearchData(EventSearchTitleBean bean) {
-        if (bean.getKey_info() != null && bean.getKey_info().size() > 0) {
-            llSearchDataLayout.setVisibility(View.VISIBLE);
-            adapter.replaceData(bean.getKey_info());
-        } else {
-            llSearchDataLayout.setVisibility(View.GONE);
+        if (isSearchEnable) {   // 点击列表item不展示联想
+            if (bean.getKey_info() != null && bean.getKey_info().size() > 0) {
+                llSearchDataLayout.setVisibility(View.VISIBLE);
+                adapter.replaceData(bean.getKey_info());
+            } else {
+                llSearchDataLayout.setVisibility(View.GONE);
+            }
+        }else{
+            isSearchEnable = true;
         }
 
         if (bean.getPart_info() != null && bean.getPart_info().size() > 0) {
             mPartList = bean.getPart_info();
-        }
-    }
-
-    protected void setPhotoRecycler(RecyclerView recycler) {
-        recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        mAdapter = new EventReportRecyclerAdapter(R.layout.item_event_report_recycler);
-        recycler.setAdapter(mAdapter);
-        LocalMedia localMedia = new LocalMedia();
-//        localMedia.setDuration(-1);
-//        localMedia.setCompressPath("");
-//        localMedia.setPath("");
-//        localMediaList.add(localMedia);
-//        localMedia = new LocalMedia();
-        localMedia.setDuration(-100);
-        localMediaList.add(localMedia);
-        mAdapter.addData(localMediaList);
-        mAdapter.setListener(this);
-    }
-
-    @Override
-    public void click() {
-        goGallery();
-    }
-
-    public void removeLocalListTemp() {
-        for (int i = 0; i < localMediaList.size(); i++) {
-            if (localMediaList.get(i).getDuration() == -100) {
-                localMediaList.remove(localMediaList.get(i));
-                break;
-            }
-        }
-    }
-
-    /**
-     * 提交的时候不进行清除本身的localMediaList数据
-     *
-     * @return
-     */
-    public List<LocalMedia> getRemoveLocalListTemp() {
-        List<LocalMedia> tempLocalMedia = new ArrayList<>();
-        for (int i = 0; i < localMediaList.size(); i++) {
-            if (localMediaList.get(i).getDuration() != -100) {
-                tempLocalMedia.add(localMediaList.get(i));
-            }
-        }
-        return tempLocalMedia;
-    }
-
-    public void goGallery() {
-        removeLocalListTemp();
-
-        PictureSelector.create(this)
-                .openGallery(PictureMimeType.ofImage())
-                .compress(true)
-                .selectionMedia(localMediaList)
-                .maxSelectNum(9).forResult(PictureConfig.CHOOSE_REQUEST);
-    }
-
-    @Override
-    public void delete(LocalMedia item) {
-        localMediaList.remove(item);
-        for (int i = 0; i < localMediaList.size(); i++) {
-            LocalMedia media = localMediaList.get(i);
-            if (media.getDuration() == -100) {
-                break;
-            }
-            if (i == localMediaList.size() - 1) {
-                localMediaList.add(getTemp());
-            }
-        }
-
-        //删除也是重新刷新数据
-        //本来想定义 onDelete回调，发现也是 adapter.replaceData(),所以也用onResult 了
-        onResult(localMediaList);
-    }
-
-    protected void onResult(List<LocalMedia> selectList) {
-        if (mAdapter != null) {
-            mAdapter.replaceData(selectList);
         }
     }
 
@@ -381,29 +300,6 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
         }
     }
 
-    protected LocalMedia getTemp() {
-        LocalMedia localMedia = new LocalMedia();
-        localMedia.setDuration(-100);
-        return localMedia;
-    }
-
-    //图片上传
-    protected List<File> getImagePushPath() {
-
-        List<LocalMedia> localListTemp = getRemoveLocalListTemp();
-        //设置相片
-        List<File> imgList = new ArrayList<>();
-        if (localListTemp != null && localListTemp.size() > 0) {
-            for (int i = 0; i < localListTemp.size(); i++) {
-                String path = localListTemp.get(i).getPath();
-                if (TextUtils.isEmpty(path)) {
-                    path = localListTemp.get(i).getCompressPath();
-                }
-                imgList.add(new File(path));
-            }
-        }
-        return imgList;
-    }
 
     @OnClick({R.id.tatv_query, R.id.tatv_happen, R.id.tatv_report_path})
     public void onViewClicked(View view) {

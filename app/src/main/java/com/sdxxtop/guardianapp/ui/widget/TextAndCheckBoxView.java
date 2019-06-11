@@ -72,7 +72,7 @@ public class TextAndCheckBoxView extends LinearLayout {
                 break;
         }
         if (mListener!=null){
-            mListener.refreshStatus();
+            mListener.refreshStatus(ckYes.isChecked());
         }
     }
 
@@ -81,7 +81,7 @@ public class TextAndCheckBoxView extends LinearLayout {
     }
 
     public interface OnCheckBoxClick{
-        void refreshStatus();
+        void refreshStatus(boolean isShow);
     }
     private OnCheckBoxClick mListener;
     public void setOnCheckBoxClick(OnCheckBoxClick listener){

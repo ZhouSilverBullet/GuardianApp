@@ -35,7 +35,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscretionReportPresenter> implements EventDiscretionReportContract.IView{
+public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscretionReportPresenter> implements EventDiscretionReportContract.IView {
 
     @BindView(R.id.cvisv_view)
     CustomVideoImgSelectView cvisvView;
@@ -93,7 +93,8 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
         netContent.setMaxLength(200);
         tacbvView.setOnCheckBoxClick(new TextAndCheckBoxView.OnCheckBoxClick() {
             @Override
-            public void refreshStatus() {
+            public void refreshStatus(boolean isShow) {
+                tatvEndTime.setVisibility(isShow?View.VISIBLE:View.GONE);
                 tatvEndTime.getTextRightText().setText("");
                 tatvEndTime.getTextRightText().setHint("请选择整改时效");
             }
@@ -232,7 +233,7 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
         super.onActivityResult(requestCode, resultCode, data);
         hideLoadingDialog();
         if (resultCode == RESULT_OK) {
-            cvisvView.callActivityResult(requestCode,resultCode,data);
+            cvisvView.callActivityResult(requestCode, resultCode, data);
         } else if (requestCode == 100 && resultCode == 10087 && data != null) {
             String address = data.getStringExtra("ad");
             String lt = data.getStringExtra("lt");

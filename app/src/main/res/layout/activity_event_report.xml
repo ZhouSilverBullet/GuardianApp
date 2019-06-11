@@ -3,6 +3,7 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              xmlns:tools="http://schemas.android.com/tools"
               android:background="@drawable/half_green_bg"
               android:clipToPadding="true"
               android:fitsSystemWindows="true"
@@ -105,7 +106,7 @@
                     <com.sdxxtop.guardianapp.ui.widget.NumberEditTextView
                         android:id="@+id/net_content_position"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="100dp"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="15dp"
@@ -116,15 +117,17 @@
                     android:id="@+id/ll_search_data_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    tools:visibility="visible"
                     android:visibility="gone">
 
                     <TextView
                         android:id="@+id/tv_dismiss"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="500dp"
                         android:background="#99000000"/>
 
-                    <androidx.recyclerview.widget.RecyclerView
+                    <com.sdxxtop.guardianapp.ui.widget.MaxHeightRecyclerView
+                        app:maxHeight="350dp"
                         android:id="@+id/title_recycler"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>

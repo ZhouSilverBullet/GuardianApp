@@ -85,7 +85,14 @@
                         android:layout_marginRight="15dp"
                         android:layout_marginBottom="5dp"/>
 
+                    <com.sdxxtop.guardianapp.ui.widget.TextAndCheckBoxView
+                        android:id="@+id/tacbv_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
                     <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+                        tools:visibility="visible"
+                        android:visibility="gone"
                         android:id="@+id/tatv_end_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -93,14 +100,10 @@
                         app:tatv_text_right_hint_value="请选择整改时效"
                         app:tatv_text_view="整改时限"/>
 
-                    <com.sdxxtop.guardianapp.ui.widget.TextAndCheckBoxView
-                        android:id="@+id/tacbv_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
                 </LinearLayout>
 
                 <RelativeLayout
+                    tools:visibility="visible"
                     android:id="@+id/ll_search_data_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

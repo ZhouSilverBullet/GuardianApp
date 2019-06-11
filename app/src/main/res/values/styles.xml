@@ -168,4 +168,8 @@
         <item name="android:textColor">@color/blue</item>
     </style>
 
+    <declare-styleable name="MaxHeightRecyclerView">
+        <attr name="maxHeight" format="dimension" />
+    </declare-styleable>
+
 </resources>
