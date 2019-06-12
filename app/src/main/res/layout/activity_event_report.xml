@@ -55,6 +55,13 @@
                     android:orientation="vertical">
 
                     <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+                        android:id="@+id/tatv_report_path"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:tatv_text_right_hint_value="请点击选择"
+                        app:tatv_text_view="主管部门"/>
+
+                    <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
                         android:id="@+id/tatv_query"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -67,13 +74,6 @@
                         android:layout_height="wrap_content"
                         app:tatv_text_right_hint_value="请点击选择"
                         app:tatv_text_view="发生地点"/>
-
-                    <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
-                        android:id="@+id/tatv_report_path"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:tatv_text_right_hint_value="请点击选择"
-                        app:tatv_text_view="主管部门"/>
 
                     <TextView
                         android:layout_width="wrap_content"

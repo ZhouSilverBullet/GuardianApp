@@ -15,6 +15,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
+import com.sdxxtop.guardianapp.model.bean.EventModeBean;
 import com.sdxxtop.guardianapp.model.bean.EventSearchTitleBean;
 import com.sdxxtop.guardianapp.model.bean.ShowPartBean;
 import com.sdxxtop.guardianapp.presenter.EventReportPresenter;
@@ -93,15 +94,6 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 
 //        setPhotoRecycler(mRecyclerView);
 
-        if (queryData == null) {
-            queryData = new ArrayList<>();
-            queryData.add("巡检");
-            queryData.add("化验");
-            queryData.add("感应器报警");
-            queryData.add("他人反应");
-        }
-        tatvQuery.getTextRightText().setText(queryData.get(0));
-
         netContentPosition.setMaxLength(60);
 
         InputFilter[] filters = {new InputFilter.LengthFilter(10)};
@@ -156,6 +148,12 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                TextView zhuguanbumen = tatvReportPath.getTextRightText();
+                zhuguanbumen.setText("");
+                zhuguanbumen.setHint("请点击选择");
+                TextView faxianfashi = tatvQuery.getTextRightText();
+                faxianfashi.setText("");
+                faxianfashi.setHint("请点击选择");
                 mPresenter.searchTitle(s.toString().trim());
             }
 
@@ -215,6 +213,13 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
             return;
         }
 
+        //主管部门
+        String pathName = tatvReportPath.getRightTVString();
+        if (reportPathData == null || TextUtils.isEmpty(pathName) || mSelectPartId == 0) {
+            showToast("请选择主管部门");
+            return;
+        }
+
         //发现方式
         String queryName = tatvQuery.getRightTVString();
         if (queryData == null || TextUtils.isEmpty(queryName)) {
@@ -231,12 +236,6 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 
         int queryType = queryData.indexOf(queryName) + 1;
 
-        //主管部门
-        String pathName = tatvReportPath.getRightTVString();
-        if (reportPathData == null || TextUtils.isEmpty(pathName) || mSelectPartId == 0) {
-            showToast("请选择主管部门");
-            return;
-        }
         int pathType = mSelectPartId;
 
         String editValue = netContent.getEditValue();
@@ -277,13 +276,42 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
             } else {
                 llSearchDataLayout.setVisibility(View.GONE);
             }
-        }else{
+        } else {
             isSearchEnable = true;
         }
 
         if (bean.getPart_info() != null && bean.getPart_info().size() > 0) {
             mPartList = bean.getPart_info();
         }
+    }
+
+    /**
+     * 展示根据部门id搜索出来的发现方式
+     *
+     * @param bean
+     */
+    @Override
+    public void showQuerySelect(EventModeBean bean) {
+        queryData.clear();
+        if (bean.getMode_data() != null && bean.getMode_data().size() > 0) {
+            for (int i = 0; i < bean.getMode_data().size(); i++) {
+                queryData.add(bean.getMode_data().get(i).getName());
+            }
+            if (singleStyleView == null) {
+                singleStyleView = new SingleStyleView(this, queryData);
+                singleStyleView.setOnItemSelectLintener(new SingleStyleView.OnItemSelectLintener() {
+                    @Override
+                    public void onItemSelect(String result) {
+                        tatvQuery.getTextRightText().setText(result);
+                    }
+                });
+            }
+            singleStyleView.replaceData(queryData);
+            singleStyleView.show();
+        } else {
+            showToast("暂无数据");
+        }
+
     }
 
     @Override
@@ -303,15 +331,36 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 
     @OnClick({R.id.tatv_query, R.id.tatv_happen, R.id.tatv_report_path})
     public void onViewClicked(View view) {
+
+        String title = taevTitle.getEditText().getText().toString().trim();
         hideKeyboard(btnPush);
+
         switch (view.getId()) {
             case R.id.tatv_query:
-                selectQuery();
+                //事件标题
+                if (TextUtils.isEmpty(title)) {
+                    showToast("请填写事件标题");
+                    return;
+                }
+                //主管部门
+                String pathName = tatvReportPath.getRightTVString();
+                if (reportPathData == null || TextUtils.isEmpty(pathName) || mSelectPartId == 0) {
+                    showToast("请选择主管部门");
+                    return;
+                }
+
+                //发现方式
+                mPresenter.eventMode(mSelectPartId);
                 break;
             case R.id.tatv_happen:
                 selectHappen();
                 break;
-            case R.id.tatv_report_path:
+            case R.id.tatv_report_path:  // 主管部门
+                //事件标题
+                if (TextUtils.isEmpty(title)) {
+                    showToast("请填写事件标题");
+                    return;
+                }
                 selectReportPath();
                 break;
             default:
@@ -319,9 +368,8 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
         }
     }
 
-
     private SingleStyleView singleReportPathDataView;
-    private List<String> queryData;
+    private List<String> queryData = new ArrayList<>();
     private List<String> reportPathData = new ArrayList<>();
 
     private void selectReportPath() {
@@ -345,10 +393,6 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
         showLoadingDialog();
         Intent intent = new Intent(this, AmapPoiActivity.class);
         startActivityForResult(intent, 100);
-    }
-
-    private void selectQuery() {
-        showQuerySelect(queryData);
     }
 
 
@@ -376,19 +420,6 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 
         singleReportPathDataView.replaceData(queryData);
         singleReportPathDataView.show();
-    }
-
-    private void showQuerySelect(List<String> queryData) {
-        if (singleStyleView == null) {
-            singleStyleView = new SingleStyleView(this, queryData);
-            singleStyleView.setOnItemSelectLintener(new SingleStyleView.OnItemSelectLintener() {
-                @Override
-                public void onItemSelect(String result) {
-                    tatvQuery.getTextRightText().setText(result);
-                }
-            });
-        }
-        singleStyleView.show();
     }
 
     @Override

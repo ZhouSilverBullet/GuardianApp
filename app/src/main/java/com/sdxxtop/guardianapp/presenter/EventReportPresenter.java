@@ -5,6 +5,7 @@ import android.app.Activity;
 import com.google.gson.internal.LinkedTreeMap;
 import com.sdxxtop.guardianapp.base.BaseActivity;
 import com.sdxxtop.guardianapp.base.RxPresenter;
+import com.sdxxtop.guardianapp.model.bean.EventModeBean;
 import com.sdxxtop.guardianapp.model.bean.EventSearchTitleBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
 import com.sdxxtop.guardianapp.model.bean.ShowPartBean;
@@ -124,6 +125,24 @@ public class EventReportPresenter extends RxPresenter<EventReportContract.IView>
             @Override
             public void onFailure(int code, String error) {
 //                UIUtils.showToast(error);
+            }
+        });
+        addSubscribe(disposable);
+    }
+
+    public void eventMode(int mSelectPartId) {
+        Params params = new Params();
+        params.put("pt", mSelectPartId);
+        Observable<RequestBean<EventModeBean>> observable = getEnvirApi().postEventMode(params.getData());
+        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EventModeBean>() {
+            @Override
+            public void onSuccess(EventModeBean bean) {
+                mView.showQuerySelect(bean);
+            }
+
+            @Override
+            public void onFailure(int code, String error) {
+                UIUtils.showToast(error);
             }
         });
         addSubscribe(disposable);

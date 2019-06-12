@@ -8,10 +8,10 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.sdxxtop.guardianapp.utils.DialogUtil;
 import com.sdxxtop.guardianapp.utils.StatusBarUtil;
-import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import androidx.annotation.Nullable;
 import butterknife.ButterKnife;
@@ -87,11 +87,21 @@ public abstract class BaseActivity extends SupportActivity {
         }
     }
 
-    public void showToast(String msg) {
+//    public void showToast(String msg) {
+//        if (TextUtils.isEmpty(msg)) {
+//            return;
+//        }
+//        UIUtils.showToast(msg);
+//    }
+
+    public void showToast(String msg){
         if (TextUtils.isEmpty(msg)) {
             return;
         }
-        UIUtils.showToast(msg);
+//        Toast.makeText(context,msg,Toast.LENGTH_LONG).show();
+        Toast toast=Toast.makeText(this,msg,Toast.LENGTH_SHORT);
+        toast.setText(msg);
+        toast.show();
     }
 
     public void showLoadingDialog() {
