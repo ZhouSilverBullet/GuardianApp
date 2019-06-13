@@ -72,7 +72,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import io.reactivex.functions.Consumer;
 
-public class AmapPoiActivity extends BaseActivity implements PoiSearch.OnPoiSearchListener, LocationSource, AMapLocationListener, GeocodeSearch.OnGeocodeSearchListener {
+public class AmapPoiActivity extends BaseActivity implements PoiSearch.OnPoiSearchListener, LocationSource, AMapLocationListener,
+        GeocodeSearch.OnGeocodeSearchListener {
     @BindView(R.id.dialog_search_back)
     ImageButton backBtn;
     @BindView(R.id.dialog_serach_btn_search)
@@ -544,7 +545,7 @@ public class AmapPoiActivity extends BaseActivity implements PoiSearch.OnPoiSear
 
     @Override
     public void onPoiItemSearched(PoiItem poiItem, int errCode) {
-
+        Log.e("onPoiItemSearched", "go");
     }
 
     @Override
@@ -626,6 +627,7 @@ public class AmapPoiActivity extends BaseActivity implements PoiSearch.OnPoiSear
 //                searchResultAdapter.notifyDataSetChanged();
             } else {
                 Toast.makeText(this, "定位失败", Toast.LENGTH_SHORT).show();
+                hideLoadingDialog();
             }
         }
     }
@@ -696,7 +698,6 @@ public class AmapPoiActivity extends BaseActivity implements PoiSearch.OnPoiSear
                 handleFirstItem(tempLocationBean);
                 searchAdapter.replaceData(new ArrayList<LocationBean>());
                 searchAdapter2.replaceData(datas);
-
                 hideLoadingDialog();
 //                //第一次加载这个firstItem
 //                if (firstItem.getLatLonPoint() != null && TextUtils.isEmpty(searchTitle1.getText().toString())) {
@@ -828,6 +829,9 @@ public class AmapPoiActivity extends BaseActivity implements PoiSearch.OnPoiSear
 
     class SearchAdapter extends BaseQuickAdapter<LocationBean, BaseViewHolder> {
 
+        double latitude_1;
+        double longitude_1;
+
         public SearchAdapter(int layoutResId) {
             super(layoutResId);
         }
@@ -844,10 +848,17 @@ public class AmapPoiActivity extends BaseActivity implements PoiSearch.OnPoiSear
             helper.getConvertView().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    showLoadingDialog();
                     double latitude = item.latitude;
                     double longitude = item.longitude;
+                    if (latitude_1 == latitude && longitude_1 == longitude) {
+                        showToast("已定位到选中位置");
+                        return;
+                    } else {
+                        showLoadingDialog();
+                        latitude_1 = latitude;
+                        longitude_1 = longitude;
+                    }
+
 
                     searchLatlonPoint = new LatLonPoint(latitude, longitude);
                     LatLng curLatlng = new LatLng(latitude, longitude);
