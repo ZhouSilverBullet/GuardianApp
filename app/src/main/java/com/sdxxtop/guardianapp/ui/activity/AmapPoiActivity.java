@@ -829,8 +829,8 @@ public class AmapPoiActivity extends BaseActivity implements PoiSearch.OnPoiSear
 
     class SearchAdapter extends BaseQuickAdapter<LocationBean, BaseViewHolder> {
 
-        double latitude_1;
-        double longitude_1;
+        double latitudeTemp;
+        double longitudeTemp;
 
         public SearchAdapter(int layoutResId) {
             super(layoutResId);
@@ -850,13 +850,13 @@ public class AmapPoiActivity extends BaseActivity implements PoiSearch.OnPoiSear
                 public void onClick(View v) {
                     double latitude = item.latitude;
                     double longitude = item.longitude;
-                    if (latitude_1 == latitude && longitude_1 == longitude) {
+                    if (latitudeTemp == latitude && longitudeTemp == longitude) {
                         showToast("已定位到选中位置");
                         return;
                     } else {
                         showLoadingDialog();
-                        latitude_1 = latitude;
-                        longitude_1 = longitude;
+                        latitudeTemp = latitude;
+                        longitudeTemp = longitude;
                     }
 
 
