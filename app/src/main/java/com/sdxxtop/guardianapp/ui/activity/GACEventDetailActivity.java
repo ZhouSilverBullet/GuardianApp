@@ -89,8 +89,9 @@ public class GACEventDetailActivity extends BaseMvpActivity<GACEPresenter> imple
                     @Override
                     public void onPopItemClick(int partTypeid, String partName) {
                         casvLeft.tvArea.setText(partName);
+                        casvRight.tvArea.setText("所有企业");
                         part_typeid = partTypeid;
-                        mPresenter.enterpriseCompany(part_typeid, parent_id);
+                        mPresenter.enterpriseCompany(part_typeid, 0);
                     }
                 });
             }
