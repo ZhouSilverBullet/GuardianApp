@@ -47,6 +47,7 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     TextView tvPlace;
     @BindView(R.id.civ_header)
     CircleImageView civHeader;
+    /***权限***/
     @BindView(R.id.company_report)
     TextAndTextView companyReport;
     @BindView(R.id.grid_member_report)
@@ -55,6 +56,11 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     TextAndTextView eventReport;
     @BindView(R.id.message_center)
     TextAndTextView messageCenter;
+    @BindView(R.id.tatv_message)
+    TextAndTextView tatvMessage;
+    @BindView(R.id.tatv_report)
+    TextAndTextView tatvReport;
+
 
     private boolean isAdmin;
 
@@ -169,15 +175,22 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
                 break;
         }
 
-        if (indexBean.getPosition() == 3 || indexBean.getPosition() == 4) {
-            companyReport.setVisibility(View.GONE);
-            gridMemberReport.setVisibility(View.VISIBLE);
-            eventReport.setVisibility(View.VISIBLE);
-        } else {
-            companyReport.setVisibility(View.GONE);
-            gridMemberReport.setVisibility(View.GONE);
-            eventReport.setVisibility(View.GONE);
-        }
+//        if (indexBean.getPosition() == 3 || indexBean.getPosition() == 4) {
+//            companyReport.setVisibility(View.GONE);
+//            gridMemberReport.setVisibility(View.VISIBLE);
+//            eventReport.setVisibility(View.VISIBLE);
+//        } else {
+//            companyReport.setVisibility(View.GONE);
+//            gridMemberReport.setVisibility(View.GONE);
+//            eventReport.setVisibility(View.GONE);
+//        }
+
+        tatvReport.setVisibility(indexBean.getIs_report() == 1 ? View.VISIBLE : View.GONE);
+        eventReport.setVisibility(indexBean.getIs_event() == 1 ? View.VISIBLE : View.GONE);
+        gridMemberReport.setVisibility(indexBean.getIs_guider() == 1 ? View.VISIBLE : View.GONE);
+        companyReport.setVisibility(indexBean.getIs_business() == 1 ? View.VISIBLE : View.GONE);
+        tatvMessage.setVisibility(indexBean.getIs_part() == 1 ? View.VISIBLE : View.GONE);
+
         messageCenter.setMessageCount(indexBean.getUnread_count());
     }
 
@@ -194,7 +207,7 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
                         .showCropGrid(false)
                         .circleDimmedLayer(true)
                         .compress(true).selectionMode(PictureConfig.SINGLE).maxSelectNum(1).forResult(IMAGE_STORE);
-                 break;
+                break;
             case R.id.tatv_message:
                 new QuitGroupPopView(getActivity(), mRootView, mPartName, partUnit);
                 break;

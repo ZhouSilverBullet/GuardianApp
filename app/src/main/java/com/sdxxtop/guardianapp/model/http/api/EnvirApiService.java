@@ -1,5 +1,6 @@
 package com.sdxxtop.guardianapp.model.http.api;
 
+import com.sdxxtop.guardianapp.model.bean.ArticleIndexBean;
 import com.sdxxtop.guardianapp.model.bean.AutoLoginBean;
 import com.sdxxtop.guardianapp.model.bean.ContactIndexBean;
 import com.sdxxtop.guardianapp.model.bean.EnterpriseCompanyBean;
@@ -55,6 +56,10 @@ public interface EnvirApiService {
     @FormUrlEncoded
     @POST("app/init")
     Observable<RequestBean<InitBean>> postAppInit(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("article/index")
+    Observable<RequestBean<ArticleIndexBean>> postArticleIndex(@Field("data") String data);
 
     @FormUrlEncoded
     @POST("login/sendCode")

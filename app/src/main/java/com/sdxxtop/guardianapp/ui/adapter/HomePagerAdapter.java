@@ -32,4 +32,14 @@ public class HomePagerAdapter extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
         return mTitleList.get(position);
     }
+
+    public int getItemPosition(Object object) {
+        return POSITION_UNCHANGED;
+    }
+
+    public void replaceData(List<String> titleList, List<Fragment> fragmentList){
+        mTitleList = titleList;
+        mFragmentList = fragmentList;
+        notifyDataSetChanged();
+    }
 }

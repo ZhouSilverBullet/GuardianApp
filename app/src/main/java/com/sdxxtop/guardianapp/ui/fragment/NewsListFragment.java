@@ -129,4 +129,10 @@ public class NewsListFragment extends BaseMvpFragment<NewsListFragmentPresenter>
     public void showError(String error) {
         closeLoadingDialog();
     }
+
+    @Override
+    public void setIsFirstLoading(boolean isFirstLoading) {
+        super.setIsFirstLoading(isFirstLoading);
+        this.isFirstLoading = isFirstLoading;
+    }
 }

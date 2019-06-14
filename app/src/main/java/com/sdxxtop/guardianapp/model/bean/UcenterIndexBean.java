@@ -21,6 +21,53 @@ public class UcenterIndexBean {
     private int type;
     private int unread_count;
 
+    /***** 权限 *******/
+    private int is_report;
+    private int is_event;
+    private int is_guider;
+    private int is_business;
+    private int is_part;
+
+    public int getIs_report() {
+        return is_report;
+    }
+
+    public void setIs_report(int is_report) {
+        this.is_report = is_report;
+    }
+
+    public int getIs_event() {
+        return is_event;
+    }
+
+    public void setIs_event(int is_event) {
+        this.is_event = is_event;
+    }
+
+    public int getIs_guider() {
+        return is_guider;
+    }
+
+    public void setIs_guider(int is_guider) {
+        this.is_guider = is_guider;
+    }
+
+    public int getIs_business() {
+        return is_business;
+    }
+
+    public void setIs_business(int is_business) {
+        this.is_business = is_business;
+    }
+
+    public int getIs_part() {
+        return is_part;
+    }
+
+    public void setIs_part(int is_part) {
+        this.is_part = is_part;
+    }
+
     public int getUnread_count() {
         return unread_count;
     }

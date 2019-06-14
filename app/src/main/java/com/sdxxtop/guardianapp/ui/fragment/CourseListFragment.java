@@ -110,7 +110,9 @@ public class CourseListFragment extends BaseMvpFragment<CourseListPresenter> imp
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             String namePath = isCourse ? "course" : "exam";
-            mPresenter.loadData(namePath);
+            if (mPresenter!=null){
+                mPresenter.loadData(namePath);
+            }
         }
     }
 
@@ -241,6 +243,10 @@ public class CourseListFragment extends BaseMvpFragment<CourseListPresenter> imp
         }
     }
 
+    @Override
+    public void setIsFirstLoading(boolean isFirstLoading) {
+        super.setIsFirstLoading(isFirstLoading);
+    }
 //    private void handleData(List<BaseCourseDataBean> list,) {
 //        list.add(new CourseHeaderBean());
 //        list.add(new CourseCellBean());

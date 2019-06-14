@@ -16,6 +16,7 @@ import com.luck.picture.lib.permissions.RxPermissions;
 import com.orhanobut.logger.Logger;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
+import com.sdxxtop.guardianapp.model.bean.ArticleIndexBean;
 import com.sdxxtop.guardianapp.model.bean.InitBean;
 import com.sdxxtop.guardianapp.presenter.HomePresenter;
 import com.sdxxtop.guardianapp.presenter.contract.HomeContract;
@@ -26,6 +27,7 @@ import com.sdxxtop.guardianapp.ui.fragment.LearningFragment;
 import com.sdxxtop.guardianapp.ui.fragment.MineFragment;
 import com.sdxxtop.guardianapp.utils.ReflectUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -117,11 +119,42 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
 //                if (position == 2) {
 //                    return false;
 //                }
-                itemSelectAnimator(position, wasSelected);
-                switchFragment(position);
+                if (position == 1) {
+                    mPresenter.articleIndex(position, wasSelected);
+                }else{
+                    switchFragment(position);
+                    itemSelectAnimator(position, wasSelected);
+                }
                 return true;
             }
         });
+    }
+
+    private List<ArticleIndexBean.ShowBean> showList = new ArrayList<>();
+
+    @Override
+    public void showPermission(ArticleIndexBean bean, int position, boolean wasSelected) {
+        showList.clear();
+        if (bean.getShow() != null && bean.getShow().size() > 0) {
+            List<ArticleIndexBean.ShowBean> list = bean.getShow();
+            for (ArticleIndexBean.ShowBean showBean : list) {
+                if (showBean.getIs_show()==1){
+                    showList.add(showBean);
+                }
+            }
+
+            if (showList.size()>0){
+                if (mFragments[1]!=null){
+                    ((LearningFragment)mFragments[1]).replaceList(showList);
+                }
+                switchFragment(position);
+                itemSelectAnimator(position, wasSelected);
+            }else{
+                showToast("没有操作权限");
+            }
+        } else {
+            showToast("没有操作权限");
+        }
     }
 
     private void switchFragment(int position) {

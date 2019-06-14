@@ -26,6 +26,53 @@ public class MainIndexBean {
     private List<AddEventBean> add_event;
     private List<AddPatrolBean>add_patrol;
 
+    private int is_clock;
+    private int is_report;
+    private int is_patrol;
+    private int is_mail;
+    private int is_map;
+
+
+    public int getIs_clock() {
+        return is_clock;
+    }
+
+    public void setIs_clock(int is_clock) {
+        this.is_clock = is_clock;
+    }
+
+    public int getIs_report() {
+        return is_report;
+    }
+
+    public void setIs_report(int is_report) {
+        this.is_report = is_report;
+    }
+
+    public int getIs_patrol() {
+        return is_patrol;
+    }
+
+    public void setIs_patrol(int is_patrol) {
+        this.is_patrol = is_patrol;
+    }
+
+    public int getIs_mail() {
+        return is_mail;
+    }
+
+    public void setIs_mail(int is_mail) {
+        this.is_mail = is_mail;
+    }
+
+    public int getIs_map() {
+        return is_map;
+    }
+
+    public void setIs_map(int is_map) {
+        this.is_map = is_map;
+    }
+
     public int getUnread_count() {
         return unread_count;
     }

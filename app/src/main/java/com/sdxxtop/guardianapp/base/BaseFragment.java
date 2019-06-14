@@ -2,14 +2,16 @@ package com.sdxxtop.guardianapp.base;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.sdxxtop.guardianapp.app.App;
 import com.sdxxtop.guardianapp.utils.DialogUtil;
 import com.sdxxtop.guardianapp.utils.StatusBarUtil;
 import com.sdxxtop.guardianapp.utils.SystemUtil;
-import com.sdxxtop.guardianapp.app.App;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -78,6 +80,16 @@ public abstract class BaseFragment extends SupportFragment {
         }
     }
 
+    public void showToast(String msg){
+        if (TextUtils.isEmpty(msg)) {
+            return;
+        }
+//        Toast.makeText(context,msg,Toast.LENGTH_LONG).show();
+        Toast toast=Toast.makeText(getContext(),msg,Toast.LENGTH_SHORT);
+        toast.setText(msg);
+        toast.show();
+    }
+
     public boolean isVersionMoreKitkat() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             return true;
@@ -90,5 +102,9 @@ public abstract class BaseFragment extends SupportFragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {//Android6.0以上系统
             StatusBarUtil.setDarkStatusIcon(getActivity().getWindow(), isDark);
         }
+    }
+
+    public void setIsFirstLoading(boolean isFirstLoading){
+
     }
 }

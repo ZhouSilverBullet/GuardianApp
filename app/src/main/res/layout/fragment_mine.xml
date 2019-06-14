@@ -3,6 +3,7 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              xmlns:tools="http://schemas.android.com/tools"
               android:background="@drawable/half_login_bg"
               android:fitsSystemWindows="true"
               android:orientation="vertical">
@@ -105,10 +106,14 @@
                 android:id="@+id/tatv_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:visibility="visible"
                 app:tatv_text_view="单位信息"/>
 
             <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
                 android:id="@+id/tatv_report"
+                tools:visibility="visible"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:tatv_text_view="我的上报"/>
@@ -117,6 +122,7 @@
                 android:id="@+id/event_report"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                tools:visibility="visible"
                 android:visibility="gone"
                 app:tatv_text_view="事件报告"/>
 
@@ -125,6 +131,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
+                tools:visibility="visible"
                 app:tatv_text_view="网格员报告"/>
 
             <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
@@ -132,13 +139,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
+                tools:visibility="visible"
                 app:tatv_text_view="企业报告"/>
 
             <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
                 android:id="@+id/message_center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
+                tools:visibility="visible"
                 app:tatv_text_view="消息中心"/>
 
             <View

@@ -80,6 +80,11 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
     private boolean isAdmin;
     private HomeRecyclerAdapter mRecyclerAdapter;
     private boolean mIsFace;
+    private int isReport;
+    private int isPatrol;
+    private int isMail;
+    private int isMap;
+    private int isClock;
 
     public static HomeFragment newInstance(boolean isAdmin) {
 
@@ -124,13 +129,21 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
         llEventReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), EventReportActivity.class));
+                if (isReport == 1) {
+                    startActivity(new Intent(getContext(), EventReportActivity.class));
+                } else {
+                    showToast("没有操作权限");
+                }
             }
         });
         llEventDiscretion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), EventDiscretionReportActivity.class));
+                if (isPatrol == 1) {
+                    startActivity(new Intent(getContext(), EventDiscretionReportActivity.class));
+                } else {
+                    showToast("没有操作权限");
+                }
             }
         });
 
@@ -193,29 +206,39 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
                             intent = new Intent(getContext(), PatrolRecordActivity.class);
                             break;
                         case 1:
+                            if (isMail == 1) {
 //                            UIUtils.showToast("通讯录");
-                            intent = new Intent(getContext(), ContactActivity.class);
+                                intent = new Intent(getContext(), ContactActivity.class);
+                            } else {
+                                showToast("您当前暂无权限");
+                            }
                             break;
                         case 2:
+                            if (isMap == 1) {
 //                            UIUtils.showToast("网格地图");
-                            intent = new Intent(getContext(), GridMapActivity.class);
+                                intent = new Intent(getContext(), GridMapActivity.class);
+                            }else{
+                                showToast("您当前暂无权限");
+                            }
                             break;
                         case 3:
 //                            UIUtils.showToast("打卡");
 
                             //判断一次打卡，gps是否打开
-
-                            if (mIsFace) {
-                                if (GpsUtils.isOPen(getContext())) {
-                                    intent = new Intent(getContext(), MyFaceLivenessActivity.class);
-                                    intent.putExtra("isFace", true);
+                            if (isClock==1){
+                                if (mIsFace) {
+                                    if (GpsUtils.isOPen(getContext())) {
+                                        intent = new Intent(getContext(), MyFaceLivenessActivity.class);
+                                        intent.putExtra("isFace", true);
+                                    } else {
+                                        GpsUtils.showCode332ErrorDialog(getContext());
+                                    }
                                 } else {
-                                    GpsUtils.showCode332ErrorDialog(getContext());
+                                    toFace();
                                 }
-                            } else {
-                                toFace();
+                            }else{
+                                showToast("您当前暂无权限");
                             }
-
                             break;
                     }
                     if (intent != null) {
@@ -258,6 +281,16 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
     @Override
     public void showData(MainIndexBean mainIndexBean) {
         Logger.e("HomeFragment", mainIndexBean);
+        /********* 权限 **********/
+        isReport = mainIndexBean.getIs_report();
+        isPatrol = mainIndexBean.getIs_patrol();
+        isClock = mainIndexBean.getIs_clock();
+        isMail = mainIndexBean.getIs_mail();
+        isMap = mainIndexBean.getIs_map();
+
+        itlvView2.setVisibility(isReport==1?View.VISIBLE:View.GONE);
+        itlvView3.setVisibility(isPatrol==1?View.VISIBLE:View.GONE);
+
         tvPartName.setText(mainIndexBean.getPart_name());
 
         List<MainIndexBean.EventBean> eventBean = mainIndexBean.getEventBean();
@@ -281,7 +314,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
             List<ImgAndTextLinearView.TagEventBean> data = new ArrayList<>();
             for (int i = 0; i < mainIndexBean.getPending_event().size(); i++) {
                 MainIndexBean.PendingEventBean bean = mainIndexBean.getPending_event().get(i);
-                data.add(new ImgAndTextLinearView.TagEventBean(bean.getEvent_id(), bean.getTitle(), bean.getEnd_date(),getStatus(1,bean.getStatus())));
+                data.add(new ImgAndTextLinearView.TagEventBean(bean.getEvent_id(), bean.getTitle(), bean.getEnd_date(), getStatus(1, bean.getStatus())));
             }
             itlvView1.setData(data);
         } else {
@@ -291,7 +324,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
             List<ImgAndTextLinearView.TagEventBean> data = new ArrayList<>();
             for (int i = 0; i < mainIndexBean.getAdd_event().size(); i++) {
                 MainIndexBean.AddEventBean bean = mainIndexBean.getAdd_event().get(i);
-                data.add(new ImgAndTextLinearView.TagEventBean(bean.getEvent_id(), bean.getTitle(), "",getStatus(2,bean.getStatus())));
+                data.add(new ImgAndTextLinearView.TagEventBean(bean.getEvent_id(), bean.getTitle(), "", getStatus(2, bean.getStatus())));
             }
             itlvView2.setData(data);
         } else {
@@ -301,7 +334,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
             List<ImgAndTextLinearView.TagEventBean> data = new ArrayList<>();
             for (int i = 0; i < mainIndexBean.getAdd_patrol().size(); i++) {
                 MainIndexBean.AddPatrolBean bean = mainIndexBean.getAdd_patrol().get(i);
-                data.add(new ImgAndTextLinearView.TagEventBean(bean.getPatrol_id(), bean.getTitle(), bean.getRectify_date(),getStatus(3,bean.getStatus())));
+                data.add(new ImgAndTextLinearView.TagEventBean(bean.getPatrol_id(), bean.getTitle(), bean.getRectify_date(), getStatus(3, bean.getStatus())));
             }
             itlvView3.setData(data);
         } else {
