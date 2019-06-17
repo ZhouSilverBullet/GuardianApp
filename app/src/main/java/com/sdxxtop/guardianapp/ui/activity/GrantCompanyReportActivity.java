@@ -2,6 +2,7 @@ package com.sdxxtop.guardianapp.ui.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -40,8 +41,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.functions.Consumer;
 
-public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> implements GCRContract.IView, AMap.OnMapLoadedListener,
-        CustomEventLayout.OnTabClickListener {
+public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> implements GCRContract.IView, AMap.OnMapLoadedListener{
 
     @BindView(R.id.title)
     TitleView title;
@@ -119,6 +119,7 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
                 }
             }
         });
+        addTabView(null);
     }
 
     /**
@@ -144,15 +145,19 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
 
     //添加详情标签
     private void addTabView(EnterpriseIndexBean bean) {
-        if (bean == null)
-            return;
         List<TabTextBean> list = new ArrayList<>();
-        list.add(new TabTextBean(1, String.valueOf(bean.getPart_count()), "企业数"));
-        list.add(new TabTextBean(2, String.valueOf(bean.getUser_count()), "安全管理员数"));
-        list.add(new TabTextBean(3, String.valueOf(bean.getTrai_count()), "考试培训次数"));
-        list.add(new TabTextBean(4, String.valueOf(bean.getReport_info()), "上报自查次数"));
+        if (bean == null) {
+            list.add(new TabTextBean(1, "--", "企业数"));
+            list.add(new TabTextBean(2, "--", "安全管理员数"));
+            list.add(new TabTextBean(3, "--", "考试培训次数"));
+            list.add(new TabTextBean(4, "--", "上报自查次数"));
+        }else{
+            list.add(new TabTextBean(1, String.valueOf(bean.getPart_count()), "企业数"));
+            list.add(new TabTextBean(2, String.valueOf(bean.getUser_count()), "安全管理员数"));
+            list.add(new TabTextBean(3, String.valueOf(bean.getTrai_count()), "考试培训次数"));
+            list.add(new TabTextBean(4, String.valueOf(bean.getReport_info()), "上报自查次数"));
+        }
         celView.addLayout(list);
-        celView.setOnTabClickListener(this);
     }
 
     private void initMap() {
@@ -256,20 +261,7 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
         if (data == null)
             return;
         if (isMapLoadSuccess && isMapDataLoadSuccess) {
-            LatLngBounds.Builder builder = LatLngBounds.builder();
-            for (int i = 0; i < data.size(); i++) {
-                Log.e("循环列表", "'" + data.get(i).toString());
-                markerImgLoad.addCustomMarker(data.get(i), new MarkerSign(i), new MarkerImgLoad.OnMarkerListener() {
-                    @Override
-                    public void showMarkerIcon(MarkerOptions markerOptions, MarkerSign sign) {
-                        Marker marker;
-                        marker = mAMap.addMarker(markerOptions);
-                        marker.setObject(sign);
-                    }
-                });
-//                builder.include(markerImgLoad.getLatLng(data.get(i).getLongitude()));
-            }
-            moveMapToPosition(markerImgLoad.getLatLng(data.get(0).getLongitude()));
+            AsyncTask.THREAD_POOL_EXECUTOR.execute(new MyRunnable(data));
         }
     }
 
@@ -292,12 +284,6 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
     }
 
     @Override
-    public void onTabClick(int num) {
-//        Intent intent = new Intent(GrantCompanyReportActivity.this, GACEventDetailActivity.class);   // 企业详情
-//        startActivity(intent);
-    }
-
-    @Override
     public void showData(EnterpriseIndexBean bean) {
         mAMap.clear();
         tvNowCount.setText("（在线人数" + bean.getNow_count() + "人）");
@@ -312,6 +298,33 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
             isMapDataLoadSuccess = true;
             userInfos = bean.getUser_info();
             addCustomMarkersToMap(userInfos);
+        }
+    }
+
+    class MyRunnable implements Runnable {
+        private List<EnterpriseIndexBean.UserInfo> mData;
+
+        public MyRunnable(List<EnterpriseIndexBean.UserInfo> mData) {
+            this.mData = mData;
+        }
+
+        @Override
+        public void run() {
+            LatLngBounds.Builder builder = LatLngBounds.builder();
+            for (int i = 0; i < mData.size(); i++) {
+                Log.e("循环列表", "'" + mData.get(i).toString());
+                markerImgLoad.addCustomMarker(mData.get(i), new MarkerSign(i), new MarkerImgLoad.OnMarkerListener() {
+                    @Override
+                    public void showMarkerIcon(MarkerOptions markerOptions, MarkerSign sign) {
+                        Marker marker;
+                        marker = mAMap.addMarker(markerOptions);
+                        marker.setObject(sign);
+                    }
+                });
+//                builder.include(markerImgLoad.getLatLng(data.get(i).getLongitude()));
+            }
+//            mAMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 30));
+            moveMapToPosition(markerImgLoad.getLatLng(mData.get(0).getLongitude()));
         }
     }
 }
