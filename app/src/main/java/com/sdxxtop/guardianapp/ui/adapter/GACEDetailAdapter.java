@@ -30,7 +30,7 @@ public class GACEDetailAdapter extends BaseQuickAdapter<EnterpriseCompanyBean.Pa
 
         if (item != null) {
             helper.setText(R.id.tv_company_name, item.getPart_name());
-            helper.setText(R.id.tv_company_row, item.getPart_name());
+            helper.setText(R.id.tv_company_row, item.getParent_name());
             helper.setText(R.id.tv_seu_count, String.valueOf(item.getSeu_count()));
             helper.setText(R.id.tv_train_count, String.valueOf(item.getTrain_count()));
             helper.setText(R.id.tv_check_num, String.valueOf(item.getReport_info()));
