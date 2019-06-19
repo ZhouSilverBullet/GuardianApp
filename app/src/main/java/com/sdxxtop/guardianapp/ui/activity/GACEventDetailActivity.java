@@ -67,7 +67,8 @@ public class GACEventDetailActivity extends BaseMvpActivity<GACEPresenter> imple
     @Override
     protected void initView() {
         super.initView();
-        casvRight.tvArea.setText("全部");
+        casvLeft.tvArea.setText("全区");
+        casvRight.tvArea.setText("所有企业");
         ettView.setOnTextClickListener(new EnterpriseTabTitleView.OnTextClickListener() {
             @Override
             public void onTextClick(int num, boolean isOrder) {
@@ -88,8 +89,8 @@ public class GACEventDetailActivity extends BaseMvpActivity<GACEPresenter> imple
                 popWindow.setOnPopItemClickListener(new AreaSelectPopWindow.OnPopItemClickListener() {
                     @Override
                     public void onPopItemClick(int partTypeid, String partName) {
-                        casvLeft.tvArea.setText(partName);
-                        casvRight.tvArea.setText("所有企业");
+//                        casvLeft.tvArea.setText(partName);
+//                        casvRight.tvArea.setText("所有企业");
                         part_typeid = partTypeid;
                         mPresenter.enterpriseCompany(part_typeid, 0);
                     }
@@ -104,7 +105,7 @@ public class GACEventDetailActivity extends BaseMvpActivity<GACEPresenter> imple
                 popWindow.setOnPopItemClickListener(new AreaSelectPopWindow.OnPopItemClickListener() {
                     @Override
                     public void onPopItemClick(int partTypeid, String partName) {
-                        casvRight.tvArea.setText(partName);
+//                        casvRight.tvArea.setText(partName);
                         parent_id = partTypeid;
                         mPresenter.enterpriseCompany(part_typeid, parent_id);
                     }
@@ -122,6 +123,9 @@ public class GACEventDetailActivity extends BaseMvpActivity<GACEPresenter> imple
     @Override
     public void showData(EnterpriseCompanyBean bean) {
         adapter.replaceData(bean.getPart_info());
+        casvLeft.tvArea.setText(bean.getEvent_name());
+        casvRight.tvArea.setText(bean.getParent_name());
+
         leftData.clear();
         rightData.clear();
         for (int i = 0; i < bean.getUser_part().size(); i++) {

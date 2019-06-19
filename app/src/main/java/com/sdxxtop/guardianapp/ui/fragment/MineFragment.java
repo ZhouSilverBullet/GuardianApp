@@ -127,6 +127,12 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.loadData();
+    }
+
+    @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
