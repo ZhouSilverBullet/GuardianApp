@@ -9,9 +9,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.NinePatchDrawable;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
@@ -21,12 +21,8 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.maps.model.Polygon;
 import com.amap.api.maps.model.PolygonOptions;
-import com.amap.api.services.core.LatLonPoint;
-import com.amap.api.services.district.DistrictItem;
-import com.amap.api.services.district.DistrictResult;
-import com.amap.api.services.district.DistrictSearch;
-import com.amap.api.services.district.DistrictSearchQuery;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
@@ -48,7 +44,8 @@ import androidx.annotation.Nullable;
 import butterknife.BindView;
 import io.reactivex.functions.Consumer;
 
-public class GridMapActivity extends BaseMvpActivity<GridMapPresenter> implements AMap.OnMyLocationChangeListener, AMap.OnMapClickListener, GridMapContract.IView, AMap.OnMarkerClickListener {
+public class GridMapActivity extends BaseMvpActivity<GridMapPresenter> implements AMap.OnMyLocationChangeListener, AMap.OnMapClickListener,
+        GridMapContract.IView, AMap.OnMarkerClickListener {
     private static final String TAG = "GridMapActivity";
 
     @BindView(R.id.gmap)
@@ -58,6 +55,7 @@ public class GridMapActivity extends BaseMvpActivity<GridMapPresenter> implement
 
     private boolean isFirst;
     private GridMapAdapter mAdapter;
+    private Polygon polygon;
 
     @Override
     protected void initInject() {
@@ -94,7 +92,8 @@ public class GridMapActivity extends BaseMvpActivity<GridMapPresenter> implement
 
     private void initMap() {
         aMap = mMapView.getMap();
-        MyLocationStyle myLocationStyle = new MyLocationStyle();//初始化定位蓝点样式类myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）如果不设置myLocationType，默认也会执行此种模式。
+        MyLocationStyle myLocationStyle = new MyLocationStyle();//初始化定位蓝点样式类myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);
+        // 连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）如果不设置myLocationType，默认也会执行此种模式。
 //        myLocationStyle.interval(); //设置连续定位模式下的定位间隔，只在连续定位模式下生效，单次定位模式下不会生效。单位为毫秒。
 //        myLocationStyle.showMyLocation(true);
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);
@@ -154,17 +153,7 @@ public class GridMapActivity extends BaseMvpActivity<GridMapPresenter> implement
         Logger.e(TAG, s);
     }
 
-    @Override
-    public void showPolygon(int index, MainMapBean.UserBean userBean, List<LatLng> list) {
-        PolygonOptions polygonOptions = new PolygonOptions();
-        polygonOptions.addAll(list);
-        int parseColor = Color.parseColor(GuardianUtils.getHalfColor(index));
-        polygonOptions.strokeWidth(15) // 多边形的边框
-                .strokeColor(parseColor) // 边框颜色
-                .fillColor(parseColor);   // 多边形的填充色
-
-        aMap.addPolygon(polygonOptions);
-
+    public void showPolygon(int index, MainMapBean.UserBean userBean, String lanLan) {
         String middle = userBean.getMiddle();
         runOnUiThread(new Runnable() {
             @Override
@@ -179,12 +168,12 @@ public class GridMapActivity extends BaseMvpActivity<GridMapPresenter> implement
                                 MarkerOptions markerOptions = new MarkerOptions();
                                 Bitmap bitmap = drawable2Bitmap(resource);
 
-                                Bitmap bm = Bitmap.createScaledBitmap(bitmap, 150, 150, true);
-                                Log.i("GitMap", "压缩后图片的大小" + (bm.getByteCount() / 1024) + "KB宽度为"
-                                        + bm.getWidth() + "高度为" + bm.getHeight());
+//                                Bitmap bm = Bitmap.createScaledBitmap(bitmap, 150, 150, true);
+//                                Log.i("GitMap", "压缩后图片的大小" + (bm.getByteCount() / 1024) + "KB宽度为"
+//                                        + bm.getWidth() + "高度为" + bm.getHeight());
 
-                                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(bm));
-                                markerOptions.position(latLng).title("").snippet(userBean.getName());
+                                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(drawable2Bitmap(getResources().getDrawable(R.drawable.grid_map_icon))));
+                                markerOptions.position(latLng).title("" + lanLan).snippet(index + ",:," + userBean.getName()+",:,"+userBean.getImg());
                                 aMap.addMarker(markerOptions);
                                 if (index == 0) {
                                     aMap.moveCamera(CameraUpdateFactory.changeLatLng(latLng));
@@ -220,77 +209,6 @@ public class GridMapActivity extends BaseMvpActivity<GridMapPresenter> implement
         }
     }
 
-    private void search(String keywords) {
-        DistrictSearch search = new DistrictSearch(this);
-        DistrictSearchQuery query = new DistrictSearchQuery();
-        query.setKeywords(keywords);//传入关键字
-        query.setShowBoundary(true);//是否返回边界值
-        search.setQuery(query);
-        search.setOnDistrictSearchListener(new DistrictSearch.OnDistrictSearchListener() {
-            @Override
-            public void onDistrictSearched(DistrictResult result) {
-                handleDistrict(result);
-            }
-        });
-        search.searchDistrictAsyn();
-
-    }
-
-    private void handleDistrict(DistrictResult result) {
-        ArrayList<DistrictItem> district = result.getDistrict();
-        for (DistrictItem districtItem : district) {
-            String adcode = districtItem.getAdcode();
-            LatLonPoint center = districtItem.getCenter();
-            String citycode = districtItem.getCitycode();
-            String level = districtItem.getLevel();
-            String name = districtItem.getName();
-            List<DistrictItem> subDistrict = districtItem.getSubDistrict();
-//            for (DistrictItem item : subDistrict) {
-            new Thread() {
-                @Override
-                public void run() {
-                    parseData(districtItem);
-
-                }
-            }.start();
-
-//            }
-        }
-    }
-
-    private void parseData(DistrictItem districtItem) {
-        String[] polyStr = districtItem.districtBoundary();
-        if (polyStr == null || polyStr.length == 0) {
-            return;
-        }
-
-        List<LatLng> list;
-
-        for (String str : polyStr) {
-            list = new ArrayList<>();
-            String[] lat = str.split(";");
-            boolean isFirst = true;
-            LatLng firstLatLng = null;
-            for (String latstr : lat) {
-                String[] lats = latstr.split(",");
-                if (isFirst) {
-                    isFirst = false;
-                    firstLatLng = new LatLng(Double
-                            .parseDouble(lats[1]), Double
-                            .parseDouble(lats[0]));
-                }
-                list.add(new LatLng(Double
-                        .parseDouble(lats[1]), Double
-                        .parseDouble(lats[0])));
-
-            }
-            if (firstLatLng != null) {
-                list.add(firstLatLng);
-            }
-//            show(list);
-        }
-    }
-
     @Override
     public void onMapClick(LatLng latLng) {
 //        aMap.clear();
@@ -322,11 +240,87 @@ public class GridMapActivity extends BaseMvpActivity<GridMapPresenter> implement
     @Override
     public boolean onMarkerClick(Marker marker) {
         tempMarker = marker;
+        if (polygon!=null){
+            polygon.remove();
+        }
+        MarkerOptions options = marker.getOptions();
+        String snippet = options.getSnippet();
+        int markerIndex = Integer.parseInt(snippet.split(",:,")[0]);
+
+        setPolygont(markerIndex, options.getTitle());
+
         if (marker.isInfoWindowShown()) {
             marker.hideInfoWindow();
         } else {
             marker.showInfoWindow();
         }
         return true;
+    }
+
+    /*********************  地图优化  ************************/
+    public void setPolygont(int index, String lat) {
+        PolygonOptions  polygonOptions = new PolygonOptions();
+        polygonOptions.addAll(parseData(lat));
+        int parseColor = Color.parseColor(GuardianUtils.getHalfColor(index));
+        polygonOptions.strokeWidth(5) // 多边形的边框
+                .strokeColor(parseColor) // 边框颜色
+                .fillColor(parseColor);   // 多边形的填充色
+        polygon = aMap.addPolygon(polygonOptions);
+    }
+
+    @Override
+    public void showMap(MainMapBean mainMapBean) {
+        if (mainMapBean.getUser() != null && mainMapBean.getUser().size() > 0) {
+            AsyncTask.THREAD_POOL_EXECUTOR.execute(
+                    new MapRunnable(mainMapBean.getUser()));
+        } else {
+            showToast("暂无数据");
+        }
+    }
+
+    public class MapRunnable implements Runnable {
+        List<MainMapBean.UserBean> user;
+
+        public MapRunnable(List<MainMapBean.UserBean> user) {
+            this.user = user;
+        }
+
+        @Override
+        public void run() {
+            for (MainMapBean.UserBean userBean : user) {
+                String lonLon = userBean.getLonLon();
+                int i = user.indexOf(userBean);
+                if (!TextUtils.isEmpty(lonLon)) {
+                    showPolygon(i, userBean, lonLon);
+                }
+            }
+        }
+    }
+
+    private List<LatLng> parseData(String lanLan) {
+        List<LatLng> list = new ArrayList<>();
+        if (TextUtils.isEmpty(lanLan)) {
+            return list;
+        }
+        String[] lat = lanLan.split(";");
+        boolean isFirst = true;
+        LatLng firstLatLng = null;
+        for (String latstr : lat) {
+            String[] lats = latstr.split(",");
+            if (isFirst) {
+                isFirst = false;
+                firstLatLng = new LatLng(Double
+                        .parseDouble(lats[1]), Double
+                        .parseDouble(lats[0]));
+            }
+            list.add(new LatLng(Double
+                    .parseDouble(lats[1]), Double
+                    .parseDouble(lats[0])));
+
+        }
+        if (firstLatLng != null) {
+            list.add(firstLatLng);
+        }
+        return list;
     }
 }

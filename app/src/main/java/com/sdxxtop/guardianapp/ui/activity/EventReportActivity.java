@@ -81,6 +81,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 
     private boolean isSearchEnable = true;
     private SingleStyleView singleStyleView;
+    private int queryType;
 
     @Override
     protected int getLayout() {
@@ -222,7 +223,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 
         //发现方式
         String queryName = tatvQuery.getRightTVString();
-        if (queryData == null || TextUtils.isEmpty(queryName)) {
+        if (findType == null || TextUtils.isEmpty(queryName)) {
             showToast("请选择发现方式");
             return;
         }
@@ -233,8 +234,6 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
             showToast("请选择发生地点");
             return;
         }
-
-        int queryType = queryData.indexOf(queryName) + 1;
 
         int pathType = mSelectPartId;
 
@@ -292,21 +291,23 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
      */
     @Override
     public void showQuerySelect(EventModeBean bean) {
-        queryData.clear();
+        findType.clear();
         if (bean.getMode_data() != null && bean.getMode_data().size() > 0) {
             for (int i = 0; i < bean.getMode_data().size(); i++) {
-                queryData.add(bean.getMode_data().get(i).getName());
+                EventModeBean.ModeDataBean dataBean = bean.getMode_data().get(i);
+                findType.add(new SingleStyleView.ListDataBean(dataBean.getMode_id(),dataBean.getName()));
             }
             if (singleStyleView == null) {
-                singleStyleView = new SingleStyleView(this, queryData);
+                singleStyleView = new SingleStyleView(this, null);
                 singleStyleView.setOnItemSelectLintener(new SingleStyleView.OnItemSelectLintener() {
                     @Override
-                    public void onItemSelect(String result) {
+                    public void onItemSelect(int id,String result) {
+                        queryType = id;
                         tatvQuery.getTextRightText().setText(result);
                     }
                 });
             }
-            singleStyleView.replaceData(queryData);
+            singleStyleView.replaceData(findType);
             singleStyleView.show();
         } else {
             showToast("暂无数据");
@@ -369,8 +370,8 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     }
 
     private SingleStyleView singleReportPathDataView;
-    private List<String> queryData = new ArrayList<>();
-    private List<String> reportPathData = new ArrayList<>();
+    private List<SingleStyleView.ListDataBean> findType = new ArrayList<>();
+    private List<SingleStyleView.ListDataBean> reportPathData = new ArrayList<>();
 
     private void selectReportPath() {
         if (mPartList == null) {
@@ -382,7 +383,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
         }
         reportPathData.clear();
         for (ShowPartBean.PartBean partBean : mPartList) {
-            reportPathData.add(partBean.getPart_name());
+            reportPathData.add(new SingleStyleView.ListDataBean(partBean.getPart_id(),partBean.getPart_name()));
         }
 
         showReportPathSelect(reportPathData);
@@ -396,13 +397,13 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     }
 
 
-    private void showReportPathSelect(List<String> queryData) {
+    private void showReportPathSelect(List<SingleStyleView.ListDataBean> queryData) {
         if (singleReportPathDataView == null) {
             singleReportPathDataView = new SingleStyleView(this, queryData);
 
             singleReportPathDataView.setOnItemSelectLintener(new SingleStyleView.OnItemSelectLintener() {
                 @Override
-                public void onItemSelect(String result) {
+                public void onItemSelect(int id,String result) {
                     tatvReportPath.getTextRightText().setText(result);
                     tatvReportPath.getTextRightText().setTextColor(getResources().getColor(R.color.black));
                     if (mPartList != null) {

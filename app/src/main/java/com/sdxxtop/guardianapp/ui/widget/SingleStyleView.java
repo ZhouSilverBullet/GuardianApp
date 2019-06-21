@@ -9,18 +9,25 @@ import com.bigkoo.pickerview.listener.OnOptionsSelectChangeListener;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SingleStyleView {
-    private List<String> mList;
+    private List<String> mList = new ArrayList<>();
     private Activity mActivity;
     private OnItemSelectLintener mLintener;
     private OptionsPickerView pvOptions;
+    private List<ListDataBean> mData;
 
-    public SingleStyleView(Activity activity, List<String> list) {
+    public SingleStyleView(Activity activity, List<ListDataBean> list) {
         mActivity = activity;
-        mList = list;
-
+        mData = list;
+        mList.clear();
+        if (list!=null&&list.size()>0){
+            for (int i = 0; i < list.size(); i++) {
+                mList.add(list.get(i).name);
+            }
+        }
         initOptionPicker();
     }
 
@@ -30,13 +37,19 @@ public class SingleStyleView {
         }
     }
 
-    public void replaceData(List<String> queryData) {
-        this.mList = queryData;
-        pvOptions.setPicker(queryData);
+    public void replaceData(List<ListDataBean> list) {
+        mData = list;
+        mList.clear();
+        if (list!=null&&list.size()>0){
+            for (int i = 0; i < list.size(); i++) {
+                mList.add(list.get(i).name);
+            }
+        }
+        pvOptions.setPicker(mList);
     }
 
     public interface OnItemSelectLintener {
-        void onItemSelect(String result);
+        void onItemSelect(int id,String result);
     }
 
     public void setOnItemSelectLintener(OnItemSelectLintener lintener) {
@@ -54,7 +67,8 @@ public class SingleStyleView {
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
                 //返回的分别是三个级别的选中位置
                 String tx = mList.get(options1);
-                mLintener.onItemSelect(tx);
+                ListDataBean listDataBean = mData.get(options1);
+                mLintener.onItemSelect(listDataBean.id,listDataBean.name);
             }
         })
                 .setTitleText(" ")
@@ -79,4 +93,15 @@ public class SingleStyleView {
                 .build();
         pvOptions.setPicker(mList);//二级选择器
     }
+
+    public static class ListDataBean{
+        public ListDataBean(int id, String name) {
+            this.id = id;
+            this.name = name;
+        }
+
+        public int id;
+        public String name;
+    }
+
 }

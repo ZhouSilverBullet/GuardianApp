@@ -15,6 +15,7 @@ public class EventReadIndexBean {
     public String add_time;
     public int patrol_type;
     public String place;
+    public String patrol_name;
     public String longitude;
     public String content;
     public int status;

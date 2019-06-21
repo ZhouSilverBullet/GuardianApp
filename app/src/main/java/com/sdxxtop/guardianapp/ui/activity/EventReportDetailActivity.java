@@ -352,7 +352,8 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         bandImgAndVideo(bean.img, bean.video, recyclerView, mAdapter);
         tvContentTitle.setText(bean.title);
         tvTime.setText(Date2Util.handleTime(bean.add_time));
-        handlePatrol(bean.patrol_type);
+//        handlePatrol(bean.patrol_type);
+        tvCheckMethod.setText(bean.patrol_name);
         tvHappen.setText(bean.place);
         tvReportPath.setText(bean.part_name);
         tvDescription.setText(new StringBuilder().append("事件简要描述：").append(bean.content));

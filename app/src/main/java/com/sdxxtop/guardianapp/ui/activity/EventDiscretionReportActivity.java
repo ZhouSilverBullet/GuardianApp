@@ -23,7 +23,6 @@ import com.sdxxtop.guardianapp.ui.widget.TextAndCheckBoxView;
 import com.sdxxtop.guardianapp.ui.widget.TextAndEditView;
 import com.sdxxtop.guardianapp.ui.widget.TextAndTextView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
-import com.sdxxtop.guardianapp.utils.MyTextChangeListener;
 import com.sdxxtop.guardianapp.utils.TimeSelectBottomDialog;
 
 import java.io.File;
@@ -114,16 +113,16 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
             }
         });
 
-        taevTitle.getEditText().addTextChangedListener(new MyTextChangeListener(new MyTextChangeListener.OnTextChangedListener() {
-            @Override
-            public void textChange(String str) {
-                if (isSearchEnable) {
-                    mPresenter.searchTitle(str);
-                } else {
-                    isSearchEnable = true;
-                }
-            }
-        }));
+//        taevTitle.getEditText().addTextChangedListener(new MyTextChangeListener(new MyTextChangeListener.OnTextChangedListener() {
+//            @Override
+//            public void textChange(String str) {
+//                if (isSearchEnable) {
+//                    mPresenter.searchTitle(str);
+//                } else {
+//                    isSearchEnable = true;
+//                }
+//            }
+//        }));
 
         tvDismiss.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,7 +144,7 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_push:
-                showReportConfirmDialog();
+                toReport();
                 break;
             case R.id.tatv_happen:
                 selectHappen();

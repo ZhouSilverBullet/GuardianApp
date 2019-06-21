@@ -132,6 +132,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
                 if (isReport == 1) {
                     startActivity(new Intent(getContext(), EventReportActivity.class));
                 } else {
+                    startActivity(new Intent(getContext(), EventReportActivity.class));
                     showToast("没有操作权限");
                 }
             }
@@ -142,6 +143,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
                 if (isPatrol == 1) {
                     startActivity(new Intent(getContext(), EventDiscretionReportActivity.class));
                 } else {
+                    startActivity(new Intent(getContext(), EventDiscretionReportActivity.class));
                     showToast("没有操作权限");
                 }
             }
@@ -210,7 +212,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
 //                            UIUtils.showToast("通讯录");
                                 intent = new Intent(getContext(), ContactActivity.class);
                             } else {
-                                showToast("您当前暂无权限");
+                                showToast("没有操作权限");
                             }
                             break;
                         case 2:
@@ -218,7 +220,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
 //                            UIUtils.showToast("网格地图");
                                 intent = new Intent(getContext(), GridMapActivity.class);
                             }else{
-                                showToast("您当前暂无权限");
+                                showToast("没有操作权限");
                             }
                             break;
                         case 3:
@@ -237,7 +239,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
                                     toFace();
                                 }
                             }else{
-                                showToast("您当前暂无权限");
+                                showToast("没有操作权限");
                             }
                             break;
                     }

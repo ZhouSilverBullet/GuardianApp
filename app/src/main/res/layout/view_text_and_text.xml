@@ -14,6 +14,7 @@
         android:paddingRight="15dp">
 
         <RelativeLayout
+            android:layout_marginRight="10dp"
             android:id="@+id/rl_containor"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
@@ -54,7 +55,7 @@
             android:ellipsize="end"
             android:gravity="right"
             android:singleLine="true"
-            android:text="09:00"
+            android:text="少时诵诗书"
             android:textColor="#999999"
             android:textSize="17sp"/>
 

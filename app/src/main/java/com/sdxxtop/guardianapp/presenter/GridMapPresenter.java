@@ -2,7 +2,6 @@ package com.sdxxtop.guardianapp.presenter;
 
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.text.TextUtils;
 
 import com.amap.api.maps.model.LatLng;
@@ -43,8 +42,11 @@ public class GridMapPresenter extends RxPresenter<GridMapContract.IView> impleme
             public void onSuccess(MainMapBean mainMapBean) {
                 List<MainMapBean.UserBean> user = mainMapBean.getUser();
                 if (user != null) {
-                    AsyncTask.THREAD_POOL_EXECUTOR.execute(
-                            new MapRunnable(GridMapPresenter.this, user));
+//                    AsyncTask.THREAD_POOL_EXECUTOR.execute(
+//                            new MapRunnable(GridMapPresenter.this, user));
+                    mView.showMap(mainMapBean);
+                }else{
+                    UIUtils.showToast("暂无数据");
                 }
             }
 
@@ -120,7 +122,7 @@ public class GridMapPresenter extends RxPresenter<GridMapContract.IView> impleme
         if (firstLatLng != null) {
             list.add(firstLatLng);
         }
-        mView.showPolygon(index, middle, list);
+//        mView.showPolygon(index, middle, list);
     }
 
     private void parseData(DistrictItem districtItem) {
