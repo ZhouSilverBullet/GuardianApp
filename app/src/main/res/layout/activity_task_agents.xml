@@ -9,9 +9,8 @@
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:bgColor="@color/green"
         app:leftLayoutIsShow="true"
-        app:titleColor="@color/white"
+        app:leftLayoutIconIsGray="true"
         app:titleValue="待办任务" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout

@@ -104,6 +104,7 @@ public class ERCheckResultWindow extends PopupWindow {
         rlContainor.setVisibility(isShowHead ? View.VISIBLE : View.GONE);
         tvTitle.setText("无法解决原因");
         btnConfirm.setText("提交");
+        etNumContent.setEditHint(" ");
         show(mActivity.getLayoutInflater().inflate(parentLayoutId, null));
     }
 

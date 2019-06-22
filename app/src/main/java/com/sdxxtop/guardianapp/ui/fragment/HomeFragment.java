@@ -132,7 +132,6 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
                 if (isReport == 1) {
                     startActivity(new Intent(getContext(), EventReportActivity.class));
                 } else {
-                    startActivity(new Intent(getContext(), EventReportActivity.class));
                     showToast("没有操作权限");
                 }
             }
@@ -143,7 +142,6 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
                 if (isPatrol == 1) {
                     startActivity(new Intent(getContext(), EventDiscretionReportActivity.class));
                 } else {
-                    startActivity(new Intent(getContext(), EventDiscretionReportActivity.class));
                     showToast("没有操作权限");
                 }
             }
@@ -219,7 +217,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
                             if (isMap == 1) {
 //                            UIUtils.showToast("网格地图");
                                 intent = new Intent(getContext(), GridMapActivity.class);
-                            }else{
+                            } else {
                                 showToast("没有操作权限");
                             }
                             break;
@@ -227,7 +225,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
 //                            UIUtils.showToast("打卡");
 
                             //判断一次打卡，gps是否打开
-                            if (isClock==1){
+                            if (isClock == 1) {
                                 if (mIsFace) {
                                     if (GpsUtils.isOPen(getContext())) {
                                         intent = new Intent(getContext(), MyFaceLivenessActivity.class);
@@ -238,7 +236,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
                                 } else {
                                     toFace();
                                 }
-                            }else{
+                            } else {
                                 showToast("没有操作权限");
                             }
                             break;
@@ -290,8 +288,8 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
         isMail = mainIndexBean.getIs_mail();
         isMap = mainIndexBean.getIs_map();
 
-        itlvView2.setVisibility(isReport==1?View.VISIBLE:View.GONE);
-        itlvView3.setVisibility(isPatrol==1?View.VISIBLE:View.GONE);
+        itlvView2.setVisibility(isReport == 1 ? View.VISIBLE : View.GONE);
+        itlvView3.setVisibility(isPatrol == 1 ? View.VISIBLE : View.GONE);
 
         tvPartName.setText(mainIndexBean.getPart_name());
 

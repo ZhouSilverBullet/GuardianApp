@@ -243,6 +243,7 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
 
     @Override
     public void skipDetail(PatrolAddBean bean) {
+        showToast("提交成功");
         hideLoadingDialog();
         Intent intent = new Intent(this, PatrolAddDetailActivity.class);
         intent.putExtra("patrol_id", bean.getPatrol_id());
