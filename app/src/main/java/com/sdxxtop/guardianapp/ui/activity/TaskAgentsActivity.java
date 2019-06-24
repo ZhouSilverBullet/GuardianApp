@@ -1,18 +1,15 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.OnRefreshLoadmoreListener;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sdxxtop.guardianapp.R;
-import com.sdxxtop.guardianapp.base.BaseActivity;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.model.bean.EventIndexBean;
 import com.sdxxtop.guardianapp.presenter.TaskAgentsPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.TaskAgentsContract;
 import com.sdxxtop.guardianapp.ui.adapter.TaskAgentsAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
