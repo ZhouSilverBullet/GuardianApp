@@ -206,6 +206,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
 //                            UIUtils.showToast("查询记录");
 //                            SkipMapUtils.invokingGD(v.getContext(),"北京天池家园酒店","39.989652", "116.476604");
                             intent = new Intent(getContext(), PatrolRecordActivity.class);
+
                             break;
                         case 1:
                             if (isMail == 1) {
