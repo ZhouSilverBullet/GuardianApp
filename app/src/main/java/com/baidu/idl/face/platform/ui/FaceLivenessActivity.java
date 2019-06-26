@@ -29,7 +29,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.amap.api.location.AMapLocation;
 import com.baidu.aip.face.stat.Ast;
 import com.baidu.idl.face.platform.FaceConfig;
 import com.baidu.idl.face.platform.FaceSDKManager;
@@ -44,7 +43,6 @@ import com.baidu.idl.face.platform.utils.APIUtils;
 import com.baidu.idl.face.platform.utils.Base64Utils;
 import com.baidu.idl.face.platform.utils.CameraPreviewUtils;
 import com.sdxxtop.guardianapp.R;
-import com.sdxxtop.guardianapp.utils.AMapFindLocation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -129,15 +127,15 @@ public class FaceLivenessActivity extends AppCompatActivity implements
         tvLocation = findViewById(R.id.tv_location);
         btnCard = findViewById(R.id.btn_card);
 
-        AMapFindLocation instance = AMapFindLocation.getInstance();
-        instance.location();
-        instance.setLocationCompanyListener(new AMapFindLocation.LocationCompanyListener() {
-            @Override
-            public void onAddress(AMapLocation address) {
-                String address1 = address.getAddress();
-                tvLocation.setText(address1);
-            }
-        });
+//        AMapFindLocation instance = AMapFindLocation.getInstance();
+//        instance.location();
+//        instance.setLocationCompanyListener(new AMapFindLocation.LocationCompanyListener() {
+//            @Override
+//            public void onAddress(AMapLocation address) {
+//                String address1 = address.getAddress();
+//                tvLocation.setText(address1);
+//            }
+//        });
     }
 
     public void init() {

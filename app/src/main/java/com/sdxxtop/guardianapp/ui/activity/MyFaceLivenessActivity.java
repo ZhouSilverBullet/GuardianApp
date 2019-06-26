@@ -36,6 +36,8 @@ public class MyFaceLivenessActivity extends FaceLivenessActivity implements Face
 
         if (getIntent() != null) {
             mIsFace = getIntent().getBooleanExtra("isFace", true);
+            String address = getIntent().getStringExtra("address");
+            tvLocation.setText(address);
         }
 
         TitleView titleView = findViewById(R.id.tv_title);

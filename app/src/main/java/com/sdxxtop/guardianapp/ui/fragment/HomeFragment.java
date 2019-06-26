@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.amap.api.location.AMapLocation;
 import com.bumptech.glide.Glide;
 import com.orhanobut.logger.Logger;
 import com.sdxxtop.guardianapp.R;
@@ -28,6 +29,7 @@ import com.sdxxtop.guardianapp.ui.adapter.HomeRecyclerAdapter;
 import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
 import com.sdxxtop.guardianapp.ui.widget.ImgAndTextLinearView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
+import com.sdxxtop.guardianapp.utils.AMapFindLocation;
 import com.sdxxtop.guardianapp.utils.GlideImageLoader;
 import com.sdxxtop.guardianapp.utils.GpsUtils;
 import com.sdxxtop.guardianapp.utils.SpUtil;
@@ -228,8 +230,22 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
                             if (isClock == 1) {
                                 if (mIsFace) {
                                     if (GpsUtils.isOPen(getContext())) {
-                                        intent = new Intent(getContext(), MyFaceLivenessActivity.class);
-                                        intent.putExtra("isFace", true);
+                                        AMapFindLocation instance = AMapFindLocation.getInstance();
+                                        instance.location();
+                                        instance.setLocationCompanyListener(new AMapFindLocation.LocationCompanyListener() {
+                                            @Override
+                                            public void onAddress(AMapLocation amapLocation) {
+                                                String address = amapLocation.getAddress();
+                                                if (TextUtils.isEmpty(address)) {
+                                                    showToast("当前无定位信息");
+                                                } else {
+                                                    Intent intent = new Intent(getContext(), MyFaceLivenessActivity.class);
+                                                    intent.putExtra("isFace", true);
+                                                    intent.putExtra("address", address);
+                                                    startActivity(intent);
+                                                }
+                                            }
+                                        });
                                     } else {
                                         GpsUtils.showCode332ErrorDialog(getContext());
                                     }
@@ -269,8 +285,6 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
                     }
                 })
                 .show();
-
-
     }
 
     @Override
