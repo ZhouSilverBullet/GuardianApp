@@ -1,5 +1,7 @@
 package com.sdxxtop.guardianapp.utils;
 
+import android.text.TextUtils;
+
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
@@ -26,11 +28,15 @@ public class AMapFindLocation implements AMapLocationListener {
 
     @Override
     public void onLocationChanged(AMapLocation amapLocation) {
+        String address = amapLocation.getAddress();
+        if (TextUtils.isEmpty(address)) {
+            return;
+        }
         if (locationCompanyListener != null) {
-            try{
+            try {
                 //防止onAddress出现异常了，仍然可以释放locationCompanyListener
                 locationCompanyListener.onAddress(amapLocation);
-            }finally {
+            } finally {
                 removeLocationCompanyListener();
                 mlocationClient.stopLocation();
             }

@@ -67,6 +67,9 @@ public class GuardianUtils {
             case 4:
                 positionName = "区级管理员";
                 break;
+            case 5:
+                positionName = "执法人员";
+                break;
             default:
                 positionName = "网格员";
                 break;

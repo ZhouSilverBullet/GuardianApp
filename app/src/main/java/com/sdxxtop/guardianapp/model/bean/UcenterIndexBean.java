@@ -132,7 +132,7 @@ public class UcenterIndexBean {
         this.position = position;
     }
 
-    //1:网格员 2: 企业员工 3:街道管理员 4:区级管理员
+    //1:网格员 2: 企业员工 3:街道管理员 4:区级管理员 5:执法人员
     public String getStringPosition() {
         return GuardianUtils.getJobName(getPosition());
     }
