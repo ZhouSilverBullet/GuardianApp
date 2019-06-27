@@ -39,24 +39,25 @@ public class HomePresenter extends RxPresenter<HomeContract.IView> implements Ho
         addSubscribe(disposable);
     }
 
-    public void articleIndex(int position,boolean wasSelected) {
+
+    public void articleIndex(int position, boolean wasSelected) {
         Params params = new Params();
         Observable<RequestBean<ArticleIndexBean>> observable = getEnvirApi().postArticleIndex(params.getData());
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<ArticleIndexBean>() {
             @Override
             public void onSuccess(ArticleIndexBean bean) {
-                if (bean!=null){
-                    mView.showPermission(bean,position,wasSelected);
-                }else{
-                    mView.showError("暂无权限");
+                if (bean != null) {
+                    mView.showPermission(bean, position, wasSelected);
+                } else {
+                    mView.showError("没有操作权限");
                 }
             }
 
             @Override
             public void onFailure(int code, String error) {
-
             }
         });
         addSubscribe(disposable);
+
     }
 }

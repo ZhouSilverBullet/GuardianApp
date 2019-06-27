@@ -377,7 +377,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            statusBar(false);
+            statusBar(true);
             mPresenter.loadData();
         }
     }

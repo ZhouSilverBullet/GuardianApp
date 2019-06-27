@@ -97,11 +97,10 @@ public class NewsListFragment extends BaseMvpFragment<NewsListFragmentPresenter>
     }
 
     private void loadData() {
-        if (isFirstLoading) {
-            return;
-        }
+//        if (isFirstLoading) {
+//            return;
+//        }
         isFirstLoading = true;
-        showLoadingDialog();
         mPresenter.loadData(0, type);
     }
 
@@ -116,13 +115,12 @@ public class NewsListFragment extends BaseMvpFragment<NewsListFragmentPresenter>
 
     @Override
     public void showData(List<LearnNewsBean> data) {
+        closeLoadingDialog();
         if (isLoadMore == 2) {
             adapter.addData(data);
         } else {
             adapter.replaceData(data);
         }
-
-        closeLoadingDialog();
     }
 
     @Override

@@ -27,7 +27,7 @@ public class EventDiscretionListAdapter extends BaseQuickAdapter<EventDiscretion
     protected void convert(BaseViewHolder helper, EventDiscretionListBean.PartolBean item) {
         helper.setText(R.id.tv_title,item.getTitle());
         helper.setText(R.id.tv_time,"整改时限："+item.getRectify_date());
-        helper.setText(R.id.tv_address,"提交时间："+item.getRectify_date());
+        helper.setText(R.id.tv_address,"提交时间："+item.getAdd_date());
         helper.setText(R.id.tv_status,item.getStatus()==1?"待复查":"已完成");
 
         helper.convertView.setOnClickListener(new View.OnClickListener() {

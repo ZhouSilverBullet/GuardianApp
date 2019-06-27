@@ -174,7 +174,7 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
                 partUnit = "区级单位";
                 break;
             case 2:
-                partUnit = "乡镇单位";
+                partUnit = "街道单位";
                 break;
             case 3:
                 partUnit = "企业单位";

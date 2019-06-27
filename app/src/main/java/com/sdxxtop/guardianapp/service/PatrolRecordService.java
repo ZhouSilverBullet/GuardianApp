@@ -7,8 +7,6 @@ import android.os.IBinder;
 import android.os.Message;
 import android.text.TextUtils;
 
-import androidx.annotation.Nullable;
-
 import com.amap.api.location.AMapLocation;
 import com.orhanobut.logger.Logger;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
@@ -16,6 +14,7 @@ import com.sdxxtop.guardianapp.model.http.net.Params;
 import com.sdxxtop.guardianapp.model.http.net.RetrofitHelper;
 import com.sdxxtop.guardianapp.utils.AMapFindLocation;
 
+import androidx.annotation.Nullable;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -71,8 +70,11 @@ public class PatrolRecordService extends Service implements Handler.Callback {
                 double longitude = address.getLongitude();
                 double latitude = address.getLatitude();
                 String address1 = address.getAddress();
-
-                if (longitude == 0.0 || latitude == 0.0 || TextUtils.isEmpty(address1)) {
+                if (TextUtils.isEmpty(address1)) {
+                    address1 = "无名路";
+//                    Toast.makeText(PatrolRecordService.this, "无名路", Toast.LENGTH_SHORT).show();
+                }
+                if (longitude == 0.0 || latitude == 0.0) {
                     Logger.e("获取经纬度为0或者地址不对，就放弃这次访问");
                     return;
                 }

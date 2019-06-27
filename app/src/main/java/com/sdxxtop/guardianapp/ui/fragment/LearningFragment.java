@@ -35,25 +35,43 @@ public class LearningFragment extends BaseFragment {
     ArrayList<String> titleList = new ArrayList<>();
     private HomePagerAdapter homePagerAdapter;
 
-    public void replaceList(List<ArticleIndexBean.ShowBean> showList){
+    public void replaceList(List<ArticleIndexBean.ShowBean> showList) {
         if (showList != null && showList.size() > 0) {
-//            showList.remove(0);
-//            showList.remove(0);
-//            showList.remove(0);
             titleList.clear();
             fragments.clear();
             for (ArticleIndexBean.ShowBean showBean : showList) {
-                titleList.add(showBean.getTitle());
-                fragments.add(map.get(showBean.getTitle()));
+                String title = showBean.getTitle();
+                titleList.add(title);
+                fragments.add(map.get(title));
             }
         }
-        for (int i = 0; i < fragments.size(); i++) {
-            BaseFragment fragment = (BaseFragment) fragments.get(i);
-            fragment.setIsFirstLoading(false);
-        }
-        homePagerAdapter.replaceData(titleList,fragments);
+//        homePagerAdapter.replaceData(titleList,fragments);
 
+        homePagerAdapter = new HomePagerAdapter(getChildFragmentManager(),
+                titleList, fragments);
+        mViewPager.setAdapter(homePagerAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
+        mViewPager.setOffscreenPageLimit(fragments.size());
     }
+
+//    private Fragment getFragment(String title) {
+//        Fragment fragment = null;
+//        switch (title) {
+//            case "新闻学习":
+//                fragment = NewsListFragment.newInstance(1);
+//                break;
+//            case "罗庄发布":
+//                fragment = NewsListFragment.newInstance(2);
+//                break;
+//            case "课程":
+//                fragment = CourseListFragment.newInstance(1);
+//                break;
+//            case "考核":
+//                fragment = CourseListFragment.newInstance(2);
+//                break;
+//        }
+//        return fragment;
+//    }
 
     @Override
     protected void initView() {
@@ -72,18 +90,18 @@ public class LearningFragment extends BaseFragment {
         fragments.add(NewsListFragment.newInstance(2));
         fragments.add(CourseListFragment.newInstance(1));
         fragments.add(CourseListFragment.newInstance(2));
-
-
+//
+//
         for (int i = 0; i < titleList.size(); i++) {
             String title = titleList.get(i);
             map.put(title, fragments.get(i));
         }
-
-        homePagerAdapter = new HomePagerAdapter(getChildFragmentManager(),
-                titleList, fragments);
-        mViewPager.setAdapter(homePagerAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
-        mViewPager.setOffscreenPageLimit(fragments.size());
+//
+//        homePagerAdapter = new HomePagerAdapter(getChildFragmentManager(),
+//                titleList, fragments);
+//        mViewPager.setAdapter(homePagerAdapter);
+//        mTabLayout.setupWithViewPager(mViewPager);
+//        mViewPager.setOffscreenPageLimit(fragments.size());
 
 //        fragments.add(ImageTabFragment.newInstance(R.drawable.course));
 //        fragments.add(ImageTabFragment.newInstance(R.drawable.score));
@@ -97,5 +115,4 @@ public class LearningFragment extends BaseFragment {
             statusBar(true);
         }
     }
-
 }

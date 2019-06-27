@@ -147,15 +147,20 @@ public class MarkerImgLoad {
         name.setText(userInfo.getName());
         tv_jobs.setText(userInfo.getPosition());
 
-        Glide.with(mContext)
-                .load(userInfo.getImg())
-                .into(new SimpleTarget<Drawable>(100, 100) {
-                    @Override
-                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                        icon.setImageDrawable(resource);
-                        listener.markerIconLoadingFinished(markerView);
-                    }
-                });
+        UIUtils.getMainThreadHandler().post(new Runnable() {
+            @Override
+            public void run() {
+                Glide.with(mContext)
+                        .load(userInfo.getImg())
+                        .into(new SimpleTarget<Drawable>(100, 100) {
+                            @Override
+                            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                                icon.setImageDrawable(resource);
+                                listener.markerIconLoadingFinished(markerView);
+                            }
+                        });
+            }
+        });
     }
 
     /**

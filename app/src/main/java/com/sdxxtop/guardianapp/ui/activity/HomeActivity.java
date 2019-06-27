@@ -42,6 +42,7 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
     private SupportFragment[] mFragments = new SupportFragment[3];
     private boolean isAdmin;
     private RxPermissions mRxPermissions;
+    private int currentPosition = 0;
 
     @Override
     protected int getLayout() {
@@ -121,11 +122,13 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
 //                }
                 if (position == 1) {
                     mPresenter.articleIndex(position, wasSelected);
-                }else{
+                    return false;
+                } else {
+                    currentPosition = position;
                     switchFragment(position);
                     itemSelectAnimator(position, wasSelected);
+                    return true;
                 }
-                return true;
             }
         });
     }
@@ -138,21 +141,24 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
         if (bean.getShow() != null && bean.getShow().size() > 0) {
             List<ArticleIndexBean.ShowBean> list = bean.getShow();
             for (ArticleIndexBean.ShowBean showBean : list) {
-                if (showBean.getIs_show()==1){
+                if (showBean.getIs_show() == 1) {
                     showList.add(showBean);
                 }
             }
 
-            if (showList.size()>0){
-                if (mFragments[1]!=null){
-                    ((LearningFragment)mFragments[1]).replaceList(showList);
+            if (showList.size() > 0) {
+                if (mFragments[1] != null) {
+                    ((LearningFragment) mFragments[1]).replaceList(showList);
                 }
                 switchFragment(position);
                 itemSelectAnimator(position, wasSelected);
-            }else{
+                mAHBottomNavigation.setCurrentItem(1,false);
+            } else {
                 showToast("没有操作权限");
+                mAHBottomNavigation.setCurrentItem(currentPosition,false);
             }
         } else {
+            mAHBottomNavigation.setCurrentItem(currentPosition,false);
             showToast("没有操作权限");
         }
     }
