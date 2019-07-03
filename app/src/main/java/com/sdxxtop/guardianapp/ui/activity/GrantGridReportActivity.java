@@ -34,6 +34,7 @@ import com.sdxxtop.guardianapp.utils.MarkerImgLoad;
 import com.sdxxtop.guardianapp.utils.MarkerSign;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,6 +70,7 @@ public class GrantGridReportActivity extends BaseMvpActivity<GGRPresenter> imple
     private List<AreaSelectPopWindow.PopWindowDataBean> popWondowData = new ArrayList<>();
     private boolean isMapLoadSuccess, isMapDataLoadSuccess;   // 地图加载完成标识/地图数据加载完成标识
     private List<GridreportIndexBean.GridNowInfo> userInfos;
+    private boolean isThreadStop = false;
 
     @Override
     protected int getLayout() {
@@ -149,13 +151,13 @@ public class GrantGridReportActivity extends BaseMvpActivity<GGRPresenter> imple
 
     //添加详情标签
     private void addTabView(GridreportIndexBean bean) {
-        if (bean == null){
+        if (bean == null) {
             List<TabTextBean> list = new ArrayList<>();
             list.add(new TabTextBean(1, "--", "总人数"));
             list.add(new TabTextBean(2, "--", "巡逻总距离(km)"));
             list.add(new TabTextBean(3, "--", "巡逻总时长(h)"));
             celView.addLayout(list);
-        }else{
+        } else {
             List<TabTextBean> list = new ArrayList<>();
             list.add(new TabTextBean(1, String.valueOf(bean.getGrid_count()), "总人数"));
             list.add(new TabTextBean(2, String.valueOf(bean.getGrid_distance()), "巡逻总距离(km)"));
@@ -221,6 +223,7 @@ public class GrantGridReportActivity extends BaseMvpActivity<GGRPresenter> imple
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        isThreadStop = true;
         //在activity执行onDestroy时执行mapView.onDestroy()，销毁地图
         if (mMapView != null) {
             mMapView.onDestroy();
@@ -266,7 +269,7 @@ public class GrantGridReportActivity extends BaseMvpActivity<GGRPresenter> imple
         if (data == null)
             return;
         if (isMapLoadSuccess && isMapDataLoadSuccess) {
-            AsyncTask.THREAD_POOL_EXECUTOR.execute(new MyRunnable(data));
+            AsyncTask.THREAD_POOL_EXECUTOR.execute(new MyRunnable(data, this));
         }
     }
 
@@ -300,6 +303,9 @@ public class GrantGridReportActivity extends BaseMvpActivity<GGRPresenter> imple
             }
         }
         if (bean.getGrid_now_info() != null && bean.getGrid_now_info().size() > 0) {
+            if (isFinishing()) {
+                return;
+            }
             isMapDataLoadSuccess = true;
             userInfos = bean.getGrid_now_info();
             addCustomMarkersToMap(userInfos);
@@ -308,28 +314,35 @@ public class GrantGridReportActivity extends BaseMvpActivity<GGRPresenter> imple
 
     class MyRunnable implements Runnable {
         private List<GridreportIndexBean.GridNowInfo> mData;
+        private WeakReference<GrantGridReportActivity> activityDef;
 
-        public MyRunnable(List<GridreportIndexBean.GridNowInfo> mData) {
+        public MyRunnable(List<GridreportIndexBean.GridNowInfo> mData, GrantGridReportActivity activity) {
             this.mData = mData;
+            activityDef = new WeakReference<>(activity);
         }
 
         @Override
         public void run() {
-            LatLngBounds.Builder builder = LatLngBounds.builder();
-            for (int i = 0; i < mData.size(); i++) {
-                Log.e("循环列表", "'" + mData.get(i).toString());
-                markerImgLoad.addCustomMarker(mData.get(i), new MarkerSign(i), new MarkerImgLoad.OnMarkerListener() {
-                    @Override
-                    public void showMarkerIcon(MarkerOptions markerOptions, MarkerSign sign) {
-                        Marker marker;
-                        marker = mAMap.addMarker(markerOptions);
-                        marker.setObject(sign);
-                    }
-                });
+            if (mData != null && mData.size() > 0) {
+                LatLngBounds.Builder builder = LatLngBounds.builder();
+                for (int i = 0; i < mData.size(); i++) {
+                    if (activityDef.get() == null || activityDef.get().isFinishing()) {
+                        return;
 //                builder.include(markerImgLoad.getLatLng(data.get(i).getLongitude()));
-            }
+                    }
+                    Log.e("循环列表", "'" + mData.get(i).toString());
+                    markerImgLoad.addCustomMarker(mData.get(i), new MarkerSign(i), new MarkerImgLoad.OnMarkerListener() {
+                        @Override
+                        public void showMarkerIcon(MarkerOptions markerOptions, MarkerSign sign) {
+                            Marker marker;
+                            marker = mAMap.addMarker(markerOptions);
+                            marker.setObject(sign);
+                        }
+                    });
 //            mAMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 30));
-            moveMapToPosition(markerImgLoad.getLatLng(mData.get(0).getLongitude()));
+                }
+                moveMapToPosition(markerImgLoad.getLatLng(mData.get(0).getLongitude()));
+            }
         }
     }
 }

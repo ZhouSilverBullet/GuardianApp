@@ -37,12 +37,16 @@ public class PatrolPathPresenter extends RxPresenter<PatrolPathContract.IView> i
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EnterpriseTrailBean>() {
             @Override
             public void onSuccess(EnterpriseTrailBean bean) {
-                mView.showData(bean);
+                if (mView != null) {
+                    mView.showData(bean);
+                }
             }
 
             @Override
             public void onFailure(int code, String error) {
-                mView.showError(error);
+                if (mView != null) {
+                    mView.showError(error);
+                }
             }
         });
 

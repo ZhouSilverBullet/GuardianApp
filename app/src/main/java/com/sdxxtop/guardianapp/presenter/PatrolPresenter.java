@@ -28,7 +28,9 @@ public class PatrolPresenter extends RxPresenter<PatrolContract.IView> implement
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<SignLogBean>() {
             @Override
             public void onSuccess(SignLogBean signLogBean) {
-                mView.showData(signLogBean);
+                if (mView != null) {
+                    mView.showData(signLogBean);
+                }
             }
 
             @Override

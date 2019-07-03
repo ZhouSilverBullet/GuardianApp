@@ -215,25 +215,29 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
      * @param data
      */
     private void addMarker(List<EnterpriseTrailBean.TrailInfo> data) {
-        for (int i = 1; i < list.size() - 1; i++) {
-            //起点图标
-            aMap.addMarker(new MarkerOptions()
-                    .position(list.get(i))
-                    .anchor(0.5f, 0.15f)  // icon偏移量
+        if (data!=null&&data.size()>0){
+            for (int i = 1; i < list.size() - 1; i++) {
+                //起点图标
+                aMap.addMarker(new MarkerOptions()
+                        .position(list.get(i))
+                        .anchor(0.5f, 0.15f)  // icon偏移量
 //                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_success)));
-                    .icon(customizeMarkerIcon(data.get(i))));
-        }
+                        .icon(customizeMarkerIcon(data.get(i))));
+            }
 
-        //起点图标
-        aMap.addMarker(new MarkerOptions()
-                .position(list.get(0))
-                .icon(customizeMarkerIconLastAndFirst(data.get(0), "起点")));
+            //起点图标
+            if (list.size()>0){
+                aMap.addMarker(new MarkerOptions()
+                        .position(list.get(0))
+                        .icon(customizeMarkerIconLastAndFirst(data.get(0), "起点")));
+            }
 
-        //终点坐标
-        if (list.size() > 0) {
-            aMap.addMarker(new MarkerOptions()
-                    .position(list.get(list.size() - 1))
-                    .icon(customizeMarkerIconLastAndFirst(data.get(data.size() - 1), "终点")));
+            //终点坐标
+            if (list.size() > 0) {
+                aMap.addMarker(new MarkerOptions()
+                        .position(list.get(list.size() - 1))
+                        .icon(customizeMarkerIconLastAndFirst(data.get(data.size() - 1), "终点")));
+            }
         }
     }
 

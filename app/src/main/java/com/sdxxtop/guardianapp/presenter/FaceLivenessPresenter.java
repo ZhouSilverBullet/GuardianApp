@@ -16,8 +16,6 @@ import com.sdxxtop.guardianapp.presenter.contract.FaceLivenessContract;
 import com.sdxxtop.guardianapp.utils.AMapFindLocation;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 
-import org.reactivestreams.Publisher;
-
 import java.io.File;
 import java.io.FileOutputStream;
 
@@ -46,12 +44,16 @@ public class FaceLivenessPresenter extends RxPresenter<FaceLivenessContract.IVie
         Disposable disposable = RxUtils.handleHttp(observable, new IRequestCallback<RequestBean>() {
             @Override
             public void onSuccess(RequestBean requestBean) {
-                mView.faceSuccess(address);
+                if (mView != null) {
+                    mView.faceSuccess(address);
+                }
             }
 
             @Override
             public void onFailure(int code, String error) {
-                mView.showError(error);
+                if (mView != null) {
+                    mView.showError(error);
+                }
             }
         });
         addSubscribe(disposable);
@@ -97,12 +99,16 @@ public class FaceLivenessPresenter extends RxPresenter<FaceLivenessContract.IVie
         Disposable disposable = RxUtils.handleHttp(observable, new IRequestCallback<RequestBean>() {
             @Override
             public void onSuccess(RequestBean requestBean) {
-                mView.faceRegisterSuccess("");
+                if (mView != null) {
+                    mView.faceRegisterSuccess("");
+                }
             }
 
             @Override
             public void onFailure(int code, String error) {
-                mView.showError(error);
+                if (mView != null) {
+                    mView.showError(error);
+                }
             }
         });
         addSubscribe(disposable);
@@ -169,7 +175,9 @@ public class FaceLivenessPresenter extends RxPresenter<FaceLivenessContract.IVie
 
             @Override
             public void onFailure(int code, String error) {
-                mView.showError(error);
+                if (mView != null) {
+                    mView.showError(error);
+                }
             }
         });
         addSubscribe(disposable);

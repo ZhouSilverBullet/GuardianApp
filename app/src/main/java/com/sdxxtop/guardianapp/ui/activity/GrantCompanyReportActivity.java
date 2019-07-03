@@ -41,7 +41,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.functions.Consumer;
 
-public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> implements GCRContract.IView, AMap.OnMapLoadedListener{
+public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> implements GCRContract.IView, AMap.OnMapLoadedListener {
 
     @BindView(R.id.title)
     TitleView title;
@@ -67,6 +67,7 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
     private List<AreaSelectPopWindow.PopWindowDataBean> popWondowData = new ArrayList<>();
     private boolean isMapLoadSuccess, isMapDataLoadSuccess;   // 地图加载完成标识/地图数据加载完成标识
     private List<EnterpriseIndexBean.UserInfo> userInfos;
+    private boolean isThreadStop = false;
 
     @Override
     protected int getLayout() {
@@ -151,7 +152,7 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
             list.add(new TabTextBean(2, "--", "安全管理员数"));
             list.add(new TabTextBean(3, "--", "考试培训次数"));
             list.add(new TabTextBean(4, "--", "上报自查次数"));
-        }else{
+        } else {
             list.add(new TabTextBean(1, String.valueOf(bean.getPart_count()), "企业数"));
             list.add(new TabTextBean(2, String.valueOf(bean.getUser_count()), "安全管理员数"));
             list.add(new TabTextBean(3, String.valueOf(bean.getTrai_count()), "考试培训次数"));
@@ -216,6 +217,7 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        isThreadStop = true;
         //在activity执行onDestroy时执行mapView.onDestroy()，销毁地图
         if (mMapView != null) {
             mMapView.onDestroy();
@@ -310,21 +312,26 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
 
         @Override
         public void run() {
-            LatLngBounds.Builder builder = LatLngBounds.builder();
-            for (int i = 0; i < mData.size(); i++) {
-                Log.e("循环列表", "'" + mData.get(i).toString());
-                markerImgLoad.addCustomMarker(mData.get(i), new MarkerSign(i), new MarkerImgLoad.OnMarkerListener() {
-                    @Override
-                    public void showMarkerIcon(MarkerOptions markerOptions, MarkerSign sign) {
-                        Marker marker;
-                        marker = mAMap.addMarker(markerOptions);
-                        marker.setObject(sign);
-                    }
-                });
+            if (!isThreadStop) {
+                if (mData != null && mData.size() > 0) {
+                    LatLngBounds.Builder builder = LatLngBounds.builder();
+                    for (int i = 0; i < mData.size(); i++) {
+                        Log.e("循环列表", "'" + mData.get(i).toString());
+                        markerImgLoad.addCustomMarker(mData.get(i), new MarkerSign(i), new MarkerImgLoad.OnMarkerListener() {
+                            @Override
+                            public void showMarkerIcon(MarkerOptions markerOptions, MarkerSign sign) {
+                                Marker marker;
+                                marker = mAMap.addMarker(markerOptions);
+                                marker.setObject(sign);
+                            }
+                        });
 //                builder.include(markerImgLoad.getLatLng(data.get(i).getLongitude()));
-            }
+                    }
 //            mAMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 30));
-            moveMapToPosition(markerImgLoad.getLatLng(mData.get(0).getLongitude()));
+                    moveMapToPosition(markerImgLoad.getLatLng(mData.get(0).getLongitude()));
+                }
+            }
         }
     }
+
 }

@@ -238,7 +238,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
                                             public void onAddress(AMapLocation amapLocation) {
                                                 String address = amapLocation.getAddress();
                                                 if (TextUtils.isEmpty(address)) {
-                                                    showToast("当前无定位信息");
+                                                    showToast("定位获取位置失败,请稍后重试");
                                                 } else {
                                                     Intent intent = new Intent(getContext(), MyFaceLivenessActivity.class);
                                                     intent.putExtra("isFace", true);

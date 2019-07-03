@@ -31,12 +31,16 @@ public class GGRPresenter extends RxPresenter<GGRContract.IView> implements GGRC
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<GridreportIndexBean>() {
             @Override
             public void onSuccess(GridreportIndexBean bean) {
-                mView.showData(bean);
+                if (mView != null) {
+                    mView.showData(bean);
+                }
             }
 
             @Override
             public void onFailure(int code, String error) {
-                mView.showError(error);
+                if (mView != null) {
+                    mView.showError(error);
+                }
             }
         });
 

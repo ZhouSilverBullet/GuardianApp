@@ -109,6 +109,7 @@ public class App extends BaseApp {
 
     /**
      * 初始化云推送通道
+     *
      * @param applicationContext
      */
     private void initCloudChannel(Context applicationContext) {
@@ -124,6 +125,7 @@ public class App extends BaseApp {
             public void onSuccess(String response) {
                 Log.e(TAG, "init cloudchannel success");
             }
+
             @Override
             public void onFailed(String errorCode, String errorMessage) {
                 Log.e(TAG, "init cloudchannel failed -- errorcode:" + errorCode + " -- errorMessage:" + errorMessage);
@@ -131,6 +133,7 @@ public class App extends BaseApp {
         });
         initNotificationChannel();
     }
+
     //Android 8.0以上设备通知接收
     private void initNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

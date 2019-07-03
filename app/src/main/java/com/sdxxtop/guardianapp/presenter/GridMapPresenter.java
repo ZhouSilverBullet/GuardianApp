@@ -44,7 +44,9 @@ public class GridMapPresenter extends RxPresenter<GridMapContract.IView> impleme
                 if (user != null) {
 //                    AsyncTask.THREAD_POOL_EXECUTOR.execute(
 //                            new MapRunnable(GridMapPresenter.this, user));
-                    mView.showMap(mainMapBean);
+                    if (mView != null) {
+                        mView.showMap(mainMapBean);
+                    }
                 }else{
                     UIUtils.showToast("暂无数据");
                 }

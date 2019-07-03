@@ -32,7 +32,9 @@ public class GCRPresenter extends RxPresenter<GCRContract.IView> implements GCRC
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EnterpriseIndexBean>() {
             @Override
             public void onSuccess(EnterpriseIndexBean bean) {
-                mView.showData(bean);
+                if (mView != null) {
+                    mView.showData(bean);
+                }
             }
 
             @Override
