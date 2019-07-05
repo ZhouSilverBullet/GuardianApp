@@ -29,9 +29,9 @@ import com.sdxxtop.guardianapp.ui.adapter.HomeRecyclerAdapter;
 import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
 import com.sdxxtop.guardianapp.ui.widget.ImgAndTextLinearView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
-import com.sdxxtop.guardianapp.utils.AMapFindLocation;
 import com.sdxxtop.guardianapp.utils.GlideImageLoader;
 import com.sdxxtop.guardianapp.utils.GpsUtils;
+import com.sdxxtop.guardianapp.utils.LocationUtilOne;
 import com.sdxxtop.guardianapp.utils.SpUtil;
 import com.youth.banner.Banner;
 
@@ -231,12 +231,12 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
                             if (isClock == 1) {
                                 if (mIsFace) {
                                     if (GpsUtils.isOPen(getContext())) {
-                                        AMapFindLocation instance = AMapFindLocation.getInstance();
-                                        instance.location();
-                                        instance.setLocationCompanyListener(new AMapFindLocation.LocationCompanyListener() {
+                                        LocationUtilOne oneLoaction = new LocationUtilOne();
+                                        oneLoaction.startLocate(getContext());
+                                        oneLoaction.setLocationCallBack(new LocationUtilOne.ILocationCallBack() {
                                             @Override
-                                            public void onAddress(AMapLocation amapLocation) {
-                                                String address = amapLocation.getAddress();
+                                            public void callBack(String str, double lat, double lgt, AMapLocation aMapLocation) {
+                                                String address = aMapLocation.getAddress();
                                                 if (TextUtils.isEmpty(address)) {
                                                     showToast("定位获取位置失败,请稍后重试");
                                                 } else {

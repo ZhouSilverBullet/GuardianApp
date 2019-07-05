@@ -22,6 +22,7 @@ import com.sdxxtop.guardianapp.presenter.HomePresenter;
 import com.sdxxtop.guardianapp.presenter.contract.HomeContract;
 import com.sdxxtop.guardianapp.service.PatrolRecordService;
 import com.sdxxtop.guardianapp.ui.dialog.DownloadDialog;
+import com.sdxxtop.guardianapp.ui.fragment.DataMonitoringFragment;
 import com.sdxxtop.guardianapp.ui.fragment.HomeFragment;
 import com.sdxxtop.guardianapp.ui.fragment.LearningFragment;
 import com.sdxxtop.guardianapp.ui.fragment.MineFragment;
@@ -39,7 +40,7 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
     @BindView(R.id.ahn_home_navigation)
     AHBottomNavigation mAHBottomNavigation;
     private int prePosition;
-    private SupportFragment[] mFragments = new SupportFragment[3];
+    private SupportFragment[] mFragments = new SupportFragment[4];
     private boolean isAdmin;
     private RxPermissions mRxPermissions;
     private int currentPosition = 0;
@@ -120,7 +121,7 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
 //                if (position == 2) {
 //                    return false;
 //                }
-                if (position == 1) {
+                if (position == 2) {
                     mPresenter.articleIndex(position, wasSelected);
                     return false;
                 } else {
@@ -147,12 +148,12 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
             }
 
             if (showList.size() > 0) {
-                if (mFragments[1] != null) {
-                    ((LearningFragment) mFragments[1]).replaceList(showList);
+                if (mFragments[2] != null) {
+                    ((LearningFragment) mFragments[2]).replaceList(showList);
                 }
                 switchFragment(position);
                 itemSelectAnimator(position, wasSelected);
-                mAHBottomNavigation.setCurrentItem(1,false);
+                mAHBottomNavigation.setCurrentItem(2,false);
             } else {
                 showToast("没有操作权限");
                 mAHBottomNavigation.setCurrentItem(currentPosition,false);
@@ -167,13 +168,15 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
         HomeFragment fragment = findFragment(HomeFragment.class);
         if (fragment == null) {
             mFragments[0] = HomeFragment.newInstance(isAdmin);
-            mFragments[1] = new LearningFragment();
-            mFragments[2] = MineFragment.newInstance(isAdmin);
+            mFragments[1] = DataMonitoringFragment.newInstance();
+            mFragments[2] = new LearningFragment();
+            mFragments[3] = MineFragment.newInstance(isAdmin);
 
             loadMultipleRootFragment(R.id.fl_home_container, position,
                     mFragments[0],
                     mFragments[1],
-                    mFragments[2]);
+                    mFragments[2],
+                    mFragments[3]);
         } else {
             showHideFragment(mFragments[position], mFragments[prePosition]);
         }

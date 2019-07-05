@@ -198,7 +198,7 @@ public class CustomProgressBar extends RelativeLayout {
         return "";
     }
 
-    public void setNoSolveValue(String tijiaoTime,String parfaTime,String wufaChuliTime){
+    public void setNoSolveValue(String tijiaoTime, String parfaTime, String wufaChuliTime) {
         img1.setImageDrawable(getResources().getDrawable(R.drawable.details));
         img2.setImageDrawable(getResources().getDrawable(R.drawable.details));
         img3.setImageDrawable(getResources().getDrawable(R.drawable.event_progress_show_error));
@@ -210,5 +210,16 @@ public class CustomProgressBar extends RelativeLayout {
         tvDate1.setText(parseShowDate(tijiaoTime));
         tvDate2.setText(parseShowDate(parfaTime));
         tvDate3.setText(parseShowDate(wufaChuliTime));
+    }
+
+    public void setWFJJYWCValue() {
+        img1.setImageDrawable(getResources().getDrawable(R.drawable.details));
+        img2.setImageDrawable(getResources().getDrawable(R.drawable.details));
+        img3.setImageDrawable(getResources().getDrawable(R.drawable.event_progress_show_error));
+        img4.setImageDrawable(getResources().getDrawable(R.drawable.details));
+        tvLine3.setBackgroundColor(Color.parseColor("#32B16C"));
+        tvText3.setText("无法解决");
+        tvDate3.setTextColor(Color.parseColor("#FF0000"));
+        tvText3.setTextColor(Color.parseColor("#FF0000"));
     }
 }

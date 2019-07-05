@@ -17,7 +17,6 @@
     <uses-permission android:name="android.hardware.camera.autofocus"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/> <!-- 适配下载应用，安装apk的时候 -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
-
     <uses-permission android:name="android.permission.RESTART_PACKAGES"/>
     <uses-permission android:name="android.permission.GET_TASKS"/>
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
@@ -35,6 +34,10 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.activity.DeviceDataDetailActivity">
+        </activity>
+        <activity android:name=".ui.activity.MonitorMapActivity">
+        </activity>
         <activity android:name=".ui.activity.CenterMessage2Activity">
         </activity>
         <activity android:name=".ui.activity.CenterMessageActivity">
@@ -84,8 +87,8 @@
         <activity
             android:name=".ui.activity.HomeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@style/AppNormalTheme"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask"
+            android:theme="@style/AppNormalTheme"/>
         <activity
             android:name=".ui.activity.SplashActivity"
             android:theme="@style/NormalSplash">
@@ -165,16 +168,13 @@
         <meta-data
             android:name="design_height_in_dp"
             android:value="724"/>
-
-
         <meta-data
             android:name="com.alibaba.app.appkey"
             android:value="27562646"/> <!-- 请填写你自己的- appKey -->
         <meta-data
             android:name="com.alibaba.app.appsecret"
             android:value="95e2d08511e79f602eb7f11c4255f14c"/> <!-- 请填写你自己的appSecret -->
-
-        <!-- Push SDK 相关组件，required-->
+        <!-- Push SDK 相关组件，required -->
         <!-- 消息接收服务 -->
         <service
             android:name="com.alibaba.sdk.android.push.MsgService"
@@ -222,6 +222,7 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+
                 <data android:scheme="package"/>
             </intent-filter>
             <intent-filter>
@@ -248,8 +249,7 @@
         </service>
         <service
             android:name="com.alibaba.sdk.android.push.AliyunPushIntentService"
-            android:exported="true"
-            >
+            android:exported="true">
             <intent-filter>
                 <action android:name="org.agoo.android.intent.action.RECEIVE"/>
             </intent-filter>
@@ -264,9 +264,11 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+
                 <data android:scheme="package"/>
             </intent-filter>
         </receiver>
+
         <service
             android:name="com.alibaba.sdk.android.push.channel.TaobaoRecvService"
             android:exported="true"
@@ -274,17 +276,16 @@
             <intent-filter>
                 <action android:name="org.android.agoo.client.MessageReceiverService"/>
             </intent-filter>
-        </service>
-        <!-- V3.0.12及以上版本需配置 -->
+        </service> <!-- V3.0.12及以上版本需配置 -->
         <service
             android:name="com.taobao.accs.internal.AccsJobService"
             android:permission="android.permission.BIND_JOB_SERVICE"
-            android:process=":channel"/>
-        <!-- V3.0.7及以上版本需配置 -->
+            android:process=":channel"/> <!-- V3.0.7及以上版本需配置 -->
         <service
             android:name="com.alibaba.sdk.android.push.channel.KeepChannelService"
             android:permission="android.permission.BIND_JOB_SERVICE"
             android:process=":channel"/>
+
         <receiver
             android:name="com.alibaba.sdk.android.push.SystemEventReceiver"
             android:process=":channel">
@@ -293,8 +294,7 @@
                 <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
                 <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"/>
             </intent-filter>
-        </receiver>
-        <!-- V3.0.9及以上版本需配置 -->
+        </receiver> <!-- V3.0.9及以上版本需配置 -->
         <activity
             android:name="com.alibaba.sdk.android.push.keeplive.PushExtActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|navigation|keyboard"
@@ -304,25 +304,20 @@
             android:launchMode="singleInstance"
             android:process=":channel"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
-        </activity>
-
-        <!-- 消息接收监听器 （用户可自主扩展） -->
+        </activity> <!-- 消息接收监听器 （用户可自主扩展） -->
         <receiver
             android:name=".alipush.MyMessageReceiver"
             android:exported="false"> <!-- 为保证receiver安全，建议设置不可导出，如需对其他应用开放可通过android：permission进行限制 -->
             <intent-filter>
-                <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED" />
+                <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="com.alibaba.push2.action.NOTIFICATION_REMOVED" />
+                <action android:name="com.alibaba.push2.action.NOTIFICATION_REMOVED"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="com.alibaba.sdk.android.push.RECEIVE" />
+                <action android:name="com.alibaba.sdk.android.push.RECEIVE"/>
             </intent-filter>
         </receiver>
-
-
-
     </application>
 
 </manifest>

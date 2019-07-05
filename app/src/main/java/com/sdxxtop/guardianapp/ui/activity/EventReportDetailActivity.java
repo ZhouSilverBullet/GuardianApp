@@ -262,7 +262,10 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
 
         /**********  无法解决  ************/
 
-        if (bean.settle_status == 2) {
+        if (bean.settle_status == 2&&bean.status==4) {
+            cpbProgress.setStatus(bean.status, getTime(bean));
+            cpbProgress.setWFJJYWCValue();
+        } else if (bean.settle_status == 2&&bean.status!=5) {
             String parfaTime = "";
             String wufachuli = "";
             if (bean.extra_date != null && bean.extra_date.size() > 0) {
@@ -272,7 +275,6 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
                 wufachuli = bean.extra.get(bean.extra.size() - 1).getOperate_time();
             }
             cpbProgress.setNoSolveValue(bean.add_time, parfaTime, wufachuli);
-
         } else {
             cpbProgress.setStatus(bean.status, getTime(bean));
         }
@@ -358,11 +360,11 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         tvReportPath.setText(bean.part_name);
         tvDescription.setText(new StringBuilder().append("事件简要描述：").append(bean.content));
         //定位补充描述
-        if (TextUtils.isEmpty(bean.supplement)){
+        if (TextUtils.isEmpty(bean.supplement)) {
             tvLocationDesc.setVisibility(View.GONE);
-        }else{
+        } else {
             tvLocationDesc.setVisibility(View.VISIBLE);
-            tvLocationDesc.setText("定位补充描述: "+bean.supplement);
+            tvLocationDesc.setText("定位补充描述: " + bean.supplement);
         }
     }
 
@@ -415,7 +417,7 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         //由于后台会发送1000-01-01 00：00：00 所以 加入了 status 的判断
         if (!TextUtils.isEmpty(finishTime1)) {
             tvJiejueTime.setVisibility(View.VISIBLE);
-            tvJiejueTime.setText("解决反馈时间："+ Date2Util.handleTime(finishTime1));
+            tvJiejueTime.setText("解决反馈时间：" + Date2Util.handleTime(finishTime1));
         } else {
             tvJiejueTime.setVisibility(View.GONE);
         }
@@ -520,7 +522,7 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
                 //2.已经反馈,然后弹出验收结果
                 if (eventStatus == 2) {
                     if (erCheckResultWindow == null) {
-                        erCheckResultWindow = new ERCheckResultWindow(this,popwindow_bg);
+                        erCheckResultWindow = new ERCheckResultWindow(this, popwindow_bg);
                         erCheckResultWindow.show(getLayout(), false);
                         erCheckResultWindow.setOnConfirmClick(this);
                     } else {

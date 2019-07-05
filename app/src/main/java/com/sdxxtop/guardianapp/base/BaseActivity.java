@@ -10,8 +10,10 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.sdxxtop.guardianapp.app.App;
 import com.sdxxtop.guardianapp.utils.DialogUtil;
 import com.sdxxtop.guardianapp.utils.StatusBarUtil;
+import com.sdxxtop.guardianapp.utils.SystemUtil;
 
 import androidx.annotation.Nullable;
 import butterknife.ButterKnife;
@@ -133,6 +135,19 @@ public abstract class BaseActivity extends SupportActivity {
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    public boolean isVersionMoreKitkat() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public void topViewPadding(View view) {
+        if (isVersionMoreKitkat()) {
+            view.setPadding(0, SystemUtil.getStatusHeight(App.getContext()), 0, 0);
         }
     }
 

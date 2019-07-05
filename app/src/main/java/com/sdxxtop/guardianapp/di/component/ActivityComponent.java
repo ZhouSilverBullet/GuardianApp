@@ -8,6 +8,7 @@ import com.sdxxtop.guardianapp.ui.activity.CenterMessage2Activity;
 import com.sdxxtop.guardianapp.ui.activity.CenterMessageActivity;
 import com.sdxxtop.guardianapp.ui.activity.ContactActivity;
 import com.sdxxtop.guardianapp.ui.activity.ContactSearchActivity;
+import com.sdxxtop.guardianapp.ui.activity.DeviceDataDetailActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventDiscretionListActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventDiscretionReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportActivity;
@@ -25,6 +26,7 @@ import com.sdxxtop.guardianapp.ui.activity.GridMapActivity;
 import com.sdxxtop.guardianapp.ui.activity.GridreportUserreportActivity;
 import com.sdxxtop.guardianapp.ui.activity.HomeActivity;
 import com.sdxxtop.guardianapp.ui.activity.LoginActivity;
+import com.sdxxtop.guardianapp.ui.activity.MonitorMapActivity;
 import com.sdxxtop.guardianapp.ui.activity.NewsDetailsActivity;
 import com.sdxxtop.guardianapp.ui.activity.PartEventListActivity;
 import com.sdxxtop.guardianapp.ui.activity.PatrolAddDetailActivity;
@@ -75,5 +77,7 @@ public interface ActivityComponent {
     void inject(ReCheckActivity activity);
     void inject(CenterMessageActivity activity);
     void inject(CenterMessage2Activity activity);
+    void inject(MonitorMapActivity activity);
+    void inject(DeviceDataDetailActivity activity);
 
 }

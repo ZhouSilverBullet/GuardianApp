@@ -13,8 +13,6 @@ import android.text.TextPaint;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.dueeeke.videocontroller.StandardVideoController;
-import com.dueeeke.videoplayer.player.IjkVideoView;
 import com.dueeeke.videoplayer.player.PlayerConfig;
 import com.dueeeke.videoplayer.util.PlayerUtils;
 import com.sdxxtop.guardianapp.R;

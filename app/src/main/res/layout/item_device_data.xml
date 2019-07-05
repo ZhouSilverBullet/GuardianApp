@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <include layout="@layout/item_course_list_line_recycler"/>
+
+    <LinearLayout
+        android:paddingBottom="16dp"
+        android:paddingTop="17dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FAFBFF"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_num"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="#313131"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="2019.06.20 16:00"
+            android:textColor="#313131"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:id="@+id/tv_pm1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="25"
+            android:textColor="#313131"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:id="@+id/tv_pm2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="25"
+            android:textColor="#313131"
+            android:textSize="13sp"/>
+    </LinearLayout>
+
+</LinearLayout>

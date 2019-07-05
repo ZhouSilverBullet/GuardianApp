@@ -5,6 +5,7 @@ import android.app.Activity;
 import com.sdxxtop.guardianapp.di.module.FragmentModule;
 import com.sdxxtop.guardianapp.di.qualifier.FragmentScope;
 import com.sdxxtop.guardianapp.ui.fragment.CourseListFragment;
+import com.sdxxtop.guardianapp.ui.fragment.DataMonitoringFragment;
 import com.sdxxtop.guardianapp.ui.fragment.HomeFragment;
 import com.sdxxtop.guardianapp.ui.fragment.MineFragment;
 import com.sdxxtop.guardianapp.ui.fragment.NewsListFragment;
@@ -17,6 +18,7 @@ public interface FragmentComponent {
     Activity getActivity();
 
     void inject(HomeFragment homeFragment);
+    void inject(DataMonitoringFragment fragment);
 
     void inject(NewsListFragment newsListFragment);
     void inject(CourseListFragment fragment);

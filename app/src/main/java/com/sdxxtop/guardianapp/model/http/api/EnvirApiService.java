@@ -1,8 +1,11 @@
 package com.sdxxtop.guardianapp.model.http.api;
 
 import com.sdxxtop.guardianapp.model.bean.ArticleIndexBean;
+import com.sdxxtop.guardianapp.model.bean.AuthDataBean;
 import com.sdxxtop.guardianapp.model.bean.AutoLoginBean;
 import com.sdxxtop.guardianapp.model.bean.ContactIndexBean;
+import com.sdxxtop.guardianapp.model.bean.DeviceDataBean;
+import com.sdxxtop.guardianapp.model.bean.DeviceMapBean;
 import com.sdxxtop.guardianapp.model.bean.EnterpriseCompanyBean;
 import com.sdxxtop.guardianapp.model.bean.EnterpriseIndexBean;
 import com.sdxxtop.guardianapp.model.bean.EnterpriseSecurityBean;
@@ -50,9 +53,9 @@ import retrofit2.http.Path;
 
 public interface EnvirApiService {
 
-//    String BASE_URL = "http://envir.sdxxtop.com/api/";
+    String BASE_URL = "http://envir.sdxxtop.com/api/";
 //    String BASE_URL = "http://envir.test.sdxxtop.com/api/";  // 测试
-    String BASE_URL = "http://envir.dev.sdxxtop.com/api/";  // 预发布环境的
+//    String BASE_URL = "http://envir.dev.sdxxtop.com/api/";  // 预发布环境的
 
     @FormUrlEncoded
     @POST("app/init")
@@ -255,7 +258,23 @@ public interface EnvirApiService {
     Observable<RequestBean<UnreadIndexBean>> postUnreadIndex(@Field("data") String data);
 
     @FormUrlEncoded
+    @POST("device/index")
+    Observable<RequestBean<AuthDataBean>> posDeviceIndex(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("device/deviceMap")
+    Observable<RequestBean<DeviceMapBean>> postDeviceDeviceMap(@Field("data") String data);
+
+    @FormUrlEncoded
     @POST("unread/newslist")
     Observable<RequestBean<UnreadNewslistBean>> postUnreadNewslist(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("device/deviceRead")
+    Observable<RequestBean<DeviceDataBean>> postDeviceDeviceRead(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("device/deviceReadList")
+    Observable<RequestBean<DeviceDataBean>> postDeviceDeviceReadList(@Field("data") String data);
 
 }

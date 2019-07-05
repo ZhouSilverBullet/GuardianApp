@@ -40,6 +40,6 @@
         android:layout_below="@+id/ll_containor_temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/triangle_down"/>
+        android:background="@drawable/triangle_down_orangn"/>
 
 </RelativeLayout>
