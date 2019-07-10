@@ -24,7 +24,7 @@ public class UnreadNewslistBean {
     }
 
     public List<EventItemBean> getOverdue_event() {
-        if (overdue_event!=null&&overdue_event.size()>0){
+        if (overdue_event != null && overdue_event.size() > 0) {
             for (EventItemBean eventItemBean : overdue_event) {
                 eventItemBean.setClassify("超期事件");
             }
@@ -37,7 +37,7 @@ public class UnreadNewslistBean {
     }
 
     public List<EventItemBean> getEvent_expire() {
-        if (event_expire!=null&&event_expire.size()>0){
+        if (event_expire != null && event_expire.size() > 0) {
             for (EventItemBean eventItemBean : event_expire) {
                 eventItemBean.setClassify("到期事件");
             }
@@ -50,7 +50,7 @@ public class UnreadNewslistBean {
     }
 
     public List<EventItemBean> getWhole_event() {
-        if (whole_event!=null&&whole_event.size()>0){
+        if (whole_event != null && whole_event.size() > 0) {
             for (EventItemBean eventItemBean : whole_event) {
                 eventItemBean.setClassify("待验收事件");
             }
@@ -63,7 +63,7 @@ public class UnreadNewslistBean {
     }
 
     public List<EventItemBean> getReject_data() {
-        if (reject_data!=null&&reject_data.size()>0){
+        if (reject_data != null && reject_data.size() > 0) {
             for (EventItemBean eventItemBean : reject_data) {
                 eventItemBean.setClassify("驳回事件");
             }
@@ -83,6 +83,35 @@ public class UnreadNewslistBean {
 
         private int patrol_id;
         private String rectify_date;
+
+        //扬尘监测
+        private int early_id;
+        private String content;
+        private String add_time;
+
+        public int getEarly_id() {
+            return early_id;
+        }
+
+        public void setEarly_id(int early_id) {
+            this.early_id = early_id;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
+
+        public String getAdd_time() {
+            return add_time;
+        }
+
+        public void setAdd_time(String add_time) {
+            this.add_time = add_time;
+        }
 
         public String getRectify_date() {
             return rectify_date;

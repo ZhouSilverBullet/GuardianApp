@@ -84,6 +84,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/ll_data_normal"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -121,6 +122,7 @@
                     android:background="@color/color_E0E0E0"/>
 
                 <LinearLayout
+                    android:id="@+id/ll_data_exception"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -158,6 +160,7 @@
                     android:background="@color/color_E0E0E0"/>
 
                 <LinearLayout
+                    android:id="@+id/ll_device_exception"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

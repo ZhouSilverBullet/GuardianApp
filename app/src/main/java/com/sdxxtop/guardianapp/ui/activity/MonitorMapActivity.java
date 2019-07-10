@@ -53,10 +53,19 @@ public class MonitorMapActivity extends BaseMvpActivity<MonitorMapPresenter> imp
     TextView tvDataException;
     @BindView(R.id.tv_device_exception)
     TextView tvDeviceException;
+    @BindView(R.id.ll_data_normal)
+    LinearLayout llDataNormal;
+    @BindView(R.id.ll_data_exception)
+    LinearLayout llDataException;
+    @BindView(R.id.ll_device_exception)
+    LinearLayout llDeviceException;
 
     private AMap aMap;
     private MonitorMapMarkerUtil mapMarkerUtil;
     private MonitorMarkerAdapter mAdapter;
+    private boolean isMapLoadOver = false;
+    private boolean isDataLoadOver = false;
+    private List<DeviceMapBean.DeviceInfo> data;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -100,6 +109,13 @@ public class MonitorMapActivity extends BaseMvpActivity<MonitorMapPresenter> imp
 
         mAdapter = new MonitorMarkerAdapter(this);
         aMap.setInfoWindowAdapter(mAdapter);
+        aMap.setOnMapLoadedListener(new AMap.OnMapLoadedListener() {
+            @Override
+            public void onMapLoaded() {
+                isMapLoadOver = true;
+                drawDataToMap();
+            }
+        });
 
         aMap.setOnMarkerClickListener(new AMap.OnMarkerClickListener() {
             @Override
@@ -110,7 +126,7 @@ public class MonitorMapActivity extends BaseMvpActivity<MonitorMapPresenter> imp
                     marker.hideInfoWindow();
                 } else {
                     if ("3".equals(split[0])) {
-                        Intent intent = new Intent(MonitorMapActivity.this,DeviceDataDetailActivity.class);
+                        Intent intent = new Intent(MonitorMapActivity.this, DeviceDataDetailActivity.class);
                         intent.putExtra("deviceId", split[1]);
                         startActivity(intent);
                     } else {
@@ -125,15 +141,32 @@ public class MonitorMapActivity extends BaseMvpActivity<MonitorMapPresenter> imp
         initLocation();
     }
 
-    @OnClick({R.id.ll_back, R.id.ll_monitor_list})
+    @OnClick({R.id.ll_back, R.id.ll_monitor_list, R.id.ll_data_normal, R.id.ll_data_exception, R.id.ll_device_exception})
     public void onViewClicked(View view) {
+        Intent intent = null;
         switch (view.getId()) {
             case R.id.ll_back:
                 finish();
                 break;
-            case R.id.ll_monitor_list:
-
+            case R.id.ll_monitor_list:  // 设备列表
+                intent = new Intent(this, DeviceListActivity.class);
+                intent.putExtra("status", "全部");
                 break;
+            case R.id.ll_data_normal:
+                intent = new Intent(this, DeviceListActivity.class);
+                intent.putExtra("status", "正常");
+                break;
+            case R.id.ll_data_exception:
+                intent = new Intent(this, DeviceListActivity.class);
+                intent.putExtra("status", "预警");
+                break;
+            case R.id.ll_device_exception:
+                intent = new Intent(this, DeviceListActivity.class);
+                intent.putExtra("status", "设备异常");
+                break;
+        }
+        if (intent!=null){
+            startActivity(intent);
         }
     }
 
@@ -173,10 +206,17 @@ public class MonitorMapActivity extends BaseMvpActivity<MonitorMapPresenter> imp
                 tvDeviceException.setText("--");
             }
 
-            List<DeviceMapBean.DeviceInfo> data = bean.getDevice_info();
-            if (data != null && data.size() > 0) {
-                AsyncTask.THREAD_POOL_EXECUTOR.execute(new MyRunnable(data));
+            data = bean.getDevice_info();
+            if (data != null) {
+                isDataLoadOver = true;
+                drawDataToMap();
             }
+        }
+    }
+
+    private void drawDataToMap() {
+        if (isDataLoadOver && isMapLoadOver) {
+            AsyncTask.THREAD_POOL_EXECUTOR.execute(new MyRunnable(data));
         }
     }
 
@@ -191,6 +231,7 @@ public class MonitorMapActivity extends BaseMvpActivity<MonitorMapPresenter> imp
     @Override
     protected void onResume() {
         super.onResume();
+        mPresenter.loadData();
         if (mapView != null) {
             mapView.onResume();
         }
@@ -222,6 +263,7 @@ public class MonitorMapActivity extends BaseMvpActivity<MonitorMapPresenter> imp
         @Override
         public void run() {
             if (mData != null && mData.size() > 0) {
+                aMap.clear();
                 LatLngBounds.Builder builder = LatLngBounds.builder();
                 for (int i = 0; i < mData.size(); i++) {
                     Log.e("循环列表", "'" + mData.get(i).toString());
@@ -236,9 +278,9 @@ public class MonitorMapActivity extends BaseMvpActivity<MonitorMapPresenter> imp
                         aMap.addCircle(new CircleOptions().
                                 center(mapMarkerUtil.getLatLng(deviceInfo.getLongitude())).
                                 radius(1000).
-                                fillColor(Color.parseColor("#33FF0000")).
-                                strokeColor(Color.parseColor("#FF0000")).
-                                strokeWidth(1));
+                                fillColor(Color.parseColor("#33FF0000"))
+                                .strokeColor(Color.parseColor("#FF0000"))
+                                .strokeWidth(1));
                     } else if (deviceInfo.getStatus() == 2) {
                         aMap.addMarker(new MarkerOptions()
                                 .position(mapMarkerUtil.getLatLng(deviceInfo.getLongitude()))

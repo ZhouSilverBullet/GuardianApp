@@ -89,6 +89,7 @@ public class CustomBarChartView extends LinearLayout {
         chartDataMap.add(yValue1);
         chartDataMap.add(yValue2);
         showBarChart(xValues, chartDataMap, colors);
+
         Matrix matrix = new Matrix();
         matrix.postScale(scaleNum(data.size()), 1f);//两个参数分别是x,y轴的缩放比例。例如：将x轴的数据放大为之前的1.5倍
         mChart.getViewPortHandler().refresh(matrix, mChart, false);//将图表动画显示之前进行缩放
@@ -183,6 +184,8 @@ public class CustomBarChartView extends LinearLayout {
         //是否绘制在图表里面
         legend.setDrawInside(false);
         legend.setEnabled(false);
+
+        mChart.setNoDataText("暂无数据");
     }
 
 

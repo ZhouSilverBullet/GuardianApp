@@ -25,7 +25,7 @@ public class DeviceDataDetailPresenter extends RxPresenter<DeviceDataDetailContr
 
     public void loadData(String deviceId, String day, String time) {
         Params params = new Params();
-        params.put("deid", "2");
+        params.put("deid", deviceId);
         params.put("date", day);
         params.put("intime", time);
 
@@ -50,7 +50,7 @@ public class DeviceDataDetailPresenter extends RxPresenter<DeviceDataDetailContr
 
     public void loadListData(String deviceId, String day, String time,int pageSize) {
         Params params = new Params();
-        params.put("deid", "2");
+        params.put("deid", deviceId);
         params.put("date", day);
         params.put("intime", time);
         params.put("sp", pageSize);

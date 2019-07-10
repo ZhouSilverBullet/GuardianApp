@@ -1,5 +1,6 @@
 package com.sdxxtop.guardianapp.ui.pop;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
@@ -76,7 +77,9 @@ public class ERCheckResultWindow extends PopupWindow {
             @Override
             public void onDismiss() {
 //                setShowBackground(1.f);
-                mView.setVisibility(View.GONE);
+                if (mView != null) {
+                    mView.setVisibility(View.GONE);
+                }
                 ERCheckResultWindow.this.dismiss();
             }
         });
@@ -87,7 +90,9 @@ public class ERCheckResultWindow extends PopupWindow {
         showAtLocation(parent, Gravity.BOTTOM, 0, 0);
 
 //        setShowBackground(0.6f);
-        mView.setVisibility(View.VISIBLE);
+        if (mView!=null){
+            mView.setVisibility(View.VISIBLE);
+        }
     }
 
     public void show(int parentLayoutId) {
@@ -108,6 +113,7 @@ public class ERCheckResultWindow extends PopupWindow {
         show(mActivity.getLayoutInflater().inflate(parentLayoutId, null));
     }
 
+    @SuppressLint("WrongConstant")
     private void defaultStyle(Context context) {
         int weight = context.getResources().getDisplayMetrics().widthPixels;
         int height = ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -117,6 +123,8 @@ public class ERCheckResultWindow extends PopupWindow {
         setTouchable(true);
         setBackgroundDrawable(new ColorDrawable());
         setOutsideTouchable(true);
+        setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
+        setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         setAnimationStyle(R.style.ActionSheetDialogAnimation);
     }
 

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/shape_red_bg"
+        android:gravity="center"
+        android:text="警"
+        android:textColor="@color/white"
+        android:textSize="15sp"/>
+
+    <TextView
+        android:id="@+id/tv_device_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="19dp"
+        android:layout_toRightOf="@+id/tv_icon"
+        android:maxEms="10"
+        android:singleLine="true"
+        android:text="设备名称"
+        android:textColor="@color/color_313131"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/tv_exception"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginRight="17dp"
+        android:text="PM2.5，PM10 超标"
+        android:textColor="@color/color_313131"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/tv_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/tv_device_name"
+        android:layout_marginLeft="11dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginRight="15dp"
+        android:layout_toRightOf="@+id/tv_icon"
+        android:background="@color/color_E0E0E0"/>
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_line"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@+id/tv_icon"
+        android:text="2019.05.06"
+        android:textColor="@color/color_666666"
+        android:textSize="12sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_line"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="15dp"
+        android:text="查看更多 >"
+        android:textColor="@color/color_999999"
+        android:textSize="12sp"/>
+</RelativeLayout>

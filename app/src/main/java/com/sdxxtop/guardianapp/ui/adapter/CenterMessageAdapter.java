@@ -10,6 +10,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.model.bean.UnreadIndexAdapterBean;
 import com.sdxxtop.guardianapp.ui.activity.CenterMessage2Activity;
+import com.sdxxtop.guardianapp.ui.activity.DeviceCenterMsgActivity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -50,6 +51,10 @@ public class CenterMessageAdapter extends BaseQuickAdapter<UnreadIndexAdapterBea
                 helper.setText(R.id.tv_status, "整");
                 helper.setBackgroundRes(R.id.tv_status, R.drawable.shape_orange_bg);
                 break;
+            case 4:
+                helper.setText(R.id.tv_status, "警");
+                helper.setBackgroundRes(R.id.tv_status, R.drawable.shape_red_bg);
+                break;
         }
 
         setMsgUnread(item.getCount(), helper.getView(R.id.tv_messgae_count));
@@ -57,10 +62,16 @@ public class CenterMessageAdapter extends BaseQuickAdapter<UnreadIndexAdapterBea
         helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, CenterMessage2Activity.class);
-                intent.putExtra("name", item.getName());
-                intent.putExtra("type", item.getType());
-                mContext.startActivity(intent);
+                if (item.getType()==4){
+                    Intent intent = new Intent(mContext, DeviceCenterMsgActivity.class);
+                    intent.putExtra("name", item.getName());
+                    mContext.startActivity(intent);
+                }else{
+                    Intent intent = new Intent(mContext, CenterMessage2Activity.class);
+                    intent.putExtra("name", item.getName());
+                    intent.putExtra("type", item.getType());
+                    mContext.startActivity(intent);
+                }
             }
         });
     }

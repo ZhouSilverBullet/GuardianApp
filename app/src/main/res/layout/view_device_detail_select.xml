@@ -30,7 +30,6 @@
             android:src="@drawable/date_icon"/>
 
         <TextView
-            android:textColor="@color/color_292929"
             android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,7 +37,8 @@
             android:layout_marginRight="13sp"
             android:layout_marginBottom="16dp"
             android:layout_toLeftOf="@+id/iv_date_icon"
-            android:text="2019年6月20日"/>
+            android:text=""
+            android:textColor="@color/color_292929"/>
 
     </RelativeLayout>
 
@@ -74,7 +74,6 @@
             android:src="@drawable/time_icon"/>
 
         <TextView
-            android:textColor="@color/color_292929"
             android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -82,7 +81,8 @@
             android:layout_marginRight="13sp"
             android:layout_marginBottom="16dp"
             android:layout_toLeftOf="@+id/iv_time_icon"
-            android:text="00:00 ~ 23:00"/>
+            android:text=""
+            android:textColor="@color/color_292929"/>
 
     </RelativeLayout>
 

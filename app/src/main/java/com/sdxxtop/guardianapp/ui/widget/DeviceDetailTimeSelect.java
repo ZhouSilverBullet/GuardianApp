@@ -21,6 +21,7 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.ui.widget.timePicker.HomeTimeSelectView;
+import com.sdxxtop.guardianapp.utils.Date2Util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -52,6 +53,8 @@ public class DeviceDetailTimeSelect extends LinearLayout {
     private TimePickerView pvLeftTime;
     private TimePickerView pvTime;
     private HomeTimeSelectView homeTimeSelectView;
+    private String day = Date2Util.getToday();
+    private String time = "00:00 - 23:00";
 
     public DeviceDetailTimeSelect(Context context) {
         this(context, null);
@@ -69,6 +72,8 @@ public class DeviceDetailTimeSelect extends LinearLayout {
     private void initView() {
         LayoutInflater.from(getContext()).inflate(R.layout.view_device_detail_select, this, true);
         ButterKnife.bind(this);
+        tvDate.setText(Date2Util.getTodayDay());  // 设置初始日期
+        tvTime.setText("00:00 ~ 23:00");
         initLeftTimePicker();
         initTimePicker();
     }
@@ -99,7 +104,8 @@ public class DeviceDetailTimeSelect extends LinearLayout {
             public void onTimeSelect(Date date, View v) {
                 tvDate.setText(getDate(date));
                 if (mListener != null) {
-                    mListener.onSelect(getFormatDate(date));
+                    day = getFormatDate(date);
+                    mListener.onSelect(day, time);
                 }
             }
         }).setTimeSelectChangeListener(new OnTimeSelectChangeListener() {
@@ -133,8 +139,12 @@ public class DeviceDetailTimeSelect extends LinearLayout {
     private void initHomeSelect() {
         homeTimeSelectView = new HomeTimeSelectView(getContext(), new HomeTimeSelectView.OnConfirmClick() {
             @Override
-            public void onClick(String time) {
-                tvTime.setText(time);
+            public void onClick(String selectTime) {
+                tvTime.setText(selectTime);
+                if (mListener != null) {
+                    time = selectTime.replace("~", "-");
+                    mListener.onSelect(day, time);
+                }
             }
         });
     }
@@ -201,7 +211,7 @@ public class DeviceDetailTimeSelect extends LinearLayout {
         this.mListener = listener;
     }
 
-    public interface OnDateSelect{
-        void onSelect(String time);
+    public interface OnDateSelect {
+        void onSelect(String day, String time);
     }
 }

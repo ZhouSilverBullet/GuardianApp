@@ -1,5 +1,8 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
+import android.view.View;
+import android.widget.TextView;
+
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -9,7 +12,9 @@ import com.sdxxtop.guardianapp.model.bean.DeviceDataBean;
 import com.sdxxtop.guardianapp.presenter.DeviceDataDetailPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.DeviceDataDetailContract;
 import com.sdxxtop.guardianapp.ui.adapter.DeviceDataListAdapter;
+import com.sdxxtop.guardianapp.ui.widget.DeviceDetailTimeSelect;
 import com.sdxxtop.guardianapp.ui.widget.chart.CustomBarChartView;
+import com.sdxxtop.guardianapp.utils.Date2Util;
 
 import java.util.List;
 
@@ -25,9 +30,15 @@ public class DeviceDataDetailActivity extends BaseMvpActivity<DeviceDataDetailPr
     SmartRefreshLayout smartRefresh;
     @BindView(R.id.cbcv_view)
     CustomBarChartView cbcv_view;
+    @BindView(R.id.ddts_view)
+    DeviceDetailTimeSelect ddts_view;
+    @BindView(R.id.tv_no_data)
+    TextView tvNoData;
 
     private String deviceId;
     private DeviceDataListAdapter adapter;
+    private String day = Date2Util.getToday();
+    private String time = "00:00 - 23:00";
 
     @Override
     protected int getLayout() {
@@ -50,7 +61,8 @@ public class DeviceDataDetailActivity extends BaseMvpActivity<DeviceDataDetailPr
         if (getIntent() != null) {
             deviceId = getIntent().getStringExtra("deviceId");
         }
-        mPresenter.loadData(deviceId, "", "");
+        mPresenter.loadData(deviceId, day, time);
+        mPresenter.loadListData(deviceId, day, time, 0);
     }
 
     @Override
@@ -64,18 +76,27 @@ public class DeviceDataDetailActivity extends BaseMvpActivity<DeviceDataDetailPr
             @Override
             public void onLoadMore(RefreshLayout refreshLayout) {
                 if (adapter != null) {
-                    mPresenter.loadListData(deviceId, "", "", adapter.getItemCount());
+                    mPresenter.loadListData(deviceId, day, time, adapter.getItemCount());
                 }
             }
 
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
                 if (adapter != null) {
-                    mPresenter.loadListData(deviceId, "", "", 0);
+                    mPresenter.loadListData(deviceId, day, time, 0);
                 }
             }
         });
-        smartRefresh.autoRefresh();
+
+        ddts_view.setOnDateSelect(new DeviceDetailTimeSelect.OnDateSelect() {
+            @Override
+            public void onSelect(String selectDay, String selectTime) {
+                day = selectDay;
+                time = selectTime;
+                mPresenter.loadData(deviceId, day, time);
+                mPresenter.loadListData(deviceId, day, time, 0);
+            }
+        });
     }
 
     @Override
@@ -83,7 +104,7 @@ public class DeviceDataDetailActivity extends BaseMvpActivity<DeviceDataDetailPr
         List<DeviceDataBean.DustDataBean> data = bean.getDust_data();
         if (data != null && data.size() > 0) {
             cbcv_view.initData(data);
-        }else{
+        } else {
             cbcv_view.setNoData();
         }
     }
@@ -95,12 +116,17 @@ public class DeviceDataDetailActivity extends BaseMvpActivity<DeviceDataDetailPr
             smartRefresh.finishLoadMore();
         }
         List<DeviceDataBean.DustDataBean> data = bean.getDust_data();
-        if (data != null&&data.size()>0) {
+        if (data != null) {
             if (pageSize == 0) {
                 adapter.replaceData(bean.getDust_data());
             } else {
                 adapter.addData(bean.getDust_data());
             }
+        }
+        if (data.size() == 0) {
+            tvNoData.setVisibility(View.VISIBLE);
+        } else {
+            tvNoData.setVisibility(View.GONE);
         }
     }
 }

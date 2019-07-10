@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.sdxxtop.guardianapp.ui.widget.TitleView
+            android:id="@+id/titleView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:leftLayoutIconIsGray="true"
+            app:titleValue="扬尘预警"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/titleView">
+
+            <include
+                layout="@layout/item_course_list_line_recycler"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_temp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/titleView">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:text="预警地点: "
+                android:textColor="@color/color_292929"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="24dp"
+                android:text="..."
+                android:textColor="@color/color_292929"
+                android:textSize="15sp"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_gongdi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_temp"
+            android:layout_margin="15dp"
+            android:text="所属工地: "
+            android:textColor="@color/color_292929"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/tv_fuzeren"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_gongdi"
+            android:layout_margin="15dp"
+            android:text="负责人: "
+            android:textColor="@color/color_292929"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_fuzeren"
+            android:layout_margin="15dp"
+            android:text="联系电话: "
+            android:textColor="@color/color_292929"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_phone"
+            android:layout_margin="15dp"
+            android:text="预警时间: "
+            android:textColor="@color/color_292929"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_time"
+            android:layout_margin="15dp"
+            android:text="预警内容: "
+            android:textColor="@color/color_292929"
+            android:textSize="15sp"/>
+
+        <LinearLayout
+            android:id="@+id/ll_btn_containor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_no"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_white_solid_bg"
+                android:text="无法解决"
+                android:textColor="#32B16C"
+                android:textSize="16sp"/>
+
+            <Button
+                android:id="@+id/btn_yes"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="14dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_green_solid_bg"
+                android:text="已解决"
+                android:textColor="@color/white"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/popwindow_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/half_translate"
+        android:visibility="gone"/>
+</FrameLayout>

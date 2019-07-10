@@ -34,9 +34,19 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:theme="@style/AppNormalTheme"
+            android:name=".ui.activity.DeviceWarnDetailActivity">
+        </activity>
+        <activity android:name=".ui.activity.DeviceCenterMsgActivity">
+        </activity>
+        <activity android:name=".ui.activity.DeviceListActivity">
+        </activity>
         <activity android:name=".ui.activity.DeviceDataDetailActivity">
         </activity>
-        <activity android:name=".ui.activity.MonitorMapActivity">
+        <activity
+            android:name=".ui.activity.MonitorMapActivity"
+            android:launchMode="singleTask">
         </activity>
         <activity android:name=".ui.activity.CenterMessage2Activity">
         </activity>

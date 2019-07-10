@@ -5,7 +5,9 @@ import com.sdxxtop.guardianapp.model.bean.AuthDataBean;
 import com.sdxxtop.guardianapp.model.bean.AutoLoginBean;
 import com.sdxxtop.guardianapp.model.bean.ContactIndexBean;
 import com.sdxxtop.guardianapp.model.bean.DeviceDataBean;
+import com.sdxxtop.guardianapp.model.bean.DeviceListBean;
 import com.sdxxtop.guardianapp.model.bean.DeviceMapBean;
+import com.sdxxtop.guardianapp.model.bean.EarlyWarningBean;
 import com.sdxxtop.guardianapp.model.bean.EnterpriseCompanyBean;
 import com.sdxxtop.guardianapp.model.bean.EnterpriseIndexBean;
 import com.sdxxtop.guardianapp.model.bean.EnterpriseSecurityBean;
@@ -276,5 +278,18 @@ public interface EnvirApiService {
     @FormUrlEncoded
     @POST("device/deviceReadList")
     Observable<RequestBean<DeviceDataBean>> postDeviceDeviceReadList(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("device/deviceList")
+    Observable<RequestBean<DeviceListBean>> postDeviceDeviceList(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("device/earlyRead")
+    Observable<RequestBean<EarlyWarningBean>> postDeviceEarlyRead(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("device/modify")
+    Observable<RequestBean> postDeviceModify(@Field("data") String data);
+
 
 }

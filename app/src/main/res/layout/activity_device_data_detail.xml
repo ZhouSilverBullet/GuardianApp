@@ -17,6 +17,7 @@
     <include layout="@layout/item_course_list_line_recycler"/>
 
     <com.sdxxtop.guardianapp.ui.widget.DeviceDetailTimeSelect
+        android:id="@+id/ddts_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -72,15 +73,31 @@
             android:textSize="13sp"/>
     </LinearLayout>
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/smart_refresh"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/smart_refresh"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+            android:layout_height="wrap_content">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+        <TextView
+            android:id="@+id/tv_no_data"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="暂无数据"
+            android:textColor="#F7BD33"
+            android:textSize="12sp"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+    </RelativeLayout>
 </LinearLayout>

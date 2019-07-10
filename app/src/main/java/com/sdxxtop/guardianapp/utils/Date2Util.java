@@ -803,6 +803,7 @@ public class Date2Util {
         }
         return formatDate;
     }
+
     /**
      * 格式化日期
      *
@@ -827,6 +828,7 @@ public class Date2Util {
         }
         return formatDate;
     }
+
     /**
      * 困难申请的时间规则
      * 一分钟以内:刚刚
@@ -985,4 +987,18 @@ public class Date2Util {
 
         return "";
     }
+
+    public static String getTodayDay() {
+        Calendar calendar = Calendar.getInstance();
+        Date time = calendar.getTime();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
+        return format.format(time);
+    }
+    public static String getToday() {
+        Calendar calendar = Calendar.getInstance();
+        Date time = calendar.getTime();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return format.format(time);
+    }
+
 }
