@@ -40,6 +40,12 @@ public class EventDiscretionListActivity extends BaseMvpActivity<EventDiscretion
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.loadData(0);
+    }
+
+    @Override
     protected void initView() {
         super.initView();
         mAdapter = new EventDiscretionListAdapter(R.layout.item_event_discretion_list, null);
@@ -61,8 +67,6 @@ public class EventDiscretionListActivity extends BaseMvpActivity<EventDiscretion
                 }
             }
         });
-
-        mSmartRefreshLayout.autoRefresh();
     }
 
     @Override

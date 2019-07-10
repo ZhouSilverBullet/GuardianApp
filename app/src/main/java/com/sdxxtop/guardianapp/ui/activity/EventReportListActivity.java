@@ -77,13 +77,12 @@ public class EventReportListActivity extends BaseMvpActivity<TaskAgentsPresenter
             }
         });
 
-        mSmartRefreshLayout.autoRefresh();
     }
 
     @Override
-    protected void initData() {
-        super.initData();
-//        mPresenter.loadData();
+    protected void onResume() {
+        super.onResume();
+        mPresenter.loadData(0, 2);
     }
 
     @Override

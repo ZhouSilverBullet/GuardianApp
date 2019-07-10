@@ -41,9 +41,9 @@ public class TaskAgentsActivity extends BaseMvpActivity<TaskAgentsPresenter> imp
     }
 
     @Override
-    protected void initData() {
-        super.initData();
-//        mPresenter.loadData(0);
+    protected void onResume() {
+        super.onResume();
+        mPresenter.loadData(0, 1);
     }
 
     @Override
@@ -65,7 +65,6 @@ public class TaskAgentsActivity extends BaseMvpActivity<TaskAgentsPresenter> imp
             }
         });
 
-        mSmartRefreshLayout.autoRefresh();
     }
 
     @Override
