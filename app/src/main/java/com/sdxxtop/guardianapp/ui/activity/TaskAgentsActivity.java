@@ -79,6 +79,10 @@ public class TaskAgentsActivity extends BaseMvpActivity<TaskAgentsPresenter> imp
 
     @Override
     public void showData(int page, EventIndexBean eventIndexBean) {
+        if (mSmartRefreshLayout != null) {
+            mSmartRefreshLayout.finishRefresh();
+            mSmartRefreshLayout.finishLoadMore();
+        }
         List<EventIndexBean.EventBean> event = eventIndexBean.getEvent();
         if (event == null) {
             return;
@@ -90,11 +94,6 @@ public class TaskAgentsActivity extends BaseMvpActivity<TaskAgentsPresenter> imp
 
         if (page != 0) {
             mAdapter.addData(event);
-        }
-
-        if (mSmartRefreshLayout != null) {
-            mSmartRefreshLayout.finishRefresh();
-            mSmartRefreshLayout.finishLoadMore();
         }
     }
 }
