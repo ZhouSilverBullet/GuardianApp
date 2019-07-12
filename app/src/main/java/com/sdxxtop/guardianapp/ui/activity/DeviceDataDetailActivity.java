@@ -38,7 +38,7 @@ public class DeviceDataDetailActivity extends BaseMvpActivity<DeviceDataDetailPr
     private String deviceId;
     private DeviceDataListAdapter adapter;
     private String day = Date2Util.getToday();
-    private String time = "00:00 - 23:00";
+    private String time = "00:00 - 23:59";
 
     @Override
     protected int getLayout() {
@@ -123,10 +123,10 @@ public class DeviceDataDetailActivity extends BaseMvpActivity<DeviceDataDetailPr
                 adapter.addData(bean.getDust_data());
             }
         }
-        if (data.size() == 0) {
-            tvNoData.setVisibility(View.VISIBLE);
-        } else {
+        if (adapter != null && adapter.getItemCount() > 0) {
             tvNoData.setVisibility(View.GONE);
+        } else {
+            tvNoData.setVisibility(View.VISIBLE);
         }
     }
 }

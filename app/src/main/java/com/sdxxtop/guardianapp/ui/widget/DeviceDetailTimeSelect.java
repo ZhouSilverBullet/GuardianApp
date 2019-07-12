@@ -54,7 +54,7 @@ public class DeviceDetailTimeSelect extends LinearLayout {
     private TimePickerView pvTime;
     private HomeTimeSelectView homeTimeSelectView;
     private String day = Date2Util.getToday();
-    private String time = "00:00 - 23:00";
+    private String time = "00:00 - 23:59";
 
     public DeviceDetailTimeSelect(Context context) {
         this(context, null);
@@ -73,7 +73,7 @@ public class DeviceDetailTimeSelect extends LinearLayout {
         LayoutInflater.from(getContext()).inflate(R.layout.view_device_detail_select, this, true);
         ButterKnife.bind(this);
         tvDate.setText(Date2Util.getTodayDay());  // 设置初始日期
-        tvTime.setText("00:00 ~ 23:00");
+        tvTime.setText("00:00 ~ 23:59");
         initLeftTimePicker();
         initTimePicker();
     }

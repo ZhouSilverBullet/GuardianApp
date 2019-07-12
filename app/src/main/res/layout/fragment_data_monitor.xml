@@ -12,7 +12,7 @@
         app:bgColor="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:titleValue="数据监测"/>
+        app:titleValue="数据监控"/>
 
     <include layout="@layout/item_course_list_line_recycler"/>
 

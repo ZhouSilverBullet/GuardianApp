@@ -170,8 +170,10 @@ public class CustomBarChartView extends LinearLayout {
 
         //不显示X轴网格线
         xAxis.setDrawGridLines(false);
+        leftAxis.setDrawGridLines(false);
         //右侧Y轴网格线设置为虚线
-        leftAxis.enableGridDashedLine(10f, 10f, 0f);
+//        leftAxis.enableGridDashedLine(10f, 10f, 0f);
+        leftAxis.setAxisMinimum(0f);
 
         /***折线图例 标签 设置***/
         legend = barChart.getLegend();
@@ -270,6 +272,7 @@ public class CustomBarChartView extends LinearLayout {
         data.setBarWidth(barWidth);
         //(起始点、柱状图组间距、柱状图之间间距)
         data.groupBars(0f, groupSpace, barSpace);
+        data.setHighlightEnabled(false);
         mChart.setData(data);
 
         XAxis xAxis = mChart.getXAxis();
@@ -282,8 +285,8 @@ public class CustomBarChartView extends LinearLayout {
     public void setLimitLine(int height) {
         LimitLine limitLine = new LimitLine(height, "");
         limitLine.setLineWidth(1f);
-        limitLine.setLineColor(Color.parseColor("#FF0000"));
-        limitLine.enableDashedLine(10f, 4f, 0f);
+        limitLine.setLineColor(Color.parseColor("#999999"));
+        limitLine.enableDashedLine(20f, 8f, 0f);
         limitLine.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
         limitLine.setTextSize(10f);
         leftAxis.addLimitLine(limitLine);

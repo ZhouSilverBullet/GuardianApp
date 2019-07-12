@@ -104,7 +104,7 @@ public class HomeTimeSelectView extends Dialog {
         wheelStartHour.setCurrentItem(0);
         wheelStartMinute.setCurrentItem(0);
         wheelEndHour.setCurrentItem(hourEndAdapter.getItemsCount() - 1);
-        wheelEndMinute.setCurrentItem(0);
+        wheelEndMinute.setCurrentItem(minuteEndAdapter.getItemsCount() - 1);
     }
 
     public class tempAdapter implements WheelAdapter<String> {
