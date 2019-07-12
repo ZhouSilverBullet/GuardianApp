@@ -311,7 +311,7 @@ public class MonitorMapActivity extends BaseMvpActivity<MonitorMapPresenter> imp
                     }
                 }
 
-                aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mapMarkerUtil.getLatLng(mData.get(1).getLongitude()), 12));
+                aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mapMarkerUtil.getLatLng(mData.get(0).getLongitude()), 12));
             }
         }
     }
