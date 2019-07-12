@@ -1,6 +1,8 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
+import android.graphics.Color;
 import android.view.View;
+import android.widget.TextView;
 
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
@@ -21,6 +23,9 @@ public class DeviceCenterMsgActivity extends BaseMvpActivity<DeviceCenterMsgPres
     View vLine;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.tv_header)
+    TextView tv_header;
+
     private DeviceCenterMsgAdapter adapter;
 
     @Override
@@ -55,8 +60,15 @@ public class DeviceCenterMsgActivity extends BaseMvpActivity<DeviceCenterMsgPres
     @Override
     public void showData(UnreadNewslistBean bean) {
         List<UnreadNewslistBean.EventItemBean> data = bean.getOverdue_event();
-        if (data !=null){
+        if (data != null) {
             adapter.replaceData(data);
+        }
+        if (data.size() > 0&&data!=null) {
+            tv_header.setText("扬尘预警事件");
+            tv_header.setVisibility(View.VISIBLE);
+            tv_header.setBackgroundColor(Color.parseColor("#FAFBFF"));
+        } else {
+            tv_header.setVisibility(View.GONE);
         }
     }
 }

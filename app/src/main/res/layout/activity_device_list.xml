@@ -17,7 +17,7 @@
         app:leftLayoutIsShow="true"
         app:rightTextValue="地图"
         app:titleColor="@color/white"
-        app:titleValue="检测地图"/>
+        app:titleValue="检测列表"/>
 
     <LinearLayout
         android:id="@+id/ll_containor"

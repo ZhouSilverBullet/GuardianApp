@@ -13,7 +13,12 @@
         app:leftLayoutIconIsGray="true"
         app:titleValue="预警提醒"/>
 
-    <include layout="@layout/item_course_list_line_recycler"/>
+    <include
+        layout="@layout/item_course_list_line_recycler"/>
+
+    <include
+        android:id="@+id/tv_header"
+        layout="@layout/item_contact_header"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
