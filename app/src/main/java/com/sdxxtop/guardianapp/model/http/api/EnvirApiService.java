@@ -125,6 +125,7 @@ public interface EnvirApiService {
 
     @FormUrlEncoded
     @POST("event/showPart")
+//    @POST("event/report")
     Observable<RequestBean<ShowPartBean>> postEventShowPart(@Field("data") String data);
 
     @FormUrlEncoded

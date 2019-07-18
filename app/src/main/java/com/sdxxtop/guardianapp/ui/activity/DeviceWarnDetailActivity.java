@@ -117,8 +117,8 @@ public class DeviceWarnDetailActivity extends BaseMvpActivity<DeviceWarnPresente
 
     public String getFormatTime(String time) {
         String result = "";
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        SimpleDateFormat format2 = new SimpleDateFormat("yyyy.MM.dd  hh:mm");
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat format2 = new SimpleDateFormat("yyyy.MM.dd  HH:mm");
         try {
             Date parse = format1.parse(time);
             result = format2.format(parse);

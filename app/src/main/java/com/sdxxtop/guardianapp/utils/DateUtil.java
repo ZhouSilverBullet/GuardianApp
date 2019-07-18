@@ -308,7 +308,7 @@ public class DateUtil {
      * @return
      */
     public static String show12Date() {
-        SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String date = sDateFormat.format(new Date());
         return date;
     }
@@ -554,7 +554,7 @@ public class DateUtil {
     public static String getDayTime(String time) {
         Date date = null;
         try {
-            date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(time);
+            date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(time);
             Calendar currentDate = Calendar.getInstance();
             currentDate.setTime(date);
             int year = currentDate.get(Calendar.YEAR);

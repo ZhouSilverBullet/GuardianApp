@@ -44,7 +44,7 @@ public class DeviceCenterMsgAdapter extends BaseQuickAdapter<UnreadNewslistBean.
 
     public String getFormatTime(String time) {
         String result = "";
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SimpleDateFormat formatResult = new SimpleDateFormat("yyyy.MM.dd");
         try {
             Date parse = format.parse(time);
