@@ -4,9 +4,17 @@ import java.util.List;
 
 public class ContactIndexBean {
     private List<ContactBean> user;
-
+    private int num;
     public List<ContactBean> getUser() {
         return user;
+    }
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
     }
 
     public void setUser(List<ContactBean> user) {

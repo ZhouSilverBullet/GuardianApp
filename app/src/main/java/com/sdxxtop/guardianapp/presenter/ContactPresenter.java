@@ -27,7 +27,7 @@ public class ContactPresenter extends RxPresenter<ContactContract.IView> impleme
             @Override
             public void onSuccess(ContactIndexBean contactIndexBean) {
                 List<ContactIndexBean.ContactBean> user = contactIndexBean.getUser();
-                mView.showList(user);
+                mView.showList(contactIndexBean);
             }
 
             @Override
@@ -46,7 +46,7 @@ public class ContactPresenter extends RxPresenter<ContactContract.IView> impleme
             @Override
             public void onSuccess(ContactIndexBean contactIndexBean) {
                 List<ContactIndexBean.ContactBean> user = contactIndexBean.getUser();
-                mView.showSearchList(user);
+                mView.showSearchList(contactIndexBean);
             }
 
             @Override

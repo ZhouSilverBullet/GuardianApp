@@ -80,8 +80,8 @@ public class EventStatistyActivity extends BaseMvpActivity<EventStatistyPresente
                 tempText = "处理中事件统计：";
                 break;
             case 3:
-                title.setTitleValue("已处理事件统计");
-                tempText = "已处理报事件统计：";
+                title.setTitleValue("待验收事件统计");
+                tempText = "待验收报事件统计：";
                 break;
             case 4:
                 title.setTitleValue("已完成事件统计");

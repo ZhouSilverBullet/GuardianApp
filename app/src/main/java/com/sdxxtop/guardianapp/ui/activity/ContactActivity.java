@@ -15,6 +15,7 @@ import com.sdxxtop.guardianapp.presenter.ContactPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.ContactContract;
 import com.sdxxtop.guardianapp.ui.adapter.ContactAdapter;
 import com.sdxxtop.guardianapp.ui.widget.SideIndexBar;
+import com.sdxxtop.guardianapp.ui.widget.TitleView;
 import com.sdxxtop.guardianapp.utils.ItemDivider;
 import com.sdxxtop.guardianapp.utils.pinyin.CharacterParser;
 import com.sdxxtop.guardianapp.utils.pinyin.PinyinComparator;
@@ -41,6 +42,8 @@ public class ContactActivity extends BaseMvpActivity<ContactPresenter> implement
     EditText etSearch;
     @BindView(R.id.tv_cancel)
     TextView tvCancel;
+    @BindView(R.id.titleView)
+    TitleView titleView;
 
     private ContactAdapter mAdapter;
 
@@ -131,14 +134,20 @@ public class ContactActivity extends BaseMvpActivity<ContactPresenter> implement
     }
 
     @Override
-    public void showList(List<ContactIndexBean.ContactBean> contactBeanList) {
+    public void showList(ContactIndexBean contactIndexBean) {
 //        handleData(contactBeanList, true);
-        handleData(contactBeanList, false);
+        if (contactIndexBean != null && contactIndexBean.getUser()!=null) {
+            titleView.setTitleValue("通讯录"+"（"+contactIndexBean.getNum()+"）");
+            handleData(contactIndexBean.getUser(), false);
+        }
     }
 
     @Override
-    public void showSearchList(List<ContactIndexBean.ContactBean> contactBean) {
-        handleData(contactBean, false);
+    public void showSearchList(ContactIndexBean contactIndexBean) {
+        if (contactIndexBean != null&&contactIndexBean.getUser()!=null) {
+            titleView.setTitleValue("通讯录"+"（"+contactIndexBean.getNum()+"）");
+            handleData(contactIndexBean.getUser(), false);
+        }
     }
 
     private void handleData(List<ContactIndexBean.ContactBean> contactBeanList, boolean isShowBar) {

@@ -60,7 +60,7 @@ public class GrantEventReportActivity extends BaseMvpActivity<GERPresenter> impl
         data.add(new TabTextBean(0, "--", "已上报"));
         data.add(new TabTextBean(1, "--", "待处理"));
         data.add(new TabTextBean(2, "--", "处理中"));
-        data.add(new TabTextBean(3, "--", "已处理"));
+        data.add(new TabTextBean(3, "--", "待验收"));
         data.add(new TabTextBean(4, "--", "已完成"));
         celView.addLayout(data);
     }
@@ -106,7 +106,7 @@ public class GrantEventReportActivity extends BaseMvpActivity<GERPresenter> impl
 //            }
 //        }
         pieChart1.setPieData(indexBean.getEventInfo());  // 上报事件统计
-        pieChart2.setPieData(indexBean.getCompleteInfo());  //已处理事件统计
+        pieChart2.setPieData(indexBean.getCompleteInfo());  //待验收事件统计
     }
 
     private void addLinearLayout(GERPIndexBean indexBean) {
@@ -114,7 +114,7 @@ public class GrantEventReportActivity extends BaseMvpActivity<GERPresenter> impl
         data.add(new TabTextBean(0, String.valueOf(indexBean.getCount()), "已上报"));
         data.add(new TabTextBean(1, String.valueOf(indexBean.getWait_for()), "待处理"));
         data.add(new TabTextBean(2, String.valueOf(indexBean.getTo_solved()), "处理中"));
-        data.add(new TabTextBean(3, String.valueOf(indexBean.getAdopt()), "已处理"));
+        data.add(new TabTextBean(3, String.valueOf(indexBean.getAdopt()), "待验收"));
         data.add(new TabTextBean(4, String.valueOf(indexBean.getPending()), "已完成"));
         celView.addLayout(data);
     }

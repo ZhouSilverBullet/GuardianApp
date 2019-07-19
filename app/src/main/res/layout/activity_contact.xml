@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/half_green_bg"
-    android:clipToPadding="true"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/half_green_bg"
+              android:clipToPadding="true"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical">
 
     <com.sdxxtop.guardianapp.ui.widget.TitleView
+        android:id="@+id/titleView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:bgColor="@color/green"
         app:leftLayoutIsShow="true"
         app:titleColor="@color/white"
-        app:titleValue="罗庄网格管理通讯录" />
+        app:titleValue="通讯录"/>
 
     <!--<com.sdxxtop.guardianapp.ui.widget.SearchView-->
     <!--android:id="@+id/sv_search"-->
@@ -53,7 +54,7 @@
                 android:imeOptions="actionSearch"
                 android:singleLine="true"
                 android:textColor="@color/color_333333"
-                android:textSize="15sp" />
+                android:textSize="15sp"/>
         </RelativeLayout>
 
         <TextView
@@ -66,7 +67,7 @@
             android:text="取消"
             android:textColor="@color/color_32B16C"
             android:textSize="15sp"
-            android:visibility="gone" />
+            android:visibility="gone"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -78,7 +79,7 @@
             android:id="@+id/rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginRight="30dp" />
+            android:layout_marginRight="30dp"/>
 
         <!--<ImageView-->
         <!--android:layout_width="match_parent"-->
@@ -97,7 +98,7 @@
             app:letterColor="@color/green"
             app:letterSize="15sp"
             app:selectBackground="@color/transparent"
-            app:selectLetterColor="@color/black" />
+            app:selectLetterColor="@color/black"/>
 
 
         <TextView
@@ -109,7 +110,7 @@
             android:gravity="center"
             android:textColor="@color/white"
             android:textSize="25sp"
-            android:visibility="gone" />
+            android:visibility="gone"/>
     </RelativeLayout>
 
 </LinearLayout>

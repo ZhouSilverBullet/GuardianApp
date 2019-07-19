@@ -165,7 +165,7 @@ public class PartEventListActivity extends BaseMvpActivity<PELPresenter> impleme
         popWondowStatusData.add(new AreaSelectPopWindow.PopWindowDataBean(0, "全部"));
         popWondowStatusData.add(new AreaSelectPopWindow.PopWindowDataBean(1, "待处理"));
         popWondowStatusData.add(new AreaSelectPopWindow.PopWindowDataBean(2, "处理中"));
-        popWondowStatusData.add(new AreaSelectPopWindow.PopWindowDataBean(3, "已处理"));
+        popWondowStatusData.add(new AreaSelectPopWindow.PopWindowDataBean(3, "待验收"));
         popWondowStatusData.add(new AreaSelectPopWindow.PopWindowDataBean(4, "已完成"));
     }
 }
