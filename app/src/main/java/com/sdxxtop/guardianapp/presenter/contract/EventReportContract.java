@@ -4,6 +4,7 @@ import com.sdxxtop.guardianapp.base.BasePresenter;
 import com.sdxxtop.guardianapp.base.BaseView;
 import com.sdxxtop.guardianapp.model.bean.EventModeBean;
 import com.sdxxtop.guardianapp.model.bean.EventSearchTitleBean;
+import com.sdxxtop.guardianapp.model.bean.EventShowBean;
 import com.sdxxtop.guardianapp.model.bean.ShowPartBean;
 
 import java.util.List;
@@ -17,6 +18,8 @@ public interface EventReportContract {
         void showSearchData(EventSearchTitleBean bean);
 
         void showQuerySelect(EventModeBean bean);
+
+        void showEventBean(EventShowBean bean);
     }
 
     interface IPresenter extends BasePresenter<IView> {

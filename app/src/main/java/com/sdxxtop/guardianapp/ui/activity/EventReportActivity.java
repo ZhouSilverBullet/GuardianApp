@@ -17,6 +17,7 @@ import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.model.bean.EventModeBean;
 import com.sdxxtop.guardianapp.model.bean.EventSearchTitleBean;
+import com.sdxxtop.guardianapp.model.bean.EventShowBean;
 import com.sdxxtop.guardianapp.model.bean.ShowPartBean;
 import com.sdxxtop.guardianapp.presenter.EventReportPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.EventReportContract;
@@ -29,6 +30,7 @@ import com.sdxxtop.guardianapp.ui.widget.SingleStyleView;
 import com.sdxxtop.guardianapp.ui.widget.TextAndEditView;
 import com.sdxxtop.guardianapp.ui.widget.TextAndTextView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
+import com.sdxxtop.guardianapp.ui.widget.timePicker.ProvinceTwoPickerView;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import java.io.File;
@@ -41,7 +43,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> implements EventReportContract.IView {
+public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> implements EventReportContract.IView, ProvinceTwoPickerView.OnConfirmClick {
     @BindView(R.id.tv_title)
     TitleView mTitleView;
     @BindView(R.id.btn_push)
@@ -82,6 +84,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     private boolean isSearchEnable = true;
     private SingleStyleView singleStyleView;
     private int queryType;
+    private ProvinceTwoPickerView pickerUtil;
 
     @Override
     protected int getLayout() {
@@ -176,7 +179,8 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     @Override
     protected void initData() {
         super.initData();
-        mPresenter.loadAera();
+        mPresenter.loadSector();
+//        mPresenter.loadAera();
 //        mPresenter.searchTitle("");
     }
 
@@ -366,6 +370,11 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 //                    showToast("请填写事件标题");
 //                    return;
 //                }
+
+                if (pickerUtil != null) {
+                    pickerUtil.show();
+                }
+                if (1 == 1) return;
                 selectReportPath();
                 break;
             default:
@@ -428,6 +437,19 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     }
 
     @Override
+    public void showEventBean(EventShowBean bean) {
+        pickerUtil = new ProvinceTwoPickerView(this, bean.getPart());
+        pickerUtil.setOnConfirmClick(this);
+    }
+
+    @Override
+    public void confirmClick(String resultTx, int resultId) {
+        mSelectPartId = resultId;
+        tatvReportPath.getTextRightText().setText(resultTx);
+        tatvReportPath.getTextRightText().setTextColor(getResources().getColor(R.color.black));
+    }
+
+    @Override
     protected void initInject() {
         getActivityComponent().inject(this);
     }
@@ -436,4 +458,5 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     public void showError(String error) {
         hideLoadingDialog();
     }
+
 }

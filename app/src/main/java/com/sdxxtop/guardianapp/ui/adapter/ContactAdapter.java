@@ -71,7 +71,8 @@ public class ContactAdapter extends BaseQuickAdapter<ContactIndexBean.ContactBea
 
     @Override
     public long getHeaderId(int position) {
-        return getData().get(position).sortLetters.charAt(0);
+//        return getData().get(position).sortLetters.charAt(0);
+        return getData().get(position).getPart_id();
     }
 
     @Override
@@ -85,7 +86,8 @@ public class ContactAdapter extends BaseQuickAdapter<ContactIndexBean.ContactBea
 
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        String showValue = String.valueOf(getData().get(position).sortLetters.charAt(0));
+//        String showValue = String.valueOf(getData().get(position).sortLetters.charAt(0));
+        String showValue = String.valueOf(getData().get(position).getPart_name());
         ((TextView) viewHolder.itemView).setText(showValue);
     }
 
@@ -98,6 +100,5 @@ public class ContactAdapter extends BaseQuickAdapter<ContactIndexBean.ContactBea
             }
         }
         return -1;
-
     }
 }

@@ -130,6 +130,11 @@ public interface EnvirApiService {
     Observable<RequestBean<ShowPartBean>> postEventShowPart(@Field("data") String data);
 
     @FormUrlEncoded
+//    @POST("event/showPart")
+    @POST("event/sector")
+    Observable<RequestBean<EventShowBean>> postEventSector(@Field("data") String data);
+
+    @FormUrlEncoded
     @POST("event/search")
     Observable<RequestBean<EventSearchTitleBean>> postEventSearch(@Field("data") String data);
 

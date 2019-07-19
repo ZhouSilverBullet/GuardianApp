@@ -1,6 +1,5 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
-import android.content.Intent;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -14,9 +13,7 @@ import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.model.bean.ContactIndexBean;
 import com.sdxxtop.guardianapp.presenter.ContactPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.ContactContract;
-import com.sdxxtop.guardianapp.ui.activity.ContactSearchActivity;
 import com.sdxxtop.guardianapp.ui.adapter.ContactAdapter;
-import com.sdxxtop.guardianapp.ui.widget.SearchView;
 import com.sdxxtop.guardianapp.ui.widget.SideIndexBar;
 import com.sdxxtop.guardianapp.utils.ItemDivider;
 import com.sdxxtop.guardianapp.utils.pinyin.CharacterParser;
@@ -24,13 +21,11 @@ import com.sdxxtop.guardianapp.utils.pinyin.PinyinComparator;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import butterknife.BindView;
 
 public class ContactActivity extends BaseMvpActivity<ContactPresenter> implements ContactContract.IView, TextWatcher {
@@ -62,7 +57,7 @@ public class ContactActivity extends BaseMvpActivity<ContactPresenter> implement
     @Override
     protected void initView() {
         super.initView();
-
+        mSideIndexBar.setVisibility(View.GONE);
         mSideIndexBar.setLetters("#ABCDEFHIJKLMOPQSTUVXYZ");
         mSideIndexBar.setTextDialog(mText);
         mSideIndexBar.setOnLetterChangedListener(new SideIndexBar.OnLetterChangedListener() {
@@ -95,7 +90,6 @@ public class ContactActivity extends BaseMvpActivity<ContactPresenter> implement
                 }
             }
         });
-
         mRecyclerView.addItemDecoration(headersDecor);
     }
 
@@ -138,7 +132,8 @@ public class ContactActivity extends BaseMvpActivity<ContactPresenter> implement
 
     @Override
     public void showList(List<ContactIndexBean.ContactBean> contactBeanList) {
-        handleData(contactBeanList, true);
+//        handleData(contactBeanList, true);
+        handleData(contactBeanList, false);
     }
 
     @Override
@@ -152,19 +147,19 @@ public class ContactActivity extends BaseMvpActivity<ContactPresenter> implement
         }
 
         for (ContactIndexBean.ContactBean contactBean : contactBeanList) {
-            String pinyin = characterParser.getSelling(contactBean.getName());
-            String sortString = pinyin.substring(0, 1).toUpperCase();
-
-            if (sortString.matches("[A-Z]")) {
-                contactBean.sortLetters = sortString.toUpperCase();
-            } else {
-                contactBean.sortLetters = "#";
-            }
+//            String pinyin = characterParser.getSelling(contactBean.getName());
+//            String sortString = pinyin.substring(0, 1).toUpperCase();
+//
+//            if (sortString.matches("[A-Z]")) {
+//                contactBean.sortLetters = sortString.toUpperCase();
+//            } else {
+//                contactBean.sortLetters = "#";
+//            }
             beanList.add(contactBean);
         }
 
 
-        Collections.sort(beanList, pinyinComparator);
+//        Collections.sort(beanList, pinyinComparator);
 
         //计算mSideIndexBar的个数
         LinkedHashSet<String> set = new LinkedHashSet<>();

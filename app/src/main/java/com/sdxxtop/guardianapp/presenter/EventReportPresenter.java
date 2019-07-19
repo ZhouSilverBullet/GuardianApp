@@ -7,6 +7,7 @@ import com.sdxxtop.guardianapp.base.BaseActivity;
 import com.sdxxtop.guardianapp.base.RxPresenter;
 import com.sdxxtop.guardianapp.model.bean.EventModeBean;
 import com.sdxxtop.guardianapp.model.bean.EventSearchTitleBean;
+import com.sdxxtop.guardianapp.model.bean.EventShowBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
 import com.sdxxtop.guardianapp.model.bean.ShowPartBean;
 import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
@@ -35,7 +36,7 @@ public class EventReportPresenter extends RxPresenter<EventReportContract.IView>
 
 
     public void pushReport(String title, int pathType, int patrolType,
-                           String place, String longitude, String content, List<File> imagePushPath, List<File> videoPushPath,String positionDesc) {
+                           String place, String longitude, String content, List<File> imagePushPath, List<File> videoPushPath, String positionDesc) {
         ImageAndVideoParams params = new ImageAndVideoParams();
         params.put("tl", title);
         params.put("pt", pathType);
@@ -46,8 +47,8 @@ public class EventReportPresenter extends RxPresenter<EventReportContract.IView>
         params.put("spt", positionDesc);
 
         params.addImagePathList("img[]", imagePushPath);
-        if (videoPushPath!=null&&videoPushPath.size()>0){
-            util = new VideoCompressUtil((Activity)mView);
+        if (videoPushPath != null && videoPushPath.size() > 0) {
+            util = new VideoCompressUtil((Activity) mView);
             File file = videoPushPath.get(0);
             util.videoCompress(file.getPath());
 
@@ -63,13 +64,13 @@ public class EventReportPresenter extends RxPresenter<EventReportContract.IView>
                     UIUtils.showToast("压缩失败,请重新尝试");
                 }
             });
-        }else{
+        } else {
             request(params);
         }
     }
 
     private void request(ImageAndVideoParams params) {
-        ((BaseActivity)mView).showLoadingDialog();
+        ((BaseActivity) mView).showLoadingDialog();
         Observable<RequestBean> observable = getEnvirLongApi().postEventAdd(params.getImgAndVideoData());
         Disposable disposable = RxUtils.handleHttp(observable, new IRequestCallback<RequestBean>() {
             @Override
@@ -107,6 +108,25 @@ public class EventReportPresenter extends RxPresenter<EventReportContract.IView>
             @Override
             public void onFailure(int code, String error) {
 //                UIUtils.showToast(error);
+            }
+        });
+        addSubscribe(disposable);
+    }
+
+    public void loadSector() {
+        Params params = new Params();
+        Observable<RequestBean<EventShowBean>> observable = getEnvirApi().postEventSector(params.getData());
+        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EventShowBean>() {
+            @Override
+            public void onSuccess(EventShowBean bean) {
+                if (mView != null) {
+                    mView.showEventBean(bean);
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String error) {
+                UIUtils.showToast(error);
             }
         });
         addSubscribe(disposable);
