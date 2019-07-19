@@ -39,7 +39,7 @@ public class EventReportPresenter extends RxPresenter<EventReportContract.IView>
         ImageAndVideoParams params = new ImageAndVideoParams();
         params.put("tl", title);
         params.put("pt", pathType);
-        params.put("plt", patrolType);
+        params.put("plt", 1);
         params.put("pl", place);
         params.put("lt", longitude);
         params.put("ct", content);

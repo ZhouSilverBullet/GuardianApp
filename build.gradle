@@ -27,6 +27,7 @@ allprojects {
         maven { url 'https://jitpack.io' }//添加jitpack仓库地址
         maven { url 'https://oss.jfrog.org/libs-snapshot' }
         maven { url 'http://maven.aliyun.com/nexus/content/repositories/releases/' }
+        maven { url 'https://dl.bintray.com/umsdk/release' }
 
 
     }

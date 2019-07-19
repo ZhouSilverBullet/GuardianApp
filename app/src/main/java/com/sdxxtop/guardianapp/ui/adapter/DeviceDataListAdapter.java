@@ -62,11 +62,11 @@ public class DeviceDataListAdapter extends BaseQuickAdapter<DeviceDataBean.DustD
             result = " 优秀";
         } else if (num <= 75 && num > 35) {
             result = " 良";
-        } else if (num <= 115 && num > 76) {
+        } else if (num <= 115 && num > 75) {
             result = " 轻度";
         } else if (num <= 150 && num > 115) {
             result = " 中度";
-        } else if (num <= 250 && num > 151) {
+        } else if (num <= 250 && num > 150) {
             result = " 重度";
         } else if (num > 250) {
             result = " 严重";

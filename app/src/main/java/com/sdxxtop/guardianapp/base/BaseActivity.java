@@ -14,6 +14,7 @@ import com.sdxxtop.guardianapp.app.App;
 import com.sdxxtop.guardianapp.utils.DialogUtil;
 import com.sdxxtop.guardianapp.utils.StatusBarUtil;
 import com.sdxxtop.guardianapp.utils.SystemUtil;
+import com.umeng.analytics.MobclickAgent;
 
 import androidx.annotation.Nullable;
 import butterknife.ButterKnife;
@@ -168,4 +169,15 @@ public abstract class BaseActivity extends SupportActivity {
     }
 
     protected abstract int getLayout();
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 }

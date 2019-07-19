@@ -355,7 +355,8 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         tvContentTitle.setText(bean.title);
         tvTime.setText(Date2Util.handleTime(bean.add_time));
 //        handlePatrol(bean.patrol_type);
-        tvCheckMethod.setText(bean.patrol_name);
+//        tvCheckMethod.setText(bean.patrol_name);
+        tvCheckMethod.setText("巡逻");
         tvHappen.setText(bean.place);
         tvReportPath.setText(bean.part_name);
         tvDescription.setText(new StringBuilder().append("事件简要描述：").append(bean.content));
@@ -444,10 +445,10 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
                 strPatrol = "他人反应";
                 break;
             default:
-                strPatrol = "巡检";
+                strPatrol = "巡逻";
                 break;
         }
-        tvCheckMethod.setText(strPatrol);
+        tvCheckMethod.setText("巡逻");
     }
 
     private void bandImgAndVideo(String img, String vedio, RecyclerView recyclerView, PatrolDetailImgAdapter adapter) {

@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.model.bean.AuthDataBean;
 import com.sdxxtop.guardianapp.ui.activity.MonitorMapActivity;
+import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import java.util.List;
 
@@ -34,7 +35,11 @@ public class DataMonitoringAdapter extends BaseQuickAdapter<AuthDataBean.AuthBea
                 Intent intent = null;
                 switch (item.getType()) {
                     case 1:   // 扬尘监测
-                        intent = new Intent(mContext, MonitorMapActivity.class);
+                        if (item.getIs_auth()==1){
+                            intent = new Intent(mContext, MonitorMapActivity.class);
+                        }else{
+                            UIUtils.showToast("没有操作权限");
+                        }
                         break;
                 }
 

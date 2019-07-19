@@ -31,6 +31,7 @@ import com.sdxxtop.guardianapp.app.base.BaseApp;
 import com.sdxxtop.guardianapp.di.component.AppComponent;
 import com.sdxxtop.guardianapp.di.component.DaggerAppComponent;
 import com.sdxxtop.guardianapp.di.module.AppModule;
+import com.umeng.commonsdk.UMConfigure;
 
 
 public class App extends BaseApp {
@@ -49,6 +50,24 @@ public class App extends BaseApp {
         initBaiduFace();
         CrashHandler.getInstance().init(this);
         initCloudChannel(this);
+        initUM();
+    }
+
+    private void initUM() {
+        /**
+         * 初始化common库
+         * 参数1:上下文，不能为空
+         * 参数2:【友盟+】 AppKey
+         * 参数3:【友盟+】 Channel
+         * 参数4:设备类型，UMConfigure.DEVICE_TYPE_PHONE为手机、UMConfigure.DEVICE_TYPE_BOX为盒子，默认为手机
+         * 参数5:Push推送业务的secret
+         */
+        /**
+         * 注意: 即使您已经在AndroidManifest.xml中配置过appkey和channel值，也需要在App代码中调
+         * 用初始化接口（如需要使用AndroidManifest.xml中配置好的appkey和channel值，
+         * UMConfigure.init调用中appkey和channel参数请置为null）。
+         */
+        UMConfigure.init(this, "5d31b2930cafb20936000e67", "Umeng", UMConfigure.DEVICE_TYPE_PHONE, null);
     }
 
     private void initBaiduFace() {
