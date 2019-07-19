@@ -96,6 +96,8 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 //        setPhotoRecycler(mRecyclerView);
 
         netContentPosition.setMaxLength(60);
+        tatvQuery.getTextRightText().setText("巡逻");
+        tatvQuery.getTextRightText().setTextColor(Color.parseColor("#313131"));
 
         InputFilter[] filters = {new InputFilter.LengthFilter(10)};
         taevTitle.getEditText().setFilters(filters);
@@ -116,7 +118,6 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
                 taevTitle.getEditText().setText(item.getKeyword());
                 taevTitle.getEditText().setSelection(item.getKeyword().length());
                 llSearchDataLayout.setVisibility(View.GONE);
-//                mPresenter.searchTitle(item.getKeyword());
             }
         });
     }
@@ -149,13 +150,13 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                TextView zhuguanbumen = tatvReportPath.getTextRightText();
-                zhuguanbumen.setText("");
-                zhuguanbumen.setHint("请点击选择");
-                TextView faxianfashi = tatvQuery.getTextRightText();
-                faxianfashi.setText("");
-                faxianfashi.setHint("请点击选择");
-                mPresenter.searchTitle(s.toString().trim());
+//                TextView zhuguanbumen = tatvReportPath.getTextRightText();
+//                zhuguanbumen.setText("");
+//                zhuguanbumen.setHint("请点击选择");
+//                TextView faxianfashi = tatvQuery.getTextRightText();
+//                faxianfashi.setText("");
+//                faxianfashi.setHint("请点击选择");
+//                mPresenter.searchTitle(s.toString().trim());
             }
 
             @Override
@@ -175,8 +176,8 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     @Override
     protected void initData() {
         super.initData();
-//        mPresenter.loadAera();
-        mPresenter.searchTitle("");
+        mPresenter.loadAera();
+//        mPresenter.searchTitle("");
     }
 
     private void showReportConfirmDialog() {
@@ -295,13 +296,13 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
         if (bean.getMode_data() != null && bean.getMode_data().size() > 0) {
             for (int i = 0; i < bean.getMode_data().size(); i++) {
                 EventModeBean.ModeDataBean dataBean = bean.getMode_data().get(i);
-                findType.add(new SingleStyleView.ListDataBean(dataBean.getMode_id(),dataBean.getName()));
+                findType.add(new SingleStyleView.ListDataBean(dataBean.getMode_id(), dataBean.getName()));
             }
             if (singleStyleView == null) {
                 singleStyleView = new SingleStyleView(this, null);
                 singleStyleView.setOnItemSelectLintener(new SingleStyleView.OnItemSelectLintener() {
                     @Override
-                    public void onItemSelect(int id,String result) {
+                    public void onItemSelect(int id, String result) {
                         queryType = id;
                         tatvQuery.getTextRightText().setText(result);
                     }
@@ -338,6 +339,9 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 
         switch (view.getId()) {
             case R.id.tatv_query:
+                if (1 == 1) {
+                    return;
+                }
                 //事件标题
                 if (TextUtils.isEmpty(title)) {
                     showToast("请填写事件标题");
@@ -358,10 +362,10 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
                 break;
             case R.id.tatv_report_path:  // 主管部门
                 //事件标题
-                if (TextUtils.isEmpty(title)) {
-                    showToast("请填写事件标题");
-                    return;
-                }
+//                if (TextUtils.isEmpty(title)) {
+//                    showToast("请填写事件标题");
+//                    return;
+//                }
                 selectReportPath();
                 break;
             default:
@@ -383,7 +387,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
         }
         reportPathData.clear();
         for (ShowPartBean.PartBean partBean : mPartList) {
-            reportPathData.add(new SingleStyleView.ListDataBean(partBean.getPart_id(),partBean.getPart_name()));
+            reportPathData.add(new SingleStyleView.ListDataBean(partBean.getPart_id(), partBean.getPart_name()));
         }
 
         showReportPathSelect(reportPathData);
@@ -403,7 +407,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 
             singleReportPathDataView.setOnItemSelectLintener(new SingleStyleView.OnItemSelectLintener() {
                 @Override
-                public void onItemSelect(int id,String result) {
+                public void onItemSelect(int id, String result) {
                     tatvReportPath.getTextRightText().setText(result);
                     tatvReportPath.getTextRightText().setTextColor(getResources().getColor(R.color.black));
                     if (mPartList != null) {

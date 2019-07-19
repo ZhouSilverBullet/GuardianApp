@@ -1,8 +1,10 @@
 package com.sdxxtop.guardianapp.presenter;
 
 
+import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.base.RxPresenter;
 import com.sdxxtop.guardianapp.model.bean.EventListBean;
+import com.sdxxtop.guardianapp.model.bean.EventShowBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
 import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
 import com.sdxxtop.guardianapp.model.http.net.Params;
@@ -23,7 +25,7 @@ public class EventStatistyPresenter extends RxPresenter<EventStatistyContract.IV
     }
 
 
-    public void eventlist(int event_type,int part_typeid,String startTime,String endTime) {
+    public void eventlist(int event_type, int part_typeid, String startTime, String endTime) {
         Params params = new Params();
         params.put("pt", part_typeid);
         params.put("st", startTime);
@@ -34,12 +36,36 @@ public class EventStatistyPresenter extends RxPresenter<EventStatistyContract.IV
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EventListBean>() {
             @Override
             public void onSuccess(EventListBean listBean) {
-                mView.showListData(listBean);
+                if (mView != null) {
+                    mView.showListData(listBean);
+                }
             }
 
             @Override
             public void onFailure(int code, String error) {
 
+            }
+        });
+        addSubscribe(disposable);
+    }
+
+    public void eventShow() {
+        Params params = new Params();
+
+        Observable<RequestBean<EventShowBean>> observable = getEnvirApi().postEventreportShow(params.getData());
+        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EventShowBean>() {
+            @Override
+            public void onSuccess(EventShowBean bean) {
+                if (mView != null) {
+                    mView.showEventBean(bean);
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String error) {
+                if (mView != null) {
+                    ((BaseMvpActivity) mView).showToast(error);
+                }
             }
         });
         addSubscribe(disposable);

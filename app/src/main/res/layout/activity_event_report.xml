@@ -66,6 +66,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:tatv_text_right_hint_value="请点击选择"
+                        app:tatv_text_img_is_show="false"
                         app:tatv_text_view="发现方式"/>
 
                     <com.sdxxtop.guardianapp.ui.widget.TextAndTextView

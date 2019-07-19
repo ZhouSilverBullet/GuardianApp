@@ -29,16 +29,19 @@ public class DeviceListAdapter extends BaseQuickAdapter<DeviceListBean.DeviceInf
     protected void convert(BaseViewHolder helper, DeviceListBean.DeviceInfoBean item) {
         switch (item.getStatus()) {
             case 1:
+                helper.setText(R.id.tv_status,"实时");
                 helper.setTextColor(R.id.tv_pm1, Color.parseColor("#1296DB"));
                 helper.setTextColor(R.id.tv_pm2, Color.parseColor("#1296DB"));
                 helper.setImageResource(R.id.iv_icon, R.drawable.icon_data_normal);
                 break;
             case 2:
+                helper.setText(R.id.tv_status,"预警时数据");
                 helper.setTextColor(R.id.tv_pm1, Color.parseColor("#E99E4C"));
                 helper.setTextColor(R.id.tv_pm2, Color.parseColor("#E99E4C"));
                 helper.setImageResource(R.id.iv_icon, R.drawable.icon_data_exception);
                 break;
             case 3:
+                helper.setText(R.id.tv_status,"设备异常时数据");
                 helper.setTextColor(R.id.tv_pm1, Color.parseColor("#FF0101"));
                 helper.setTextColor(R.id.tv_pm2, Color.parseColor("#FF0101"));
                 helper.setImageResource(R.id.iv_icon, R.drawable.icon_device_exception);

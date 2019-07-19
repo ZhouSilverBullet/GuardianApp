@@ -9,11 +9,13 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.model.bean.EventListBean;
+import com.sdxxtop.guardianapp.model.bean.EventShowBean;
 import com.sdxxtop.guardianapp.presenter.EventStatistyPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.EventStatistyContract;
 import com.sdxxtop.guardianapp.ui.adapter.EventStatistyListAdapter;
 import com.sdxxtop.guardianapp.ui.pop.AreaSelectPopWindow;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
+import com.sdxxtop.guardianapp.ui.widget.timePicker.ProvincePickerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class EventStatistyActivity extends BaseMvpActivity<EventStatistyPresenter> implements EventStatistyContract.IView {
+public class EventStatistyActivity extends BaseMvpActivity<EventStatistyPresenter> implements EventStatistyContract.IView, ProvincePickerView.OnConfirmClick {
 
     @BindView(R.id.title)
     TitleView title;
@@ -45,7 +47,7 @@ public class EventStatistyActivity extends BaseMvpActivity<EventStatistyPresente
     private int eventId;
     private int part_typeid = 0;  // 选择区的标识
     private String tempText = "";  // 用来拼接count
-    private String startTime,endTime;
+    private String startTime, endTime;
 
 
     @Override
@@ -67,23 +69,23 @@ public class EventStatistyActivity extends BaseMvpActivity<EventStatistyPresente
         switch (eventId) {
             case 0:
                 title.setTitleValue("已上报事件统计");
-                tempText="已上报事件统计：";
+                tempText = "已上报事件统计：";
                 break;
             case 1:
                 title.setTitleValue("待处理事件统计");
-                tempText="待处理事件统计：";
+                tempText = "待处理事件统计：";
                 break;
             case 2:
                 title.setTitleValue("处理中事件统计");
-                tempText="处理中事件统计：";
+                tempText = "处理中事件统计：";
                 break;
             case 3:
                 title.setTitleValue("已处理事件统计");
-                tempText="已处理报事件统计：";
+                tempText = "已处理报事件统计：";
                 break;
             case 4:
                 title.setTitleValue("已完成事件统计");
-                tempText="已完成事件统计：";
+                tempText = "已完成事件统计：";
                 break;
         }
 
@@ -95,7 +97,8 @@ public class EventStatistyActivity extends BaseMvpActivity<EventStatistyPresente
     @Override
     protected void initData() {
         super.initData();
-        mPresenter.eventlist(eventId, part_typeid,startTime,endTime);
+        mPresenter.eventlist(eventId, part_typeid, startTime, endTime);
+        mPresenter.eventShow();
     }
 
     @Override
@@ -110,11 +113,17 @@ public class EventStatistyActivity extends BaseMvpActivity<EventStatistyPresente
 
     @OnClick(R.id.rl_area_layout)
     public void onViewClicked(View view) {
-        AreaSelectPopWindow popWindow = new AreaSelectPopWindow(EventStatistyActivity.this, llContainorTemp, popWondowData, tvArea,tvBg);
+        if (pickerUtil != null) {
+            pickerUtil.show();
+        }
+        if (1 == 1) {
+            return;
+        }
+        AreaSelectPopWindow popWindow = new AreaSelectPopWindow(EventStatistyActivity.this, llContainorTemp, popWondowData, tvArea, tvBg);
         popWindow.setOnPopItemClickListener(new AreaSelectPopWindow.OnPopItemClickListener() {
             @Override
-            public void onPopItemClick(int part_typeid,String partName ) {
-                mPresenter.eventlist(eventId, part_typeid,startTime,endTime);
+            public void onPopItemClick(int part_typeid, String partName) {
+                mPresenter.eventlist(eventId, part_typeid, startTime, endTime);
             }
         });
     }
@@ -122,14 +131,32 @@ public class EventStatistyActivity extends BaseMvpActivity<EventStatistyPresente
     @Override
     public void showListData(EventListBean listBean) {
         popWondowData.clear();
-        tvArea.setText(listBean.getEvent_name()+"");
-        tvEventNum.setText(tempText+listBean.getCount());
-        if (listBean.getPart()!=null&&listBean.getPart().size()>0){
+        tvArea.setText(listBean.getEvent_name() + "");
+        tvEventNum.setText(tempText + listBean.getCount());
+        if (listBean.getPart() != null && listBean.getPart().size() > 0) {
             for (EventListBean.CompleteInfo completeInfo : listBean.getPart()) {
-                popWondowData.add(new AreaSelectPopWindow.PopWindowDataBean(completeInfo.getPart_id(),completeInfo.getPart_name()));
+                popWondowData.add(new AreaSelectPopWindow.PopWindowDataBean(completeInfo.getPart_id(), completeInfo.getPart_name()));
             }
         }
         adapter.replaceData(listBean.getCompleteInfo());
-        adapter.setTime(startTime,endTime,eventId);
+        adapter.setTime(startTime, endTime, eventId);
+    }
+
+    private ProvincePickerView pickerUtil;
+
+    @Override
+    public void showEventBean(EventShowBean bean) {
+        pickerUtil = new ProvincePickerView(this, bean.getPart());
+        pickerUtil.setOnConfirmClick(this);
+    }
+
+    /**
+     * @param resultTx 选中的部门的名称
+     * @param resultId 选中部门的id
+     */
+    @Override
+    public void confirmClick(String resultTx, int resultId) {
+        part_typeid = resultId;
+        mPresenter.eventlist(eventId, part_typeid, startTime, endTime);
     }
 }

@@ -6,8 +6,8 @@ ext {
                 applicationId    : "com.sdxxtop.guardianapp",
                 minSdkVersion    : 19,
                 targetSdkVersion : 28,
-                versionCode      : 10007,
-                versionName      : "1.0.7"
+                versionCode      : 10008,
+                versionName      : "1.0.8"
         ]
 
         def dependVersion = [

@@ -19,6 +19,7 @@ import com.sdxxtop.guardianapp.model.bean.EventListBean;
 import com.sdxxtop.guardianapp.model.bean.EventModeBean;
 import com.sdxxtop.guardianapp.model.bean.EventReadIndexBean;
 import com.sdxxtop.guardianapp.model.bean.EventSearchTitleBean;
+import com.sdxxtop.guardianapp.model.bean.EventShowBean;
 import com.sdxxtop.guardianapp.model.bean.ExamineFinishBean;
 import com.sdxxtop.guardianapp.model.bean.GERPIndexBean;
 import com.sdxxtop.guardianapp.model.bean.GridreportIndexBean;
@@ -124,8 +125,8 @@ public interface EnvirApiService {
     Observable<RequestBean> postEventFailed(@PartMap HashMap<String, RequestBody> data);
 
     @FormUrlEncoded
-    @POST("event/showPart")
-//    @POST("event/report")
+//    @POST("event/showPart")
+    @POST("event/report")
     Observable<RequestBean<ShowPartBean>> postEventShowPart(@Field("data") String data);
 
     @FormUrlEncoded
@@ -199,6 +200,10 @@ public interface EnvirApiService {
     @FormUrlEncoded
     @POST("eventreport/eventlist")
     Observable<RequestBean<EventListBean>> postEventlist(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("eventreport/eventShow")
+    Observable<RequestBean<EventShowBean>> postEventreportShow(@Field("data") String data);
 
     @FormUrlEncoded
     @POST("eventreport/eventdetails")
