@@ -140,7 +140,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppNormalTheme"/>
         <activity android:name=".ui.activity.ExamineActivity"/>
-        <activity android:name=".ui.activity.NewsDetailsActivity"/>
+
         <activity
             android:name=".ui.activity.LoginConfirmActivity"
             android:launchMode="singleTask"/>
@@ -333,6 +333,12 @@
                 <action android:name="com.alibaba.sdk.android.push.RECEIVE"/>
             </intent-filter>
         </receiver>
+
+        <activity android:name=".ui.activity.NewsDetailsActivity"
+            android:process=":remotewebview" />
+
+        <service android:name="com.sdxxtop.webview.romoteservice.OptimizationService"
+            android:process=":remotewebview" />
     </application>
 
 </manifest>

@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/half_green_bg"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
@@ -17,21 +16,10 @@
         app:titleColor="@color/white"
         app:titleValue="文章学习" />
 
-    <RelativeLayout
+    <FrameLayout
+        android:id="@+id/web_view_fragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <WebView
-            android:id="@+id/webview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_centerInParent="true" />
-
-    </RelativeLayout>
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
 </LinearLayout>

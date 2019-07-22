@@ -4,6 +4,7 @@ package com.sdxxtop.guardianapp.app;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.util.Log;
@@ -31,6 +32,8 @@ import com.sdxxtop.guardianapp.app.base.BaseApp;
 import com.sdxxtop.guardianapp.di.component.AppComponent;
 import com.sdxxtop.guardianapp.di.component.DaggerAppComponent;
 import com.sdxxtop.guardianapp.di.module.AppModule;
+import com.sdxxtop.webview.remotewebview.ProgressWebView;
+import com.sdxxtop.webview.romoteservice.OptimizationService;
 import com.umeng.commonsdk.UMConfigure;
 
 
@@ -50,7 +53,17 @@ public class App extends BaseApp {
         initBaiduFace();
         CrashHandler.getInstance().init(this);
         initCloudChannel(this);
-        initUM();
+
+        initWebViewServer();
+    }
+
+    private void initWebViewServer() {
+        startService(new Intent(this, OptimizationService.class));
+
+        if ("com.sdxxtop.guardianapp:remoteweb".equals(getProcessName(this))) {
+            new ProgressWebView(this);
+        }
+
     }
 
     private void initUM() {

@@ -1,5 +1,6 @@
 package com.sdxxtop.guardianapp.app.base;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -7,6 +8,8 @@ import android.os.Looper;
 
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
+
+import java.util.List;
 
 public abstract class BaseApp extends MultiDexApplication {
 
@@ -78,5 +81,21 @@ public abstract class BaseApp extends MultiDexApplication {
 
     public void setMainHandler(Handler mHandler) {
         this.mHandler = mHandler;
+    }
+
+    public static String getProcessName(Context context) {
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> processes = am.getRunningAppProcesses();
+        if (processes == null) {
+            return null;
+        }
+        for (ActivityManager.RunningAppProcessInfo process : processes) {
+            if (process.pid == android.os.Process.myPid()) {
+                if (process.processName != null) {
+                    return process.processName;
+                }
+            }
+        }
+        return null;
     }
 }
