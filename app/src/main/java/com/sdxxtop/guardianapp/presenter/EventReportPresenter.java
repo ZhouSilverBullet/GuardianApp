@@ -132,19 +132,22 @@ public class EventReportPresenter extends RxPresenter<EventReportContract.IView>
         addSubscribe(disposable);
     }
 
-    public void searchTitle(String title) {
+    public void searchTitle(String title, int keywordId) {
         Params params = new Params();
         params.put("kwd", title);
+        params.put("kid", keywordId);
         Observable<RequestBean<EventSearchTitleBean>> observable = getEnvirApi().postEventSearch(params.getData());
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EventSearchTitleBean>() {
             @Override
-            public void onSuccess(EventSearchTitleBean Bean) {
-                mView.showSearchData(Bean);
+            public void onSuccess(EventSearchTitleBean bean) {
+                if (mView != null) {
+                    mView.showSearchData(bean, keywordId);
+                }
             }
 
             @Override
             public void onFailure(int code, String error) {
-//                UIUtils.showToast(error);
+                UIUtils.showToast(error);
             }
         });
         addSubscribe(disposable);

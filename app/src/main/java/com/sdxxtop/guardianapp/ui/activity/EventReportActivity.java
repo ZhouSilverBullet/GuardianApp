@@ -12,7 +12,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.luck.picture.lib.entity.LocalMedia;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.model.bean.EventModeBean;
@@ -21,7 +20,6 @@ import com.sdxxtop.guardianapp.model.bean.EventShowBean;
 import com.sdxxtop.guardianapp.model.bean.ShowPartBean;
 import com.sdxxtop.guardianapp.presenter.EventReportPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.EventReportContract;
-import com.sdxxtop.guardianapp.ui.adapter.EventReportRecyclerAdapter;
 import com.sdxxtop.guardianapp.ui.adapter.EventSearchTitleAdapter;
 import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
 import com.sdxxtop.guardianapp.ui.widget.CustomVideoImgSelectView;
@@ -73,18 +71,14 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     @BindView(R.id.cvisv_view)
     CustomVideoImgSelectView cvisvView;
 
-    private EventReportRecyclerAdapter mAdapter;
-    private List<LocalMedia> localMediaList = new ArrayList<>();
-    //金纬度
-    private String lonLng;
-    private List<ShowPartBean.PartBean> mPartList;
+    private String lonLng;    //经纬度
     private int mSelectPartId;
     private EventSearchTitleAdapter adapter;
 
-    private boolean isSearchEnable = true;
     private SingleStyleView singleStyleView;
     private int queryType;
     private ProvinceTwoPickerView pickerUtil;
+    private boolean isItemClick = false;
 
     @Override
     protected int getLayout() {
@@ -95,8 +89,6 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     protected void initView() {
         super.initView();
 //        setSwipeBackEnable(true);
-
-//        setPhotoRecycler(mRecyclerView);
 
         netContentPosition.setMaxLength(60);
         tatvQuery.getTextRightText().setText("巡逻");
@@ -113,14 +105,14 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                isSearchEnable = false;
-                mSelectPartId = 0;
+                isItemClick = true;
                 tatvReportPath.getTextRightText().setText("请点击选择");
                 tatvReportPath.getTextRightText().setTextColor(Color.parseColor("#999999"));
                 EventSearchTitleBean.KeyInfo item = (EventSearchTitleBean.KeyInfo) adapter.getItem(position);
                 taevTitle.getEditText().setText(item.getKeyword());
                 taevTitle.getEditText().setSelection(item.getKeyword().length());
                 llSearchDataLayout.setVisibility(View.GONE);
+                mPresenter.searchTitle(item.getKeyword(), item.getKeyword_id());
             }
         });
     }
@@ -153,13 +145,14 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                TextView zhuguanbumen = tatvReportPath.getTextRightText();
-//                zhuguanbumen.setText("");
-//                zhuguanbumen.setHint("请点击选择");
-//                TextView faxianfashi = tatvQuery.getTextRightText();
-//                faxianfashi.setText("");
-//                faxianfashi.setHint("请点击选择");
-//                mPresenter.searchTitle(s.toString().trim());
+                if (isItemClick) {  //item被点击触发的搜索
+                    isItemClick = false;
+                } else {
+                    TextView zhuguanbumen = tatvReportPath.getTextRightText();
+                    zhuguanbumen.setText("");
+                    zhuguanbumen.setHint("请点击选择");
+                    mPresenter.searchTitle(s.toString().trim(), 0);
+                }
             }
 
             @Override
@@ -179,9 +172,9 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     @Override
     protected void initData() {
         super.initData();
-        mPresenter.loadSector();
+//        mPresenter.loadSector();
 //        mPresenter.loadAera();
-//        mPresenter.searchTitle("");
+        mPresenter.searchTitle("", 0);
     }
 
     private void showReportConfirmDialog() {
@@ -221,7 +214,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 
         //主管部门
         String pathName = tatvReportPath.getRightTVString();
-        if (reportPathData == null || TextUtils.isEmpty(pathName) || mSelectPartId == 0) {
+        if (TextUtils.isEmpty(pathName) || mSelectPartId == 0) {
             showToast("请选择主管部门");
             return;
         }
@@ -263,7 +256,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 
     @Override
     public void showPart(List<ShowPartBean.PartBean> par) {
-        mPartList = par;
+//        mPartList = par;
     }
 
     /**
@@ -272,20 +265,22 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
      * @param bean
      */
     @Override
-    public void showSearchData(EventSearchTitleBean bean) {
-        if (isSearchEnable) {   // 点击列表item不展示联想
+    public void showSearchData(EventSearchTitleBean bean, int keywordId) {
+        List<EventShowBean.NewPartBean> mPartList = bean.getPart_info();
+        if (mPartList != null) {
+            pickerUtil = new ProvinceTwoPickerView(this, mPartList);
+            pickerUtil.setOnConfirmClick(this);
+        }
+
+        if (keywordId == 0) {   // 标题搜索 展示
             if (bean.getKey_info() != null && bean.getKey_info().size() > 0) {
                 llSearchDataLayout.setVisibility(View.VISIBLE);
                 adapter.replaceData(bean.getKey_info());
             } else {
                 llSearchDataLayout.setVisibility(View.GONE);
             }
-        } else {
-            isSearchEnable = true;
-        }
-
-        if (bean.getPart_info() != null && bean.getPart_info().size() > 0) {
-            mPartList = bean.getPart_info();
+        } else {    // 点击列表item不展示联想
+            llSearchDataLayout.setVisibility(View.GONE);
         }
     }
 
@@ -351,13 +346,6 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
                     showToast("请填写事件标题");
                     return;
                 }
-                //主管部门
-                String pathName = tatvReportPath.getRightTVString();
-                if (reportPathData == null || TextUtils.isEmpty(pathName) || mSelectPartId == 0) {
-                    showToast("请选择主管部门");
-                    return;
-                }
-
                 //发现方式
                 mPresenter.eventMode(mSelectPartId);
                 break;
@@ -374,33 +362,13 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
                 if (pickerUtil != null) {
                     pickerUtil.show();
                 }
-                if (1 == 1) return;
-                selectReportPath();
                 break;
             default:
                 break;
         }
     }
 
-    private SingleStyleView singleReportPathDataView;
     private List<SingleStyleView.ListDataBean> findType = new ArrayList<>();
-    private List<SingleStyleView.ListDataBean> reportPathData = new ArrayList<>();
-
-    private void selectReportPath() {
-        if (mPartList == null) {
-            showToast("数据拉取中...");
-            if (mPresenter != null) { //再拉去一次
-                mPresenter.loadAera();
-            }
-            return;
-        }
-        reportPathData.clear();
-        for (ShowPartBean.PartBean partBean : mPartList) {
-            reportPathData.add(new SingleStyleView.ListDataBean(partBean.getPart_id(), partBean.getPart_name()));
-        }
-
-        showReportPathSelect(reportPathData);
-    }
 
     private void selectHappen() {
         //由于启动map界面比较慢,所以弄个进度条,在回到页面的情况下 hideLoadingDialog
@@ -409,37 +377,10 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
         startActivityForResult(intent, 100);
     }
 
-
-    private void showReportPathSelect(List<SingleStyleView.ListDataBean> queryData) {
-        if (singleReportPathDataView == null) {
-            singleReportPathDataView = new SingleStyleView(this, queryData);
-
-            singleReportPathDataView.setOnItemSelectLintener(new SingleStyleView.OnItemSelectLintener() {
-                @Override
-                public void onItemSelect(int id, String result) {
-                    tatvReportPath.getTextRightText().setText(result);
-                    tatvReportPath.getTextRightText().setTextColor(getResources().getColor(R.color.black));
-                    if (mPartList != null) {
-                        for (ShowPartBean.PartBean partBean : mPartList) {
-                            if (result.equals(partBean.getPart_name())) {
-                                mSelectPartId = partBean.getPart_id();
-                                return;
-                            }
-                        }
-                    }
-                    mSelectPartId = 0;
-                }
-            });
-        }
-
-        singleReportPathDataView.replaceData(queryData);
-        singleReportPathDataView.show();
-    }
-
     @Override
     public void showEventBean(EventShowBean bean) {
-        pickerUtil = new ProvinceTwoPickerView(this, bean.getPart());
-        pickerUtil.setOnConfirmClick(this);
+//        pickerUtil = new ProvinceTwoPickerView(this, bean.getPart());
+//        pickerUtil.setOnConfirmClick(this);
     }
 
     @Override

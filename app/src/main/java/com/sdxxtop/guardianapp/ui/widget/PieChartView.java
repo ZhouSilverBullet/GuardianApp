@@ -25,6 +25,7 @@ import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.model.bean.GERPIndexBean;
 import com.sdxxtop.guardianapp.ui.widget.piechart.MyPieChart;
+import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,7 +101,7 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
         pieChart.setRotationAngle(0);
         // enable rotation of the chart by touch
         pieChart.setRotationEnabled(true);
-        pieChart.setHighlightPerTapEnabled(true);
+//        pieChart.setHighlightPerTapEnabled(false);
 
         pieChart.setDrawEntryLabels(false);   // 不绘制x的值   x:罗庄,y:25%
         // pieChart.setUnit(" €");
@@ -130,7 +131,16 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
 
     @Override
     public void onValueSelected(Entry e, Highlight h) {
-        Log.e("onValueSelected:", "" + e.toString());
+        Log.e("onValueSelected:", "" + e.toString() + "data==" + e.getData());
+        try {
+            String data = (String) e.getData();
+            if (!"".equals(data)){
+                String[] split = data.split(",");
+                UIUtils.showToast("部门id==="+split[1]);
+            }
+        }catch (Exception e1){
+            UIUtils.showToast("该部门下无子部门");
+        }
     }
 
     @Override
@@ -143,7 +153,7 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
         ArrayList<Integer> colors = new ArrayList<Integer>();
         for (int i = 0; i < dataList.size(); i++) {
             GERPIndexBean.EventInfoBean item = dataList.get(i);
-            entries.add(new PieEntry(item.getCount(),item.getPart_name()));
+            entries.add(new PieEntry(item.getCount(), item.getPart_name(), "413,59"));
             colors.add(Color.parseColor(item.getColor()));
         }
 
@@ -179,26 +189,33 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
         pieChart.invalidate();
     }
 
-    public void setPieData(List<GERPIndexBean.EventInfoBean> data){
-        if (data!=null&&data.size()>0){
+    public void setPieData(List<GERPIndexBean.EventInfoBean> data) {
+        if (data != null && data.size() > 0) {
             for (GERPIndexBean.EventInfoBean datum : data) {
-                if (datum.getCount()!=0){
+                if (datum.getCount() != 0) {
                     setData(data);
                     tvDodata.setVisibility(View.GONE);
                     return;
                 }
             }
             tvDodata.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             pieChart.removeAllViews();
             pieChart.setData(null);
         }
     }
 
-    class MyPercentFormatter implements IValueFormatter{
+    class MyPercentFormatter implements IValueFormatter {
         @Override
         public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-            return String.valueOf((int)value);
+            String text = "";
+            if (entry != null) {
+                String data = (String) entry.getData();
+                String[] split = data.split(",");
+                text = split[0];
+            }
+//            return String.valueOf((int) value);
+            return text;
         }
     }
 

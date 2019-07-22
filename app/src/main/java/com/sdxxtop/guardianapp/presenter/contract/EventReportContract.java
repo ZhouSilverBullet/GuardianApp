@@ -15,7 +15,7 @@ public interface EventReportContract {
 
         void showPart(List<ShowPartBean.PartBean> par);
 
-        void showSearchData(EventSearchTitleBean bean);
+        void showSearchData(EventSearchTitleBean bean,int keywordId);
 
         void showQuerySelect(EventModeBean bean);
 

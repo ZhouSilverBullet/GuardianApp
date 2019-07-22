@@ -11,7 +11,7 @@ public class EventSearchTitleBean {
 
     private String keyword;
     private List<KeyInfo> key_info;
-    private List<ShowPartBean.PartBean> part_info;
+    private List<EventShowBean.NewPartBean> part_info;
 
     public String getKeyword() {
         return keyword;
@@ -29,11 +29,11 @@ public class EventSearchTitleBean {
         this.key_info = key_info;
     }
 
-    public List<ShowPartBean.PartBean> getPart_info() {
+    public List<EventShowBean.NewPartBean> getPart_info() {
         return part_info;
     }
 
-    public void setPart_info(List<ShowPartBean.PartBean> part_info) {
+    public void setPart_info(List<EventShowBean.NewPartBean> part_info) {
         this.part_info = part_info;
     }
 
