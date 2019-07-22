@@ -336,6 +336,9 @@
 
         <activity android:name=".ui.activity.NewsDetailsActivity"
             android:process=":remotewebview" />
+        <activity
+            android:name=".ui.widget.imgservice.OnlineServiceActivity"
+            android:theme="@style/AppNormalBlueTheme" />
 
         <service android:name="com.sdxxtop.webview.romoteservice.OptimizationService"
             android:process=":remotewebview" />

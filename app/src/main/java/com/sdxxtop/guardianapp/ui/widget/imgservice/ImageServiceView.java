@@ -1,6 +1,8 @@
 package com.sdxxtop.guardianapp.ui.widget.imgservice;
 
 import android.content.Context;
+import android.content.Intent;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -15,6 +17,8 @@ import android.widget.RelativeLayout;
 import androidx.annotation.Nullable;
 
 import com.sdxxtop.guardianapp.R;
+import com.sdxxtop.guardianapp.app.Constants;
+import com.sdxxtop.guardianapp.utils.SpUtil;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 
 /**
@@ -58,7 +62,9 @@ public class ImageServiceView extends RelativeLayout implements ViewTreeObserver
         imgService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                ServiceActivity.skipServiceActivity(v.getContext());
+                Intent intent = new Intent(getContext(), OnlineServiceActivity.class);
+                intent.putExtra("href", "https://tb.53kf.com/code/client/b722216fa3d928f41a494d544ac54dcb/2?device=android");
+                getContext().startActivity(intent);
             }
         });
         //设置屏幕触摸事件
@@ -159,7 +165,7 @@ public class ImageServiceView extends RelativeLayout implements ViewTreeObserver
         }
         //刷新界面
 //        relativeLayout.invalidate();
-        return true;
+        return false;
     }
 
 }
