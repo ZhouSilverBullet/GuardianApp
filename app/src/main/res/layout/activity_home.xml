@@ -7,11 +7,18 @@
     android:orientation="vertical"
     tools:context="com.sdxxtop.guardianapp.ui.activity.HomeActivity">
 
-    <FrameLayout
-        android:id="@+id/fl_home_container"
+    <com.sdxxtop.guardianapp.ui.widget.imgservice.ImageServiceView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1">
+
+        <FrameLayout
+            android:id="@+id/fl_home_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.sdxxtop.guardianapp.ui.widget.imgservice.ImageServiceView>
+
 
     <com.aurelhubert.ahbottomnavigation.AHBottomNavigation
         android:id="@+id/ahn_home_navigation"
