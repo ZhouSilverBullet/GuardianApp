@@ -6,8 +6,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
@@ -21,6 +21,7 @@
             android:textSize="@dimen/sp_14"/>
 
         <TextView
+            android:layout_alignParentRight="true"
             android:id="@+id/tv_up"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,7 +32,7 @@
             android:visibility="gone"
             tools:visibility="visible"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"

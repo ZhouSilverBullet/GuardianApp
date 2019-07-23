@@ -2,7 +2,6 @@ package com.sdxxtop.guardianapp.ui.widget.imgservice;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -14,12 +13,10 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import androidx.annotation.Nullable;
-
 import com.sdxxtop.guardianapp.R;
-import com.sdxxtop.guardianapp.app.Constants;
-import com.sdxxtop.guardianapp.utils.SpUtil;
 import com.sdxxtop.guardianapp.utils.UIUtils;
+
+import androidx.annotation.Nullable;
 
 /**
  * Email: zhousaito@163.com
@@ -40,7 +37,7 @@ public class ImageServiceView extends RelativeLayout implements ViewTreeObserver
     private int lastY;
     private int tempX;
     private int tempY;
-    private int height = UIUtils.dip2px(60);
+    private int height = UIUtils.dip2px(80);
     private int imgHeight;
 
     public ImageServiceView(Context context, @Nullable AttributeSet attrs) {

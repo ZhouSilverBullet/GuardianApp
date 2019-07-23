@@ -6,11 +6,14 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.widget.TextView;
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.listener.CustomListener;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.google.gson.Gson;
+import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.model.bean.EventShowBean;
 import com.sdxxtop.guardianapp.model.bean.JsonBean;
 import com.sdxxtop.guardianapp.utils.UIUtils;
@@ -69,6 +72,7 @@ public class ProvincePickerView {
     };
 
     private List<EventShowBean.NewPartBean> mData;
+    private OptionsPickerView pvOptions;
 
     public ProvincePickerView(Context context, List<EventShowBean.NewPartBean> data) {
         if (data == null) {
@@ -154,7 +158,7 @@ public class ProvincePickerView {
     }
 
     private void showPickerView() {// 弹出选择器
-        OptionsPickerView pvOptions = new OptionsPickerBuilder(mContext, new OnOptionsSelectListener() {
+        pvOptions = new OptionsPickerBuilder(mContext, new OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
 
@@ -204,7 +208,27 @@ public class ProvincePickerView {
                 }
             }
         })
+                .setLayoutRes(R.layout.pickerview_custom_options_select, new CustomListener() {
+                    @Override
+                    public void customLayout(View v) {
+                        final TextView tvSubmit = (TextView) v.findViewById(R.id.tv_finish);
+                        TextView tvCancel = (TextView) v.findViewById(R.id.tv_cancel);
+                        tvSubmit.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                pvOptions.returnData();
+                                pvOptions.dismiss();
+                            }
+                        });
 
+                        tvCancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                pvOptions.dismiss();
+                            }
+                        });
+                    }
+                })
                 .setTitleText(" ")
                 .setDividerColor(Color.BLACK)
                 .setTextColorCenter(Color.BLACK) //设置选中项文字颜色

@@ -82,7 +82,7 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="20dp"
                 android:background="#FAFBFF"
-                app:pie_title="待验收事件统计"
+                app:pie_title="已处理事件统计"
                 app:tv_prev_is_show="false"/>
 
         </LinearLayout>

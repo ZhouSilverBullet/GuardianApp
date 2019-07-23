@@ -56,7 +56,10 @@ public class GrantEventReportActivity extends BaseMvpActivity<GERPresenter> impl
                 if (partId.size()==0){
                     return;
                 }
-                mPresenter.eventChart(mStartTime, mEndTime,partId.get(partId.size()-1),false);
+                currentItem = 0;
+                partId.clear();
+                pieChart1.tv_up.setVisibility(View.GONE);
+                mPresenter.eventChart(mStartTime, mEndTime,"0",true);
             }
         });
         pieChart1.setPieData(null);
