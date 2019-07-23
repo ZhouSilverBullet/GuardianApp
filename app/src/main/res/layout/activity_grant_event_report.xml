@@ -70,7 +70,8 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:background="#FAFBFF"
-                app:pie_title="上报事件统计"/>
+                app:pie_title="上报事件统计"
+                app:tv_prev_is_show="false"/>
 
             <com.sdxxtop.guardianapp.ui.widget.PieChartView
                 android:id="@+id/pie_chart2"
@@ -81,7 +82,8 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="20dp"
                 android:background="#FAFBFF"
-                app:pie_title="待验收事件统计"/>
+                app:pie_title="待验收事件统计"
+                app:tv_prev_is_show="false"/>
 
         </LinearLayout>
 

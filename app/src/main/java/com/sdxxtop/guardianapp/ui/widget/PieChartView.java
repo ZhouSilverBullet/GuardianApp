@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
@@ -23,8 +24,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.MPPointF;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.sdxxtop.guardianapp.R;
-import com.sdxxtop.guardianapp.model.bean.GERPIndexBean;
-import com.sdxxtop.guardianapp.ui.widget.piechart.MyPieChart;
+import com.sdxxtop.guardianapp.model.bean.EventChartBean;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import java.util.ArrayList;
@@ -43,14 +43,16 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.pie_chart)
-    MyPieChart pieChart;
+    PieChart pieChart;
     @BindView(R.id.tv_nodata)
     TextView tvDodata;
+    @BindView(R.id.tv_up)
+    public TextView tv_up;
 
     private String title;
 
     protected String[] mParties = new String[]{"环保局", "城管局", "应急局", "盛庄街道"};
-
+    private boolean prevIsShow;
 
     public PieChartView(Context context) {
         this(context, null);
@@ -64,6 +66,7 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
         super(context, attrs, defStyleAttr);
         TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.PieChartview, defStyleAttr, 0);
         title = typedArray.getString(R.styleable.PieChartview_pie_title);
+        prevIsShow = typedArray.getBoolean(R.styleable.PieChartview_tv_prev_is_show,false);
 
         typedArray.recycle();
         initView();
@@ -79,6 +82,11 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
             tvTitle.setVisibility(View.GONE);
         }
 
+        if (prevIsShow){
+            tv_up.setVisibility(View.VISIBLE);
+        }else{
+            tv_up.setVisibility(View.GONE);
+        }
         //初始化饼图
         initPieChart();
     }
@@ -86,7 +94,7 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
     private void initPieChart() {
         pieChart.setUsePercentValues(false);  // 不显示百分比
         pieChart.getDescription().setEnabled(false);
-        pieChart.setExtraOffsets(0, 0, 0, -10);
+        pieChart.setExtraOffsets(10.0f, 10.0f, 10.0f, 10.0f);
 
         pieChart.setDragDecelerationFrictionCoef(0.95f);
         pieChart.setDrawHoleEnabled(true);
@@ -134,11 +142,13 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
         Log.e("onValueSelected:", "" + e.toString() + "data==" + e.getData());
         try {
             String data = (String) e.getData();
-            if (!"".equals(data)){
+            if (!"".equals(data)) {
                 String[] split = data.split(",");
-                UIUtils.showToast("部门id==="+split[1]);
+                if (mListener != null) {
+                    mListener.pieItemClick(split[1]);
+                }
             }
-        }catch (Exception e1){
+        } catch (Exception e1) {
             UIUtils.showToast("该部门下无子部门");
         }
     }
@@ -148,13 +158,15 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
         Log.e("onNothingSelected:", "被点击了");
     }
 
-    private void setData(List<GERPIndexBean.EventInfoBean> dataList) {
+    private void setData(List<EventChartBean.ChartInfoBean> dataList) {
         ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
         ArrayList<Integer> colors = new ArrayList<Integer>();
         for (int i = 0; i < dataList.size(); i++) {
-            GERPIndexBean.EventInfoBean item = dataList.get(i);
-            entries.add(new PieEntry(item.getCount(), item.getPart_name(), "413,59"));
-            colors.add(Color.parseColor(item.getColor()));
+            EventChartBean.ChartInfoBean item = dataList.get(i);
+            if (item.getCount()!=0){
+                entries.add(new PieEntry(item.getNum(), item.getPart_name(), item.getCount() + "," + item.getPart_id()));
+                colors.add(Color.parseColor(item.getColor()));
+            }
         }
 
         PieDataSet dataSet = new PieDataSet(entries, "");
@@ -163,22 +175,21 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
         dataSet.setIconsOffset(new MPPointF(0, 40));
         dataSet.setSelectionShift(5f);
         dataSet.setDrawValues(true);  // 不画值
-
         // add a lot of colors
         dataSet.setColors(colors);
-
-        dataSet.setValueLinePart1OffsetPercentage(80.0f);
-        dataSet.setValueLinePart1Length(1.5f);
-        dataSet.setValueLinePart2Length(1.0f);
+        dataSet.setUsingSliceColorAsValueLineColor(true);
+        dataSet.setValueLinePart1OffsetPercentage(85.0f);
+        dataSet.setValueLinePart1Length(1.2f);
+        dataSet.setValueLinePart2Length(0.7f);
         dataSet.setHighlightEnabled(true);
         dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
         dataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);//标签显示在外面，关闭显示在饼图里面
-        dataSet.setValueLineColor(0xff000000);  //设置指示线条颜色,必须设置成这样，才能和饼图区域颜色一致
+//        dataSet.setValueLineColor(0xff000000);  //设置指示线条颜色,必须设置成这样，才能和饼图区域颜色一致
         //dataSet.setUsingSliceColorAsValueLineColor(true);
 
         PieData data = new PieData(dataSet);
         data.setValueFormatter(new MyPercentFormatter());
-        data.setValueTextColor(Color.BLACK);
+        data.setValueTextColors(colors);
         data.setValueTextSize(12f);
         data.setHighlightEnabled(true);
 
@@ -189,9 +200,9 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
         pieChart.invalidate();
     }
 
-    public void setPieData(List<GERPIndexBean.EventInfoBean> data) {
+    public void setPieData(List<EventChartBean.ChartInfoBean> data) {
         if (data != null && data.size() > 0) {
-            for (GERPIndexBean.EventInfoBean datum : data) {
+            for (EventChartBean.ChartInfoBean datum : data) {
                 if (datum.getCount() != 0) {
                     setData(data);
                     tvDodata.setVisibility(View.GONE);
@@ -214,9 +225,19 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
                 String[] split = data.split(",");
                 text = split[0];
             }
-//            return String.valueOf((int) value);
             return text;
+//            return String.valueOf((int) value);
         }
+    }
+
+    private OnPieChartClick mListener;
+
+    public void setOnPieChartClick(OnPieChartClick listener) {
+        this.mListener = listener;
+    }
+
+    public interface OnPieChartClick {
+        void pieItemClick(String id);
     }
 
 }

@@ -13,6 +13,7 @@ import com.sdxxtop.guardianapp.model.bean.EnterpriseIndexBean;
 import com.sdxxtop.guardianapp.model.bean.EnterpriseSecurityBean;
 import com.sdxxtop.guardianapp.model.bean.EnterpriseTrailBean;
 import com.sdxxtop.guardianapp.model.bean.EnterpriseUserdetailsBean;
+import com.sdxxtop.guardianapp.model.bean.EventChartBean;
 import com.sdxxtop.guardianapp.model.bean.EventDiscretionListBean;
 import com.sdxxtop.guardianapp.model.bean.EventIndexBean;
 import com.sdxxtop.guardianapp.model.bean.EventListBean;
@@ -301,6 +302,10 @@ public interface EnvirApiService {
     @FormUrlEncoded
     @POST("device/modify")
     Observable<RequestBean> postDeviceModify(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("eventreport/eventChart")
+    Observable<RequestBean<EventChartBean>> postEventChart(@Field("data") String data);
 
 
 }

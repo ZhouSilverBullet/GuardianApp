@@ -2,6 +2,7 @@ package com.sdxxtop.guardianapp.presenter;
 
 
 import com.sdxxtop.guardianapp.base.RxPresenter;
+import com.sdxxtop.guardianapp.model.bean.EventChartBean;
 import com.sdxxtop.guardianapp.model.bean.GERPIndexBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
 import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
@@ -33,6 +34,27 @@ public class GERPresenter extends RxPresenter<GERContract.IView> implements GERC
             @Override
             public void onSuccess(GERPIndexBean indexBean) {
                 mView.showIndexData(indexBean);
+            }
+
+            @Override
+            public void onFailure(int code, String error) {
+
+            }
+        });
+        addSubscribe(disposable);
+    }
+
+    public void eventChart(String startTime, String endTime, String chartId,boolean isAdd) {
+        Params params = new Params();
+        params.put("st", startTime);
+        params.put("et", endTime);
+        params.put("pt", chartId);
+
+        Observable<RequestBean<EventChartBean>> observable = getEnvirApi().postEventChart(params.getData());
+        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EventChartBean>() {
+            @Override
+            public void onSuccess(EventChartBean bean) {
+                mView.showChartData(bean,chartId,isAdd);
             }
 
             @Override
