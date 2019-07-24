@@ -53,8 +53,8 @@ public class App extends BaseApp {
         initBaiduFace();
         CrashHandler.getInstance().init(this);
         initCloudChannel(this);
-
-        initWebViewServer();
+        initUM();
+//        initWebViewServer();
     }
 
     private void initWebViewServer() {

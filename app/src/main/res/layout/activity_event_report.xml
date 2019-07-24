@@ -59,7 +59,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:tatv_text_right_hint_value="请点击选择"
-                        app:tatv_text_view="主管部门"/>
+                        app:tatv_text_view="责任部门"/>
 
                     <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
                         android:id="@+id/tatv_query"

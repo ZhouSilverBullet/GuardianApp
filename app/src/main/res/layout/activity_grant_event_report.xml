@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:leftLayoutIconIsGray="true"
-        app:titleValue="事件上报"/>
+        app:titleValue="事件数据"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -49,6 +49,7 @@
                 android:layout_marginRight="15dp"
                 android:background="@drawable/layout_report_tab_bg"
                 android:orientation="horizontal">
+
             </com.sdxxtop.guardianapp.ui.widget.CustomEventLayout>
 
             <TextView
@@ -82,7 +83,7 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="20dp"
                 android:background="#FAFBFF"
-                app:pie_title="已处理事件统计"
+                app:pie_title="待验收事件统计"
                 app:tv_prev_is_show="false"/>
 
         </LinearLayout>

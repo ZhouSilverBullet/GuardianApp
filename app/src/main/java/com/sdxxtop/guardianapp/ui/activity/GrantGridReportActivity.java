@@ -103,7 +103,7 @@ public class GrantGridReportActivity extends BaseMvpActivity<GGRPresenter> imple
     @Override
     protected void initView() {
         super.initView();
-        title.setTitleValue("网格员报告");
+        title.setTitleValue("网格员数据");
         title.getTvRight().setText("巡逻详情");
 
         title.getTvRight().setOnClickListener(new View.OnClickListener() {

@@ -35,7 +35,25 @@ public class DeviceListBean {
         private String longitude;
         private int tpfpm;
         private int tenpm;
+        private int real_tpfpm;
+        private int real_tenpm;
         private int status;
+
+        public int getReal_tpfpm() {
+            return real_tpfpm;
+        }
+
+        public void setReal_tpfpm(int real_tpfpm) {
+            this.real_tpfpm = real_tpfpm;
+        }
+
+        public int getReal_tenpm() {
+            return real_tenpm;
+        }
+
+        public void setReal_tenpm(int real_tenpm) {
+            this.real_tenpm = real_tenpm;
+        }
 
         public int getDevice_id() {
             return device_id;

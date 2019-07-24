@@ -184,7 +184,7 @@
                             style="@style/normal_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="主管部门"/>
+                            android:text="责任部门"/>
 
                         <TextView
                             android:id="@+id/tv_report_path"

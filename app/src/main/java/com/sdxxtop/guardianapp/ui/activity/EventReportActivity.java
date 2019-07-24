@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.amap.api.location.AMapLocation;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
@@ -29,6 +30,8 @@ import com.sdxxtop.guardianapp.ui.widget.TextAndEditView;
 import com.sdxxtop.guardianapp.ui.widget.TextAndTextView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
 import com.sdxxtop.guardianapp.ui.widget.timePicker.ProvinceTwoPickerView;
+import com.sdxxtop.guardianapp.utils.GpsUtils;
+import com.sdxxtop.guardianapp.utils.LocationUtilOne;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import java.io.File;
@@ -115,6 +118,23 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
                 mPresenter.searchTitle(item.getKeyword(), item.getKeyword_id());
             }
         });
+
+
+        if (GpsUtils.isOPen(this)) {
+            LocationUtilOne oneLoaction = new LocationUtilOne();
+            oneLoaction.startLocate(this);
+            oneLoaction.setLocationCallBack(new LocationUtilOne.ILocationCallBack() {
+                @Override
+                public void callBack(String str, double lat, double lgt, AMapLocation aMapLocation) {
+                    String address = aMapLocation.getAddress();
+                    if (!TextUtils.isEmpty(address)){
+                        tatvHappen.getTextRightText().setText(address);
+//                        String value = longitude + "," + latitude;
+                        lonLng = aMapLocation.getLongitude()+","+aMapLocation.getLatitude();
+                    }
+                }
+            });
+        }
     }
 
     @Override
@@ -227,7 +247,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
         }
 
         //发生地点
-        String place = tatvHappen.getRightTVString();
+        String place = tatvHappen.getTextRightText().getText().toString().trim();
         if (TextUtils.isEmpty(place) || TextUtils.isEmpty(lonLng)) {
             showToast("请选择发生地点");
             return;

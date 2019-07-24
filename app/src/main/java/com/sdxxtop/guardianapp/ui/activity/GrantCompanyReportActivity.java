@@ -101,7 +101,7 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
     @Override
     protected void initView() {
         super.initView();
-        title.setTitleValue("企业报告");
+        title.setTitleValue("企业数据");
         title.getTvRight().setText("企业详情");
         title.getTvRight().setOnClickListener(new View.OnClickListener() {
             @Override

@@ -88,6 +88,9 @@
         <activity android:name=".ui.activity.GrantEventReportActivity">
         </activity>
 
+        <meta-data android:name="android.webkit.WebView.EnableSafeBrowsing"
+                   android:value="true"/>
+
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="1985905fa798941ad45e429a5bbd97e0"/>
@@ -334,8 +337,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ui.activity.NewsDetailsActivity"
-            android:process=":remotewebview" />
+        <activity android:name=".ui.activity.NewsDetailsActivity" />
         <activity
             android:name=".ui.widget.imgservice.OnlineServiceActivity"
             android:theme="@style/AppNormalBlueTheme" />

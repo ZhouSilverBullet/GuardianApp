@@ -124,7 +124,7 @@
                 android:layout_height="wrap_content"
                 tools:visibility="visible"
                 android:visibility="gone"
-                app:tatv_text_view="事件报告"/>
+                app:tatv_text_view="事件数据"/>
 
             <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
                 android:id="@+id/grid_member_report"
@@ -132,7 +132,7 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 tools:visibility="visible"
-                app:tatv_text_view="网格员报告"/>
+                app:tatv_text_view="网格员数据"/>
 
             <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
                 android:id="@+id/company_report"
@@ -140,7 +140,7 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 tools:visibility="visible"
-                app:tatv_text_view="企业报告"/>
+                app:tatv_text_view="企业数据"/>
 
             <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
                 android:id="@+id/message_center"
