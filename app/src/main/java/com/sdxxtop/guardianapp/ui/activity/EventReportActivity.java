@@ -113,7 +113,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
                 tatvReportPath.getTextRightText().setTextColor(Color.parseColor("#999999"));
                 EventSearchTitleBean.KeyInfo item = (EventSearchTitleBean.KeyInfo) adapter.getItem(position);
                 taevTitle.getEditText().setText(item.getKeyword());
-                taevTitle.getEditText().setSelection(item.getKeyword().length());
+//                taevTitle.getEditText().setSelection(item.getKeyword().length());
                 llSearchDataLayout.setVisibility(View.GONE);
                 mPresenter.searchTitle(item.getKeyword(), item.getKeyword_id());
             }
