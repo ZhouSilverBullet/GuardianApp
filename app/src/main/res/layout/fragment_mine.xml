@@ -149,6 +149,13 @@
                 tools:visibility="visible"
                 app:tatv_text_view="消息中心"/>
 
+            <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+                android:id="@+id/message_meet_event"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:visibility="visible"
+                app:tatv_text_view="应急事件"/>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="100dp"

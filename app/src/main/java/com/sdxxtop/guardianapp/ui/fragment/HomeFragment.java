@@ -63,6 +63,8 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
     @BindView(R.id.ll_container)
     LinearLayout mllContainer;
 
+    @BindView(R.id.itlv_view_4)
+    ImgAndTextLinearView itlvView4;
     @BindView(R.id.itlv_view_1)
     ImgAndTextLinearView itlvView1;
     @BindView(R.id.itlv_view_2)
@@ -152,6 +154,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
         itlvView1.setOnClick(1);
         itlvView2.setOnClick(2);
         itlvView3.setOnClick(3);
+        itlvView4.setOnClick(4);
 
         llContainor.setOnClickListener(new View.OnClickListener() {
             @Override

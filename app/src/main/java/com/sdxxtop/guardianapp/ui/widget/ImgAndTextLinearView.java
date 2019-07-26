@@ -17,6 +17,7 @@ import com.sdxxtop.guardianapp.ui.activity.EventDiscretionListActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportListActivity;
 import com.sdxxtop.guardianapp.ui.activity.PatrolAddDetailActivity;
+import com.sdxxtop.guardianapp.ui.activity.SectionEventActivity;
 import com.sdxxtop.guardianapp.ui.activity.TaskAgentsActivity;
 
 import java.util.List;
@@ -140,6 +141,9 @@ public class ImgAndTextLinearView extends LinearLayout {
                         break;
                     case 3:
                         getContext().startActivity(new Intent(getContext(), EventDiscretionListActivity.class));
+                        break;
+                    case 4:
+                        getContext().startActivity(new Intent(getContext(), SectionEventActivity.class));
                         break;
                 }
                 break;

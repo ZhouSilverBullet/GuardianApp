@@ -20,9 +20,8 @@ import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.sdxxtop.guardianapp.R;
+import com.sdxxtop.guardianapp.ui.widget.TitleView;
 import com.sdxxtop.guardianapp.ui.widget.imgservice.webservice.ImageUtil;
 import com.sdxxtop.guardianapp.ui.widget.imgservice.webservice.JSAndroid;
 import com.sdxxtop.guardianapp.ui.widget.imgservice.webservice.PermissionUtil;
@@ -32,10 +31,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 public class ServiceWebActivity extends AppCompatActivity implements ReWebChomeClient.OpenFileChooserCallBack {
 
     protected LinearLayout llLoad;
     protected WebView webView;
+    protected TitleView titleView;
     private static final int REQUEST_CODE_PICK_IMAGE = 0;
     private static final int REQUEST_CODE_IMAGE_CAPTURE = 1;
     private Intent mSourceIntent;
@@ -49,6 +51,7 @@ public class ServiceWebActivity extends AppCompatActivity implements ReWebChomeC
         setContentView(R.layout.activity_service_web);
         webView = (WebView) findViewById(R.id.web_view);
         llLoad = (LinearLayout) findViewById(R.id.ll_load);
+        titleView = (TitleView) findViewById(R.id.titleView);
         initData();
 
         fixDirPath();

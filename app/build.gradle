@@ -145,7 +145,7 @@ dependencies {
     implementation 'com.aliyun.ams:alicloud-android-third-push:3.0.6@aar'
     implementation project(path: ':videocompressor')
 
-    implementation  'com.umeng.umsdk:analytics:8.0.0'
-    implementation  'com.umeng.umsdk:common:2.0.0'
+    implementation 'com.umeng.umsdk:analytics:8.0.0'
+    implementation 'com.umeng.umsdk:common:2.0.0'
     implementation project(path: ':xuxin_webview')
 }

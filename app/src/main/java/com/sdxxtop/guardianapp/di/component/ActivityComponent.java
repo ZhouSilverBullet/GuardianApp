@@ -38,6 +38,7 @@ import com.sdxxtop.guardianapp.ui.activity.PatrolRecordActivity;
 import com.sdxxtop.guardianapp.ui.activity.ReCheckActivity;
 import com.sdxxtop.guardianapp.ui.activity.SafeStaffDetail2Activity;
 import com.sdxxtop.guardianapp.ui.activity.SafeStaffDetailActivity;
+import com.sdxxtop.guardianapp.ui.activity.SectionEventActivity;
 import com.sdxxtop.guardianapp.ui.activity.SplashActivity;
 import com.sdxxtop.guardianapp.ui.activity.TaskAgentsActivity;
 
@@ -85,5 +86,6 @@ public interface ActivityComponent {
     void inject(DeviceListActivity activity);
     void inject(DeviceCenterMsgActivity activity);
     void inject(DeviceWarnDetailActivity activity);
+    void inject(SectionEventActivity activity);
 
 }

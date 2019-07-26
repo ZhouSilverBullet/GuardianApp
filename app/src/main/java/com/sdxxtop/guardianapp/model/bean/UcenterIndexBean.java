@@ -27,6 +27,24 @@ public class UcenterIndexBean {
     private int is_guider;
     private int is_business;
     private int is_part;
+    private int is_uav;
+    private String is_uav_url;
+
+    public String getIs_uav_url() {
+        return is_uav_url;
+    }
+
+    public void setIs_uav_url(String is_uav_url) {
+        this.is_uav_url = is_uav_url;
+    }
+
+    public int getIs_uav() {
+        return is_uav;
+    }
+
+    public void setIs_uav(int is_uav) {
+        this.is_uav = is_uav;
+    }
 
     public int getIs_report() {
         return is_report;
@@ -136,4 +154,5 @@ public class UcenterIndexBean {
     public String getStringPosition() {
         return GuardianUtils.getJobName(getPosition());
     }
+
 }

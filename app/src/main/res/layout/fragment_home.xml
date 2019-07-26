@@ -171,6 +171,15 @@
                     android:orientation="vertical">
 
                     <com.sdxxtop.guardianapp.ui.widget.ImgAndTextLinearView
+                        android:id="@+id/itlv_view_4"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:iv_icon="@drawable/task_blue"
+                        app:tv_task_prefix="待认领："
+                        app:tv_task_title="部门事件"/>
+
+                    <com.sdxxtop.guardianapp.ui.widget.ImgAndTextLinearView
                         android:id="@+id/itlv_view_1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

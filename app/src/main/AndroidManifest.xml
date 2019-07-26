@@ -22,12 +22,9 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.REORDER_TASKS"/>
-
-
-    <!-- 推荐的权限 -->
+    <uses-permission android:name="android.permission.REORDER_TASKS"/> <!-- 推荐的权限 -->
     <!-- 添加如下权限，以便使用更多的第三方SDK和更精准的统计数据 -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
 
     <application
         android:name=".app.App"
@@ -39,9 +36,11 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.activity.SectionEventActivity">
+        </activity>
         <activity
-            android:theme="@style/AppNormalTheme"
-            android:name=".ui.activity.DeviceWarnDetailActivity">
+            android:name=".ui.activity.DeviceWarnDetailActivity"
+            android:theme="@style/AppNormalTheme">
         </activity>
         <activity android:name=".ui.activity.DeviceCenterMsgActivity">
         </activity>
@@ -87,10 +86,12 @@
         </activity>
         <activity android:name=".ui.activity.GrantEventReportActivity">
         </activity>
+        <activity android:name=".ui.widget.imgservice.EventOnlineActivity">
+        </activity>
 
-        <meta-data android:name="android.webkit.WebView.EnableSafeBrowsing"
-                   android:value="true"/>
-
+        <meta-data
+            android:name="android.webkit.WebView.EnableSafeBrowsing"
+            android:value="true"/>
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="1985905fa798941ad45e429a5bbd97e0"/>
@@ -143,7 +144,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppNormalTheme"/>
         <activity android:name=".ui.activity.ExamineActivity"/>
-
         <activity
             android:name=".ui.activity.LoginConfirmActivity"
             android:launchMode="singleTask"/>
@@ -337,13 +337,14 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ui.activity.NewsDetailsActivity" />
+        <activity android:name=".ui.activity.NewsDetailsActivity"/>
         <activity
             android:name=".ui.widget.imgservice.OnlineServiceActivity"
-            android:theme="@style/AppNormalBlueTheme" />
+            android:theme="@style/AppNormalBlueTheme"/>
 
-        <service android:name="com.sdxxtop.webview.romoteservice.OptimizationService"
-            android:process=":remotewebview" />
+        <service
+            android:name="com.sdxxtop.webview.romoteservice.OptimizationService"
+            android:process=":remotewebview"/>
     </application>
 
 </manifest>

@@ -29,6 +29,7 @@ import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
 import com.sdxxtop.guardianapp.ui.pop.QuitGroupPopView;
 import com.sdxxtop.guardianapp.ui.widget.TextAndTextView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
+import com.sdxxtop.guardianapp.ui.widget.imgservice.EventOnlineActivity;
 import com.sdxxtop.guardianapp.utils.SpUtil;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 
@@ -60,9 +61,12 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     TextAndTextView tatvMessage;
     @BindView(R.id.tatv_report)
     TextAndTextView tatvReport;
+    @BindView(R.id.message_meet_event)
+    TextAndTextView messageMeetEvent;
 
 
     private boolean isAdmin;
+    private String uav_url;
 
     private int IMAGE_STORE = 100;
     private String mPartName;
@@ -191,16 +195,22 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
 //            eventReport.setVisibility(View.GONE);
 //        }
 
+        if (!TextUtils.isEmpty(indexBean.getIs_uav_url())){
+            uav_url = indexBean.getIs_uav_url();
+        }
+
         tatvReport.setVisibility(indexBean.getIs_report() == 1 ? View.VISIBLE : View.GONE);
         eventReport.setVisibility(indexBean.getIs_event() == 1 ? View.VISIBLE : View.GONE);
         gridMemberReport.setVisibility(indexBean.getIs_guider() == 1 ? View.VISIBLE : View.GONE);
         companyReport.setVisibility(indexBean.getIs_business() == 1 ? View.VISIBLE : View.GONE);
         tatvMessage.setVisibility(indexBean.getIs_part() == 1 ? View.VISIBLE : View.GONE);
+        messageMeetEvent.setVisibility(indexBean.getIs_uav() == 1 ? View.VISIBLE : View.GONE);
 
         messageCenter.setMessageCount(indexBean.getUnread_count());
     }
 
-    @OnClick({R.id.civ_header, R.id.tatv_message, R.id.tatv_report, R.id.event_report, R.id.grid_member_report, R.id.company_report, R.id.message_center})
+    @OnClick({R.id.civ_header, R.id.tatv_message, R.id.tatv_report, R.id.event_report,
+            R.id.grid_member_report, R.id.company_report, R.id.message_center,R.id.message_meet_event})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.civ_header:
@@ -234,6 +244,11 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
             case R.id.message_center:     // 消息中心
                 Intent messageIntent = new Intent(getActivity(), CenterMessageActivity.class);
                 startActivity(messageIntent);
+                break;
+            case R.id.message_meet_event:     // 消息中心
+                Intent intent = new Intent(getContext(), EventOnlineActivity.class);
+                intent.putExtra("href",uav_url);
+                startActivity(intent);
                 break;
         }
     }

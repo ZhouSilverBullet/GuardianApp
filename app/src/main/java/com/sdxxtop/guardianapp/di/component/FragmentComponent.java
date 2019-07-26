@@ -9,6 +9,7 @@ import com.sdxxtop.guardianapp.ui.fragment.DataMonitoringFragment;
 import com.sdxxtop.guardianapp.ui.fragment.HomeFragment;
 import com.sdxxtop.guardianapp.ui.fragment.MineFragment;
 import com.sdxxtop.guardianapp.ui.fragment.NewsListFragment;
+import com.sdxxtop.guardianapp.ui.fragment.SectionEventFragment;
 
 import dagger.Component;
 
@@ -23,4 +24,5 @@ public interface FragmentComponent {
     void inject(NewsListFragment newsListFragment);
     void inject(CourseListFragment fragment);
     void inject(MineFragment fragment);
+    void inject(SectionEventFragment fragment);
 }
