@@ -36,6 +36,8 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.activity.EventMoveActivity">
+        </activity>
         <activity android:name=".ui.activity.SectionEventActivity">
         </activity>
         <activity

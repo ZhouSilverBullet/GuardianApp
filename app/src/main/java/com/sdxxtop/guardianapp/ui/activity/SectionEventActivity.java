@@ -26,7 +26,7 @@ public class SectionEventActivity extends BaseMvpActivity<SectionEventPresenter>
     ViewPager viewpager;
 
     private ArrayList<Fragment> fragments = new ArrayList<>();
-    private String[] titles = new String[]{"全部（10）","待认领（9）","已认领（5）","已完成（1）"};
+    private String[] titles = new String[]{"全部", "待认领", "已认领", "已完成"};
 
     @Override
     protected int getLayout() {
@@ -46,13 +46,37 @@ public class SectionEventActivity extends BaseMvpActivity<SectionEventPresenter>
     @Override
     protected void initView() {
         super.initView();
-        for(int i=0;i<titles.length;i++){
-            fragments.add(SectionEventFragment.newInstance(i+1));
+        for (int i = 0; i < titles.length; i++) {
+            fragments.add(SectionEventFragment.newInstance(i));
         }
 
-        viewpager.setAdapter(new MyAdapter(getSupportFragmentManager(), Arrays.asList(titles),fragments));
+        viewpager.setAdapter(new MyAdapter(getSupportFragmentManager(), Arrays.asList(titles), fragments));
         tabLayout.setupWithViewPager(viewpager);
         viewpager.setOffscreenPageLimit(fragments.size());
+    }
+
+    public void setChengeCount(List<String> count) {
+        if (tabLayout == null) return;
+        for (int i = 0; i < count.size(); i++) {
+            setTabText(i, count.get(i));
+        }
+    }
+
+    public void setTabText(int type, String count) {
+        switch (type) {
+            case 0:
+                tabLayout.getTabAt(type).setText("全部（" + count + "）");
+                break;
+            case 1:
+                tabLayout.getTabAt(type).setText("待认领（" + count + "）");
+                break;
+            case 2:
+                tabLayout.getTabAt(type).setText("已认领（" + count + "）");
+                break;
+            case 3:
+                tabLayout.getTabAt(type).setText("已完成（" + count + "）");
+                break;
+        }
     }
 
     class MyAdapter extends FragmentStatePagerAdapter {

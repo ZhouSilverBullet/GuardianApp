@@ -25,6 +25,7 @@ public class MainIndexBean {
     private List<PendingEventBean> pending_event;
     private List<AddEventBean> add_event;
     private List<AddPatrolBean>add_patrol;
+    private List<PendingEventBean>part_event;
 
     private int is_clock;
     private int is_report;
@@ -32,6 +33,13 @@ public class MainIndexBean {
     private int is_mail;
     private int is_map;
 
+    public List<PendingEventBean> getPart_event() {
+        return part_event;
+    }
+
+    public void setPart_event(List<PendingEventBean> part_event) {
+        this.part_event = part_event;
+    }
 
     public int getIs_clock() {
         return is_clock;

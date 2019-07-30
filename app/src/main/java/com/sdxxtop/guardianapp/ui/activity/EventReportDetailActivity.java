@@ -15,12 +15,14 @@ import com.sdxxtop.guardianapp.model.bean.EventReadIndexBean;
 import com.sdxxtop.guardianapp.model.bean.MediaBean;
 import com.sdxxtop.guardianapp.presenter.EventReportDetailPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.EventReportDetailContract;
+import com.sdxxtop.guardianapp.ui.adapter.LiuzhuanAdapter;
 import com.sdxxtop.guardianapp.ui.adapter.PaifaAdapter;
 import com.sdxxtop.guardianapp.ui.adapter.PatrolDetailImgAdapter;
 import com.sdxxtop.guardianapp.ui.adapter.WuFaJieJueAdapter;
 import com.sdxxtop.guardianapp.ui.adapter.YanshouAdapter;
 import com.sdxxtop.guardianapp.ui.pop.ERCheckResultWindow;
 import com.sdxxtop.guardianapp.ui.pop.SelectMapPopView;
+import com.sdxxtop.guardianapp.ui.pop.SolveEvaluateWindow;
 import com.sdxxtop.guardianapp.ui.widget.CustomProgressBar;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
 import com.sdxxtop.guardianapp.utils.Date2Util;
@@ -72,6 +74,8 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
     TextView tvDescription;
     @BindView(R.id.paifa_recy)
     RecyclerView paifaRecy;
+    @BindView(R.id.liuzhuan_recy)
+    RecyclerView liuzhuanRecy;
 
     @BindView(R.id.btn_check_faile)
     Button btnCheckFaile;
@@ -107,17 +111,41 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
     View popwindow_bg;
     @BindView(R.id.tv_location_desc)
     TextView tvLocationDesc;
+    /********* 流转 **********/
+    @BindView(R.id.ll_renling_layout)
+    LinearLayout llRenlingLayout;
+    @BindView(R.id.tv_renling_status)
+    TextView tvRenlingStatus;
+    @BindView(R.id.tv_renling_name)
+    TextView tvRenlingName;
+    @BindView(R.id.tv_renling_time)
+    TextView tvRenlingTime;
+    @BindView(R.id.renling_line)
+    View renlingLine;
+    /********* 评价 **********/
+    @BindView(R.id.ll_renling_pingjia)
+    LinearLayout llRenlingPingjia;
+    @BindView(R.id.tv_pingjia_status)
+    TextView tvPingjiaStatus;
+    @BindView(R.id.tv_pingjia_desc)
+    TextView tvPingjiaDesc;
 
 
     //用于提交
     private int eventStatus;
+    private int isClaim;  // 流转/认领
+    private int isClaimAuth;  // 流转/认领
+    private int isFinish;  // 是否有解决权限
+    private int isModify;  // 是否有评价权限
 
     private String mEventId;
     private PatrolDetailImgAdapter mAdapter;
     //先反馈问题
     private PatrolDetailImgAdapter mFinishAdapter;
     private ERCheckResultWindow erCheckResultWindow;
+    private SolveEvaluateWindow solveEvaluateWindow;
     private PaifaAdapter paifaAdapter;
+    private LiuzhuanAdapter liuzhuanAdapter;
     private YanshouAdapter yanshouAdapter;
     private WuFaJieJueAdapter wuFaJieJueAdapter;
     private PatrolDetailImgAdapter yanshouPassAdapter;
@@ -151,6 +179,11 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         jiejue_recy.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         mFinishAdapter = new PatrolDetailImgAdapter(R.layout.gv_filter_image, new ArrayList<>());
         jiejue_recy.setAdapter(mFinishAdapter);
+
+        /*********** 流转 **********/
+        liuzhuanRecy.setLayoutManager(new LinearLayoutManager(this));
+        liuzhuanAdapter = new LiuzhuanAdapter(R.layout.item_liuzhuan_view, null);
+        liuzhuanRecy.setAdapter(liuzhuanAdapter);
 
         /*********** 派发 **********/
         paifaRecy.setLayoutManager(new LinearLayoutManager(this));
@@ -201,6 +234,13 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
             if (mPresenter != null) {
                 mPresenter.loadData(mEventId);
             }
+        } else if (requestCode == 321 && resultCode == 123) {   // 流转
+            if (data != null) {
+                boolean isClose = data.getBooleanExtra("isClose", false);
+                if (isClose) {
+                    finish();
+                }
+            }
         }
     }
 
@@ -214,10 +254,23 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         address = bean.place;
         longitude = bean.longitude;
         eventStatus = bean.status;
+        isClaim = bean.is_claim;
+        isClaimAuth = bean.is_claim_auth;
+        isFinish = bean.is_finish;
+        isModify = bean.is_modify;
         //显示进度条状态
 
         showBottomButton(bean);  // 底部按钮显示隐藏
         collectHeadData(bean);   // 统一数据管理
+
+        /********* 流转 **********/
+        liuzhuanAdapter.replaceData(bean.circulation);
+
+        /********* 认领 **********/
+        setRenlingData(bean);
+
+        /********* 评价 *********/
+        setPingjiaData(bean);
 
         /********* 派发 **********/
         paifaAdapter.replaceData(bean.extra_date);
@@ -261,11 +314,14 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         }
 
         /**********  无法解决  ************/
-
-        if (bean.settle_status == 2&&bean.status==4) {
+        if (bean.is_claim == 1) {   // 认领状态下不显示进度条
+            rlProgress.setVisibility(View.GONE);
+            return;
+        }
+        if (bean.settle_status == 2 && bean.status == 4) {
             cpbProgress.setStatus(bean.status, getTime(bean));
             cpbProgress.setWFJJYWCValue();
-        } else if (bean.settle_status == 2&&bean.status!=5) {
+        } else if (bean.settle_status == 2 && bean.status != 5) {
             String parfaTime = "";
             String wufachuli = "";
             if (bean.extra_date != null && bean.extra_date.size() > 0) {
@@ -279,6 +335,7 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
             cpbProgress.setStatus(bean.status, getTime(bean));
         }
     }
+
 
     private List<String> getTime(EventReadIndexBean bean) {
         List<String> time = new ArrayList<>();
@@ -371,45 +428,110 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
 
     /*** 底部按钮显示隐藏********/
     private void showBottomButton(EventReadIndexBean bean) {
-        //1.是已经解决 2.未解决
-        if (bean.is_finish == 1) {
-            switch (bean.status) {
-                case 2:
-                    btnCheckFaile.setTextColor(getResources().getColor(R.color.green));
-                    btnCheckFaile.setVisibility(View.VISIBLE);
-                    btnCheckFaile.setText("无法解决");
-                    btnCheckFaile.setBackgroundResource(R.drawable.btn_white_solid_bg);
+
+        if (bean.is_claim_auth == 1 && bean.status == 1) {
+            btnCheckFaile.setTextColor(getResources().getColor(R.color.green));
+            btnCheckFaile.setVisibility(View.VISIBLE);
+            btnCheckFaile.setText("流转事件");
+            btnCheckFaile.setBackgroundResource(R.drawable.btn_white_solid_bg);
+
+            btnCheckSuccess.setTextColor(getResources().getColor(R.color.white));
+            btnCheckSuccess.setVisibility(View.VISIBLE);
+            btnCheckSuccess.setText("认领");
+            btnCheckSuccess.setBackgroundResource(R.drawable.btn_green_solid_bg);
+        } else {
+            //1.是已经解决 2.未解决
+            if (bean.is_finish == 1) {
+                if (bean.is_claim == 1) {
+                    btnCheckFaile.setVisibility(View.GONE);
 
                     btnCheckSuccess.setTextColor(getResources().getColor(R.color.white));
                     btnCheckSuccess.setVisibility(View.VISIBLE);
-                    btnCheckSuccess.setText("已解决");
+                    btnCheckSuccess.setText("解决");
                     btnCheckSuccess.setBackgroundResource(R.drawable.btn_green_solid_bg);
-                    break;
+                    return;
+                }
+                switch (bean.status) {
+                    case 2:
+                        btnCheckFaile.setTextColor(getResources().getColor(R.color.green));
+                        btnCheckFaile.setVisibility(View.VISIBLE);
+                        btnCheckFaile.setText("无法解决");
+                        btnCheckFaile.setBackgroundResource(R.drawable.btn_white_solid_bg);
+
+                        btnCheckSuccess.setTextColor(getResources().getColor(R.color.white));
+                        btnCheckSuccess.setVisibility(View.VISIBLE);
+                        btnCheckSuccess.setText("已解决");
+                        btnCheckSuccess.setBackgroundResource(R.drawable.btn_green_solid_bg);
+                        break;
+                }
+                return;
+            } else {
+                btnCheckFaile.setVisibility(View.GONE);
+                btnCheckSuccess.setVisibility(View.GONE);
             }
-            return;
-        } else {
-            btnCheckFaile.setVisibility(View.GONE);
-            btnCheckSuccess.setVisibility(View.GONE);
-        }
 
-        //是否有验收事件权限 1:有 2:否
-        if (bean.is_modify == 1) {
-            switch (bean.status) {
-                case 3:
-                    btnCheckFaile.setTextColor(getResources().getColor(R.color.white));
-                    btnCheckFaile.setVisibility(View.VISIBLE);
-                    btnCheckFaile.setText("验收通过");
-                    btnCheckFaile.setBackgroundResource(R.drawable.btn_green_solid_bg);
+            //是否有验收事件权限 1:有 2:否
+            if (bean.is_modify == 1) {
+                if (bean.is_claim == 1) {  // 评价
+                    btnCheckFaile.setVisibility(View.GONE);
 
-                    btnCheckSuccess.setTextColor(getResources().getColor(R.color.green));
+                    btnCheckSuccess.setTextColor(getResources().getColor(R.color.white));
                     btnCheckSuccess.setVisibility(View.VISIBLE);
-                    btnCheckSuccess.setText("验收不通过");
-                    btnCheckSuccess.setBackgroundResource(R.drawable.btn_white_solid_bg);
-                    break;
+                    btnCheckSuccess.setText("评价");
+                    btnCheckSuccess.setBackgroundResource(R.drawable.btn_green_solid_bg);
+                    return;
+                }
+                switch (bean.status) {
+                    case 3:
+                        btnCheckFaile.setTextColor(getResources().getColor(R.color.white));
+                        btnCheckFaile.setVisibility(View.VISIBLE);
+                        btnCheckFaile.setText("验收通过");
+                        btnCheckFaile.setBackgroundResource(R.drawable.btn_green_solid_bg);
+
+                        btnCheckSuccess.setTextColor(getResources().getColor(R.color.green));
+                        btnCheckSuccess.setVisibility(View.VISIBLE);
+                        btnCheckSuccess.setText("验收不通过");
+                        btnCheckSuccess.setBackgroundResource(R.drawable.btn_white_solid_bg);
+                        break;
+                }
+            } else {
+                btnCheckFaile.setVisibility(View.GONE);
+                btnCheckSuccess.setVisibility(View.GONE);
             }
+        }
+    }
+
+    /***********  设置认领信息 *************/
+    public void setRenlingData(EventReadIndexBean bean) {
+        List<EventReadIndexBean.ExtraDateBean> claim_date = bean.claim_date;
+        if (claim_date != null && claim_date.size() > 0) {
+            EventReadIndexBean.ExtraDateBean item = claim_date.get(0);
+            llRenlingLayout.setVisibility(View.VISIBLE);
+            tvRenlingStatus.setVisibility(View.VISIBLE);
+            tvRenlingStatus.setText("状态：" + getStatus(item.getStatus()));
+            tvRenlingName.setVisibility(View.VISIBLE);
+            tvRenlingName.setText("认领人：" + item.getName());
+            tvRenlingTime.setVisibility(View.VISIBLE);
+            tvRenlingTime.setText("认领时间：" + handleShortTime(item.getSend_time()));
+
+            renlingLine.setVisibility((bean.circulation != null && bean.circulation.size() > 0) ? View.GONE : View.VISIBLE);
         } else {
-            btnCheckFaile.setVisibility(View.GONE);
-            btnCheckSuccess.setVisibility(View.GONE);
+            llRenlingLayout.setVisibility(View.GONE);
+        }
+    }
+
+    /***********  设置认领评价信息 *************/
+    private void setPingjiaData(EventReadIndexBean bean) {
+        List<EventReadIndexBean.CompletedBean> data = bean.claim_completed;
+        if (data != null && data.size() > 0) {
+            EventReadIndexBean.CompletedBean item = data.get(0);
+            llRenlingPingjia.setVisibility(View.VISIBLE);
+            tvPingjiaStatus.setVisibility(View.VISIBLE);
+            tvPingjiaStatus.setText("评价情况：" + item.getAppraiseStr());
+            tvPingjiaDesc.setVisibility(View.VISIBLE);
+            tvPingjiaDesc.setText("描述：" + item.getExtra());
+        } else {
+            llRenlingPingjia.setVisibility(View.GONE);
         }
     }
 
@@ -451,6 +573,25 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         tvCheckMethod.setText("巡逻");
     }
 
+    private String getStatus(int status) {
+        String strStatus = "";
+        switch (status) {
+            case 2:
+                strStatus = "已认领";
+                break;
+            case 3:
+                strStatus = "待评价";
+                break;
+            case 4:
+                strStatus = "已完成";
+                break;
+            default:
+                strStatus = "待认领";
+                break;
+        }
+        return strStatus;
+    }
+
     private void bandImgAndVideo(String img, String vedio, RecyclerView recyclerView, PatrolDetailImgAdapter adapter) {
         List<MediaBean> list = new ArrayList<>();
         if (!TextUtils.isEmpty(vedio)) {
@@ -476,8 +617,8 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
             return "";
         }
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy.MM.dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM/dd");
         try {
             Date date = sdf.parse(time);
             return sdf2.format(date);
@@ -510,10 +651,30 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
                 //1.已经派发,确定的时候
 //
                 //2.已经反馈,然后弹出验收结果
-                if (eventStatus == 2) {
+                if (eventStatus == 2 && isClaim == 2) {
                     skipSecondPush(EventReportDetailSecondActivity.TYPE_SOLVE);
-                } else if (eventStatus == 3) {
+                } else if (eventStatus == 3 && isClaim == 2) {
                     skipSecondPush(EventReportDetailSecondActivity.TYPE_CHACK_FAILE);
+                } else if (eventStatus == 1 && isClaimAuth == 1) {  // 事件认领
+                    mPresenter.failed(mEventId, "", 2);
+                } else if (isFinish == 1 && isClaim == 1) {  // 认领解决
+                    skipSecondPush(EventReportDetailSecondActivity.TYPE_SOLVE);
+                } else if (isModify == 1 && isClaim == 1) {  // 评价
+                    if (solveEvaluateWindow == null) {
+                        solveEvaluateWindow = new SolveEvaluateWindow(this, popwindow_bg);
+                        solveEvaluateWindow.show(getLayout());
+                        solveEvaluateWindow.setOnConfirmClick(new SolveEvaluateWindow.OnConfirmClick() {
+                            @Override
+                            public void onButtonClick(String str, int status) {
+                                mPresenter.failed(mEventId, str, 4, status);
+                                if (solveEvaluateWindow != null) {
+                                    solveEvaluateWindow.dismiss();
+                                }
+                            }
+                        });
+                    } else {
+                        solveEvaluateWindow.show(getLayout());
+                    }
                 }
 
                 break;
@@ -531,8 +692,11 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
                     }
                 } else if (eventStatus == 3) {
                     skipSecondPush(EventReportDetailSecondActivity.TYPE_CHACK_SUCCSESS);
+                } else if (eventStatus == 1 && isClaimAuth == 1) {   // 事件流转
+                    Intent intent = new Intent(EventReportDetailActivity.this, EventMoveActivity.class);
+                    intent.putExtra("eventId", mEventId);
+                    startActivityForResult(intent, 321);
                 }
-
                 break;
             case R.id.rl_happen:
                 if (TextUtils.isEmpty(address)) {

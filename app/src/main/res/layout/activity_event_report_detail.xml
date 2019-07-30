@@ -22,6 +22,8 @@
             app:leftLayoutIconIsGray="true"
             app:titleValue="上报详情"/>
 
+        <include layout="@layout/item_course_list_line_recycler"/>
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -47,6 +49,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:animateLayoutChanges="true"
@@ -208,6 +211,69 @@
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/liuzhuan_recy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_renling_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <View
+                        android:id="@+id/renling_line"
+                        style="@style/line_style"
+                        android:layout_marginBottom="10dp"
+                        android:visibility="visible"
+                        tools:visibility="visible"/>
+
+                    <TextView
+                        android:id="@+id/tv_renling_status"
+                        style="@style/normal_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="10dp"
+                        android:visibility="gone"
+                        tools:text="状态:已认领"
+                        tools:visibility="visible"/>
+
+                    <TextView
+                        android:id="@+id/tv_renling_name"
+                        style="@style/normal_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="10dp"
+                        android:visibility="gone"
+                        tools:text="认领人:王俊凯"
+                        tools:visibility="visible"/>
+
+                    <TextView
+                        android:id="@+id/tv_renling_time"
+                        style="@style/normal_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="10dp"
+                        android:visibility="gone"
+                        tools:text="认领时间:2019/7/25"
+                        tools:visibility="visible"/>
+
+                    <View
+                        style="@style/line_style"
+                        android:layout_marginBottom="10dp"
+                        android:visibility="visible"
+                        tools:visibility="visible"/>
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/paifa_recy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -329,6 +395,46 @@
                         tools:visibility="visible"/>
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_renling_pingjia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/tv_pingjia_status"
+                        style="@style/normal_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="10dp"
+                        android:visibility="gone"
+                        tools:text="评价情况：满意"
+                        tools:visibility="visible"/>
+
+                    <TextView
+                        android:id="@+id/tv_pingjia_desc"
+                        style="@style/normal_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="10dp"
+                        android:visibility="gone"
+                        tools:text="描述：满意"
+                        tools:visibility="visible"/>
+
+                    <View
+                        style="@style/line_style"
+                        android:layout_marginBottom="10dp"
+                        android:visibility="visible"
+                        tools:visibility="visible"/>
+                </LinearLayout>
+
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 

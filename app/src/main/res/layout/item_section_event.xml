@@ -1,36 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="9dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginBottom="4dp"
+    app:cardCornerRadius="7dp"
+    app:cardElevation="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-        </LinearLayout>
-
-
-        <TextView
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="事件名称"
-            android:textColor="@color/color_313131"
-            android:textSize="15sp"/>
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="事件名称"
+                android:textColor="@color/color_313131"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:textColor="@color/color_666666"
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="上报时间:2019/9/12"
+                android:textSize="10sp"/>
+
+        </RelativeLayout>
 
         <TextView
+            android:textColor="@color/color_666666"
+            android:id="@+id/tv_place"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
             android:text="地址:北京和事实上事实上"
-            android:textSize="12sp"/>
+            android:textSize="10sp"/>
 
         <include layout="@layout/item_course_list_line_recycler"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:gravity="center"
+                android:id="@+id/tv_status"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/btn_green_solid_bg"
+                android:paddingLeft="15dp"
+                android:paddingTop="5dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="8dp"
+                android:text="待认领"
+                android:textColor="@color/white"
+                android:textSize="10sp"/>
+
+            <TextView
+                android:textColor="@color/color_313131"
+                android:id="@+id/tv_renlingren"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="认领人:王俊凯"
+                android:textSize="12sp"/>
+        </RelativeLayout>
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -55,6 +55,10 @@ public class CenterMessageAdapter extends BaseQuickAdapter<UnreadIndexAdapterBea
                 helper.setText(R.id.tv_status, "警");
                 helper.setBackgroundRes(R.id.tv_status, R.drawable.shape_red_bg);
                 break;
+            case 5:
+                helper.setText(R.id.tv_status, "评");
+                helper.setBackgroundRes(R.id.tv_status, R.drawable.shape_yellow_bg);
+                break;
         }
 
         setMsgUnread(item.getCount(), helper.getView(R.id.tv_messgae_count));
@@ -62,9 +66,10 @@ public class CenterMessageAdapter extends BaseQuickAdapter<UnreadIndexAdapterBea
         helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (item.getType()==4){
+                if (item.getType()==4||item.getType()==5){
                     Intent intent = new Intent(mContext, DeviceCenterMsgActivity.class);
                     intent.putExtra("name", item.getName());
+                    intent.putExtra("type", item.getType());
                     mContext.startActivity(intent);
                 }else{
                     Intent intent = new Intent(mContext, CenterMessage2Activity.class);

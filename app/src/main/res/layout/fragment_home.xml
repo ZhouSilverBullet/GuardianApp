@@ -172,10 +172,9 @@
 
                     <com.sdxxtop.guardianapp.ui.widget.ImgAndTextLinearView
                         android:id="@+id/itlv_view_4"
-                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:iv_icon="@drawable/task_blue"
+                        app:iv_icon="@drawable/task_violet"
                         app:tv_task_prefix="待认领："
                         app:tv_task_title="部门事件"/>
 

@@ -358,6 +358,18 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
         } else {
             itlvView3.setNoDate();
         }
+
+        if (mainIndexBean.getPart_event()!=null&&mainIndexBean.getPart_event().size()>0){
+            List<ImgAndTextLinearView.TagEventBean> data = new ArrayList<>();
+            for (int i = 0; i < mainIndexBean.getPart_event().size(); i++) {
+                MainIndexBean.PendingEventBean bean = mainIndexBean.getPart_event().get(i);
+                data.add(new ImgAndTextLinearView.TagEventBean(bean.getEvent_id(), bean.getTitle(), bean.getEnd_date(), getStatus(4, bean.getStatus())));
+            }
+            itlvView4.setData(data);
+        }else{
+            itlvView4.setNoDate();
+        }
+
         ivMessageIcon.setImageResource(mainIndexBean.getUnread_count() == 0 ? R.drawable.message_normal : R.drawable.message_notice);
     }
 
@@ -435,6 +447,22 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
                         str = "已完成整改";
                         break;
 
+                }
+                break;
+            case 4:    //事件状态 1、带认领 2、已认领 3、待评价 4、已完成
+                switch (status) {
+                    case 1:
+                        str = "待认领";
+                        break;
+                    case 2:
+                        str = "已认领";
+                        break;
+                    case 3:
+                        str = "待评价";
+                        break;
+                    case 4:
+                        str = "已完成";
+                        break;
                 }
                 break;
         }

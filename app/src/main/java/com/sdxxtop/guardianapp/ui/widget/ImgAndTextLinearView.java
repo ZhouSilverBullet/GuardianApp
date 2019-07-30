@@ -164,6 +164,7 @@ public class ImgAndTextLinearView extends LinearLayout {
         switch (mItemClick) {
             case 1:   // 上报详情
             case 2:
+            case 4:
                 Intent intent = new Intent(getContext(), EventReportDetailActivity.class);
                 intent.putExtra("eventId", String.valueOf(mData.get(position).getEventId()));
                 getContext().startActivity(intent);

@@ -2,11 +2,9 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.activity.SectionEventActivity">
+    android:orientation="vertical">
 
     <com.sdxxtop.guardianapp.ui.widget.TitleView
         android:layout_width="match_parent"
@@ -19,8 +17,12 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tablayout"
         android:layout_width="match_parent"
-        android:layout_marginBottom="1dp"
-        android:layout_height="40dp"/>
+        android:layout_height="40dp"
+        android:background="#F0F7F8"
+        app:tabIndicatorColor="@color/green"
+        app:tabSelectedTextColor="@color/green"
+        app:tabTextAppearance="@style/AppliedTabLayoutTextStyle"
+        app:tabTextColor="#999999"/>
 
     <include layout="@layout/item_course_list_line_recycler"/>
 

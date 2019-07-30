@@ -14,6 +14,15 @@ public class UnreadIndexBean {
     private OverdueBean whole;
     private OverdueBean overdue;
     private OverdueBean device;
+    private OverdueBean claim;
+
+    public OverdueBean getClaim() {
+        return claim;
+    }
+
+    public void setClaim(OverdueBean claim) {
+        this.claim = claim;
+    }
 
     public OverdueBean getDevice() {
         return device;
@@ -99,6 +108,9 @@ public class UnreadIndexBean {
         }
         if (device!=null){
             list.add(new UnreadIndexAdapterBean(device.count,device.name,device.title,4,device.time));
+        }
+        if (claim!=null){
+            list.add(new UnreadIndexAdapterBean(claim.count,claim.name,claim.title,5,claim.time));
         }
         return list;
     }

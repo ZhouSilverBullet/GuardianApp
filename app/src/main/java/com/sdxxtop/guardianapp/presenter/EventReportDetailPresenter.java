@@ -88,4 +88,26 @@ public class EventReportDetailPresenter extends RxPresenter<EventReportDetailCon
         addSubscribe(disposable);
     }
 
+    public void failed(String eventId,String extra,int status,int eval) {
+        ImageParams params = new ImageParams();
+        params.put("ei", eventId);
+        params.put("st", status);
+        params.put("et", extra);
+        params.put("eval", eval);
+
+        Observable<RequestBean> observable = getEnvirApi().postEventFailed(params.getImgData());
+        Disposable disposable = RxUtils.handleHttp(observable, new IRequestCallback<RequestBean>() {
+            @Override
+            public void onSuccess(RequestBean requestBean) {
+                mView.modifyRefresh();
+            }
+
+            @Override
+            public void onFailure(int code, String error) {
+                UIUtils.showToast(error);
+            }
+        });
+        addSubscribe(disposable);
+    }
+
 }

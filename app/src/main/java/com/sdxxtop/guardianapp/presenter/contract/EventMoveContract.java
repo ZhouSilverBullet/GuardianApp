@@ -2,15 +2,15 @@ package com.sdxxtop.guardianapp.presenter.contract;
 
 import com.sdxxtop.guardianapp.base.BasePresenter;
 import com.sdxxtop.guardianapp.base.BaseView;
-import com.sdxxtop.guardianapp.model.bean.SectionEventBean;
+import com.sdxxtop.guardianapp.model.bean.EventShowBean;
 
 /**
  * 用来copy使用的
  */
-public interface UnifyEventContract {
+public interface EventMoveContract {
     interface IView extends BaseView {
 
-        void showData(SectionEventBean bean,int page_start);
+        void showData(EventShowBean bean);
     }
 
     interface IPresenter extends BasePresenter<IView> {

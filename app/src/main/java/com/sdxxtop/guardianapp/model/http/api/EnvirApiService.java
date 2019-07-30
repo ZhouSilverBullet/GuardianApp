@@ -35,6 +35,7 @@ import com.sdxxtop.guardianapp.model.bean.PartEventListBean;
 import com.sdxxtop.guardianapp.model.bean.PatrolAddBean;
 import com.sdxxtop.guardianapp.model.bean.PatrolReadBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
+import com.sdxxtop.guardianapp.model.bean.SectionEventBean;
 import com.sdxxtop.guardianapp.model.bean.ShowPartBean;
 import com.sdxxtop.guardianapp.model.bean.SignLogBean;
 import com.sdxxtop.guardianapp.model.bean.StudyCourseBean;
@@ -307,5 +308,12 @@ public interface EnvirApiService {
     @POST("eventreport/eventChart")
     Observable<RequestBean<EventChartBean>> postEventChart(@Field("data") String data);
 
+    @FormUrlEncoded
+    @POST("event/sectoral")
+    Observable<RequestBean<SectionEventBean>> postSectionEvent(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("event/operate")
+    Observable<RequestBean> postEventOperate(@Field("data") String data);
 
 }

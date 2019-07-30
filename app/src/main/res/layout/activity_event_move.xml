@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.activity.EventMoveActivity">
+
+    <com.sdxxtop.guardianapp.ui.widget.TitleView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:leftLayoutIconIsGray="true"
+        app:titleValue="事件流转"/>
+
+    <include layout="@layout/item_course_list_line_recycler"/>
+
+    <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+        android:id="@+id/event_report"
+        app:tatv_text_right_hint_value="选择流转部门"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tatv_text_view="选择流转部门"
+        tools:visibility="visible"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:text="输入流转原因"
+        android:textColor="#333333"
+        android:textSize="17sp"/>
+
+    <com.sdxxtop.guardianapp.ui.widget.NumberEditTextView
+        android:id="@+id/et_num_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"/>
+
+    <Button
+        android:id="@+id/btn_check_success"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:background="@drawable/btn_green_solid_bg"
+        android:text="确认流转"
+        android:textColor="@color/white"/>
+</LinearLayout>

@@ -24,29 +24,90 @@ public class EventReadIndexBean {
     public int operate_status;
     public int settle_status;
 
-    public int is_modify;
-    public int is_finish;
+    public int is_modify;       //当前账号和状态是否能验收事件 1:有 2:否,
+    public int is_finish;      //当前账号和状态是否能解决事件 1:有 2:否,
+    public int is_claim_auth; //当前账号和状态是否能认领与流转事件 1:有 2:否,
+    public int is_claim;     //是否是认领时间 1、是 2、否
     public String part_name;
     public String supplement;
 
 
     public List<ExtraDateBean> extra_date;//事件的所有派发信息
+    public List<ExtraDateBean> claim_date;//事件的所有认领信息
 
     public List<ExtraBean> extra;//事件的所有无法解决信息
     public List<SolveBean> solve;//最近一条的解决信息
     public List<ExtraInfoBean> extra_info;//验收不通过
     public List<CompletedBean> completed;//已完成
+    public List<CompletedBean> claim_completed;//评价已完成
+    public List<CirculationBean> circulation;//流转信息
 
+    public static class CirculationBean {
+        private int event_id;
+        private int part_id;
+        private String reason;
+        private String add_time;
+        private String part_name;
+
+        public int getEvent_id() {
+            return event_id;
+        }
+
+        public void setEvent_id(int event_id) {
+            this.event_id = event_id;
+        }
+
+        public int getPart_id() {
+            return part_id;
+        }
+
+        public void setPart_id(int part_id) {
+            this.part_id = part_id;
+        }
+
+        public String getReason() {
+            return reason;
+        }
+
+        public void setReason(String reason) {
+            this.reason = reason;
+        }
+
+        public String getAdd_time() {
+            return add_time;
+        }
+
+        public void setAdd_time(String add_time) {
+            this.add_time = add_time;
+        }
+
+        public String getPart_name() {
+            return part_name;
+        }
+
+        public void setPart_name(String part_name) {
+            this.part_name = part_name;
+        }
+    }
 
     public static class ExtraDateBean {//事件的所有派发信息
         private int userid;
         private int event_id;
         private int send_id;
+        private int status;
         private String send_time;
         private String send_name;
         private String name;
         private String operate_date;
         private int important_type;
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
+        }
 
         public int getEvent_id() {
             return event_id;
@@ -233,9 +294,34 @@ public class EventReadIndexBean {
     public static class CompletedBean {//已完成
         private String extra;
         private String operate_time;
+        private int appraise;
         private String video;
         private int status;
         private String img;
+
+        public String getAppraiseStr(){
+            String str = "满意";
+            switch (appraise){
+                case 1:
+                    str = "满意";
+                    break;
+                case 2:
+                    str = "一般";
+                    break;
+                case 3:
+                    str = "不满意";
+                    break;
+            }
+            return str;
+        }
+
+        public int getAppraise() {
+            return appraise;
+        }
+
+        public void setAppraise(int appraise) {
+            this.appraise = appraise;
+        }
 
         public String getExtra() {
             return extra;

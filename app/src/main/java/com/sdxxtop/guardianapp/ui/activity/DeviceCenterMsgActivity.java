@@ -10,6 +10,7 @@ import com.sdxxtop.guardianapp.model.bean.UnreadNewslistBean;
 import com.sdxxtop.guardianapp.presenter.DeviceCenterMsgPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.DeviceCenterMsgContract;
 import com.sdxxtop.guardianapp.ui.adapter.DeviceCenterMsgAdapter;
+import com.sdxxtop.guardianapp.ui.widget.TitleView;
 
 import java.util.List;
 
@@ -25,8 +26,11 @@ public class DeviceCenterMsgActivity extends BaseMvpActivity<DeviceCenterMsgPres
     RecyclerView recyclerView;
     @BindView(R.id.tv_header)
     TextView tv_header;
+    @BindView(R.id.titleView)
+    TitleView titleView;
 
     private DeviceCenterMsgAdapter adapter;
+    private int type;
 
     @Override
     protected int getLayout() {
@@ -46,14 +50,17 @@ public class DeviceCenterMsgActivity extends BaseMvpActivity<DeviceCenterMsgPres
     @Override
     protected void onResume() {
         super.onResume();
-        mPresenter.loadData();
+        type = getIntent().getIntExtra("type", 0);
+        mPresenter.loadData(type);
     }
 
     @Override
     protected void initView() {
         super.initView();
+        titleView.setTitleValue(getIntent().getStringExtra("name"));
+        tv_header.setText(type==4?"扬尘预警事件":"事件解决未评价");
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new DeviceCenterMsgAdapter(R.layout.item_device_message_info, null);
+        adapter = new DeviceCenterMsgAdapter(R.layout.item_device_message_info, null,type);
         recyclerView.setAdapter(adapter);
     }
 
@@ -64,7 +71,6 @@ public class DeviceCenterMsgActivity extends BaseMvpActivity<DeviceCenterMsgPres
             adapter.replaceData(data);
         }
         if (data.size() > 0&&data!=null) {
-            tv_header.setText("扬尘预警事件");
             tv_header.setVisibility(View.VISIBLE);
             tv_header.setBackgroundColor(Color.parseColor("#FAFBFF"));
         } else {

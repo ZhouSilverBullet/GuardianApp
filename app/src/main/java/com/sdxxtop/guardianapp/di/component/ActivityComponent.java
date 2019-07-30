@@ -14,6 +14,7 @@ import com.sdxxtop.guardianapp.ui.activity.DeviceListActivity;
 import com.sdxxtop.guardianapp.ui.activity.DeviceWarnDetailActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventDiscretionListActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventDiscretionReportActivity;
+import com.sdxxtop.guardianapp.ui.activity.EventMoveActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportDetailSecondActivity;
@@ -87,5 +88,6 @@ public interface ActivityComponent {
     void inject(DeviceCenterMsgActivity activity);
     void inject(DeviceWarnDetailActivity activity);
     void inject(SectionEventActivity activity);
+    void inject(EventMoveActivity activity);
 
 }

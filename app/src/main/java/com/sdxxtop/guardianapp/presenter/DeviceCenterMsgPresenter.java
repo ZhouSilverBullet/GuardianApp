@@ -23,9 +23,9 @@ public class DeviceCenterMsgPresenter extends RxPresenter<DeviceCenterMsgContrac
     }
 
 
-    public void loadData() {
+    public void loadData(int type) {
         Params params = new Params();
-        params.put("tp", 4);
+        params.put("tp", type);
 
         Observable<RequestBean<UnreadNewslistBean>> observable = getEnvirApi().postUnreadNewslist(params.getData());
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<UnreadNewslistBean>() {
