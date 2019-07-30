@@ -82,6 +82,8 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
             mEventType = intent.getIntExtra("eventType", TYPE_REPORT);
         }
 
+        etNumContent2.setEditHint(" ");
+
         switch (mEventType) {
             case TYPE_SOLVE: // 3、已解决
                 llJiejueLayout.setVisibility(View.VISIBLE);

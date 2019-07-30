@@ -15,6 +15,15 @@ public class UnreadIndexBean {
     private OverdueBean overdue;
     private OverdueBean device;
     private OverdueBean claim;
+    private OverdueBean claim_event;
+
+    public OverdueBean getClaim_event() {
+        return claim_event;
+    }
+
+    public void setClaim_event(OverdueBean claim_event) {
+        this.claim_event = claim_event;
+    }
 
     public OverdueBean getClaim() {
         return claim;
@@ -111,6 +120,9 @@ public class UnreadIndexBean {
         }
         if (claim!=null){
             list.add(new UnreadIndexAdapterBean(claim.count,claim.name,claim.title,5,claim.time));
+        }
+        if (claim_event!=null){
+            list.add(new UnreadIndexAdapterBean(claim_event.count,claim_event.name,claim_event.title,6,claim_event.time));
         }
         return list;
     }

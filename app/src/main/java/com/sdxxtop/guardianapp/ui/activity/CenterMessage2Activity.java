@@ -76,15 +76,23 @@ public class CenterMessage2Activity extends BaseMvpActivity<CenterMessage2Presen
     public void showData(UnreadNewslistBean bean) {
         List<UnreadNewslistBean.EventItemBean> list = new ArrayList<>();
 
+        if (bean.getClaim_event() != null && bean.getClaim_event().size() > 0) {
+            list.addAll(bean.getClaim_event());
+        }
+
         List<UnreadNewslistBean.EventItemBean> overdue_event = bean.getOverdue_event();
         if (overdue_event != null && bean.getOverdue_event().size() > 0) {
-            if (type==3){
+            if (type == 3) {
                 for (UnreadNewslistBean.EventItemBean eventItemBean : overdue_event) {
                     eventItemBean.setClassify("自行处理事件");
                 }
-            }else if (type==1){
+            } else if (type == 1) {
                 for (UnreadNewslistBean.EventItemBean eventItemBean : overdue_event) {
                     eventItemBean.setClassify("派发事件");
+                }
+            } else if (type == 6) {
+                for (UnreadNewslistBean.EventItemBean eventItemBean : overdue_event) {
+                    eventItemBean.setClassify("已认领超期事件");
                 }
             }
             list.addAll(overdue_event);
@@ -100,7 +108,7 @@ public class CenterMessage2Activity extends BaseMvpActivity<CenterMessage2Presen
             list.addAll(bean.getWhole_event());
         }
 
-        mAdapter.setmType(bean.getEvent_type());
+        mAdapter.setmType(bean.getEvent_type(),type);
         mAdapter.replaceData(list);
     }
 }

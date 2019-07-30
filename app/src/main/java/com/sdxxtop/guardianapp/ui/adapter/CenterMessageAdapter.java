@@ -36,7 +36,7 @@ public class CenterMessageAdapter extends BaseQuickAdapter<UnreadIndexAdapterBea
     protected void convert(BaseViewHolder helper, UnreadIndexAdapterBean item) {
         helper.setText(R.id.tv_title, item.getName());
         helper.setText(R.id.tv_desc, item.getTitle());
-        helper.setText(R.id.tv_time,handleMessageTime(item.getTime()));
+        helper.setText(R.id.tv_time, handleMessageTime(item.getTime()));
 
         switch (item.getType()) {
             case 1:
@@ -59,6 +59,10 @@ public class CenterMessageAdapter extends BaseQuickAdapter<UnreadIndexAdapterBea
                 helper.setText(R.id.tv_status, "评");
                 helper.setBackgroundRes(R.id.tv_status, R.drawable.shape_yellow_bg);
                 break;
+            case 6:
+                helper.setText(R.id.tv_status, "认");
+                helper.setBackgroundRes(R.id.tv_status, R.drawable.shape_yellow_bg);
+                break;
         }
 
         setMsgUnread(item.getCount(), helper.getView(R.id.tv_messgae_count));
@@ -66,12 +70,12 @@ public class CenterMessageAdapter extends BaseQuickAdapter<UnreadIndexAdapterBea
         helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (item.getType()==4||item.getType()==5){
+                if (item.getType() == 4 || item.getType() == 5) {
                     Intent intent = new Intent(mContext, DeviceCenterMsgActivity.class);
                     intent.putExtra("name", item.getName());
                     intent.putExtra("type", item.getType());
                     mContext.startActivity(intent);
-                }else{
+                } else {
                     Intent intent = new Intent(mContext, CenterMessage2Activity.class);
                     intent.putExtra("name", item.getName());
                     intent.putExtra("type", item.getType());

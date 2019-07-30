@@ -25,16 +25,15 @@ import androidx.annotation.Nullable;
 public class DeviceCenterMsgAdapter extends BaseQuickAdapter<UnreadNewslistBean.EventItemBean, BaseViewHolder> {
     private int mType;
 
-    public DeviceCenterMsgAdapter(int layoutResId, @Nullable List<UnreadNewslistBean.EventItemBean> data, int type) {
+    public DeviceCenterMsgAdapter(int layoutResId, @Nullable List<UnreadNewslistBean.EventItemBean> data) {
         super(layoutResId, data);
-        this.mType = type;
     }
 
     @Override
     protected void convert(BaseViewHolder helper, UnreadNewslistBean.EventItemBean item) {
         helper.setText(R.id.tv_device_name, item.getTitle());
         helper.setText(R.id.tv_exception, item.getContent());
-        helper.setText(R.id.tv_time, getFormatTime(item.getUpdate_time()));
+        helper.setText(R.id.tv_time, getFormatTime( mType == 4 ?item.getAdd_time():item.getUpdate_time()));
 
         helper.setText(R.id.tv_icon, mType == 4 ? "警" : "评");
         helper.setBackgroundRes(R.id.tv_icon, mType == 4 ? R.drawable.shape_red_bg : R.drawable.shape_yellow_bg);
@@ -44,11 +43,11 @@ public class DeviceCenterMsgAdapter extends BaseQuickAdapter<UnreadNewslistBean.
             public void onClick(View v) {
                 Intent intent = null;
                 if (mType == 4) {
-                    intent =new Intent(mContext, DeviceWarnDetailActivity.class);
+                    intent = new Intent(mContext, DeviceWarnDetailActivity.class);
                     intent.putExtra("early_id", item.getEarly_id());
                     mContext.startActivity(intent);
-                }else{
-                    intent =new Intent(mContext, EventReportDetailActivity.class);
+                } else {
+                    intent = new Intent(mContext, EventReportDetailActivity.class);
                     intent.putExtra("eventId", String.valueOf(item.getEvent_id()));
                     mContext.startActivity(intent);
                 }
@@ -67,5 +66,9 @@ public class DeviceCenterMsgAdapter extends BaseQuickAdapter<UnreadNewslistBean.
             e.printStackTrace();
         }
         return result;
+    }
+
+    public void setType(int type){
+        this.mType = type;
     }
 }

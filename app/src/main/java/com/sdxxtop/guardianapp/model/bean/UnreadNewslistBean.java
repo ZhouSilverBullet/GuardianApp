@@ -14,6 +14,20 @@ public class UnreadNewslistBean {
     private List<EventItemBean> event_expire;//到期事件
     private List<EventItemBean> whole_event;//待验收事件
     private List<EventItemBean> reject_data;//驳回事件
+    private List<EventItemBean> claim_event;//待认领超期事件
+
+    public List<EventItemBean> getClaim_event() {
+        if (claim_event!=null&&claim_event.size()>0){
+            for (EventItemBean eventItemBean : claim_event) {
+                eventItemBean.setClassify("待认领超期事件");
+            }
+        }
+        return claim_event;
+    }
+
+    public void setClaim_event(List<EventItemBean> claim_event) {
+        this.claim_event = claim_event;
+    }
 
     public int getEvent_type() {
         return event_type;

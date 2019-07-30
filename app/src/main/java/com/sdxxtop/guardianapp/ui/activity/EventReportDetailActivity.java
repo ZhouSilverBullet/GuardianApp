@@ -529,7 +529,12 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
             tvPingjiaStatus.setVisibility(View.VISIBLE);
             tvPingjiaStatus.setText("评价情况：" + item.getAppraiseStr());
             tvPingjiaDesc.setVisibility(View.VISIBLE);
-            tvPingjiaDesc.setText("描述：" + item.getExtra());
+            if (!TextUtils.isEmpty(item.getExtra())){
+                tvPingjiaDesc.setVisibility(View.VISIBLE);
+                tvPingjiaDesc.setText("描述：" + item.getExtra());
+            }else{
+                tvPingjiaDesc.setVisibility(View.GONE);
+            }
         } else {
             llRenlingPingjia.setVisibility(View.GONE);
         }
@@ -642,7 +647,6 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
             erCheckResultWindow.dismiss();
         }
     }
-
 
     @OnClick({R.id.btn_check_success, R.id.rl_happen, R.id.btn_check_faile})
     public void onViewClicked(View view) {

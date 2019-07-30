@@ -60,7 +60,7 @@ public class DeviceCenterMsgActivity extends BaseMvpActivity<DeviceCenterMsgPres
         titleView.setTitleValue(getIntent().getStringExtra("name"));
         tv_header.setText(type==4?"扬尘预警事件":"事件解决未评价");
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new DeviceCenterMsgAdapter(R.layout.item_device_message_info, null,type);
+        adapter = new DeviceCenterMsgAdapter(R.layout.item_device_message_info, null);
         recyclerView.setAdapter(adapter);
     }
 
@@ -69,6 +69,7 @@ public class DeviceCenterMsgActivity extends BaseMvpActivity<DeviceCenterMsgPres
         List<UnreadNewslistBean.EventItemBean> data = bean.getOverdue_event();
         if (data != null) {
             adapter.replaceData(data);
+            adapter.setType(type);
         }
         if (data.size() > 0&&data!=null) {
             tv_header.setVisibility(View.VISIBLE);

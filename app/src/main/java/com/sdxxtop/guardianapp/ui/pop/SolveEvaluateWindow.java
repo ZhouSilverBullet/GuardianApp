@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,6 @@ import android.widget.TextView;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.ui.widget.EvaluateSelectView;
 import com.sdxxtop.guardianapp.ui.widget.NumberEditTextView;
-import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -138,13 +136,7 @@ public class SolveEvaluateWindow extends PopupWindow {
         switch (view.getId()) {
             case R.id.btn_confirm:
                 //提交确定
-
                 String editValue = etNumContent.getEditValue();
-                if (TextUtils.isEmpty(editValue)) {
-                    UIUtils.showToast("请描述无法解决原因");
-                    return;
-                }
-
                 if (mListener != null) {
                     mListener.onButtonClick(editValue,esv_view.getCurrentSelectItem());
                 }

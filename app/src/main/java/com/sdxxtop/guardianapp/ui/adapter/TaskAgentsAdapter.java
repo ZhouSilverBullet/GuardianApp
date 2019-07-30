@@ -39,6 +39,11 @@ public class TaskAgentsAdapter extends BaseQuickAdapter<EventIndexBean.EventBean
         }
 
         tvImportant.setText(sb);
+        if (item.getIs_claim() == 1) {
+            tvImportant.setVisibility(View.GONE);
+        } else {
+            tvImportant.setVisibility(View.VISIBLE);
+        }
 
         String endDate = item.getEnd_date();
         tvDate.setText("截止日期：" + endDate);
@@ -46,19 +51,19 @@ public class TaskAgentsAdapter extends BaseQuickAdapter<EventIndexBean.EventBean
         String strStatus = "";
         switch (item.getStatus()) { //状态(1:待派发 2:待解决 3:待验收 4:验收通过 5:验收未通过)
             case 2:
-                strStatus = "待解决";
+                strStatus = item.getIs_claim() == 1 ? "已认领" : "待解决";
                 break;
             case 3:
-                strStatus = "待验收";
+                strStatus = item.getIs_claim() == 1 ? "待评价" : "待验收";
                 break;
             case 4:
-                strStatus = "验收通过";
+                strStatus = item.getIs_claim() == 1 ? "已完成" : "验收通过";
                 break;
             case 5:
                 strStatus = "验收未通过";
                 break;
             default:
-                strStatus = "待派发";
+                strStatus = "待认领";
                 break;
         }
         tvPhase.setText(strStatus);

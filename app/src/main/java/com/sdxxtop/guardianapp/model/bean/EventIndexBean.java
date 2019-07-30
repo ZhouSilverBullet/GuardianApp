@@ -46,6 +46,15 @@ public class EventIndexBean {
         private String place;
         private String add_time;
         private int important_type;
+        private int is_claim;
+
+        public int getIs_claim() {
+            return is_claim;
+        }
+
+        public void setIs_claim(int is_claim) {
+            this.is_claim = is_claim;
+        }
 
         public int getEvent_id() {
             return event_id;
