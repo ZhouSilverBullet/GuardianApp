@@ -26,24 +26,42 @@ public class EventReportListAdapter extends BaseQuickAdapter<EventIndexBean.Even
         tvTime.setText("上报时间：" + Date2Util.handleTime(item.getAdd_time()));
         tvAddress.setText("事件地点：" + item.getPlace());
         String strStatus = "";
-        switch (item.getStatus()) { //状态(1:带派发 2:待解决 3:待验收 4:验收通过 5:验收不通过)
-            case 2:
-                strStatus = "已派发";
-                break;
-            case 3:
-                strStatus = "已反馈";
-                break;
-            case 4:
-                strStatus = "已完成";
-                break;
-            case 5:
+        if (item.getIs_claim()==1){
+            switch (item.getStatus()) {
+                case 2:
+                    strStatus = "已认领";
+                    break;
+                case 3:
+                    strStatus = "待评价";
+                    break;
+                case 4:
+                    strStatus = "已完成";
+                    break;
+                default:
+                    strStatus = "待认领";
+                    break;
+            }
+        }else{
+            switch (item.getStatus()) { //状态(1:带派发 2:待解决 3:待验收 4:验收通过 5:验收不通过)
+                case 2:
+                    strStatus = "已派发";
+                    break;
+                case 3:
+                    strStatus = "已反馈";
+                    break;
+                case 4:
+                    strStatus = "已完成";
+                    break;
+                case 5:
 //                strStatus = "验收不通过";
-                strStatus = "已完成";
-                break;
-            default:
-                strStatus = "已提交";
-                break;
+                    strStatus = "已完成";
+                    break;
+                default:
+                    strStatus = "已提交";
+                    break;
+            }
         }
+
         tvStatus.setText(strStatus);
 
         helper.getConvertView().setOnClickListener(new View.OnClickListener() {

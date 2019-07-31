@@ -64,13 +64,17 @@ public class ERDSecondPresenter extends RxPresenter<ERDSecondContract.IView> imp
         Disposable disposable = RxUtils.handleHttp(observable, new IRequestCallback<RequestBean>() {
             @Override
             public void onSuccess(RequestBean requestBean) {
-                mView.modifyRefresh();
+                if (mView != null) {
+                    mView.modifyRefresh();
+                }
             }
 
             @Override
             public void onFailure(int code, String error) {
-                UIUtils.showToast(error);
-                mView.showError(error);
+                if (mView != null) {
+                    UIUtils.showToast(error);
+                    mView.showError(error);
+                }
             }
         });
         addSubscribe(disposable);

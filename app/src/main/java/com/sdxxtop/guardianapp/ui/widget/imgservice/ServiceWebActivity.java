@@ -38,6 +38,7 @@ public class ServiceWebActivity extends AppCompatActivity implements ReWebChomeC
     protected LinearLayout llLoad;
     protected WebView webView;
     protected TitleView titleView;
+    protected View include;
     private static final int REQUEST_CODE_PICK_IMAGE = 0;
     private static final int REQUEST_CODE_IMAGE_CAPTURE = 1;
     private Intent mSourceIntent;
@@ -51,6 +52,7 @@ public class ServiceWebActivity extends AppCompatActivity implements ReWebChomeC
         setContentView(R.layout.activity_service_web);
         webView = (WebView) findViewById(R.id.web_view);
         llLoad = (LinearLayout) findViewById(R.id.ll_load);
+        include = findViewById(R.id.include);
         titleView = (TitleView) findViewById(R.id.titleView);
         initData();
 

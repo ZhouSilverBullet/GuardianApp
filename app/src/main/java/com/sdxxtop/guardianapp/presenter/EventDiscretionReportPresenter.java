@@ -95,13 +95,17 @@ public class EventDiscretionReportPresenter extends RxPresenter<EventDiscretionR
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<PatrolAddBean>() {
             @Override
             public void onSuccess(PatrolAddBean bean) {
-                mView.skipDetail(bean);
+                if (mView != null&&bean!=null) {
+                    mView.skipDetail(bean);
+                }
             }
 
             @Override
             public void onFailure(int code, String error) {
-                UIUtils.showToast(error);
-                mView.showError(error);
+                if (mView != null) {
+                    UIUtils.showToast(error);
+                    mView.showError(error);
+                }
             }
         });
         addSubscribe(disposable);

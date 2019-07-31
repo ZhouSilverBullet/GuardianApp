@@ -17,12 +17,14 @@
         app:leftLayoutIconIsGray="true"
         app:titleValue="应急事件"/>
 
-    <include layout="@layout/item_course_list_line_recycler"/>
+    <include
+        android:id="@+id/include"
+        layout="@layout/item_course_list_line_recycler"
+        android:visibility="gone"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="1dp">
+        android:layout_height="match_parent">
 
         <WebView
             android:id="@+id/web_view"

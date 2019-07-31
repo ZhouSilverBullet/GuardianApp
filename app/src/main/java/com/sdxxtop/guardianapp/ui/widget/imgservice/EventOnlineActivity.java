@@ -18,6 +18,7 @@ public class EventOnlineActivity extends ServiceWebActivity {
     protected void initData() {
         initStatusBar();
         titleView.setVisibility(View.VISIBLE);
+        include.setVisibility(View.VISIBLE);
         String href = getIntent().getStringExtra("href");
         webView.loadUrl(href);
     }

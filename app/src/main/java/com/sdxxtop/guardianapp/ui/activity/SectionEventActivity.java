@@ -65,16 +65,16 @@ public class SectionEventActivity extends BaseMvpActivity<SectionEventPresenter>
     public void setTabText(int type, String count) {
         switch (type) {
             case 0:
-                tabLayout.getTabAt(type).setText("全部（" + count + "）");
+                tabLayout.getTabAt(type).setText("全部(" + count + ")");
                 break;
             case 1:
-                tabLayout.getTabAt(type).setText("待认领（" + count + "）");
+                tabLayout.getTabAt(type).setText("待认领(" + count + ")");
                 break;
             case 2:
-                tabLayout.getTabAt(type).setText("已认领（" + count + "）");
+                tabLayout.getTabAt(type).setText("已认领(" + count + ")");
                 break;
             case 3:
-                tabLayout.getTabAt(type).setText("已完成（" + count + "）");
+                tabLayout.getTabAt(type).setText("已完成(" + count + ")");
                 break;
         }
     }

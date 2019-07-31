@@ -332,7 +332,8 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
             List<ImgAndTextLinearView.TagEventBean> data = new ArrayList<>();
             for (int i = 0; i < mainIndexBean.getPending_event().size(); i++) {
                 MainIndexBean.PendingEventBean bean = mainIndexBean.getPending_event().get(i);
-                data.add(new ImgAndTextLinearView.TagEventBean(bean.getEvent_id(), bean.getTitle(), bean.getEnd_date(), getStatus(1, bean.getStatus())));
+                data.add(new ImgAndTextLinearView.TagEventBean(bean.getEvent_id(), bean.getTitle(), bean.getEnd_date(), getStatus(1, bean.getStatus(),
+                        bean.getIs_claim())));
             }
             itlvView1.setData(data);
         } else {
@@ -342,7 +343,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
             List<ImgAndTextLinearView.TagEventBean> data = new ArrayList<>();
             for (int i = 0; i < mainIndexBean.getAdd_event().size(); i++) {
                 MainIndexBean.AddEventBean bean = mainIndexBean.getAdd_event().get(i);
-                data.add(new ImgAndTextLinearView.TagEventBean(bean.getEvent_id(), bean.getTitle(), "", getStatus(2, bean.getStatus())));
+                data.add(new ImgAndTextLinearView.TagEventBean(bean.getEvent_id(), bean.getTitle(), "", getStatus(2, bean.getStatus(), bean.getIs_claim())));
             }
             itlvView2.setData(data);
         } else {
@@ -352,21 +353,23 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
             List<ImgAndTextLinearView.TagEventBean> data = new ArrayList<>();
             for (int i = 0; i < mainIndexBean.getAdd_patrol().size(); i++) {
                 MainIndexBean.AddPatrolBean bean = mainIndexBean.getAdd_patrol().get(i);
-                data.add(new ImgAndTextLinearView.TagEventBean(bean.getPatrol_id(), bean.getTitle(), bean.getRectify_date(), getStatus(3, bean.getStatus())));
+                data.add(new ImgAndTextLinearView.TagEventBean(bean.getPatrol_id(), bean.getTitle(), bean.getRectify_date(), getStatus(3, bean.getStatus(),
+                        0)));
             }
             itlvView3.setData(data);
         } else {
             itlvView3.setNoDate();
         }
 
-        if (mainIndexBean.getPart_event()!=null&&mainIndexBean.getPart_event().size()>0){
+        if (mainIndexBean.getPart_event() != null && mainIndexBean.getPart_event().size() > 0) {
             List<ImgAndTextLinearView.TagEventBean> data = new ArrayList<>();
             for (int i = 0; i < mainIndexBean.getPart_event().size(); i++) {
                 MainIndexBean.PendingEventBean bean = mainIndexBean.getPart_event().get(i);
-                data.add(new ImgAndTextLinearView.TagEventBean(bean.getEvent_id(), bean.getTitle(), bean.getEnd_date(), getStatus(4, bean.getStatus())));
+                data.add(new ImgAndTextLinearView.TagEventBean(bean.getEvent_id(), bean.getTitle(), bean.getEnd_date(), getStatus(4, bean.getStatus(),
+                        bean.getIs_claim())));
             }
             itlvView4.setData(data);
-        }else{
+        } else {
             itlvView4.setNoDate();
         }
 
@@ -405,39 +408,73 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
         }
     }
 
-    public String getStatus(int type, int status) {
+    public String getStatus(int type, int status, int isClaim) {
         String str = "";
         switch (type) {
-            case 1:
-                switch (status) {
-                    case 2:
-                        str = "待解决";
-                        break;
-                    case 3:
-                        str = "待验收";
-                        break;
+            case 1:    // 代办任务
+                if (isClaim == 1) {
+                    switch (status) {
+                        case 2:
+                            str = "已认领";
+                            break;
+                        case 3:
+                            str = "待评价";
+                            break;
+                        case 4:
+                            str = "已完成";
+                            break;
+                        default:
+                            str = "待认领";
+                            break;
+                    }
+                } else {
+                    switch (status) {
+                        case 2:
+                            str = "待解决";
+                            break;
+                        case 3:
+                            str = "待验收";
+                            break;
+                    }
                 }
                 break;
-            case 2:
-                switch (status) {
-                    case 1:
-                        str = "待派发";
-                        break;
-                    case 2:
-                        str = "待解决";
-                        break;
-                    case 3:
-                        str = "待验收";
-                        break;
-                    case 4:
-                        str = "已完成";
-                        break;
-                    case 5:
-                        str = "驳回";
-                        break;
+            case 2:    // 我的上报
+                if (isClaim == 1) {
+                    switch (status) {
+                        case 2:
+                            str = "已认领";
+                            break;
+                        case 3:
+                            str = "待评价";
+                            break;
+                        case 4:
+                            str = "已完成";
+                            break;
+                        default:
+                            str = "待认领";
+                            break;
+                    }
+                } else {
+                    switch (status) {
+                        case 1:
+                            str = "待派发";
+                            break;
+                        case 2:
+                            str = "待解决";
+                            break;
+                        case 3:
+                            str = "待验收";
+                            break;
+                        case 4:
+                            str = "已完成";
+                            break;
+                        case 5:
+                            str = "驳回";
+                            break;
+                    }
                 }
                 break;
-            case 3:
+            case 3:    //  我的巡查
                 switch (status) {
                     case 1:
                     case 2:
@@ -449,7 +486,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
 
                 }
                 break;
-            case 4:    //事件状态 1、带认领 2、已认领 3、待评价 4、已完成
+            case 4:    //事件认领状态 1、带认领 2、已认领 3、待评价 4、已完成
                 switch (status) {
                     case 1:
                         str = "待认领";

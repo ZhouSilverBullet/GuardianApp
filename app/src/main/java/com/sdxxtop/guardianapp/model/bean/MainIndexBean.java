@@ -197,6 +197,15 @@ public class MainIndexBean {
         private String place;
         private String add_time;
         private int userid;
+        private int is_claim;
+
+        public int getIs_claim() {
+            return is_claim;
+        }
+
+        public void setIs_claim(int is_claim) {
+            this.is_claim = is_claim;
+        }
 
         public int getEvent_id() {
             return event_id;
@@ -268,6 +277,15 @@ public class MainIndexBean {
         private int status;
         private String add_time;
         private String update_time;
+        private int is_claim;
+
+        public int getIs_claim() {
+            return is_claim;
+        }
+
+        public void setIs_claim(int is_claim) {
+            this.is_claim = is_claim;
+        }
 
         public int getEvent_id() {
             return event_id;

@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:ellipsize="end"
-                android:maxWidth="170dp"
+                android:maxWidth="160dp"
                 android:singleLine="true"
                 android:text="事件地点：罗西街道"
                 android:textColor="@color/color_666666"
