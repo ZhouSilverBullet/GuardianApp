@@ -114,7 +114,7 @@ dependencies {
     implementation 'com.amap.api:3dmap:6.8.0'
     implementation 'com.amap.api:map2d:5.2.0'
     implementation 'com.amap.api:search:6.5.0.1'
-    implementation 'com.amap.api:location:4.5.1'
+//    implementation 'com.amap.api:location:4.5.1'
     api project(path: ':faceplatform')
 //    # 必选，可兼容市面上绝大部分设备
     implementation 'com.github.dueeeke.dkplayer:dkplayer-java:2.5.5'
@@ -148,4 +148,5 @@ dependencies {
     implementation 'com.umeng.umsdk:analytics:8.0.0'
     implementation 'com.umeng.umsdk:common:2.0.0'
     implementation project(path: ':xuxin_webview')
+    implementation project(path: ':skipsettings')
 }

@@ -21,6 +21,7 @@ import com.sdxxtop.guardianapp.alipush.AnalyticsHome;
 import com.sdxxtop.guardianapp.app.Constants;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.model.bean.LoginBean;
+import com.sdxxtop.guardianapp.model.bean.TrackInfoBean;
 import com.sdxxtop.guardianapp.presenter.LoginPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.LoginContract;
 import com.sdxxtop.guardianapp.ui.control.DelTextWatcher;
@@ -166,6 +167,14 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
 
         //阿里云推送绑定账号
         AnalyticsHome.bindAccount(mobile);
+
+        /******** 猎鹰相关 ********/
+        TrackInfoBean trackInfo = loginBean.track_info;
+        if (trackInfo != null) {
+            SpUtil.putLong(Constants.SERVICE_ID, trackInfo.getSid(), false);
+            SpUtil.putLong(Constants.TERMINAL_ID, trackInfo.getTid(), false);
+            SpUtil.putLong(Constants.TRACK_ID, trackInfo.getTrid(), false);
+        }
 
         Intent intent = new Intent(this, LoginConfirmActivity.class);
         intent.putExtra("isAdmin", true);

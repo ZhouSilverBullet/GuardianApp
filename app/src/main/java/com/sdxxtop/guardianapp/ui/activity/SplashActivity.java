@@ -13,6 +13,7 @@ import com.sdxxtop.guardianapp.alipush.AnalyticsHome;
 import com.sdxxtop.guardianapp.app.Constants;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.model.bean.AutoLoginBean;
+import com.sdxxtop.guardianapp.model.bean.TrackInfoBean;
 import com.sdxxtop.guardianapp.presenter.SplashPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.SplashContract;
 import com.sdxxtop.guardianapp.utils.SpUtil;
@@ -105,6 +106,14 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
         SpUtil.putInt(Constants.EXPIRE_TIME, expire_time);
         SpUtil.putInt(Constants.PART_ID, part_id);
         SpUtil.putString(Constants.AUTO_TOKEN, auto_token);
+
+        /******** 猎鹰相关 ********/
+        TrackInfoBean trackInfo = autoLoginBean.track_info;
+        if (trackInfo != null) {
+            SpUtil.putLong(Constants.SERVICE_ID, trackInfo.getSid(), false);
+            SpUtil.putLong(Constants.TERMINAL_ID, trackInfo.getTid(), false);
+            SpUtil.putLong(Constants.TRACK_ID, trackInfo.getTrid(), false);
+        }
 
         new Handler().postDelayed(new Runnable() {
             @Override

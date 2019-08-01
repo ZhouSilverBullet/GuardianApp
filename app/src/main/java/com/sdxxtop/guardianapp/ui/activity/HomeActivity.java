@@ -2,10 +2,13 @@ package com.sdxxtop.guardianapp.ui.activity;
 
 import android.Manifest;
 import android.animation.Animator;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.PowerManager;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.widget.ImageView;
@@ -20,8 +23,8 @@ import com.sdxxtop.guardianapp.model.bean.ArticleIndexBean;
 import com.sdxxtop.guardianapp.model.bean.InitBean;
 import com.sdxxtop.guardianapp.presenter.HomePresenter;
 import com.sdxxtop.guardianapp.presenter.contract.HomeContract;
-import com.sdxxtop.guardianapp.service.PatrolRecordService;
 import com.sdxxtop.guardianapp.ui.dialog.DownloadDialog;
+import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
 import com.sdxxtop.guardianapp.ui.fragment.DataMonitoringFragment;
 import com.sdxxtop.guardianapp.ui.fragment.HomeFragment;
 import com.sdxxtop.guardianapp.ui.fragment.LearningFragment;
@@ -68,6 +71,7 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
         }
     }
 
+    @SuppressLint("CheckResult")
     @Override
     protected void initView() {
         initAHNavigation();
@@ -88,15 +92,17 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
             public void accept(Boolean aBoolean) throws Exception {
                 if (aBoolean) {
                     startPatrolService();
+                    mPresenter.startUploadingPoint();
                 }
             }
         });
     }
 
     private void startPatrolService() {
-        Logger.e("开启了服务");
-        Intent intent = new Intent(this, PatrolRecordService.class);
-        startService(intent);
+        ignoreBatteryOptimization(this);
+//        Logger.e("开启了服务");
+//        Intent intent = new Intent(this, PatrolRecordService.class);
+//        startService(intent);
     }
 
     private void initAHNavigation() {
@@ -218,6 +224,43 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
         if (initBean != null) {
             DownloadDialog downloadDialog = new DownloadDialog(this, initBean, new RxPermissions(this));
             downloadDialog.show();
+        }
+    }
+
+    /**
+     * 忽略电池优化
+     */
+    public void ignoreBatteryOptimization(Activity activity) {
+        PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+        boolean hasIgnored = false;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            hasIgnored = powerManager.isIgnoringBatteryOptimizations(activity.getPackageName());
+            //  判断当前APP是否有加入电池优化的白名单，如果没有，弹出加入电池优化的白名单的设置对话框。
+            if (!hasIgnored) {
+//                Intent intent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+//                intent.setData(Uri.parse("package:"+activity.getPackageName()));
+//                startActivity(intent);
+                new IosAlertDialog(this)
+                        .builder()
+                        .setCancelable(false)
+                        .setTitle(" ")
+                        .setMsg(" 请设置手机权限,否则定位轨迹会有偏移 ")
+                        .setMsg2("  ")
+                        .setPositiveButton("去设置", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(HomeActivity.this, SystemSettingActivity.class);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("取消", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                            }
+                        })
+                        .show();
+            }
         }
     }
 }

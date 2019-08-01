@@ -15,6 +15,8 @@ public class AutoLoginBean {
     private String auto_token;
     private int expire_time;
 
+    public TrackInfoBean track_info;
+
     public int getUserid() {
         return userid;
     }

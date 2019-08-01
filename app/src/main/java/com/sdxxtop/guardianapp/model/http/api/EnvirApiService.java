@@ -40,6 +40,8 @@ import com.sdxxtop.guardianapp.model.bean.ShowPartBean;
 import com.sdxxtop.guardianapp.model.bean.SignLogBean;
 import com.sdxxtop.guardianapp.model.bean.StudyCourseBean;
 import com.sdxxtop.guardianapp.model.bean.StudyQuestionBean;
+import com.sdxxtop.guardianapp.model.bean.TrackBean;
+import com.sdxxtop.guardianapp.model.bean.TrackPointBean;
 import com.sdxxtop.guardianapp.model.bean.UcenterIndexBean;
 import com.sdxxtop.guardianapp.model.bean.UnreadIndexBean;
 import com.sdxxtop.guardianapp.model.bean.UnreadNewslistBean;
@@ -315,5 +317,13 @@ public interface EnvirApiService {
     @FormUrlEncoded
     @POST("event/operate")
     Observable<RequestBean> postEventOperate(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("main/getlocus")
+    Observable<RequestBean<TrackBean>> postFalconReturnTime(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("main/signlog")
+    Observable<RequestBean<TrackPointBean>> postMoreTrack(@Field("data") String data);
 
 }

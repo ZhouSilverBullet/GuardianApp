@@ -21,4 +21,10 @@ public interface Constants {
      */
     String USER_IMG = "user_img";
 
+
+    /******* 猎鹰相关 ********/
+    String TERMINAL_ID = "terminal_id";
+    String TRACK_ID = "track_id";
+    String SERVICE_ID = "service_id";
+
 }

@@ -34,8 +34,8 @@ public class LocationUtilOne implements AMapLocationListener {
         //设置是否允许模拟位置,默认为false，不允许模拟位置
         clientOption.setMockEnable(false);
 
-        clientOption.setOnceLocationLatest(true);
-        clientOption.setOnceLocation(true);
+//        clientOption.setOnceLocationLatest(true);
+//        clientOption.setOnceLocation(true);
         //设置定位间隔
         aMapLocationClient.setLocationOption(clientOption);
 
@@ -55,9 +55,10 @@ public class LocationUtilOne implements AMapLocationListener {
                 String street = aMapLocation.getStreet();
                 double lat = aMapLocation.getLatitude();
                 double lgt = aMapLocation.getLongitude();
+
                 if (callBack != null) {
                     callBack.callBack(country + province + city + district + street, lat, lgt, aMapLocation);
-                    aMapLocationClient.stopLocation();
+//                    aMapLocationClient.stopLocation();
                 }
 
             } else {

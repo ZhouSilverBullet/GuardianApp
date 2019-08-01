@@ -19,6 +19,22 @@ public class SpUtil {
     }
 
 
+    public static void putLong(String key, long value, boolean isApply) {
+        SharedPreferences sp = getSp();
+        if (sp == null)
+            return;
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putLong(key, value);
+        if (isApply) {
+            applyEditor(editor);
+        } else  {
+            commitEditor(editor);
+        }
+    }
+    private static void commitEditor(SharedPreferences.Editor editor) {
+        editor.commit();
+    }
+
     public static void putLong(Context context, String key, long value) {
         SharedPreferences sp = getSp(context);
         if (sp == null)

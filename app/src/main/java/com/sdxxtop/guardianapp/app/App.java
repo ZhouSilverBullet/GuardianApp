@@ -1,8 +1,10 @@
 package com.sdxxtop.guardianapp.app;
 
 
+import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,6 +16,8 @@ import com.alibaba.sdk.android.push.CommonCallback;
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.alibaba.sdk.android.push.register.HuaWeiRegister;
 import com.alibaba.sdk.android.push.register.MiPushRegister;
+import com.amap.api.track.AMapTrackClient;
+import com.amap.api.track.AMapTrackService;
 import com.baidu.idl.face.platform.FaceSDKManager;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
@@ -33,6 +37,7 @@ import com.sdxxtop.guardianapp.app.base.BaseApp;
 import com.sdxxtop.guardianapp.di.component.AppComponent;
 import com.sdxxtop.guardianapp.di.component.DaggerAppComponent;
 import com.sdxxtop.guardianapp.di.module.AppModule;
+import com.sdxxtop.guardianapp.service.ForegroundService;
 import com.sdxxtop.webview.remotewebview.ProgressWebView;
 import com.sdxxtop.webview.romoteservice.OptimizationService;
 import com.umeng.analytics.MobclickAgent;
@@ -44,6 +49,7 @@ public class App extends BaseApp {
     private static App instance;
     private static AppComponent appComponent;
     private static final String TAG = "Init";
+    private static AMapTrackClient aMapTrackClient;
 
     @Override
     public void onCreate() {
@@ -56,6 +62,8 @@ public class App extends BaseApp {
         CrashHandler.getInstance().init(this);
         initCloudChannel(this);
         initUM();
+        initAMapTrackClient();
+        startAlarm();
 //        initWebViewServer();
     }
 
@@ -194,5 +202,35 @@ public class App extends BaseApp {
             //最后在notificationmanager中创建该通知渠道
             mNotificationManager.createNotificationChannel(mChannel);
         }
+    }
+
+    public void startAlarm() {
+        //首先获得系统服务
+        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        //设置闹钟的意图，我这里是去调用一个服务，该服务功能就是获取位置并且上传
+        Intent intent = new Intent(this, AMapTrackService.class);
+        PendingIntent pendSender = PendingIntent.getService(this, 0, intent, 0);
+        am.cancel(pendSender);
+        //AlarmManager.RTC_WAKEUP ;这个参数表示系统会唤醒进程；设置的间隔时间是1分钟
+        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 60 * 1000, pendSender);
+    }
+
+    /********** 猎鹰相关 ***********/
+
+    private void initAMapTrackClient() {
+        aMapTrackClient = new AMapTrackClient(getApplicationContext());
+        aMapTrackClient.setInterval(5, 30);
+    }
+
+    public static AMapTrackClient getAMapTrackClient() {
+        if (aMapTrackClient != null) {
+            return aMapTrackClient;
+        }
+        return null;
+    }
+
+    public void startTrackService() {
+        Intent intent = new Intent(App.getInstance(), ForegroundService.class);
+        startService(intent);
     }
 }

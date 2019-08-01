@@ -2,6 +2,7 @@ package com.sdxxtop.guardianapp.presenter;
 
 
 import android.graphics.Bitmap;
+import android.text.TextUtils;
 
 import com.amap.api.location.AMapLocation;
 import com.sdxxtop.guardianapp.app.App;
@@ -14,6 +15,7 @@ import com.sdxxtop.guardianapp.model.http.net.Params;
 import com.sdxxtop.guardianapp.model.http.util.RxUtils;
 import com.sdxxtop.guardianapp.presenter.contract.FaceLivenessContract;
 import com.sdxxtop.guardianapp.utils.AMapFindLocation;
+import com.sdxxtop.guardianapp.utils.SpUtil;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import java.io.File;
@@ -40,6 +42,7 @@ public class FaceLivenessPresenter extends RxPresenter<FaceLivenessContract.IVie
         params.put("slt", lanLan);
         params.put("ad", address);
         params.put("st", "1");
+        params.put("trid", SpUtil.getLong(Constants.TRACK_ID, 0));
         Observable<RequestBean> observable = getEnvirApi().postMainSign(params.getData());
         Disposable disposable = RxUtils.handleHttp(observable, new IRequestCallback<RequestBean>() {
             @Override
@@ -114,7 +117,7 @@ public class FaceLivenessPresenter extends RxPresenter<FaceLivenessContract.IVie
         addSubscribe(disposable);
     }
 
-    public void loginFace(Bitmap bitmap) {
+    public void loginFace(Bitmap bitmap,String address) {
         Disposable subscribe = Flowable.just(bitmap).map(new Function<Bitmap, File>() {
             @Override
             public File apply(Bitmap bitmap) throws Exception {
@@ -134,7 +137,7 @@ public class FaceLivenessPresenter extends RxPresenter<FaceLivenessContract.IVie
 
                     @Override
                     public void accept(File s) throws Exception {
-                        loginFace(s);
+                        loginFace(s,address);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -144,7 +147,7 @@ public class FaceLivenessPresenter extends RxPresenter<FaceLivenessContract.IVie
                 });
     }
 
-    private void loginFace(File imgFile) {
+    private void loginFace(File imgFile,String address) {
 
         if (imgFile == null) {
             UIUtils.showToast("人脸图片失败");
@@ -162,12 +165,14 @@ public class FaceLivenessPresenter extends RxPresenter<FaceLivenessContract.IVie
                 instance.location();
                 instance.setLocationCompanyListener(new AMapFindLocation.LocationCompanyListener() {
                     @Override
-                    public void onAddress(AMapLocation address) {
-                        double longitude = address.getLongitude();
-                        double latitude = address.getLatitude();
+                    public void onAddress(AMapLocation aMapLocation) {
+                        double longitude = aMapLocation.getLongitude();
+                        double latitude = aMapLocation.getLatitude();
                         String value = longitude + "," + latitude;
-                        String address1 = address.getAddress();
-
+                        String address1 = aMapLocation.getAddress();
+                        if (TextUtils.isEmpty(address1)){
+                            address1 = address;
+                        }
                         face(value, address1);
                     }
                 });

@@ -29,9 +29,9 @@ import com.sdxxtop.guardianapp.ui.adapter.HomeRecyclerAdapter;
 import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
 import com.sdxxtop.guardianapp.ui.widget.ImgAndTextLinearView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
+import com.sdxxtop.guardianapp.utils.AMapFindLocation2;
 import com.sdxxtop.guardianapp.utils.GlideImageLoader;
 import com.sdxxtop.guardianapp.utils.GpsUtils;
-import com.sdxxtop.guardianapp.utils.LocationUtilOne;
 import com.sdxxtop.guardianapp.utils.SpUtil;
 import com.youth.banner.Banner;
 
@@ -234,16 +234,19 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
                             //判断一次打卡，gps是否打开
                             if (isClock == 1) {
                                 if (mIsFace) {
+                                    showLoadingDialog();
                                     if (GpsUtils.isOPen(getContext())) {
-                                        LocationUtilOne oneLoaction = new LocationUtilOne();
-                                        oneLoaction.startLocate(getContext());
-                                        oneLoaction.setLocationCallBack(new LocationUtilOne.ILocationCallBack() {
+                                        AMapFindLocation2 instance = AMapFindLocation2.getInstance();
+                                        instance.location();
+                                        instance.setLocationCompanyListener(new AMapFindLocation2.LocationCompanyListener() {
                                             @Override
-                                            public void callBack(String str, double lat, double lgt, AMapLocation aMapLocation) {
+                                            public void onAddress(AMapLocation aMapLocation) {
                                                 String address = aMapLocation.getAddress();
                                                 if (TextUtils.isEmpty(address)) {
                                                     showToast("定位获取位置失败,请稍后重试");
                                                 } else {
+                                                    closeLoadingDialog();
+                                                    instance.stopLocation();
                                                     Intent intent = new Intent(getContext(), MyFaceLivenessActivity.class);
                                                     intent.putExtra("isFace", true);
                                                     intent.putExtra("address", address);
@@ -486,7 +489,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
 
                 }
                 break;
-            case 4:    //事件认领状态 1、带认领 2、已认领 3、待评价 4、已完成
+            case 4:    //部门事件认领状态 1、带认领 2、已认领 3、待评价 4、已完成
                 switch (status) {
                     case 1:
                         str = "待认领";

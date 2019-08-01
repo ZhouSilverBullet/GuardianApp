@@ -23,6 +23,8 @@ public class LoginBean {
     private int part_id;
     private String img;
 
+    public TrackInfoBean track_info;
+
     public String getAuto_token() {
         return auto_token;
     }

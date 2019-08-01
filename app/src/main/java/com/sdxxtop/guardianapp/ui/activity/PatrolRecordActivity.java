@@ -22,6 +22,8 @@ import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.LatLngBounds;
+import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.maps.model.Polyline;
@@ -35,6 +37,7 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.model.bean.SignLogBean;
+import com.sdxxtop.guardianapp.model.bean.TrackPointBean;
 import com.sdxxtop.guardianapp.presenter.PatrolPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.PatrolContract;
 import com.sdxxtop.guardianapp.ui.adapter.PatrolMapAdapter;
@@ -48,6 +51,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -84,6 +88,7 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
     //下载数据为空
     private boolean isLoadEmpty;
     private BottomDialogView dialogView;
+    private List<List<TrackPointBean.PointBean>> trackList;
 
     @Override
     protected int getLayout() {
@@ -116,8 +121,9 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
                                 time += " 14:00 - 17:00";
                             }
                             int resid = time.indexOf(todayDate);
-                            tatvDate.getTextRightText().setText(resid!=-1?"今日":time);
-                            mPresenter.loadData(time, type);
+                            tatvDate.getTextRightText().setText(resid != -1 ? "今日" : time);
+//                            mPresenter.loadData(time, type);
+                            mPresenter.loadTrack(time, type);
                         }
                     });
                     dialogView.show();
@@ -309,10 +315,26 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
 
     @Override
     public void onMapLoaded() {
-        if (isInternetDataLoad) {
-            drawMapLine();
-        }
+//        if (isInternetDataLoad) {
+//            drawMapLine();
+//        }
         isMapLoad = true;
+        aMap.clear();
+        drawMapTrack();
+    }
+
+    public void drawMapTrack() {
+        AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
+            @Override
+            public void run() {
+                if (trackList != null && trackList.size() > 0) {
+                    for (int i = 0; i < trackList.size(); i++) {
+                        List<TrackPointBean.PointBean> pointBeans = trackList.get(i);
+                        drawTrackOnMap(pointBeans);
+                    }
+                }
+            }
+        });
     }
 
     //地图上面画线
@@ -373,45 +395,16 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
         if (isMapLoad) {
             drawMapLine();
         }
+    }
 
-
-//        if (data != null) {
-//            addressList = data.getAddress();
-//            if (addressList != null && addressList.size() > 0) {
-//                sportAddressAdapter.replaceData(addressList);
-//            }
-//            int step_num = data.getStep_num();
-//            tvStepNum.setText(step_num + "");
-//            String distance = data.getDistance();
-//            String cal = data.getCal();
-//            tvDistance.setText(cal + "");
-//            tvCal.setText(distance + "");
-//
-//            List<String> longitude = data.getLongitude();
-//            if (longitude.size() > 0) {
-//                if (curLatlngList.size() > 0) {
-//                    curLatlngList.clear();
-//                }
-//
-//                for (String longitData : longitude) {
-//                    if (!TextUtils.isEmpty(longitData)) {
-//                        String[] split = longitData.split(",");
-//                        if (split.length > 1) {
-//                            try {
-//                                curLatlngList.add(new LatLng(Double.parseDouble(split[1]),
-//                                        Double.parseDouble(split[0])));
-//                            } catch (Exception e) {
-//
-//                            }
-//                        }
-//                    }
-//                }
-//
-//                if (isMapLoad) {
-//                    drawMapLine();
-//                }
-//            }
-//        }
+    @Override
+    public void showTrackData(TrackPointBean bean) {
+        if (bean == null) return;
+        tvPosition.setText("共" +bean.getDistance()+ "米 打卡" +  bean.getNum()  + "次");
+        trackList = bean.getSign();
+        isTrackLoad = true;
+        aMap.clear();
+        drawMapTrack();
     }
 
     /**
@@ -435,7 +428,8 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
         super.onResume();
         //mapview 修改一下加载时间试试
         mapView.onResume();
-        mPresenter.loadData(todayDate, 0);
+//        mPresenter.loadData(todayDate, 0);
+        mPresenter.loadTrack(todayDate, 0);
     }
 
     @Override
@@ -470,7 +464,7 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
                     chooseDay = date;
                     tatvDate.getTextRightText().setText(getFormatDate(chooseDay));
 //                    mPresenter.kaoqinMore(getUserID(), studentID, date);
-                    mPresenter.loadData(date, 0);
+//                    mPresenter.loadData(date, 0);
                     selectionDateWindow.dismiss();
                 }
             });
@@ -508,5 +502,48 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
             e.printStackTrace();
         }
         return formatDate;
+    }
+
+    private List<Marker> endMarkers = new LinkedList<>();
+    private List<Polyline> polylines = new LinkedList<>();
+    private boolean isTrackLoad;
+
+    private int listSize = 0;
+
+    private void drawTrackOnMap(List<TrackPointBean.PointBean> points) {
+        if (points.size() < 2) return;
+
+        if (isMapLoad && isTrackLoad) {
+            LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
+            PolylineOptions polylineOptions = new PolylineOptions();
+            polylineOptions.color(Color.BLUE).width(10);
+            if (points.size() > 0) {
+                // 起点
+                TrackPointBean.PointBean pointBean = points.get(0);
+                MarkerOptions markerOptions = new MarkerOptions()
+                        .position(pointBean.getLatLng())
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                endMarkers.add(mapView.getMap().addMarker(markerOptions));
+            }
+            if (points.size() > 1) {
+                // 终点
+                TrackPointBean.PointBean pointBean = points.get(points.size() - 1);
+                MarkerOptions markerOptions = new MarkerOptions()
+                        .position(pointBean.getLatLng())
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                endMarkers.add(mapView.getMap().addMarker(markerOptions));
+            }
+            for (TrackPointBean.PointBean pointBean : points) {
+                polylineOptions.add(pointBean.getLatLng());
+                boundsBuilder.include(pointBean.getLatLng());
+            }
+            Polyline polyline = mapView.getMap().addPolyline(polylineOptions);
+            polylines.add(polyline);
+//            mapView.getMap().animateCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 30));
+            if (points.size()>0){
+                aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(points.get(0).getLatLng(), 14f));
+            }
+
+        }
     }
 }

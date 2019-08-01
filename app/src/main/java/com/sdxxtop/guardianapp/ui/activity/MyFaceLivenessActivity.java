@@ -24,6 +24,7 @@ public class MyFaceLivenessActivity extends FaceLivenessActivity implements Face
 
     private DialogUtil mDialogUtil;
     private boolean mIsFace;
+    private String address;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,7 @@ public class MyFaceLivenessActivity extends FaceLivenessActivity implements Face
 
         if (getIntent() != null) {
             mIsFace = getIntent().getBooleanExtra("isFace", true);
-            String address = getIntent().getStringExtra("address");
+            address = getIntent().getStringExtra("address");
             tvLocation.setText(address);
         }
 
@@ -89,7 +90,7 @@ public class MyFaceLivenessActivity extends FaceLivenessActivity implements Face
             return;
         }
 
-        mPresenter.loginFace(bitmap);
+        mPresenter.loginFace(bitmap,address);
     }
 
     private void goToRegister(Bitmap bitmap) {
