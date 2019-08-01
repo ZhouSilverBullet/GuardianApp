@@ -27,6 +27,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.sdxxtop.guardianapp.BuildConfig;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.app.base.BaseApp;
 import com.sdxxtop.guardianapp.di.component.AppComponent;
@@ -34,6 +35,7 @@ import com.sdxxtop.guardianapp.di.component.DaggerAppComponent;
 import com.sdxxtop.guardianapp.di.module.AppModule;
 import com.sdxxtop.webview.remotewebview.ProgressWebView;
 import com.sdxxtop.webview.romoteservice.OptimizationService;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 
 
@@ -81,6 +83,9 @@ public class App extends BaseApp {
          * UMConfigure.init调用中appkey和channel参数请置为null）。
          */
         UMConfigure.init(this, "5d31b2930cafb20936000e67", "Umeng", UMConfigure.DEVICE_TYPE_PHONE, null);
+        if (BuildConfig.DEBUG) {
+            MobclickAgent.setCatchUncaughtExceptions(false);// 关闭错误统计
+        }
     }
 
     private void initBaiduFace() {

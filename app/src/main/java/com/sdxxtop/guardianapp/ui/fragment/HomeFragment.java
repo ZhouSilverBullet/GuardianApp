@@ -191,6 +191,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
         mPresenter.loadData();
     }
 
+
     @Override
     protected void initEvent() {
         super.initEvent();
@@ -476,12 +477,11 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
                 break;
             case 3:    //  我的巡查
                 switch (status) {
-                    case 1:
                     case 2:
-                        str = "新任务";
+                        str = "已完成";
                         break;
-                    case 3:
-                        str = "已完成整改";
+                    case 1:
+                        str = "待复查";
                         break;
 
                 }

@@ -518,10 +518,12 @@ public class FaceLivenessActivity extends AppCompatActivity implements
                         (int) (mTipsIcon.getMinimumHeight() * 0.7f));
                 mTipsTopView.setCompoundDrawablePadding(15);
             }
+            if (mTipsTopView==null)return;
             mTipsTopView.setBackgroundResource(R.drawable.bg_tips);
             mTipsTopView.setText(R.string.detect_standard);
             mTipsTopView.setCompoundDrawables(mTipsIcon, null, null, null);
         } else {
+            if (mTipsTopView==null)return;
             mTipsTopView.setBackgroundResource(R.drawable.bg_tips_no);
             mTipsTopView.setCompoundDrawables(null, null, null, null);
             if (!TextUtils.isEmpty(message)) {

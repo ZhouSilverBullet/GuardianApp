@@ -162,6 +162,7 @@ public class GridMapActivity extends BaseMvpActivity<GridMapPresenter> implement
                     @Override
                     public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
                         if (!TextUtils.isEmpty(middle)) {
+                            if (aMap==null)return;
                             String[] split = middle.split(",");
                             if (split.length > 1) {
                                 LatLng latLng = new LatLng(Double.parseDouble(split[1]), Double.parseDouble(split[0]));

@@ -70,6 +70,7 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
 
     @Override
     public void showError(String error) {
+        showToast(error);
         hideLoadingDialog();
     }
 

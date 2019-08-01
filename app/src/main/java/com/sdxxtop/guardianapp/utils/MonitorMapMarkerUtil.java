@@ -80,6 +80,7 @@ public class MonitorMapMarkerUtil {
                         .into(new SimpleTarget<Drawable>(100, 100) {
                             @Override
                             public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                                if (icon==null||listener==null)return;
                                 icon.setImageDrawable(resource);
                                 listener.markerIconLoadingFinished(markerView);
                             }

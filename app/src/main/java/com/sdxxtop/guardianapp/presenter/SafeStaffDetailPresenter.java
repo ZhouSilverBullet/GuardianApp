@@ -35,12 +35,16 @@ public class SafeStaffDetailPresenter extends RxPresenter<SafeStaffDetailContrac
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EnterpriseSecurityBean>() {
             @Override
             public void onSuccess(EnterpriseSecurityBean bean) {
-                mView.showData(bean);
+                if (mView != null) {
+                    mView.showData(bean);
+                }
             }
 
             @Override
             public void onFailure(int code, String error) {
-                mView.showError(error);
+                if (mView != null) {
+                    mView.showError(error);
+                }
             }
         });
         addSubscribe(disposable);
@@ -56,14 +60,16 @@ public class SafeStaffDetailPresenter extends RxPresenter<SafeStaffDetailContrac
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<GridreportOperatorBean>() {
             @Override
             public void onSuccess(GridreportOperatorBean bean) {
-                if (bean!=null){
+                if (bean!=null&&mView!=null){
                     mView.showGridData(bean);
                 }
             }
 
             @Override
             public void onFailure(int code, String error) {
-                mView.showError(error);
+                if (mView != null) {
+                    mView.showError(error);
+                }
             }
         });
         addSubscribe(disposable);

@@ -46,7 +46,7 @@ public class ProvinceTwoPickerView {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MSG_LOAD_DATA:
-                    if (thread == null) {//如果已创建就不再重新创建子线程了
+                    if (thread == null) {  //如果已创建就不再重新创建子线程了
 
                         thread = new Thread(new Runnable() {
                             @Override
@@ -76,7 +76,7 @@ public class ProvinceTwoPickerView {
 
     public ProvinceTwoPickerView(Context context, List<EventShowBean.NewPartBean> data) {
         this.mContext = context;
-        if (data == null&&data.size()==0) {
+        if (data == null || data.size() == 0) {
             UIUtils.showToast("暂无主管部门");
             return;
         }
@@ -86,7 +86,6 @@ public class ProvinceTwoPickerView {
 
 
     private void initJsonData() {//解析数据
-
         /**
          * 注意：assets 目录下的Json文件仅供参考，实际使用可自行替换文件
          * 关键逻辑在于循环体
@@ -155,7 +154,7 @@ public class ProvinceTwoPickerView {
         if (isLoaded) {
             showPickerView();
         } else {
-            UIUtils.showToast("数据为加载完成,稍后再试...");
+            UIUtils.showToast("数据未加载完成,稍后再试...");
         }
     }
 
@@ -194,10 +193,10 @@ public class ProvinceTwoPickerView {
                 if (mlistener != null) {
                     String resultTx = "";
                     int resultId = 0;
-                    if (!"".equals(opt2tx)){
+                    if (!"".equals(opt2tx)) {
                         resultTx = opt2tx;
                         resultId = opt2Id;
-                    }else{
+                    } else {
                         resultTx = opt1tx;
                         resultId = opt1Id;
                     }

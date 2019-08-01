@@ -1,5 +1,7 @@
 package com.sdxxtop.guardianapp.model.bean;
 
+import android.text.TextUtils;
+
 import com.amap.api.maps.model.LatLng;
 
 import java.util.List;
@@ -104,6 +106,9 @@ public class GridreportIndexBean {
         private String longitude;
 
         public LatLng getLatlng() {
+            if (TextUtils.isEmpty(longitude)){
+                return new LatLng(0,0);
+            }
             return new LatLng(Double.parseDouble(longitude.split(",")[1]),Double.parseDouble(longitude.split(",")[0]));
         }
         public int getUserid() {

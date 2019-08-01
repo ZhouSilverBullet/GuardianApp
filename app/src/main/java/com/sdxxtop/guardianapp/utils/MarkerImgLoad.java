@@ -91,7 +91,7 @@ public class MarkerImgLoad {
      * 企业
      */
     public void addCustomMarker(EnterpriseIndexBean.UserInfo userInfo, final MarkerSign sign, OnMarkerListener listener) {
-        if (mContext==null){
+        if (mContext == null) {
             return;
         }
         LatLng latLng = getLatLng(userInfo.getLongitude());
@@ -157,6 +157,7 @@ public class MarkerImgLoad {
                         .into(new SimpleTarget<Drawable>(100, 100) {
                             @Override
                             public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                                if (icon==null||listener==null)return;
                                 icon.setImageDrawable(resource);
                                 listener.markerIconLoadingFinished(markerView);
                             }
@@ -191,10 +192,9 @@ public class MarkerImgLoad {
                         .into(new SimpleTarget<Drawable>(100, 100) {
                             @Override
                             public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                                if (listener != null) {
-                                    icon.setImageDrawable(resource);
-                                    listener.markerIconLoadingFinished(markerView);
-                                }
+                                if (listener == null || icon == null)return;
+                                icon.setImageDrawable(resource);
+                                listener.markerIconLoadingFinished(markerView);
                             }
                         });
             }
@@ -215,6 +215,7 @@ public class MarkerImgLoad {
                 .into(new SimpleTarget<Drawable>(100, 100) {
                     @Override
                     public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                        if (icon==null||listener==null||bitmapDescriptor==null)return;
                         icon.setImageDrawable(resource);
                         bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(convertViewToBitmap(markerView));
                         listener.markerIconLoadingFinished(markerView);
