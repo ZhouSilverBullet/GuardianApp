@@ -189,7 +189,7 @@ public class App extends BaseApp {
             // 通知渠道的id
             String id = "1";
             // 用户可以看到的通知渠道的名字.
-            CharSequence name = "智慧罗庄";
+            CharSequence name = "数字罗庄";
             // 用户可以看到的通知渠道的描述
             String description = "notification description";
             int importance = NotificationManager.IMPORTANCE_HIGH;

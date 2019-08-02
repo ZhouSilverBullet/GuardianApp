@@ -161,5 +161,6 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
     @Override
     public void showError(String error) {
         skipLogin();
+
     }
 }

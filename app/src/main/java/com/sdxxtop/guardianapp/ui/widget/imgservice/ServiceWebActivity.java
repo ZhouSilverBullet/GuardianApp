@@ -12,6 +12,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -26,6 +28,7 @@ import com.sdxxtop.guardianapp.ui.widget.imgservice.webservice.ImageUtil;
 import com.sdxxtop.guardianapp.ui.widget.imgservice.webservice.JSAndroid;
 import com.sdxxtop.guardianapp.ui.widget.imgservice.webservice.PermissionUtil;
 import com.sdxxtop.guardianapp.ui.widget.imgservice.webservice.ReWebChomeClient;
+import com.sdxxtop.guardianapp.utils.StatusBarUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -334,6 +337,33 @@ public class ServiceWebActivity extends AppCompatActivity implements ReWebChomeC
 
         //加载方法
         webView.loadUrl("javascript:hideBottom();");
+    }
+
+    /**
+     * statusBar 控制
+     */
+    protected void initStatusBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window window = getWindow();
+            // Translucent status bar
+            window.setFlags(
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+            if (StatusBarUtil.MIUISetStatusBarLightMode(getWindow(), true)) {//小米MIUI系统
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {//Android6.0以上系统
+                    StatusBarUtil.android6_SetStatusBarLightMode(getWindow());
+                    StatusBarUtil.compat(this);
+                } else {
+                    StatusBarUtil.compat(this);
+                }
+            } else if (StatusBarUtil.FlymeSetStatusBarLightMode(getWindow(), true)) {//魅族flyme系统
+                StatusBarUtil.compat(this);
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {//Android6.0以上系统
+                StatusBarUtil.android6_SetStatusBarLightMode(getWindow());
+                StatusBarUtil.compat(this);
+            }
+        }
     }
 
 }

@@ -18,7 +18,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class SystemSettingActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private String[] brandList = {"huawei","oppo","xiaomi"};
+    private String[] brandList = {"huawei", "oppo", "xiaomi"};
+    private String[] availableBrandList = {"huawei", "oppo", "xiaomi", "smartisan"/*锤子*/, "vivo", "samsung", "lenovo", "letv", "meizu"};
+
     private SkipSetting instance;
 
     @Override
@@ -43,9 +45,9 @@ public class SystemSettingActivity extends AppCompatActivity implements View.OnC
             case R.id.tv_open_protect:  // 后台省电保护
                 boolean b1 = instance.toPowerSaving(getApplicationContext());
                 if (!b1) {
-                    if (Arrays.asList(brandList).contains(brand)){
+                    if (Arrays.asList(brandList).contains(brand)) {
                         getAppDetailSettingIntent(this);
-                    }else{
+                    } else {
                         showToast("该机型暂不支持快速设置,请手动设置。");
                     }
                 }
@@ -53,14 +55,17 @@ public class SystemSettingActivity extends AppCompatActivity implements View.OnC
             case R.id.tv_open_start:    //  自启动
                 boolean b = instance.toSelfStarting(getApplicationContext());
                 if (!b) {
-                    if (Arrays.asList(brandList).contains(brand)){
+                    if (Arrays.asList(brandList).contains(brand)) {
                         getAppDetailSettingIntent(this);
-                    }else{
+                    } else {
                         showToast("该机型暂不支持快速设置,请手动设置。");
                     }
                 }
                 break;
             case R.id.tv_look_course:   //  查看教程
+                Intent intent1 = new Intent(this, ImageCourseActivity.class);
+                intent1.putExtra("href", brand);
+                startActivity(intent1);
                 break;
         }
         if (intent != null) {
@@ -71,26 +76,26 @@ public class SystemSettingActivity extends AppCompatActivity implements View.OnC
     /**
      * 跳转到权限设置界面
      */
-    private void getAppDetailSettingIntent(Context context){
+    private void getAppDetailSettingIntent(Context context) {
         Intent intent = new Intent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        if(Build.VERSION.SDK_INT >= 9){
+        if (Build.VERSION.SDK_INT >= 9) {
             intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
             intent.setData(Uri.fromParts("package", getPackageName(), null));
-        } else if(Build.VERSION.SDK_INT <= 8){
+        } else if (Build.VERSION.SDK_INT <= 8) {
             intent.setAction(Intent.ACTION_VIEW);
-            intent.setClassName("com.android.settings","com.android.settings.InstalledAppDetails");
+            intent.setClassName("com.android.settings", "com.android.settings.InstalledAppDetails");
             intent.putExtra("com.android.settings.ApplicationPkgName", getPackageName());
         }
         startActivity(intent);
     }
 
-    public void showToast(String msg){
+    public void showToast(String msg) {
         if (TextUtils.isEmpty(msg)) {
             return;
         }
 //        Toast.makeText(context,msg,Toast.LENGTH_LONG).show();
-        Toast toast=Toast.makeText(this,msg,Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
         toast.setText(msg);
         toast.show();
     }

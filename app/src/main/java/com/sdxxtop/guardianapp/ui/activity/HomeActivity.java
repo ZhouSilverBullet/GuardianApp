@@ -29,6 +29,7 @@ import com.sdxxtop.guardianapp.ui.fragment.DataMonitoringFragment;
 import com.sdxxtop.guardianapp.ui.fragment.HomeFragment;
 import com.sdxxtop.guardianapp.ui.fragment.LearningFragment;
 import com.sdxxtop.guardianapp.ui.fragment.MineFragment;
+import com.sdxxtop.guardianapp.utils.ExcludePhoneModel;
 import com.sdxxtop.guardianapp.utils.ReflectUtils;
 
 import java.util.ArrayList;
@@ -234,6 +235,10 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
         PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
         boolean hasIgnored = false;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            boolean exclude = ExcludePhoneModel.isExclude();
+            if (exclude){  //是否忽略
+                return;
+            }
             hasIgnored = powerManager.isIgnoringBatteryOptimizations(activity.getPackageName());
             //  判断当前APP是否有加入电池优化的白名单，如果没有，弹出加入电池优化的白名单的设置对话框。
             if (!hasIgnored) {

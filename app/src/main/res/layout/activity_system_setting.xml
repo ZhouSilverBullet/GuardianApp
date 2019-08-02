@@ -86,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="设置方法：安全中心->应用智能省电->智慧罗庄->无限制"
+            android:text="设置方法：安全中心->应用智能省电->数字罗庄->无限制"
             android:textColor="@color/color_313131"
             android:textSize="12sp"/>
 
@@ -113,6 +113,7 @@
                 android:textSize="15sp"/>
 
             <TextView
+                android:padding="5dp"
                 android:id="@+id/tv_look_course"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

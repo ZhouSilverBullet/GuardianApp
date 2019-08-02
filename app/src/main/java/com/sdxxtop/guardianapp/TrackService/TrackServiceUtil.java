@@ -104,6 +104,7 @@ public class TrackServiceUtil {
     }
 
     public void stsrtTrackService(long serviceId, long terminalId, long trackId, Notification notification) {
+        Log.e("stsrtTrackService", "ForegroundService 服务创建了");
         if (aMapTrackClient == null) return;
         mTrackId = trackId;
         TrackParam trackParam = new TrackParam(serviceId, terminalId);

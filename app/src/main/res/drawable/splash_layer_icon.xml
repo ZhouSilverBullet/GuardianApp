@@ -7,22 +7,22 @@
         </shape>
     </item>
 
-    <item android:top="100dp">
-        <bitmap
-            android:gravity="top|center"
-            android:src="@drawable/logo_text_icon" />
-    </item>
+    <!--<item android:top="100dp">-->
+        <!--<bitmap-->
+            <!--android:gravity="top|center"-->
+            <!--android:src="@drawable/logo_text_icon" />-->
+    <!--</item>-->
 
-    <item android:bottom="100dp">
-        <bitmap
-            android:gravity="bottom|center"
-            android:src="@drawable/splash_bottom_text_2" />
-    </item>
+    <!--<item android:bottom="100dp">-->
+        <!--<bitmap-->
+            <!--android:gravity="bottom|center"-->
+            <!--android:src="@drawable/splash_bottom_text_2" />-->
+    <!--</item>-->
 
     <item android:gravity="center">
         <bitmap
             android:gravity="center"
-            android:src="@drawable/logo_text" />
+            android:src="@drawable/splash_login_bg" />
     </item>
 
 </layer-list>

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="85dp"
-        android:text="智慧罗庄"
+        android:text="数字罗庄"
         android:textColor="@color/white"
         android:textSize="25sp" />
 

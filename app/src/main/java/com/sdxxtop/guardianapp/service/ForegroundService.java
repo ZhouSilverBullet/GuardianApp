@@ -40,13 +40,15 @@ public class ForegroundService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        trackUtil = new TrackServiceUtil();
         Log.e(TAG, "ForegroundService 服务创建了");
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) { //Android4.3-->Android7.0
             //将service设置成前台服务
             startForeground(SERVICE_ID, new Notification());
             //删除通知栏消息
             startService(new Intent(this, InnerService.class));
+
+            notification = new Notification.Builder(getApplicationContext()).build();
         } else { // 8.0 及以上
             //通知栏消息需要设置channel
             NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -63,14 +65,13 @@ public class ForegroundService extends Service {
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setWhen(System.currentTimeMillis())
                         .setTicker("GPS测试1")
-                        .setContentTitle("智慧罗庄")
+                        .setContentTitle("数字罗庄")
                         .setContentText("GPS 使用中")
                         .setOngoing(true)
                         .setContentIntent(pendingIntent)
                         .setAutoCancel(false)
                         .build();
                 //将service设置成前台服务，8.x退到后台会显示通知栏消息，9.0会立刻显示通知栏消息
-                Log.e(TAG, "onCreate: 服务创建了 ----");
                 startForeground(SERVICE_ID, notification);
             }
         }
@@ -79,8 +80,8 @@ public class ForegroundService extends Service {
         long serviceId = SpUtil.getLong(Constants.SERVICE_ID, 0);
         long terminalId = SpUtil.getLong(Constants.TERMINAL_ID, 0);
         long trackId = SpUtil.getLong(Constants.TRACK_ID, 0);
-        if (notification!=null){
-            trackUtil.stsrtTrackService(serviceId, terminalId, trackId,notification);
+        if (notification != null) {
+            trackUtil.stsrtTrackService(serviceId, terminalId, trackId, notification);
         }
     }
 
@@ -118,7 +119,7 @@ public class ForegroundService extends Service {
 
     public void stopTrackService() {
         AMapTrackClient aMapTrackClient = App.getAMapTrackClient();
-        if (aMapTrackClient !=null){
+        if (aMapTrackClient != null) {
             long serviceId = SpUtil.getLong(Constants.SERVICE_ID, 0);
             long terminalId = SpUtil.getLong(Constants.TERMINAL_ID, 0);
             aMapTrackClient.stopTrack(new TrackParam(serviceId, terminalId), new SimpleOnTrackLifecycleListener());

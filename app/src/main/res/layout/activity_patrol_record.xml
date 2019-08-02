@@ -40,7 +40,7 @@
                 android:layout_alignParentRight="true"
                 android:ellipsize="middle"
                 android:singleLine="true"
-                android:text="共2563米 打卡12次"
+                android:text="共0.0米 打卡0次"
                 android:textColor="@color/color_333333"
                 android:textSize="17sp" />
 

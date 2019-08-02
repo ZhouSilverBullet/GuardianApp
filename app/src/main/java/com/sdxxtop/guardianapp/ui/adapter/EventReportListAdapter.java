@@ -44,7 +44,7 @@ public class EventReportListAdapter extends BaseQuickAdapter<EventIndexBean.Even
         }else{
             switch (item.getStatus()) { //状态(1:带派发 2:待解决 3:待验收 4:验收通过 5:验收不通过)
                 case 2:
-                    strStatus = "待派发";
+                    strStatus = "已派发";
                     break;
                 case 3:
                     strStatus = "已反馈";
@@ -57,7 +57,7 @@ public class EventReportListAdapter extends BaseQuickAdapter<EventIndexBean.Even
                     strStatus = "已完成";
                     break;
                 default:
-                    strStatus = "已提交";
+                    strStatus = "待派发";
                     break;
             }
         }

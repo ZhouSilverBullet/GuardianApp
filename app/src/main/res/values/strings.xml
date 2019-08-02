@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">智慧罗庄</string>
+    <string name="app_name">数字罗庄</string>
 
     <string name="detect_no_face">未检测到人脸</string>
     <string name="detect_face_in">把脸移入框内</string>

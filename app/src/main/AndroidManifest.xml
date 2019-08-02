@@ -31,7 +31,6 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
-
     <application
         android:name=".app.App"
         android:allowBackup="true"
@@ -42,6 +41,8 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.activity.ImageCourseActivity">
+        </activity>
         <activity android:name=".ui.activity.EventMoveActivity">
         </activity>
         <activity android:name=".ui.activity.SectionEventActivity">
@@ -105,11 +106,8 @@
             android:value="81974efe8098da9206a13898e4dc47a4"/>
 
         <service android:name="com.amap.api.location.APSService"/>
-        <service android:name="com.amap.api.track.AMapTrackService" />
-        <service android:name=".service.PatrolRecordService"/>
-
-        <!--猎鹰轨迹的启动服务-->
-
+        <service android:name="com.amap.api.track.AMapTrackService"/>
+        <service android:name=".service.PatrolRecordService"/> <!-- 猎鹰轨迹的启动服务 -->
         <service
             android:name=".service.ForegroundService"
             android:enabled="true"
