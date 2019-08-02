@@ -60,6 +60,7 @@ public class EventMoveActivity extends BaseMvpActivity<EventMovePresenter> imple
     public void onViewClicked(View view) {
         switch (view.getId()){
             case R.id.event_report:    // 选择流转部门
+                hideKeyboard(eventReport);
                 if (pickerUtil!=null){
                     pickerUtil.show();
                 }
