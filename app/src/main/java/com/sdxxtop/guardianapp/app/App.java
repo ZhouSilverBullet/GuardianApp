@@ -232,9 +232,19 @@ public class App extends BaseApp {
         return null;
     }
 
+    private Intent intent;
+
     public void startTrackService() {
-        Intent intent = new Intent(App.getInstance(), ForegroundService.class);
-        startService(intent);
+        if (!isServiceExisted(ForegroundService.class.getName())) {
+            intent = new Intent(App.getInstance(), ForegroundService.class);
+            startService(intent);
+        } else {
+            if (intent==null){
+                intent = new Intent(App.getInstance(), ForegroundService.class);
+            }
+            stopService(intent);
+            startService(intent);
+        }
     }
 
     /**
