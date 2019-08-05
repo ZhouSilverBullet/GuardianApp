@@ -32,6 +32,15 @@ public class MainIndexBean {
     private int is_patrol;
     private int is_mail;
     private int is_map;
+    private int is_part_event;
+
+    public int getIs_part_event() {
+        return is_part_event;
+    }
+
+    public void setIs_part_event(int is_part_event) {
+        this.is_part_event = is_part_event;
+    }
 
     public List<PendingEventBean> getPart_event() {
         return part_event;

@@ -239,10 +239,10 @@ public class App extends BaseApp {
             intent = new Intent(App.getInstance(), ForegroundService.class);
             startService(intent);
         } else {
-            if (intent==null){
-                intent = new Intent(App.getInstance(), ForegroundService.class);
+            if (intent!=null){
+                stopService(intent);
             }
-            stopService(intent);
+            intent = new Intent(App.getInstance(), ForegroundService.class);
             startService(intent);
         }
     }

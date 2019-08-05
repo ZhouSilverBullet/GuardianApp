@@ -89,12 +89,6 @@ public class MonitorMapActivity extends BaseMvpActivity<MonitorMapPresenter> imp
     }
 
     @Override
-    protected void initData() {
-        super.initData();
-        mPresenter.loadData();
-    }
-
-    @Override
     protected void initView() {
         super.initView();
         topViewPadding(llContainor);

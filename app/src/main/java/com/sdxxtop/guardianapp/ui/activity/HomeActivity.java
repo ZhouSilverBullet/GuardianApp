@@ -4,6 +4,8 @@ import android.Manifest;
 import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -12,6 +14,7 @@ import android.os.PowerManager;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
@@ -23,6 +26,7 @@ import com.sdxxtop.guardianapp.model.bean.ArticleIndexBean;
 import com.sdxxtop.guardianapp.model.bean.InitBean;
 import com.sdxxtop.guardianapp.presenter.HomePresenter;
 import com.sdxxtop.guardianapp.presenter.contract.HomeContract;
+import com.sdxxtop.guardianapp.service.ForegroundService;
 import com.sdxxtop.guardianapp.ui.dialog.DownloadDialog;
 import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
 import com.sdxxtop.guardianapp.ui.fragment.DataMonitoringFragment;
@@ -100,7 +104,8 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
     }
 
     private void startPatrolService() {
-        ignoreBatteryOptimization(this);
+        // TODO  定位服务 暂时关闭
+//        ignoreBatteryOptimization(this);
 //        Logger.e("开启了服务");
 //        Intent intent = new Intent(this, PatrolRecordService.class);
 //        startService(intent);
@@ -160,13 +165,13 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
                 }
                 switchFragment(position);
                 itemSelectAnimator(position, wasSelected);
-                mAHBottomNavigation.setCurrentItem(2,false);
+                mAHBottomNavigation.setCurrentItem(2, false);
             } else {
                 showToast("没有操作权限");
-                mAHBottomNavigation.setCurrentItem(currentPosition,false);
+                mAHBottomNavigation.setCurrentItem(currentPosition, false);
             }
         } else {
-            mAHBottomNavigation.setCurrentItem(currentPosition,false);
+            mAHBottomNavigation.setCurrentItem(currentPosition, false);
             showToast("没有操作权限");
         }
     }
@@ -236,7 +241,7 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
         boolean hasIgnored = false;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             boolean exclude = ExcludePhoneModel.isExclude();
-            if (exclude){  //是否忽略
+            if (exclude) {  //是否忽略
                 return;
             }
             hasIgnored = powerManager.isIgnoringBatteryOptimizations(activity.getPackageName());
@@ -267,5 +272,49 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
                         .show();
             }
         }
+    }
+
+    private static final int TIME_EXIT = 2000;
+    private long mBackPressed;
+
+    @Override
+    public void onBackPressedSupport() {
+        if (mBackPressed + TIME_EXIT > System.currentTimeMillis()) {
+            //用户退出处理
+            finish();
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
+                finishAffinity();
+            }
+            if (isServiceExisted(ForegroundService.class.getName())){
+                Intent intent = new Intent(this, ForegroundService.class);
+                stopService(intent);
+            }
+            super.onBackPressedSupport();
+            return;
+        } else {
+            Toast.makeText(this, "再点击一次返回退出程序", Toast.LENGTH_SHORT).show();
+            mBackPressed = System.currentTimeMillis();
+        }
+    }
+
+    /**
+     * 判断service是否已经运行
+     * 必须判断uid,因为可能有重名的Service,所以要找自己程序的Service,不同进程只要是同一个程序就是同一个uid,个人理解android系统中一个程序就是一个用户
+     * 用pid替换uid进行判断强烈不建议,因为如果是远程Service的话,主进程的pid和远程Service的pid不是一个值,在主进程调用该方法会导致Service即使已经运行也会认为没有运行
+     * 如果Service和主进程是一个进程的话,用pid不会出错,但是这种方法强烈不建议,如果你后来把Service改成了远程Service,这时候判断就出错了
+     *
+     * @param className Service的全名,例如PushService.class.getName()
+     * @return true:Service已运行 false:Service未运行
+     */
+    public boolean isServiceExisted(String className) {
+        ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningServiceInfo> serviceList = am.getRunningServices(Integer.MAX_VALUE);
+        int myUid = android.os.Process.myUid();
+        for (ActivityManager.RunningServiceInfo runningServiceInfo : serviceList) {
+            if (runningServiceInfo.uid == myUid && runningServiceInfo.service.getClassName().equals(className)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

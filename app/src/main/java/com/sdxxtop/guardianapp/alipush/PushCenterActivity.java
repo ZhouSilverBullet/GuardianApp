@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.sdxxtop.guardianapp.ui.activity.CenterMessage2Activity;
+import com.sdxxtop.guardianapp.ui.activity.CenterMessageActivity;
 import com.sdxxtop.guardianapp.ui.activity.DeviceWarnDetailActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity;
 import com.sdxxtop.guardianapp.ui.activity.PatrolAddDetailActivity;
@@ -85,6 +87,10 @@ public class PushCenterActivity extends AppCompatActivity {
                     intent.putExtra("patrol_id", jsonObject.optInt("patrol_id"));
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
+                case 3:  // 消息中心
+                    intent = new Intent(this, CenterMessageActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
                     break;
                 case 5:  //跳转推送的预警详情
                     if (!jsonObject.has("early_id")) {
@@ -93,6 +99,13 @@ public class PushCenterActivity extends AppCompatActivity {
                     }
                     intent = new Intent(this, DeviceWarnDetailActivity.class);
                     intent.putExtra("early_id", jsonObject.optInt("early_id"));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    break;
+                case 6:  //跳转推送的预警详情
+                    intent = new Intent(this, CenterMessage2Activity.class);
+                    intent.putExtra("name", "认领事件提醒");
+                    intent.putExtra("type", 6);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     break;

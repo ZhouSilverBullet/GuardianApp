@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.amap.api.track.AMapTrackClient;
 import com.amap.api.track.ErrorCode;
@@ -75,7 +74,7 @@ public class TrackServiceUtil {
         @Override
         public void onStartGatherCallback(int status, String msg) {
             if (status == ErrorCode.TrackListen.START_GATHER_SUCEE) {
-                Toast.makeText(mContext, "定位采集开启成功", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "定位采集开启成功", Toast.LENGTH_SHORT).show();
             } else if (status == ErrorCode.TrackListen.START_GATHER_ALREADY_STARTED) {
 //                Toast.makeText(mContext, "定位采集已经开启", Toast.LENGTH_SHORT).show();
             } else {
@@ -164,4 +163,5 @@ public class TrackServiceUtil {
         nm.notify(100, notification);
         return notification;
     }
+
 }

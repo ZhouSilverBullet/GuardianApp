@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.PopupWindow;
@@ -44,6 +45,7 @@ import com.sdxxtop.guardianapp.ui.adapter.PatrolMapAdapter;
 import com.sdxxtop.guardianapp.ui.pop.StatSelectionDateWindow;
 import com.sdxxtop.guardianapp.ui.widget.TextAndTextView;
 import com.sdxxtop.guardianapp.ui.widget.calendarSelect.BottomDialogView;
+import com.sdxxtop.guardianapp.utils.AMapFindLocation2;
 import com.sdxxtop.guardianapp.utils.Date2Util;
 
 import java.text.SimpleDateFormat;
@@ -127,6 +129,21 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
                         }
                     });
                     dialogView.show();
+                }
+            }
+        });
+
+        AMapFindLocation2 instance = AMapFindLocation2.getInstance();
+        instance.location();
+        instance.setLocationCompanyListener(new AMapFindLocation2.LocationCompanyListener() {
+            @Override
+            public void onAddress(AMapLocation aMapLocation) {
+                String address = aMapLocation.getAddress();
+                if (TextUtils.isEmpty(address)) {
+                    showToast("定位获取位置失败,请稍后重试");
+                } else {
+
+
                 }
             }
         });
@@ -299,7 +316,7 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
                 if (isLoadEmpty) {
                     moveToCamera();
                 }
-
+                moveToCamera();
 //                moveToPath();
 //                drawMapLine();
             } else {
@@ -400,7 +417,7 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
     @Override
     public void showTrackData(TrackPointBean bean) {
         if (bean == null) return;
-        tvPosition.setText("共" +bean.getDistance()+ "米 打卡" +  bean.getNum()  + "次");
+        tvPosition.setText("共" + bean.getDistance() + "米");
         trackList = bean.getSign();
         isTrackLoad = true;
         aMap.clear();
@@ -412,9 +429,6 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
      */
     private synchronized void moveToCamera() {
         aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(curLatlng, 16f));
-        isLoadEmpty = false;
-        //load只会加载一次，所以不改变状态
-//        isPositionLoadFinish = false;
     }
 
     @Override
@@ -540,7 +554,7 @@ public class PatrolRecordActivity extends BaseMvpActivity<PatrolPresenter> imple
             Polyline polyline = mapView.getMap().addPolyline(polylineOptions);
             polylines.add(polyline);
 //            mapView.getMap().animateCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 30));
-            if (points.size()>0){
+            if (points.size() > 0) {
                 aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(points.get(0).getLatLng(), 14f));
             }
 

@@ -89,6 +89,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
     private int isMail;
     private int isMap;
     private int isClock;
+    private int isPartEvent;
 
     public static HomeFragment newInstance(boolean isAdmin) {
 
@@ -309,9 +310,11 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
         isClock = mainIndexBean.getIs_clock();
         isMail = mainIndexBean.getIs_mail();
         isMap = mainIndexBean.getIs_map();
+        isPartEvent = mainIndexBean.getIs_part_event();
 
         itlvView2.setVisibility(isReport == 1 ? View.VISIBLE : View.GONE);
         itlvView3.setVisibility(isPatrol == 1 ? View.VISIBLE : View.GONE);
+        itlvView4.setVisibility(isPartEvent == 1 ? View.VISIBLE : View.GONE);
 
         tvPartName.setText(mainIndexBean.getPart_name());
 
