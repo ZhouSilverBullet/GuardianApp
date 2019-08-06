@@ -54,6 +54,9 @@ public class SectionEventAdapter extends BaseQuickAdapter<SectionEventBean.Claim
             case 2:
                 str = "已认领";
                 break;
+            case 3:
+                str = "待评价";
+                break;
             case 4:
                 str = "已完成";
                 break;
