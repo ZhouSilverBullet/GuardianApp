@@ -5,12 +5,16 @@ import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.PowerManager;
+import android.provider.Settings;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.widget.ImageView;
@@ -27,6 +31,7 @@ import com.sdxxtop.guardianapp.model.bean.InitBean;
 import com.sdxxtop.guardianapp.presenter.HomePresenter;
 import com.sdxxtop.guardianapp.presenter.contract.HomeContract;
 import com.sdxxtop.guardianapp.service.ForegroundService;
+import com.sdxxtop.guardianapp.service.NotificationMonitor;
 import com.sdxxtop.guardianapp.ui.dialog.DownloadDialog;
 import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
 import com.sdxxtop.guardianapp.ui.fragment.DataMonitoringFragment;
@@ -39,6 +44,7 @@ import com.sdxxtop.guardianapp.utils.ReflectUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.app.AlertDialog;
 import butterknife.BindView;
 import io.reactivex.functions.Consumer;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -52,6 +58,9 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
     private boolean isAdmin;
     private RxPermissions mRxPermissions;
     private int currentPosition = 0;
+    private boolean isEnabledNLS = false;
+    private static final String ENABLED_NOTIFICATION_LISTENERS = "enabled_notification_listeners";
+    private static final String ACTION_NOTIFICATION_LISTENER_SETTINGS = "android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS";
 
     @Override
     protected int getLayout() {
@@ -226,6 +235,16 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        isEnabledNLS = isEnabled();
+        if (!isEnabledNLS) {
+            showConfirmDialog();
+        }
+//        clearAllNotifications();
+    }
+
+    @Override
     public void showInit(InitBean initBean) {
         if (initBean != null) {
             DownloadDialog downloadDialog = new DownloadDialog(this, initBean, new RxPermissions(this));
@@ -285,7 +304,7 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
                 finishAffinity();
             }
-            if (isServiceExisted(ForegroundService.class.getName())){
+            if (isServiceExisted(ForegroundService.class.getName())) {
                 Intent intent = new Intent(this, ForegroundService.class);
                 stopService(intent);
             }
@@ -316,5 +335,64 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
             }
         }
         return false;
+    }
+
+    private boolean isEnabled() {
+        String pkgName = getPackageName();
+        final String flat = Settings.Secure.getString(getContentResolver(),
+                ENABLED_NOTIFICATION_LISTENERS);
+        if (!TextUtils.isEmpty(flat)) {
+            final String[] names = flat.split(":");
+            for (int i = 0; i < names.length; i++) {
+                final ComponentName cn = ComponentName.unflattenFromString(names[i]);
+                if (cn != null) {
+                    if (TextUtils.equals(pkgName, cn.getPackageName())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private void showConfirmDialog() {
+        new AlertDialog.Builder(this)
+                .setMessage("请打开通知使用权,确保消息能够准时送达!")
+                .setTitle("通知使用权")
+                .setCancelable(true)
+                .setPositiveButton(android.R.string.ok,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                openNotificationAccess();
+                            }
+                        })
+                .setNegativeButton(android.R.string.cancel,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // do nothing
+                            }
+                        })
+                .create().show();
+    }
+
+    private void openNotificationAccess() {
+        startActivity(new Intent(ACTION_NOTIFICATION_LISTENER_SETTINGS));
+    }
+
+    private void clearAllNotifications() {
+        if (isEnabledNLS) {
+            cancelNotification(this, true);
+        }
+    }
+
+    private void cancelNotification(Context context, boolean isCancelAll) {
+        Intent intent = new Intent();
+        intent.setAction(NotificationMonitor.ACTION_NLS_CONTROL);
+        if (isCancelAll) {
+            intent.putExtra("command", "cancel_all");
+        } else {
+            intent.putExtra("command", "cancel_last");
+        }
+        context.sendBroadcast(intent);
     }
 }

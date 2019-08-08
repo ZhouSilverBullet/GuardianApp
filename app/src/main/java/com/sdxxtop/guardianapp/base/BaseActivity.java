@@ -1,6 +1,7 @@
 package com.sdxxtop.guardianapp.base;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.sdxxtop.guardianapp.app.App;
+import com.sdxxtop.guardianapp.service.NotificationMonitor;
 import com.sdxxtop.guardianapp.utils.DialogUtil;
 import com.sdxxtop.guardianapp.utils.StatusBarUtil;
 import com.sdxxtop.guardianapp.utils.SystemUtil;
@@ -97,12 +99,12 @@ public abstract class BaseActivity extends SupportActivity {
 //        UIUtils.showToast(msg);
 //    }
 
-    public void showToast(String msg){
+    public void showToast(String msg) {
         if (TextUtils.isEmpty(msg)) {
             return;
         }
 //        Toast.makeText(context,msg,Toast.LENGTH_LONG).show();
-        Toast toast=Toast.makeText(this,msg,Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
         toast.setText(msg);
         toast.show();
     }
@@ -146,6 +148,7 @@ public abstract class BaseActivity extends SupportActivity {
             return false;
         }
     }
+
     public void topViewPadding(View view) {
         if (isVersionMoreKitkat()) {
             view.setPadding(0, SystemUtil.getStatusHeight(App.getContext()), 0, 0);
@@ -173,8 +176,14 @@ public abstract class BaseActivity extends SupportActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Intent intent = new Intent();
+        intent.setAction(NotificationMonitor.ACTION_NLS_CONTROL);
+        intent.putExtra("command", "cancel_last");
+        sendBroadcast(intent);
+
         MobclickAgent.onResume(this);
     }
+
     @Override
     protected void onPause() {
         super.onPause();

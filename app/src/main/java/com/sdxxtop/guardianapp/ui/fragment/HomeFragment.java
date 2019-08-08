@@ -1,8 +1,10 @@
 package com.sdxxtop.guardianapp.ui.fragment;
 
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,6 +26,7 @@ import com.sdxxtop.guardianapp.ui.activity.EventDiscretionReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.GridMapActivity;
 import com.sdxxtop.guardianapp.ui.activity.MyFaceLivenessActivity;
+import com.sdxxtop.guardianapp.ui.activity.NotificationActivity;
 import com.sdxxtop.guardianapp.ui.activity.PatrolRecordActivity;
 import com.sdxxtop.guardianapp.ui.adapter.HomeRecyclerAdapter;
 import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
@@ -134,6 +137,8 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
         llEventReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(getActivity(), NotificationActivity.class));
+                if(1==1)return;
                 if (isReport == 1) {
                     startActivity(new Intent(getContext(), EventReportActivity.class));
                 } else {
@@ -144,6 +149,8 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
         llEventDiscretion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(getActivity(), NotificationActivity.class));
+                if(1==1)return;
                 if (isPatrol == 1) {
                     startActivity(new Intent(getContext(), EventDiscretionReportActivity.class));
                 } else {
@@ -164,6 +171,24 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
                 startActivity(intent);
             }
         });
+    }
+
+    // 判断是否打开了通知监听权限
+    private boolean isEnabled() {
+        String pkgName = getActivity().getPackageName();
+        final String flat = Settings.Secure.getString(getActivity().getContentResolver(), "enabled_notification_listeners");
+        if (!TextUtils.isEmpty(flat)) {
+            final String[] names = flat.split(":");
+            for (int i = 0; i < names.length; i++) {
+                final ComponentName cn = ComponentName.unflattenFromString(names[i]);
+                if (cn != null) {
+                    if (TextUtils.equals(pkgName, cn.getPackageName())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     private ArrayList<Integer> getRecyclerData(boolean isAdmin) {

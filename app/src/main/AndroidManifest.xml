@@ -41,6 +41,8 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.activity.NotificationActivity">
+        </activity>
         <activity android:name=".ui.activity.ImageCourseActivity">
         </activity>
         <activity android:name=".ui.activity.EventMoveActivity">
@@ -361,6 +363,14 @@
         <service
             android:name="com.sdxxtop.webview.romoteservice.OptimizationService"
             android:process=":remotewebview"/>
+
+        <service
+            android:name=".service.NotificationMonitor"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE" >
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
