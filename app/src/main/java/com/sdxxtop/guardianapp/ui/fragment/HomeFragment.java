@@ -26,7 +26,6 @@ import com.sdxxtop.guardianapp.ui.activity.EventDiscretionReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.GridMapActivity;
 import com.sdxxtop.guardianapp.ui.activity.MyFaceLivenessActivity;
-import com.sdxxtop.guardianapp.ui.activity.NotificationActivity;
 import com.sdxxtop.guardianapp.ui.activity.PatrolRecordActivity;
 import com.sdxxtop.guardianapp.ui.adapter.HomeRecyclerAdapter;
 import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
@@ -137,8 +136,6 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
         llEventReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), NotificationActivity.class));
-                if(1==1)return;
                 if (isReport == 1) {
                     startActivity(new Intent(getContext(), EventReportActivity.class));
                 } else {
@@ -149,8 +146,6 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
         llEventDiscretion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), NotificationActivity.class));
-                if(1==1)return;
                 if (isPatrol == 1) {
                     startActivity(new Intent(getContext(), EventDiscretionReportActivity.class));
                 } else {

@@ -61,7 +61,7 @@ public class NotificationMonitor extends NotificationListenerService {
                             }
                             for (int i = 0; i < notifyList.length; i++) {
                                 StatusBarNotification sbnn = notifyList[i];
-                                if (sbnn != null&&sbnn.getNotification()!=null) {
+                                if (sbnn != null && sbnn.getNotification() != null) {
                                     Bundle info = sbnn.getNotification().extras;
                                     if (info != null) {
                                         // 获取接收消息的抬头

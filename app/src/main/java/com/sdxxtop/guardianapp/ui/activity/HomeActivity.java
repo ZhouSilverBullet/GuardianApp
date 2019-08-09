@@ -236,6 +236,9 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
 
     @Override
     protected void onResume() {
+        if (!isServiceExisted(NotificationMonitor.class.getName())){
+            startService(new Intent(this,NotificationMonitor.class));
+        }
         super.onResume();
         isEnabledNLS = isEnabled();
         if (!isEnabledNLS) {
