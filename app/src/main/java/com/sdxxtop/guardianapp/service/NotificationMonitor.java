@@ -61,13 +61,22 @@ public class NotificationMonitor extends NotificationListenerService {
                             }
                             for (int i = 0; i < notifyList.length; i++) {
                                 StatusBarNotification sbnn = notifyList[i];
-                                if (sbnn != null) {
+                                if (sbnn != null&&sbnn.getNotification()!=null) {
                                     Bundle info = sbnn.getNotification().extras;
-                                    if (info.getString(Notification.EXTRA_TITLE).equals("已通过GPS确定位置") && info.getString(Notification.EXTRA_TEXT).equals(
-                                            "数字罗庄")) {
+                                    if (info != null) {
+                                        // 获取接收消息的抬头
+                                        String notificationTitle = info.getString(Notification.EXTRA_TITLE);
+                                        // 获取接收消息的内容
+                                        String notificationText = info.getString(Notification.EXTRA_TEXT);
+                                        if (notificationTitle != null && notificationText != null) {
+                                            Log.e("XSL_Test", "Notification posted " + notificationTitle + " & " + notificationText);
+                                            if (notificationTitle.equals("已通过GPS确定位置") && notificationText.equals(
+                                                    "数字罗庄")) {
 //                                        cancelNotification(sbnn.getPackageName(), sbnn.getTag(), sbnn.getId());
-                                        cancelNotification(sbnn.getKey());
-                                        return;
+                                                cancelNotification(sbnn.getKey());
+                                                return;
+                                            }
+                                        }
                                     }
                                 }
                             }
