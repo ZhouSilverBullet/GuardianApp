@@ -52,6 +52,7 @@ public class NotificationMonitor extends NotificationListenerService {
                 action = intent.getAction();
                 if (action.equals(ACTION_NLS_CONTROL)) {
                     String command = intent.getStringExtra("command");
+                    updateCurrentNotifications();
                     if (TextUtils.equals(command, "cancel_last")) {
                         if (mCurrentNotifications != null && mCurrentNotificationsCounts >= 1) {
 //                            StatusBarNotification sbnn = getCurrentNotifications()[mCurrentNotificationsCounts - 1];

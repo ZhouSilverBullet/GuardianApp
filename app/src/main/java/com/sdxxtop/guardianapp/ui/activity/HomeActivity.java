@@ -311,6 +311,10 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
                 Intent intent = new Intent(this, ForegroundService.class);
                 stopService(intent);
             }
+            if (isServiceExisted(NotificationMonitor.class.getName())) {
+                Intent intent = new Intent(this, NotificationMonitor.class);
+                stopService(intent);
+            }
             super.onBackPressedSupport();
             return;
         } else {
