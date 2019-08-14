@@ -39,6 +39,14 @@
         <attr name="tatv_line_is_show" format="boolean"/>
     </declare-styleable>
 
+    <!--支持圆角的TextView-->
+    <declare-styleable name="RoundTextView">
+        <attr name="rtvBgColor" format="color"/>
+        <attr name="rtvBorderWidth" format="dimension"/>
+        <attr name="rtvBorderColor" format="dimension"/>
+        <attr name="rtvRadius" format="dimension"/>
+    </declare-styleable>
+
     <declare-styleable name="TextAndCheckBoxView">
         <attr name="tacbv_text_view" format="string"/>
         <attr name="tacbv_text_right_value" format="string"/>
