@@ -247,6 +247,9 @@ public class GridMapActivity extends BaseMvpActivity<GridMapPresenter> implement
             setPolygont(markerIndex, options.getTitle());
         } else if (!TextUtils.isEmpty(title)) {
             String[] split = title.split(";");
+            if ("0".equals(split[0])){
+                marker.setVisible(false);
+            }
             if (split[1].equals("1")) {
                 if (polygon != null) {
                     polygon.remove();
