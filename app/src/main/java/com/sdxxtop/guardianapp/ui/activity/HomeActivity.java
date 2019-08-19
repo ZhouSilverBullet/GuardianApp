@@ -9,6 +9,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
@@ -88,6 +89,7 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
     @SuppressLint("CheckResult")
     @Override
     protected void initView() {
+        toggleNotificationListenerService(this);
         initAHNavigation();
 
         switchFragment(0);
@@ -401,5 +403,14 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
             intent.putExtra("command", "cancel_last");
         }
         context.sendBroadcast(intent);
+    }
+
+    public void toggleNotificationListenerService(Context context) {
+        PackageManager pm = context.getPackageManager();
+        pm.setComponentEnabledSetting(new ComponentName(context, NotificationMonitor .class),
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+
+        pm.setComponentEnabledSetting(new ComponentName(context, NotificationMonitor .class),
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
     }
 }
