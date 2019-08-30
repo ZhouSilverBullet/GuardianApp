@@ -25,6 +25,14 @@
     <string name="liveness_head_down">缓慢低头</string>
     <string name="liveness_good">非常好</string>
 
+    <string name="permission_camera">摄像头</string>
+
+    <string name="permission_storage">文件</string>
+    <string name="permission_accounts">信息</string>
+    <string name="permission_phone">状态</string>
+    <string name="permission_location">定位</string>
+    <string name="permission_audio">录音</string>
+    <string name="active_notification_count_zero">No active notification</string>
     <string-array name="custom_weekdays">
         <item>日</item>
         <item>一</item>
@@ -34,12 +42,4 @@
         <item>五</item>
         <item>六</item>
     </string-array>
-
-    <string name="permission_camera">摄像头</string>
-    <string name="permission_storage">文件</string>
-    <string name="permission_accounts">信息</string>
-    <string name="permission_phone">状态</string>
-    <string name="permission_location">定位</string>
-    <string name="permission_audio">录音</string>
-    <string name="active_notification_count_zero">No active notification</string>
 </resources>

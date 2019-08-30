@@ -67,6 +67,11 @@ public class DataMonitoringFragment extends BaseMvpFragment<DataMonitoringPresen
     public void showData(AuthDataBean bean) {
         List<AuthDataBean.AuthBean> beanList = bean.getAuth();
         if (beanList != null && beanList.size() > 0) {
+            AuthDataBean.AuthBean bean1 = new AuthDataBean.AuthBean();
+            bean1.setIs_auth(1);
+            bean1.setTitle("无人机");
+            bean1.setType(2);
+            beanList.add(bean1);
             adapter.replaceData(beanList);
         }
     }

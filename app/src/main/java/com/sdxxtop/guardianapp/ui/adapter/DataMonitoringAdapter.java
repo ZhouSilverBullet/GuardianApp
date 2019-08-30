@@ -7,6 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.model.bean.AuthDataBean;
+import com.sdxxtop.guardianapp.ui.activity.FlyDataListActivity;
 import com.sdxxtop.guardianapp.ui.activity.MonitorMapActivity;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 
@@ -39,6 +40,11 @@ public class DataMonitoringAdapter extends BaseQuickAdapter<AuthDataBean.AuthBea
                             intent = new Intent(mContext, MonitorMapActivity.class);
                         }else{
                             UIUtils.showToast("没有操作权限");
+                        }
+                        break;
+                    case 2:   // 无人机
+                        if (item.getIs_auth()==1){
+                            intent = new Intent(mContext, FlyDataListActivity.class);
                         }
                         break;
                 }
