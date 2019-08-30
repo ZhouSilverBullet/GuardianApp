@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Process;
 import android.util.Log;
 
 import com.alibaba.sdk.android.push.CloudPushService;
@@ -39,8 +40,6 @@ import com.sdxxtop.guardianapp.di.component.AppComponent;
 import com.sdxxtop.guardianapp.di.component.DaggerAppComponent;
 import com.sdxxtop.guardianapp.di.module.AppModule;
 import com.sdxxtop.guardianapp.service.ForegroundService;
-import com.sdxxtop.webview.remotewebview.ProgressWebView;
-import com.sdxxtop.webview.romoteservice.OptimizationService;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 
@@ -71,12 +70,11 @@ public class App extends BaseApp {
     }
 
     private void initWebViewServer() {
-        startService(new Intent(this, OptimizationService.class));
-
-        if ("com.sdxxtop.guardianapp:remoteweb".equals(getProcessName(this))) {
-            new ProgressWebView(this);
-        }
-
+//        startService(new Intent(this, OptimizationService.class));
+//
+//        if ("com.sdxxtop.guardianapp:remoteweb".equals(getProcessName(this))) {
+//            new ProgressWebView(this);
+//        }
     }
 
     private void initUM() {
@@ -259,10 +257,15 @@ public class App extends BaseApp {
     public boolean isServiceExisted(String className) {
         ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningServiceInfo> serviceList = am.getRunningServices(Integer.MAX_VALUE);
-        int myUid = android.os.Process.myUid();
+        int myUid = 0;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.BASE_1_1) {
+            myUid = Process.myUid();
+        }
         for (ActivityManager.RunningServiceInfo runningServiceInfo : serviceList) {
-            if (runningServiceInfo.uid == myUid && runningServiceInfo.service.getClassName().equals(className)) {
-                return true;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
+                if (runningServiceInfo.uid == myUid && runningServiceInfo.service.getClassName().equals(className)) {
+                    return true;
+                }
             }
         }
         return false;
