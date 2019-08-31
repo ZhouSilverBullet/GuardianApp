@@ -2,15 +2,16 @@ package com.sdxxtop.guardianapp.ui.activity;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarLayout;
 import com.haibin.calendarview.CalendarView;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.presenter.FlyDataListPresenter;
@@ -23,27 +24,52 @@ import java.util.Map;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.OnClick;
 
 public class FlyDataListActivity extends BaseMvpActivity<FlyDataListPresenter> implements FlyDataListContract.IView, CalendarView.OnYearChangeListener,
         CalendarView.OnCalendarSelectListener {
 
+    @BindView(R.id.tv_month_day)
     TextView mTextMonthDay;
-
+    @BindView(R.id.tv_year)
     TextView mTextYear;
-
+    @BindView(R.id.tv_lunar)
     TextView mTextLunar;
-
+    @BindView(R.id.ib_calendar)
+    ImageView ibCalendar;
+    @BindView(R.id.tv_current_day)
     TextView mTextCurrentDay;
-
-    CalendarView mCalendarView;
-
+    @BindView(R.id.fl_current)
+    FrameLayout flCurrent;
+    @BindView(R.id.iv_year_seclect)
+    ImageView ivYearSeclect;
+    @BindView(R.id.iv_search)
+    ImageView ivSearch;
+    @BindView(R.id.iv_add)
+    ImageView ivAdd;
+    @BindView(R.id.rl_tool)
     RelativeLayout mRelativeTool;
-
-    SmartRefreshLayout mSmartRefresh;
+    @BindView(R.id.calendarView)
+    CalendarView mCalendarView;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
+    @BindView(R.id.ll_layout)
+    LinearLayout llLayout;
+    @BindView(R.id.calendarLayout)
+    CalendarLayout mCalendarLayout;
+    @BindView(R.id.ll_caldenar_layout)
+    LinearLayout llCaldenarLayout;
+    @BindView(R.id.tv_cancel)
+    TextView tvCancel;
+    @BindView(R.id.recyclerView_search)
+    RecyclerView recyclerViewSearch;
+    @BindView(R.id.ll_search_layout)
+    RelativeLayout llSearchLayout;
+    @BindView(R.id.edittext)
+    EditText edittext;
 
     private int mYear;
-    CalendarLayout mCalendarLayout;
-    private RecyclerView recyclerView;
 
     @Override
     public void showError(String error) {
@@ -107,30 +133,6 @@ public class FlyDataListActivity extends BaseMvpActivity<FlyDataListPresenter> i
 
     @Override
     public void initView() {
-        mTextMonthDay = findViewById(R.id.tv_month_day);
-        mTextYear = findViewById(R.id.tv_year);
-        mTextLunar = findViewById(R.id.tv_lunar);
-        mRelativeTool = findViewById(R.id.rl_tool);
-        mCalendarView = findViewById(R.id.calendarView);
-        mTextCurrentDay = findViewById(R.id.tv_current_day);
-        mSmartRefresh = findViewById(R.id.smart_refresh);
-
-        mTextMonthDay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        findViewById(R.id.fl_current).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mCalendarView != null) {
-                    mCalendarView.closeYearSelectLayout();
-                }
-                mCalendarView.scrollToCurrent(true);
-            }
-        });
-        mCalendarLayout = findViewById(R.id.calendarLayout);
         mCalendarView.setOnCalendarSelectListener(this);
         mCalendarView.setOnYearChangeListener(this);
         mTextYear.setText(String.valueOf(mCalendarView.getCurYear()));
@@ -139,7 +141,6 @@ public class FlyDataListActivity extends BaseMvpActivity<FlyDataListPresenter> i
         mTextLunar.setText("今日");
         mTextCurrentDay.setText(String.valueOf(mCalendarView.getCurDay()));
 
-        recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         ArrayList<String> strings = new ArrayList<>();
         strings.add("");
@@ -148,47 +149,21 @@ public class FlyDataListActivity extends BaseMvpActivity<FlyDataListPresenter> i
         strings.add("");
         strings.add("");
         strings.add("");
+        strings.add("");
+        strings.add("");
+        strings.add("");
+        strings.add("");
+        strings.add("");
+        strings.add("");
+        strings.add("");
+        strings.add("");
+        strings.add("");
+        strings.add("");
+        strings.add("");
+        strings.add("");
+        strings.add("");
+        strings.add("");
         recyclerView.setAdapter(new FlyDataAdapter(R.layout.item_fly_datalist, strings));
-
-        mSmartRefresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
-            @Override
-            public void onLoadMore(RefreshLayout refreshLayout) {
-                mSmartRefresh.finishLoadMore();
-                mSmartRefresh.finishRefresh();
-            }
-
-            @Override
-            public void onRefresh(RefreshLayout refreshLayout) {
-                mSmartRefresh.finishLoadMore();
-                mSmartRefresh.finishRefresh();
-            }
-        });
-
-        findViewById(R.id.iv_add).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(FlyDataListActivity.this, FlyEventReportActivity.class));
-            }
-        });
-        findViewById(R.id.iv_search).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        findViewById(R.id.iv_year_seclect).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!mCalendarLayout.isExpand()) {
-                    mCalendarLayout.expand();
-                    return;
-                }
-                mTextMonthDay.setText(String.valueOf(mYear));
-                mCalendarView.showYearSelectLayout(mYear);
-                mTextLunar.setVisibility(View.GONE);
-                mTextYear.setVisibility(View.GONE);
-            }
-        });
     }
 
     @Override
@@ -209,5 +184,44 @@ public class FlyDataListActivity extends BaseMvpActivity<FlyDataListPresenter> i
         mTextYear.setText(String.valueOf(calendar.getYear()));
         mTextLunar.setText(calendar.getLunar());
         mYear = calendar.getYear();
+    }
+
+
+    @OnClick({R.id.tv_month_day, R.id.fl_current, R.id.tv_cancel, R.id.iv_add, R.id.iv_search, R.id.iv_year_seclect})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tv_month_day:  // 返回
+                finish();
+                break;
+            case R.id.iv_add:  // 添加
+                startActivity(new Intent(FlyDataListActivity.this, FlyEventReportActivity.class));
+                break;
+            case R.id.iv_search:   // 搜索
+                edittext.setText("");
+                llCaldenarLayout.setVisibility(View.GONE);
+                llSearchLayout.setVisibility(View.VISIBLE);
+                break;
+            case R.id.tv_cancel:   // 取消搜索
+                hideKeyboard(view);
+                llCaldenarLayout.setVisibility(View.VISIBLE);
+                llSearchLayout.setVisibility(View.GONE);
+                break;
+            case R.id.fl_current:   // 返回当前日期
+                if (mCalendarView != null) {
+                    mCalendarView.scrollToCurrent(true);
+                    mCalendarView.closeYearSelectLayout();
+                }
+                break;
+            case R.id.iv_year_seclect:   // 选择年
+                if (!mCalendarLayout.isExpand()) {
+                    mCalendarLayout.expand();
+//                    return;
+                }
+                mTextMonthDay.setText(String.valueOf(mYear));
+                mCalendarView.showYearSelectLayout(mYear);
+                mTextLunar.setVisibility(View.GONE);
+                mTextYear.setVisibility(View.GONE);
+                break;
+        }
     }
 }

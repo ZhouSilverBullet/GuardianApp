@@ -1,42 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
+    android:background="#F2F2F2"
     android:layout_width="match_parent"
-    android:paddingRight="10dp"
-    android:paddingLeft="10dp"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
     android:layout_height="wrap_content">
 
     <TextView
-        android:textSize="15sp"
-        android:textColor="@color/black"
-        android:text="09:18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:background="#F2F2F2"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
 
-    <TextView
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
-        android:singleLine="true"
-        android:textSize="15sp"
-        android:textColor="@color/black"
-        android:text="飞行任务标题"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content" />
-
-    <RelativeLayout
-        android:layout_weight="1"
-        android:layout_width="0dp"
+        android:padding="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
-            android:singleLine="true"
-            android:layout_alignParentRight="true"
-            android:textSize="13sp"
-            android:text="区环保局区环保局区环保局区环保局区环保局区环保局区环保局"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:text="09:18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </RelativeLayout>
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:singleLine="true"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:text="飞行任务标题"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:singleLine="true"
+                android:layout_alignParentRight="true"
+                android:textSize="13sp"
+                android:text="区环保局区环保局区环保局区环保局区环保局区环保局区环保局"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

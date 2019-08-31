@@ -1,7 +1,12 @@
 package com.sdxxtop.guardianapp.ui.adapter;
 
+import android.content.Intent;
+import android.view.View;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.sdxxtop.guardianapp.ui.activity.EventDetailActivity;
+import com.sdxxtop.guardianapp.ui.activity.FlyEventDetailActivity;
 
 import java.util.List;
 
@@ -20,6 +25,15 @@ public class FlyDataAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
 
     @Override
     protected void convert(BaseViewHolder helper, String item) {
-
+        helper.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (helper.getAdapterPosition()/2==0){
+                    mContext.startActivity(new Intent(mContext, FlyEventDetailActivity.class));
+                }else{
+                    mContext.startActivity(new Intent(mContext, EventDetailActivity.class));
+                }
+            }
+        });
     }
 }
