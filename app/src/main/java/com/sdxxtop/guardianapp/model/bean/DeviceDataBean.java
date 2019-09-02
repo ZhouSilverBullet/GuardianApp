@@ -53,6 +53,16 @@ public class DeviceDataBean {
         private float tenpm;
         private String add_time;
 
+        public DustDataBean() {
+        }
+
+        public DustDataBean(String device_sn, float tpfpm, float tenpm, String add_time) {
+            this.device_sn = device_sn;
+            this.tpfpm = tpfpm;
+            this.tenpm = tenpm;
+            this.add_time = add_time;
+        }
+
         public String getDevice_sn() {
             return device_sn;
         }

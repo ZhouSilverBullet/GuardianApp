@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import cn.jzvd.JzvdStd;
 
+
+
 public class FlyEventDetailActivity extends BaseMvpActivity<FlyEventDetailPresenter> implements FlyEventDetailContract.IView {
 
     @BindView(R.id.recyclerView)

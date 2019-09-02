@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.sdxxtop.guardianapp.ui.widget.chart.CustomBarChartView
+            android:id="@+id/cbcv_bar_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp" />
+
+        <com.sdxxtop.guardianapp.ui.widget.chart.CustomLineChartView
+            android:id="@+id/clcv_line_view"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:background="@color/white"
+            android:layout_marginBottom="5dp"
+            android:orientation="vertical"
+            android:id="@+id/text_layout"
+            android:layout_width="match_parent"
+            android:layout_height="170dp">
+
+            <com.sdxxtop.guardianapp.ui.widget.autoscroll.AutoScrollRecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/show_text"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/shape_text_select_normal"
+            android:textSize="15sp"
+            android:text="文本图"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/show_bar"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/shape_text_select"
+            android:textSize="15sp"
+            android:text="柱状图"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/show_line"
+            android:textColor="@color/black"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/shape_text_select_normal"
+            android:textSize="15sp"
+            android:text="曲线图"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</LinearLayout>
