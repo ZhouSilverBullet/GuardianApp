@@ -23,11 +23,12 @@ public class SingleStyleView {
         mActivity = activity;
         mData = list;
         mList.clear();
-        if (list!=null&&list.size()>0){
+        if (list != null && list.size() > 0) {
             for (int i = 0; i < list.size(); i++) {
                 mList.add(list.get(i).name);
             }
         }
+        if (mList.size() == 0) return;
         initOptionPicker();
     }
 
@@ -40,7 +41,7 @@ public class SingleStyleView {
     public void replaceData(List<ListDataBean> list) {
         mData = list;
         mList.clear();
-        if (list!=null&&list.size()>0){
+        if (list != null && list.size() > 0) {
             for (int i = 0; i < list.size(); i++) {
                 mList.add(list.get(i).name);
             }
@@ -49,7 +50,7 @@ public class SingleStyleView {
     }
 
     public interface OnItemSelectLintener {
-        void onItemSelect(int id,String result);
+        void onItemSelect(int id, String result);
     }
 
     public void setOnItemSelectLintener(OnItemSelectLintener lintener) {
@@ -68,7 +69,7 @@ public class SingleStyleView {
                 //返回的分别是三个级别的选中位置
                 String tx = mList.get(options1);
                 ListDataBean listDataBean = mData.get(options1);
-                mLintener.onItemSelect(listDataBean.id,listDataBean.name);
+                mLintener.onItemSelect(listDataBean.id, listDataBean.name);
             }
         })
                 .setTitleText(" ")
@@ -94,7 +95,7 @@ public class SingleStyleView {
         pvOptions.setPicker(mList);//二级选择器
     }
 
-    public static class ListDataBean{
+    public static class ListDataBean {
         public ListDataBean(int id, String name) {
             this.id = id;
             this.name = name;

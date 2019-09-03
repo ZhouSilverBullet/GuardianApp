@@ -14,12 +14,14 @@ import com.haibin.calendarview.CalendarLayout;
 import com.haibin.calendarview.CalendarView;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
+import com.sdxxtop.guardianapp.model.bean.FlyEventListBean;
 import com.sdxxtop.guardianapp.presenter.FlyDataListPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.FlyDataListContract;
 import com.sdxxtop.guardianapp.ui.adapter.FlyDataAdapter;
+import com.sdxxtop.guardianapp.utils.Date2Util;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -70,6 +72,7 @@ public class FlyDataListActivity extends BaseMvpActivity<FlyDataListPresenter> i
     EditText edittext;
 
     private int mYear;
+    private FlyDataAdapter adapter;
 
     @Override
     public void showError(String error) {
@@ -89,33 +92,8 @@ public class FlyDataListActivity extends BaseMvpActivity<FlyDataListPresenter> i
 
     @Override
     public void initData() {
-        int year = mCalendarView.getCurYear();
-        int month = mCalendarView.getCurMonth();
-        Map<String, Calendar> map = new HashMap<>();
-        for (int y = 1997; y < 2082; y++) {
-            for (int m = 1; m <= 12; m++) {
-                map.put(getSchemeCalendar(y, m, 3, 0xFFedc56d, "飞").toString(),
-                        getSchemeCalendar(y, m, 3, 0xFFedc56d, "飞"));
-                map.put(getSchemeCalendar(y, m, 6, 0xFFedc56d, "飞").toString(),
-                        getSchemeCalendar(y, m, 6, 0xFFedc56d, "飞"));
-                map.put(getSchemeCalendar(y, m, 9, 0xFFedc56d, "飞").toString(),
-                        getSchemeCalendar(y, m, 9, 0xFFedc56d, "飞"));
-                map.put(getSchemeCalendar(y, m, 13, 0xFFedc56d, "飞").toString(),
-                        getSchemeCalendar(y, m, 13, 0xFFedc56d, "飞"));
-                map.put(getSchemeCalendar(y, m, 14, 0xFFedc56d, "飞").toString(),
-                        getSchemeCalendar(y, m, 14, 0xFFedc56d, "飞"));
-                map.put(getSchemeCalendar(y, m, 15, 0xFFedc56d, "飞").toString(),
-                        getSchemeCalendar(y, m, 15, 0xFFedc56d, "飞"));
-                map.put(getSchemeCalendar(y, m, 18, 0xFFedc56d, "飞").toString(),
-                        getSchemeCalendar(y, m, 18, 0xFFedc56d, "飞"));
-                map.put(getSchemeCalendar(y, m, 25, 0xFFedc56d, "飞").toString(),
-                        getSchemeCalendar(y, m, 25, 0xFFedc56d, "飞"));
-                map.put(getSchemeCalendar(y, m, 27, 0xFFedc56d, "飞").toString(),
-                        getSchemeCalendar(y, m, 27, 0xFFedc56d, "飞"));
-            }
-        }
-        //此方法在巨大的数据量上不影响遍历性能，推荐使用
-        mCalendarView.setSchemeDate(map);
+        mPresenter.getUavData("");
+        mPresenter.getUavEventData("");
     }
 
     private Calendar getSchemeCalendar(int year, int month, int day, int color, String text) {
@@ -142,28 +120,8 @@ public class FlyDataListActivity extends BaseMvpActivity<FlyDataListPresenter> i
         mTextCurrentDay.setText(String.valueOf(mCalendarView.getCurDay()));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ArrayList<String> strings = new ArrayList<>();
-        strings.add("");
-        strings.add("");
-        strings.add("");
-        strings.add("");
-        strings.add("");
-        strings.add("");
-        strings.add("");
-        strings.add("");
-        strings.add("");
-        strings.add("");
-        strings.add("");
-        strings.add("");
-        strings.add("");
-        strings.add("");
-        strings.add("");
-        strings.add("");
-        strings.add("");
-        strings.add("");
-        strings.add("");
-        strings.add("");
-        recyclerView.setAdapter(new FlyDataAdapter(R.layout.item_fly_datalist, strings));
+        adapter = new FlyDataAdapter(R.layout.item_fly_datalist, null);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -184,6 +142,12 @@ public class FlyDataListActivity extends BaseMvpActivity<FlyDataListPresenter> i
         mTextYear.setText(String.valueOf(calendar.getYear()));
         mTextLunar.setText(calendar.getLunar());
         mYear = calendar.getYear();
+
+        String value = Date2Util.getZeroTime(calendar.getYear()) + "-" +
+                Date2Util.getZeroTime(calendar.getMonth()) + "-" +
+                Date2Util.getZeroTime(calendar.getDay());
+        mPresenter.getUavData(value);
+        mPresenter.getUavEventData(value);
     }
 
 
@@ -223,5 +187,26 @@ public class FlyDataListActivity extends BaseMvpActivity<FlyDataListPresenter> i
                 mTextYear.setVisibility(View.GONE);
                 break;
         }
+    }
+
+    @Override
+    public void setMonthUavData(List<FlyEventListBean.MonthTash> data) {
+        if (data != null && data.size() > 0) {
+            mCalendarView.clearSchemeDate();
+            Map<String, Calendar> map = new HashMap<>();
+            for (FlyEventListBean.MonthTash item : data) {
+                int y = Date2Util.getDateInt(item.add_date, 0);
+                int m = Date2Util.getDateInt(item.add_date, 1);
+                int d = Date2Util.getDateInt(item.add_date, 2);
+                map.put(getSchemeCalendar(y, m, d, 0xFFedc56d, "飞").toString(),
+                        getSchemeCalendar(y, m, d, 0xFFedc56d, "飞"));
+            }
+            mCalendarView.setSchemeDate(map);
+        }
+    }
+
+    @Override
+    public void setDayUavList(List<FlyEventListBean.DayTash> data) {
+        adapter.replaceData(data);
     }
 }

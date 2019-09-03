@@ -77,7 +77,7 @@ public class ProvinceTwoPickerView {
     public ProvinceTwoPickerView(Context context, List<EventShowBean.NewPartBean> data) {
         this.mContext = context;
         if (data == null || data.size() == 0) {
-            UIUtils.showToast("暂无主管部门");
+            UIUtils.showToast("暂无部门");
             return;
         }
         this.mData = data;

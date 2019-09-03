@@ -22,6 +22,9 @@ import com.sdxxtop.guardianapp.model.bean.EventReadIndexBean;
 import com.sdxxtop.guardianapp.model.bean.EventSearchTitleBean;
 import com.sdxxtop.guardianapp.model.bean.EventShowBean;
 import com.sdxxtop.guardianapp.model.bean.ExamineFinishBean;
+import com.sdxxtop.guardianapp.model.bean.FlyEventDetailBean;
+import com.sdxxtop.guardianapp.model.bean.FlyEventListBean;
+import com.sdxxtop.guardianapp.model.bean.FlyEventPartBean;
 import com.sdxxtop.guardianapp.model.bean.GERPIndexBean;
 import com.sdxxtop.guardianapp.model.bean.GridreportIndexBean;
 import com.sdxxtop.guardianapp.model.bean.GridreportOperatorBean;
@@ -325,5 +328,25 @@ public interface EnvirApiService {
     @FormUrlEncoded
     @POST("main/signlog")
     Observable<RequestBean<TrackPointBean>> postMoreTrack(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("uav/showPart")
+    Observable<RequestBean<FlyEventPartBean>> postFlyEventPartBean(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("uav/add")
+    Observable<RequestBean> postFlyEventAdd(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("uav/uavlist")
+    Observable<RequestBean<FlyEventListBean>> postFlyEventList(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("uav/mothuav")
+    Observable<RequestBean<FlyEventListBean>> postMonthFlyEvent(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("uav/read")
+    Observable<RequestBean<FlyEventDetailBean>> postFlyEventDetail(@Field("data") String data);
 
 }

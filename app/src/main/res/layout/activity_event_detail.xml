@@ -101,7 +101,7 @@
                 <TextView
                     android:id="@+id/tv_title"
                     android:textColor="@color/black"
-                    android:text="任务标题：巡逻"
+                    android:text="任务标题："
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content" />
@@ -110,32 +110,7 @@
                     android:layout_alignParentRight="true"
                     android:id="@+id/tv_plane_name"
                     android:textColor="@color/black"
-                    android:text="无人机名称 ：1号"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:paddingTop="10dp"
-                android:paddingLeft="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/tv_event_content"
-                    android:textColor="@color/black"
-                    android:text="任务内容：定位巡逻"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:layout_alignParentRight="true"
-                    android:id="@+id/tv_event_time"
-                    android:textColor="@color/black"
-                    android:text="任务时间：2019/9/1"
+                    android:text="无人机名称 ："
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content" />
@@ -151,7 +126,32 @@
                 <TextView
                     android:id="@+id/tv_name"
                     android:textColor="@color/black"
-                    android:text="执行人 ：刘杨"
+                    android:text="执行人 ："
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/tv_event_time"
+                    android:textColor="@color/black"
+                    android:text="任务时间："
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:paddingTop="10dp"
+                android:paddingLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_event_content"
+                    android:textColor="@color/black"
+                    android:text="任务内容："
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content" />

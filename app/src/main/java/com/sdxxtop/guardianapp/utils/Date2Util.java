@@ -994,6 +994,7 @@ public class Date2Util {
         SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
         return format.format(time);
     }
+
     public static String getToday() {
         Calendar calendar = Calendar.getInstance();
         Date time = calendar.getTime();
@@ -1001,4 +1002,14 @@ public class Date2Util {
         return format.format(time);
     }
 
+    public static int getDateInt(String date, int index) {
+        if (TextUtils.isEmpty(date)) {
+            return 0;
+        }
+        String[] split = date.split("-");
+        if (split.length == 3) {
+            return Integer.parseInt(split[index]);
+        }
+        return 0;
+    }
 }

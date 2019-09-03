@@ -12,6 +12,7 @@ import com.sdxxtop.guardianapp.ui.activity.DeviceCenterMsgActivity;
 import com.sdxxtop.guardianapp.ui.activity.DeviceDataDetailActivity;
 import com.sdxxtop.guardianapp.ui.activity.DeviceListActivity;
 import com.sdxxtop.guardianapp.ui.activity.DeviceWarnDetailActivity;
+import com.sdxxtop.guardianapp.ui.activity.EventDetailActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventDiscretionListActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventDiscretionReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventMoveActivity;
@@ -23,6 +24,7 @@ import com.sdxxtop.guardianapp.ui.activity.EventStatistyActivity;
 import com.sdxxtop.guardianapp.ui.activity.ExamineActivity;
 import com.sdxxtop.guardianapp.ui.activity.FlyDataListActivity;
 import com.sdxxtop.guardianapp.ui.activity.FlyEventDetailActivity;
+import com.sdxxtop.guardianapp.ui.activity.FlyEventReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.GACEventDetailActivity;
 import com.sdxxtop.guardianapp.ui.activity.GACPatrolDetailActivity;
 import com.sdxxtop.guardianapp.ui.activity.GrantCompanyReportActivity;
@@ -93,5 +95,7 @@ public interface ActivityComponent {
     void inject(EventMoveActivity activity);
     void inject(FlyDataListActivity activity);
     void inject(FlyEventDetailActivity activity);
+    void inject(FlyEventReportActivity activity);
+    void inject(EventDetailActivity activity);
 
 }

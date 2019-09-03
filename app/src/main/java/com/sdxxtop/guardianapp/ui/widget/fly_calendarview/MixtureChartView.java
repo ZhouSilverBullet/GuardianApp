@@ -49,6 +49,7 @@ public class MixtureChartView extends LinearLayout {
     TextView showLine;
     @BindView(R.id.recyclerView)
     AutoScrollRecyclerView recyclerView;
+    private NoticeRecyclerViewAdapter adapter;
 
     public MixtureChartView(Context context) {
         this(context, null);
@@ -80,11 +81,7 @@ public class MixtureChartView extends LinearLayout {
         clcvLineView.initData(data);
         cbcvBarView.initData(data);
 
-        List<String> dataList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            dataList.add("测试数据" + i);
-        }
-        NoticeRecyclerViewAdapter adapter = new NoticeRecyclerViewAdapter(dataList);
+        adapter = new NoticeRecyclerViewAdapter(null);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setAdapter(adapter);
 
@@ -106,7 +103,7 @@ public class MixtureChartView extends LinearLayout {
             }
         };
         //item滚动步骤3：开始滚动
-        startAuto();
+//        startAuto();
         //流式滚动效果
 //        recyclerView.start();
     }
@@ -173,6 +170,15 @@ public class MixtureChartView extends LinearLayout {
             mAutoTask.dispose();
             mAutoTask = null;
         }
+    }
+
+    public void setData(){
+        List<String> dataList = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            dataList.add("测试数据" + i);
+        }
+        adapter.replaceData(dataList);
+        startAuto();
     }
 
 }

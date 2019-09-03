@@ -36,19 +36,56 @@
                 app:taev_edit_text_hint="事件重点简述（限制10个字）"
                 app:taev_text_view="事件标题" />
 
-            <com.sdxxtop.guardianapp.ui.widget.TextAndEditView
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:taev_edit_text_hint="王艺元"
-                app:taev_text_view="执行人" />
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp">
+
+                    <TextView
+                        android:id="@+id/text_and_text_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="执行人"
+                        android:textColor="#333333"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@null"
+                        android:ellipsize="end"
+                        android:gravity="right"
+                        android:singleLine="true"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="17sp" />
+
+                </RelativeLayout>
+
+                <include layout="@layout/item_course_list_line_recycler" />
+
+            </LinearLayout>
 
             <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+                android:id="@+id/tatv_part"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:tatv_text_right_hint_value="请点击选择"
                 app:tatv_text_view="部门" />
 
             <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+                android:id="@+id/tatv_uav"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:tatv_text_right_hint_value="请点击选择"

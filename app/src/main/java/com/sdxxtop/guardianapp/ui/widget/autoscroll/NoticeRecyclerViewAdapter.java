@@ -18,7 +18,7 @@ public class NoticeRecyclerViewAdapter extends BaseQuickAdapter<String, BaseView
 
 
     public NoticeRecyclerViewAdapter(@Nullable List<String> data) {
-        super(R.layout.item_fly_datalist, data);
+        super(R.layout.item_device_data, data);
     }
 
     @Override
