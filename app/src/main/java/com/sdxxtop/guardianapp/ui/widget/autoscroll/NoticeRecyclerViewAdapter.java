@@ -4,6 +4,7 @@ package com.sdxxtop.guardianapp.ui.widget.autoscroll;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sdxxtop.guardianapp.R;
+import com.sdxxtop.guardianapp.model.bean.FlyEventDetailBean;
 
 import java.util.List;
 
@@ -14,22 +15,26 @@ import androidx.annotation.Nullable;
  * date       : 2018/10/18
  * function  : 垂直滚动的RecyclerView的adapter
  */
-public class NoticeRecyclerViewAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+public class NoticeRecyclerViewAdapter extends BaseQuickAdapter<FlyEventDetailBean.UavExcel, BaseViewHolder> {
 
 
-    public NoticeRecyclerViewAdapter(@Nullable List<String> data) {
-        super(R.layout.item_device_data, data);
+    public NoticeRecyclerViewAdapter(@Nullable List<FlyEventDetailBean.UavExcel> data) {
+        super(R.layout.item_device_fly_data, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, String item) {
-        //TODO
-//        helper.setText(R.id.it_tv, item);
+    protected void convert(BaseViewHolder helper, FlyEventDetailBean.UavExcel item) {
+        helper.setText(R.id.tv_num, "" + item.sort);
+        helper.setText(R.id.tv_time, getTime(item.date));
+        helper.setText(R.id.tv_pm1, "" + item.tpfpm);
+        helper.setText(R.id.tv_pm2, "" + item.tenpm);
+        helper.setText(R.id.tv_temperature, "" + item.temperature);
+        helper.setText(R.id.tv_humidity, "" + item.humidity);
     }
 
     @Nullable
     @Override
-    public String getItem(int position) {
+    public FlyEventDetailBean.UavExcel getItem(int position) {
         int newPosition = position % getData().size();
         return getData().get(newPosition);
     }
@@ -49,4 +54,16 @@ public class NoticeRecyclerViewAdapter extends BaseQuickAdapter<String, BaseView
     public int getItemCount() {
         return Integer.MAX_VALUE;
     }
+
+    private String getTime(String time) {
+        String result = "";
+        if (time.contains("上午")) {
+            result = time.replace("上午", "");
+        }
+        if (time.contains("下午")) {
+            result = time.replace("下午", "");
+        }
+        return result;
+    }
+
 }

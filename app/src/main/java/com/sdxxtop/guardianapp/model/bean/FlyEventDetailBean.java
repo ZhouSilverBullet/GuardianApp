@@ -37,6 +37,6 @@ public class FlyEventDetailBean {
         public String place;
         public String longitudes;
         public String add_time;
+        public int sort;
     }
-
 }

@@ -6,10 +6,12 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.model.bean.DeviceDataBean;
+import com.sdxxtop.guardianapp.model.bean.FlyEventDetailBean;
 import com.sdxxtop.guardianapp.ui.widget.autoscroll.AutoScrollRecyclerView;
 import com.sdxxtop.guardianapp.ui.widget.autoscroll.NoticeRecyclerViewAdapter;
 import com.sdxxtop.guardianapp.ui.widget.chart.CustomBarChartView;
@@ -40,7 +42,7 @@ public class MixtureChartView extends LinearLayout {
     @BindView(R.id.clcv_line_view)
     CustomLineChartView clcvLineView;
     @BindView(R.id.text_layout)
-    LinearLayout text_layout;
+    RelativeLayout text_layout;
     @BindView(R.id.show_text)
     TextView showText;
     @BindView(R.id.show_bar)
@@ -49,6 +51,14 @@ public class MixtureChartView extends LinearLayout {
     TextView showLine;
     @BindView(R.id.recyclerView)
     AutoScrollRecyclerView recyclerView;
+    @BindView(R.id.rl_chart)
+    RelativeLayout rlChart;
+    @BindView(R.id.ll_text)
+    LinearLayout llText;
+    @BindView(R.id.tv_list_nodata)
+    TextView tvListNodata;
+
+
     private NoticeRecyclerViewAdapter adapter;
 
     public MixtureChartView(Context context) {
@@ -73,13 +83,8 @@ public class MixtureChartView extends LinearLayout {
         showText.setTextColor(getResources().getColor(R.color.white));
         showBar.setTextColor(getResources().getColor(R.color.black));
         showLine.setTextColor(getResources().getColor(R.color.black));
-
-        List<DeviceDataBean.DustDataBean> data = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            data.add(new DeviceDataBean.DustDataBean("", 40, 60, "2019-01-02 05:2" + i + ":22"));
-        }
-        clcvLineView.initData(data);
-        cbcvBarView.initData(data);
+        rlChart.setVisibility(View.GONE);
+        llText.setVisibility(View.VISIBLE);
 
         adapter = new NoticeRecyclerViewAdapter(null);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
@@ -112,6 +117,8 @@ public class MixtureChartView extends LinearLayout {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.show_text:
+                rlChart.setVisibility(View.GONE);
+                llText.setVisibility(View.VISIBLE);
                 text_layout.setVisibility(View.VISIBLE);
                 cbcvBarView.setVisibility(View.GONE);
                 clcvLineView.setVisibility(View.GONE);
@@ -123,6 +130,8 @@ public class MixtureChartView extends LinearLayout {
                 showLine.setTextColor(getResources().getColor(R.color.black));
                 break;
             case R.id.show_bar:
+                rlChart.setVisibility(View.VISIBLE);
+                llText.setVisibility(View.GONE);
                 text_layout.setVisibility(View.GONE);
                 cbcvBarView.setVisibility(View.VISIBLE);
                 clcvLineView.setVisibility(View.GONE);
@@ -134,6 +143,8 @@ public class MixtureChartView extends LinearLayout {
                 showLine.setTextColor(getResources().getColor(R.color.black));
                 break;
             case R.id.show_line:
+                rlChart.setVisibility(View.VISIBLE);
+                llText.setVisibility(View.GONE);
                 text_layout.setVisibility(View.GONE);
                 cbcvBarView.setVisibility(View.GONE);
                 clcvLineView.setVisibility(View.VISIBLE);
@@ -152,7 +163,7 @@ public class MixtureChartView extends LinearLayout {
 
     //item滚动步骤2：设置定时器自动滚动
     public void startAuto() {
-        if (mAutoTask!= null && !mAutoTask.isDisposed()) {
+        if (mAutoTask != null && !mAutoTask.isDisposed()) {
             mAutoTask.dispose();
         }
         mAutoTask = Observable.interval(1, 2, TimeUnit.SECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Long>() {
@@ -166,19 +177,36 @@ public class MixtureChartView extends LinearLayout {
     }
 
     private void stopAuto() {
-        if (mAutoTask!= null && !mAutoTask.isDisposed()) {
+        if (mAutoTask != null && !mAutoTask.isDisposed()) {
             mAutoTask.dispose();
             mAutoTask = null;
         }
     }
 
-    public void setData(){
-        List<String> dataList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            dataList.add("测试数据" + i);
+    public void setData(List<FlyEventDetailBean.UavExcel> data) {
+        stopAuto();
+        if (data == null || data.size() == 0) {
+            clcvLineView.setNoData();
+            cbcvBarView.setNoData();
+            tvListNodata.setVisibility(View.VISIBLE);
+            return;
+        } else {
+            adapter.replaceData(data);
+            startAuto();
         }
-        adapter.replaceData(dataList);
-        startAuto();
-    }
+        List<DeviceDataBean.DustDataBean> dataList = new ArrayList<>();
+        for (FlyEventDetailBean.UavExcel item : data) {
+            String time = "";
+            if (item.date.contains("上午")) {
+                time = item.date.replace("上午", "");
+            }
+            if (item.date.contains("下午")) {
+                time = item.date.replace("下午", "");
+            }
+            dataList.add(new DeviceDataBean.DustDataBean("", item.tpfpm, item.tenpm, time));
+        }
 
+        clcvLineView.initData(dataList);
+        cbcvBarView.initData(dataList);
+    }
 }

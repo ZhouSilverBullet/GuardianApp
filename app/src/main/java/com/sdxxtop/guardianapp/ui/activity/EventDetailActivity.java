@@ -1,6 +1,10 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.amap.api.maps.AMap;
@@ -35,6 +39,8 @@ public class EventDetailActivity extends BaseMvpActivity<EventDetailPresenter> i
     TextView tvEventTime;
     @BindView(R.id.tv_event_content)
     TextView tvEventContent;
+    @BindView(R.id.et_search)
+    EditText etSearch;
 
     private int eventId;
     private AMap aMap;
@@ -104,6 +110,26 @@ public class EventDetailActivity extends BaseMvpActivity<EventDetailPresenter> i
         super.initView();
         initMap();
         eventId = getIntent().getIntExtra("eventId", 0);
+
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String tx = s.toString().trim();
+                if (!TextUtils.isEmpty(tx)){
+                    mPresenter.loadData(eventId, tx);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
@@ -129,7 +155,9 @@ public class EventDetailActivity extends BaseMvpActivity<EventDetailPresenter> i
             aMap.addMarker(markerOptions);
         }
 
-        mixturechartview.setData();
+        if (bean.uav_excel!=null){
+            mixturechartview.setData(bean.uav_excel);
+        }
 
     }
 
