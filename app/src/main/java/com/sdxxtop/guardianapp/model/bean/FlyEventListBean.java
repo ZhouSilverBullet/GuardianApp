@@ -10,6 +10,7 @@ import java.util.List;
 public class FlyEventListBean {
     public List<MonthTash> month_uav;
     public List<DayTash> day_tash;
+    public List<DayTash> search;
 
     public class DayTash{
         public int id;

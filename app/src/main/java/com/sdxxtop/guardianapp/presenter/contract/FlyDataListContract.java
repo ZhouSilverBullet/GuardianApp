@@ -15,6 +15,8 @@ public interface FlyDataListContract {
         void setMonthUavData(List<FlyEventListBean.MonthTash> data);
 
         void setDayUavList(List<FlyEventListBean.DayTash> data);
+
+        void setSearchData(List<FlyEventListBean.DayTash> search);
     }
 
     interface IPresenter extends BasePresenter<IView> {

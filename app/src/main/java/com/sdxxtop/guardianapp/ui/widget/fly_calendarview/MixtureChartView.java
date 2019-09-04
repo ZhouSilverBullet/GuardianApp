@@ -196,14 +196,7 @@ public class MixtureChartView extends LinearLayout {
         }
         List<DeviceDataBean.DustDataBean> dataList = new ArrayList<>();
         for (FlyEventDetailBean.UavExcel item : data) {
-            String time = "";
-            if (item.date.contains("上午")) {
-                time = item.date.replace("上午", "");
-            }
-            if (item.date.contains("下午")) {
-                time = item.date.replace("下午", "");
-            }
-            dataList.add(new DeviceDataBean.DustDataBean("", item.tpfpm, item.tenpm, time));
+            dataList.add(new DeviceDataBean.DustDataBean("", item.tpfpm, item.tenpm, item.date));
         }
 
         clcvLineView.initData(dataList);

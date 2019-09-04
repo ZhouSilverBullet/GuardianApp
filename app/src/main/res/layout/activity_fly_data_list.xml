@@ -199,6 +199,7 @@
     <RelativeLayout
         android:id="@+id/ll_search_layout"
         android:visibility="gone"
+        tools:visibility="visible"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:background="@color/white"
@@ -250,9 +251,10 @@
         <androidx.recyclerview.widget.RecyclerView
             android:layout_marginTop="10dp"
             android:layout_below="@+id/tv_cancel"
+            android:background="#F2F2F2"
             android:id="@+id/recyclerView_search"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent" />
 
     </RelativeLayout>
 

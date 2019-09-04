@@ -25,7 +25,7 @@ public class NoticeRecyclerViewAdapter extends BaseQuickAdapter<FlyEventDetailBe
     @Override
     protected void convert(BaseViewHolder helper, FlyEventDetailBean.UavExcel item) {
         helper.setText(R.id.tv_num, "" + item.sort);
-        helper.setText(R.id.tv_time, getTime(item.date));
+        helper.setText(R.id.tv_time,item.date);
         helper.setText(R.id.tv_pm1, "" + item.tpfpm);
         helper.setText(R.id.tv_pm2, "" + item.tenpm);
         helper.setText(R.id.tv_temperature, "" + item.temperature);
@@ -53,17 +53,6 @@ public class NoticeRecyclerViewAdapter extends BaseQuickAdapter<FlyEventDetailBe
     @Override
     public int getItemCount() {
         return Integer.MAX_VALUE;
-    }
-
-    private String getTime(String time) {
-        String result = "";
-        if (time.contains("上午")) {
-            result = time.replace("上午", "");
-        }
-        if (time.contains("下午")) {
-            result = time.replace("下午", "");
-        }
-        return result;
     }
 
 }

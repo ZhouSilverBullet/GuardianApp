@@ -349,4 +349,8 @@ public interface EnvirApiService {
     @POST("uav/read")
     Observable<RequestBean<FlyEventDetailBean>> postFlyEventDetail(@Field("data") String data);
 
+    @FormUrlEncoded
+    @POST("uav/search")
+    Observable<RequestBean<FlyEventListBean>> postSearchEvent(@Field("data") String data);
+
 }

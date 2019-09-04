@@ -1,6 +1,7 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -19,6 +20,7 @@ import com.sdxxtop.guardianapp.presenter.FlyDataListPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.FlyDataListContract;
 import com.sdxxtop.guardianapp.ui.adapter.FlyDataAdapter;
 import com.sdxxtop.guardianapp.utils.Date2Util;
+import com.sdxxtop.guardianapp.utils.MyTextWatcher;
 
 import java.util.HashMap;
 import java.util.List;
@@ -73,6 +75,7 @@ public class FlyDataListActivity extends BaseMvpActivity<FlyDataListPresenter> i
 
     private int mYear;
     private FlyDataAdapter adapter;
+    private FlyDataAdapter searchAdapter;
 
     @Override
     public void showError(String error) {
@@ -122,6 +125,20 @@ public class FlyDataListActivity extends BaseMvpActivity<FlyDataListPresenter> i
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new FlyDataAdapter(R.layout.item_fly_datalist, null);
         recyclerView.setAdapter(adapter);
+
+        recyclerViewSearch.setLayoutManager(new LinearLayoutManager(this));
+        searchAdapter = new FlyDataAdapter(R.layout.item_fly_datalist, null);
+        recyclerViewSearch.setAdapter(searchAdapter);
+
+        edittext.addTextChangedListener(new MyTextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String tx = s.toString().trim();
+                if (!TextUtils.isEmpty(tx)) {
+                    mPresenter.getSearchData(tx);
+                }
+            }
+        });
     }
 
     @Override
@@ -208,5 +225,10 @@ public class FlyDataListActivity extends BaseMvpActivity<FlyDataListPresenter> i
     @Override
     public void setDayUavList(List<FlyEventListBean.DayTash> data) {
         adapter.replaceData(data);
+    }
+
+    @Override
+    public void setSearchData(List<FlyEventListBean.DayTash> data) {
+        searchAdapter.replaceData(data);
     }
 }

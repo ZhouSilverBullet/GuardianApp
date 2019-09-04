@@ -68,4 +68,27 @@ public class FlyDataListPresenter extends RxPresenter<FlyDataListContract.IView>
         });
         addSubscribe(disposable);
     }
+
+    public void getSearchData(String tx) {
+        Params params = new Params();
+        params.put("task",tx);
+
+        Observable<RequestBean<FlyEventListBean>> observable = getEnvirApi().postSearchEvent(params.getData());
+        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<FlyEventListBean>() {
+            @Override
+            public void onSuccess(FlyEventListBean bean) {
+                if (mView != null) {
+                    if (bean.search != null) {
+                        mView.setSearchData(bean.search);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String error) {
+
+            }
+        });
+        addSubscribe(disposable);
+    }
 }
