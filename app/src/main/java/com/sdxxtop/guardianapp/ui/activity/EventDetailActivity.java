@@ -76,6 +76,9 @@ public class EventDetailActivity extends BaseMvpActivity<EventDetailPresenter> i
         if (mMapView != null) {
             mMapView.onDestroy();
         }
+        if (mixturechartview != null) {
+            mixturechartview.stopAuto();
+        }
     }
 
     @Override

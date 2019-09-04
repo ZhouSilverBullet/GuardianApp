@@ -176,7 +176,7 @@ public class MixtureChartView extends LinearLayout {
         });
     }
 
-    private void stopAuto() {
+    public void stopAuto() {
         if (mAutoTask != null && !mAutoTask.isDisposed()) {
             mAutoTask.dispose();
             mAutoTask = null;
