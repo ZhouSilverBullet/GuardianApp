@@ -1,6 +1,7 @@
 package com.sdxxtop.guardianapp.ui.fragment;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -9,10 +10,14 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpFragment;
+import com.sdxxtop.guardianapp.model.bean.AllarticleBean;
 import com.sdxxtop.guardianapp.model.bean.LearnNewsBean;
 import com.sdxxtop.guardianapp.presenter.NewsListFragmentPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.NewsListFragmentContract;
+import com.sdxxtop.guardianapp.ui.adapter.BannerViewLearnHolder;
 import com.sdxxtop.guardianapp.ui.adapter.NewsListAdapter;
+import com.sdxxtop.guardianapp.ui.widget.mzbanner.MZBannerView;
+import com.sdxxtop.guardianapp.ui.widget.mzbanner.holder.MZHolderCreator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,10 +41,10 @@ public class NewsListFragment extends BaseMvpFragment<NewsListFragmentPresenter>
     private int isLoadMore = 1;
 
     private boolean isFirstLoading;
+    private MZBannerView mMZBanner;
 
 
     public static NewsListFragment newInstance(int type) {
-
         Bundle args = new Bundle();
         args.putInt("type", type);
         NewsListFragment fragment = new NewsListFragment();
@@ -90,9 +95,13 @@ public class NewsListFragment extends BaseMvpFragment<NewsListFragmentPresenter>
             }
         });
 
+        View headerView = View.inflate(getContext(), R.layout.item_banner_header, null);
+        mMZBanner = headerView.findViewById(R.id.banner);
+        adapter.addHeaderView(headerView);
+
         if (getUserVisibleHint()) {
             loadData();
-            Logger.e("setUserVisibleHint1" , type);
+            Logger.e("setUserVisibleHint1", type);
         }
     }
 
@@ -109,17 +118,31 @@ public class NewsListFragment extends BaseMvpFragment<NewsListFragmentPresenter>
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && mPresenter != null) {
             loadData();
-            Logger.e("setUserVisibleHint2" , type);
+            Logger.e("setUserVisibleHint2", type);
         }
     }
 
     @Override
-    public void showData(List<LearnNewsBean> data) {
+    public void showData(AllarticleBean bean) {
         closeLoadingDialog();
-        if (isLoadMore == 2) {
-            adapter.addData(data);
-        } else {
-            adapter.replaceData(data);
+        List<AllarticleBean.WheelPlanting> banner = bean.wheel_planting;
+        if (banner != null) {
+            // 设置数据
+            mMZBanner.setIndicatorVisible(false);
+            mMZBanner.setPages(banner, new MZHolderCreator<BannerViewLearnHolder>() {
+                @Override
+                public BannerViewLearnHolder createViewHolder() {
+                    return new BannerViewLearnHolder();
+                }
+            });
+        }
+        List<LearnNewsBean> data = bean.all_article;
+        if (data != null) {
+            if (isLoadMore == 2) {
+                adapter.addData(data);
+            } else {
+                adapter.replaceData(data);
+            }
         }
     }
 

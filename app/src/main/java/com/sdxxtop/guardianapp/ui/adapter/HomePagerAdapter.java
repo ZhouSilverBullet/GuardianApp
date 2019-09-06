@@ -6,12 +6,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import me.yokeyword.fragmentation.SupportFragment;
 
 public class HomePagerAdapter extends FragmentStatePagerAdapter {
     private List<String> mTitleList;
-    private List<Fragment> mFragmentList;
+    private List<SupportFragment> mFragmentList;
 
-    public HomePagerAdapter(FragmentManager fm, List<String> titleList, List<Fragment> fragmentList) {
+    public HomePagerAdapter(FragmentManager fm, List<String> titleList, List<SupportFragment> fragmentList) {
         super(fm);
         mTitleList = titleList;
         mFragmentList = fragmentList;
@@ -33,11 +34,7 @@ public class HomePagerAdapter extends FragmentStatePagerAdapter {
         return mTitleList.get(position);
     }
 
-    public int getItemPosition(Object object) {
-        return POSITION_UNCHANGED;
-    }
-
-    public void replaceData(List<String> titleList, List<Fragment> fragmentList){
+    public void replaceData(List<String> titleList, List<SupportFragment> fragmentList){
         mTitleList = titleList;
         mFragmentList = fragmentList;
         notifyDataSetChanged();

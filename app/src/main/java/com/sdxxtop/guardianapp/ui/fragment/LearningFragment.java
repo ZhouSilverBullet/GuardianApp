@@ -1,37 +1,43 @@
 package com.sdxxtop.guardianapp.ui.fragment;
 
+import android.os.Bundle;
+
 import com.google.android.material.tabs.TabLayout;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseFragment;
 import com.sdxxtop.guardianapp.model.bean.ArticleIndexBean;
 import com.sdxxtop.guardianapp.ui.adapter.HomePagerAdapter;
-import com.sdxxtop.guardianapp.ui.widget.TitleView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
+import me.yokeyword.fragmentation.SupportFragment;
 
 public class LearningFragment extends BaseFragment {
-    @BindView(R.id.tv_title)
-    TitleView mTitleView;
+
     @BindView(R.id.vp)
     ViewPager mViewPager;
     @BindView(R.id.tab)
     TabLayout mTabLayout;
-
 
     @Override
     protected int getFragmentLayout() {
         return R.layout.fragment_learning;
     }
 
-    Map<String, Fragment> map = new HashMap<>();
-    ArrayList<Fragment> fragments = new ArrayList<>();
+    public static LearningFragment newInstance() {
+        Bundle args = new Bundle();
+        LearningFragment fragment = new LearningFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    Map<String, SupportFragment> map = new HashMap<>();
+    ArrayList<SupportFragment> fragments = new ArrayList<>();
     ArrayList<String> titleList = new ArrayList<>();
     private HomePagerAdapter homePagerAdapter;
 
@@ -45,7 +51,6 @@ public class LearningFragment extends BaseFragment {
                 fragments.add(map.get(title));
             }
         }
-//        homePagerAdapter.replaceData(titleList,fragments);
 
         homePagerAdapter = new HomePagerAdapter(getChildFragmentManager(),
                 titleList, fragments);
@@ -77,13 +82,12 @@ public class LearningFragment extends BaseFragment {
     protected void initView() {
         super.initView();
         statusBar(true);
-        topViewPadding(mTitleView);
 
-        titleList.add("新闻学习");
-        titleList.add("罗庄发布");
-        titleList.add("课程");
+        titleList.add("新闻中心");
+        titleList.add("权威发布");
+        titleList.add("线上培训");
 //        titleList.add("评分");
-        titleList.add("考核");
+        titleList.add("作业考核");
 
 
         fragments.add(NewsListFragment.newInstance(1));

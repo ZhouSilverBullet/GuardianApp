@@ -5,31 +5,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context="com.sdxxtop.guardianapp.ui.fragment.LearningFragment">
 
-    <com.sdxxtop.guardianapp.ui.widget.TitleView
-        android:id="@+id/tv_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:bgColor="@color/white"
-        app:titleColor="@color/color_303030"
-        app:titleValue="学海无涯" />
+    <TextView
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="41dp"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:textColor="@color/color_313131"
+        android:text="学习"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <com.google.android.material.tabs.TabLayout
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:id="@+id/tab"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="#F0F7F8"
-        app:tabIndicatorColor="@color/green"
-        app:tabSelectedTextColor="@color/green"
+        app:tabIndicatorColor="#2593E7"
+        app:tabSelectedTextColor="#2593E7"
         app:tabTextAppearance="@style/AppliedTabLayoutTextStyle"
         app:tabTextColor="@color/color_303030" />
 
     <androidx.viewpager.widget.ViewPager
+        android:layout_marginTop="15dp"
         android:id="@+id/vp"
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="0dp" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
 </LinearLayout>

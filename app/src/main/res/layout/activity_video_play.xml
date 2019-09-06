@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,14 +12,18 @@
         app:bgColor="#B2000000"
         app:leftLayoutIsShow="true"
         app:titleColor="@color/white"
-        app:titleValue=" "/>
+        app:titleValue=" " />
 
-
-    <com.sdxxtop.guardianapp.ui.widget.DanmukuVideoView
-        android:background="@color/translate"
-        android:id="@+id/player"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"/>
+        android:layout_height="300dp">
+
+        <com.sdxxtop.guardianapp.ui.widget.DanmukuVideoView
+            android:background="@color/translate"
+            android:id="@+id/player"
+            android:layout_width="match_parent"
+            android:layout_height="300dp" />
+    </LinearLayout>
 
     <TextView
         android:padding="10dp"
@@ -30,5 +33,5 @@
         android:layout_marginTop="10dp"
         android:text="习近平强调，要因势而谋、应势而动、顺势而为，加快推动媒体融合发展，使主流媒体具有强大传播力、引导力、影响力、公信力，形成网上网下同心圆。"
         android:textColor="@color/white"
-        android:textSize="9sp"/>
+        android:textSize="9sp" />
 </LinearLayout>

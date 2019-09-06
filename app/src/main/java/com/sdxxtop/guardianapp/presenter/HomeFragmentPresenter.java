@@ -1,7 +1,7 @@
 package com.sdxxtop.guardianapp.presenter;
 
 import com.sdxxtop.guardianapp.base.RxPresenter;
-import com.sdxxtop.guardianapp.model.bean.MainIndexBean;
+import com.sdxxtop.guardianapp.model.bean.MainIndexBeanNew;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
 import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
 import com.sdxxtop.guardianapp.model.http.net.Params;
@@ -22,10 +22,10 @@ public class HomeFragmentPresenter extends RxPresenter<HomeFragmentContract.IVie
     @Override
     public void loadData() {
         Params params = new Params();
-        Observable<RequestBean<MainIndexBean>> observable = getEnvirApi().postMainIndex(params.getData());
-        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<MainIndexBean>() {
+        Observable<RequestBean<MainIndexBeanNew>> observable = getEnvirApi().postMainIndex(params.getData());
+        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<MainIndexBeanNew>() {
             @Override
-            public void onSuccess(MainIndexBean mainIndexBean) {
+            public void onSuccess(MainIndexBeanNew mainIndexBean) {
                 mView.showData(mainIndexBean);
             }
 

@@ -1,222 +1,416 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:fitsSystemWindows="true"
-              android:orientation="vertical"
-              tools:context="com.sdxxtop.guardianapp.ui.fragment.HomeFragment">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_f2"
+    android:orientation="vertical">
 
-    <com.sdxxtop.guardianapp.ui.widget.imgservice.ImageServiceView
+    <LinearLayout
+        android:background="@drawable/bg_home_new"
+        android:id="@+id/ll_layout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="256dp"
+        android:orientation="vertical">
 
         <LinearLayout
+            android:layout_marginTop="42dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:gravity="center_vertical">
 
-            <com.sdxxtop.guardianapp.ui.widget.TitleView
-                android:id="@+id/tv_title"
-                android:layout_width="match_parent"
+            <TextView
+                android:includeFontPadding="false"
+                android:id="@+id/tv_part_name"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:bgColor="@color/transparent"
-                app:titleColor="@color/white"
-                app:titleValue="罗庄区"/>
+                android:layout_weight="1"
+                android:text="数字罗庄"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="5dp"
-                android:gravity="center_vertical">
+                android:id="@+id/ll_containor"
+                android:layout_width="35dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:gravity="center">
 
-                <TextView
-                    android:id="@+id/tv_part_name"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="罗庄区"
-                    android:textColor="@color/color_313131"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/civ_header"
-                    android:layout_width="35dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:elevation="5dp"
-                    android:src="@drawable/tou_xiang"
-                    android:visibility="gone"/>
-
-                <LinearLayout
-                    android:id="@+id/ll_containor"
-                    android:layout_width="35dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="5dp"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/iv_message_icon"
-                        android:layout_width="14dp"
-                        android:layout_height="16dp"
-                        android:src="@drawable/message_normal"/>
-
-                </LinearLayout>
+                <ImageView
+                    android:id="@+id/iv_message_icon"
+                    android:layout_width="14dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/message_normal" />
 
             </LinearLayout>
 
-            <com.youth.banner.Banner
-                android:id="@+id/banner"
-                android:layout_width="match_parent"
-                android:layout_height="140dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="15dp"/>
+        </LinearLayout>
+
+        <TextView
+            android:singleLine="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="12dp"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:text="数据源自无人机移动检测扬尘、环保定点检测"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="111dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="130dp">
+
+        <RelativeLayout
+            android:paddingTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <LinearLayout
-                android:id="@+id/ll_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_icon"
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/weather_home_new"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp" />
 
                 <TextView
-                    style="@style/text"
-                    android:drawableTop="@drawable/record_home"
-                    android:text="工作轨迹"/>
-
-                <TextView
-                    style="@style/text"
-                    android:drawableTop="@drawable/icon_list_home"
-                    android:text="通讯录"/>
-
-                <TextView
-                    style="@style/text"
-                    android:drawableTop="@drawable/icon_map_home"
-                    android:text="网格地图"/>
-
-                <TextView
-                    style="@style/text"
-                    android:drawableTop="@drawable/punch_home"
-                    android:text="打卡"/>
-
+                    android:layout_marginLeft="10dp"
+                    android:textColor="#313131"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:text="今日空气质量"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tv_weather_status"
+                android:layout_marginRight="15dp"
+                android:layout_alignParentRight="true"
+                android:textStyle="bold"
+                android:textColor="#00A0E9"
+                android:textSize="15sp"
+                android:text="优"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_line"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/tv_weather_status"
+                android:background="#E0E0E0"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="26dp"
-                android:background="@color/color_E0E0E0"/>
+                android:layout_height="1dp" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="9dp"
-                android:layout_marginRight="15dp"
-                android:orientation="horizontal">
+                android:id="@+id/ll_pm_1"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_below="@+id/tv_line"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:id="@+id/ll_event_report"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/add_bg_left"
-                    android:gravity="center">
+                <TextView
+                    android:textColor="#999999"
+                    android:textSize="15sp"
+                    android:text="PM2.5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/add_home"
-                        android:drawablePadding="8dp"
-                        android:gravity="center"
-                        android:text="事件上报"
-                        android:textColor="@color/white"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/ll_event_discretion"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/add_bg_right"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/add_home"
-                        android:drawablePadding="8dp"
-                        android:gravity="center"
-                        android:text="自行处理"
-                        android:textColor="@color/white"/>
-
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_pm1"
+                    android:includeFontPadding="false"
+                    android:layout_marginLeft="11dp"
+                    android:textColor="#313131"
+                    android:textSize="20sp"
+                    android:text="36.6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
-            <androidx.core.widget.NestedScrollView
+            <LinearLayout
+                android:layout_marginTop="6dp"
+                android:layout_marginLeft="20dp"
+                android:layout_below="@+id/ll_pm_1"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textColor="#999999"
+                    android:textSize="15sp"
+                    android:text="PM10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:includeFontPadding="false"
+                    android:id="@+id/tv_pm2"
+                    android:layout_marginLeft="15dp"
+                    android:textColor="#313131"
+                    android:textSize="20sp"
+                    android:text="36.6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginRight="35dp"
+                android:layout_marginTop="43dp"
+                android:gravity="right"
+                android:layout_alignParentRight="true"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/tv_current_wendu"
+                    android:layout_width="51dp"
+                    android:layout_height="40dp" />
+
+                <TextView
+                    android:id="@+id/tv_wendu"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/color_999999"
+                    android:textSize="14sp"
+                    android:text="18℃/30℃"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <RelativeLayout
+        android:id="@+id/rl_msg_text"
+        android:layout_below="@+id/ll_layout"
+        android:background="@drawable/shape_home_message_notice"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="11dp"
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+
+        <ImageView
+            android:id="@+id/iv_temp"
+            android:src="@drawable/message_home_new"
+            android:layout_marginLeft="7dp"
+            android:layout_centerVertical="true"
+            android:layout_width="15dp"
+            android:layout_height="13dp" />
+
+        <com.sdxxtop.guardianapp.ui.widget.AutoTextView
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_temp"
+            android:id="@+id/autotextview"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_msg_count"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:text="9"
+            android:textSize="9sp"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/point1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_below="@+id/rl_msg_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.sdxxtop.guardianapp.ui.widget.UnScrolGridView
+                android:listSelector="@android:color/transparent"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/gridview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <com.sdxxtop.guardianapp.ui.widget.ImgAndTextLinearView
-                        android:id="@+id/itlv_view_4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:iv_icon="@drawable/task_violet"
-                        app:tv_task_prefix="待认领："
-                        app:tv_task_title="部门事件"/>
-
-                    <com.sdxxtop.guardianapp.ui.widget.ImgAndTextLinearView
-                        android:id="@+id/itlv_view_1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:iv_icon="@drawable/task_blue"
-                        app:tv_task_prefix="新任务："
-                        app:tv_task_title="待办任务"/>
-
-                    <com.sdxxtop.guardianapp.ui.widget.ImgAndTextLinearView
-                        android:id="@+id/itlv_view_2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:iv_icon="@drawable/task_yellow"
-                        app:tv_task_prefix="新反馈："
-                        app:tv_task_title="我的上报"/>
-
-                    <com.sdxxtop.guardianapp.ui.widget.ImgAndTextLinearView
-                        android:id="@+id/itlv_view_3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="14dp"
-                        app:iv_icon="@drawable/task_green"
-                        app:tv_task_prefix="新任务："
-                        app:tv_task_title="我的巡查"/>
-
-                </LinearLayout>
-
-            </androidx.core.widget.NestedScrollView>
-
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:horizontalSpacing="10dp"
+                android:numColumns="3"
+                android:verticalSpacing="10dp" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv"
+                android:layout_marginTop="11dp"
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                android:visibility="gone"/>
+                android:layout_height="wrap_content" />
+
+            <androidx.cardview.widget.CardView
+                app:cardElevation="5dp"
+                app:cardCornerRadius="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="130dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/ll_uva"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_width="151dp"
+                        android:layout_height="130dp">
+
+                        <ImageView
+                            android:src="@drawable/icon_uva_new"
+                            android:layout_width="89dp"
+                            android:layout_height="46dp" />
+
+                        <TextView
+                            android:layout_marginTop="15dp"
+                            android:textColor="@color/color_313131"
+                            android:textSize="14sp"
+                            android:text="无人机"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:textColor="@color/color_E0E0E0"
+                            android:textSize="12sp"
+                            android:text="UVA"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_toRightOf="@+id/ll_uva"
+                        android:background="#EEEEEE"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent" />
+
+                    <RelativeLayout
+                        android:layout_toRightOf="@+id/ll_uva"
+                        android:layout_alignParentRight="true"
+                        android:orientation="vertical"
+                        android:id="@+id/rl_map"
+                        android:layout_width="match_parent"
+                        android:layout_height="65dp">
+
+                        <TextView
+                            android:layout_marginLeft="21dp"
+                            android:layout_marginTop="19dp"
+                            android:includeFontPadding="false"
+                            android:textColor="@color/color_313131"
+                            android:textSize="14sp"
+                            android:text="网络地图"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_marginLeft="21dp"
+                            android:layout_marginTop="36dp"
+                            android:includeFontPadding="false"
+                            android:textColor="@color/color_E0E0E0"
+                            android:textSize="12sp"
+                            android:text="Network Map"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <ImageView
+                            android:layout_marginRight="20dp"
+                            android:layout_marginTop="11dp"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/icon_networkmap_new"
+                            android:layout_width="50dp"
+                            android:layout_height="44dp" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_toRightOf="@+id/ll_uva"
+                        android:layout_below="@+id/rl_map"
+                        android:background="@color/color_EEEEEE"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_online_service"
+                        android:layout_toRightOf="@+id/ll_uva"
+                        android:layout_below="@+id/rl_map"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="65dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="21dp"
+                            android:layout_marginTop="19dp"
+                            android:includeFontPadding="false"
+                            android:text="在线客服"
+                            android:textColor="@color/color_313131"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_marginLeft="21dp"
+                            android:layout_marginTop="36dp"
+                            android:includeFontPadding="false"
+                            android:textColor="@color/color_E0E0E0"
+                            android:textSize="12sp"
+                            android:text="Online Service"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <ImageView
+                            android:layout_marginRight="20dp"
+                            android:layout_marginTop="11dp"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/icon_customer_service_new"
+                            android:layout_width="50dp"
+                            android:layout_height="44dp" />
+
+                    </RelativeLayout>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:background="@color/translate"
+                android:layout_width="match_parent"
+                android:layout_height="60dp" />
         </LinearLayout>
 
-    </com.sdxxtop.guardianapp.ui.widget.imgservice.ImageServiceView>
+    </androidx.core.widget.NestedScrollView>
 
-</LinearLayout>
+</RelativeLayout>

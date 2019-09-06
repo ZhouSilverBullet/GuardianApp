@@ -1,5 +1,6 @@
 package com.sdxxtop.guardianapp.model.http.api;
 
+import com.sdxxtop.guardianapp.model.bean.AllarticleBean;
 import com.sdxxtop.guardianapp.model.bean.ArticleIndexBean;
 import com.sdxxtop.guardianapp.model.bean.AuthDataBean;
 import com.sdxxtop.guardianapp.model.bean.AutoLoginBean;
@@ -32,7 +33,7 @@ import com.sdxxtop.guardianapp.model.bean.GridreportPatrolBean;
 import com.sdxxtop.guardianapp.model.bean.GridreportUserreportBean;
 import com.sdxxtop.guardianapp.model.bean.InitBean;
 import com.sdxxtop.guardianapp.model.bean.LoginBean;
-import com.sdxxtop.guardianapp.model.bean.MainIndexBean;
+import com.sdxxtop.guardianapp.model.bean.MainIndexBeanNew;
 import com.sdxxtop.guardianapp.model.bean.MainMapBean;
 import com.sdxxtop.guardianapp.model.bean.PartEventListBean;
 import com.sdxxtop.guardianapp.model.bean.PatrolAddBean;
@@ -48,6 +49,7 @@ import com.sdxxtop.guardianapp.model.bean.TrackPointBean;
 import com.sdxxtop.guardianapp.model.bean.UcenterIndexBean;
 import com.sdxxtop.guardianapp.model.bean.UnreadIndexBean;
 import com.sdxxtop.guardianapp.model.bean.UnreadNewslistBean;
+import com.sdxxtop.guardianapp.model.bean.WorkIndexBean;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -63,8 +65,8 @@ import retrofit2.http.Path;
 
 public interface EnvirApiService {
 
-    String BASE_URL = "http://envir.sdxxtop.com/api/";
-//    String BASE_URL = "http://envir.test.sdxxtop.com/api/";  // 测试
+//    String BASE_URL = "http://envir.sdxxtop.com/api/";
+    String BASE_URL = "http://envir.test.sdxxtop.com/api/";  // 测试
 //    String BASE_URL = "http://envir.dev.sdxxtop.com/api/";  // 预发布环境的
 
     @FormUrlEncoded
@@ -90,7 +92,7 @@ public interface EnvirApiService {
     ////////////// 首页 ////////////
     @FormUrlEncoded
     @POST("main/index")
-    Observable<RequestBean<MainIndexBean>> postMainIndex(@Field("data") String data);
+    Observable<RequestBean<MainIndexBeanNew>> postMainIndex(@Field("data") String data);
 
     @FormUrlEncoded
     @POST("main/sign")
@@ -352,5 +354,13 @@ public interface EnvirApiService {
     @FormUrlEncoded
     @POST("uav/search")
     Observable<RequestBean<FlyEventListBean>> postSearchEvent(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("working/index")
+    Observable<RequestBean<WorkIndexBean>> postWorkIndex(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("article/allarticle")
+    Observable<RequestBean<AllarticleBean>> postAllarticleData(@Field("data") String data);
 
 }

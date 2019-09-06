@@ -21,7 +21,6 @@ import com.sdxxtop.guardianapp.model.http.net.RetrofitHelper;
 import com.sdxxtop.guardianapp.model.http.util.RxUtils;
 import com.sdxxtop.guardianapp.ui.activity.ExamineActivity;
 import com.sdxxtop.guardianapp.ui.activity.NewsDetailsActivity;
-import com.sdxxtop.guardianapp.ui.activity.VideoPlayActivity;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import java.text.ParseException;
@@ -92,10 +91,10 @@ public class CourseListAdapter extends BaseMultiItemQuickAdapter<BaseCourseDataB
                                 intent.putExtra("article_path", ((CourseCellBean) item).getUrl());
                                 mContext.startActivity(intent);
                             } else {
-                                Intent intent = new Intent(mContext, VideoPlayActivity.class);
-                                intent.putExtra("video_path", ((CourseCellBean) item).getUrl());
-                                intent.putExtra("title", ((CourseCellBean) item).getTitle());
-                                mContext.startActivity(intent);
+//                                Intent intent = new Intent(mContext, VideoPlayActivity.class);
+//                                intent.putExtra("video_path", ((CourseCellBean) item).getUrl());
+//                                intent.putExtra("title", ((CourseCellBean) item).getTitle());
+//                                mContext.startActivity(intent);
                             }
                         }
                     });

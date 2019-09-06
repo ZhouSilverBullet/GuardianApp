@@ -39,6 +39,8 @@ import com.sdxxtop.guardianapp.ui.fragment.DataMonitoringFragment;
 import com.sdxxtop.guardianapp.ui.fragment.HomeFragment;
 import com.sdxxtop.guardianapp.ui.fragment.LearningFragment;
 import com.sdxxtop.guardianapp.ui.fragment.MineFragment;
+import com.sdxxtop.guardianapp.ui.fragment.WorkFragment;
+import com.sdxxtop.guardianapp.ui.widget.bottom_tab.CustomBottomTab;
 import com.sdxxtop.guardianapp.utils.ExcludePhoneModel;
 import com.sdxxtop.guardianapp.utils.ReflectUtils;
 
@@ -54,8 +56,11 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
 
     @BindView(R.id.ahn_home_navigation)
     AHBottomNavigation mAHBottomNavigation;
+    @BindView(R.id.cbt_view)
+    public CustomBottomTab cbtView;
+
     private int prePosition;
-    private SupportFragment[] mFragments = new SupportFragment[4];
+    private SupportFragment[] mFragments = new SupportFragment[5];
     private boolean isAdmin;
     private RxPermissions mRxPermissions;
     private int currentPosition = 0;
@@ -90,8 +95,7 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
     @Override
     protected void initView() {
         toggleNotificationListenerService(this);
-        initAHNavigation();
-
+//        initAHNavigation();
         switchFragment(0);
 
         mRxPermissions = new RxPermissions(this);
@@ -107,8 +111,21 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
             @Override
             public void accept(Boolean aBoolean) throws Exception {
                 if (aBoolean) {
-                    startPatrolService();
+//                    startPatrolService();
                     mPresenter.startUploadingPoint();
+                }
+            }
+        });
+
+        cbtView.setOnMenuClickListener(new CustomBottomTab.OnMenuClickListener() {
+            @Override
+            public boolean netResult(int menu) {
+                if (menu == 3) {
+                    mPresenter.articleIndex(menu, true);
+                    return false;
+                } else {
+                    switchFragment(menu);
+                    return true;
                 }
             }
         });
@@ -149,61 +166,12 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
                     return false;
                 } else {
                     currentPosition = position;
-                    switchFragment(position);
-                    itemSelectAnimator(position, wasSelected);
+//                    switchFragment(position);
+//                    itemSelectAnimator(position, wasSelected);
                     return true;
                 }
             }
         });
-    }
-
-    private List<ArticleIndexBean.ShowBean> showList = new ArrayList<>();
-
-    @Override
-    public void showPermission(ArticleIndexBean bean, int position, boolean wasSelected) {
-        showList.clear();
-        if (bean.getShow() != null && bean.getShow().size() > 0) {
-            List<ArticleIndexBean.ShowBean> list = bean.getShow();
-            for (ArticleIndexBean.ShowBean showBean : list) {
-                if (showBean.getIs_show() == 1) {
-                    showList.add(showBean);
-                }
-            }
-
-            if (showList.size() > 0) {
-                if (mFragments[2] != null) {
-                    ((LearningFragment) mFragments[2]).replaceList(showList);
-                }
-                switchFragment(position);
-                itemSelectAnimator(position, wasSelected);
-                mAHBottomNavigation.setCurrentItem(2, false);
-            } else {
-                showToast("没有操作权限");
-                mAHBottomNavigation.setCurrentItem(currentPosition, false);
-            }
-        } else {
-            mAHBottomNavigation.setCurrentItem(currentPosition, false);
-            showToast("没有操作权限");
-        }
-    }
-
-    private void switchFragment(int position) {
-        HomeFragment fragment = findFragment(HomeFragment.class);
-        if (fragment == null) {
-            mFragments[0] = HomeFragment.newInstance(isAdmin);
-            mFragments[1] = DataMonitoringFragment.newInstance();
-            mFragments[2] = new LearningFragment();
-            mFragments[3] = MineFragment.newInstance(isAdmin);
-
-            loadMultipleRootFragment(R.id.fl_home_container, position,
-                    mFragments[0],
-                    mFragments[1],
-                    mFragments[2],
-                    mFragments[3]);
-        } else {
-            showHideFragment(mFragments[position], mFragments[prePosition]);
-        }
-        prePosition = position;
     }
 
     private void itemSelectAnimator(int position, boolean wasSelected) {
@@ -225,6 +193,58 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
         }
     }
 
+    private List<ArticleIndexBean.ShowBean> showList = new ArrayList<>();
+
+    @Override
+    public void showPermission(ArticleIndexBean bean, int position, boolean wasSelected) {
+        showList.clear();
+        if (bean.getShow() != null && bean.getShow().size() > 0) {
+            List<ArticleIndexBean.ShowBean> list = bean.getShow();
+            for (ArticleIndexBean.ShowBean showBean : list) {
+                if (showBean.getIs_show() == 1) {
+                    showList.add(showBean);
+                }
+            }
+
+            if (showList.size() > 0) {
+                if (mFragments[3] != null) {
+                    ((LearningFragment) mFragments[3]).replaceList(showList);
+                    switchFragment(position);
+                    cbtView.setCurrentItem(position);
+                }
+//                itemSelectAnimator(position, wasSelected);
+//                mAHBottomNavigation.setCurrentItem(2, false);
+            } else {
+                showToast("没有操作权限");
+//                mAHBottomNavigation.setCurrentItem(currentPosition, false);
+            }
+        } else {
+//            mAHBottomNavigation.setCurrentItem(currentPosition, false);
+            showToast("没有操作权限");
+        }
+    }
+
+    private void switchFragment(int position) {
+        HomeFragment fragment = findFragment(HomeFragment.class);
+        if (fragment == null) {
+            mFragments[0] = HomeFragment.newInstance(isAdmin);
+            mFragments[1] = WorkFragment.newInstance();
+            mFragments[2] = DataMonitoringFragment.newInstance();
+            mFragments[3] = LearningFragment.newInstance();
+            mFragments[4] = MineFragment.newInstance(isAdmin);
+
+            loadMultipleRootFragment(R.id.fl_home_container, position,
+                    mFragments[0],
+                    mFragments[1],
+                    mFragments[2],
+                    mFragments[3],
+                    mFragments[4]);
+        } else {
+            showHideFragment(mFragments[position], mFragments[prePosition]);
+        }
+        prePosition = position;
+    }
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -238,8 +258,8 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
 
     @Override
     protected void onResume() {
-        if (!isServiceExisted(NotificationMonitor.class.getName())){
-            startService(new Intent(this,NotificationMonitor.class));
+        if (!isServiceExisted(NotificationMonitor.class.getName())) {
+            startService(new Intent(this, NotificationMonitor.class));
         }
         super.onResume();
         isEnabledNLS = isEnabled();
@@ -247,6 +267,23 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
             showConfirmDialog();
         }
 //        clearAllNotifications();
+    }
+
+    /**
+     * 点击首页无人机页面跳转
+     */
+    public void setWurenjiClick() {
+        cbtView.setWurenjiClick();
+        switchFragment(2);
+        if (mFragments[2] != null) {
+            for (SupportFragment fragment : mFragments) {
+                if (fragment instanceof DataMonitoringFragment) {
+                    DataMonitoringFragment workFragment = (DataMonitoringFragment) fragment;
+                    workFragment.setCurrentItem();
+                    break;
+                }
+            }
+        }
     }
 
     @Override
@@ -407,10 +444,10 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
 
     public void toggleNotificationListenerService(Context context) {
         PackageManager pm = context.getPackageManager();
-        pm.setComponentEnabledSetting(new ComponentName(context, NotificationMonitor .class),
+        pm.setComponentEnabledSetting(new ComponentName(context, NotificationMonitor.class),
                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
 
-        pm.setComponentEnabledSetting(new ComponentName(context, NotificationMonitor .class),
+        pm.setComponentEnabledSetting(new ComponentName(context, NotificationMonitor.class),
                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
     }
 }
