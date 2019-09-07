@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <ImageView
@@ -154,7 +153,6 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:tint="@color/black"
                 android:src="@drawable/service_my_new"
                 android:layout_width="18dp"
                 android:layout_height="19dp" />
@@ -180,7 +178,6 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:tint="@color/black"
                 android:src="@drawable/set_my_new"
                 android:layout_width="18dp"
                 android:layout_height="19dp" />
@@ -206,7 +203,6 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:tint="@color/black"
                 android:src="@drawable/aboutus_my_new"
                 android:layout_width="18dp"
                 android:layout_height="19dp" />

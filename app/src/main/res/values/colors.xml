@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimary">#2593E7</color>
+    <color name="colorPrimaryDark">#2593E7</color>
     <color name="colorAccent">#D81B60</color>
 
     <color name="white">#ffffff</color>
@@ -22,7 +22,7 @@
     <color name="color_292929">#292929</color>
     <color name="color_313131">#313131</color>
     <color name="color_red_F23030">#F23030</color>
-    <color name="green">#34B26D</color>
+    <color name="green">#2593E7</color>
     <color name="translate">#00000000</color>
     <color name="half_translate">#60000000</color>
     <color name="color_333333">#333333</color>
@@ -46,6 +46,7 @@
     <color name="color_558C97CB">#558C97CB</color>
     <color name="color_55F9A15C">#55F9A15C</color>
     <color name="color_f6">#f6f6f6</color>
+    <color name="default_shadow_color">#88757575</color>
 
     <array name="tab_colors">
         <item>#34B26D</item>

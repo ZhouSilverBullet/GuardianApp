@@ -23,7 +23,6 @@ import com.sdxxtop.guardianapp.presenter.contract.FlyEventDetailContract;
 import com.sdxxtop.guardianapp.ui.adapter.VideoPlayAdapter;
 import com.sdxxtop.guardianapp.ui.widget.MaxHeightRecyclerView;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -156,12 +155,8 @@ public class FlyEventDetailActivity extends BaseMvpActivity<FlyEventDetailPresen
             mMapView.setVisibility(View.VISIBLE);
         }
 
-        ArrayList<String> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            list.add("" + i);
-        }
         recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-        adapter = new VideoPlayAdapter(R.layout.item_video_play, list);
+        adapter = new VideoPlayAdapter(R.layout.item_video_play, null);
         recyclerView.setAdapter(adapter);
 
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -203,9 +198,9 @@ public class FlyEventDetailActivity extends BaseMvpActivity<FlyEventDetailPresen
                 if (videoList.size() > 0) {
                     recyclerView.setVisibility(View.VISIBLE);
                     JZVideoPlayer.setUp(videoList.get(0), " ");
-                    Glide.with(this).load("https://i0.hdslb.com/bfs/archive/19252a5dac6a250c6cabb3b9c3b005f734718e60.jpg@880w_440h.jpg").into(JZVideoPlayer.thumbImageView);
+                    Glide.with(this).load(videoList.get(0)).into(JZVideoPlayer.thumbImageView);
                     adapter.replaceData(videoList);
-                }else{
+                } else {
                     recyclerView.setVisibility(View.GONE);
                 }
             }

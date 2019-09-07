@@ -26,6 +26,6 @@ public class VideoPlayAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
     protected void convert(BaseViewHolder helper, String item) {
         helper.setIsRecyclable(false);
         ImageView ivVideo = helper.getView(R.id.iv_video);
-        Glide.with(mContext).load("https://i0.hdslb.com/bfs/archive/d7db7d500c14548ae33fce679cd38a850c3f94be.png@880w_440h.png").into(ivVideo);
+        Glide.with(mContext).load(item).into(ivVideo);
     }
 }

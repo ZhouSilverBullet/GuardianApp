@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,11 +12,11 @@
         android:id="@+id/titleView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:bgColor="#33B16D"
+        app:bgColor="@color/green"
         app:leftLayoutIsShow="true"
         app:rightTextValue="地图"
         app:titleColor="@color/white"
-        app:titleValue="监控列表"/>
+        app:titleValue="监控列表" />
 
     <LinearLayout
         android:id="@+id/ll_containor"
@@ -33,7 +32,7 @@
             android:layout_height="wrap_content"
             android:text="监测区域："
             android:textColor="@color/color_313131"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
         <LinearLayout
             android:id="@+id/ll_area_layout"
@@ -53,12 +52,12 @@
                 android:singleLine="true"
                 android:text="全区"
                 android:textColor="@color/color_313131"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_list_down"/>
+                android:src="@drawable/icon_list_down" />
 
         </LinearLayout>
 
@@ -68,7 +67,7 @@
             android:layout_marginLeft="13dp"
             android:text="状态："
             android:textColor="@color/color_313131"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
         <LinearLayout
             android:id="@+id/ll_status_layout"
@@ -88,12 +87,12 @@
                 android:singleLine="true"
                 android:text="全部"
                 android:textColor="@color/color_313131"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_list_down"/>
+                android:src="@drawable/icon_list_down" />
 
         </LinearLayout>
     </LinearLayout>
@@ -105,7 +104,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/tv_bg"
@@ -113,7 +112,7 @@
             android:layout_height="match_parent"
             android:background="@color/half_translate"
             android:visibility="gone"
-            tools:visibility="visible"/>
+            tools:visibility="visible" />
     </RelativeLayout>
 
 </LinearLayout>

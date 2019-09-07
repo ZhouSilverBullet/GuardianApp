@@ -92,9 +92,9 @@ public class FlyDataListActivity extends BaseMvpActivity<FlyDataListPresenter> i
         return R.layout.activity_fly_data_list;
     }
 
-
     @Override
-    public void initData() {
+    protected void onResume() {
+        super.onResume();
         mPresenter.getUavData("");
         mPresenter.getUavEventData("");
     }

@@ -56,6 +56,7 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
 
     @BindView(R.id.ahn_home_navigation)
     AHBottomNavigation mAHBottomNavigation;
+
     @BindView(R.id.cbt_view)
     public CustomBottomTab cbtView;
 

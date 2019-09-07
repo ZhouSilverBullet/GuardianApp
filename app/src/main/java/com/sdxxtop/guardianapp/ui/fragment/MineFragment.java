@@ -213,6 +213,8 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
             case R.id.ll_contacts:
                 if (is_mail == 1) {
                     startActivity(new Intent(getContext(), ContactActivity.class));
+                } else {
+                    showToast("暂无权限");
                 }
                 break;
             case R.id.ll_message:

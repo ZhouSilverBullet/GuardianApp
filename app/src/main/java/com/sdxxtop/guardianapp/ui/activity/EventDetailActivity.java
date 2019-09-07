@@ -1,5 +1,6 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -10,16 +11,18 @@ import android.widget.TextView;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
-import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
-import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.maps.model.Polyline;
+import com.amap.api.maps.model.PolylineOptions;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.model.bean.FlyEventDetailBean;
 import com.sdxxtop.guardianapp.presenter.EventDetailPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.EventDetailContract;
 import com.sdxxtop.guardianapp.ui.widget.fly_calendarview.MixtureChartView;
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -123,7 +126,7 @@ public class EventDetailActivity extends BaseMvpActivity<EventDetailPresenter> i
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String tx = s.toString().trim();
-                if (!TextUtils.isEmpty(tx)){
+                if (!TextUtils.isEmpty(tx)) {
                     mPresenter.loadData(eventId, tx);
                 }
             }
@@ -149,19 +152,23 @@ public class EventDetailActivity extends BaseMvpActivity<EventDetailPresenter> i
             tvEventTime.setText("任务时间：" + bean.uav_task.add_date);
             tvName.setText("执行人 ：" + bean.uav_task.user_name);
 
-            String[] split = bean.uav_task.longitude.split(",");
-            LatLng latLng = new LatLng(Double.parseDouble(split[1]), Double.parseDouble(split[0]));
-            MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.grid_map_icon));
-            markerOptions.position(latLng);
-            aMap.moveCamera(CameraUpdateFactory.changeLatLng(latLng));
-            aMap.addMarker(markerOptions);
+//            String[] split = bean.uav_task.longitude.split(",");
+//            LatLng latLng = new LatLng(Double.parseDouble(split[1]), Double.parseDouble(split[0]));
+//            MarkerOptions markerOptions = new MarkerOptions();
+//            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.grid_map_icon));
+//            markerOptions.position(latLng);
+//            aMap.moveCamera(CameraUpdateFactory.changeLatLng(latLng));
+//            aMap.addMarker(markerOptions);
+
+            List<FlyEventDetailBean.UavExcel> pointList = bean.uav_excel;
+            if (pointList != null) {
+                drawMapLine(pointList);
+            }
         }
 
-        if (bean.uav_excel!=null){
+        if (bean.uav_excel != null) {
             mixturechartview.setData(bean.uav_excel);
         }
-
     }
 
     private void initMap() {
@@ -171,5 +178,40 @@ public class EventDetailActivity extends BaseMvpActivity<EventDetailPresenter> i
         aMap.setMyLocationStyle(myLocationStyle);//设置定位蓝点的Style
         aMap.getUiSettings().setMyLocationButtonEnabled(false); //设置默认定位按钮是否显示，非必需设置。
         aMap.moveCamera(CameraUpdateFactory.zoomTo(10));
+    }
+
+
+    //地图上面画线
+    private void drawMapLine(List<FlyEventDetailBean.UavExcel> data) {
+        AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
+            @Override
+            public void run() {
+                LatLng latLngPoint = null;
+                if (data != null && data.size() > 0) {
+                    // 获取轨迹坐标点
+                    PolylineOptions polt = new PolylineOptions();
+                    for (int i = 0; i < data.size(); i++) {
+                        LatLng latLng = getLatLng(data.get(i).longitudes);
+                        if (latLng != null) {
+                            latLngPoint = latLng;
+                            polt.add(latLng);
+                        }
+                    }
+                    polt.width(5).geodesic(false).color(getResources().getColor(R.color.green));
+                    Polyline polyline = aMap.addPolyline(polt);
+                    aMap.moveCamera(CameraUpdateFactory.changeLatLng(latLngPoint));
+                }
+//                moveToPath();
+            }
+        });
+    }
+
+    private LatLng getLatLng(String location) {
+        if (!TextUtils.isEmpty(location)) {
+            String[] split = location.split(",");
+            LatLng latLng = new LatLng(Double.parseDouble(split[1]), Double.parseDouble(split[0]));
+            return latLng;
+        }
+        return null;
     }
 }
