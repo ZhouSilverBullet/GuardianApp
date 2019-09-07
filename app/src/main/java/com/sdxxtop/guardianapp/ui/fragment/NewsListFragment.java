@@ -97,6 +97,7 @@ public class NewsListFragment extends BaseMvpFragment<NewsListFragmentPresenter>
 
         View headerView = View.inflate(getContext(), R.layout.item_banner_header, null);
         mMZBanner = headerView.findViewById(R.id.banner);
+        mMZBanner.setIndicatorVisible(false);
         adapter.addHeaderView(headerView);
 
         if (getUserVisibleHint()) {
@@ -127,14 +128,17 @@ public class NewsListFragment extends BaseMvpFragment<NewsListFragmentPresenter>
         closeLoadingDialog();
         List<AllarticleBean.WheelPlanting> banner = bean.wheel_planting;
         if (banner != null) {
+            if (banner.size() == 0) {
+                mMZBanner.setVisibility(View.GONE);
+            }
             // 设置数据
-            mMZBanner.setIndicatorVisible(false);
             mMZBanner.setPages(banner, new MZHolderCreator<BannerViewLearnHolder>() {
                 @Override
                 public BannerViewLearnHolder createViewHolder() {
                     return new BannerViewLearnHolder();
                 }
             });
+            mMZBanner.start();
         }
         List<LearnNewsBean> data = bean.all_article;
         if (data != null) {
@@ -156,4 +160,5 @@ public class NewsListFragment extends BaseMvpFragment<NewsListFragmentPresenter>
         super.setIsFirstLoading(isFirstLoading);
         this.isFirstLoading = isFirstLoading;
     }
+
 }

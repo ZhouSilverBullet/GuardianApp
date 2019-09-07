@@ -213,6 +213,7 @@
         android:layout_height="30dp">
 
         <ImageView
+            android:tint="#2593E7"
             android:id="@+id/iv_temp"
             android:src="@drawable/message_home_new"
             android:layout_marginLeft="7dp"
@@ -334,7 +335,7 @@
                             android:includeFontPadding="false"
                             android:textColor="@color/color_313131"
                             android:textSize="14sp"
-                            android:text="网络地图"
+                            android:text="网格地图"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 

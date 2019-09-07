@@ -196,7 +196,7 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
         mPresenter.loadData();
     }
 
-    @OnClick({R.id.civ_header, R.id.ll_contacts, R.id.ll_message, R.id.ll_online_service, R.id.ll_banben, R.id.ll_guanyu})
+    @OnClick({R.id.civ_header, R.id.ll_contacts, R.id.ll_message, R.id.ll_online_service, R.id.ll_banben, R.id.ll_guanyu, R.id.rl_login_out})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.civ_header:
@@ -225,6 +225,9 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
                 Intent intent = new Intent(getContext(), OnlineServiceActivity.class);
                 intent.putExtra("href", "https://tb.53kf.com/code/client/b722216fa3d928f41a494d544ac54dcb/2?device=android");
                 startActivity(intent);
+                break;
+            case R.id.rl_login_out:  // 退出
+                logoutDialog();
                 break;
             case R.id.ll_banben:
                 break;

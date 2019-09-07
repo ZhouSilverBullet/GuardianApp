@@ -27,8 +27,9 @@
             android:layout_height="wrap_content" />
 
         <RelativeLayout
+            android:id="@+id/rl_login_out"
             android:layout_marginTop="22dp"
-            android:layout_marginLeft="25dp"
+            android:paddingLeft="25dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
@@ -49,6 +50,7 @@
                 android:layout_height="61dp">
 
                 <TextView
+                    android:singleLine="true"
                     android:id="@+id/tv_name"
                     android:includeFontPadding="false"
                     android:textColor="@color/color_313131"

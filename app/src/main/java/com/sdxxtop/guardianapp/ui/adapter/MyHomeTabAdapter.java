@@ -98,17 +98,20 @@ public class MyHomeTabAdapter extends BaseAdapter {
         }
         Intent intent = null;
         switch (index) {
-            case 0:   // 巡查上报
-                if (mBean.is_patrol == 1) {
-                    intent = new Intent(context, EventDiscretionReportActivity.class);
-                }
-                break;
-            case 1:  // 事件上报
+            case 0: // 事件上报
                 if (mBean.is_report == 1) {
                     intent = new Intent(context, EventReportActivity.class);
                 }
                 break;
+            case 1:  // 巡查上报
+                if (mBean.is_patrol == 1) {
+                    intent = new Intent(context, EventDiscretionReportActivity.class);
+                }
+                break;
             case 2:
+                if (mActivity != null) {
+                    ((HomeActivity) mActivity).showLoadingDialog();
+                }
                 toFaceDaka(context);
                 break;
             case 3: // 无人机检测
@@ -148,6 +151,9 @@ public class MyHomeTabAdapter extends BaseAdapter {
                     instance.setLocationCompanyListener(new AMapFindLocation2.LocationCompanyListener() {
                         @Override
                         public void onAddress(AMapLocation aMapLocation) {
+                            if (mActivity != null) {
+                                ((HomeActivity) mActivity).hideLoadingDialog();
+                            }
                             String address = aMapLocation.getAddress();
                             if (TextUtils.isEmpty(address)) {
                                 UIUtils.showToast("定位获取位置失败,请稍后重试");

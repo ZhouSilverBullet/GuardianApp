@@ -17,6 +17,7 @@ import com.sdxxtop.guardianapp.presenter.contract.HomeFragmentContract;
 import com.sdxxtop.guardianapp.ui.activity.CenterMessageActivity;
 import com.sdxxtop.guardianapp.ui.activity.GridMapActivity;
 import com.sdxxtop.guardianapp.ui.activity.HomeActivity;
+import com.sdxxtop.guardianapp.ui.activity.TaskAgentsActivity;
 import com.sdxxtop.guardianapp.ui.adapter.HomeImageAdapter;
 import com.sdxxtop.guardianapp.ui.adapter.MyHomeTabAdapter;
 import com.sdxxtop.guardianapp.ui.widget.AutoTextView;
@@ -196,7 +197,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
         }
     }
 
-    @OnClick({R.id.ll_uva, R.id.rl_map, R.id.rl_online_service})
+    @OnClick({R.id.ll_uva, R.id.rl_map, R.id.rl_online_service, R.id.rl_msg_text})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_uva:   // 无人机
@@ -218,6 +219,9 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
                 Intent intent = new Intent(getContext(), OnlineServiceActivity.class);
                 intent.putExtra("href", "https://tb.53kf.com/code/client/b722216fa3d928f41a494d544ac54dcb/2?device=android");
                 startActivity(intent);
+                break;
+            case R.id.rl_msg_text:
+                startActivity(new Intent(getContext(), TaskAgentsActivity.class));
                 break;
         }
     }

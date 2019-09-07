@@ -1,24 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.sdxxtop.guardianapp.ui.widget.RoundRectImageView
-        android:id="@+id/banner_image"
-        android:scaleType="center"
+    <RelativeLayout
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp">
+
+        <com.sdxxtop.guardianapp.ui.widget.RoundRectImageView
+            android:id="@+id/banner_image"
+            android:scaleType="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_alignParentBottom="true"
+            android:paddingRight="11dp"
+            android:gravity="right|center_vertical"
+            android:text="扬尘监测"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:background="@drawable/shape_banner_bg"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+    </RelativeLayout>
 
     <TextView
-        android:id="@+id/tv_title"
-        android:layout_alignParentBottom="true"
-        android:paddingRight="11dp"
-        android:gravity="right|center_vertical"
-        android:text="扬尘监测"
-        android:textColor="@color/white"
-        android:textSize="17sp"
-        android:background="@drawable/shape_banner_bg"
+        android:paddingLeft="10dp"
+        tools:visibility="visible"
+        android:visibility="gone"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/color_313131"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:text="汪洋在西藏调研:高质量打赢西藏脱贫攻坚战"
+        android:id="@+id/tv_desc"
         android:layout_width="match_parent"
-        android:layout_height="30dp" />
-</RelativeLayout>
+        android:layout_height="wrap_content" />
+</LinearLayout>

@@ -28,6 +28,8 @@ public class WorkIndexBean {
     }
     public class PendingEvent {
         public int event_id;
+        public int is_claim;
+        public int status;
         public String title;
         public String end_date;
         public String day;
