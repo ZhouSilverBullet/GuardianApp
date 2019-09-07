@@ -18,7 +18,6 @@ import com.sdxxtop.guardianapp.ui.adapter.WorkTabAdapter;
 import com.sdxxtop.guardianapp.ui.widget.UnScrolGridView;
 import com.sdxxtop.guardianapp.ui.widget.chart.CustomOneBarChartView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -104,6 +103,14 @@ public class WorkFragment extends BaseMvpFragment<WorkFragmentPresenter> impleme
         recyclerView.setAdapter(adapter);
         tabAdapter = new WorkTabAdapter();
         gridview.setAdapter(tabAdapter);
+
+        cbcvBarView.setOnClick(new CustomOneBarChartView.OnBarChartClick() {
+            @Override
+            public void barChartClick(int eventNum, int completeNum) {
+                tvReport.setText("" + eventNum);
+                tvChuli.setText("" + completeNum);
+            }
+        });
     }
 
     @OnClick(R.id.ll_more_event)
@@ -117,12 +124,8 @@ public class WorkFragment extends BaseMvpFragment<WorkFragmentPresenter> impleme
 
     @Override
     public void showIndex(WorkIndexBean bean) {
-        List<Float> list = new ArrayList<>();
         if (bean.month_complete != null && bean.month_complete.size() > 0) {
-            for (WorkIndexBean.MonthComplete item : bean.month_complete) {
-                list.add(item.complete_rate);
-            }
-            cbcvBarView.initData(list, Color.parseColor("#442593E7"));
+            cbcvBarView.initData(bean.month_complete, Color.parseColor("#442593E7"));
         } else {
             cbcvBarView.setNoData();
         }
@@ -133,7 +136,6 @@ public class WorkFragment extends BaseMvpFragment<WorkFragmentPresenter> impleme
         } else {
             tvNoData.setVisibility(View.VISIBLE);
         }
-
         tvReport.setText("" + bean.report);
         tvChuli.setText("" + bean.complete);
         tvTitle.setText(bean.part_name);

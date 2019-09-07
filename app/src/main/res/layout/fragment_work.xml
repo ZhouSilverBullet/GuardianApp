@@ -80,7 +80,7 @@
                     android:id="@+id/tv_report"
                     android:layout_marginLeft="5dp"
                     android:textColor="#2593E7"
-                    tools:text="142"
+                    tools:text="0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -96,7 +96,7 @@
                     android:id="@+id/tv_chuli"
                     android:layout_marginLeft="5dp"
                     android:textColor="#2593E7"
-                    android:text="52"
+                    android:text="0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>

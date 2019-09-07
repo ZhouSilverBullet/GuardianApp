@@ -3,6 +3,7 @@ package com.sdxxtop.guardianapp.ui.widget.chart;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
@@ -18,8 +19,12 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.sdxxtop.guardianapp.R;
+import com.sdxxtop.guardianapp.model.bean.WorkIndexBean;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -69,7 +74,7 @@ public class CustomOneBarChartView extends LinearLayout {
 //        initData(null);
     }
 
-    public void initData(List<Float> data, int color) {
+    public void initData(List<WorkIndexBean.MonthComplete> data, int color) {
         //处理数据是 记得判断每条柱状图对应的数据集合 长度是否一致
         List<List<Float>> chartDataMap = new ArrayList<>();
         List<Float> yValue1 = new ArrayList<>();
@@ -122,6 +127,21 @@ public class CustomOneBarChartView extends LinearLayout {
         //禁止所有事件
 //        barChart.setTouchEnabled(false);
 
+        barChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                String data = (String) e.getData();
+                if (mListener != null && !TextUtils.isEmpty(data)) {
+                    String[] split = data.split(",");
+                    mListener.barChartClick(Integer.parseInt(split[0]), Integer.parseInt(split[1]));
+                }
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
 
         //不显示边框
         barChart.setDrawBorders(false);
@@ -208,21 +228,21 @@ public class CustomOneBarChartView extends LinearLayout {
      *                  key对应柱状图名字  List<Float> 对应每类柱状图的Y值
      * @param colors
      */
-    public void showBarChart(final List<String> xValues, List<Float> dataLists, @ColorRes int colors) {
+    public void showBarChart(final List<String> xValues, List<WorkIndexBean.MonthComplete> dataLists, @ColorRes int colors) {
         List<BarEntry> entries = new ArrayList<>();
         for (int i = 0; i < dataLists.size(); i++) {
+            WorkIndexBean.MonthComplete item = dataLists.get(i);
             /**
              *  如果需要添加TAG标志 可使用以下构造方法
              *  BarEntry(float x, float y, Object data)
              *  e.getData()
              */
-            entries.add(new BarEntry(i, dataLists.get(i)));
+            entries.add(new BarEntry(i, item.complete_rate, "" + item.events_count + "," + item.events_complete));
         }
         // 每一个BarDataSet代表一类柱状图
         BarDataSet barDataSet = new BarDataSet(entries, "");
         initBarDataSet(barDataSet, colors);
         barDataSet.setHighLightColor(heightColor);
-
         //X轴自定义值
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
@@ -263,5 +283,15 @@ public class CustomOneBarChartView extends LinearLayout {
             mChart.removeAllViews();
             mChart.setData(null);
         }
+    }
+
+    private OnBarChartClick mListener;
+
+    public void setOnClick(OnBarChartClick listener) {
+        this.mListener = listener;
+    }
+
+    public interface OnBarChartClick {
+        void barChartClick(int eventNum, int completeNum);
     }
 }
