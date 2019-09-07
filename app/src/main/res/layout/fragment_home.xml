@@ -54,199 +54,14 @@
             android:layout_marginLeft="12dp"
             android:textSize="12sp"
             android:textColor="@color/white"
-            android:text="数据源自无人机移动检测扬尘、环保定点检测"
+            android:text="弘扬新精神  锤炼新作风  塑造新形象"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
     </LinearLayout>
 
-    <androidx.cardview.widget.CardView
-        android:layout_marginBottom="15dp"
-        android:layout_marginTop="111dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="130dp">
-
-        <RelativeLayout
-            android:paddingTop="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/iv_icon"
-                    android:layout_marginLeft="15dp"
-                    android:src="@drawable/weather_home_new"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp" />
-
-                <TextView
-                    android:layout_marginLeft="10dp"
-                    android:textColor="#313131"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:text="今日空气质量"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/tv_weather_status"
-                android:layout_marginRight="15dp"
-                android:layout_alignParentRight="true"
-                android:textStyle="bold"
-                android:textColor="#00A0E9"
-                android:textSize="15sp"
-                android:text="优"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/tv_line"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
-                android:layout_below="@+id/tv_weather_status"
-                android:background="#E0E0E0"
-                android:layout_width="match_parent"
-                android:layout_height="1dp" />
-
-            <LinearLayout
-                android:id="@+id/ll_pm_1"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_below="@+id/tv_line"
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:textColor="#999999"
-                    android:textSize="15sp"
-                    android:text="PM2.5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:id="@+id/tv_pm1"
-                    android:includeFontPadding="false"
-                    android:layout_marginLeft="11dp"
-                    android:textColor="#313131"
-                    android:textSize="20sp"
-                    android:text="36.6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginTop="6dp"
-                android:layout_marginLeft="20dp"
-                android:layout_below="@+id/ll_pm_1"
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:textColor="#999999"
-                    android:textSize="15sp"
-                    android:text="PM10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:includeFontPadding="false"
-                    android:id="@+id/tv_pm2"
-                    android:layout_marginLeft="15dp"
-                    android:textColor="#313131"
-                    android:textSize="20sp"
-                    android:text="36.6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginRight="35dp"
-                android:layout_marginTop="43dp"
-                android:gravity="right"
-                android:layout_alignParentRight="true"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/tv_current_wendu"
-                    android:layout_width="51dp"
-                    android:layout_height="40dp" />
-
-                <TextView
-                    android:id="@+id/tv_wendu"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/color_999999"
-                    android:textSize="14sp"
-                    android:text="18℃/30℃"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <RelativeLayout
-        android:id="@+id/rl_msg_text"
-        android:layout_below="@+id/ll_layout"
-        android:background="@drawable/shape_home_message_notice"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="11dp"
-        android:layout_width="match_parent"
-        android:layout_height="30dp">
-
-        <ImageView
-            android:tint="#2593E7"
-            android:id="@+id/iv_temp"
-            android:src="@drawable/message_home_new"
-            android:layout_marginLeft="7dp"
-            android:layout_centerVertical="true"
-            android:layout_width="15dp"
-            android:layout_height="13dp" />
-
-        <com.sdxxtop.guardianapp.ui.widget.AutoTextView
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/iv_temp"
-            android:id="@+id/autotextview"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/tv_msg_count"
-            android:textColor="@color/white"
-            android:gravity="center"
-            android:text="9"
-            android:textSize="9sp"
-            android:layout_marginRight="10dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/point1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </RelativeLayout>
-
     <androidx.core.widget.NestedScrollView
-        android:layout_below="@+id/rl_msg_text"
+        android:layout_marginTop="111dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -254,6 +69,140 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginBottom="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="130dp">
+
+                <RelativeLayout
+                    android:paddingTop="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/iv_icon"
+                            android:layout_marginLeft="15dp"
+                            android:src="@drawable/weather_home_new"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp" />
+
+                        <TextView
+                            android:layout_marginLeft="10dp"
+                            android:textColor="#313131"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:text="今日空气质量"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_weather_status"
+                        android:layout_marginRight="15dp"
+                        android:layout_alignParentRight="true"
+                        android:textStyle="bold"
+                        android:textColor="#00A0E9"
+                        android:textSize="15sp"
+                        android:text="优"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/tv_line"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="13dp"
+                        android:layout_below="@+id/tv_weather_status"
+                        android:background="#E0E0E0"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp" />
+
+                    <LinearLayout
+                        android:gravity="center_vertical"
+                        android:layout_marginRight="35dp"
+                        android:layout_marginTop="50dp"
+                        android:layout_alignParentRight="true"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_marginLeft="35dp"
+                            android:id="@+id/tv_wendu"
+                            android:includeFontPadding="false"
+                            android:textColor="@color/color_999999"
+                            android:textSize="19sp"
+                            android:text="18℃/30℃"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" />
+
+                        <ImageView
+                            android:src="@drawable/icon_customer_service_new"
+                            android:id="@+id/tv_current_wendu"
+                            android:layout_width="51dp"
+                            android:layout_height="40dp" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <RelativeLayout
+                android:id="@+id/rl_msg_text"
+                android:layout_below="@+id/ll_layout"
+                android:background="@drawable/shape_home_message_notice"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="11dp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp">
+
+                <ImageView
+                    android:tint="#2593E7"
+                    android:id="@+id/iv_temp"
+                    android:src="@drawable/message_home_new"
+                    android:layout_marginLeft="7dp"
+                    android:layout_centerVertical="true"
+                    android:layout_width="15dp"
+                    android:layout_height="13dp" />
+
+                <com.sdxxtop.guardianapp.ui.widget.AutoTextView
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/iv_temp"
+                    android:id="@+id/autotextview"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tv_msg_count"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:text="9"
+                    android:textSize="9sp"
+                    android:layout_marginRight="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/point1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </RelativeLayout>
 
             <com.sdxxtop.guardianapp.ui.widget.UnScrolGridView
                 android:listSelector="@android:color/transparent"

@@ -12,6 +12,7 @@ import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.maps.model.Polyline;
 import com.amap.api.maps.model.PolylineOptions;
@@ -186,6 +187,7 @@ public class EventDetailActivity extends BaseMvpActivity<EventDetailPresenter> i
         AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
             @Override
             public void run() {
+                LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
                 LatLng latLngPoint = null;
                 if (data != null && data.size() > 0) {
                     // 获取轨迹坐标点
@@ -195,11 +197,13 @@ public class EventDetailActivity extends BaseMvpActivity<EventDetailPresenter> i
                         if (latLng != null) {
                             latLngPoint = latLng;
                             polt.add(latLng);
+                            boundsBuilder.include(latLng);
                         }
                     }
                     polt.width(5).geodesic(false).color(getResources().getColor(R.color.green));
                     Polyline polyline = aMap.addPolyline(polt);
-                    aMap.moveCamera(CameraUpdateFactory.changeLatLng(latLngPoint));
+//                    aMap.moveCamera(CameraUpdateFactory.changeLatLng(latLngPoint));
+                    aMap.animateCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 30));
                 }
 //                moveToPath();
             }

@@ -48,6 +48,8 @@ public class WorkFragment extends BaseMvpFragment<WorkFragmentPresenter> impleme
     TextView tvReport;
     @BindView(R.id.tv_title)
     TextView tvTitle;
+    @BindView(R.id.tv_no_data)
+    TextView tvNoData;
 
     private NewDaiBanAdapter adapter;
     private WorkTabAdapter tabAdapter;
@@ -75,15 +77,22 @@ public class WorkFragment extends BaseMvpFragment<WorkFragmentPresenter> impleme
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            mPresenter.loadWorkIndex();
+        }
+    }
+
+    @Override
+    protected void initData() {
         mPresenter.loadWorkIndex();
     }
 
     @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
+    public void onResume() {
+        super.onResume();
+        if (isVisible()) {
             mPresenter.loadWorkIndex();
         }
     }
@@ -107,22 +116,24 @@ public class WorkFragment extends BaseMvpFragment<WorkFragmentPresenter> impleme
     }
 
     @Override
-    protected void initData() {
-
-    }
-
-    @Override
     public void showIndex(WorkIndexBean bean) {
         List<Float> list = new ArrayList<>();
         if (bean.month_complete != null && bean.month_complete.size() > 0) {
             for (WorkIndexBean.MonthComplete item : bean.month_complete) {
                 list.add(item.complete_rate);
             }
-            cbcvBarView.initData(list, Color.parseColor("#0F2593E7"));
+            cbcvBarView.initData(list, Color.parseColor("#442593E7"));
         } else {
             cbcvBarView.setNoData();
         }
-        adapter.replaceData(bean.pending_event);
+        List<WorkIndexBean.PendingEvent> pendingList = bean.pending_event;
+        if (pendingList != null && pendingList.size() > 0) {
+            tvNoData.setVisibility(View.GONE);
+            adapter.replaceData(pendingList);
+        } else {
+            tvNoData.setVisibility(View.VISIBLE);
+        }
+
         tvReport.setText("" + bean.report);
         tvChuli.setText("" + bean.complete);
         tvTitle.setText(bean.part_name);

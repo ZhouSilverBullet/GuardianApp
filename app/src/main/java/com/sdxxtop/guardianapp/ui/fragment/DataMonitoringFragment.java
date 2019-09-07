@@ -120,19 +120,21 @@ public class DataMonitoringFragment extends BaseMvpFragment<DataMonitoringPresen
     @Override
     protected void initData() {
         super.initData();
+        mPresenter.loadData();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isVisible()){
+            mPresenter.loadData();
+        }
     }
 
     @Override
     public void showData(AuthDataBean bean) {
         mBean = bean;
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.loadData();
-    }
-
 
     @Override
     public void showError(String error) {

@@ -46,8 +46,8 @@ public class CustomOneBarChartView extends LinearLayout {
     private XAxis xAxis;
     private YAxis leftAxis;
     private Legend legend;
-    public static final int heightColor = Color.parseColor("#2593E7");
-    public static final String[] txStr = {"1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月",};
+    public static final int heightColor = Color.rgb(37, 147, 231); //Color.parseColor("#FF2593E7"); //Color.rgb(37,147,231)
+    public static final String[] txStr = {"1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月",};
 
     public CustomOneBarChartView(Context context) {
         this(context, null);
@@ -72,7 +72,6 @@ public class CustomOneBarChartView extends LinearLayout {
     public void initData(List<Float> data, int color) {
         //处理数据是 记得判断每条柱状图对应的数据集合 长度是否一致
         List<List<Float>> chartDataMap = new ArrayList<>();
-        List<String> xValues = new ArrayList<>();
         List<Float> yValue1 = new ArrayList<>();
         List<Integer> colors = Arrays.asList(
                 getResources().getColor(R.color.color_C490BF), getResources().getColor(R.color.color_00B7EE)

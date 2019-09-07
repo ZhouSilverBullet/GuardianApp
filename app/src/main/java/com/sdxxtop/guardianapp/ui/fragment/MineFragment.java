@@ -95,6 +95,14 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
         mPresenter.loadData();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isVisible()){
+            mPresenter.loadData();
+        }
+    }
+
     private void logoutDialog() {
         new IosAlertDialog(getActivity()).builder()
                 .setHeightMsg("确定退出吗?")
@@ -111,12 +119,6 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
                     }
                 })
                 .show();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.loadData();
     }
 
     @Override

@@ -7,6 +7,12 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="15dp" />
+
+    <LinearLayout
         android:paddingTop="3dp"
         android:layout_gravity="bottom"
         android:background="@drawable/tab_bg_home"

@@ -76,6 +76,7 @@ public class FlyDataListActivity extends BaseMvpActivity<FlyDataListPresenter> i
     private int mYear;
     private FlyDataAdapter adapter;
     private FlyDataAdapter searchAdapter;
+    private String value = "";
 
     @Override
     public void showError(String error) {
@@ -95,8 +96,8 @@ public class FlyDataListActivity extends BaseMvpActivity<FlyDataListPresenter> i
     @Override
     protected void onResume() {
         super.onResume();
-        mPresenter.getUavData("");
-        mPresenter.getUavEventData("");
+        mPresenter.getUavData(value);
+        mPresenter.getUavEventData(value);
     }
 
     private Calendar getSchemeCalendar(int year, int month, int day, int color, String text) {
@@ -118,7 +119,7 @@ public class FlyDataListActivity extends BaseMvpActivity<FlyDataListPresenter> i
         mCalendarView.setOnYearChangeListener(this);
         mTextYear.setText(String.valueOf(mCalendarView.getCurYear()));
         mYear = mCalendarView.getCurYear();
-        mTextMonthDay.setText(mCalendarView.getCurMonth() + "月" + mCalendarView.getCurDay() + "日");
+        mTextMonthDay.setText(mYear + "年" + mCalendarView.getCurMonth() + "月");
         mTextLunar.setText("今日");
         mTextCurrentDay.setText(String.valueOf(mCalendarView.getCurDay()));
 
@@ -155,14 +156,15 @@ public class FlyDataListActivity extends BaseMvpActivity<FlyDataListPresenter> i
     public void onCalendarSelect(Calendar calendar, boolean isClick) {
         mTextLunar.setVisibility(View.VISIBLE);
         mTextYear.setVisibility(View.VISIBLE);
-        mTextMonthDay.setText(calendar.getMonth() + "月" + calendar.getDay() + "日");
+        mTextMonthDay.setText(calendar.getYear() + "年" + calendar.getMonth() + "月");
         mTextYear.setText(String.valueOf(calendar.getYear()));
         mTextLunar.setText(calendar.getLunar());
         mYear = calendar.getYear();
 
-        String value = Date2Util.getZeroTime(calendar.getYear()) + "-" +
+        value = Date2Util.getZeroTime(calendar.getYear()) + "-" +
                 Date2Util.getZeroTime(calendar.getMonth()) + "-" +
                 Date2Util.getZeroTime(calendar.getDay());
+
         mPresenter.getUavData(value);
         mPresenter.getUavEventData(value);
     }

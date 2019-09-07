@@ -18,6 +18,15 @@
 
     <include layout="@layout/item_course_list_line_recycler" />
 
+    <TextView
+        android:padding="10dp"
+        android:background="#F4B5BC"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:text="空气数据"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -26,15 +35,6 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <TextView
-                android:padding="10dp"
-                android:background="#F4B5BC"
-                android:textSize="14sp"
-                android:textColor="@color/black"
-                android:text="空气数据"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
             <RelativeLayout
                 android:layout_marginRight="20dp"
@@ -92,72 +92,62 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <LinearLayout
+            <TextView
+                android:singleLine="true"
                 android:layout_marginTop="15dp"
                 android:paddingTop="10dp"
                 android:paddingLeft="10dp"
+                android:id="@+id/tv_title"
+                android:textColor="@color/black"
+                android:text="任务标题："
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content" />
 
-                <TextView
-                    android:id="@+id/tv_title"
-                    android:textColor="@color/black"
-                    android:text="任务标题："
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:layout_alignParentRight="true"
-                    android:id="@+id/tv_plane_name"
-                    android:textColor="@color/black"
-                    android:text="无人机名称 ："
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <LinearLayout
+            <TextView
+                android:singleLine="true"
                 android:paddingTop="10dp"
                 android:paddingLeft="10dp"
+                android:layout_alignParentRight="true"
+                android:id="@+id/tv_plane_name"
+                android:textColor="@color/black"
+                android:text="无人机名称 ："
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content" />
 
-                <TextView
-                    android:id="@+id/tv_name"
-                    android:textColor="@color/black"
-                    android:text="执行人 ："
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:layout_alignParentRight="true"
-                    android:id="@+id/tv_event_time"
-                    android:textColor="@color/black"
-                    android:text="任务时间："
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <LinearLayout
+            <TextView
+                android:singleLine="true"
                 android:paddingTop="10dp"
                 android:paddingLeft="10dp"
+                android:id="@+id/tv_name"
+                android:textColor="@color/black"
+                android:text="执行人 ："
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content" />
 
-                <TextView
-                    android:id="@+id/tv_event_content"
-                    android:textColor="@color/black"
-                    android:text="任务内容："
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content" />
+            <TextView
+                android:singleLine="true"
+                android:paddingTop="10dp"
+                android:paddingLeft="10dp"
+                android:layout_alignParentRight="true"
+                android:id="@+id/tv_event_time"
+                android:textColor="@color/black"
+                android:text="任务时间："
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-            </LinearLayout>
+            <TextView
+                android:paddingTop="10dp"
+                android:paddingLeft="10dp"
+                android:id="@+id/tv_event_content"
+                android:textColor="@color/black"
+                android:text="任务内容："
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

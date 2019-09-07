@@ -1,5 +1,6 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -36,7 +37,7 @@ public class FlyEventReportActivity extends BaseMvpActivity<FlyEventReportPresen
     @BindView(R.id.tatv_uav)
     TextAndTextView tatvUav;
     @BindView(R.id.taev_title)
-    TextAndEditView taev_title;
+    TextAndEditView taevTitle;
     @BindView(R.id.net_content)
     NumberEditTextView netContent;
     @BindView(R.id.btn_add)
@@ -72,6 +73,8 @@ public class FlyEventReportActivity extends BaseMvpActivity<FlyEventReportPresen
 
     @Override
     protected void initView() {
+        InputFilter[] filters = {new InputFilter.LengthFilter(10)};
+        taevTitle.getEditText().setFilters(filters);
         netContent.setEditHint(" ");
     }
 
@@ -121,7 +124,7 @@ public class FlyEventReportActivity extends BaseMvpActivity<FlyEventReportPresen
      * 上报部门
      */
     private void reportEvent() {
-        String title = taev_title.getEditText().getText().toString().trim();
+        String title = taevTitle.getEditText().getText().toString().trim();
         if (TextUtils.isEmpty(title)) {
             showToast("请填写标题");
             return;

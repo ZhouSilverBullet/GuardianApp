@@ -134,12 +134,29 @@
 
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_marginRight="15dp"
-                android:layout_marginLeft="15dp"
-                android:id="@+id/recyclerView"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tv_no_data"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:text="暂无数据"
+                    android:textColor="#F7BD33"
+                    android:textSize="12sp"
+                    tools:visibility="visible"
+                    android:visibility="gone" />
+            </RelativeLayout>
 
             <TextView
                 android:background="@color/translate"

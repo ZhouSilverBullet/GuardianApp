@@ -32,7 +32,6 @@
                 android:layout_height="25dp" />
 
             <TextView
-                android:text=""
                 android:id="@+id/tv_month_day"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -44,6 +43,7 @@
                 tools:ignore="RtlSymmetry" />
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_toRightOf="@+id/tv_month_day"
@@ -162,7 +162,7 @@
                 app:scheme_text="假"
                 app:scheme_text_color="#333"
                 app:scheme_theme_color="#128c4b"
-                app:selected_lunar_text_color="#CFCFCF"
+                app:selected_lunar_text_color="@color/black"
                 app:month_view="com.sdxxtop.guardianapp.ui.widget.fly_calendarview.MeiZuMonthView"
                 app:week_view="com.sdxxtop.guardianapp.ui.widget.fly_calendarview.MeizuWeekView"
                 app:selected_text_color="#333"
@@ -199,7 +199,6 @@
     <RelativeLayout
         android:id="@+id/ll_search_layout"
         android:visibility="gone"
-        tools:visibility="visible"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:background="@color/white"

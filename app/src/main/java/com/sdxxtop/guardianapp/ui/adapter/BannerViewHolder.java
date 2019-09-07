@@ -22,7 +22,7 @@ public class BannerViewHolder implements MZViewHolder<DataEntry> {
     @Override
     public View createView(Context context) {
         // 返回页面布局文件
-        View view = LayoutInflater.from(context).inflate(R.layout.banner_item, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.banner_item_yingyong, null);
         mImageView = view.findViewById(R.id.banner_image);
         tvTitle = view.findViewById(R.id.tv_title);
         return view;

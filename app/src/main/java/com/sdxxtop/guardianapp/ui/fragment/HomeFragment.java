@@ -58,10 +58,10 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
 
     @BindView(R.id.iv_icon)
     ImageView ivIcon;
-    @BindView(R.id.tv_pm2)
-    TextView tvPm2;
-    @BindView(R.id.tv_pm1)
-    TextView tvPm1;
+    //    @BindView(R.id.tv_pm2)
+//    TextView tvPm2;
+//    @BindView(R.id.tv_pm1)
+//    TextView tvPm1;
     @BindView(R.id.tv_current_wendu)
     ImageView tvCurrentWendu;
     @BindView(R.id.tv_wendu)
@@ -120,6 +120,14 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (isVisible()) {
+            mPresenter.loadData();
+        }
+    }
+
+    @Override
     protected void initData() {
         super.initData();
         mPresenter.loadData();
@@ -140,8 +148,8 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
         mBean = bean;
         Glide.with(getContext()).load(bean.temperature_img).into(tvCurrentWendu);
         setMessageCount(bean.pending_count);
-        tvPm1.setText("" + bean.avg_tpfpm);
-        tvPm2.setText("" + bean.avg_tenpm);
+//        tvPm1.setText("" + bean.avg_tpfpm);
+//        tvPm2.setText("" + bean.avg_tenpm);
         tvWeatherStatus.setText(bean.air_quality);
         tvWendu.setText("" + bean.min_temperature + "℃/" + bean.max_temperature + "℃");
         ivMessageIcon.setImageResource(bean.unread_count == 0 ? R.drawable.message_normal : R.drawable.message_notice);
@@ -162,6 +170,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
+        ((HomeActivity) getActivity()).hideLoadingDialog();
         if (!hidden) {
             statusBar(true);
             mPresenter.loadData();

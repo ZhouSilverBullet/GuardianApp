@@ -110,6 +110,7 @@
     </LinearLayout>
 
     <TextView
+        android:lineSpacingExtra="8dp"
         android:id="@+id/tv_desc"
         android:layout_marginTop="30dp"
         android:layout_marginRight="26dp"
