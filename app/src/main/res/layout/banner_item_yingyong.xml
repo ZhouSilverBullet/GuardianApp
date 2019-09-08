@@ -1,41 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:background="@color/white"
-        android:layout_width="5dp"
-        android:layout_height="match_parent" />
-
-    <RelativeLayout
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="match_parent">
-
-        <com.sdxxtop.guardianapp.ui.widget.RoundRectImageView
-            android:id="@+id/banner_image"
-            android:scaleType="center"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
 
         <TextView
-            android:id="@+id/tv_title"
-            android:layout_alignParentBottom="true"
-            android:paddingRight="11dp"
-            android:gravity="right|center_vertical"
-            android:text="扬尘监测"
-            android:textColor="@color/white"
-            android:textSize="17sp"
-            android:background="@drawable/shape_banner_bg"
-            android:layout_width="match_parent"
-            android:layout_height="30dp" />
-    </RelativeLayout>
+            android:background="@color/translate"
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <com.sdxxtop.guardianapp.ui.widget.RoundRectImageView
+                android:id="@+id/banner_image"
+                android:scaleType="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_alignParentBottom="true"
+                android:paddingRight="11dp"
+                android:gravity="right|center_vertical"
+                android:text="扬尘监测"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:background="@drawable/shape_banner_bg"
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+        </RelativeLayout>
+
+        <TextView
+            android:background="@color/translate"
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/ll_layout_1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/icon_1"
+                android:src="@drawable/map_application_new"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+
+            <TextView
+                android:id="@+id/text_1"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/color_666666"
+                android:textSize="13sp"
+                android:text="地图"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_layout_2"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/icon_2"
+                android:src="@drawable/list_application_new"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+
+            <TextView
+                android:layout_marginTop="8dp"
+                android:id="@+id/text_2"
+                android:textColor="@color/color_666666"
+                android:textSize="13sp"
+                android:text="列表"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_layout_3"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/icon_3"
+                android:src="@drawable/report_application_new"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+
+            <TextView
+                android:layout_marginTop="8dp"
+                android:id="@+id/text_3"
+                android:textColor="@color/color_666666"
+                android:textSize="13sp"
+                android:text="报表"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </LinearLayout>
 
     <TextView
-        android:background="@color/white"
-        android:layout_width="5dp"
-        android:layout_height="match_parent" />
+        android:lineSpacingExtra="8dp"
+        android:id="@+id/tv_desc"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="35dp"
+        android:layout_marginLeft="35dp"
+        android:textSize="12sp"
+        android:textColor="@color/color_666666"
+        android:text="@string/yc_tx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

@@ -6,62 +6,7 @@
     android:background="@color/color_f2"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:background="@drawable/bg_home_new"
-        android:id="@+id/ll_layout"
-        android:layout_width="match_parent"
-        android:layout_height="256dp"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_marginTop="42dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:includeFontPadding="false"
-                android:id="@+id/tv_part_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="数字罗庄"
-                android:textColor="@color/white"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:id="@+id/ll_containor"
-                android:layout_width="35dp"
-                android:layout_height="match_parent"
-                android:layout_marginRight="5dp"
-                android:gravity="center">
-
-                <ImageView
-                    android:id="@+id/iv_message_icon"
-                    android:layout_width="14dp"
-                    android:layout_height="16dp"
-                    android:src="@drawable/message_normal" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <TextView
-            android:singleLine="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="12dp"
-            android:textSize="12sp"
-            android:textColor="@color/white"
-            android:text="弘扬新精神  锤炼新作风  塑造新形象"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
     <androidx.core.widget.NestedScrollView
-        android:layout_marginTop="111dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -70,95 +15,160 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.cardview.widget.CardView
-                android:layout_marginBottom="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginLeft="15dp"
-                app:cardCornerRadius="5dp"
-                app:cardElevation="5dp"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="130dp">
+                android:layout_height="wrap_content">
 
-                <RelativeLayout
-                    android:paddingTop="16dp"
+                <ImageView
+                    android:scaleType="fitXY"
+                    android:src="@drawable/bg_home_new"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="256dp" />
+
+                <LinearLayout
+                    android:id="@+id/ll_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <LinearLayout
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:id="@+id/iv_icon"
-                            android:layout_marginLeft="15dp"
-                            android:src="@drawable/weather_home_new"
-                            android:layout_width="15dp"
-                            android:layout_height="15dp" />
+                        android:layout_marginTop="42dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:gravity="center_vertical">
 
                         <TextView
-                            android:layout_marginLeft="10dp"
-                            android:textColor="#313131"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            android:text="今日空气质量"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:includeFontPadding="false"
+                            android:id="@+id/tv_part_name"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="数字罗庄"
+                            android:textColor="@color/white"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:id="@+id/ll_containor"
+                            android:layout_width="35dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="5dp"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:id="@+id/iv_message_icon"
+                                android:layout_width="14dp"
+                                android:layout_height="16dp"
+                                android:src="@drawable/message_normal" />
+
+                        </LinearLayout>
+
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/tv_weather_status"
-                        android:layout_marginRight="15dp"
-                        android:layout_alignParentRight="true"
-                        android:textStyle="bold"
-                        android:textColor="#00A0E9"
-                        android:textSize="15sp"
-                        android:text="优"
-                        android:layout_width="wrap_content"
+                        android:singleLine="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="16dp"
+                        android:textSize="12sp"
+                        android:textColor="@color/white"
+                        android:text="弘扬新精神  锤炼新作风  塑造新形象"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
-                    <TextView
-                        android:id="@+id/tv_line"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginTop="13dp"
-                        android:layout_below="@+id/tv_weather_status"
-                        android:background="#E0E0E0"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp" />
+                </LinearLayout>
 
-                    <LinearLayout
-                        android:gravity="center_vertical"
-                        android:layout_marginRight="35dp"
-                        android:layout_marginTop="50dp"
-                        android:layout_alignParentRight="true"
-                        android:orientation="horizontal"
+                <androidx.cardview.widget.CardView
+                    android:layout_marginTop="111dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="15dp"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp">
+
+                    <RelativeLayout
+                        android:paddingTop="16dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
+                        <LinearLayout
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/iv_icon"
+                                android:layout_marginLeft="15dp"
+                                android:src="@drawable/weather_home_new"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp" />
+
+                            <TextView
+                                android:layout_marginLeft="10dp"
+                                android:textColor="#313131"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:text="今日空气质量"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+
                         <TextView
-                            android:layout_marginLeft="35dp"
-                            android:id="@+id/tv_wendu"
-                            android:includeFontPadding="false"
-                            android:textColor="@color/color_999999"
-                            android:textSize="19sp"
-                            android:text="18℃/30℃"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
+                            android:id="@+id/tv_weather_status"
+                            android:layout_marginRight="15dp"
+                            android:layout_alignParentRight="true"
+                            android:textStyle="bold"
+                            android:textColor="#00A0E9"
+                            android:textSize="15sp"
+                            android:text="优"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
-                        <ImageView
-                            android:src="@drawable/icon_customer_service_new"
-                            android:id="@+id/tv_current_wendu"
-                            android:layout_width="51dp"
-                            android:layout_height="40dp" />
+                        <TextView
+                            android:id="@+id/tv_line"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="13dp"
+                            android:layout_below="@+id/tv_weather_status"
+                            android:background="#E0E0E0"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp" />
 
-                    </LinearLayout>
+                        <LinearLayout
+                            android:gravity="center_vertical"
+                            android:layout_marginRight="35dp"
+                            android:layout_marginTop="50dp"
+                            android:layout_alignParentRight="true"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
-                </RelativeLayout>
+                            <TextView
+                                android:layout_marginLeft="35dp"
+                                android:id="@+id/tv_wendu"
+                                android:includeFontPadding="false"
+                                android:textColor="@color/color_999999"
+                                android:textSize="19sp"
+                                android:text="18℃/30℃"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content" />
 
-            </androidx.cardview.widget.CardView>
+                            <ImageView
+                                android:src="@drawable/icon_customer_service_new"
+                                android:id="@+id/tv_current_wendu"
+                                android:layout_width="51dp"
+                                android:layout_height="40dp" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_msg_text"

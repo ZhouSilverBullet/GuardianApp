@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,38 +8,64 @@
     android:orientation="vertical"
     tools:context="com.sdxxtop.guardianapp.ui.fragment.LearningFragment">
 
+    <ImageView
+        android:scaleType="fitXY"
+        android:src="@drawable/unify_top_fragment_bg"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
     <TextView
+        android:id="@+id/tv_title"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="41dp"
         android:textStyle="bold"
         android:textSize="24sp"
-        android:textColor="@color/color_313131"
+        android:textColor="@color/white"
         android:text="学习"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <TextView
+        android:background="#80F2F2F2"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="3dp"
+        android:layout_below="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+
     <com.google.android.material.tabs.TabLayout
+        android:background="@drawable/shape_tab_white_bg"
+        android:layout_below="@+id/tv_title"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:id="@+id/tab"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:paddingBottom="3dp"
+        android:layout_height="43dp"
         app:tabIndicatorColor="#2593E7"
         app:tabSelectedTextColor="#2593E7"
         app:tabTextAppearance="@style/AppliedTabLayoutTextStyle"
         app:tabTextColor="@color/color_303030" />
 
-    <androidx.viewpager.widget.ViewPager
-        android:background="@color/white"
-        android:layout_marginTop="15dp"
-        android:id="@+id/vp"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp" />
-
     <LinearLayout
-        android:background="@color/color_f2"
+        android:orientation="vertical"
+        android:layout_below="@+id/tab"
         android:layout_width="match_parent"
-        android:layout_height="60dp" />
-</LinearLayout>
+        android:layout_height="match_parent">
+
+        <androidx.viewpager.widget.ViewPager
+            android:layout_marginTop="10dp"
+            android:id="@+id/vp"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+
+        <LinearLayout
+            android:background="@color/color_f2"
+            android:layout_width="match_parent"
+            android:layout_height="60dp" />
+    </LinearLayout>
+
+</RelativeLayout>

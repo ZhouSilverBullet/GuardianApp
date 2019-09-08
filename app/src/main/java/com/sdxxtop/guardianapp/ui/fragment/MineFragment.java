@@ -98,7 +98,7 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     @Override
     public void onResume() {
         super.onResume();
-        if (isVisible()){
+        if (isVisible()) {
             mPresenter.loadData();
         }
     }
