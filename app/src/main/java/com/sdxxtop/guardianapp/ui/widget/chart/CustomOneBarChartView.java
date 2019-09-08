@@ -53,6 +53,7 @@ public class CustomOneBarChartView extends LinearLayout {
     private Legend legend;
     public static final int heightColor = Color.rgb(37, 147, 231); //Color.parseColor("#FF2593E7"); //Color.rgb(37,147,231)
     public static final String[] txStr = {"1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月",};
+    private IAxisValueFormatter formatter;
 
     public CustomOneBarChartView(Context context) {
         this(context, null);
@@ -196,6 +197,18 @@ public class CustomOneBarChartView extends LinearLayout {
         legend.setEnabled(false);
 
         mChart.setNoDataText("暂无数据");
+
+        //右侧Y轴自定义值
+        formatter = new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                return (int) (value) + "";
+            }
+        };
+
+        XYMarkerView mv = new XYMarkerView(this.getContext(), formatter);
+        mv.setChartView(mChart);
+        mChart.setMarker(mv);
     }
 
 
@@ -250,22 +263,11 @@ public class CustomOneBarChartView extends LinearLayout {
                 return xValues.get((int) Math.abs(value) % xValues.size());
             }
         });
-        //右侧Y轴自定义值
-        IAxisValueFormatter formatter = new IAxisValueFormatter() {
-            @Override
-            public String getFormattedValue(float value, AxisBase axis) {
-                return (int) (value) + "";
-            }
-        };
         leftAxis.setValueFormatter(formatter);
-
         BarData data = new BarData(barDataSet);
         data.setHighlightEnabled(true);
+        mChart.highlightValues(null);   // 设置当前图组 的marker隐藏
         mChart.setData(data);
-
-        XYMarkerView mv = new XYMarkerView(this.getContext(), formatter);
-        mv.setChartView(mChart);
-        mChart.setMarker(mv);
     }
 
     public void setLimitLine(int height) {

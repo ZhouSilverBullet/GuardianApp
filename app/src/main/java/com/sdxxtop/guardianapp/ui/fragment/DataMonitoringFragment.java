@@ -1,6 +1,7 @@
 package com.sdxxtop.guardianapp.ui.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.sdxxtop.guardianapp.R;
@@ -9,6 +10,9 @@ import com.sdxxtop.guardianapp.model.bean.AuthDataBean;
 import com.sdxxtop.guardianapp.model.bean.DataEntry;
 import com.sdxxtop.guardianapp.presenter.DataMonitoringPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.DataMonitoringContract;
+import com.sdxxtop.guardianapp.ui.activity.DeviceListActivity;
+import com.sdxxtop.guardianapp.ui.activity.FlyDataListActivity;
+import com.sdxxtop.guardianapp.ui.activity.MonitorMapActivity;
 import com.sdxxtop.guardianapp.ui.adapter.BannerViewHolder;
 import com.sdxxtop.guardianapp.ui.widget.mzbanner.MZBannerView;
 import com.sdxxtop.guardianapp.ui.widget.mzbanner.holder.MZHolderCreator;
@@ -29,6 +33,7 @@ public class DataMonitoringFragment extends BaseMvpFragment<DataMonitoringPresen
     private static int[] RES = {R.drawable.yangchenjiance, R.drawable.wurenji_img};
     private static String[] TITLE = {"扬尘监测", "无人机"};
     private BannerViewHolder bannerViewHolder;
+    private AuthDataBean mBean;
 
     public static DataMonitoringFragment newInstance() {
         Bundle args = new Bundle();
@@ -70,6 +75,13 @@ public class DataMonitoringFragment extends BaseMvpFragment<DataMonitoringPresen
                 return bannerViewHolder;
             }
         });
+
+        bannerViewHolder.setOnTabClick(new BannerViewHolder.OnTabClickListener() {
+            @Override
+            public void onTabClick(int index, int layoutId) {
+                onClick(index, layoutId);
+            }
+        });
     }
 
     private List<DataEntry> mockData() {
@@ -101,9 +113,7 @@ public class DataMonitoringFragment extends BaseMvpFragment<DataMonitoringPresen
 
     @Override
     public void showData(AuthDataBean bean) {
-        if (bannerViewHolder != null) {
-            bannerViewHolder.setPerMission(bean);
-        }
+        mBean = bean;
     }
 
     @Override
@@ -123,4 +133,44 @@ public class DataMonitoringFragment extends BaseMvpFragment<DataMonitoringPresen
             mPresenter.loadData();
         }
     }
+
+    public void onClick(int index, int layoutId) {
+        if (mBean == null) {
+            return;
+        }
+        switch (layoutId) {
+            case R.id.ll_layout_1:
+                if (index == 0) {//扬尘
+                    if (mBean.is_raise_dust == 1) {
+                        startActivity(new Intent(getContext(), MonitorMapActivity.class));
+                    } else {
+                        showToast("暂无权限");
+                    }
+                } else {
+                    showToast("暂未开放");
+                }
+                break;
+            case R.id.ll_layout_2:
+                if (index == 0) {//扬尘
+                    if (mBean.is_raise_dust == 1) {
+                        Intent intent = new Intent(getContext(), DeviceListActivity.class);
+                        intent.putExtra("status", "全部");
+                        startActivity(intent);
+                    } else {
+                        showToast("暂无权限");
+                    }
+                } else {
+                    if (mBean.is_uav == 1) {
+                        startActivity(new Intent(getContext(), FlyDataListActivity.class));
+                    } else {
+                        showToast("暂无权限");
+                    }
+                }
+                break;
+            case R.id.ll_layout_3:
+                showToast("暂未开放");
+                break;
+        }
+    }
+
 }

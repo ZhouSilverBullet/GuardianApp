@@ -109,9 +109,6 @@ public class MyHomeTabAdapter extends BaseAdapter {
                 }
                 break;
             case 2:
-                if (mActivity != null) {
-                    ((HomeActivity) mActivity).showLoadingDialog();
-                }
                 toFaceDaka(context);
                 break;
             case 3: // 无人机检测
@@ -145,6 +142,9 @@ public class MyHomeTabAdapter extends BaseAdapter {
         //判断一次打卡，gps是否打开
         if (mBean.is_clock == 1) {
             if (mBean.is_face == 1) {
+                if (mActivity != null) {
+                    ((HomeActivity) mActivity).showLoadingDialog();
+                }
                 if (GpsUtils.isOPen(context)) {
                     AMapFindLocation2 instance = AMapFindLocation2.getInstance();
                     instance.location();
