@@ -33,8 +33,8 @@
                 android:id="@+id/taev_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:taev_edit_text_hint="事件重点简述（限制10个字）"
-                app:taev_text_view="事件标题" />
+                app:taev_edit_text_hint="任务重点简述（限制10个字）"
+                app:taev_text_view="任务标题" />
 
             <LinearLayout
                 android:orientation="vertical"

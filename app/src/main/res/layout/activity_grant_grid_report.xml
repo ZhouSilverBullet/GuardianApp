@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:leftLayoutIconIsGray="true"
-        app:rightTextColor="#32B16C"
+        app:rightTextColor="@color/green"
         app:rightTextValue="巡逻详情"
         app:titleValue="网格员数据"/>
 

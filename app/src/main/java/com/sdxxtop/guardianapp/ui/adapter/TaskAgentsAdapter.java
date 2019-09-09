@@ -40,7 +40,7 @@ public class TaskAgentsAdapter extends BaseQuickAdapter<EventIndexBean.EventBean
 
         tvImportant.setText(sb);
         if (item.getIs_claim() == 1) {
-            tvImportant.setVisibility(View.GONE);
+            tvImportant.setVisibility(View.INVISIBLE);
         } else {
             tvImportant.setVisibility(View.VISIBLE);
         }

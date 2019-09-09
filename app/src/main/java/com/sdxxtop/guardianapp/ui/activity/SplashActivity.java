@@ -27,6 +27,7 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (!this.isTaskRoot()) {
             Intent intent = getIntent();
             String action = intent.getAction();
