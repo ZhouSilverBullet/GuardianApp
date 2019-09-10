@@ -210,7 +210,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_uva:   // 无人机
-                if (mBean.is_uav == 1) {
+                if (mBean != null && mBean.is_uav == 1) {
                     HomeActivity activity = ((HomeActivity) getActivity());
                     activity.setWurenjiClick();
                 } else {
@@ -218,7 +218,7 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
                 }
                 break;
             case R.id.rl_map:  // 网格地图
-                if (mBean.is_map == 1) {
+                if (mBean != null && mBean.is_map == 1) {
                     startActivity(new Intent(getContext(), GridMapActivity.class));
                 } else {
                     showToast("暂无权限");
