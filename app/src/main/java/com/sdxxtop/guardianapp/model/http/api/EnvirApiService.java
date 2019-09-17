@@ -27,6 +27,8 @@ import com.sdxxtop.guardianapp.model.bean.FlyEventDetailBean;
 import com.sdxxtop.guardianapp.model.bean.FlyEventListBean;
 import com.sdxxtop.guardianapp.model.bean.FlyEventPartBean;
 import com.sdxxtop.guardianapp.model.bean.GERPIndexBean;
+import com.sdxxtop.guardianapp.model.bean.GridEventCountBean;
+import com.sdxxtop.guardianapp.model.bean.GridEventListBean;
 import com.sdxxtop.guardianapp.model.bean.GridreportIndexBean;
 import com.sdxxtop.guardianapp.model.bean.GridreportOperatorBean;
 import com.sdxxtop.guardianapp.model.bean.GridreportPatrolBean;
@@ -65,8 +67,8 @@ import retrofit2.http.Path;
 
 public interface EnvirApiService {
 
-    String BASE_URL = "http://envir.sdxxtop.com/api/";
-//    String BASE_URL = "http://envir.test.sdxxtop.com/api/";  // 测试
+//    String BASE_URL = "http://envir.sdxxtop.com/api/";
+    String BASE_URL = "http://envir.test.sdxxtop.com/api/";  // 测试
 //    String BASE_URL = "http://envir.dev.sdxxtop.com/api/";  // 预发布环境的
 
     @FormUrlEncoded
@@ -362,5 +364,13 @@ public interface EnvirApiService {
     @FormUrlEncoded
     @POST("article/allarticle")
     Observable<RequestBean<AllarticleBean>> postAllarticleData(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("working/gridevent")
+    Observable<RequestBean<GridEventCountBean>> postGridEventCount(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("working/{name}")
+    Observable<RequestBean<GridEventListBean>> postGridEventList(@Path("name") String name,@Field("data") String data);
 
 }

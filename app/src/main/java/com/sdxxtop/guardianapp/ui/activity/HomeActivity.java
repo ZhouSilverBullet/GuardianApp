@@ -262,11 +262,11 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
         if (!isServiceExisted(NotificationMonitor.class.getName())) {
             startService(new Intent(this, NotificationMonitor.class));
         }
-        super.onResume();
         isEnabledNLS = isEnabled();
         if (!isEnabledNLS) {
             showConfirmDialog();
         }
+        super.onResume();
 //        clearAllNotifications();
     }
 

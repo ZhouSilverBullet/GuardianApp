@@ -16,6 +16,7 @@ public class WorkIndexBean {
     public int is_patrol;
     public int report;
     public int complete;
+    public int is_grid_event;
     public String part_name;
 
     public int pending_count;

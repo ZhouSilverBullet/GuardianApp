@@ -3,7 +3,6 @@ package com.sdxxtop.guardianapp.ui.activity;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -48,10 +47,9 @@ public class PatrolAddDetailActivity extends BaseMvpActivity<PatrolAddDetailPres
     LinearLayout llContainor;
     @BindView(R.id.tv_img_video_desc)
     TextView tvImgVideoDesc;
-    @BindView(R.id.btn_push)
-    Button btnReCheck;
 
     private int patrol_id;
+    private Boolean isPartEvent;  // 部门事件跳转到详情默认隐藏按钮
     private PatrolDetailImgAdapter adapter, adapterCheck;
     private String address = "";
     private String longitude = "";
@@ -83,6 +81,7 @@ public class PatrolAddDetailActivity extends BaseMvpActivity<PatrolAddDetailPres
     protected void initView() {
         super.initView();
         patrol_id = getIntent().getIntExtra("patrol_id", 0);
+        isPartEvent = getIntent().getBooleanExtra("isPartEvent", false);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         adapter = new PatrolDetailImgAdapter(R.layout.gv_filter_image, null);
         recyclerView.setAdapter(adapter);
@@ -98,7 +97,11 @@ public class PatrolAddDetailActivity extends BaseMvpActivity<PatrolAddDetailPres
         longitude = bean.getLongitude();
 
         if (bean.getStatus() == 1) {
-            llContainor.setVisibility(View.VISIBLE);
+            if (isPartEvent) {   // 是部门事件把按钮隐藏
+                llContainor.setVisibility(View.GONE);
+            } else {
+                llContainor.setVisibility(View.VISIBLE);
+            }
         } else {
             llContainor.setVisibility(View.GONE);
         }
@@ -110,12 +113,12 @@ public class PatrolAddDetailActivity extends BaseMvpActivity<PatrolAddDetailPres
         //视频
         data.clear();
         if (!TextUtils.isEmpty(bean.getVideo())) {
-            data.add(new MediaBean(bean.getVideo(),2));
+            data.add(new MediaBean(bean.getVideo(), 2));
         }
-        if (!TextUtils.isEmpty(bean.getImg())){
+        if (!TextUtils.isEmpty(bean.getImg())) {
             String[] split = bean.getImg().split(",");
             for (int i = 0; i < split.length; i++) {
-                data.add(new MediaBean(split[i],1));
+                data.add(new MediaBean(split[i], 1));
             }
         }
         adapter.replaceData(data);
@@ -134,12 +137,12 @@ public class PatrolAddDetailActivity extends BaseMvpActivity<PatrolAddDetailPres
         //复查视频
         checkData.clear();
         if (!TextUtils.isEmpty(bean.getCheck_video())) {
-            checkData.add(new MediaBean(bean.getCheck_video(),2));
+            checkData.add(new MediaBean(bean.getCheck_video(), 2));
         }
-        if (!TextUtils.isEmpty(bean.getCheck_img())){
+        if (!TextUtils.isEmpty(bean.getCheck_img())) {
             String[] split = bean.getCheck_img().split(",");
             for (int i = 0; i < split.length; i++) {
-                checkData.add(new MediaBean(split[i],1));
+                checkData.add(new MediaBean(split[i], 1));
             }
         }
         adapterCheck.replaceData(checkData);

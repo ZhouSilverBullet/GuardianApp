@@ -139,6 +139,7 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
     private int isModify;  // 是否有评价权限
 
     private String mEventId;
+    private Boolean isPartEvent; // 部门事件跳转到详情默认隐藏按钮
     private PatrolDetailImgAdapter mAdapter;
     //先反馈问题
     private PatrolDetailImgAdapter mFinishAdapter;
@@ -166,6 +167,7 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         Intent intent = getIntent();
         if (intent != null) {
             mEventId = intent.getStringExtra("eventId");
+            isPartEvent = intent.getBooleanExtra("isPartEvent",false);
         }
     }
 
@@ -260,7 +262,9 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
         isModify = bean.is_modify;
         //显示进度条状态
 
-        showBottomButton(bean);  // 底部按钮显示隐藏
+        if (!isPartEvent){
+            showBottomButton(bean);  // 底部按钮显示隐藏
+        }
         collectHeadData(bean);   // 统一数据管理
 
         /********* 流转 **********/

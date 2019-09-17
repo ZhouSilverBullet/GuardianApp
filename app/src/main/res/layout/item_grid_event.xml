@@ -44,8 +44,8 @@
         </RelativeLayout>
 
         <TextView
-            android:singleLine="true"
             android:textColor="@color/color_666666"
+            android:singleLine="true"
             android:id="@+id/tv_place"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,20 +76,11 @@
                 android:paddingLeft="15dp"
                 android:paddingTop="5dp"
                 android:paddingRight="15dp"
-                android:paddingBottom="8dp"
+                android:paddingBottom="5dp"
                 android:text="待认领"
                 android:textColor="@color/white"
                 android:textSize="10sp"/>
 
-            <TextView
-                android:textColor="@color/color_313131"
-                android:id="@+id/tv_renlingren"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:text="认领人:王俊凯"
-                android:textSize="12sp"/>
         </RelativeLayout>
 
     </LinearLayout>

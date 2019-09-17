@@ -30,6 +30,7 @@ import com.sdxxtop.guardianapp.ui.activity.GACPatrolDetailActivity;
 import com.sdxxtop.guardianapp.ui.activity.GrantCompanyReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.GrantEventReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.GrantGridReportActivity;
+import com.sdxxtop.guardianapp.ui.activity.GridEventActivity;
 import com.sdxxtop.guardianapp.ui.activity.GridMapActivity;
 import com.sdxxtop.guardianapp.ui.activity.GridreportUserreportActivity;
 import com.sdxxtop.guardianapp.ui.activity.HomeActivity;
@@ -97,5 +98,6 @@ public interface ActivityComponent {
     void inject(FlyEventDetailActivity activity);
     void inject(FlyEventReportActivity activity);
     void inject(EventDetailActivity activity);
+    void inject(GridEventActivity activity);
 
 }
