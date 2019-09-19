@@ -112,7 +112,7 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
             @Override
             public void accept(Boolean aBoolean) throws Exception {
                 if (aBoolean) {
-//                    startPatrolService();
+                    startPatrolService();
                     mPresenter.startUploadingPoint();
                 }
             }
@@ -134,7 +134,7 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
 
     private void startPatrolService() {
         // TODO  定位服务 暂时关闭
-//        ignoreBatteryOptimization(this);
+        ignoreBatteryOptimization(this);
 //        Logger.e("开启了服务");
 //        Intent intent = new Intent(this, PatrolRecordService.class);
 //        startService(intent);

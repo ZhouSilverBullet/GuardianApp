@@ -19,6 +19,7 @@ import com.sdxxtop.guardianapp.ui.activity.GrantCompanyReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.GrantEventReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.GrantGridReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.GridEventActivity;
+import com.sdxxtop.guardianapp.ui.activity.PatrolRecordActivity;
 import com.sdxxtop.guardianapp.ui.activity.SectionEventActivity;
 
 /**
@@ -29,8 +30,8 @@ import com.sdxxtop.guardianapp.ui.activity.SectionEventActivity;
 public class WorkTabAdapter extends BaseAdapter {
 
     private int[] imgRes = {R.drawable.icon_shijian_work, R.drawable.icon_shuju_work, R.drawable.icon_qiye_work,
-            R.drawable.icon_bumen_work, R.drawable.icon_shangbao_work, R.drawable.icon_xuncha_work,R.drawable.icon_bumen_work};
-    private String[] titleRes = {"事件统计", "工作数据", "企业数据", "部门事件", "我的上报", "我的巡查","网格事件"};
+            R.drawable.icon_bumen_work, R.drawable.icon_shangbao_work, R.drawable.icon_xuncha_work, R.drawable.icon_bumen_work, R.drawable.icon_bumen_work};
+    private String[] titleRes = {"事件统计", "工作数据", "企业数据", "部门事件", "我的上报", "我的巡查", "网格事件", "工作轨迹"};
 
     @Override
     public int getCount() {
@@ -125,6 +126,9 @@ public class WorkTabAdapter extends BaseAdapter {
                 if (mBean.is_grid_event == 1) {
                     intent = new Intent(context, GridEventActivity.class);
                 }
+                break;
+            case 7:   // 网格事件
+                intent = new Intent(context, PatrolRecordActivity.class);
                 break;
         }
         if (intent == null) {
