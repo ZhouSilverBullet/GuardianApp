@@ -92,7 +92,7 @@ public class GridEventActivity extends BaseMvpActivity<GridEventPresenter> imple
             map.put(2, value);
         }
         if (bean.partol != null && tabLayout.getTabAt(3) != null) {
-            tabLayout.getTabAt(3).setText("解决事件(" + bean.partol.count + ")");
+            tabLayout.getTabAt(3).setText("巡查汇报(" + bean.partol.count + ")");
             String[] value = {String.valueOf(bean.partol.stay_review), String.valueOf(bean.partol.complete)};
             map.put(3, value);
         }
@@ -212,7 +212,7 @@ public class GridEventActivity extends BaseMvpActivity<GridEventPresenter> imple
             tvTitle3.setVisibility(View.GONE);
             tvTitle4.setVisibility(View.GONE);
             switch (eventType) {
-                case 0:   // 解决事件
+                case 0:   // 解决事件   待解决、待验收、已完成
                     if (tx.length != 3) return;
                     tvTitle1.setVisibility(View.VISIBLE);
                     tvTitle2.setVisibility(View.VISIBLE);
@@ -221,7 +221,7 @@ public class GridEventActivity extends BaseMvpActivity<GridEventPresenter> imple
                     tvTitle2.setText("待验收(" + tx[1] + ")");
                     tvTitle3.setText("已完成(" + tx[2] + ")");
                     break;
-                case 1:  //上报事件
+                case 1:  //上报事件  带派发、带解决、待验收、已完成
                     if (tx.length != 4) return;
                     tvTitle1.setVisibility(View.VISIBLE);
                     tvTitle2.setVisibility(View.VISIBLE);
@@ -229,24 +229,24 @@ public class GridEventActivity extends BaseMvpActivity<GridEventPresenter> imple
                     tvTitle4.setVisibility(View.VISIBLE);
                     tvTitle1.setText("待派发(" + tx[0] + ")");
                     tvTitle2.setText("待解决(" + tx[1] + ")");
-                    tvTitle3.setText("已验收(" + tx[2] + ")");
+                    tvTitle3.setText("待验收(" + tx[2] + ")");
                     tvTitle4.setText("已完成(" + tx[3] + ")");
                     break;
-                case 2:   //认领事件
+                case 2:   //认领事件   已认领、待评价、已完成
                     if (tx.length != 3) return;
                     tvTitle1.setVisibility(View.VISIBLE);
                     tvTitle2.setVisibility(View.VISIBLE);
                     tvTitle3.setVisibility(View.VISIBLE);
                     tvTitle1.setText("已认领(" + tx[0] + ")");
                     tvTitle2.setText("待评价(" + tx[1] + ")");
-                    tvTitle3.setText("已验收(" + tx[2] + ")");
+                    tvTitle3.setText("已完成(" + tx[2] + ")");
                     break;
-                case 3:  //自行处理事件
+                case 3:  //自行处理事件   待复查、已完成
                     if (tx.length != 2) return;
                     tvTitle1.setVisibility(View.VISIBLE);
                     tvTitle2.setVisibility(View.VISIBLE);
                     tvTitle1.setText("待复查(" + tx[0] + ")");
-                    tvTitle2.setText("待评价(" + tx[1] + ")");
+                    tvTitle2.setText("已完成(" + tx[1] + ")");
                     break;
             }
         }

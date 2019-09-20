@@ -63,7 +63,9 @@ public class RxUtils {
 
 
     public static <D> Disposable handleDataHttp(Observable<RequestBean<D>> observable, IRequestCallback<D> requestCallback) {
-        return observable.compose(RxUtils.schedulers()).compose(RxUtils.handleResult())
+        return observable
+                .compose(RxUtils.schedulers())
+                .compose(RxUtils.handleResult())
                 .subscribe(successData(requestCallback),  //成功
                         throwableConsumer(requestCallback)); //失败
 

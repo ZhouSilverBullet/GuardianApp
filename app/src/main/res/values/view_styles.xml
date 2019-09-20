@@ -31,6 +31,9 @@
     <style name="AppliedTabLayoutTextStyle">
         <item name="android:textSize">15sp</item>
     </style>
+    <style name="GridEventTabLayoutTextStyle">
+        <item name="android:textSize">13sp</item>
+    </style>
 
     <style name="progress_layout_weight">
         <item name="android:orientation">vertical</item>

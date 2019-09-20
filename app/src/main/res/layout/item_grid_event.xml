@@ -24,14 +24,6 @@
             android:layout_marginRight="10dp">
 
             <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="事件名称"
-                android:textColor="@color/color_313131"
-                android:textSize="15sp"/>
-
-            <TextView
                 android:textColor="@color/color_666666"
                 android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
@@ -40,6 +32,18 @@
                 android:layout_centerVertical="true"
                 android:text="上报时间:2019/9/12"
                 android:textSize="10sp"/>
+
+            <TextView
+                android:singleLine="true"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentLeft="true"
+                android:id="@+id/tv_title"
+                android:layout_toLeftOf="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="事件名称"
+                android:textColor="@color/color_313131"
+                android:textSize="15sp"/>
 
         </RelativeLayout>
 

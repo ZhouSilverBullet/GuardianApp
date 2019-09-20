@@ -21,7 +21,9 @@
         android:layout_height="40dp"
         android:background="#F0F7F8"
         app:tabIndicatorColor="@color/green"
+        app:tabTextAppearance="@style/GridEventTabLayoutTextStyle"
         app:tabSelectedTextColor="@color/green"
+        app:tabMode="scrollable"
         app:tabTextColor="#999999"/>
 
     <include layout="@layout/item_course_list_line_recycler"/>
