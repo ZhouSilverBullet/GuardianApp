@@ -266,11 +266,11 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
         if (!isServiceExisted(NotificationMonitor.class.getName())) {
             startService(new Intent(this, NotificationMonitor.class));
         }
+        super.onResume();
         isEnabledNLS = isEnabled();
         if (!isEnabledNLS) {
             showConfirmDialog();
         }
-        super.onResume();
 //        clearAllNotifications();
     }
 
@@ -407,13 +407,14 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
     }
 
     private void showConfirmDialog() {
-        new AlertDialog.Builder(this)
+        AlertDialog dialog = new AlertDialog.Builder(this)
                 .setMessage("请打开通知使用权,确保消息能够准时送达!")
                 .setTitle("通知使用权")
                 .setCancelable(true)
                 .setPositiveButton(android.R.string.ok,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
                                 openNotificationAccess();
                             }
                         })
@@ -423,7 +424,8 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
                                 // do nothing
                             }
                         })
-                .create().show();
+                .create();
+        dialog.show();
     }
 
     private void openNotificationAccess() {
