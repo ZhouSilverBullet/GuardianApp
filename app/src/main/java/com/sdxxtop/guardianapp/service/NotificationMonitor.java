@@ -52,6 +52,7 @@ public class NotificationMonitor extends NotificationListenerService {
                 action = intent.getAction();
                 if (action.equals(ACTION_NLS_CONTROL)) {
                     String command = intent.getStringExtra("command");
+                    if (TextUtils.isEmpty(command)) return;
                     updateCurrentNotifications();
                     if (TextUtils.equals(command, "cancel_last")) {
                         if (mCurrentNotifications != null && mCurrentNotificationsCounts >= 1) {
@@ -73,8 +74,9 @@ public class NotificationMonitor extends NotificationListenerService {
                                             Log.e("XSL_Test", "Notification posted " + notificationTitle + " & " + notificationText);
                                             if (notificationTitle.equals("已通过GPS确定位置") && notificationText.equals(
                                                     "数字罗庄")) {
-//                                        cancelNotification(sbnn.getPackageName(), sbnn.getTag(), sbnn.getId());
-                                                cancelNotification(sbnn.getKey());
+                                                if (!TextUtils.isEmpty(sbnn.getKey())) {
+                                                    cancelNotification(sbnn.getKey());
+                                                }
                                                 return;
                                             }
                                         }
@@ -88,7 +90,6 @@ public class NotificationMonitor extends NotificationListenerService {
                 }
             }
         }
-
     }
 
     @Override
@@ -109,7 +110,6 @@ public class NotificationMonitor extends NotificationListenerService {
 
     @Override
     public IBinder onBind(Intent intent) {
-        // a.equals("b");
         logNLS("onBind...");
         return super.onBind(intent);
     }
@@ -149,15 +149,15 @@ public class NotificationMonitor extends NotificationListenerService {
         logNLS("have " + mCurrentNotificationsCounts + " active notifications");
         mRemovedNotification = sbn;
 
-        // TODO Auto-generated method stub
-        Bundle extras = sbn.getNotification().extras;
-        // 获取接收消息APP的包名
-        String notificationPkg = sbn.getPackageName();
-        // 获取接收消息的抬头
-        String notificationTitle = extras.getString(Notification.EXTRA_TITLE);
-        // 获取接收消息的内容
-        String notificationText = extras.getString(Notification.EXTRA_TEXT);
-        Log.i("XSL_Test", "Notification posted " + notificationTitle + " & " + notificationText);
+//        // TODO Auto-generated method stub
+//        Bundle extras = sbn.getNotification().extras;
+//        // 获取接收消息APP的包名
+//        String notificationPkg = sbn.getPackageName();
+//        // 获取接收消息的抬头
+//        String notificationTitle = extras.getString(Notification.EXTRA_TITLE);
+//        // 获取接收消息的内容
+//        String notificationText = extras.getString(Notification.EXTRA_TEXT);
+//        Log.i("XSL_Test", "Notification posted " + notificationTitle + " & " + notificationText);
     }
 
     private void updateCurrentNotifications() {

@@ -95,7 +95,6 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
     @SuppressLint("CheckResult")
     @Override
     protected void initView() {
-        toggleNotificationListenerService(this);
 //        initAHNavigation();
         switchFragment(0);
 
@@ -130,6 +129,11 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
                 }
             }
         });
+
+        if (!isServiceExisted(NotificationMonitor.class.getName())) {
+            startService(new Intent(this, NotificationMonitor.class));
+        }
+        toggleNotificationListenerService(this);
     }
 
     private void startPatrolService() {
@@ -424,23 +428,6 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
 
     private void openNotificationAccess() {
         startActivity(new Intent(ACTION_NOTIFICATION_LISTENER_SETTINGS));
-    }
-
-    private void clearAllNotifications() {
-        if (isEnabledNLS) {
-            cancelNotification(this, true);
-        }
-    }
-
-    private void cancelNotification(Context context, boolean isCancelAll) {
-        Intent intent = new Intent();
-        intent.setAction(NotificationMonitor.ACTION_NLS_CONTROL);
-        if (isCancelAll) {
-            intent.putExtra("command", "cancel_all");
-        } else {
-            intent.putExtra("command", "cancel_last");
-        }
-        context.sendBroadcast(intent);
     }
 
     public void toggleNotificationListenerService(Context context) {

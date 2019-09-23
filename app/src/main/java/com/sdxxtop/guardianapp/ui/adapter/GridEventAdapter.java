@@ -33,7 +33,7 @@ public class GridEventAdapter extends BaseQuickAdapter<GridEventListBean.GridLis
     @Override
     protected void convert(BaseViewHolder helper, GridEventListBean.GridListBean item) {
         helper.setText(R.id.tv_title, item.title);
-        helper.setText(R.id.tv_time, "上报时间: " + getTimeStr(item.add_time));
+        helper.setText(R.id.tv_time, getTimeStr(item.add_time));
         helper.setText(R.id.tv_place, item.place);
         helper.setText(R.id.tv_status, getStatusStr(item.status));
 
