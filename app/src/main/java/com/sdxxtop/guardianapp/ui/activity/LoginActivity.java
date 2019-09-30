@@ -169,6 +169,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         AnalyticsHome.bindAccount(mobile);
 
         /******** 猎鹰相关 ********/
+        SpUtil.putLong(Constants.IS_TRACK, loginBean.getIs_track(), false);
         TrackInfoBean trackInfo = loginBean.track_info;
         if (trackInfo != null) {
             SpUtil.putLong(Constants.SERVICE_ID, trackInfo.getSid(), false);

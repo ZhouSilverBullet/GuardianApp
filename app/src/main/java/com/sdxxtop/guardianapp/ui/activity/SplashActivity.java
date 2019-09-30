@@ -109,6 +109,7 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
         SpUtil.putString(Constants.AUTO_TOKEN, auto_token);
 
         /******** 猎鹰相关 ********/
+        SpUtil.putLong(Constants.IS_TRACK, autoLoginBean.getIs_track(), false);
         TrackInfoBean trackInfo = autoLoginBean.track_info;
         if (trackInfo != null) {
             SpUtil.putLong(Constants.SERVICE_ID, trackInfo.getSid(), false);

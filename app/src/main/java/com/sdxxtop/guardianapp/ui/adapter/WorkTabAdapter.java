@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sdxxtop.guardianapp.R;
+import com.sdxxtop.guardianapp.app.Constants;
 import com.sdxxtop.guardianapp.model.bean.WorkIndexBean;
 import com.sdxxtop.guardianapp.ui.activity.EventDiscretionListActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportListActivity;
@@ -21,6 +22,10 @@ import com.sdxxtop.guardianapp.ui.activity.GrantGridReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.GridEventActivity;
 import com.sdxxtop.guardianapp.ui.activity.PatrolRecordActivity;
 import com.sdxxtop.guardianapp.ui.activity.SectionEventActivity;
+import com.sdxxtop.guardianapp.utils.SpUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author :  lwb
@@ -33,14 +38,32 @@ public class WorkTabAdapter extends BaseAdapter {
             R.drawable.icon_bumen_work, R.drawable.icon_shangbao_work, R.drawable.icon_xuncha_work, R.drawable.icon_bumen_work};
     private String[] titleRes = {"事件统计", "工作数据", "企业数据", "部门事件", "我的上报", "我的巡查", "网格事件"};
 
+    private List<Integer> imgResValue = new ArrayList<>();
+    private List<String> titleResValue = new ArrayList<>();
+
+    public WorkTabAdapter() {
+        for (int imgRe : imgRes) {
+            imgResValue.add(imgRe);
+        }
+        for (String titleRe : titleRes) {
+            titleResValue.add(titleRe);
+        }
+        long aLong = SpUtil.getLong(Constants.IS_TRACK, 2);
+        if (aLong == 1) {
+            imgResValue.add(R.drawable.icon_bumen_work);
+            titleResValue.add("工作轨迹");
+        }
+    }
+
+
     @Override
     public int getCount() {
-        return titleRes.length;
+        return titleResValue.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return titleRes[position];
+        return titleResValue.get(position);
     }
 
     @Override
@@ -68,8 +91,8 @@ public class WorkTabAdapter extends BaseAdapter {
         }
 
         // 根据key值设置不同数据内容
-        holder.imageView.setImageResource(imgRes[position]);
-        holder.textView.setText(titleRes[position]);
+        holder.imageView.setImageResource(imgResValue.get(position));
+        holder.textView.setText(titleResValue.get(position));
         holder.llLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,7 +150,7 @@ public class WorkTabAdapter extends BaseAdapter {
                     intent = new Intent(context, GridEventActivity.class);
                 }
                 break;
-            case 7:   // 网格事件
+            case 7:   // 工作轨迹
                 intent = new Intent(context, PatrolRecordActivity.class);
                 break;
         }
@@ -142,6 +165,7 @@ public class WorkTabAdapter extends BaseAdapter {
 
     public void setLimits(WorkIndexBean bean) {
         this.mBean = bean;
+
     }
 
     public void showToast(Context context) {

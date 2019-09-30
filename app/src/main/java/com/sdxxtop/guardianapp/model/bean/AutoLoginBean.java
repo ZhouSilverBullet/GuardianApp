@@ -15,6 +15,17 @@ public class AutoLoginBean {
     private String auto_token;
     private int expire_time;
 
+    private int is_track;  //是否有查看个人轨迹权限  1是  2否
+
+
+    public int getIs_track() {
+        return is_track;
+    }
+
+    public void setIs_track(int is_track) {
+        this.is_track = is_track;
+    }
+
     public TrackInfoBean track_info;
 
     public int getUserid() {

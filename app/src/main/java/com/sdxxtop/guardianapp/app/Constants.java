@@ -26,5 +26,6 @@ public interface Constants {
     String TERMINAL_ID = "terminal_id";
     String TRACK_ID = "track_id";
     String SERVICE_ID = "service_id";
+    String IS_TRACK = "is_track";
 
 }
