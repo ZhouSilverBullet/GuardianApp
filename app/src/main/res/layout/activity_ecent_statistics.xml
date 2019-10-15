@@ -9,6 +9,8 @@
 
     <com.sdxxtop.guardianapp.ui.widget.TitleView
         android:id="@+id/title"
+        app:rightTextValue="上一级"
+        app:rightTextColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:leftLayoutIconIsGray="true"/>
@@ -19,6 +21,7 @@
         android:background="@color/color_E0E0E0"/>
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/ll_containor_temp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -73,6 +76,7 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -95,5 +99,29 @@
             android:background="#99000000"
             android:visibility="gone"/>
     </RelativeLayout>
+
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tablayout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        app:tabIndicatorColor="#3296FA"
+        app:tabSelectedTextColor="#3296FA"
+        app:tabTextAppearance="@style/AppliedTabLayoutTextStyle"
+        app:tabTextColor="#666666" />
+
+    <View
+        android:layout_below="@+id/tablayout"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E4E4E4" />
+
+    <com.sdxxtop.guardianapp.ui.widget.CustomNoSlideViewPager
+        android:layout_marginTop="1dp"
+        android:layout_below="@+id/tablayout"
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 
 </LinearLayout>

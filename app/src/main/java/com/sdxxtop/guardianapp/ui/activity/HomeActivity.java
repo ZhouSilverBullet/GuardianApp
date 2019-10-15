@@ -111,8 +111,9 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
             @Override
             public void accept(Boolean aBoolean) throws Exception {
                 if (aBoolean) {
-                    startPatrolService();
-                    mPresenter.startUploadingPoint();
+                    //TODO  猎鹰相关关闭
+//                    startPatrolService();
+//                    mPresenter.startUploadingPoint();
                 }
             }
         });

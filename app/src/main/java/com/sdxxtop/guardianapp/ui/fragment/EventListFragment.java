@@ -1,5 +1,7 @@
-package com.sdxxtop.guardianapp.ui.activity;
+package com.sdxxtop.guardianapp.ui.fragment;
 
+
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -9,15 +11,14 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sdxxtop.guardianapp.R;
-import com.sdxxtop.guardianapp.base.BaseMvpActivity;
+import com.sdxxtop.guardianapp.base.BaseMvpFragment;
 import com.sdxxtop.guardianapp.model.bean.PartEventListBean;
 import com.sdxxtop.guardianapp.presenter.PELPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.PELContract;
+import com.sdxxtop.guardianapp.ui.activity.EventStatistyActivity;
 import com.sdxxtop.guardianapp.ui.adapter.PartEventListAdapter;
 import com.sdxxtop.guardianapp.ui.pop.AreaSelectPopWindow;
-import com.sdxxtop.guardianapp.ui.widget.CustomAreaSelectView;
 import com.sdxxtop.guardianapp.ui.widget.GERTimeSelectView;
-import com.sdxxtop.guardianapp.ui.widget.TitleView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,64 +28,62 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class PartEventListActivity extends BaseMvpActivity<PELPresenter> implements PELContract.IView {
+/**
+ * @author :  lwb
+ * Date: 2019/10/15
+ * Desc:
+ */
+public class EventListFragment extends BaseMvpFragment<PELPresenter> implements PELContract.IView {
 
-    @BindView(R.id.title)
-    TitleView title;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    @BindView(R.id.casv_view)
-    CustomAreaSelectView casvView;
     @BindView(R.id.smart_refresh)
     SmartRefreshLayout smartRefresh;
     @BindView(R.id.gertsv_view)
     GERTimeSelectView gertsvView;
+    @BindView(R.id.tv_status)
+    TextView tvStatus;
     @BindView(R.id.ll_containor_temp)
     LinearLayout llContainorTemp;
     @BindView(R.id.ll_temp)
     LinearLayout llTemp;
-    @BindView(R.id.tv_status)
-    TextView tvStatus;
     @BindView(R.id.tv_bg)
     TextView tvBg;
 
-    private List<AreaSelectPopWindow.PopWindowDataBean> popWondowData = new ArrayList<>();
-    private List<AreaSelectPopWindow.PopWindowDataBean> popWondowStatusData = new ArrayList<>();
+    private String start_time = "";
+    private String end_time = "";
+    private int part_id = 1;
+    private int event_type;
 
     private PartEventListAdapter adapter;
-    private int part_id;  // 部门id
-    private int event_type = 0;
-    private String start_time, end_time;
+    private List<AreaSelectPopWindow.PopWindowDataBean> popWondowStatusData = new ArrayList<>();
 
-    @Override
-    protected int getLayout() {
-        return R.layout.activity_part_event_list;
+    public static EventListFragment newInstance(int event_type) {
+        Bundle args = new Bundle();
+        args.putInt("eventStatus", event_type);
+        EventListFragment fragment = new EventListFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
     protected void initInject() {
-        getActivityComponent().inject(this);
+        getFragmentComponent().inject(this);
     }
 
     @Override
-    public void showError(String error) {
-
-    }
-
-    @Override
-    protected void initData() {
-        super.initData();
+    protected int getFragmentLayout() {
+        return R.layout.fragment_event_list;
     }
 
     @Override
     protected void initView() {
-        super.initView();
-        String partIdStr = getIntent().getStringExtra("part_id");
-        part_id = Integer.parseInt(partIdStr);
-        start_time = getIntent().getStringExtra("startTime");
-        end_time = getIntent().getStringExtra("endTime");
-        event_type = getIntent().getIntExtra("status", 0);
-
+        EventStatistyActivity activity = (EventStatistyActivity) getActivity();
+        if (activity != null) {
+            start_time = activity.startTime;
+            end_time = activity.endTime;
+        }
+        //初始化时间
         if (!TextUtils.isEmpty(start_time) && !TextUtils.isEmpty(end_time)) {
             gertsvView.tvStartTime.setTextColor(getResources().getColor(R.color.black));
             gertsvView.tvEndTime.setTextColor(getResources().getColor(R.color.black));
@@ -94,7 +93,7 @@ public class PartEventListActivity extends BaseMvpActivity<PELPresenter> impleme
             gertsvView.setTime(start_time, end_time);
         }
 
-        title.setTitleValue(getIntent().getStringExtra("part_name") + "事件");
+        event_type = getArguments().getInt("eventStatus");
         smartRefresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshLayout) {
@@ -110,6 +109,11 @@ public class PartEventListActivity extends BaseMvpActivity<PELPresenter> impleme
         });
         smartRefresh.autoRefresh();
 
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new PartEventListAdapter();
+        recyclerView.setAdapter(adapter);
+
+        //日期选择
         gertsvView.setOnTimeSelectListener(new GERTimeSelectView.OnTimeChooseListener() {
             @Override
             public void onTimeSelect(String startTime, String endTime) {
@@ -118,21 +122,18 @@ public class PartEventListActivity extends BaseMvpActivity<PELPresenter> impleme
                 mPresenter.postPartEventList(0, part_id, start_time, end_time, event_type);
             }
         });
+    }
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new PartEventListAdapter();
-        recyclerView.setAdapter(adapter);
+    @Override
+    public void showError(String error) {
 
     }
 
-    @OnClick({R.id.casv_view, R.id.ll_containor_temp})
+    @OnClick({R.id.ll_containor_temp})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.casv_view:
-                new AreaSelectPopWindow(PartEventListActivity.this, casvView.llAreaLayout, popWondowData, casvView.tvArea);
-                break;
             case R.id.ll_containor_temp:
-                AreaSelectPopWindow popWindow = new AreaSelectPopWindow(this, llTemp, popWondowStatusData, tvStatus, tvBg, event_type);
+                AreaSelectPopWindow popWindow = new AreaSelectPopWindow(getActivity(), llTemp, popWondowStatusData, tvStatus, tvBg, event_type);
                 popWindow.setOnPopItemClickListener(new AreaSelectPopWindow.OnPopItemClickListener() {
                     @Override
                     public void onPopItemClick(int part_typeid, String partName) {
@@ -156,15 +157,35 @@ public class PartEventListActivity extends BaseMvpActivity<PELPresenter> impleme
         } else {
             adapter.addData(bean.getCl_data());
         }
-        popWondowData.clear();
-        for (int i = 0; i < bean.getPart_name().size(); i++) {
-            popWondowData.add(new AreaSelectPopWindow.PopWindowDataBean(0, bean.getPart_name().get(i).getPart_name()));
-        }
+
         popWondowStatusData.clear();
         popWondowStatusData.add(new AreaSelectPopWindow.PopWindowDataBean(0, "全部"));
         popWondowStatusData.add(new AreaSelectPopWindow.PopWindowDataBean(1, "待处理"));
         popWondowStatusData.add(new AreaSelectPopWindow.PopWindowDataBean(2, "处理中"));
         popWondowStatusData.add(new AreaSelectPopWindow.PopWindowDataBean(3, "待验收"));
         popWondowStatusData.add(new AreaSelectPopWindow.PopWindowDataBean(4, "已完成"));
+    }
+
+    public void loadData(int partId, int eventStatus) {
+        this.part_id = partId;
+        event_type = eventStatus;
+        switch (eventStatus) {
+            case 0:
+                tvStatus.setText("全部");
+                break;
+            case 1:
+                tvStatus.setText("待处理");
+                break;
+            case 2:
+                tvStatus.setText("处理中");
+                break;
+            case 3:
+                tvStatus.setText("待验收");
+                break;
+            case 4:
+                tvStatus.setText("已完成");
+                break;
+        }
+        mPresenter.postPartEventList(0, part_id, "", "", event_type);
     }
 }

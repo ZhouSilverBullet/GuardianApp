@@ -10,6 +10,7 @@ import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
 import com.sdxxtop.guardianapp.model.http.net.Params;
 import com.sdxxtop.guardianapp.model.http.util.RxUtils;
 import com.sdxxtop.guardianapp.presenter.contract.EventStatistyContract;
+import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import javax.inject.Inject;
 
@@ -43,7 +44,7 @@ public class EventStatistyPresenter extends RxPresenter<EventStatistyContract.IV
 
             @Override
             public void onFailure(int code, String error) {
-
+                UIUtils.showToast(error);
             }
         });
         addSubscribe(disposable);

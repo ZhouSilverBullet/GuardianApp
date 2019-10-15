@@ -46,7 +46,7 @@ public class EventListBean {
         this.completeInfo = completeInfo;
     }
 
-    public static class CompleteInfo{
+    public static class CompleteInfo {
 
         public CompleteInfo(int count, String part_name, int part_id) {
             this.count = count;
@@ -54,9 +54,12 @@ public class EventListBean {
             this.part_id = part_id;
         }
 
-        private int count;
-        private String part_name;
-        private int part_id;
+        public int count;
+        public String part_name;
+        public int part_id;
+        public int parent_id;
+        public int level;
+        public List<CompleteInfo> children;
 
         public int getCount() {
             return count;
@@ -80,6 +83,30 @@ public class EventListBean {
 
         public void setPart_id(int part_id) {
             this.part_id = part_id;
+        }
+
+        public int getParent_id() {
+            return parent_id;
+        }
+
+        public void setParent_id(int parent_id) {
+            this.parent_id = parent_id;
+        }
+
+        public int getLevel() {
+            return level;
+        }
+
+        public void setLevel(int level) {
+            this.level = level;
+        }
+
+        public List<CompleteInfo> getChildren() {
+            return children;
+        }
+
+        public void setChildren(List<CompleteInfo> children) {
+            this.children = children;
         }
     }
 }

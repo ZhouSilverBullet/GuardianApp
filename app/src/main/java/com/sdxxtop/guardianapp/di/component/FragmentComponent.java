@@ -6,10 +6,12 @@ import com.sdxxtop.guardianapp.di.module.FragmentModule;
 import com.sdxxtop.guardianapp.di.qualifier.FragmentScope;
 import com.sdxxtop.guardianapp.ui.fragment.CourseListFragment;
 import com.sdxxtop.guardianapp.ui.fragment.DataMonitoringFragment;
+import com.sdxxtop.guardianapp.ui.fragment.EventListFragment;
 import com.sdxxtop.guardianapp.ui.fragment.GridEventFragment;
 import com.sdxxtop.guardianapp.ui.fragment.HomeFragment;
 import com.sdxxtop.guardianapp.ui.fragment.MineFragment;
 import com.sdxxtop.guardianapp.ui.fragment.NewsListFragment;
+import com.sdxxtop.guardianapp.ui.fragment.OrganizationListFragment;
 import com.sdxxtop.guardianapp.ui.fragment.SectionEventFragment;
 import com.sdxxtop.guardianapp.ui.fragment.WorkFragment;
 
@@ -29,4 +31,6 @@ public interface FragmentComponent {
     void inject(SectionEventFragment fragment);
     void inject(WorkFragment fragment);
     void inject(GridEventFragment fragment);
+    void inject(OrganizationListFragment fragment);
+    void inject(EventListFragment fragment);
 }

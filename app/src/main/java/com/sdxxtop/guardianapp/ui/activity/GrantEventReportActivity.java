@@ -2,12 +2,12 @@ package com.sdxxtop.guardianapp.ui.activity;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.TextView;
 
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.model.bean.EventChartBean;
 import com.sdxxtop.guardianapp.model.bean.GERPIndexBean;
-import com.sdxxtop.guardianapp.model.bean.TabTextBean;
 import com.sdxxtop.guardianapp.presenter.GERPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.GERContract;
 import com.sdxxtop.guardianapp.ui.widget.CustomEventLayout;
@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class GrantEventReportActivity extends BaseMvpActivity<GERPresenter> implements GERContract.IView, CustomEventLayout.OnTabClickListener {
 
@@ -29,6 +30,17 @@ public class GrantEventReportActivity extends BaseMvpActivity<GERPresenter> impl
     PieChartView pieChart2;
     @BindView(R.id.time_select)
     GERTimeSelectView timeSelect;
+
+    @BindView(R.id.tv_num_1)
+    TextView tvNum1;
+    @BindView(R.id.tv_num_2)
+    TextView tvNum2;
+    @BindView(R.id.tv_num_3)
+    TextView tvNum3;
+    @BindView(R.id.tv_num_4)
+    TextView tvNum4;
+    @BindView(R.id.tv_num_5)
+    TextView tvNum5;
 
     private String mStartTime, mEndTime;
     private List<String> partId = new ArrayList<>();
@@ -53,27 +65,26 @@ public class GrantEventReportActivity extends BaseMvpActivity<GERPresenter> impl
                 mStartTime = startTime;
                 mEndTime = endTime;
                 mPresenter.index(mStartTime, mEndTime);
-                if (partId.size()==0){
+                if (partId.size() == 0) {
                     return;
                 }
                 currentItem = 0;
                 partId.clear();
                 pieChart1.tv_up.setVisibility(View.GONE);
-                mPresenter.eventChart(mStartTime, mEndTime,"0",true);
+                mPresenter.eventChart(mStartTime, mEndTime, "0", true);
             }
         });
         pieChart1.setPieData(null);
         pieChart2.setPieData(null);
 
-        celView.setOnTabClickListener(this);
-
-        List<TabTextBean> data = new ArrayList<>();
-        data.add(new TabTextBean(0, "--", "已上报"));
-        data.add(new TabTextBean(1, "--", "待处理"));
-        data.add(new TabTextBean(2, "--", "处理中"));
-        data.add(new TabTextBean(3, "--", "待验收"));
-        data.add(new TabTextBean(4, "--", "已完成"));
-        celView.addLayout(data);
+//        celView.setOnTabClickListener(this);
+//        List<TabTextBean> data = new ArrayList<>();
+//        data.add(new TabTextBean(0, "--", "已上报"));
+//        data.add(new TabTextBean(1, "--", "待处理"));
+//        data.add(new TabTextBean(2, "--", "处理中"));
+//        data.add(new TabTextBean(3, "--", "待验收"));
+//        data.add(new TabTextBean(4, "--", "已完成"));
+//        celView.addLayout(data);
         pieChart1.setOnPieChartClick(new PieChartView.OnPieChartClick() {
             @Override
             public void pieItemClick(String id) {
@@ -97,7 +108,7 @@ public class GrantEventReportActivity extends BaseMvpActivity<GERPresenter> impl
                 }
                 currentItem -= 1;
                 partId.remove(currentItem);
-                if (currentItem == 1){
+                if (currentItem == 1) {
                     pieChart1.tv_up.setVisibility(View.GONE);
                 }
                 mPresenter.eventChart(mStartTime, mEndTime, partId.get(partId.size() - 1), false);
@@ -166,12 +177,44 @@ public class GrantEventReportActivity extends BaseMvpActivity<GERPresenter> impl
     }
 
     private void addLinearLayout(GERPIndexBean indexBean) {
-        List<TabTextBean> data = new ArrayList<>();
-        data.add(new TabTextBean(0, String.valueOf(indexBean.getCount()), "已上报"));
-        data.add(new TabTextBean(1, String.valueOf(indexBean.getWait_for()), "待处理"));
-        data.add(new TabTextBean(2, String.valueOf(indexBean.getTo_solved()), "处理中"));
-        data.add(new TabTextBean(3, String.valueOf(indexBean.getAdopt()), "待验收"));
-        data.add(new TabTextBean(4, String.valueOf(indexBean.getPending()), "已完成"));
-        celView.addLayout(data);
+//        List<TabTextBean> data = new ArrayList<>();
+//        data.add(new TabTextBean(0, String.valueOf(indexBean.getCount()), "已上报"));
+//        data.add(new TabTextBean(1, String.valueOf(indexBean.getWait_for()), "待处理"));
+//        data.add(new TabTextBean(2, String.valueOf(indexBean.getTo_solved()), "处理中"));
+//        data.add(new TabTextBean(3, String.valueOf(indexBean.getAdopt()), "待验收"));
+//        data.add(new TabTextBean(4, String.valueOf(indexBean.getPending()), "已完成"));
+//        celView.addLayout(data);
+
+        tvNum1.setText(String.valueOf(indexBean.getCount()));
+        tvNum2.setText(String.valueOf(indexBean.getWait_for()));
+        tvNum3.setText(String.valueOf(indexBean.getTo_solved()));
+        tvNum4.setText(String.valueOf(indexBean.getAdopt()));
+        tvNum5.setText(String.valueOf(indexBean.getPending()));
     }
+
+    @OnClick({R.id.ll_layout_1, R.id.ll_layout_2, R.id.ll_layout_3, R.id.ll_layout_4, R.id.ll_layout_5})
+    public void onViewClicked(View view) {
+        Intent intent = new Intent(this, EventStatistyActivity.class);
+        intent.putExtra("startTime", mStartTime);
+        intent.putExtra("endTime", mEndTime);
+        switch (view.getId()) {
+            case R.id.ll_layout_1:
+                intent.putExtra("event_type", 0);
+                break;
+            case R.id.ll_layout_2:
+                intent.putExtra("event_type", 1);
+                break;
+            case R.id.ll_layout_3:
+                intent.putExtra("event_type", 2);
+                break;
+            case R.id.ll_layout_4:
+                intent.putExtra("event_type", 3);
+                break;
+            case R.id.ll_layout_5:
+                intent.putExtra("event_type", 4);
+                break;
+        }
+        startActivity(intent);
+    }
+
 }

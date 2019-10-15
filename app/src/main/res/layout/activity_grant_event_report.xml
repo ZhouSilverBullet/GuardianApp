@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,12 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:leftLayoutIconIsGray="true"
-        app:titleValue="事件数据"/>
+        app:titleValue="事件数据" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/color_E0E0E0"/>
+        android:background="@color/color_E0E0E0" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -31,7 +30,7 @@
             <com.sdxxtop.guardianapp.ui.widget.GERTimeSelectView
                 android:id="@+id/time_select"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -39,18 +38,166 @@
                 android:padding="16dp"
                 android:text="事件总数统计"
                 android:textColor="@color/color_292929"
-                android:textSize="15sp"/>
+                android:textSize="15sp" />
 
             <com.sdxxtop.guardianapp.ui.widget.CustomEventLayout
+                android:visibility="gone"
                 android:id="@+id/cel_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:background="@drawable/layout_report_tab_bg"
-                android:orientation="horizontal">
+                android:orientation="horizontal" />
 
-            </com.sdxxtop.guardianapp.ui.widget.CustomEventLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:id="@+id/ll_layout_1"
+                    android:gravity="center"
+                    android:background="@drawable/layout_report_tab_bg"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_num_1"
+                        android:textColor="@color/white"
+                        android:textSize="10sp"
+                        android:text="--"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textColor="@color/white"
+                        android:textSize="10sp"
+                        android:text="已上报"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:id="@+id/ll_layout_2"
+                    android:gravity="center"
+                    android:background="@drawable/layout_report_tab_bg"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_num_2"
+                        android:textSize="10sp"
+                        android:textColor="@color/white"
+                        android:text="--"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textSize="10sp"
+                        android:textColor="@color/white"
+                        android:text="待处理"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:id="@+id/ll_layout_3"
+                    android:gravity="center"
+                    android:background="@drawable/layout_report_tab_bg"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_num_3"
+                        android:textSize="10sp"
+                        android:textColor="@color/white"
+                        android:text="--"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textSize="10sp"
+                        android:textColor="@color/white"
+                        android:text="处理中"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:id="@+id/ll_layout_4"
+                    android:gravity="center"
+                    android:background="@drawable/layout_report_tab_bg"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_num_4"
+                        android:textSize="10sp"
+                        android:textColor="@color/white"
+                        android:text="--"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textSize="10sp"
+                        android:textColor="@color/white"
+                        android:text="待验收"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:id="@+id/ll_layout_5"
+                    android:gravity="center"
+                    android:background="@drawable/layout_report_tab_bg"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_num_5"
+                        android:textSize="10sp"
+                        android:textColor="@color/white"
+                        android:text="--"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textSize="10sp"
+                        android:textColor="@color/white"
+                        android:text="已完成"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+            </LinearLayout>
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -61,7 +208,7 @@
                 android:paddingBottom="15dp"
                 android:text="上报事件分类统计"
                 android:textColor="@color/color_292929"
-                android:textSize="15sp"/>
+                android:textSize="15sp" />
 
 
             <com.sdxxtop.guardianapp.ui.widget.PieChartView
@@ -72,7 +219,7 @@
                 android:layout_marginRight="15dp"
                 android:background="#FAFBFF"
                 app:pie_title="上报事件统计"
-                app:tv_prev_is_show="false"/>
+                app:tv_prev_is_show="false" />
 
             <com.sdxxtop.guardianapp.ui.widget.PieChartView
                 android:id="@+id/pie_chart2"
@@ -84,7 +231,7 @@
                 android:layout_marginBottom="20dp"
                 android:background="#FAFBFF"
                 app:pie_title="待验收事件统计"
-                app:tv_prev_is_show="false"/>
+                app:tv_prev_is_show="false" />
 
         </LinearLayout>
 

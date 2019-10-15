@@ -24,7 +24,7 @@
             android:singleLine="true"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:text="环保局"
             android:textColor="@color/color_313131"
             android:textSize="15sp" />
@@ -38,6 +38,16 @@
             android:text="356"
             android:textColor="@color/color_313131"
             android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_detail"
+            android:textColor="@color/color_313131"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:text="详情"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
 

@@ -9,10 +9,6 @@ import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.model.bean.PartEventListBean;
 import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity;
 
-import java.util.List;
-
-import androidx.annotation.Nullable;
-
 /**
  * @author :  lwb
  * Date: 2019/5/9
@@ -21,12 +17,13 @@ import androidx.annotation.Nullable;
 public class PartEventListAdapter extends BaseQuickAdapter<PartEventListBean.ClData, BaseViewHolder> {
 
 
-    public PartEventListAdapter(int layoutResId, @Nullable List<PartEventListBean.ClData> data) {
-        super(layoutResId, data);
+    public PartEventListAdapter() {
+        super(R.layout.item_part_event);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, PartEventListBean.ClData item) {
+        if (item==null)return;
         helper.setText(R.id.tv_event_status, getStatus(item.getStatus()));
         helper.setText(R.id.tv_part_name, item.getTitle());
         helper.setText(R.id.tv_part_event_num, item.getAdd_time());

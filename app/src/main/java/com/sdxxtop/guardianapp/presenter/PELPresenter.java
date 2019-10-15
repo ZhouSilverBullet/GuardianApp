@@ -23,7 +23,7 @@ public class PELPresenter extends RxPresenter<PELContract.IView> implements PELC
     }
 
 
-    public void postPartEventList(int start_page, String part_typeid, String startTime, String endTime, int event_type) {
+    public void postPartEventList(int start_page, int part_typeid, String startTime, String endTime, int event_type) {
         Params params = new Params();
         params.put("sp", start_page);
         params.put("pt", part_typeid);
