@@ -35,8 +35,11 @@ import java.util.List;
 public class WorkTabAdapter extends BaseAdapter {
 
     private int[] imgRes = {R.drawable.icon_shijian_work, R.drawable.icon_shuju_work, R.drawable.icon_qiye_work,
-            R.drawable.icon_bumen_work, R.drawable.icon_shangbao_work, R.drawable.icon_xuncha_work, R.drawable.icon_bumen_work};
-    private String[] titleRes = {"事件统计", "工作数据", "企业数据", "部门事件", "我的上报", "我的巡查", "网格事件"};
+            R.drawable.icon_bumen_work, R.drawable.icon_shangbao_work, R.drawable.icon_xuncha_work};
+//    private int[] imgRes = {R.drawable.icon_shijian_work, R.drawable.icon_shuju_work, R.drawable.icon_qiye_work,
+//            R.drawable.icon_bumen_work, R.drawable.icon_shangbao_work, R.drawable.icon_xuncha_work, R.drawable.icon_bumen_work};
+    private String[] titleRes = {"事件统计", "工作数据", "企业数据", "部门事件", "我的上报", "我的巡查"};
+//    private String[] titleRes = {"事件统计", "工作数据", "企业数据", "部门事件", "我的上报", "我的巡查", "网格事件"};
 
     private List<Integer> imgResValue = new ArrayList<>();
     private List<String> titleResValue = new ArrayList<>();
@@ -49,10 +52,10 @@ public class WorkTabAdapter extends BaseAdapter {
             titleResValue.add(titleRe);
         }
         long aLong = SpUtil.getLong(Constants.IS_TRACK, 2);
-        if (aLong == 1) {
-            imgResValue.add(R.drawable.icon_bumen_work);
-            titleResValue.add("工作轨迹");
-        }
+//        if (aLong == 1) {
+//            imgResValue.add(R.drawable.icon_bumen_work);
+//            titleResValue.add("工作轨迹");
+//        }
     }
 
 
