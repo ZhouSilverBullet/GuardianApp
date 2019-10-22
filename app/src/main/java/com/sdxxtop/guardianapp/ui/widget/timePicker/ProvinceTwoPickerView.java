@@ -3,6 +3,7 @@ package com.sdxxtop.guardianapp.ui.widget.timePicker;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -34,7 +35,6 @@ public class ProvinceTwoPickerView {
     private static final int MSG_LOAD_DATA = 0x0001;
     private static final int MSG_LOAD_SUCCESS = 0x0002;
     private static final int MSG_LOAD_FAILED = 0x0003;
-    private Thread thread;
     private static boolean isLoaded = false;
 
     private List<EventShowBean.NewPartBean> options1Items = new ArrayList<>();
@@ -46,17 +46,13 @@ public class ProvinceTwoPickerView {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MSG_LOAD_DATA:
-                    if (thread == null) {  //如果已创建就不再重新创建子线程了
-
-                        thread = new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                // 子线程中解析省市区数据
-                                initJsonData();
-                            }
-                        });
-                        thread.start();
-                    }
+                    AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            // 子线程中解析省市区数据
+                            initJsonData();
+                        }
+                    });
                     break;
 
                 case MSG_LOAD_SUCCESS:
@@ -144,17 +140,15 @@ public class ProvinceTwoPickerView {
              */
 //            options3Items.add(province_AreaList);
         }
-
         mHandler.sendEmptyMessage(MSG_LOAD_SUCCESS);
-
     }
 
 
     public void show() {
-        if (isLoaded) {
+        if (isLoaded && mData != null && mData.size() > 0) {
             showPickerView();
         } else {
-            UIUtils.showToast("数据未加载完成,稍后再试...");
+            UIUtils.showToast(mData.size() == 0 ? "暂无数据" : "数据未加载完成,稍后再试...");
         }
     }
 
@@ -232,7 +226,11 @@ public class ProvinceTwoPickerView {
                 .build();
 
 //        pvOptions.setPicker(options1Items);//一级选择器
-        pvOptions.setPicker(options1Items, options2Items);//二级选择器
+        if (options2Items.size() == 0) {
+            pvOptions.setPicker(options1Items);//一级选择器
+        } else {
+            pvOptions.setPicker(options1Items, options2Items);//二级选择器
+        }
 //        pvOptions.setPicker(options1Items, options2Items, options3Items);//三级选择器
         pvOptions.show();
     }

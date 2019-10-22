@@ -52,10 +52,10 @@ public class EventDiscretionListActivity extends BaseMvpActivity<EventDiscretion
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(mAdapter);
 
-        mSmartRefreshLayout.setOnRefreshListener(new OnRefreshLoadMoreListener() {
+        mSmartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshLayout) {
-                if (mPresenter != null) {
+                if (mAdapter != null) {
                     mPresenter.loadData(mAdapter.getData().size());
                 }
             }

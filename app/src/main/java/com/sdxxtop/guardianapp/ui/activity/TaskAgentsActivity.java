@@ -49,7 +49,7 @@ public class TaskAgentsActivity extends BaseMvpActivity<TaskAgentsPresenter> imp
     @Override
     protected void initEvent() {
         super.initEvent();
-        mSmartRefreshLayout.setOnRefreshListener(new OnRefreshLoadMoreListener() {
+        mSmartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshLayout) {
                 if (mPresenter != null) {
