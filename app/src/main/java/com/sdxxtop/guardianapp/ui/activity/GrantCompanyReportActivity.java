@@ -65,7 +65,6 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
 
     private int part_typeid = 0;  // 区域选择默认值
     private List<AreaSelectPopWindow.PopWindowDataBean> popWondowData = new ArrayList<>();
-    private boolean isMapLoadSuccess, isMapDataLoadSuccess;   // 地图加载完成标识/地图数据加载完成标识
     private List<EnterpriseIndexBean.UserInfo> userInfos;
     private boolean isThreadStop = false;
 
@@ -250,9 +249,6 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
      */
     @Override
     public void onMapLoaded() {
-        isMapLoadSuccess = true;
-        //添加自定义Marker
-        addCustomMarkersToMap(userInfos);
     }
 
     /**
@@ -262,9 +258,7 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
     private void addCustomMarkersToMap(List<EnterpriseIndexBean.UserInfo> data) {
         if (data == null)
             return;
-        if (isMapLoadSuccess && isMapDataLoadSuccess) {
-            AsyncTask.THREAD_POOL_EXECUTOR.execute(new MyRunnable(data));
-        }
+        AsyncTask.THREAD_POOL_EXECUTOR.execute(new MyRunnable(data));
     }
 
 
@@ -297,7 +291,6 @@ public class GrantCompanyReportActivity extends BaseMvpActivity<GCRPresenter> im
             }
         }
         if (bean.getUser_info() != null && bean.getUser_info().size() > 0) {
-            isMapDataLoadSuccess = true;
             userInfos = bean.getUser_info();
             addCustomMarkersToMap(userInfos);
         }

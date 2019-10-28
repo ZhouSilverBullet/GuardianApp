@@ -90,7 +90,7 @@ public class EventDiscretionReportPresenter extends RxPresenter<EventDiscretionR
     }
 
     public void request(ImageAndVideoParams params){
-        ((BaseActivity)mView).showLoadingDialog();
+        ((BaseActivity)mView).showLoadingDialogNotCancel();
         Observable<RequestBean<PatrolAddBean>> observable = getEnvirLongApi().postPatrolAdd(params.getImgAndVideoData());
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<PatrolAddBean>() {
             @Override
@@ -103,6 +103,7 @@ public class EventDiscretionReportPresenter extends RxPresenter<EventDiscretionR
             @Override
             public void onFailure(int code, String error) {
                 if (mView != null) {
+                    ((BaseActivity)mView).hideLoadingDialog();
                     UIUtils.showToast(error);
                     mView.showError(error);
                 }

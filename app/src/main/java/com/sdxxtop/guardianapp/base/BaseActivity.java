@@ -116,6 +116,13 @@ public abstract class BaseActivity extends SupportActivity {
         mDialogUtil.showLoadingDialog(this);
     }
 
+    public void showLoadingDialogNotCancel() {
+        if (mDialogUtil == null) {
+            mDialogUtil = new DialogUtil();
+        }
+        mDialogUtil.showLoadingDialogNotCancel(this);
+    }
+
     public void hideLoadingDialog() {
         if (mDialogUtil != null) {
             mDialogUtil.closeLoadingDialog(this);

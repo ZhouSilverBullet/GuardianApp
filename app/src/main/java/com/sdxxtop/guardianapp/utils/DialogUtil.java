@@ -15,6 +15,14 @@ public class DialogUtil {
         sLoadingDialog = new LoadingDialog(activity);
         sLoadingDialog.show();
     }
+    public void showLoadingDialogNotCancel(Activity activity) {
+        if (activity == null || activity.isFinishing()) {
+            return;
+        }
+        sLoadingDialog = new LoadingDialog(activity);
+        sLoadingDialog.setCancelable(false);
+        sLoadingDialog.show();
+    }
 
     public void hideLoadingDialog() {
         if (sLoadingDialog != null) {

@@ -68,7 +68,6 @@ public class GrantGridReportActivity extends BaseMvpActivity<GGRPresenter> imple
 
     private int part_typeid = 0;  // 区域选择默认值
     private List<AreaSelectPopWindow.PopWindowDataBean> popWondowData = new ArrayList<>();
-    private boolean isMapLoadSuccess, isMapDataLoadSuccess;   // 地图加载完成标识/地图数据加载完成标识
     private List<GridreportIndexBean.GridNowInfo> userInfos;
     private boolean isThreadStop = false;
 
@@ -256,9 +255,6 @@ public class GrantGridReportActivity extends BaseMvpActivity<GGRPresenter> imple
      */
     @Override
     public void onMapLoaded() {
-        isMapLoadSuccess = true;
-        //添加自定义Marker
-        addCustomMarkersToMap(userInfos);
     }
 
     /**
@@ -268,9 +264,7 @@ public class GrantGridReportActivity extends BaseMvpActivity<GGRPresenter> imple
     private void addCustomMarkersToMap(List<GridreportIndexBean.GridNowInfo> data) {
         if (data == null)
             return;
-        if (isMapLoadSuccess && isMapDataLoadSuccess) {
-            AsyncTask.THREAD_POOL_EXECUTOR.execute(new MyRunnable(data, this));
-        }
+        AsyncTask.THREAD_POOL_EXECUTOR.execute(new MyRunnable(data, this));
     }
 
 
@@ -297,16 +291,17 @@ public class GrantGridReportActivity extends BaseMvpActivity<GGRPresenter> imple
         tvArea.setText(bean.getEvent_name());
         addTabView(bean);
         popWondowData.clear();
+        /*********** 部门 **********/
         if (bean.getPart() != null && bean.getPart().size() > 0) {
             for (GridreportIndexBean.GridPartBean gridPartBean : bean.getPart()) {
                 popWondowData.add(new AreaSelectPopWindow.PopWindowDataBean(gridPartBean.getPart_id(), gridPartBean.getPart_name()));
             }
         }
+        /*********** 网格员 **********/
         if (bean.getGrid_now_info() != null && bean.getGrid_now_info().size() > 0) {
             if (isFinishing()) {
                 return;
             }
-            isMapDataLoadSuccess = true;
             userInfos = bean.getGrid_now_info();
             addCustomMarkersToMap(userInfos);
         }

@@ -71,6 +71,7 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
     private String name;
     private StatSelectionDateWindow selectionDateWindow;
     private RxPermissions mRxPermissions;
+    private PolylineOptions polylineOptions;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -137,6 +138,7 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
         if (aMap == null) {
             aMap = mMapView.getMap();
             aMap.setOnMapLoadedListener(this);
+            polylineOptions = new PolylineOptions().color(getResources().getColor(R.color.green)).width(7).setDottedLine(false).geodesic(false);
         }
     }
 
@@ -173,85 +175,18 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
      *
      * @param data
      */
-    private void setUpMap(List<EnterpriseTrailBean.TrailInfo> data) {
+    private void setUpMap(EnterpriseTrailBean.TrailInfo data) {
         //起点位置和  地图界面大小控制
 //        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(list.get(0), 7));
         aMap.setMapTextZIndex(2);
         // 绘制一条带有纹理的直线
-        //手动数据测试
-        //.add(new LatLng(26.57, 106.71),new LatLng(26.14,105.55),new LatLng(26.58, 104.82), new LatLng(30.67, 104.06))
         //添加到地图
-        aMap.addPolyline(new PolylineOptions().addAll(list).color(getResources().getColor(R.color.green)).width(7).setDottedLine(false).geodesic(false));
-        if (list.size() > 2) {
-            addMarker(data);
-        } else if (list.size() == 1) {
-            //起点图标
-            aMap.addMarker(new MarkerOptions()
-                    .position(list.get(0))
-                    .icon(customizeMarkerIconLastAndFirst(data.get(0), "起点")));
-        } else if (list.size() == 2) {
-            //起点图标
-            aMap.addMarker(new MarkerOptions()
-                    .position(list.get(0))
-                    .icon(customizeMarkerIconLastAndFirst(data.get(0), "起点")));
+        if (polylineOptions!=null){
+            polylineOptions.add(data.getLatLng());
+        }
 
-            //终点坐标
-            if (list.size() > 0) {
-                aMap.addMarker(new MarkerOptions()
-                        .position(list.get(list.size() - 1))
-                        .icon(customizeMarkerIconLastAndFirst(data.get(data.size() - 1), "终点")));
-            }
-        }
-        if (list != null && list.size() > 0) {
-            moveMapToPosition(list.get(0));
-        }
 //        LatLngBounds bounds = getLatLngBounds();
 //        CameraUpdateFactory.newLatLngBounds(bounds, 30);
-    }
-
-    /**
-     * 绘制marker
-     *
-     * @param data
-     */
-    private void addMarker(List<EnterpriseTrailBean.TrailInfo> data) {
-        if (data!=null&&data.size()>0){
-            for (int i = 1; i < list.size() - 1; i++) {
-                //起点图标
-                aMap.addMarker(new MarkerOptions()
-                        .position(list.get(i))
-                        .anchor(0.5f, 0.15f)  // icon偏移量
-//                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_success)));
-                        .icon(customizeMarkerIcon(data.get(i))));
-            }
-
-            //起点图标
-            if (list.size()>0){
-                aMap.addMarker(new MarkerOptions()
-                        .position(list.get(0))
-                        .icon(customizeMarkerIconLastAndFirst(data.get(0), "起点")));
-            }
-
-            //终点坐标
-            if (list.size() > 0) {
-                aMap.addMarker(new MarkerOptions()
-                        .position(list.get(list.size() - 1))
-                        .icon(customizeMarkerIconLastAndFirst(data.get(data.size() - 1), "终点")));
-            }
-        }
-    }
-
-    private BitmapDescriptor customizeMarkerIcon(EnterpriseTrailBean.TrailInfo trailInfo) {
-        final View markerView = LayoutInflater.from(mContext).inflate(R.layout.view_with_time, null);
-        TextView time = markerView.findViewById(R.id.tv_time);
-        String signTime = trailInfo.getSign_time();
-        time.setText(DateUtil.getFormatMapTime(signTime));
-        BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(convertViewToBitmap(markerView));
-        if (bitmapDescriptor != null) {
-            return bitmapDescriptor;
-        } else {
-            return BitmapDescriptorFactory.fromResource(R.mipmap.ic_success);
-        }
     }
 
     private BitmapDescriptor customizeMarkerIconLastAndFirst(EnterpriseTrailBean.TrailInfo trailInfo, String str) {
@@ -261,6 +196,19 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
         String signTime = trailInfo.getSign_time();
         time.setText(DateUtil.getFormatMapTime(signTime));
         tv_title.setText(str);
+        BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(convertViewToBitmap(markerView));
+        if (bitmapDescriptor != null) {
+            return bitmapDescriptor;
+        } else {
+            return BitmapDescriptorFactory.fromResource(R.mipmap.ic_success);
+        }
+    }
+
+    private BitmapDescriptor customizeMarkerIcon(EnterpriseTrailBean.TrailInfo trailInfo) {
+        final View markerView = LayoutInflater.from(mContext).inflate(R.layout.view_with_time, null);
+        TextView time = markerView.findViewById(R.id.tv_time);
+        String signTime = trailInfo.getSign_time();
+        time.setText(DateUtil.getFormatMapTime(signTime));
         BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(convertViewToBitmap(markerView));
         if (bitmapDescriptor != null) {
             return bitmapDescriptor;
@@ -347,9 +295,33 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
         public void run() {
             if (mData != null && mData.size() > 0) {
                 for (EnterpriseTrailBean.TrailInfo trailInfo : mData) {
-                    list.add(trailInfo.getLatLng());
+                    setUpMap(trailInfo);
                 }
-                setUpMap(mData);
+
+                if (mData.size() > 1) {
+                    //起点图标
+                    aMap.addMarker(new MarkerOptions()
+                            .position(mData.get(0).getLatLng())
+                            .icon(customizeMarkerIconLastAndFirst(mData.get(0), "起点")));
+
+                    //终点坐标
+                    if (mData.size() > 0) {
+                        aMap.addMarker(new MarkerOptions()
+                                .position(mData.get(mData.size() - 1).getLatLng())
+                                .icon(customizeMarkerIconLastAndFirst(mData.get(mData.size() - 1), "终点")));
+                    }
+                } else if (mData.size() == 1) {
+                    //起点图标
+                    aMap.addMarker(new MarkerOptions()
+                            .position(mData.get(0).getLatLng())
+                            .icon(customizeMarkerIconLastAndFirst(mData.get(0), "起点")));
+                }
+
+
+                if (mData != null && mData.size() > 0) {
+                    moveMapToPosition(mData.get(0).getLatLng());
+                }
+                mMapView.getMap().addPolyline(polylineOptions);
             }
         }
     }
