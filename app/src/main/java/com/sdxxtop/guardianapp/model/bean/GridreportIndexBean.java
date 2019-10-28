@@ -16,7 +16,7 @@ public class GridreportIndexBean {
     private int grid_distance;
     private int grid_sign_time;
     private int grid_now_count;
-    private String  event_name;
+    private String event_name;
 
     private List<GridPartBean> part;
     private List<GridNowInfo> grid_now_info;
@@ -77,7 +77,7 @@ public class GridreportIndexBean {
         this.part = part;
     }
 
-    public static class GridPartBean{
+    public static class GridPartBean {
         private int part_id;
         private String part_name;
 
@@ -97,7 +97,8 @@ public class GridreportIndexBean {
             this.part_name = part_name;
         }
     }
-    public static class GridNowInfo{
+
+    public static class GridNowInfo {
         private int userid;
         private int part_id;
         private String name;
@@ -106,11 +107,12 @@ public class GridreportIndexBean {
         private String longitude;
 
         public LatLng getLatlng() {
-            if (TextUtils.isEmpty(longitude)){
-                return new LatLng(0,0);
+            if (TextUtils.isEmpty(longitude)) {
+                return new LatLng(0, 0);
             }
-            return new LatLng(Double.parseDouble(longitude.split(",")[1]),Double.parseDouble(longitude.split(",")[0]));
+            return new LatLng(Double.parseDouble(longitude.split(",")[1]), Double.parseDouble(longitude.split(",")[0]));
         }
+
         public int getUserid() {
             return userid;
         }

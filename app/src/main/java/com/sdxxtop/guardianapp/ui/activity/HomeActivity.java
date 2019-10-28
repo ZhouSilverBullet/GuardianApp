@@ -68,6 +68,7 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
     private boolean isEnabledNLS = false;
     private static final String ENABLED_NOTIFICATION_LISTENERS = "enabled_notification_listeners";
     private static final String ACTION_NOTIFICATION_LISTENER_SETTINGS = "android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS";
+    private AlertDialog dialog;   // 消息通知提示框
 
     @Override
     protected int getLayout() {
@@ -270,7 +271,11 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
         super.onResume();
         isEnabledNLS = isEnabled();
         if (!isEnabledNLS) {
-            showConfirmDialog();
+            if (dialog==null){
+                showConfirmDialog();
+            }else{
+                dialog.show();
+            }
         }
 //        clearAllNotifications();
     }
@@ -407,8 +412,11 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
         return false;
     }
 
+    /**
+     * 消息通知 弹框
+     */
     private void showConfirmDialog() {
-        AlertDialog dialog = new AlertDialog.Builder(this)
+        dialog = new AlertDialog.Builder(this)
                 .setMessage("请打开通知使用权,确保消息能够准时送达!")
                 .setTitle("通知使用权")
                 .setCancelable(true)
@@ -416,7 +424,7 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.dismiss();
-                                openNotificationAccess();
+                                startActivity(new Intent(ACTION_NOTIFICATION_LISTENER_SETTINGS));  //  跳转系统开启通知服务
                             }
                         })
                 .setNegativeButton(android.R.string.cancel,
@@ -427,10 +435,6 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
                         })
                 .create();
         dialog.show();
-    }
-
-    private void openNotificationAccess() {
-        startActivity(new Intent(ACTION_NOTIFICATION_LISTENER_SETTINGS));
     }
 
     public void toggleNotificationListenerService(Context context) {

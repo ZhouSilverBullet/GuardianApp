@@ -321,10 +321,7 @@ public class GrantGridReportActivity extends BaseMvpActivity<GGRPresenter> imple
             if (mData != null && mData.size() > 0) {
                 LatLngBounds.Builder builder = LatLngBounds.builder();
                 for (int i = 0; i < mData.size(); i++) {
-                    if (activityDef.get() == null || activityDef.get().isFinishing()) {
-                        return;
 //                builder.include(markerImgLoad.getLatLng(data.get(i).getLongitude()));
-                    }
                     Log.e("循环列表", "'" + mData.get(i).toString());
                     markerImgLoad.addCustomMarker(mData.get(i), new MarkerSign(i), new MarkerImgLoad.OnMarkerListener() {
                         @Override
@@ -336,7 +333,7 @@ public class GrantGridReportActivity extends BaseMvpActivity<GGRPresenter> imple
                     });
 //            mAMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 30));
                 }
-                moveMapToPosition(markerImgLoad.getLatLng(mData.get(0).getLongitude()));
+                moveMapToPosition(mData.get(0).getLatlng());
             }
         }
     }
