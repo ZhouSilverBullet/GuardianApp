@@ -114,7 +114,7 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
                 if (aBoolean) {
                     //TODO  猎鹰相关关闭
 //                    startPatrolService();
-//                    mPresenter.startUploadingPoint();
+                    mPresenter.startUploadingPoint();
                 }
             }
         });
