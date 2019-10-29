@@ -2,6 +2,7 @@ package com.sdxxtop.guardianapp.ui.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -138,7 +139,7 @@ public class PatrolPathActivity extends BaseMvpActivity<PatrolPathPresenter> imp
         if (aMap == null) {
             aMap = mMapView.getMap();
             aMap.setOnMapLoadedListener(this);
-            polylineOptions = new PolylineOptions().color(getResources().getColor(R.color.green)).width(7).setDottedLine(false).geodesic(false);
+            polylineOptions = new PolylineOptions().color(Color.parseColor("#32B16C")).width(7).setDottedLine(false).geodesic(false);
         }
     }
 
