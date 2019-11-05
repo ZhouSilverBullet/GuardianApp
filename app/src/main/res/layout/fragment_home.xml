@@ -230,7 +230,7 @@
                 android:layout_marginTop="11dp"
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="160dp" />
+                android:layout_height="wrap_content" />
 
             <androidx.cardview.widget.CardView
                 app:cardElevation="3dp"
