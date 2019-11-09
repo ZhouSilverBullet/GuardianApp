@@ -40,6 +40,7 @@ import com.sdxxtop.guardianapp.di.component.AppComponent;
 import com.sdxxtop.guardianapp.di.component.DaggerAppComponent;
 import com.sdxxtop.guardianapp.di.module.AppModule;
 import com.sdxxtop.guardianapp.service.ForegroundService;
+import com.sdxxtop.sdkagora.AgoraSession;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 
@@ -67,6 +68,8 @@ public class App extends BaseApp {
         initAMapTrackClient();
         startAlarm();
 //        initWebViewServer();
+
+        AgoraSession.init(this);
     }
 
     private void initWebViewServer() {
@@ -128,6 +131,7 @@ public class App extends BaseApp {
     public void onTerminate() {
         super.onTerminate();
         AppSession.getInstance().clear();
+        AgoraSession.onTerminate();
     }
 
     //static 代码段可以防止内存泄露

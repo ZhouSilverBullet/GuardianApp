@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.sdxxtop.openlive.activities.AgoraTestActivity">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="60dp" />
+
+    <EditText
+        android:id="@+id/et_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入登录id" />
+
+    <Button
+        android:text="登录"
+        android:onClick="onLoginClick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:text="登出"
+        android:onClick="onLogoutClick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/et_call"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入呼叫的id" />
+
+    <Button
+        android:text="呼叫"
+        android:onClick="onCallClick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <EditText
+        android:id="@+id/et_live"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:text="开始直播"
+        android:onClick="onLiveClick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

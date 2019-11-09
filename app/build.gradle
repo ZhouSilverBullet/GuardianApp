@@ -152,4 +152,5 @@ dependencies {
     implementation 'com.haibin:calendarview:3.6.6'
     //饺子播放器
     implementation 'cn.jzvd:jiaozivideoplayer:7.0.5'
+    implementation project(path: ':sdk_agora')
 }
