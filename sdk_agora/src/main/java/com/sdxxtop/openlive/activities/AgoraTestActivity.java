@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.sdxxtop.imagora.utils.MessageUtil;
 import com.sdxxtop.openlive.activities.presenter.im.AgoraIMLoginPresenter;
 import com.sdxxtop.openlive.activities.presenter.im.IAgoraIMLoginView;
@@ -17,7 +19,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import io.agora.rtc.Constants;
 
-public class AgoraTestActivity extends RtcBaseActivity implements IAgoraIMLoginView, IAgoraLiveView {
+public class AgoraTestActivity extends BaseActivity implements IAgoraIMLoginView, IAgoraLiveView {
 
     private String[] PERMISSIONS = {
             Manifest.permission.RECORD_AUDIO,

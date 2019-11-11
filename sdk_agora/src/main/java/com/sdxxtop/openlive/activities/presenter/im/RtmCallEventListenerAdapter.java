@@ -84,38 +84,6 @@ public class RtmCallEventListenerAdapter implements RtmCallEventListener {
         AgoraSession.getCallEventManager().onRemoteInvitationReceived(remoteInvitation);
     }
 
-    private void refused(RemoteInvitation remoteInvitation) {
-        if (rtmClient != null) {
-            rtmClient.getRtmCallManager().refuseRemoteInvitation(remoteInvitation, new ResultCallback<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-
-                }
-
-                @Override
-                public void onFailure(ErrorInfo errorInfo) {
-
-                }
-            });
-        }
-    }
-
-    private void accepted(RemoteInvitation remoteInvitation) {
-        if (rtmClient != null) {
-            rtmClient.getRtmCallManager().acceptRemoteInvitation(remoteInvitation, new ResultCallback<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-
-                }
-
-                @Override
-                public void onFailure(ErrorInfo errorInfo) {
-
-                }
-            });
-        }
-    }
-
     @Override
     public void onRemoteInvitationAccepted(RemoteInvitation remoteInvitation) {
         Log.e(TAG, "onRemoteInvitationAccepted: ");

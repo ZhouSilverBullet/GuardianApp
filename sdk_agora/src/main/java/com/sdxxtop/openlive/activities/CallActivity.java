@@ -37,7 +37,7 @@ public class CallActivity extends AppCompatActivity {
         userId = getIntent().getStringExtra("userId");
 
         localInvitation = mRtmClient.getRtmCallManager().createLocalInvitation(userId);
-        localInvitation.setContent("1111111111111111111");
+        localInvitation.setContent("{\"client\":\"111\"}");
         mRtmClient.getRtmCallManager().sendLocalInvitation(localInvitation, new ResultCallback<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
