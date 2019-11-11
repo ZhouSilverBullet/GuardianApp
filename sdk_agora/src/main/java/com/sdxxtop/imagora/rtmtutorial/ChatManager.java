@@ -64,6 +64,7 @@ public class ChatManager {
             if (BuildConfig.DEBUG) {
                 mRtmClient.setParameters("{\"rtm.log_filter\": 65535}");
             }
+//            mRtmClient.setParameters("{\"che.audio.live_for_comm\":true}");
         } catch (Exception e) {
             Log.e(TAG, Log.getStackTraceString(e));
             throw new RuntimeException("NEED TO check rtm sdk init fatal error\n" + Log.getStackTraceString(e));

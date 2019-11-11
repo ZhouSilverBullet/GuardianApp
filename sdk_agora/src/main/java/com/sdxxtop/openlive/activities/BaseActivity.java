@@ -13,6 +13,7 @@ import com.sdxxtop.openlive.AgoraAppLiveConfig;
 import com.sdxxtop.openlive.rtc.EventHandler;
 import com.sdxxtop.openlive.rtc.EngineConfig;
 import com.sdxxtop.openlive.stats.StatsManager;
+import com.sdxxtop.openlive.utils.SpUtil;
 import com.sdxxtop.openlive.utils.WindowUtil;
 import com.sdxxtop.sdkagora.AgoraSession;
 
@@ -26,7 +27,7 @@ public abstract class BaseActivity extends AppCompatActivity implements EventHan
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        WindowUtil.hideWindowStatusBar(getWindow());
+//        WindowUtil.hideWindowStatusBar(getWindow());
         setGlobalLayoutListener();
         getDisplayMetrics();
         initStatusBarHeight();
@@ -150,5 +151,9 @@ public abstract class BaseActivity extends AppCompatActivity implements EventHan
 
     public void showToast(String text) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+    }
+
+    public int getToUserId() {
+        return SpUtil.getInt("user_id", 0);
     }
 }

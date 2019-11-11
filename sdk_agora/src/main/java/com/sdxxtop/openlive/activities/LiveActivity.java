@@ -1,15 +1,17 @@
 package com.sdxxtop.openlive.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
@@ -22,6 +24,8 @@ import com.sdxxtop.imagora.model.MessageBean;
 import com.sdxxtop.imagora.rtmtutorial.AgoraIMConfig;
 import com.sdxxtop.imagora.rtmtutorial.ChatManager;
 import com.sdxxtop.imagora.utils.MessageUtil;
+import com.sdxxtop.openlive.activities.presenter.im.AgoraIMLoginPresenter;
+import com.sdxxtop.openlive.activities.presenter.im.IAgoraIMLoginView;
 import com.sdxxtop.openlive.stats.LocalStatsData;
 import com.sdxxtop.openlive.stats.RemoteStatsData;
 import com.sdxxtop.openlive.stats.StatsData;
@@ -45,17 +49,19 @@ import io.agora.rtm.RtmClientListener;
 import io.agora.rtm.RtmMessage;
 import io.agora.rtm.RtmStatusCode;
 
-public class LiveActivity extends RtcBaseActivity {
+public class LiveActivity extends RtcBaseActivity implements IAgoraIMLoginView {
+    public static final String MESSAGE_FINISH = "69b953e06abe399e018e2d0657bf26a4";
     private static final String TAG = LiveActivity.class.getSimpleName();
 
     private VideoGridContainer mVideoGridContainer;
     private ImageView mMuteAudioBtn;
-    private ImageView mMuteVideoBtn;
 
     private VideoEncoderConfiguration.VideoDimensions mVideoDimension;
+    private int uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mUserId = getIntent().getStringExtra(MessageUtil.INTENT_EXTRA_USER_ID);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_room);
         initUI();
@@ -76,16 +82,8 @@ public class LiveActivity extends RtcBaseActivity {
                 Constants.CLIENT_ROLE_AUDIENCE);
         boolean isBroadcaster = (role == Constants.CLIENT_ROLE_BROADCASTER);
 
-        mMuteVideoBtn = findViewById(R.id.live_btn_mute_video);
-        mMuteVideoBtn.setActivated(isBroadcaster);
-
         mMuteAudioBtn = findViewById(R.id.live_btn_mute_audio);
         mMuteAudioBtn.setActivated(isBroadcaster);
-
-        ImageView beautyBtn = findViewById(R.id.live_btn_beautification);
-        beautyBtn.setActivated(true);
-        rtcEngine().setBeautyEffectOptions(beautyBtn.isActivated(),
-                com.sdxxtop.openlive.Constants.DEFAULT_BEAUTY_OPTIONS);
 
         mVideoGridContainer = findViewById(R.id.live_video_grid_layout);
         mVideoGridContainer.setStatsManager(statsManager());
@@ -109,12 +107,12 @@ public class LiveActivity extends RtcBaseActivity {
 
     @Override
     protected void onGlobalLayoutCompleted() {
-        RelativeLayout topLayout = findViewById(R.id.live_room_top_layout);
-        RelativeLayout.LayoutParams params =
-                (RelativeLayout.LayoutParams) topLayout.getLayoutParams();
-        params.height = mStatusBarHeight + topLayout.getMeasuredHeight();
-        topLayout.setLayoutParams(params);
-        topLayout.setPadding(0, mStatusBarHeight, 0, 0);
+//        RelativeLayout topLayout = findViewById(R.id.live_room_top_layout);
+//        FrameLayout.LayoutParams params =
+//                (FrameLayout.LayoutParams) topLayout.getLayoutParams();
+//        params.height = mStatusBarHeight + topLayout.getMeasuredHeight();
+//        topLayout.setLayoutParams(params);
+//        topLayout.setPadding(0, mStatusBarHeight, 0, 0);
     }
 
     private void startBroadcast() {
@@ -134,6 +132,8 @@ public class LiveActivity extends RtcBaseActivity {
     @Override
     public void onJoinChannelSuccess(String channel, int uid, int elapsed) {
         // Do nothing at the moment
+        Log.e(TAG, "uid : " + uid);
+        this.uid = uid;
     }
 
     @Override
@@ -267,7 +267,7 @@ public class LiveActivity extends RtcBaseActivity {
     }
 
     public void onMuteAudioClicked(View view) {
-        if (!mMuteVideoBtn.isActivated()) return;
+//        if (!mMuteVideoBtn.isActivated()) return;
 
         rtcEngine().muteLocalAudioStream(view.isActivated());
         view.setActivated(!view.isActivated());
@@ -302,7 +302,13 @@ public class LiveActivity extends RtcBaseActivity {
     private RtmClientListener mClientListener;
     private RtmChannel mRtmChannel;
 
+    AgoraIMLoginPresenter agoraIMLoginPresenter;
+
     private void init() {
+
+        agoraIMLoginPresenter = new AgoraIMLoginPresenter(this);
+
+
         mChatManager = AgoraIMConfig.the().getChatManager();
         mRtmClient = mChatManager.getRtmClient();
         mClientListener = new MyRtmClientListener();
@@ -310,7 +316,7 @@ public class LiveActivity extends RtcBaseActivity {
 
         Intent intent = getIntent();
         mIsPeerToPeerMode = intent.getBooleanExtra(MessageUtil.INTENT_EXTRA_IS_PEER_MODE, true);
-        mUserId = intent.getStringExtra(MessageUtil.INTENT_EXTRA_USER_ID);
+
         String targetName = intent.getStringExtra(MessageUtil.INTENT_EXTRA_TARGET_NAME);
 
         mChannelName = targetName;
@@ -325,6 +331,17 @@ public class LiveActivity extends RtcBaseActivity {
         mRecyclerView.setAdapter(mMessageAdapter);
 
         mMsgEditText = findViewById(R.id.et_message);
+        mMsgEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    onClickSend();
+                    return true;
+                }
+                return false;
+            }
+        });
+
     }
 
     /**
@@ -356,12 +373,23 @@ public class LiveActivity extends RtcBaseActivity {
                     @Override
                     public void run() {
                         Log.e(TAG, "join channel failed ---> " + errorInfo);
-                        showToast(getString(R.string.join_channel_failed)+ "--" + errorInfo);
+                        if (errorInfo != null) {
+                            if (errorInfo.getErrorCode() == 2) {
+                                getChannelMemberList();
+                            }
+                        } else {
+                            showToast(getString(R.string.join_channel_failed) + "--" + errorInfo);
+                        }
 //                        finish();
                     }
                 });
             }
         });
+    }
+
+    @Override
+    public Context getContext() {
+        return getApplicationContext();
     }
 
 
@@ -383,7 +411,16 @@ public class LiveActivity extends RtcBaseActivity {
                 public void run() {
                     String account = fromMember.getUserId();
                     String msg = message.getText();
-                    Log.i(TAG, "onMessageReceived account = " + account + " msg = " + msg);
+
+                    if (msg.contains(MESSAGE_FINISH)) {
+                        if ((MESSAGE_FINISH + uid).equals(msg)) {
+                            finish();
+                            return;
+                        }
+                        return;
+                    }
+
+                    Log.e(TAG, "onMessageReceived account = " + account + " msg = " + msg);
                     MessageBean messageBean = new MessageBean(account, msg, false);
                     messageBean.setBackground(getMessageColor(account));
                     mMessageBeanList.add(messageBean);
@@ -439,6 +476,12 @@ public class LiveActivity extends RtcBaseActivity {
                     public void run() {
                         mChannelMemberCount = responseInfo.size();
 //                        refreshChannelTitle();
+
+                        for (RtmChannelMember rtmChannelMember : responseInfo) {
+                            String userId = rtmChannelMember.getUserId();
+
+                            Log.e(TAG, "getMembers : " + userId + "===" + rtmChannelMember.getChannelId());
+                        }
                     }
                 });
             }
@@ -481,8 +524,9 @@ public class LiveActivity extends RtcBaseActivity {
                 @Override
                 public void run() {
                     String content = message.getText();
+                    Log.i(TAG, "onMessageReceived222 content = " + content);
                     if (peerId.equals(mPeerId)) {
-                        MessageBean messageBean = new MessageBean(peerId, content,false);
+                        MessageBean messageBean = new MessageBean(peerId, content, false);
                         messageBean.setBackground(getMessageColor(peerId));
                         mMessageBeanList.add(messageBean);
                         mMessageAdapter.notifyItemRangeChanged(mMessageBeanList.size(), 1);
@@ -500,10 +544,10 @@ public class LiveActivity extends RtcBaseActivity {
         }
     }
 
-    public void onClickSend(View v) {
+    public void onClickSend() {
         String msg = mMsgEditText.getText().toString();
         if (!msg.equals("")) {
-            MessageBean messageBean = new MessageBean(mUserId, msg, true);
+            MessageBean messageBean = new MessageBean(mUserId, msg, false);
             mMessageBeanList.add(messageBean);
             mMessageAdapter.notifyItemRangeChanged(mMessageBeanList.size(), 1);
             mRecyclerView.scrollToPosition(mMessageBeanList.size() - 1);
@@ -549,21 +593,26 @@ public class LiveActivity extends RtcBaseActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-
+    public void onBackPressed() {
         mRtmChannel.leave(new ResultCallback<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+
+                        if (agoraIMLoginPresenter != null) {
+                            agoraIMLoginPresenter.doLogout();
+                            agoraIMLoginPresenter.doLogin(String.valueOf(getToUserId()));
+                        }
+
                         leaveAndReleaseChannel();
 
                         mChatManager.unregisterListener(mClientListener);
 
                         Log.e(TAG, "leave channel success ---> " + aVoid);
+
+                        backPressed();
                     }
                 });
             }
@@ -571,8 +620,28 @@ public class LiveActivity extends RtcBaseActivity {
             @Override
             public void onFailure(ErrorInfo errorInfo) {
                 Log.e(TAG, "leave channel failed ---> " + errorInfo);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        leaveAndReleaseChannel();
+
+                        mChatManager.unregisterListener(mClientListener);
+
+                        backPressed();
+                    }
+                });
             }
         });
+    }
+
+    private void backPressed() {
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     /**

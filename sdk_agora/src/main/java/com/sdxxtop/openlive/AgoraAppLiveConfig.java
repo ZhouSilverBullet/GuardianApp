@@ -27,6 +27,7 @@ public class AgoraAppLiveConfig {
         try {
             mRtcEngine = RtcEngine.create(getApplicationContext(), application.getString(R.string.private_app_id), mHandler);
             mRtcEngine.setChannelProfile(io.agora.rtc.Constants.CHANNEL_PROFILE_LIVE_BROADCASTING);
+            mRtcEngine.enableWebSdkInteroperability(true);
             mRtcEngine.enableVideo();
             mRtcEngine.setLogFile(FileUtil.initializeLogFile(application));
         } catch (Exception e) {

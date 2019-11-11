@@ -21,11 +21,14 @@ import android.view.ViewAnimationUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
 import com.luck.picture.lib.permissions.RxPermissions;
 import com.orhanobut.logger.Logger;
 import com.sdxxtop.guardianapp.R;
+import com.sdxxtop.guardianapp.app.Constants;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.model.bean.ArticleIndexBean;
 import com.sdxxtop.guardianapp.model.bean.InitBean;
@@ -43,16 +46,26 @@ import com.sdxxtop.guardianapp.ui.fragment.WorkFragment;
 import com.sdxxtop.guardianapp.ui.widget.bottom_tab.CustomBottomTab;
 import com.sdxxtop.guardianapp.utils.ExcludePhoneModel;
 import com.sdxxtop.guardianapp.utils.ReflectUtils;
+import com.sdxxtop.guardianapp.utils.SpUtil;
+import com.sdxxtop.openlive.activities.presenter.im.AgoraIMLoginPresenter;
+import com.sdxxtop.openlive.activities.presenter.im.IAgoraIMLoginView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.appcompat.app.AlertDialog;
 import butterknife.BindView;
 import io.reactivex.functions.Consumer;
 import me.yokeyword.fragmentation.SupportFragment;
 
-public class HomeActivity extends BaseMvpActivity<HomePresenter> implements HomeContract.IView {
+public class HomeActivity extends BaseMvpActivity<HomePresenter> implements HomeContract.IView, IAgoraIMLoginView {
+
+    private String[] PERMISSIONS = {
+            Manifest.permission.RECORD_AUDIO,
+            Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+    };
 
     @BindView(R.id.ahn_home_navigation)
     AHBottomNavigation mAHBottomNavigation;
@@ -69,6 +82,7 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
     private static final String ENABLED_NOTIFICATION_LISTENERS = "enabled_notification_listeners";
     private static final String ACTION_NOTIFICATION_LISTENER_SETTINGS = "android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS";
     private AlertDialog dialog;   // 消息通知提示框
+    private AgoraIMLoginPresenter loginPresenter;
 
     @Override
     protected int getLayout() {
@@ -97,18 +111,15 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
     @Override
     protected void initView() {
 //        initAHNavigation();
+
+        loginPresenter = new AgoraIMLoginPresenter(this);
+        loginPresenter.doLogin(String.valueOf(SpUtil.getInt(Constants.USER_ID, 0)));
+
         switchFragment(0);
 
         mRxPermissions = new RxPermissions(this);
-        mRxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Consumer<Boolean>() {
-            @Override
-            public void accept(Boolean aBoolean) throws Exception {
 
-            }
-        });
-
-        mRxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION).subscribe(new Consumer<Boolean>() {
+        mRxPermissions.request(PERMISSIONS).subscribe(new Consumer<Boolean>() {
             @Override
             public void accept(Boolean aBoolean) throws Exception {
                 if (aBoolean) {
@@ -444,5 +455,18 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
 
         pm.setComponentEnabledSetting(new ComponentName(context, NotificationMonitor.class),
                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+    }
+
+    @Override
+    public Context getContext() {
+        return getApplicationContext();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (loginPresenter != null) {
+            loginPresenter.doLogout();
+        }
     }
 }

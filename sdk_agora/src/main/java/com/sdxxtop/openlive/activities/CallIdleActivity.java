@@ -19,6 +19,7 @@ import com.sdxxtop.sdkagora.RtmCallEventCallback;
 
 import io.agora.rtc.Constants;
 import io.agora.rtm.ErrorInfo;
+import io.agora.rtm.LocalInvitation;
 import io.agora.rtm.RemoteInvitation;
 import io.agora.rtm.ResultCallback;
 import io.agora.rtm.RtmClient;
@@ -77,6 +78,28 @@ public class CallIdleActivity extends BaseActivity {
                     @Override
                     public void run() {
                         Log.e(TAG, "onRemoteInvitationAccepted remoteInvitation : " + remoteInvitation);
+                    }
+                });
+            }
+
+            @Override
+            public void onLocalInvitationFailure(LocalInvitation localInvitation, int i) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        showToast("本地通话失败");
+                        finish();
+                    }
+                });
+            }
+
+            @Override
+            public void onRemoteInvitationFailure(RemoteInvitation remoteInvitation, int i) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        showToast("连接可能超时");
+                        finish();
                     }
                 });
             }
