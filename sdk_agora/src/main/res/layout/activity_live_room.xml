@@ -1,13 +1,16 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
 
     <com.sdxxtop.openlive.ui.VideoGridContainer
         android:id="@+id/live_video_grid_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></com.sdxxtop.openlive.ui.VideoGridContainer>
+        android:layout_height="match_parent" />
 
     <RelativeLayout
+        android:fitsSystemWindows="true"
+        android:clipToPadding="true"
         android:id="@+id/live_room_top_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/live_top_layout_height"
@@ -29,6 +32,7 @@
 
         <RelativeLayout
             android:id="@+id/live_name_space_layout"
+            android:visibility="gone"
             android:layout_width="@dimen/live_name_board_width"
             android:layout_height="@dimen/live_name_board_height"
             android:layout_alignParentBottom="true"
@@ -101,16 +105,18 @@
         </RelativeLayout>
     </RelativeLayout>
 
-    <RelativeLayout
+
+    <LinearLayout
         android:id="@+id/bottom_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="@dimen/live_bottom_layout_margin"
         android:layout_marginStart="@dimen/live_bottom_layout_margin"
         android:layout_marginRight="@dimen/live_bottom_layout_margin"
         android:layout_marginEnd="@dimen/live_bottom_layout_margin"
-        android:layout_marginBottom="@dimen/live_bottom_layout_margin">
+        android:paddingBottom="@dimen/live_bottom_layout_margin">
 
         <ImageView
             android:id="@+id/live_btn_switch_camera"
@@ -124,8 +130,9 @@
             android:background="@drawable/rounded_bg_full_transparent"
             android:onClick="onSwitchCameraClicked" />
 
+
         <ImageView
-            android:id="@+id/live_btn_beautification"
+            android:id="@+id/live_btn_mute_audio"
             android:layout_width="@dimen/live_bottom_btn_size"
             android:layout_height="@dimen/live_bottom_btn_size"
             android:layout_toRightOf="@id/live_btn_switch_camera"
@@ -133,85 +140,42 @@
             android:layout_marginLeft="@dimen/live_bottom_btn_margin"
             android:layout_marginStart="@dimen/live_bottom_btn_margin"
             android:layout_centerVertical="true"
-            android:src="@drawable/btn_beauty"
-            android:scaleType="centerCrop"
-            android:background="@drawable/rounded_bg_full_transparent"
-            android:onClick="onBeautyClicked" />
-
-        <ImageView
-            android:id="@+id/live_btn_more"
-            android:layout_width="@dimen/live_bottom_btn_size"
-            android:layout_height="@dimen/live_bottom_btn_size"
-            android:layout_toRightOf="@id/live_btn_beautification"
-            android:layout_toEndOf="@id/live_btn_beautification"
-            android:layout_marginLeft="@dimen/live_bottom_btn_margin"
-            android:layout_marginStart="@dimen/live_bottom_btn_margin"
-            android:layout_centerVertical="true"
-            android:src="@drawable/btn_more"
-            android:scaleType="centerCrop"
-            android:background="@drawable/rounded_bg_full_transparent"
-            android:onClick="onMoreClicked" />
-
-        <ImageView
-            android:id="@+id/live_btn_push_stream"
-            android:layout_width="@dimen/live_bottom_btn_size"
-            android:layout_height="@dimen/live_bottom_btn_size"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/btn_push_stream"
-            android:scaleType="centerCrop"
-            android:background="@drawable/rounded_bg_full_transparent"
-            android:onClick="onPushStreamClicked" />
-
-        <ImageView
-            android:id="@+id/live_btn_mute_audio"
-            android:layout_width="@dimen/live_bottom_btn_size"
-            android:layout_height="@dimen/live_bottom_btn_size"
-            android:layout_toLeftOf="@id/live_btn_push_stream"
-            android:layout_toStartOf="@id/live_btn_push_stream"
-            android:layout_marginRight="@dimen/live_bottom_btn_margin"
-            android:layout_marginEnd="@dimen/live_bottom_btn_margin"
-            android:layout_centerVertical="true"
             android:src="@drawable/btn_mute_audio"
             android:scaleType="centerCrop"
             android:background="@drawable/rounded_bg_full_transparent"
             android:onClick="onMuteAudioClicked" />
 
-        <ImageView
-            android:id="@+id/live_btn_mute_video"
-            android:layout_width="@dimen/live_bottom_btn_size"
-            android:layout_height="@dimen/live_bottom_btn_size"
-            android:layout_toLeftOf="@id/live_btn_mute_audio"
-            android:layout_toStartOf="@id/live_btn_mute_audio"
-            android:layout_marginRight="@dimen/live_bottom_btn_margin"
-            android:layout_marginEnd="@dimen/live_bottom_btn_margin"
-            android:layout_centerVertical="true"
-            android:src="@drawable/btn_mute_video"
-            android:scaleType="centerCrop"
-            android:background="@drawable/rounded_bg_full_transparent"
-            android:onClick="onMuteVideoClicked" />
-    </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_et_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="5dp"
+            android:background="@color/transparent"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp">
 
-    <EditText
-        android:id="@+id/et_message"
-        android:layout_marginTop="60dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/et_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingTop="7dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="7dp"
+                android:textSize="16sp"
+                android:background="@drawable/et_messge_background"
+                android:imeOptions="actionSend" />
+        </RelativeLayout>
 
-    <Button
-        android:id="@+id/btn_submit"
-        android:layout_marginTop="60dp"
-        android:text="发送"
-        android:onClick="onClickSend"
-        android:layout_alignParentRight="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv"
         android:layout_width="300dp"
+        android:layout_gravity="bottom"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="60dp"
         android:layout_height="200dp" />
-</RelativeLayout>
+
+</FrameLayout>
