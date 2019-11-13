@@ -70,15 +70,18 @@ public class RtmCallEventListenerAdapter implements RtmCallEventListener {
     @Override
     public void onRemoteInvitationReceived(RemoteInvitation remoteInvitation) {
 
-        Log.e(TAG, "onRemoteInvitationReceived: ");
+        Log.e(TAG, "onRemoteInvitationReceived: "+ AgoraSession.isLiving);
 
-        Intent intent = new Intent(mContext, CallIdleActivity.class);
-        intent.putExtra("content", remoteInvitation.getContent());
-        if (!(mContext instanceof Activity)) {
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        Intent intent = new Intent(mContext, CallIdleActivity.class);
+//        intent.putExtra("content", remoteInvitation.getContent());
+//        if (!(mContext instanceof Activity)) {
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//        }
+//        mContext.startActivity(intent);
+
+        if (AgoraSession.isLiving) {
+            return;
         }
-        mContext.startActivity(intent);
-
         CallIdleActivity.startCallIdle(mContext, remoteInvitation);
 
         AgoraSession.getCallEventManager().onRemoteInvitationReceived(remoteInvitation);

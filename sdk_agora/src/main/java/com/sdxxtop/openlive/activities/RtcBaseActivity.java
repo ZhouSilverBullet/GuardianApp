@@ -28,8 +28,9 @@ public abstract class RtcBaseActivity extends BaseActivity implements EventHandl
     }
 
     public void joinChannel(int userId) {
+        String token_uid = getIntent().getStringExtra("token_uid");
         // Initialize token, extra info here before joining channel
-        rtcEngine().joinChannel(null, config().getChannelName(), "", userId);
+        rtcEngine().joinChannel(token_uid, config().getChannelName(), "", userId);
     }
 
     protected SurfaceView prepareRtcVideo(int uid, boolean local) {

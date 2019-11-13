@@ -56,10 +56,19 @@ public class AgoraIMLoginPresenter implements Handler.Callback {
         mHandler = new Handler(Looper.getMainLooper(), this);
     }
 
+    public void doLogin(String token, String userId) {
+        doLogin(token, userId, null);
+    }
+
+
+    Runnable runnable;
+
     /**
      * 登录通信
      */
-    public void doLogin(String userId) {
+    public void doLogin(String token, String userId, Runnable runnable) {
+
+        this.runnable = runnable;
         if (TextUtils.isEmpty(userId)) {
             showToast("登录不能为空");
             return;
@@ -77,10 +86,20 @@ public class AgoraIMLoginPresenter implements Handler.Callback {
 
             @Override
             public void onFailure(ErrorInfo errorInfo) {
-                Log.i(TAG, "login failed: " + errorInfo.getErrorCode());
+                Log.e(TAG, "login failed: " + errorInfo);
 
                 if (mHandler != null) {
                     mHandler.sendEmptyMessage(LOGIN_FAILURE);
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(mView.getContext(), "fail: " + errorInfo, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
+                if (runnable != null) {
+                    runnable.run();
                 }
             }
         });
@@ -110,11 +129,17 @@ public class AgoraIMLoginPresenter implements Handler.Callback {
         switch (msg.what) {
             case LOGIN_SUCCESS:
                 mIsInChat = true;
-                Toast.makeText(mView.getContext(), "login success", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mView.getContext(), "login success", Toast.LENGTH_SHORT).show();
+                if (runnable != null) {
+                    runnable.run();
+                }
                 break;
             case LOGIN_FAILURE:
                 mIsInChat = false;
-                Toast.makeText(mView.getContext(), mView.getContext().getString(R.string.login_failed), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mView.getContext(), mView.getContext().getString(R.string.login_failed), Toast.LENGTH_SHORT).show();
+                if (runnable != null) {
+                    runnable.run();
+                }
                 break;
             case LOGOUT:
                 mIsInChat = false;

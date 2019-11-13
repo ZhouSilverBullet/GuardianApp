@@ -39,6 +39,7 @@ import com.sdxxtop.guardianapp.app.base.BaseApp;
 import com.sdxxtop.guardianapp.di.component.AppComponent;
 import com.sdxxtop.guardianapp.di.component.DaggerAppComponent;
 import com.sdxxtop.guardianapp.di.module.AppModule;
+import com.sdxxtop.guardianapp.model.NetWorkSession;
 import com.sdxxtop.guardianapp.service.ForegroundService;
 import com.sdxxtop.sdkagora.AgoraSession;
 import com.umeng.analytics.MobclickAgent;
@@ -69,7 +70,11 @@ public class App extends BaseApp {
         startAlarm();
 //        initWebViewServer();
 
-        AgoraSession.init(this);
+        if (isZhidianProcess(getCurProcessName())) {
+            AgoraSession.init(this);
+        }
+
+        NetWorkSession.init(this, BuildConfig.DEBUG);
     }
 
     private void initWebViewServer() {
@@ -274,4 +279,25 @@ public class App extends BaseApp {
         }
         return false;
     }
+
+    public String getCurProcessName() {
+        try {
+            int pid = android.os.Process.myPid();
+            ActivityManager mActivityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+            for (ActivityManager.RunningAppProcessInfo appProcess : mActivityManager
+                    .getRunningAppProcesses()) {
+                if (appProcess.pid == pid) {
+                    return appProcess.processName;
+                }
+            }
+        } catch (Exception e) {
+            Log.e("getCurProcessName:", e.getMessage());
+        }
+        return getPackageName();
+    }
+
+    public boolean isZhidianProcess(String process) {
+        return getPackageName().equals(process);
+    }
+
 }

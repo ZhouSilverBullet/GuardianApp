@@ -164,6 +164,7 @@
                 android:paddingRight="10dp"
                 android:paddingBottom="7dp"
                 android:textSize="16sp"
+                android:singleLine="true"
                 android:background="@drawable/et_messge_background"
                 android:imeOptions="actionSend" />
         </RelativeLayout>

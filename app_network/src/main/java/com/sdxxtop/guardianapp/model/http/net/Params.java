@@ -70,6 +70,10 @@ public class Params {
         return NetUtil.getBase64Data(map);
     }
 
+    public String getNormalData() {
+        return NetUtil.getNormalData(map);
+    }
+
     public void putDeviceNo() {
         map.put("dn", DeviceUtil.getDeviceNo(context));
     }

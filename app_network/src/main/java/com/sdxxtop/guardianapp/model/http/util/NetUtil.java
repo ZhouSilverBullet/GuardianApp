@@ -72,6 +72,14 @@ public class NetUtil {
         return NetUtil.getBase64(jsonStr);
     }
 
+    public static String getNormalData(Map<String, String> map) {
+        if (map == null || map.size() == 0)
+            return "";
+        JSONObject json = new JSONObject(map);
+        String jsonStr = json.toString();
+        return jsonStr;
+    }
+
     //MD5加密算法
     private static String md5(String content) {
         byte[] hash;

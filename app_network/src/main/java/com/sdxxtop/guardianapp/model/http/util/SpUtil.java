@@ -1,9 +1,9 @@
-package com.sdxxtop.guardianapp.utils;
+package com.sdxxtop.guardianapp.model.http.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.sdxxtop.guardianapp.app.AppSession;
+import com.sdxxtop.guardianapp.model.NetWorkSession;
 
 import java.util.Map;
 
@@ -15,7 +15,7 @@ public class SpUtil {
     }
 
     private static SharedPreferences getSp() {
-        return AppSession.getInstance().getContext().getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
+        return NetWorkSession.getContext().getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
     }
 
 

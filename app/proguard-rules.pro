@@ -261,3 +261,9 @@
 -keep class tv.danmaku.ijk.media.player.** {*; }
 -dontwarn tv.danmaku.ijk.media.player.*
 -keep interface tv.danmaku.ijk.media.player.** { *; }
+
+
+-keep class io.agora.**{*;}
+-keep class com.sdxxtop.imagora.**{*;}
+-keep class com.sdxxtop.openlive.**{*;}
+-keep class com.sdxxtop.sdkagora.**{*;}

@@ -10,15 +10,20 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import com.sdxxtop.openlive.stats.StatsData;
 import com.sdxxtop.openlive.stats.StatsManager;
+import com.sdxxtop.openlive.ui.adpater.VideoAdapter;
+import com.sdxxtop.openlive.utils.VideoLayoutUtils;
 import com.sdxxtop.sdkagora.R;
 
 public class VideoGridContainer extends RelativeLayout implements Runnable {
-    private static final int MAX_USER = 4;
+    private static final int MAX_USER = 17;
     private static final int STATS_REFRESH_INTERVAL = 2000;
     private static final int STAT_LEFT_MARGIN = 34;
     private static final int STAT_TEXT_SIZE = 10;
@@ -28,6 +33,8 @@ public class VideoGridContainer extends RelativeLayout implements Runnable {
     private StatsManager mStatsManager;
     private Handler mHandler;
     private int mStatMarginBottom;
+    private VideoAdapter adapter;
+    private RecyclerView recyclerView;
 
     public VideoGridContainer(Context context) {
         super(context);
@@ -49,6 +56,13 @@ public class VideoGridContainer extends RelativeLayout implements Runnable {
         mStatMarginBottom = getResources().getDimensionPixelSize(
                 R.dimen.live_stat_margin_bottom);
         mHandler = new Handler(getContext().getMainLooper());
+
+        recyclerView = new RecyclerView(getContext());
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        adapter = new VideoAdapter(new ArrayList<>());
+        recyclerView.setAdapter(adapter);
+
+        addView(recyclerView, new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
     }
 
     public void setStatsManager(StatsManager manager) {
@@ -146,8 +160,24 @@ public class VideoGridContainer extends RelativeLayout implements Runnable {
     }
 
     private void requestGridLayout() {
-        removeAllViews();
-        layout(mUidList.size());
+//        removeAllViews();
+//        layout(mUidList.size());
+
+
+        handleAdapter();
+    }
+
+    private void handleAdapter() {
+        //清空
+//        adapter.replaceData(new ArrayList<>());
+        recyclerView.removeAllViews();
+
+        ArrayList<ViewGroup> list = new ArrayList<>();
+        for (int i = 0; i < mUidList.size(); i++) {
+            list.add(mUserViewList.get(mUidList.get(i)));
+        }
+
+        adapter.replaceData(list);
     }
 
     private void layout(int size) {
@@ -164,6 +194,7 @@ public class VideoGridContainer extends RelativeLayout implements Runnable {
         RelativeLayout.LayoutParams[] array =
                 new RelativeLayout.LayoutParams[size];
 
+        //这个 <= 4的情况
         for (int i = 0; i < size; i++) {
             if (i == 0) {
                 array[0] = new RelativeLayout.LayoutParams(
@@ -196,6 +227,11 @@ public class VideoGridContainer extends RelativeLayout implements Runnable {
                 array[3].addRule(RelativeLayout.RIGHT_OF, mUserViewList.get(mUidList.get(2)).getId());
             }
         }
+
+        //> 4 或 <= 9的情况
+//        VideoLayoutUtils.open4Status(width, height, array);
+
+
 
         return array;
     }

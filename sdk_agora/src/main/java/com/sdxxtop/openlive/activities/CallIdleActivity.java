@@ -10,6 +10,13 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.sdxxtop.guardianapp.model.bean.AuthDataBean;
+import com.sdxxtop.guardianapp.model.bean.RequestBean;
+import com.sdxxtop.guardianapp.model.bean.RtcRequestBean;
+import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
+import com.sdxxtop.guardianapp.model.http.net.Params;
+import com.sdxxtop.guardianapp.model.http.net.RetrofitHelper;
+import com.sdxxtop.guardianapp.model.http.util.RxUtils;
 import com.sdxxtop.imagora.rtmtutorial.AgoraIMConfig;
 import com.sdxxtop.imagora.utils.MessageUtil;
 import com.sdxxtop.openlive.utils.JsonUtil;
@@ -23,6 +30,8 @@ import io.agora.rtm.LocalInvitation;
 import io.agora.rtm.RemoteInvitation;
 import io.agora.rtm.ResultCallback;
 import io.agora.rtm.RtmClient;
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
 
 public class CallIdleActivity extends BaseActivity {
 
@@ -37,6 +46,9 @@ public class CallIdleActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        AgoraSession.isLiving = true;
+
         getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION_PANEL);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
         setContentView(R.layout.activity_call_idle);
@@ -140,9 +152,8 @@ public class CallIdleActivity extends BaseActivity {
                 public void onSuccess(Void aVoid) {
                     Log.e(TAG, "accepted onSuccess : ");
 
-                    String client = JsonUtil.getClient(mRemoteInvitation.getContent());
-                    gotoRoleActivity(client);
-                    finish();
+                    getRtcToken();
+
                 }
 
                 @Override
@@ -153,6 +164,32 @@ public class CallIdleActivity extends BaseActivity {
                 }
             });
         }
+    }
+
+    private void getRtcToken() {
+        Observable<RequestBean<RtcRequestBean>> observable = RetrofitHelper.getWapApi().postAudioRtc(String.valueOf(getToUserId()));
+        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<RtcRequestBean>() {
+            @Override
+            public void onSuccess(RtcRequestBean bean) {
+//                if (mView != null) {
+//                    mView.showData(bean);
+//                }
+                String client = JsonUtil.getClient(mRemoteInvitation.getContent());
+                String channel = bean.getChannel();
+                String token_uid = bean.getToken_uid();
+                String token_rtm = bean.getToken_rtm();
+                String token_account = bean.getToken_account();
+                gotoRoleActivity(client, channel, token_uid, token_rtm, token_account);
+                finish();
+            }
+
+            @Override
+            public void onFailure(int code, String error) {
+//                if (mView != null) {
+//                    mView.showError(error);
+//                }
+            }
+        });
     }
 
     @Override
@@ -176,14 +213,19 @@ public class CallIdleActivity extends BaseActivity {
         context.startActivity(intent);
     }
 
-    public void gotoRoleActivity(String client) {
+    public void gotoRoleActivity(String client, String channel, String token_uid, String token_rtm, String token_account) {
         Intent intent = new Intent(this, LiveActivity.class);
         //默认是主播
         intent.putExtra(MessageUtil.INTENT_EXTRA_TARGET_NAME, client);
-        intent.putExtra(MessageUtil.INTENT_EXTRA_USER_ID, "11");
+        intent.putExtra(MessageUtil.INTENT_EXTRA_USER_ID, String.valueOf(getToUserId()));
+
+        intent.putExtra("channel", channel);
+        intent.putExtra("token_uid", token_uid);
+        intent.putExtra("token_rtm", token_rtm);
+        intent.putExtra("token_account", token_account);
 
         intent.putExtra(com.sdxxtop.openlive.Constants.KEY_CLIENT_ROLE, Constants.CLIENT_ROLE_BROADCASTER);
-        config().setChannelName(client);
+        config().setChannelName(channel);
         startActivity(intent);
     }
 }

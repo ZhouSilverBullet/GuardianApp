@@ -5,6 +5,7 @@ import com.sdxxtop.guardianapp.app.Constants;
 import com.sdxxtop.guardianapp.model.NetWorkSession;
 import com.sdxxtop.guardianapp.model.http.api.ApiService;
 import com.sdxxtop.guardianapp.model.http.api.EnvirApiService;
+import com.sdxxtop.guardianapp.model.http.api.WapApiService;
 import com.sdxxtop.guardianapp.model.http.net.interceptor.NetInterceptor;
 import com.sdxxtop.guardianapp.model.http.net.interceptor.NoNetInterceptor;
 
@@ -23,6 +24,7 @@ public class RetrofitHelper {
     private static OkHttpClient okHttpClient;
     private static ApiService apiService;
     private static EnvirApiService sEnvirApiService;
+    private static WapApiService sWapApiService;
 
     private static OkHttpClient okHttpLongClient;
 
@@ -42,7 +44,7 @@ public class RetrofitHelper {
 
     public static EnvirApiService getEnvirApi() {
         initOkHttp();
-        if (apiService == null) {
+        if (sEnvirApiService == null) {
             sEnvirApiService = new Retrofit.Builder()
                     .baseUrl(EnvirApiService.BASE_URL)
                     .client(okHttpClient)
@@ -54,9 +56,23 @@ public class RetrofitHelper {
         return sEnvirApiService;
     }
 
+    public static WapApiService getWapApi() {
+        initOkHttp();
+        if (sWapApiService == null) {
+            sWapApiService = new Retrofit.Builder()
+                    .baseUrl(WapApiService.BASE_URL)
+                    .client(okHttpClient)
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+                    .create(WapApiService.class);
+        }
+        return sWapApiService;
+    }
+
     public static EnvirApiService getLongEnvirApi() {
         initOkHttp(180);
-        if (apiService == null) {
+        if (sEnvirApiService == null) {
             sEnvirApiService = new Retrofit.Builder()
                     .baseUrl(EnvirApiService.BASE_URL)
                     .client(okHttpLongClient)

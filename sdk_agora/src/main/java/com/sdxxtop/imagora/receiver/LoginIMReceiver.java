@@ -14,7 +14,18 @@ public class LoginIMReceiver extends BroadcastReceiver {
     public static final String ACTION_LOGIN_RECEIVER = "action_login_receiver";
     public static final String ACTION_LOGOUT_RECEIVER = "action_logout_receiver";
 
-    public static void register() {
+    public static void registerLoginIMReceiver(Context context) {
+        if (context == null) {
+            return;
+        }
+//        context.registerReceiver()
+    }
+
+    public static void unRegisterLoginIMReceiver(Context context) {
+        if (context == null) {
+            return;
+        }
+
 
     }
 

@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sdxxtop.imagora.adapter.MessageAdapter;
 import com.sdxxtop.imagora.model.MessageBean;
+import com.sdxxtop.imagora.receiver.LoginIMReceiver;
 import com.sdxxtop.imagora.rtmtutorial.AgoraIMConfig;
 import com.sdxxtop.imagora.rtmtutorial.ChatManager;
 import com.sdxxtop.imagora.utils.MessageUtil;
@@ -30,6 +31,7 @@ import com.sdxxtop.openlive.stats.LocalStatsData;
 import com.sdxxtop.openlive.stats.RemoteStatsData;
 import com.sdxxtop.openlive.stats.StatsData;
 import com.sdxxtop.openlive.ui.VideoGridContainer;
+import com.sdxxtop.sdkagora.AgoraSession;
 import com.sdxxtop.sdkagora.R;
 
 import java.util.ArrayList;
@@ -413,7 +415,7 @@ public class LiveActivity extends RtcBaseActivity implements IAgoraIMLoginView {
                     String msg = message.getText();
 
                     if (msg.contains(MESSAGE_FINISH)) {
-                        if ((MESSAGE_FINISH + uid).equals(msg)) {
+                        if ((MESSAGE_FINISH + uid).equals(msg) || MESSAGE_FINISH.equals(msg)) {
                             finish();
                             return;
                         }
@@ -593,26 +595,28 @@ public class LiveActivity extends RtcBaseActivity implements IAgoraIMLoginView {
     }
 
     @Override
-    public void onBackPressed() {
+    protected void onDestroy() {
+        super.onDestroy();
+        leaveChat();
+
+        Intent intent = new Intent();
+        intent.setAction(LoginIMReceiver.ACTION_LOGIN_RECEIVER);
+        sendBroadcast(intent);
+
+        AgoraSession.isLiving = false;
+    }
+
+    private void leaveChat() {
         mRtmChannel.leave(new ResultCallback<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
-                        if (agoraIMLoginPresenter != null) {
-                            agoraIMLoginPresenter.doLogout();
-                            agoraIMLoginPresenter.doLogin(String.valueOf(getToUserId()));
-                        }
-
                         leaveAndReleaseChannel();
-
                         mChatManager.unregisterListener(mClientListener);
 
                         Log.e(TAG, "leave channel success ---> " + aVoid);
-
-                        backPressed();
                     }
                 });
             }
@@ -625,23 +629,11 @@ public class LiveActivity extends RtcBaseActivity implements IAgoraIMLoginView {
                     @Override
                     public void run() {
                         leaveAndReleaseChannel();
-
                         mChatManager.unregisterListener(mClientListener);
-
-                        backPressed();
                     }
                 });
             }
         });
-    }
-
-    private void backPressed() {
-        super.onBackPressed();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 
     /**

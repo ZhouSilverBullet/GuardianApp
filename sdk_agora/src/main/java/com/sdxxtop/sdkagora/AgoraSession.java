@@ -2,8 +2,11 @@ package com.sdxxtop.sdkagora;
 
 import android.app.Application;
 
+import com.google.gson.internal.LinkedTreeMap;
 import com.sdxxtop.imagora.rtmtutorial.AgoraIMConfig;
 import com.sdxxtop.openlive.AgoraAppLiveConfig;
+
+import java.util.LinkedHashMap;
 
 /**
  * Email: zhousaito@163.com
@@ -12,6 +15,11 @@ import com.sdxxtop.openlive.AgoraAppLiveConfig;
  * Description:
  */
 public class AgoraSession {
+
+    /**
+     * 是否已经在直播间了
+     */
+    public static boolean isLiving = false;
 
     private static RtmCallEventManager callEventManager;
 
@@ -57,4 +65,20 @@ public class AgoraSession {
     public static void removeCallback(RtmCallEventCallback rtmCallEventCallback) {
         getCallEventManager().removeCallback(rtmCallEventCallback);
     }
+
+    private static LinkedTreeMap<String, String> message = new LinkedTreeMap<>();
+
+    public static void setMessage(LinkedTreeMap<String, String> map) {
+        if (map != null && map.size() > 0) {
+            if (message.size() != 0) {
+                message.clear();
+            }
+            message.putAll(map);
+        }
+    }
+
+    public static LinkedTreeMap<String, String> getMessage() {
+        return message;
+    }
+
 }

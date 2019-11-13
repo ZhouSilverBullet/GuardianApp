@@ -57,7 +57,7 @@ public class AgoraTestActivity extends BaseActivity implements IAgoraIMLoginView
     public void onLoginClick(View view) {
         String userId = etLogin.getText().toString().trim();
         if (agoraIMLoginPresenter != null) {
-            agoraIMLoginPresenter.doLogin(userId);
+//            agoraIMLoginPresenter.doLogin(userId);
         }
     }
 
@@ -89,8 +89,8 @@ public class AgoraTestActivity extends BaseActivity implements IAgoraIMLoginView
 
         //登录成功的状态
         if (agoraIMLoginPresenter.isInChat()) {
-            handleLive();
         }
+        handleLive();
     }
 
     private void handleLive() {

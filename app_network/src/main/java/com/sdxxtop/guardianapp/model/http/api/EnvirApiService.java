@@ -68,7 +68,7 @@ import retrofit2.http.Path;
 
 public interface EnvirApiService {
 
-    String BASE_URL = NetWorkSession.DEBUG() ? "http://envir.test.sdxxtop.com/api/" : "http://envir.sdxxtop.com/api/";
+    String BASE_URL = false ? "http://envir.test.sdxxtop.com/api/" : "http://envir.sdxxtop.com/api/";
 //    String BASE_URL = "http://envir.test.sdxxtop.com/api/";  // 测试
 //    String BASE_URL = "http://envir.dev.sdxxtop.com/api/";  // 预发布环境的
 

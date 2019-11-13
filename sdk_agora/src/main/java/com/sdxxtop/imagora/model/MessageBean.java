@@ -1,5 +1,10 @@
 package com.sdxxtop.imagora.model;
 
+import android.text.TextUtils;
+import android.widget.TextView;
+
+import com.sdxxtop.sdkagora.AgoraSession;
+
 public class MessageBean {
     private String account;
     private String message;
@@ -7,9 +12,26 @@ public class MessageBean {
     private boolean beSelf;
 
     public MessageBean(String account, String message, boolean beSelf) {
-        this.account = account;
+        this.account = getNewAccount(account);
         this.message = message;
         this.beSelf = beSelf;
+    }
+
+    /**
+     * 获取新名字
+     *
+     * @param account
+     * @return
+     */
+    private String getNewAccount(String account) {
+        if ("12345678".equals(account)) {
+            return "指挥中心";
+        }
+        String value = AgoraSession.getMessage().get(account);
+        if (!TextUtils.isEmpty(value)) {
+            return value;
+        }
+        return account;
     }
 
     public String getAccount() {
@@ -43,4 +65,6 @@ public class MessageBean {
     public void setBackground(int background) {
         this.background = background;
     }
+
+
 }

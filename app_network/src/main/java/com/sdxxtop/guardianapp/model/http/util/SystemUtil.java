@@ -1,4 +1,4 @@
-package com.sdxxtop.guardianapp.utils;
+package com.sdxxtop.guardianapp.model.http.util;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,16 +6,16 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 
-import com.sdxxtop.guardianapp.app.App;
+import androidx.core.content.FileProvider;
+
+import com.sdxxtop.guardianapp.model.NetWorkSession;
 
 import java.io.File;
-
-import androidx.core.content.FileProvider;
 
 
 public class SystemUtil {
     public static boolean isNetworkConnect() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) App.getInstance().getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) NetWorkSession.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivityManager != null) {
             return connectivityManager.getActiveNetworkInfo() != null;
         }

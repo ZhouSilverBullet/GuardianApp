@@ -5,10 +5,12 @@ import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -25,6 +27,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
+import com.google.gson.internal.LinkedTreeMap;
 import com.luck.picture.lib.permissions.RxPermissions;
 import com.orhanobut.logger.Logger;
 import com.sdxxtop.guardianapp.R;
@@ -32,6 +35,11 @@ import com.sdxxtop.guardianapp.app.Constants;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.model.bean.ArticleIndexBean;
 import com.sdxxtop.guardianapp.model.bean.InitBean;
+import com.sdxxtop.guardianapp.model.bean.RequestBean;
+import com.sdxxtop.guardianapp.model.bean.RtcRequestBean;
+import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
+import com.sdxxtop.guardianapp.model.http.net.RetrofitHelper;
+import com.sdxxtop.guardianapp.model.http.util.RxUtils;
 import com.sdxxtop.guardianapp.presenter.HomePresenter;
 import com.sdxxtop.guardianapp.presenter.contract.HomeContract;
 import com.sdxxtop.guardianapp.service.ForegroundService;
@@ -47,13 +55,20 @@ import com.sdxxtop.guardianapp.ui.widget.bottom_tab.CustomBottomTab;
 import com.sdxxtop.guardianapp.utils.ExcludePhoneModel;
 import com.sdxxtop.guardianapp.utils.ReflectUtils;
 import com.sdxxtop.guardianapp.utils.SpUtil;
+import com.sdxxtop.imagora.receiver.LoginIMReceiver;
+import com.sdxxtop.openlive.activities.AgoraTestActivity;
 import com.sdxxtop.openlive.activities.presenter.im.AgoraIMLoginPresenter;
 import com.sdxxtop.openlive.activities.presenter.im.IAgoraIMLoginView;
+import com.sdxxtop.openlive.utils.JsonUtil;
+import com.sdxxtop.sdkagora.AgoraSession;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import me.yokeyword.fragmentation.SupportFragment;
 
@@ -83,6 +98,7 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
     private static final String ACTION_NOTIFICATION_LISTENER_SETTINGS = "android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS";
     private AlertDialog dialog;   // 消息通知提示框
     private AgoraIMLoginPresenter loginPresenter;
+    private AgoraLoginReceiver agoraLoginReceiver;
 
     @Override
     protected int getLayout() {
@@ -113,7 +129,14 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
 //        initAHNavigation();
 
         loginPresenter = new AgoraIMLoginPresenter(this);
-        loginPresenter.doLogin(String.valueOf(SpUtil.getInt(Constants.USER_ID, 0)));
+
+        agoraLoginReceiver = new AgoraLoginReceiver(loginPresenter);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(LoginIMReceiver.ACTION_LOGIN_RECEIVER);
+        intentFilter.addAction(LoginIMReceiver.ACTION_LOGOUT_RECEIVER);
+        registerReceiver(agoraLoginReceiver, intentFilter);
+
+
 
         switchFragment(0);
 
@@ -272,6 +295,54 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
     protected void initData() {
         super.initData();
         mPresenter.initApp();
+
+        getRtmToken();
+        getAudioLists();
+    }
+
+    private void getAudioLists() {
+        Observable<RequestBean> observable = RetrofitHelper.getWapApi().postAudioLists();
+        Disposable disposable = RxUtils.handleHttp(observable, new IRequestCallback<RequestBean>() {
+            @Override
+            public void onSuccess(RequestBean bean) {
+                if (bean != null) {
+
+//                    ((LinkedTreeMap<String,String>)bean.getData()).get("50173")
+                    try {
+                        AgoraSession.setMessage((LinkedTreeMap<String, String>) bean.getData());
+                    } catch (Exception e) {
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String error) {
+
+            }
+        });
+    }
+
+    private void getRtmToken() {
+        final int userID = SpUtil.getInt(Constants.USER_ID, 0);
+        Observable<RequestBean<RtcRequestBean>> observable = RetrofitHelper.getWapApi().postAudioRtc(String.valueOf(userID));
+        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<RtcRequestBean>() {
+            @Override
+            public void onSuccess(RtcRequestBean bean) {
+//                if (mView != null) {
+//                    mView.showData(bean);
+//                }
+                String token_rtm = bean.getToken_rtm();
+
+                loginPresenter.doLogin(token_rtm, String.valueOf(userID));
+            }
+
+            @Override
+            public void onFailure(int code, String error) {
+//                if (mView != null) {
+//                    mView.showError(error);
+//                }
+            }
+        });
     }
 
     @Override
@@ -282,9 +353,9 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
         super.onResume();
         isEnabledNLS = isEnabled();
         if (!isEnabledNLS) {
-            if (dialog==null){
+            if (dialog == null) {
                 showConfirmDialog();
-            }else{
+            } else {
                 dialog.show();
             }
         }
@@ -465,8 +536,35 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (agoraLoginReceiver != null) {
+            unregisterReceiver(agoraLoginReceiver);
+        }
+
         if (loginPresenter != null) {
             loginPresenter.doLogout();
+        }
+
+    }
+
+    public static class AgoraLoginReceiver extends BroadcastReceiver {
+        AgoraIMLoginPresenter agoraIMLoginPresenter;
+
+        public AgoraLoginReceiver(AgoraIMLoginPresenter presenter) {
+            this.agoraIMLoginPresenter = presenter;
+        }
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent == null) {
+                return;
+            }
+            String action = intent.getAction();
+
+            if (LoginIMReceiver.ACTION_LOGIN_RECEIVER.equals(action)) {
+                agoraIMLoginPresenter.doLogout();
+                agoraIMLoginPresenter.doLogin(null, String.valueOf(SpUtil.getInt(Constants.USER_ID, 0)));
+            }
+
         }
     }
 }

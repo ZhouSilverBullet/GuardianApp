@@ -1,4 +1,4 @@
-package com.sdxxtop.guardianapp.utils;
+package com.sdxxtop.guardianapp.model.http.util;
 
 import android.text.TextUtils;
 
