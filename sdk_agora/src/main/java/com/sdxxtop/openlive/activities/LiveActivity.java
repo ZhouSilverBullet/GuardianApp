@@ -53,6 +53,8 @@ import io.agora.rtm.RtmStatusCode;
 
 public class LiveActivity extends RtcBaseActivity implements IAgoraIMLoginView {
     public static final String MESSAGE_FINISH = "69b953e06abe399e018e2d0657bf26a4";
+    public static final String MAIN_UID_TO_FINISH = "12345678";
+
     private static final String TAG = LiveActivity.class.getSimpleName();
 
     private VideoGridContainer mVideoGridContainer;
@@ -148,7 +150,11 @@ public class LiveActivity extends RtcBaseActivity implements IAgoraIMLoginView {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                removeRemoteUser(uid);
+                if (MAIN_UID_TO_FINISH.equals(uid + "")) {
+                    finish();
+                } else {
+                    removeRemoteUser(uid);
+                }
             }
         });
     }
