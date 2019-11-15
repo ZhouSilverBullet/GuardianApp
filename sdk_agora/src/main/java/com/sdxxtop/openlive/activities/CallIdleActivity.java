@@ -195,6 +195,7 @@ public class CallIdleActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        AgoraSession.isLiving = false;
         if (mRemoteInvitation != null) {
             mRemoteInvitation = null;
         }

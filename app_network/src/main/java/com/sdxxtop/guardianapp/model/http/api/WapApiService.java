@@ -10,7 +10,8 @@ import retrofit2.http.POST;
 
 public interface WapApiService {
 
-    String BASE_URL =  "http://wap.sdxxtop.com/";
+//    String BASE_URL =  "http://wap.sdxxtop.com/";
+    String BASE_URL =  "https://datascreen.sdxxtop.com/";
 
 
 //    @FormUrlEncoded
