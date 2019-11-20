@@ -56,14 +56,12 @@ import com.sdxxtop.guardianapp.utils.ExcludePhoneModel;
 import com.sdxxtop.guardianapp.utils.ReflectUtils;
 import com.sdxxtop.guardianapp.utils.SpUtil;
 import com.sdxxtop.imagora.receiver.LoginIMReceiver;
-import com.sdxxtop.openlive.activities.AgoraTestActivity;
 import com.sdxxtop.openlive.activities.presenter.im.AgoraIMLoginPresenter;
 import com.sdxxtop.openlive.activities.presenter.im.IAgoraIMLoginView;
-import com.sdxxtop.openlive.utils.JsonUtil;
 import com.sdxxtop.sdkagora.AgoraSession;
+import com.sdxxtop.sdkagora.SoundPlayer;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import butterknife.BindView;

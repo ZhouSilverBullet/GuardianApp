@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.SurfaceView;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -35,6 +36,8 @@ public class VideoGridContainer extends RelativeLayout implements Runnable {
     private int mStatMarginBottom;
     private VideoAdapter adapter;
     private RecyclerView recyclerView;
+    private FrameLayout frameLayout;
+    private int widthPixels;
 
     public VideoGridContainer(Context context) {
         super(context);
@@ -52,17 +55,25 @@ public class VideoGridContainer extends RelativeLayout implements Runnable {
     }
 
     private void init() {
+        widthPixels = getResources().getDisplayMetrics().widthPixels;
+
         setBackgroundResource(R.drawable.live_room_bg);
         mStatMarginBottom = getResources().getDimensionPixelSize(
                 R.dimen.live_stat_margin_bottom);
         mHandler = new Handler(getContext().getMainLooper());
 
+        frameLayout = new FrameLayout(getContext());
+        frameLayout.setId(frameLayout.hashCode());
+        addView(frameLayout, widthPixels, (int) (0.75 * widthPixels));
+
         recyclerView = new RecyclerView(getContext());
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        adapter = new VideoAdapter(new ArrayList<>());
+        adapter = new VideoAdapter(new ArrayList<>(), (widthPixels/3.0));
         recyclerView.setAdapter(adapter);
 
-        addView(recyclerView, new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        lp.addRule(RelativeLayout.BELOW, frameLayout.hashCode());
+        addView(recyclerView, lp);
     }
 
     public void setStatsManager(StatsManager manager) {
@@ -174,7 +185,18 @@ public class VideoGridContainer extends RelativeLayout implements Runnable {
 
         ArrayList<ViewGroup> list = new ArrayList<>();
         for (int i = 0; i < mUidList.size(); i++) {
-            list.add(mUserViewList.get(mUidList.get(i)));
+            if (mUidList.get(i) == 12345678) {
+                ViewGroup viewGroup = mUserViewList.get(mUidList.get(i));
+                if (viewGroup.getParent() instanceof ViewGroup) {
+                    ViewGroup parentViewGroup = (ViewGroup) viewGroup.getParent();
+                    parentViewGroup.removeAllViews();
+                }
+                frameLayout.removeAllViews();
+                frameLayout.addView(viewGroup, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            } else {
+                list.add(mUserViewList.get(mUidList.get(i)));
+            }
+
         }
 
         adapter.replaceData(list);
@@ -230,7 +252,6 @@ public class VideoGridContainer extends RelativeLayout implements Runnable {
 
         //> 4 或 <= 9的情况
 //        VideoLayoutUtils.open4Status(width, height, array);
-
 
 
         return array;

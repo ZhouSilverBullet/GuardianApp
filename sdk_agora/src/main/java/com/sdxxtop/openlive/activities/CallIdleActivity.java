@@ -1,12 +1,16 @@
 package com.sdxxtop.openlive.activities;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -23,6 +27,8 @@ import com.sdxxtop.openlive.utils.JsonUtil;
 import com.sdxxtop.sdkagora.AgoraSession;
 import com.sdxxtop.sdkagora.R;
 import com.sdxxtop.sdkagora.RtmCallEventCallback;
+import com.sdxxtop.sdkagora.SoundPlayer;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import io.agora.rtc.Constants;
 import io.agora.rtm.ErrorInfo;
@@ -32,6 +38,7 @@ import io.agora.rtm.ResultCallback;
 import io.agora.rtm.RtmClient;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 public class CallIdleActivity extends BaseActivity {
 
@@ -42,12 +49,31 @@ public class CallIdleActivity extends BaseActivity {
 
     private RtmCallEventCallback rtmCallEventCallback;
     private static volatile RemoteInvitation mRemoteInvitation;
+    private SoundPlayer soundPlayer;
+    private RxPermissions rxPermissions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         AgoraSession.isLiving = true;
+
+        rxPermissions = new RxPermissions(this);
+        rxPermissions.request(Manifest.permission.VIBRATE).subscribe(new Consumer<Boolean>() {
+            @Override
+            public void accept(Boolean aBoolean) throws Exception {
+                if (aBoolean) {
+                    soundPlayer = new SoundPlayer();
+                    soundPlayer.initPlayer();
+                }
+            }
+        });
+
+        Window win = getWindow();
+        win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED //锁屏状态下显示
+                | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD //解锁
+                | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON //保持屏幕长亮
+                | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON); //打开屏幕
 
         getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION_PANEL);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
@@ -200,6 +226,10 @@ public class CallIdleActivity extends BaseActivity {
             mRemoteInvitation = null;
         }
         AgoraSession.removeCallback(rtmCallEventCallback);
+
+        if (soundPlayer != null) {
+            soundPlayer.release();
+        }
     }
 
     public static void startCallIdle(Context context, RemoteInvitation remoteInvitation) {

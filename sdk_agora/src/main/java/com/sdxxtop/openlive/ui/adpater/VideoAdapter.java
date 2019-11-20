@@ -18,8 +18,12 @@ import java.util.List;
  * Description:
  */
 public class VideoAdapter extends BaseQuickAdapter<ViewGroup, BaseViewHolder> {
-    public VideoAdapter(@Nullable List<ViewGroup> data) {
+
+    private final double mHeight;
+
+    public VideoAdapter(@Nullable List<ViewGroup> data, double width) {
         super(R.layout.video_recycler, data);
+        this.mHeight = width * 3 / 4;
     }
 
     @Override
@@ -28,6 +32,6 @@ public class VideoAdapter extends BaseQuickAdapter<ViewGroup, BaseViewHolder> {
         if (parentViewGroup != null) {
             parentViewGroup.removeAllViews();
         }
-        ((LinearLayout) helper.itemView).addView(item, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        ((LinearLayout) helper.itemView).addView(item, ViewGroup.LayoutParams.MATCH_PARENT, (int) mHeight);
     }
 }

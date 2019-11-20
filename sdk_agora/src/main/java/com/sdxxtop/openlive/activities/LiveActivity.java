@@ -68,6 +68,9 @@ public class LiveActivity extends RtcBaseActivity implements IAgoraIMLoginView {
         mUserId = getIntent().getStringExtra(MessageUtil.INTENT_EXTRA_USER_ID);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_room);
+
+        AgoraSession.isLiving = true;
+
         initUI();
         initData();
 
