@@ -46,7 +46,11 @@ public class SingleStyleView {
                 mList.add(list.get(i).name);
             }
         }
-        pvOptions.setPicker(mList);
+        if (pvOptions != null) {
+            pvOptions.setPicker(mList);
+        }else{
+            initOptionPicker();
+        }
     }
 
     public interface OnItemSelectLintener {

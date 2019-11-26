@@ -3,7 +3,11 @@ package com.sdxxtop.guardianapp.ui.widget;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +45,7 @@ public class CustomVideoImgSelectView extends LinearLayout implements View.OnCli
     @BindView(R.id.rv)
     RecyclerView rv;
 
+    public boolean showCount;
     private GridImageAdapter adapter;
     private BottomSheetDialog bottomSheetDialog;
     private List<LocalMedia> selectImgList = new ArrayList<>();
@@ -108,6 +113,11 @@ public class CustomVideoImgSelectView extends LinearLayout implements View.OnCli
                             break;
                     }
                 }
+            }
+
+            @Override
+            public void onItemRemove() {
+                tvDesc.setText(getFormatText(allDataList.size()));
             }
         });
     }
@@ -208,6 +218,9 @@ public class CustomVideoImgSelectView extends LinearLayout implements View.OnCli
                     allDataList.clear();
                     allDataList.addAll(selectVideoList);
                     allDataList.addAll(selectImgList);
+                    if (showCount) {
+                        tvDesc.setText(getFormatText(allDataList.size()));
+                    }
                     adapter.setList(allDataList);
                     adapter.notifyDataSetChanged();
                     break;
@@ -245,6 +258,22 @@ public class CustomVideoImgSelectView extends LinearLayout implements View.OnCli
 
     public void setTvDesc(String value) {
         tvTitle.setText(value);
+    }
+
+    public void setTvDesc(boolean showCount) {
+        this.showCount = showCount;
+        tvDesc.setTextColor(Color.parseColor("#313131"));
+        colorSpan = new ForegroundColorSpan(Color.parseColor("#D9001B"));
+        tvDesc.setText(getFormatText(0));
+    }
+
+    ForegroundColorSpan colorSpan;
+
+    public SpannableStringBuilder getFormatText(int size) {
+        String str = "("+size+"/9)";
+        SpannableStringBuilder builder = new SpannableStringBuilder(str);
+        builder.setSpan(colorSpan,3,4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return builder;
     }
 
 }

@@ -142,6 +142,9 @@ public class GridImageAdapter extends RecyclerView.Adapter<GridImageAdapter.View
                         list.remove(index);
                         notifyItemRemoved(index);
                         notifyItemRangeChanged(index, list.size());
+                        if (mItemClickListener != null) {
+                            mItemClickListener.onItemRemove();
+                        }
                     }
                 }
             });
@@ -210,6 +213,7 @@ public class GridImageAdapter extends RecyclerView.Adapter<GridImageAdapter.View
 
     public interface OnItemClickListener {
         void onItemClick(int position, View v);
+        void onItemRemove();
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {

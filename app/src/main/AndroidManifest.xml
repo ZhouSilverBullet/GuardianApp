@@ -83,7 +83,9 @@
             <!-- <action android:name="android.intent.action.VIEW"/> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".ui.activity.EventReportActivity" />
+        <activity
+            android:name=".ui.activity.EventReportActivity"
+            />
         <activity android:name=".ui.activity.TaskAgentsActivity" /> <!-- 猎鹰轨迹的启动服务 -->
         <activity android:name=".ui.activity.ContactActivity" />
         <activity android:name=".alipush.PushCenterActivity" />

@@ -13,36 +13,40 @@ import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.model.bean.EventSearchTitleBean;
 import com.sdxxtop.guardianapp.model.bean.PatrolAddBean;
+import com.sdxxtop.guardianapp.model.bean.ShowPartBean;
 import com.sdxxtop.guardianapp.presenter.EventDiscretionReportPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.EventDiscretionReportContract;
 import com.sdxxtop.guardianapp.ui.adapter.EventSearchTitleAdapter;
 import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
 import com.sdxxtop.guardianapp.ui.widget.CustomVideoImgSelectView;
 import com.sdxxtop.guardianapp.ui.widget.NumberEditTextView;
+import com.sdxxtop.guardianapp.ui.widget.SingleStyleView;
 import com.sdxxtop.guardianapp.ui.widget.TextAndCheckBoxView;
 import com.sdxxtop.guardianapp.ui.widget.TextAndEditView;
 import com.sdxxtop.guardianapp.ui.widget.TextAndTextView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
+import com.sdxxtop.guardianapp.utils.MyTextWatcher;
 import com.sdxxtop.guardianapp.utils.SingleClickListener;
 import com.sdxxtop.guardianapp.utils.TimeSelectBottomDialog;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscretionReportPresenter> implements EventDiscretionReportContract.IView {
+public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscretionReportPresenter> implements EventDiscretionReportContract.IView,
+        SingleStyleView.OnItemSelectLintener {
 
     @BindView(R.id.cvisv_view)
     CustomVideoImgSelectView cvisvView;
     @BindView(R.id.taev_title)
     TextAndEditView taevTitle;
-    @BindView(R.id.tatv_happen)
-    TextAndTextView tatvHappen;
     @BindView(R.id.tatv_end_time)
     TextAndTextView tatvEndTime;
     @BindView(R.id.net_content)
@@ -60,11 +64,29 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
     @BindView(R.id.titleView)
     TitleView titleView;
 
+
+    @BindView(R.id.col_happen)
+    ConstraintLayout col_happen;
+    @BindView(R.id.tv_place_title)
+    TextView tvPlaceTitle;
+    @BindView(R.id.tv_place_desc)
+    TextView tvPlaceDesc;
+    @BindView(R.id.tv_select)
+    TextView tvSelect;
+    @BindView(R.id.tatv_event_type)
+    TextAndTextView tatvEventType;
+
+
     private String lonLng;//经纬度
     private TimeSelectBottomDialog dialog;
 
-    private EventSearchTitleAdapter titleAdapter;
+    private EventSearchTitleAdapter adapter;
     private boolean isSearchEnable = true;
+
+
+    private List<SingleStyleView.ListDataBean> categoryList = new ArrayList<>();
+    private SingleStyleView categorySelectView;
+    private int category_id;   // 事件分类id
 
     @Override
     protected int getLayout() {
@@ -82,35 +104,41 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
     }
 
     @Override
+    protected void initData() {
+        mPresenter.searchTitle();
+    }
+
+    @Override
     protected void initView() {
         super.initView();
         InputFilter[] filters = {new InputFilter.LengthFilter(16)};
         taevTitle.getEditText().setFilters(filters);
+        cvisvView.setTvDesc(true);
 
         tatvEndTime.setTextRightImage2Show(true);
         dialog = new TimeSelectBottomDialog(this, tatvEndTime.getTextRightText());
-        netContent.setEditHint("");
+        netContent.setEditHint("在此录入事件描述");
         netContent.setMaxLength(200);
         tacbvView.setOnCheckBoxClick(new TextAndCheckBoxView.OnCheckBoxClick() {
             @Override
             public void refreshStatus(boolean isShow) {
-                tatvEndTime.setVisibility(isShow?View.VISIBLE:View.GONE);
+                tatvEndTime.setVisibility(isShow ? View.VISIBLE : View.GONE);
                 tatvEndTime.getTextRightText().setText("");
                 tatvEndTime.getTextRightText().setHint("请选择整改时效");
             }
         });
 
         titleRecycler.setLayoutManager(new LinearLayoutManager(this));
-        titleAdapter = new EventSearchTitleAdapter(R.layout.item_text, null);
-        titleRecycler.setAdapter(titleAdapter);
-        titleAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        adapter = new EventSearchTitleAdapter();
+        titleRecycler.setAdapter(adapter);
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter titleAdapter, View view, int position) {
                 isSearchEnable = false;
-                EventSearchTitleBean.KeyInfo item = (EventSearchTitleBean.KeyInfo) titleAdapter.getItem(position);
-                taevTitle.getEditText().setText(item.getKeyword());
-                taevTitle.getEditText().setSelection(item.getKeyword().length());
+                ShowPartBean.KeywordInfoBean item = (ShowPartBean.KeywordInfoBean) titleAdapter.getItem(position);
+                taevTitle.getEditText().setText(item.classify_keyword);
                 llSearchDataLayout.setVisibility(View.GONE);
+                mPresenter.keywordMatch(item.classify_keyword, item.classify_keyword_id);
             }
         });
 
@@ -121,16 +149,16 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
             }
         });
 
-//        taevTitle.getEditText().addTextChangedListener(new MyTextChangeListener(new MyTextChangeListener.OnTextChangedListener() {
-//            @Override
-//            public void textChange(String str) {
-//                if (isSearchEnable) {
-//                    mPresenter.searchTitle(str);
-//                } else {
-//                    isSearchEnable = true;
-//                }
-//            }
-//        }));
+        taevTitle.getEditText().addTextChangedListener(new MyTextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (isSearchEnable) {
+                    mPresenter.keywordMatch(s.toString().trim(), 0);
+                } else {
+                    isSearchEnable = true;
+                }
+            }
+        });
 
         tvDismiss.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,12 +174,21 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
                 startActivity(intent);
             }
         });
+
+        categorySelectView = new SingleStyleView(this, categoryList);
+        categorySelectView.setOnItemSelectLintener(this);
     }
 
-    @OnClick({ R.id.tatv_happen, R.id.tatv_end_time})
+    @OnClick({R.id.tatv_end_time, R.id.col_happen, R.id.tatv_event_type})
     public void onViewClicked(View view) {
+        hideKeyboard(view);
         switch (view.getId()) {
-            case R.id.tatv_happen:
+            case R.id.tatv_event_type:
+                if (categorySelectView != null) {
+                    categorySelectView.show();
+                }
+                break;
+            case R.id.col_happen:
                 selectHappen();
                 break;
             case R.id.tatv_end_time:
@@ -197,8 +234,8 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
     private void toReport() {
         List<File> imagePushPath = cvisvView.getImageOrVideoPushPath(1);
         List<File> videoPushPath = cvisvView.getImageOrVideoPushPath(2);
-        if (imagePushPath.size() == 0 && videoPushPath.size() == 0) {
-            showToast("请选择图片或者视频");
+        if ((imagePushPath.size() + videoPushPath.size()) < 3) {
+            showToast("需要提供3个以上图片或者视频");
             return;
         }
 
@@ -208,8 +245,13 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
             return;
         }
 
+        if (category_id == 0) {
+            showToast("请选择事件分类");
+            return;
+        }
+
         //发生地点
-        String place = tatvHappen.getRightTVString();
+        String place = tvPlaceTitle.getText().toString();
         if (TextUtils.isEmpty(place) || TextUtils.isEmpty(lonLng)) {
             showToast("请选择发生地点");
             return;
@@ -227,7 +269,7 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
             return;
         }
 
-        mPresenter.pushReport(tacbvView.getEnableClick() ? 1 : 2, title, place, lonLng, editValue, endTime, imagePushPath, videoPushPath);
+        mPresenter.pushReport(tacbvView.getEnableClick() ? 1 : 2, title, place, lonLng, editValue, endTime, imagePushPath, videoPushPath,category_id);
     }
 
 
@@ -239,10 +281,14 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
         if (resultCode == RESULT_OK) {
             cvisvView.callActivityResult(requestCode, resultCode, data);
         } else if (requestCode == 100 && resultCode == 10087 && data != null) {
-            String address = data.getStringExtra("ad");
+            String title = data.getStringExtra("ar");
+            String desc = data.getStringExtra("ad");
             String lt = data.getStringExtra("lt");
+
             lonLng = lt;
-            tatvHappen.getTextRightText().setText(address);
+            tvPlaceTitle.setText(title);
+            tvPlaceDesc.setText(desc);
+            tvSelect.setVisibility(View.GONE);
         }
     }
 
@@ -256,13 +302,63 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
         finish();
     }
 
+    /**
+     * 初始化信息
+     *
+     * @param bean
+     */
     @Override
     public void showSearchData(EventSearchTitleBean bean) {
-        if (bean.getKey_info() != null && bean.getKey_info().size() > 0) {
-            llSearchDataLayout.setVisibility(View.VISIBLE);
-            titleAdapter.replaceData(bean.getKey_info());
-        } else {
+//        if (bean.getKey_info() != null && bean.getKey_info().size() > 0) {
+//            llSearchDataLayout.setVisibility(View.VISIBLE);
+//            titleAdapter.replaceData(bean.getKey_info());
+//        } else {
+//            llSearchDataLayout.setVisibility(View.GONE);
+//        }
+
+        //分类信息
+        List<EventSearchTitleBean.CategoryBean> category = bean.category;
+        categoryList.clear();
+        for (EventSearchTitleBean.CategoryBean item : category) {
+            categoryList.add(new SingleStyleView.ListDataBean(item.category_id, item.category_name));
+        }
+        categorySelectView.replaceData(categoryList);
+    }
+
+    /**
+     * 展示搜索出来的标题
+     *
+     * @param
+     */
+    @Override
+    public void showKeywordInfo(ShowPartBean bean, int keywordId) {
+        ShowPartBean.CategoryInfoBean category = bean.category;
+        if (category != null) {
+            tatvEventType.getTextRightText().setText(category.category_name);
+            category_id = category.category_id;
+        }
+
+        if (keywordId == 0) {   // 有id代表点击条目搜索不展示
+            if (bean.list != null && bean.list.size() > 0) {
+                llSearchDataLayout.setVisibility(View.VISIBLE);
+                adapter.replaceData(bean.list);
+            } else {
+                llSearchDataLayout.setVisibility(View.GONE);
+            }
+        } else {    // 点击列表item不展示联想
             llSearchDataLayout.setVisibility(View.GONE);
         }
+    }
+
+    /**
+     * 选择事件分类结果
+     *
+     * @param id
+     * @param result
+     */
+    @Override
+    public void onItemSelect(int id, String result) {
+        category_id = id;
+        tatvEventType.getTextRightText().setText(result);
     }
 }

@@ -9,17 +9,10 @@ import java.util.List;
  */
 public class EventSearchTitleBean {
 
-    private String keyword;
+    public PartBean part;
+    public List<EventShowBean.NewPartBean> part_info;
+    public List<CategoryBean> category;
     private List<KeyInfo> key_info;
-    private List<EventShowBean.NewPartBean> part_info;
-
-    public String getKeyword() {
-        return keyword;
-    }
-
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
-    }
 
     public List<KeyInfo> getKey_info() {
         return key_info;
@@ -29,15 +22,18 @@ public class EventSearchTitleBean {
         this.key_info = key_info;
     }
 
-    public List<EventShowBean.NewPartBean> getPart_info() {
-        return part_info;
+    public class PartBean {
+        public int part_id;
+        public String part_name;
     }
 
-    public void setPart_info(List<EventShowBean.NewPartBean> part_info) {
-        this.part_info = part_info;
+    public class CategoryBean {
+        public int category_id;
+        public String category_name;
     }
 
-    public static class KeyInfo {
+
+    public class KeyInfo{
         private int keyword_id;
         private String part_id;
         private String keyword;
@@ -66,6 +62,5 @@ public class EventSearchTitleBean {
             this.keyword = keyword;
         }
     }
-
 
 }

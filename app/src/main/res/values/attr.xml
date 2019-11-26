@@ -8,6 +8,8 @@
         <attr name="rightTextColor" format="color"/>
         <attr name="leftLayoutIsShow" format="boolean"/>
         <attr name="leftLayoutIconIsGray" format="boolean"/>
+        <attr name="fitsSystemWindows" format="boolean"/>
+        <attr name="clipToPadding" format="boolean"/>
     </declare-styleable>
 
     <declare-styleable name="SideIndexBar">

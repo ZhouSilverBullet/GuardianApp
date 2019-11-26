@@ -869,6 +869,19 @@ public class AmapPoiActivity extends BaseActivity implements PoiSearch.OnPoiSear
 //                    handleFirstItem(item);
 //                    isRecyclerItemClick = true;
 
+                    Intent intentFirst = new Intent();
+                    intentFirst.putExtra("ar", item.title);
+                    intentFirst.putExtra("ad", item.snippet);
+                    double longitudeRes = item.longitude;
+                    double latitudeRes = item.latitude;
+                    String value = longitudeRes + "," + latitudeRes;
+                    intentFirst.putExtra("lt", value);
+                    intentFirst.putExtra("longitude", longitude);
+                    intentFirst.putExtra("latitude", latitude);
+                    SpUtil.putString(Constants.COMPANY_JIN_WEIDU, value);
+                    setResult(10087, intentFirst);
+                    finish(true);
+
                     recyclerLinearLayout.setVisibility(View.GONE);
                 }
             });

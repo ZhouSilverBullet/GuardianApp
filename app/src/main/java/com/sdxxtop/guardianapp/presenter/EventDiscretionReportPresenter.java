@@ -8,6 +8,7 @@ import com.sdxxtop.guardianapp.base.RxPresenter;
 import com.sdxxtop.guardianapp.model.bean.EventSearchTitleBean;
 import com.sdxxtop.guardianapp.model.bean.PatrolAddBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
+import com.sdxxtop.guardianapp.model.bean.ShowPartBean;
 import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
 import com.sdxxtop.guardianapp.model.http.net.ImageAndVideoParams;
 import com.sdxxtop.guardianapp.model.http.net.Params;
@@ -37,7 +38,7 @@ public class EventDiscretionReportPresenter extends RxPresenter<EventDiscretionR
 
 
     public void pushReport(int status, String eventTitle, String place, String longitude, String content, String rectify_time, List<File> imagePushPath,
-                           List<File> videoPushPath) {
+                           List<File> videoPushPath,int categoryId) {
 
         ImageAndVideoParams params = new ImageAndVideoParams();
         params.put("tl", eventTitle);
@@ -46,6 +47,7 @@ public class EventDiscretionReportPresenter extends RxPresenter<EventDiscretionR
         params.put("ct", content);
         params.put("rt", rectify_time);
         params.put("sta", status);
+        params.put("cgib", categoryId);
 
         params.addImagePathList("img[]", imagePushPath);
 
@@ -71,9 +73,8 @@ public class EventDiscretionReportPresenter extends RxPresenter<EventDiscretionR
         }
     }
 
-    public void searchTitle(String title) {
+    public void searchTitle() {
         Params params = new Params();
-        params.put("kwd", title);
         Observable<RequestBean<EventSearchTitleBean>> observable = getEnvirApi().postEventSearch(params.getData());
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EventSearchTitleBean>() {
             @Override
@@ -107,6 +108,27 @@ public class EventDiscretionReportPresenter extends RxPresenter<EventDiscretionR
                     UIUtils.showToast(error);
                     mView.showError(error);
                 }
+            }
+        });
+        addSubscribe(disposable);
+    }
+
+    public void keywordMatch(String keyword, int keyword_id) {
+        Params params = new Params();
+        params.put("kd", keyword);
+        params.put("cki", keyword_id);
+        Observable<RequestBean<ShowPartBean>> observable = getEnvirApi().postEventShowPart(params.getData());
+        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<ShowPartBean>() {
+            @Override
+            public void onSuccess(ShowPartBean showPartBean) {
+                if (mView != null) {
+                    mView.showKeywordInfo(showPartBean, keyword_id);
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String error) {
+//                UIUtils.showToast(error);
             }
         });
         addSubscribe(disposable);

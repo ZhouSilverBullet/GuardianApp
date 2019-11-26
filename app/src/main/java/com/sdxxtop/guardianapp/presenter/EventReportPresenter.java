@@ -35,8 +35,10 @@ public class EventReportPresenter extends RxPresenter<EventReportContract.IView>
     }
 
 
-    public void pushReport(String title, int pathType, int patrolType,
-                           String place, String longitude, String content, List<File> imagePushPath, List<File> videoPushPath, String positionDesc) {
+    public void pushReport(String title, int pathType,
+                           String place, String longitude, String content,
+                           List<File> imagePushPath, List<File> videoPushPath,
+                           String positionDesc, int categoryId) {
         ImageAndVideoParams params = new ImageAndVideoParams();
         params.put("tl", title);
         params.put("pt", pathType);
@@ -45,6 +47,7 @@ public class EventReportPresenter extends RxPresenter<EventReportContract.IView>
         params.put("lt", longitude);
         params.put("ct", content);
         params.put("spt", positionDesc);
+        params.put("cgid", categoryId);
 
         params.addImagePathList("img[]", imagePushPath);
         if (videoPushPath != null && videoPushPath.size() > 0) {
@@ -92,16 +95,16 @@ public class EventReportPresenter extends RxPresenter<EventReportContract.IView>
         addSubscribe(disposable);
     }
 
-    public void loadAera() {
+    public void keywordMatch(String keyword, int keyword_id) {
         Params params = new Params();
+        params.put("kd", keyword);
+        params.put("cki", keyword_id);
         Observable<RequestBean<ShowPartBean>> observable = getEnvirApi().postEventShowPart(params.getData());
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<ShowPartBean>() {
             @Override
             public void onSuccess(ShowPartBean showPartBean) {
-//                mView.modifyRefresh();
-                List<ShowPartBean.PartBean> part = showPartBean.getPart();
-                if (part != null) {
-                    mView.showPart(part);
+                if (mView != null) {
+                    mView.showKeywordInfo(showPartBean, keyword_id);
                 }
             }
 
@@ -132,16 +135,14 @@ public class EventReportPresenter extends RxPresenter<EventReportContract.IView>
         addSubscribe(disposable);
     }
 
-    public void searchTitle(String title, int keywordId) {
+    public void searchTitle() {
         Params params = new Params();
-        params.put("kwd", title);
-        params.put("kid", keywordId);
         Observable<RequestBean<EventSearchTitleBean>> observable = getEnvirApi().postEventSearch(params.getData());
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EventSearchTitleBean>() {
             @Override
             public void onSuccess(EventSearchTitleBean bean) {
                 if (mView != null) {
-                    mView.showSearchData(bean, keywordId);
+                    mView.showSearchData(bean);
                 }
             }
 
@@ -160,7 +161,6 @@ public class EventReportPresenter extends RxPresenter<EventReportContract.IView>
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EventModeBean>() {
             @Override
             public void onSuccess(EventModeBean bean) {
-                mView.showQuerySelect(bean);
             }
 
             @Override

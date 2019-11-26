@@ -9,40 +9,18 @@ import java.util.List;
  * @UserWhat what
  */
 public class ShowPartBean {
+    public List<KeywordInfoBean> list;
+    public CategoryInfoBean category;
 
-    private List<PartBean> part;
-
-    public List<PartBean> getPart() {
-        return part;
+    public class CategoryInfoBean {
+        public int category_id;
+        public String category_name;
     }
 
-    public void setPart(List<PartBean> part) {
-        this.part = part;
-    }
-
-    public static class PartBean {
-        /**
-         * part_id : 1
-         * part_name : 罗庄区
-         */
-
-        private int part_id;
-        private String part_name;
-
-        public int getPart_id() {
-            return part_id;
-        }
-
-        public void setPart_id(int part_id) {
-            this.part_id = part_id;
-        }
-
-        public String getPart_name() {
-            return part_name;
-        }
-
-        public void setPart_name(String part_name) {
-            this.part_name = part_name;
-        }
+    public class KeywordInfoBean {
+        public int classify_keyword_id;
+        public int category_id;
+        public int classify_id;
+        public String classify_keyword;
     }
 }

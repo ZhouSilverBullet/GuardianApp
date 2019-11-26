@@ -2,10 +2,10 @@ package com.sdxxtop.guardianapp.base;
 
 import android.os.Bundle;
 
-import com.sdxxtop.guardianapp.di.component.ActivityComponent;
-import com.sdxxtop.guardianapp.di.module.ActivityModule;
 import com.sdxxtop.guardianapp.app.App;
+import com.sdxxtop.guardianapp.di.component.ActivityComponent;
 import com.sdxxtop.guardianapp.di.component.DaggerActivityComponent;
+import com.sdxxtop.guardianapp.di.module.ActivityModule;
 
 import javax.inject.Inject;
 

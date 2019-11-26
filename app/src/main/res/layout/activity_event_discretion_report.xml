@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
+    android:background="#4B7902"
     android:orientation="vertical"
     tools:context=".ui.activity.EventDiscretionReportActivity">
 
@@ -14,8 +15,10 @@
         android:id="@+id/titleView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:leftLayoutIconIsGray="true"
-        app:rightTextColor="@color/color_313131"
+        app:bgColor="#4B7902"
+        app:leftLayoutIsShow="true"
+        app:titleColor="@color/white"
+        app:rightTextColor="@color/white"
         app:rightTextValue="我的处理"
         app:titleValue="自行处理"/>
 
@@ -60,21 +63,80 @@
                     android:orientation="vertical">
 
                     <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
-                        android:id="@+id/tatv_happen"
+                        android:id="@+id/tatv_event_type"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:tatv_text_right_hint_value="请点击选择"
-                        app:tatv_text_view="事件发生地点"/>
+                        app:tatv_text_view="事件分类" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginRight="15dp"
-                        android:text="工作描述"
-                        android:textColor="@color/color_303030"
-                        android:textSize="17sp"/>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/col_happen"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingTop="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/tv_place_title"
+                            app:layout_constraintBottom_toBottomOf="@+id/tv_place_desc"
+                            android:id="@+id/text_and_text_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="定位信息"
+                            android:textColor="#333333"
+                            android:textSize="17sp"/>
+
+                        <TextView
+                            android:singleLine="true"
+                            android:textColor="@color/color_313131"
+                            android:textSize="14sp"
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/tv_place_title"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintRight_toLeftOf="@+id/iv_img"
+                            app:layout_constraintLeft_toRightOf="@+id/text_and_text_name"
+                            tools:text="鲁南国际工业品采购中心11号"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:singleLine="true"
+                            android:textSize="11sp"
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/tv_place_desc"
+                            app:layout_constraintRight_toLeftOf="@+id/iv_img"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_place_title"
+                            app:layout_constraintLeft_toRightOf="@+id/text_and_text_name"
+                            android:text=""
+                            tools:text="鲁南国际工业品采购中心11号"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:textColor="@color/color_999999"
+                            android:id="@+id/tv_select"
+                            android:layout_marginRight="10dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintRight_toLeftOf="@+id/iv_img"
+                            android:textSize="17sp"
+                            android:text="请点击选择"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <ImageView
+                            android:id="@+id/iv_img"
+                            android:src="@drawable/next_step"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_width="11dp"
+                            android:layout_height="19dp"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <com.sdxxtop.guardianapp.ui.widget.NumberEditTextView
                         android:id="@+id/net_content"
@@ -155,7 +217,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/btn_green_solid_bg"
+            android:background="@drawable/btn_event_green_solid_bg"
             android:text="提交"
             android:textColor="@color/white"/>
     </LinearLayout>

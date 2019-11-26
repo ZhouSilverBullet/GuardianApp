@@ -3,9 +3,8 @@ package com.sdxxtop.guardianapp.ui.widget;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,6 +29,8 @@ public class TitleView extends RelativeLayout {
     private TextView tvRight;
     private LinearLayout linearBack;
     private boolean layoutIsShow;
+    private boolean fitsSystemWindows;
+    private boolean clipToPadding;
 
     public TitleView(Context context) {
         this(context, null);
@@ -50,13 +51,18 @@ public class TitleView extends RelativeLayout {
         rightTextColor = a.getColor(R.styleable.TitleView_rightTextColor, getResources().getColor(R.color.white));
         layoutIsShow = a.getBoolean(R.styleable.TitleView_leftLayoutIsShow, false);
         layoutIconIsGray = a.getBoolean(R.styleable.TitleView_leftLayoutIconIsGray, false);
+        fitsSystemWindows = a.getBoolean(R.styleable.TitleView_fitsSystemWindows, true);
+        clipToPadding = a.getBoolean(R.styleable.TitleView_clipToPadding, true);
+
         a.recycle();
         init();
     }
 
     private void init() {
-        setClipToPadding(true);
-        setFitsSystemWindows(true);
+        Log.e("TitleView", "" + clipToPadding);
+        Log.e("TitleView", "" + fitsSystemWindows);
+        setClipToPadding(clipToPadding);
+        setFitsSystemWindows(fitsSystemWindows);
         setBackgroundColor(bgColor);
 
         LayoutInflater.from(getContext()).inflate(R.layout.view_title, this, true);
