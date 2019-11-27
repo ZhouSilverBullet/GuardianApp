@@ -5,6 +5,7 @@ import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,7 +22,6 @@ import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
 import com.sdxxtop.guardianapp.ui.widget.CustomVideoImgSelectView;
 import com.sdxxtop.guardianapp.ui.widget.NumberEditTextView;
 import com.sdxxtop.guardianapp.ui.widget.SingleStyleView;
-import com.sdxxtop.guardianapp.ui.widget.TextAndCheckBoxView;
 import com.sdxxtop.guardianapp.ui.widget.TextAndEditView;
 import com.sdxxtop.guardianapp.ui.widget.TextAndTextView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
@@ -51,10 +51,6 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
     TextAndTextView tatvEndTime;
     @BindView(R.id.net_content)
     NumberEditTextView netContent;
-    @BindView(R.id.tacbv_view)
-    TextAndCheckBoxView tacbvView;
-    @BindView(R.id.tv_dismiss)
-    TextView tvDismiss;
     @BindView(R.id.title_recycler)
     RecyclerView titleRecycler;
     @BindView(R.id.ll_search_data_layout)
@@ -71,10 +67,10 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
     TextView tvPlaceTitle;
     @BindView(R.id.tv_place_desc)
     TextView tvPlaceDesc;
-    @BindView(R.id.tv_select)
-    TextView tvSelect;
     @BindView(R.id.tatv_event_type)
     TextAndTextView tatvEventType;
+    @BindView(R.id.cb_into_voice)
+    CheckBox cbIntoVoice;
 
 
     private String lonLng;//经纬度
@@ -119,14 +115,7 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
         dialog = new TimeSelectBottomDialog(this, tatvEndTime.getTextRightText());
         netContent.setEditHint("在此录入事件描述");
         netContent.setMaxLength(200);
-        tacbvView.setOnCheckBoxClick(new TextAndCheckBoxView.OnCheckBoxClick() {
-            @Override
-            public void refreshStatus(boolean isShow) {
-                tatvEndTime.setVisibility(isShow ? View.VISIBLE : View.GONE);
-                tatvEndTime.getTextRightText().setText("");
-                tatvEndTime.getTextRightText().setHint("请选择整改时效");
-            }
-        });
+
 
         titleRecycler.setLayoutManager(new LinearLayoutManager(this));
         adapter = new EventSearchTitleAdapter();
@@ -160,12 +149,12 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
             }
         });
 
-        tvDismiss.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                llSearchDataLayout.setVisibility(View.GONE);
-            }
-        });
+//        tvDismiss.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                llSearchDataLayout.setVisibility(View.GONE);
+//            }
+//        });
 
         titleView.getTvRight().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,6 +166,15 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
 
         categorySelectView = new SingleStyleView(this, categoryList);
         categorySelectView.setOnItemSelectLintener(this);
+
+        cbIntoVoice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tatvEndTime.setVisibility(cbIntoVoice.isChecked() ? View.VISIBLE : View.GONE);
+                tatvEndTime.getTextRightText().setText("");
+                tatvEndTime.getTextRightText().setHint("请选择整改时效");
+            }
+        });
     }
 
     @OnClick({R.id.tatv_end_time, R.id.col_happen, R.id.tatv_event_type})
@@ -192,7 +190,7 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
                 selectHappen();
                 break;
             case R.id.tatv_end_time:
-                if (tacbvView.getEnableClick()) {
+                if (cbIntoVoice.isChecked()) {
                     if (dialog != null) {
                         dialog.show();
                     } else {
@@ -264,12 +262,12 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
         }
 
         String endTime = tatvEndTime.getRightTVString();
-        if (tacbvView.getEnableClick() && TextUtils.isEmpty(endTime)) {
+        if (cbIntoVoice.isChecked() && TextUtils.isEmpty(endTime)) {
             showToast("请选择整改时效");
             return;
         }
 
-        mPresenter.pushReport(tacbvView.getEnableClick() ? 1 : 2, title, place, lonLng, editValue, endTime, imagePushPath, videoPushPath,category_id);
+        mPresenter.pushReport(cbIntoVoice.isChecked() ? 1 : 2, title, place, lonLng, editValue, endTime, imagePushPath, videoPushPath,category_id);
     }
 
 
@@ -288,7 +286,6 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
             lonLng = lt;
             tvPlaceTitle.setText(title);
             tvPlaceDesc.setText(desc);
-            tvSelect.setVisibility(View.GONE);
         }
     }
 

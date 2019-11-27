@@ -9,18 +9,14 @@ import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.model.bean.EventDiscretionListBean;
 import com.sdxxtop.guardianapp.ui.activity.PatrolAddDetailActivity;
 
-import java.util.List;
-
-import androidx.annotation.Nullable;
-
 /**
  * @author :  lwb
  * Date: 2019/5/28
  * Desc:
  */
 public class EventDiscretionListAdapter extends BaseQuickAdapter<EventDiscretionListBean.PartolBean, BaseViewHolder> {
-    public EventDiscretionListAdapter(int layoutResId, @Nullable List<EventDiscretionListBean.PartolBean> data) {
-        super(layoutResId, data);
+    public EventDiscretionListAdapter() {
+        super(R.layout.item_event_discretion_list);
     }
 
     @Override
@@ -29,6 +25,7 @@ public class EventDiscretionListAdapter extends BaseQuickAdapter<EventDiscretion
         helper.setText(R.id.tv_time,"整改时限："+item.getRectify_date());
         helper.setText(R.id.tv_address,"提交时间："+item.getAdd_date());
         helper.setText(R.id.tv_status,item.getStatus()==1?"待复查":"已完成");
+        helper.setText(R.id.tv_event_category,item.getCategory_name());
 
         helper.convertView.setOnClickListener(new View.OnClickListener() {
             @Override

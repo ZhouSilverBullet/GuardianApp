@@ -11,8 +11,8 @@ import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity;
 import com.sdxxtop.guardianapp.utils.Date2Util;
 
 public class EventReportListAdapter extends BaseQuickAdapter<EventIndexBean.EventBean, BaseViewHolder> {
-    public EventReportListAdapter(int layoutResId) {
-        super(layoutResId);
+    public EventReportListAdapter() {
+        super(R.layout.item_event_report_list_recycler);
     }
 
     @Override
@@ -21,6 +21,7 @@ public class EventReportListAdapter extends BaseQuickAdapter<EventIndexBean.Even
         TextView tvTime = helper.getView(R.id.tv_time);
         TextView tvAddress = helper.getView(R.id.tv_address);
         TextView tvStatus = helper.getView(R.id.tv_status);
+        helper.setText(R.id.tv_event_category,item.getCategory_name());
 
         tvTitle.setText(item.getTitle());
         tvTime.setText("上报时间：" + Date2Util.handleTime(item.getAdd_time()));

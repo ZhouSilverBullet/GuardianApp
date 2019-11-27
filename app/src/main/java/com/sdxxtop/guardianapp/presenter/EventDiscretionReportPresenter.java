@@ -38,7 +38,7 @@ public class EventDiscretionReportPresenter extends RxPresenter<EventDiscretionR
 
 
     public void pushReport(int status, String eventTitle, String place, String longitude, String content, String rectify_time, List<File> imagePushPath,
-                           List<File> videoPushPath,int categoryId) {
+                           List<File> videoPushPath, int categoryId) {
 
         ImageAndVideoParams params = new ImageAndVideoParams();
         params.put("tl", eventTitle);
@@ -47,12 +47,12 @@ public class EventDiscretionReportPresenter extends RxPresenter<EventDiscretionR
         params.put("ct", content);
         params.put("rt", rectify_time);
         params.put("sta", status);
-        params.put("cgib", categoryId);
+        params.put("cgid", categoryId);
 
         params.addImagePathList("img[]", imagePushPath);
 
-        if (videoPushPath!=null&&videoPushPath.size()>0){
-            util = new VideoCompressUtil((Activity)mView);
+        if (videoPushPath != null && videoPushPath.size() > 0) {
+            util = new VideoCompressUtil((Activity) mView);
             File file = videoPushPath.get(0);
             util.videoCompress(file.getPath());
 
@@ -68,7 +68,7 @@ public class EventDiscretionReportPresenter extends RxPresenter<EventDiscretionR
                     UIUtils.showToast("压缩失败,请重新尝试");
                 }
             });
-        }else{
+        } else {
             request(params);
         }
     }
@@ -90,13 +90,13 @@ public class EventDiscretionReportPresenter extends RxPresenter<EventDiscretionR
         addSubscribe(disposable);
     }
 
-    public void request(ImageAndVideoParams params){
-        ((BaseActivity)mView).showLoadingDialogNotCancel();
+    public void request(ImageAndVideoParams params) {
+        ((BaseActivity) mView).showLoadingDialogNotCancel();
         Observable<RequestBean<PatrolAddBean>> observable = getEnvirLongApi().postPatrolAdd(params.getImgAndVideoData());
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<PatrolAddBean>() {
             @Override
             public void onSuccess(PatrolAddBean bean) {
-                if (mView != null&&bean!=null) {
+                if (mView != null && bean != null) {
                     mView.skipDetail(bean);
                 }
             }
@@ -104,7 +104,7 @@ public class EventDiscretionReportPresenter extends RxPresenter<EventDiscretionR
             @Override
             public void onFailure(int code, String error) {
                 if (mView != null) {
-                    ((BaseActivity)mView).hideLoadingDialog();
+                    ((BaseActivity) mView).hideLoadingDialog();
                     UIUtils.showToast(error);
                     mView.showError(error);
                 }

@@ -47,6 +47,15 @@ public class EventIndexBean {
         private String add_time;
         private int important_type;
         private int is_claim;
+        private String category_name;
+
+        public String getCategory_name() {
+            return category_name;
+        }
+
+        public void setCategory_name(String category_name) {
+            this.category_name = category_name;
+        }
 
         public int getIs_claim() {
             return is_claim;

@@ -76,8 +76,6 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     TextView tvPlaceTitle;
     @BindView(R.id.tv_place_desc)
     TextView tvPlaceDesc;
-    @BindView(R.id.tv_select)
-    TextView tvSelect;
 
 
     private String lonLng;    //经纬度
@@ -90,6 +88,8 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     private List<SingleStyleView.ListDataBean> categoryList = new ArrayList<>();
     private ProvinceTwoPickerView pickerUtil;
     private SingleStyleView categorySelectView;
+
+    private static final String TAG = "EventReportActivity";
 
     @Override
     protected int getLayout() {
@@ -104,7 +104,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
         InputFilter[] filters = {new InputFilter.LengthFilter(10)};
         taevTitle.getEditText().setFilters(filters);
 
-        netContent.setEditHint("");
+        netContent.setEditHint("在此录入事件描述");
 
         titleRecycler.setLayoutManager(new LinearLayoutManager(this));
         adapter = new EventSearchTitleAdapter();
@@ -128,10 +128,13 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
                 @Override
                 public void callBack(String str, double lat, double lgt, AMapLocation aMapLocation) {
                     String address = aMapLocation.getAddress();
-                    if (!TextUtils.isEmpty(address)) {
-                        tvPlaceTitle.setText(address);
+                    String poiName = aMapLocation.getPoiName();
+                    if (!TextUtils.isEmpty(address)&&!TextUtils.isEmpty(poiName)) {
+                        tvPlaceDesc.setText(address);
+                        tvPlaceTitle.setText(poiName);
 //                        String value = longitude + "," + latitude;
                         lonLng = aMapLocation.getLongitude() + "," + aMapLocation.getLatitude();
+                        oneLoaction.stopLocation();
                     }
                 }
             });
@@ -325,7 +328,6 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
             lonLng = lt;
             tvPlaceTitle.setText(title);
             tvPlaceDesc.setText(desc);
-            tvSelect.setVisibility(View.GONE);
         }
     }
 

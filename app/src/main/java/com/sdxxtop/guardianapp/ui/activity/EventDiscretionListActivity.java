@@ -22,6 +22,7 @@ public class EventDiscretionListActivity extends BaseMvpActivity<EventDiscretion
     RecyclerView recyclerView;
     @BindView(R.id.smart_refresh)
     SmartRefreshLayout mSmartRefreshLayout;
+
     private EventDiscretionListAdapter mAdapter;
 
     @Override
@@ -36,7 +37,10 @@ public class EventDiscretionListActivity extends BaseMvpActivity<EventDiscretion
 
     @Override
     public void showError(String error) {
-
+        if (mSmartRefreshLayout != null) {
+            mSmartRefreshLayout.finishLoadMore();
+            mSmartRefreshLayout.finishRefresh();
+        }
     }
 
     @Override
@@ -48,7 +52,7 @@ public class EventDiscretionListActivity extends BaseMvpActivity<EventDiscretion
     @Override
     protected void initView() {
         super.initView();
-        mAdapter = new EventDiscretionListAdapter(R.layout.item_event_discretion_list, null);
+        mAdapter = new EventDiscretionListAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(mAdapter);
 

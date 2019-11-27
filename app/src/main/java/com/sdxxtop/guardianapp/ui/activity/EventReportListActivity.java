@@ -49,7 +49,7 @@ public class EventReportListActivity extends BaseMvpActivity<TaskAgentsPresenter
         super.initView();
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new EventReportListAdapter(R.layout.item_event_report_list_recycler);
+        mAdapter = new EventReportListAdapter();
         mRecyclerView.setAdapter(mAdapter);
 //        ArrayList<String> objects = new ArrayList<>();
 //        objects.add("");

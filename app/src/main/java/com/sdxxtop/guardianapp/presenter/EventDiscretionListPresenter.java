@@ -36,6 +36,9 @@ public class EventDiscretionListPresenter extends RxPresenter<EventDiscretionLis
 
             @Override
             public void onFailure(int code, String error) {
+                if (mView != null) {
+                    mView.showError(error);
+                }
                 UIUtils.showToast(error);
             }
         });
