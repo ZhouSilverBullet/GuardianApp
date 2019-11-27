@@ -19,7 +19,7 @@
         app:leftLayoutIsShow="true"
         app:rightTextValue="我的上报"
         app:titleColor="@color/white"
-        app:titleValue="事件上报" />
+        app:titleValue="巡查上报" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -44,7 +44,7 @@
                 android:id="@+id/taev_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:taev_edit_text_hint="事件重点简述（限制10个字）"
+                app:taev_edit_text_hint="事件类目关键词（限制10个字）"
                 app:taev_text_view="事件标题" />
 
             <RelativeLayout

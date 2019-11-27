@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -125,7 +126,11 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
             public void onItemClick(BaseQuickAdapter titleAdapter, View view, int position) {
                 isSearchEnable = false;
                 ShowPartBean.KeywordInfoBean item = (ShowPartBean.KeywordInfoBean) titleAdapter.getItem(position);
-                taevTitle.getEditText().setText(item.classify_keyword);
+                EditText et_title = taevTitle.getEditText();
+                et_title.setText(item.classify_keyword);
+                et_title.clearFocus();
+                hideKeyboard(et_title);
+
                 llSearchDataLayout.setVisibility(View.GONE);
                 mPresenter.keywordMatch(item.classify_keyword, item.classify_keyword_id);
             }

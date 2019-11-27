@@ -5,6 +5,7 @@ import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -114,7 +115,11 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 isItemClick = true;
                 ShowPartBean.KeywordInfoBean item = (ShowPartBean.KeywordInfoBean) adapter.getItem(position);
-                taevTitle.getEditText().setText(item.classify_keyword);
+                EditText et_title = taevTitle.getEditText();
+                et_title.setText(item.classify_keyword);
+                et_title.clearFocus();
+                hideKeyboard(et_title);
+
                 llSearchDataLayout.setVisibility(View.GONE);
                 mPresenter.keywordMatch(item.classify_keyword, item.classify_keyword_id);
             }

@@ -37,7 +37,7 @@ public class MyHomeTabAdapter extends BaseAdapter {
 
     private int[] imgRes = {R.drawable.shijian_home_new, R.drawable.xuncha_home_new, R.drawable.qiandao_home_new,
             R.drawable.wurenji_home_new, R.drawable.map_home_new, R.drawable.service_home_new};
-    private String[] titleRes = {"事件上报", "巡查上报", "签到打卡"};
+    private String[] titleRes = {"巡查上报", "巡查处理", "签到打卡"};
 
     @Override
     public int getCount() {
