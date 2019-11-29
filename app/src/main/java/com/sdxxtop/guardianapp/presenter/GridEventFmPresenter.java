@@ -54,8 +54,10 @@ public class GridEventFmPresenter extends RxPresenter<GridEventFmContract.IView>
 
             @Override
             public void onFailure(int code, String error) {
-                ((SectionEventFragment) mView).closeLoadingDialog();
-                mView.showError(error);
+                if (mView != null) {
+                    ((SectionEventFragment) mView).closeLoadingDialog();
+                    mView.showError(error);
+                }
             }
         });
         addSubscribe(disposable);

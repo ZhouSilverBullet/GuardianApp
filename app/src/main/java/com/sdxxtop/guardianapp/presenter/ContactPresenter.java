@@ -26,8 +26,10 @@ public class ContactPresenter extends RxPresenter<ContactContract.IView> impleme
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<ContactIndexBean>() {
             @Override
             public void onSuccess(ContactIndexBean contactIndexBean) {
-                List<ContactIndexBean.ContactBean> user = contactIndexBean.getUser();
-                mView.showList(contactIndexBean);
+                if (mView != null) {
+                    List<ContactIndexBean.ContactBean> user = contactIndexBean.getUser();
+                    mView.showList(contactIndexBean);
+                }
             }
 
             @Override
@@ -45,8 +47,10 @@ public class ContactPresenter extends RxPresenter<ContactContract.IView> impleme
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<ContactIndexBean>() {
             @Override
             public void onSuccess(ContactIndexBean contactIndexBean) {
-                List<ContactIndexBean.ContactBean> user = contactIndexBean.getUser();
-                mView.showSearchList(contactIndexBean);
+                if (mView!=null){
+                    List<ContactIndexBean.ContactBean> user = contactIndexBean.getUser();
+                    mView.showSearchList(contactIndexBean);
+                }
             }
 
             @Override

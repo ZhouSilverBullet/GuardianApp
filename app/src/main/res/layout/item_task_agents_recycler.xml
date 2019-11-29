@@ -12,15 +12,17 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
             android:orientation="horizontal"
             android:paddingLeft="15dp"
-            android:paddingRight="15dp">
+            android:paddingRight="10dp">
 
             <LinearLayout
+                android:layout_marginRight="5dp"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -45,30 +47,21 @@
                     android:singleLine="true"
                     android:text="地址：北京市草原区京市草原京市草原"
                     android:textSize="10sp" />
+
             </LinearLayout>
 
-            <LinearLayout
+            <TextView
+                android:gravity="center"
+                android:paddingRight="10dp"
+                android:background="@drawable/evnet_label_bg"
+                android:id="@+id/tv_event_category"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:text="下水道堵塞"
+                android:textColor="@color/white"
+                android:textSize="10sp" />
 
-                <TextView
-                    android:id="@+id/tv_important"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:text="重要性:高"
-                    android:textColor="@color/color_red_F23030"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/tv_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
-                    android:text="截止日期：2222-22-22"
-                    android:textSize="10sp" />
-            </LinearLayout>
         </LinearLayout>
 
         <View
@@ -77,7 +70,7 @@
             android:background="@color/color_E4E4E4" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -90,6 +83,34 @@
                 android:id="@+id/tv_phase"
                 style="@style/green_bg_style"
                 android:text="已解决" />
+
+            <LinearLayout
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_important"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginBottom="7dp"
+                    android:text="重要性:高"
+                    android:textColor="@color/color_red_F23030"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_gravity="right"
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="截止日期：2222-22-22"
+                    android:textSize="10sp" />
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>

@@ -41,8 +41,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetailPresenter> implements EventReportDetailContract.IView,
+public class EventReportDetailActivity2 extends BaseMvpActivity<EventReportDetailPresenter> implements EventReportDetailContract.IView,
         ERCheckResultWindow.OnConfirmClick {
+
 
     @BindView(R.id.tv_title)
     TitleView tvTitle;
@@ -153,7 +154,7 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
 
     @Override
     protected void initInject() {
-        getActivityComponent().inject(this);
+//        getActivityComponent().inject(this);
     }
 
     @Override
@@ -644,7 +645,7 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
     }
 
     public static void startDetailActivity(Context context, String eventId) {
-        Intent intent = new Intent(context, EventReportDetailActivity.class);
+        Intent intent = new Intent(context, EventReportDetailActivity2.class);
         intent.putExtra("eventId", eventId);
         context.startActivity(intent);
     }
@@ -706,7 +707,7 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
                 } else if (eventStatus == 3) {
                     skipSecondPush(EventReportDetailSecondActivity.TYPE_CHACK_SUCCSESS);
                 } else if (eventStatus == 1 && isClaimAuth == 1) {   // 事件流转
-                    Intent intent = new Intent(EventReportDetailActivity.this, EventMoveActivity.class);
+                    Intent intent = new Intent(EventReportDetailActivity2.this, EventMoveActivity.class);
                     intent.putExtra("eventId", mEventId);
                     startActivityForResult(intent, 321);
                 }

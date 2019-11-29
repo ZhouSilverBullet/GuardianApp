@@ -17,6 +17,7 @@ import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 
 public class SplashPresenter extends RxPresenter<SplashContract.IView> implements SplashContract.IPresenter {
+
     @Inject
     public SplashPresenter() {
     }
@@ -24,7 +25,7 @@ public class SplashPresenter extends RxPresenter<SplashContract.IView> implement
     public void autoLogin() {
         Params params = new Params();
         params.put("at", SpUtil.getString(Constants.AUTO_TOKEN));
-        Observable<RequestBean<AutoLoginBean>> observable = getEnvirApi().postLoginAutoLogin(params.getData());
+        Observable<RequestBean<AutoLoginBean>> observable = getLoginLongApi().postLoginAutoLogin(params.getData());
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<AutoLoginBean>() {
             @Override
             public void onSuccess(AutoLoginBean autoLoginBean) {

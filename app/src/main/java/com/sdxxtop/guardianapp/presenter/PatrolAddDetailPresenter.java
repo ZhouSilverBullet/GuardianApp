@@ -30,12 +30,16 @@ public class PatrolAddDetailPresenter extends RxPresenter<PatrolAddDetailContrac
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<PatrolReadBean>() {
             @Override
             public void onSuccess(PatrolReadBean bean) {
-                mView.showData(bean);
+                if (mView != null) {
+                    mView.showData(bean);
+                }
             }
 
             @Override
             public void onFailure(int code, String error) {
-                mView.showError(error);
+                if (mView != null) {
+                    mView.showError(error);
+                }
             }
         });
         addSubscribe(disposable);

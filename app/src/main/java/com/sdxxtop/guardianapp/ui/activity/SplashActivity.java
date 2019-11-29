@@ -17,6 +17,7 @@ import com.sdxxtop.guardianapp.model.bean.TrackInfoBean;
 import com.sdxxtop.guardianapp.presenter.SplashPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.SplashContract;
 import com.sdxxtop.guardianapp.utils.SpUtil;
+import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import androidx.annotation.Nullable;
 import me.jessyan.autosize.internal.CancelAdapt;
@@ -162,7 +163,7 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
 
     @Override
     public void showError(String error) {
+        UIUtils.showToast(error);
         skipLogin();
-
     }
 }

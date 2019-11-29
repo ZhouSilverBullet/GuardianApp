@@ -79,7 +79,9 @@ public class EventDiscretionReportPresenter extends RxPresenter<EventDiscretionR
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EventSearchTitleBean>() {
             @Override
             public void onSuccess(EventSearchTitleBean Bean) {
-                mView.showSearchData(Bean);
+                if (mView != null) {
+                    mView.showSearchData(Bean);
+                }
             }
 
             @Override

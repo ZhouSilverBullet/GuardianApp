@@ -5,7 +5,6 @@ import com.sdxxtop.guardianapp.model.bean.LoginBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
 import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
 import com.sdxxtop.guardianapp.model.http.net.Params;
-import com.sdxxtop.guardianapp.model.http.net.RetrofitHelper;
 import com.sdxxtop.guardianapp.model.http.util.RxUtils;
 import com.sdxxtop.guardianapp.presenter.contract.LoginContract;
 import com.sdxxtop.guardianapp.utils.UIUtils;
@@ -14,7 +13,6 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 
 public class LoginPresenter extends RxPresenter<LoginContract.IView> implements LoginContract.IPresenter {
     @Inject
@@ -32,7 +30,9 @@ public class LoginPresenter extends RxPresenter<LoginContract.IView> implements 
         Disposable disposable = RxUtils.handleDataHttp(requestBeanObservable, new IRequestCallback<LoginBean>() {
             @Override
             public void onSuccess(LoginBean loginBean) {
-                mView.loginSuccess(loginBean);
+                if (mView != null) {
+                    mView.loginSuccess(loginBean);
+                }
             }
 
             @Override
@@ -51,14 +51,18 @@ public class LoginPresenter extends RxPresenter<LoginContract.IView> implements 
         Disposable disposable = RxUtils.handleHttp(observable, new IRequestCallback<RequestBean>() {
             @Override
             public void onSuccess(RequestBean requestBean) {
-                mView.sendCodeSuccess();
-                UIUtils.showToast("发送成功");
+                if (mView != null) {
+                    mView.sendCodeSuccess();
+                    UIUtils.showToast("发送成功");
+                }
             }
 
             @Override
             public void onFailure(int code, String error) {
-                mView.sendCodeError();
-                UIUtils.showToast(error);
+                if (mView != null) {
+                    mView.sendCodeError();
+                    UIUtils.showToast(error);
+                }
             }
         });
 

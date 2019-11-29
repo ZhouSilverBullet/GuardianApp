@@ -30,7 +30,9 @@ public class TaskAgentsPresenter extends RxPresenter<TaskAgentsContract.IView> i
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EventIndexBean>() {
             @Override
             public void onSuccess(EventIndexBean eventIndexBean) {
-                mView.showData(page, eventIndexBean);
+                if (mView != null) {
+                    mView.showData(page, eventIndexBean);
+                }
             }
 
             @Override

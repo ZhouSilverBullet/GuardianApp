@@ -67,13 +67,17 @@ public class ReCheckPresenter extends RxPresenter<ReCheckContract.IView> impleme
         Disposable disposable = RxUtils.handleHttp(observable, new IRequestCallback<RequestBean>() {
             @Override
             public void onSuccess(RequestBean bean) {
-                mView.showMsg(bean);
+                if (mView != null) {
+                    mView.showMsg(bean);
+                }
             }
 
             @Override
             public void onFailure(int code, String error) {
-                UIUtils.showToast(error);
-                mView.showError(error);
+                if (mView != null) {
+                    UIUtils.showToast(error);
+                    mView.showError(error);
+                }
             }
         });
         addSubscribe(disposable);

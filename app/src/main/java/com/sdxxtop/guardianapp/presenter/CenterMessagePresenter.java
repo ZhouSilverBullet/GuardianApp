@@ -31,7 +31,9 @@ public class CenterMessagePresenter extends RxPresenter<CenterMessageContract.IV
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<UnreadIndexBean>() {
             @Override
             public void onSuccess(UnreadIndexBean bean) {
-                mView.showData(bean);
+                if (mView != null) {
+                    mView.showData(bean);
+                }
             }
 
             @Override

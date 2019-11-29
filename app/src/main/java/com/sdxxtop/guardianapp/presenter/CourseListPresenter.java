@@ -10,7 +10,6 @@ import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
 import com.sdxxtop.guardianapp.model.http.net.Params;
 import com.sdxxtop.guardianapp.model.http.util.RxUtils;
 import com.sdxxtop.guardianapp.presenter.contract.CourseListContract;
-import com.sdxxtop.guardianapp.presenter.contract.HomeContract;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import java.util.List;
@@ -31,6 +30,7 @@ public class CourseListPresenter extends RxPresenter<CourseListContract.IView> i
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<StudyCourseBean>() {
             @Override
             public void onSuccess(StudyCourseBean studyCourseBean) {
+                if (mView == null) return;
 
                 if ("exam".equals(name)) {
                     List<ExamCellBean> exam = studyCourseBean.getExam();

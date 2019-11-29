@@ -32,7 +32,9 @@ public class GACEPresenter extends RxPresenter<GACEContract.IView> implements GA
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EnterpriseCompanyBean>() {
             @Override
             public void onSuccess(EnterpriseCompanyBean bean) {
-                mView.showData(bean);
+                if (mView != null) {
+                    mView.showData(bean);
+                }
             }
 
             @Override

@@ -44,6 +44,9 @@ public class RxPresenter<T extends BaseView> implements BasePresenter<T> {
     public EnvirApiService getEnvirLongApi() {
         return RetrofitHelper.getLongEnvirApi();
     }
+    public EnvirApiService getLoginLongApi() {
+        return RetrofitHelper.getLoginLongEnvirApi();
+    }
 
     public ApiService getApi() {
         return RetrofitHelper.getNewsApi();

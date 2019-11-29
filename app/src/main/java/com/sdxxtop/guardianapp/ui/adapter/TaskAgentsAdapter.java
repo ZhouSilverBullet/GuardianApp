@@ -21,6 +21,7 @@ public class TaskAgentsAdapter extends BaseQuickAdapter<EventIndexBean.EventBean
         TextView tvImportant = helper.getView(R.id.tv_important);
         TextView tvDate = helper.getView(R.id.tv_date);
         TextView tvPhase = helper.getView(R.id.tv_phase);
+        helper.setText(R.id.tv_event_category,item.getCategory_name());
 
         tvTitle.setText(item.getTitle());
         tvAddress.setText("地址：" + item.getPlace());
@@ -40,7 +41,7 @@ public class TaskAgentsAdapter extends BaseQuickAdapter<EventIndexBean.EventBean
 
         tvImportant.setText(sb);
         if (item.getIs_claim() == 1) {
-            tvImportant.setVisibility(View.INVISIBLE);
+            tvImportant.setVisibility(View.GONE);
         } else {
             tvImportant.setVisibility(View.VISIBLE);
         }

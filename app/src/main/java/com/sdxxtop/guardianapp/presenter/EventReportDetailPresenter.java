@@ -2,6 +2,7 @@ package com.sdxxtop.guardianapp.presenter;
 
 import com.sdxxtop.guardianapp.base.RxPresenter;
 import com.sdxxtop.guardianapp.model.bean.EventReadIndexBean;
+import com.sdxxtop.guardianapp.model.bean.EventReadIndexBean_new;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
 import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
 import com.sdxxtop.guardianapp.model.http.net.ImageParams;
@@ -31,7 +32,29 @@ public class EventReportDetailPresenter extends RxPresenter<EventReportDetailCon
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EventReadIndexBean>() {
             @Override
             public void onSuccess(EventReadIndexBean eventReadBean) {
-                mView.readData(eventReadBean);
+                if (mView!=null){
+                    mView.readData(eventReadBean);
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String error) {
+                UIUtils.showToast(error);
+            }
+        });
+        addSubscribe(disposable);
+    }
+
+    public void loadNewData(String eventId) {
+        Params params = new Params();
+        params.put("ei", eventId);
+        Observable<RequestBean<EventReadIndexBean_new>> observable = getEnvirApi().postNewEventRead(params.getData());
+        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EventReadIndexBean_new>() {
+            @Override
+            public void onSuccess(EventReadIndexBean_new bean) {
+                if (mView != null) {
+                    mView.readNewData(bean);
+                }
             }
 
             @Override
@@ -57,7 +80,9 @@ public class EventReportDetailPresenter extends RxPresenter<EventReportDetailCon
         Disposable disposable = RxUtils.handleHttp(observable, new IRequestCallback<RequestBean>() {
             @Override
             public void onSuccess(RequestBean requestBean) {
-                mView.modifyRefresh();
+                if (mView != null) {
+                    mView.modifyRefresh();
+                }
             }
 
             @Override
@@ -77,7 +102,9 @@ public class EventReportDetailPresenter extends RxPresenter<EventReportDetailCon
         Disposable disposable = RxUtils.handleHttp(observable, new IRequestCallback<RequestBean>() {
             @Override
             public void onSuccess(RequestBean requestBean) {
-                mView.modifyRefresh();
+                if (mView != null) {
+                    mView.modifyRefresh();
+                }
             }
 
             @Override
@@ -99,7 +126,9 @@ public class EventReportDetailPresenter extends RxPresenter<EventReportDetailCon
         Disposable disposable = RxUtils.handleHttp(observable, new IRequestCallback<RequestBean>() {
             @Override
             public void onSuccess(RequestBean requestBean) {
-                mView.modifyRefresh();
+                if (mView != null) {
+                    mView.modifyRefresh();
+                }
             }
 
             @Override

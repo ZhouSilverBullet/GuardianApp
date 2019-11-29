@@ -78,6 +78,9 @@ public class EventReportPresenter extends RxPresenter<EventReportContract.IView>
         Disposable disposable = RxUtils.handleHttp(observable, new IRequestCallback<RequestBean>() {
             @Override
             public void onSuccess(RequestBean requestBean) {
+                if (mView == null) {
+                    return;
+                }
                 String eventId = "";
                 Object data = requestBean.getData();
                 if (data != null) {
@@ -89,7 +92,9 @@ public class EventReportPresenter extends RxPresenter<EventReportContract.IView>
             @Override
             public void onFailure(int code, String error) {
                 UIUtils.showToast(error);
-                mView.showError(error);
+                if (mView != null) {
+                    mView.showError(error);
+                }
             }
         });
         addSubscribe(disposable);

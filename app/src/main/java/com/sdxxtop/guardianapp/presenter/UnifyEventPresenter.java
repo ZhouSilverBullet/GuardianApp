@@ -19,13 +19,16 @@ import io.reactivex.disposables.Disposable;
  * 用来copy使用的
  */
 public class UnifyEventPresenter extends RxPresenter<UnifyEventContract.IView> implements UnifyEventContract.IPresenter {
+
+    private static final String TAG = "UnifyEventPresenter";
+
     @Inject
     public UnifyEventPresenter() {
     }
 
 
-    public void loadData(int type,int start_page) {
-        ((SectionEventFragment)mView).showLoadingDialog();
+    public void loadData(int type, int start_page) {
+        ((SectionEventFragment) mView).showLoadingDialog();
         Params params = new Params();
         params.put("ty", type);
         params.put("sp", start_page);
@@ -33,16 +36,18 @@ public class UnifyEventPresenter extends RxPresenter<UnifyEventContract.IView> i
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<SectionEventBean>() {
             @Override
             public void onSuccess(SectionEventBean bean) {
-                ((SectionEventFragment)mView).closeLoadingDialog();
-                if (mView!=null&&bean!=null){
-                    mView.showData(bean,start_page);
+                ((SectionEventFragment) mView).closeLoadingDialog();
+                if (mView != null && bean != null) {
+                    mView.showData(bean, start_page);
                 }
             }
 
             @Override
             public void onFailure(int code, String error) {
-                ((SectionEventFragment)mView).closeLoadingDialog();
-                mView.showError(error);
+                if (mView != null) {
+                    ((SectionEventFragment) mView).closeLoadingDialog();
+                    mView.showError(error);
+                }
             }
         });
         addSubscribe(disposable);

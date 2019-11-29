@@ -4,14 +4,11 @@ package com.sdxxtop.guardianapp.presenter;
 import com.sdxxtop.guardianapp.base.RxPresenter;
 import com.sdxxtop.guardianapp.model.bean.ExamineFinishBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
-import com.sdxxtop.guardianapp.model.bean.StudyCheckBean;
 import com.sdxxtop.guardianapp.model.bean.StudyQuestionBean;
 import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
 import com.sdxxtop.guardianapp.model.http.net.Params;
-import com.sdxxtop.guardianapp.model.http.net.RetrofitHelper;
 import com.sdxxtop.guardianapp.model.http.util.RxUtils;
 import com.sdxxtop.guardianapp.presenter.contract.ExamineContract;
-import com.sdxxtop.guardianapp.presenter.contract.HomeContract;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import javax.inject.Inject;
@@ -33,7 +30,9 @@ public class ExaminePresenter extends RxPresenter<ExamineContract.IView> impleme
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<StudyQuestionBean>() {
             @Override
             public void onSuccess(StudyQuestionBean studyQuestionBean) {
-                mView.showData(studyQuestionBean);
+                if (mView != null) {
+                    mView.showData(studyQuestionBean);
+                }
             }
 
             @Override
@@ -58,7 +57,9 @@ public class ExaminePresenter extends RxPresenter<ExamineContract.IView> impleme
         Disposable disposable = RxUtils.handleHttp(observable, new IRequestCallback<RequestBean>() {
             @Override
             public void onSuccess(RequestBean checkBean) {
-                mView.pushQuestionSuccess(null);
+                if (mView != null) {
+                    mView.pushQuestionSuccess(null);
+                }
             }
 
             @Override
@@ -78,13 +79,17 @@ public class ExaminePresenter extends RxPresenter<ExamineContract.IView> impleme
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<ExamineFinishBean>() {
             @Override
             public void onSuccess(ExamineFinishBean finishBean) {
-                mView.finishSuccess(finishBean);
+                if (mView != null) {
+                    mView.finishSuccess(finishBean);
+                }
             }
 
             @Override
             public void onFailure(int code, String error) {
-                mView.finishFailure();
-                UIUtils.showToast(error);
+                if (mView != null) {
+                    mView.finishFailure();
+                    UIUtils.showToast(error);
+                }
             }
         });
 

@@ -20,6 +20,7 @@ import com.sdxxtop.guardianapp.model.bean.EventIndexBean;
 import com.sdxxtop.guardianapp.model.bean.EventListBean;
 import com.sdxxtop.guardianapp.model.bean.EventModeBean;
 import com.sdxxtop.guardianapp.model.bean.EventReadIndexBean;
+import com.sdxxtop.guardianapp.model.bean.EventReadIndexBean_new;
 import com.sdxxtop.guardianapp.model.bean.EventSearchTitleBean;
 import com.sdxxtop.guardianapp.model.bean.EventShowBean;
 import com.sdxxtop.guardianapp.model.bean.ExamineFinishBean;
@@ -126,6 +127,10 @@ public interface EnvirApiService {
     @FormUrlEncoded
     @POST("event/read")
     Observable<RequestBean<EventReadIndexBean>> postEventRead(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("event/read")
+    Observable<RequestBean<EventReadIndexBean_new>> postNewEventRead(@Field("data") String data);
 
     @Multipart
     @POST("event/modify")

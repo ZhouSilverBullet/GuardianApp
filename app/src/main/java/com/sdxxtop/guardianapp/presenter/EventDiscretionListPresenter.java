@@ -31,7 +31,9 @@ public class EventDiscretionListPresenter extends RxPresenter<EventDiscretionLis
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EventDiscretionListBean>() {
             @Override
             public void onSuccess(EventDiscretionListBean bean) {
-                mView.showData(size,bean);
+                if (mView != null) {
+                    mView.showData(size,bean);
+                }
             }
 
             @Override

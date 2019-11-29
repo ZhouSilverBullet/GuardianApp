@@ -83,6 +83,21 @@ public class RetrofitHelper {
         }
         return sEnvirApiService;
     }
+    public static EnvirApiService getLoginLongEnvirApi() {
+        initOkHttp(30,30,30);
+        if (sEnvirApiService == null) {
+            sEnvirApiService = new Retrofit.Builder()
+                    .baseUrl(EnvirApiService.BASE_URL)
+                    .client(okHttpLongClient)
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+                    .create(EnvirApiService.class);
+        }
+        return sEnvirApiService;
+    }
+
+
 
     private static void initOkHttp(int second) {
 
@@ -105,6 +120,33 @@ public class RetrofitHelper {
         builder.connectTimeout(10, TimeUnit.SECONDS);
         builder.readTimeout(second, TimeUnit.SECONDS);
         builder.writeTimeout(10, TimeUnit.SECONDS);
+
+        builder.retryOnConnectionFailure(true);
+
+        okHttpLongClient = builder.build();
+
+    }
+
+    private static void initOkHttp(int connectTime,int readTime,int writeTim) {
+        if (okHttpLongClient != null) {
+            return;
+        }
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        if (NetWorkSession.DEBUG()) {
+            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+            builder.addInterceptor(loggingInterceptor);
+        }
+
+        builder.addInterceptor(new NoNetInterceptor())
+                .addNetworkInterceptor(new NetInterceptor());
+        File file = new File(Constants.PATH_CACHE);
+        //最多缓存100m
+        builder.cache(new Cache(file, 100 * 1024 * 1024));
+
+        builder.connectTimeout(connectTime, TimeUnit.SECONDS);
+        builder.readTimeout(readTime, TimeUnit.SECONDS);
+        builder.writeTimeout(writeTim, TimeUnit.SECONDS);
 
         builder.retryOnConnectionFailure(true);
 

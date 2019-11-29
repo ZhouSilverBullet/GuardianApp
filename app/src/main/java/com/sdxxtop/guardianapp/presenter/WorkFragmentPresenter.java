@@ -8,7 +8,7 @@ import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
 import com.sdxxtop.guardianapp.model.http.net.Params;
 import com.sdxxtop.guardianapp.model.http.util.RxUtils;
 import com.sdxxtop.guardianapp.presenter.contract.WorkFragmentContract;
-import com.sdxxtop.guardianapp.ui.fragment.SectionEventFragment;
+import com.sdxxtop.guardianapp.ui.fragment.WorkFragment;
 
 import javax.inject.Inject;
 
@@ -19,10 +19,10 @@ import io.reactivex.disposables.Disposable;
  * 用来copy使用的
  */
 public class WorkFragmentPresenter extends RxPresenter<WorkFragmentContract.IView> implements WorkFragmentContract.IPresenter {
+
     @Inject
     public WorkFragmentPresenter() {
     }
-
 
     public void loadWorkIndex() {
         Params params = new Params();
@@ -37,8 +37,10 @@ public class WorkFragmentPresenter extends RxPresenter<WorkFragmentContract.IVie
 
             @Override
             public void onFailure(int code, String error) {
-                ((SectionEventFragment)mView).closeLoadingDialog();
-                mView.showError(error);
+                if (mView != null) {
+                    ((WorkFragment)mView).closeLoadingDialog();
+                    mView.showError(error);
+                }
             }
         });
         addSubscribe(disposable);

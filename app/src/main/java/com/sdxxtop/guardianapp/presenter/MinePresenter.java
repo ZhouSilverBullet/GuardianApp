@@ -33,7 +33,9 @@ public class MinePresenter extends RxPresenter<MineContract.IView> implements Mi
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<UcenterIndexBean>() {
             @Override
             public void onSuccess(UcenterIndexBean ucenterIndexBean) {
-                mView.showList(ucenterIndexBean);
+                if (mView != null) {
+                    mView.showList(ucenterIndexBean);
+                }
             }
 
             @Override
@@ -51,7 +53,9 @@ public class MinePresenter extends RxPresenter<MineContract.IView> implements Mi
         Disposable disposable = RxUtils.handleHttp(observable, new IRequestCallback<RequestBean>() {
             @Override
             public void onSuccess(RequestBean ucenterIndexBean) {
-                mView.changeIconSuccess();
+                if (mView != null) {
+                    mView.changeIconSuccess();
+                }
             }
 
             @Override

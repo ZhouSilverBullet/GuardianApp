@@ -33,12 +33,16 @@ public class SafeStaffDetail2Presenter extends RxPresenter<SafeStaffDetail2Contr
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EnterpriseUserdetailsBean>() {
             @Override
             public void onSuccess(EnterpriseUserdetailsBean bean) {
-                mView.showData(bean);
+                if (mView != null) {
+                    mView.showData(bean);
+                }
             }
 
             @Override
             public void onFailure(int code, String error) {
-                mView.showError(error);
+                if (mView != null) {
+                    mView.showError(error);
+                }
             }
         });
         addSubscribe(disposable);

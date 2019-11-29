@@ -26,7 +26,9 @@ public class HomeFragmentPresenter extends RxPresenter<HomeFragmentContract.IVie
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<MainIndexBeanNew>() {
             @Override
             public void onSuccess(MainIndexBeanNew mainIndexBean) {
-                mView.showData(mainIndexBean);
+                if (mView!=null){
+                    mView.showData(mainIndexBean);
+                }
             }
 
             @Override

@@ -36,7 +36,9 @@ public class HomePresenter extends RxPresenter<HomeContract.IView> implements Ho
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<InitBean>() {
             @Override
             public void onSuccess(InitBean initBean) {
-                mView.showInit(initBean);
+                if (mView != null) {
+                    mView.showInit(initBean);
+                }
             }
 
             @Override
@@ -54,10 +56,12 @@ public class HomePresenter extends RxPresenter<HomeContract.IView> implements Ho
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<ArticleIndexBean>() {
             @Override
             public void onSuccess(ArticleIndexBean bean) {
-                if (bean != null) {
-                    mView.showPermission(bean, position, wasSelected);
-                } else {
-                    mView.showError("没有操作权限");
+                if (mView != null) {
+                    if (bean != null) {
+                        mView.showPermission(bean, position, wasSelected);
+                    } else {
+                        mView.showError("没有操作权限");
+                    }
                 }
             }
 

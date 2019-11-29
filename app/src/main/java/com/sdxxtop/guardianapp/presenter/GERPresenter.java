@@ -33,7 +33,9 @@ public class GERPresenter extends RxPresenter<GERContract.IView> implements GERC
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<GERPIndexBean>() {
             @Override
             public void onSuccess(GERPIndexBean indexBean) {
-                mView.showIndexData(indexBean);
+                if (mView != null) {
+                    mView.showIndexData(indexBean);
+                }
             }
 
             @Override
@@ -54,7 +56,9 @@ public class GERPresenter extends RxPresenter<GERContract.IView> implements GERC
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EventChartBean>() {
             @Override
             public void onSuccess(EventChartBean bean) {
-                mView.showChartData(bean,chartId,isAdd);
+                if (mView != null) {
+                    mView.showChartData(bean,chartId,isAdd);
+                }
             }
 
             @Override

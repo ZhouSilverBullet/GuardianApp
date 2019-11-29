@@ -108,7 +108,7 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
     @Override
     protected void initView() {
         super.initView();
-        InputFilter[] filters = {new InputFilter.LengthFilter(16)};
+        InputFilter[] filters = {new InputFilter.LengthFilter(10)};
         taevTitle.getEditText().setFilters(filters);
         cvisvView.setTvDesc(true);
 
