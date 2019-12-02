@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.activity.RecordLogActivity"></activity>
         <activity android:name=".ui.activity.GridEventActivity" />
         <activity
             android:name=".ui.activity.VideoPlay2Activity"
@@ -54,6 +55,7 @@
         <activity android:name=".ui.activity.GrantCompanyReportActivity" />
         <activity android:name=".ui.activity.EventStatistyActivity" />
         <activity android:name=".ui.activity.GrantEventReportActivity" />
+        <activity android:name=".ui.activity.EventReportDetailActivity_new" />
         <activity android:name=".ui.widget.imgservice.EventOnlineActivity" />
         <activity
             android:name=".ui.activity.HomeActivity"
@@ -83,9 +85,7 @@
             <!-- <action android:name="android.intent.action.VIEW"/> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity
-            android:name=".ui.activity.EventReportActivity"
-            />
+        <activity android:name=".ui.activity.EventReportActivity" />
         <activity android:name=".ui.activity.TaskAgentsActivity" /> <!-- 猎鹰轨迹的启动服务 -->
         <activity android:name=".ui.activity.ContactActivity" />
         <activity android:name=".alipush.PushCenterActivity" />
@@ -320,19 +320,19 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 适配下载应用，安装apk的时候 -->
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- 适配下载应用，安装apk的时候 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.hardware.camera.autofocus" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- 推荐的权限 -->
+    <uses-permission android:name="android.hardware.camera.autofocus" /> <!-- 推荐的权限 -->
     <!-- 添加如下权限，以便使用更多的第三方SDK和更精准的统计数据 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
-    <uses-permission android:name="android.permission.RESTART_PACKAGES" />
-    <uses-permission android:name="android.permission.GET_TASKS" /> <!-- 用于申请获取蓝牙信息进行室内定位 -->
+    <uses-permission android:name="android.permission.RESTART_PACKAGES" /> <!-- 用于申请获取蓝牙信息进行室内定位 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />

@@ -30,7 +30,7 @@ import java.util.List;
 public class CustomProgressBar extends RelativeLayout {
 
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    private SimpleDateFormat sdf2 = new SimpleDateFormat("MM.dd HH:mm:ss");
+    private SimpleDateFormat sdf2 = new SimpleDateFormat("MM.dd HH:mm");
 
     private ImageView img1;
     private ImageView img2;
@@ -207,9 +207,17 @@ public class CustomProgressBar extends RelativeLayout {
         tvLine2.setBackgroundColor(Color.parseColor("#DEEAE3"));
         tvLine3.setBackgroundColor(Color.parseColor("#DEEAE3"));
         tvText3.setText("无法解决");
+        tvText3.setTextColor(Color.parseColor("#F5441A"));
         tvDate1.setText(parseShowDate(tijiaoTime));
         tvDate2.setText(parseShowDate(parfaTime));
+
         tvDate3.setText(parseShowDate(wufaChuliTime));
+        tvDate3.setTextColor(Color.parseColor("#F5441A"));
+    }
+
+    public void setNoSolveValue2(String tijiaoTime, String parfaTime, String wufaChuliTime){
+        this.setNoSolveValue(tijiaoTime,parfaTime,wufaChuliTime);
+        tvLine2.setBackgroundColor(Color.parseColor("#DEEAE3"));
     }
 
     public void setWFJJYWCValue() {

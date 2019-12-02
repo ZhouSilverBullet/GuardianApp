@@ -35,11 +35,16 @@ public class EventReadIndexBean_new {
     public ExtraDateBean extra_date;//认领信息
     public SendBean send;//派发信息
     public SolveBean solve;//解决信息
-    public CompletedBean completed;//已完成
+    public CompletedBean completed;//已完成 == 验收
     public ClaimCompletedBean claim_completed;//认领事件完成
+    public RifiutaBean rifiuta;//驳回
+
+    public class RifiutaBean {
+        public String extra;
+        public String operate_time;
+    }
 
     public class UnionBean {
-
         public String extra;
         public String part_name;
         public String add_time;

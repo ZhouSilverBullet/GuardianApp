@@ -9,7 +9,7 @@ import android.util.Log;
 import com.sdxxtop.guardianapp.ui.activity.CenterMessage2Activity;
 import com.sdxxtop.guardianapp.ui.activity.CenterMessageActivity;
 import com.sdxxtop.guardianapp.ui.activity.DeviceWarnDetailActivity;
-import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity;
+import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity_new;
 import com.sdxxtop.guardianapp.ui.activity.PatrolAddDetailActivity;
 
 import org.json.JSONException;
@@ -73,7 +73,7 @@ public class PushCenterActivity extends AppCompatActivity {
                         finish();
                         return;
                     }
-                    intent = new Intent(this, EventReportDetailActivity.class);
+                    intent = new Intent(this, EventReportDetailActivity_new.class);
                     intent.putExtra("eventId", String.valueOf(jsonObject.optInt("event_id")));
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);

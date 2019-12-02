@@ -41,6 +41,7 @@ import com.sdxxtop.guardianapp.model.bean.MainMapBean;
 import com.sdxxtop.guardianapp.model.bean.PartEventListBean;
 import com.sdxxtop.guardianapp.model.bean.PatrolAddBean;
 import com.sdxxtop.guardianapp.model.bean.PatrolReadBean;
+import com.sdxxtop.guardianapp.model.bean.RecordLogBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
 import com.sdxxtop.guardianapp.model.bean.SectionEventBean;
 import com.sdxxtop.guardianapp.model.bean.ShowPartBean;
@@ -373,6 +374,10 @@ public interface EnvirApiService {
     @FormUrlEncoded
     @POST("working/gridevent")
     Observable<RequestBean<GridEventCountBean>> postGridEventCount(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("event/Registra")
+    Observable<RequestBean<RecordLogBean>> postEventLog(@Field("data") String data);
 
     @FormUrlEncoded
     @POST("working/{name}")

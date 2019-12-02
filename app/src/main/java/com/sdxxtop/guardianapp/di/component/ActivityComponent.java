@@ -18,6 +18,7 @@ import com.sdxxtop.guardianapp.ui.activity.EventDiscretionReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventMoveActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity;
+import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity_new;
 import com.sdxxtop.guardianapp.ui.activity.EventReportDetailSecondActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportListActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventStatistyActivity;
@@ -42,6 +43,7 @@ import com.sdxxtop.guardianapp.ui.activity.PatrolAddDetailActivity;
 import com.sdxxtop.guardianapp.ui.activity.PatrolPathActivity;
 import com.sdxxtop.guardianapp.ui.activity.PatrolRecordActivity;
 import com.sdxxtop.guardianapp.ui.activity.ReCheckActivity;
+import com.sdxxtop.guardianapp.ui.activity.RecordLogActivity;
 import com.sdxxtop.guardianapp.ui.activity.SafeStaffDetail2Activity;
 import com.sdxxtop.guardianapp.ui.activity.SafeStaffDetailActivity;
 import com.sdxxtop.guardianapp.ui.activity.SectionEventActivity;
@@ -99,5 +101,7 @@ public interface ActivityComponent {
     void inject(FlyEventReportActivity activity);
     void inject(EventDetailActivity activity);
     void inject(GridEventActivity activity);
+    void inject(EventReportDetailActivity_new activity);
+    void inject(RecordLogActivity activity);
 
 }
