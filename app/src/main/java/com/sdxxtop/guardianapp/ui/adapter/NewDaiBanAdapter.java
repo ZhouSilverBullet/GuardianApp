@@ -6,7 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.model.bean.WorkIndexBean;
-import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity;
+import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity_new;
 
 import java.util.List;
 
@@ -50,7 +50,7 @@ public class NewDaiBanAdapter extends BaseQuickAdapter<WorkIndexBean.PendingEven
         helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventReportDetailActivity.startDetailActivity(v.getContext(), String.valueOf(item.event_id));
+                EventReportDetailActivity_new.startDetailActivity(v.getContext(), String.valueOf(item.event_id));
             }
         });
     }

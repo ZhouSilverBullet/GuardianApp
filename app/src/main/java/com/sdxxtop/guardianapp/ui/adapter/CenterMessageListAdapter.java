@@ -13,7 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.model.bean.UnreadNewslistBean;
-import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity;
+import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity_new;
 import com.sdxxtop.guardianapp.ui.activity.PatrolAddDetailActivity;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 
@@ -55,7 +55,7 @@ public class CenterMessageListAdapter extends BaseQuickAdapter<UnreadNewslistBea
             @Override
             public void onClick(View v) {
                 if (mType == 1) {
-                    Intent intent = new Intent(mContext, EventReportDetailActivity.class);
+                    Intent intent = new Intent(mContext, EventReportDetailActivity_new.class);
                     intent.putExtra("eventId", String.valueOf(item.getEvent_id()));
                     mContext.startActivity(intent);
                 } else {

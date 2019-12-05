@@ -62,32 +62,32 @@ public class RecordLogAdapter extends BaseQuickAdapter<RecordLogBean.EventLogBea
             case 1:  // 流转
                 tvTemp1.setVisibility(View.VISIBLE);
                 tvTemp2.setVisibility(View.VISIBLE);
-                tvTemp1.setVisibility(TextUtils.isEmpty(item.part_name)?View.GONE:View.VISIBLE);
-                tvTemp2.setVisibility(TextUtils.isEmpty(item.extra)?View.GONE:View.VISIBLE);
-                tvTemp1.setText("被流转部门：" + item.part_name);
-                tvTemp2.setText("流转原因：指挥中心" + item.extra);
+                tvTemp1.setVisibility(TextUtils.isEmpty(item.path_name) ? View.GONE : View.VISIBLE);
+                tvTemp2.setVisibility(TextUtils.isEmpty(item.extra) ? View.GONE : View.VISIBLE);
+                tvTemp1.setText("被流转部门：" + item.path_name);
+                tvTemp2.setText("流转原因：" + item.extra);
                 break;
             case 2:  // 联办
                 tvTemp1.setVisibility(View.VISIBLE);
                 tvTemp2.setVisibility(View.VISIBLE);
-                tvTemp1.setVisibility(TextUtils.isEmpty(item.union_name)?View.GONE:View.VISIBLE);
-                tvTemp2.setVisibility(TextUtils.isEmpty(item.extra)?View.GONE:View.VISIBLE);
+                tvTemp1.setVisibility(TextUtils.isEmpty(item.union_name) ? View.GONE : View.VISIBLE);
+                tvTemp2.setVisibility(TextUtils.isEmpty(item.extra) ? View.GONE : View.VISIBLE);
                 tvTemp1.setText("被联办部门：" + item.union_name);
                 tvTemp2.setText("联办原因：" + item.extra);
                 break;
             case 3:  // 派发
                 tvTemp1.setVisibility(View.VISIBLE);
                 tvTemp2.setVisibility(View.VISIBLE);
-                tvTemp1.setVisibility(TextUtils.isEmpty(item.settle_name)?View.GONE:View.VISIBLE);
-                tvTemp2.setVisibility(TextUtils.isEmpty(item.settle_part)?View.GONE:View.VISIBLE);
+                tvTemp1.setVisibility(TextUtils.isEmpty(item.settle_name) ? View.GONE : View.VISIBLE);
+                tvTemp2.setVisibility(TextUtils.isEmpty(item.settle_part) ? View.GONE : View.VISIBLE);
                 tvTemp1.setText("被派发人：" + item.settle_name);
                 tvTemp2.setText("被派发人部门：" + item.settle_part);
                 break;
             case 4:   //解决
                 tvTemp1.setVisibility(View.VISIBLE);
-                tvTemp1.setVisibility(TextUtils.isEmpty(item.extra)?View.GONE:View.VISIBLE);
+                tvTemp1.setVisibility(TextUtils.isEmpty(item.extra) ? View.GONE : View.VISIBLE);
                 tvTemp1.setText("解决描述：" + item.extra);
-                if (!TextUtils.isEmpty(item.img)||!TextUtils.isEmpty(item.video)){
+                if (!TextUtils.isEmpty(item.img) || !TextUtils.isEmpty(item.video)) {
                     colImgLayout.setVisibility(View.VISIBLE);
                     bandImgAndVideo(item.img, item.video, recyclerView, adapter);
 
@@ -95,9 +95,9 @@ public class RecordLogAdapter extends BaseQuickAdapter<RecordLogBean.EventLogBea
                 break;
             case 5:   //验收
                 tvTemp1.setVisibility(View.VISIBLE);
-                tvTemp1.setVisibility(TextUtils.isEmpty(item.extra)?View.GONE:View.VISIBLE);
+                tvTemp1.setVisibility(TextUtils.isEmpty(item.extra) ? View.GONE : View.VISIBLE);
                 tvTemp1.setText("描述：" + item.extra);
-                if (!TextUtils.isEmpty(item.img)||!TextUtils.isEmpty(item.video)){
+                if (!TextUtils.isEmpty(item.img) || !TextUtils.isEmpty(item.video)) {
                     colImgLayout.setVisibility(View.VISIBLE);
                     bandImgAndVideo(item.img, item.video, recyclerView, adapter);
 
@@ -105,12 +105,12 @@ public class RecordLogAdapter extends BaseQuickAdapter<RecordLogBean.EventLogBea
                 break;
             case 6:   //无法解决
                 tvTemp1.setVisibility(View.VISIBLE);
-                tvTemp1.setVisibility(TextUtils.isEmpty(item.extra)?View.GONE:View.VISIBLE);
+                tvTemp1.setVisibility(TextUtils.isEmpty(item.extra) ? View.GONE : View.VISIBLE);
                 tvTemp1.setText("无法解决原因：" + item.extra);
                 break;
             case 7:   //验收不通过
                 tvTemp1.setVisibility(View.VISIBLE);
-                tvTemp1.setVisibility(TextUtils.isEmpty(item.extra)?View.GONE:View.VISIBLE);
+                tvTemp1.setVisibility(TextUtils.isEmpty(item.extra) ? View.GONE : View.VISIBLE);
                 tvTemp1.setText("描述：" + item.extra);
                 break;
             case 8:   //删除
@@ -118,7 +118,7 @@ public class RecordLogAdapter extends BaseQuickAdapter<RecordLogBean.EventLogBea
                 break;
             case 9:  //驳回
                 tvTemp1.setVisibility(View.VISIBLE);
-                tvTemp1.setVisibility(TextUtils.isEmpty(item.extra)?View.GONE:View.VISIBLE);
+                tvTemp1.setVisibility(TextUtils.isEmpty(item.extra) ? View.GONE : View.VISIBLE);
                 tvTemp1.setText("驳回原因：" + item.extra);
                 break;
         }

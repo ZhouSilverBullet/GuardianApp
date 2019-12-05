@@ -11,6 +11,7 @@ import com.sdxxtop.guardianapp.presenter.contract.EventMoveContract;
 import com.sdxxtop.guardianapp.ui.widget.NumberEditTextView;
 import com.sdxxtop.guardianapp.ui.widget.TextAndTextView;
 import com.sdxxtop.guardianapp.ui.widget.timePicker.ProvinceTwoPickerView;
+import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -56,17 +57,21 @@ public class EventMoveActivity extends BaseMvpActivity<EventMovePresenter> imple
         etNumContent.setEditHint(" ");
     }
 
-    @OnClick({R.id.event_report,R.id.btn_check_success})
+    @OnClick({R.id.event_report, R.id.btn_check_success})
     public void onViewClicked(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.event_report:    // 选择流转部门
                 hideKeyboard(eventReport);
-                if (pickerUtil!=null){
+                if (pickerUtil != null) {
                     pickerUtil.show();
                 }
                 break;
             case R.id.btn_check_success:   // 提交流转
-                mPresenter.eventOperate(etNumContent.getEditValue(), selectPartId,eventId);
+                if (selectPartId == 0) {
+                    UIUtils.showToast("请选择流转部门");
+                    return;
+                }
+                mPresenter.eventOperate(etNumContent.getEditValue(), selectPartId, eventId);
                 break;
         }
 

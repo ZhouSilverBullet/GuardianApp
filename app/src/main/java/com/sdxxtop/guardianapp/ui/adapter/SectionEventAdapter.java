@@ -1,6 +1,5 @@
 package com.sdxxtop.guardianapp.ui.adapter;
 
-import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -8,7 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.model.bean.SectionEventBean;
-import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity;
+import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity_new;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,9 +37,7 @@ public class SectionEventAdapter extends BaseQuickAdapter<SectionEventBean.Claim
         helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, EventReportDetailActivity.class);
-                intent.putExtra("eventId", String.valueOf(item.getEvent_id()));
-                mContext.startActivity(intent);
+                EventReportDetailActivity_new.startDetailActivity(v.getContext(), String.valueOf(item.getEvent_id()));
             }
         });
     }

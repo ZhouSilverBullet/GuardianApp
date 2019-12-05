@@ -8,7 +8,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.model.bean.UnreadNewslistBean;
 import com.sdxxtop.guardianapp.ui.activity.DeviceWarnDetailActivity;
-import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity;
+import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity_new;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -47,7 +47,7 @@ public class DeviceCenterMsgAdapter extends BaseQuickAdapter<UnreadNewslistBean.
                     intent.putExtra("early_id", item.getEarly_id());
                     mContext.startActivity(intent);
                 } else {
-                    intent = new Intent(mContext, EventReportDetailActivity.class);
+                    intent = new Intent(mContext, EventReportDetailActivity_new.class);
                     intent.putExtra("eventId", String.valueOf(item.getEvent_id()));
                     mContext.startActivity(intent);
                 }

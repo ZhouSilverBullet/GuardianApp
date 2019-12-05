@@ -7,7 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.model.bean.PartEventListBean;
-import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity;
+import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity_new;
 
 /**
  * @author :  lwb
@@ -31,7 +31,7 @@ public class PartEventListAdapter extends BaseQuickAdapter<PartEventListBean.ClD
         helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, EventReportDetailActivity.class);
+                Intent intent = new Intent(mContext, EventReportDetailActivity_new.class);
                 intent.putExtra("eventId", String.valueOf(item.getEvent_id()));
                 mContext.startActivity(intent);
             }

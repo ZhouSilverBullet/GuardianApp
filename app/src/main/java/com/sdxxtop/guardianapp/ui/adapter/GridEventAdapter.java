@@ -7,7 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.model.bean.GridEventListBean;
-import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity;
+import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity_new;
 import com.sdxxtop.guardianapp.ui.activity.PatrolAddDetailActivity;
 
 import java.text.ParseException;
@@ -45,7 +45,7 @@ public class GridEventAdapter extends BaseQuickAdapter<GridEventListBean.GridLis
                     intent = new Intent(mContext, PatrolAddDetailActivity.class);
                     intent.putExtra("patrol_id",item.patrol_id);
                 }else{
-                    intent = new Intent(mContext, EventReportDetailActivity.class);
+                    intent = new Intent(mContext, EventReportDetailActivity_new.class);
                     intent.putExtra("eventId",String.valueOf(item.event_id));
                 }
                 intent.putExtra("isPartEvent",true);

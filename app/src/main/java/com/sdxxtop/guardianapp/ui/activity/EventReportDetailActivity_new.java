@@ -338,10 +338,6 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
             }
         }
 
-        /*********** 验收通过 **********/
-
-        /********* 解决结果 **********/
-
         /**********  无法解决  ************/
         if (bean.is_claim == 1) {   // 认领状态下不显示进度条
             rlProgress.setVisibility(View.GONE);

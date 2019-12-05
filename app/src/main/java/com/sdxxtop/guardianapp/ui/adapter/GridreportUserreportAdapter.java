@@ -7,7 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.model.bean.GridreportUserreportBean;
-import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity;
+import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity_new;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class GridreportUserreportAdapter extends BaseQuickAdapter<GridreportUser
         helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, EventReportDetailActivity.class);
+                Intent intent = new Intent(mContext, EventReportDetailActivity_new.class);
                 intent.putExtra("eventId", String.valueOf(item.getEvent_id()));
                 mContext.startActivity(intent);
             }

@@ -353,10 +353,10 @@
                         android:layout_marginLeft="15dp"
                         android:textSize="15sp"
                         android:textColor="#292929"
-                        android:text="流转时间：2019.04.05 12:12:00"
+                        android:text="流传部门：指挥中心"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:id="@+id/tv_lz_time"
+                        android:id="@+id/tv_lz_part"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
@@ -367,10 +367,10 @@
                         android:layout_marginLeft="15dp"
                         android:textSize="15sp"
                         android:textColor="#292929"
-                        android:text="流传部门：指挥中心"
+                        android:text="流转时间：2019.04.05 12:12:00"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_lz_time"
-                        android:id="@+id/tv_lz_part"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_lz_part"
+                        android:id="@+id/tv_lz_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
@@ -383,7 +383,7 @@
                         android:textColor="#292929"
                         android:text="流转原因：维护"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_lz_part"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_lz_time"
                         android:id="@+id/tv_lz_cause"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
