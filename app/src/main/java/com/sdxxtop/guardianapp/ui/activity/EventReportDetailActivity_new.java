@@ -373,8 +373,8 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
         if (!TextUtils.isEmpty(data.operate_time)) {
             colLz.setVisibility(View.VISIBLE);
             tvLzTime.setText("流转时间：" + data.operate_time);
-            tvLzPart.setText("流传部门：" + data.part_name);
-            tvLzCause.setText("流传部门：" + data.extra);
+            tvLzPart.setText("流转部门：" + data.part_name);
+            tvLzCause.setText("流转原因：" + data.extra);
         } else {
             colLz.setVisibility(View.GONE);
         }
