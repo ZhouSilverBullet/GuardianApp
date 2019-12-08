@@ -148,64 +148,74 @@ public class GridImageAdapter extends RecyclerView.Adapter<GridImageAdapter.View
                     }
                 }
             });
-            LocalMedia media = list.get(position);
-            int mimeType = media.getMimeType();
-            String path = "";
-            if (media.isCut() && !media.isCompressed()) {
-                // 裁剪过
-                path = media.getCutPath();
-            } else if (media.isCompressed() || (media.isCut() && media.isCompressed())) {
-                // 压缩过,或者裁剪同时压缩过,以最终压缩过图片为准
-                path = media.getCompressPath();
-            } else {
-                // 原图
-                path = media.getPath();
-            }
-            // 图片
-            if (media.isCompressed()) {
-                Log.i("compress image result:", new File(media.getCompressPath()).length() / 1024 + "k");
-                Log.i("压缩地址::", media.getCompressPath());
+
+            /**
+             * 认为可能有异常
+             */
+            try{
+                LocalMedia media = list.get(position);
+                int mimeType = media.getMimeType();
+                String path = "";
+                if (media.isCut() && !media.isCompressed()) {
+                    // 裁剪过
+                    path = media.getCutPath();
+                } else if (media.isCompressed() || (media.isCut() && media.isCompressed())) {
+                    // 压缩过,或者裁剪同时压缩过,以最终压缩过图片为准
+                    path = media.getCompressPath();
+                } else {
+                    // 原图
+                    path = media.getPath();
+                }
+                // 图片
+                if (media.isCompressed()) {
+                    Log.i("compress image result:", new File(media.getCompressPath()).length() / 1024 + "k");
+                    Log.i("压缩地址::", media.getCompressPath());
+                }
+
+                Log.i("原图地址::", media.getPath());
+                int pictureType = PictureMimeType.isPictureType(media.getPictureType());
+                if (media.isCut()) {
+                    Log.i("裁剪地址::", media.getCutPath());
+                }
+                long duration = media.getDuration();
+                viewHolder.tv_duration.setVisibility(pictureType == PictureConfig.TYPE_VIDEO
+                        ? View.VISIBLE : View.GONE);
+                if (mimeType == PictureMimeType.ofAudio()) {
+                    viewHolder.tv_duration.setVisibility(View.VISIBLE);
+                    Drawable drawable = ContextCompat.getDrawable(context, R.drawable.picture_audio);
+                    StringUtils.modifyTextViewDrawable(viewHolder.tv_duration, drawable, 0);
+                } else {
+                    Drawable drawable = ContextCompat.getDrawable(context, R.drawable.video_icon);
+                    StringUtils.modifyTextViewDrawable(viewHolder.tv_duration, drawable, 0);
+                }
+                viewHolder.tv_duration.setText(DateUtils.timeParse(duration));
+                if (mimeType == PictureMimeType.ofAudio()) {
+                    viewHolder.mImg.setImageResource(R.drawable.audio_placeholder);
+                } else {
+                    RequestOptions options = new RequestOptions()
+                            .centerCrop()
+                            .placeholder(R.color.color_f6)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL);
+                    Glide.with(viewHolder.itemView.getContext())
+                            .load(path)
+                            .apply(options)
+                            .into(viewHolder.mImg);
+                }
+                //itemView 的点击事件
+                if (mItemClickListener != null) {
+                    viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            int adapterPosition = viewHolder.getAdapterPosition();
+                            mItemClickListener.onItemClick(adapterPosition, v);
+                        }
+                    });
+                }
+
+            }catch (Exception e){
+                e.printStackTrace();
             }
 
-            Log.i("原图地址::", media.getPath());
-            int pictureType = PictureMimeType.isPictureType(media.getPictureType());
-            if (media.isCut()) {
-                Log.i("裁剪地址::", media.getCutPath());
-            }
-            long duration = media.getDuration();
-            viewHolder.tv_duration.setVisibility(pictureType == PictureConfig.TYPE_VIDEO
-                    ? View.VISIBLE : View.GONE);
-            if (mimeType == PictureMimeType.ofAudio()) {
-                viewHolder.tv_duration.setVisibility(View.VISIBLE);
-                Drawable drawable = ContextCompat.getDrawable(context, R.drawable.picture_audio);
-                StringUtils.modifyTextViewDrawable(viewHolder.tv_duration, drawable, 0);
-            } else {
-                Drawable drawable = ContextCompat.getDrawable(context, R.drawable.video_icon);
-                StringUtils.modifyTextViewDrawable(viewHolder.tv_duration, drawable, 0);
-            }
-            viewHolder.tv_duration.setText(DateUtils.timeParse(duration));
-            if (mimeType == PictureMimeType.ofAudio()) {
-                viewHolder.mImg.setImageResource(R.drawable.audio_placeholder);
-            } else {
-                RequestOptions options = new RequestOptions()
-                        .centerCrop()
-                        .placeholder(R.color.color_f6)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL);
-                Glide.with(viewHolder.itemView.getContext())
-                        .load(path)
-                        .apply(options)
-                        .into(viewHolder.mImg);
-            }
-            //itemView 的点击事件
-            if (mItemClickListener != null) {
-                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int adapterPosition = viewHolder.getAdapterPosition();
-                        mItemClickListener.onItemClick(adapterPosition, v);
-                    }
-                });
-            }
         }
     }
 

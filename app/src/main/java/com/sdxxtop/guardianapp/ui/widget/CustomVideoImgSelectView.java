@@ -270,9 +270,9 @@ public class CustomVideoImgSelectView extends LinearLayout implements View.OnCli
     ForegroundColorSpan colorSpan;
 
     public SpannableStringBuilder getFormatText(int size) {
-        String str = "("+size+"/9)";
+        String str = "(" + size + "/9)";
         SpannableStringBuilder builder = new SpannableStringBuilder(str);
-        builder.setSpan(colorSpan,3,4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        builder.setSpan(colorSpan, 3, 4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return builder;
     }
 

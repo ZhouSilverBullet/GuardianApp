@@ -129,7 +129,7 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
                 EditText et_title = taevTitle.getEditText();
                 et_title.setText(item.classify_keyword);
                 et_title.clearFocus();
-                hideKeyboard(et_title);
+                hideKeyboard(taevTitle.getEditText());
 
                 llSearchDataLayout.setVisibility(View.GONE);
                 mPresenter.keywordMatch(item.classify_keyword, item.classify_keyword_id);
@@ -184,7 +184,7 @@ public class EventDiscretionReportActivity extends BaseMvpActivity<EventDiscreti
 
     @OnClick({R.id.tatv_end_time, R.id.col_happen, R.id.tatv_event_type})
     public void onViewClicked(View view) {
-        hideKeyboard(view);
+        hideKeyboard(taevTitle.getEditText());
         switch (view.getId()) {
             case R.id.tatv_event_type:
                 if (categorySelectView != null) {

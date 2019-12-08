@@ -97,6 +97,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
         return R.layout.activity_event_report;
     }
 
+
     @Override
     protected void initView() {
         super.initView();
@@ -118,7 +119,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
                 EditText et_title = taevTitle.getEditText();
                 et_title.setText(item.classify_keyword);
                 et_title.clearFocus();
-                hideKeyboard(et_title);
+                hideKeyboard(taevTitle.getEditText());
 
                 llSearchDataLayout.setVisibility(View.GONE);
                 mPresenter.keywordMatch(item.classify_keyword, item.classify_keyword_id);
@@ -134,7 +135,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
                 public void callBack(String str, double lat, double lgt, AMapLocation aMapLocation) {
                     String address = aMapLocation.getAddress();
                     String poiName = aMapLocation.getPoiName();
-                    if (!TextUtils.isEmpty(address)&&!TextUtils.isEmpty(poiName)) {
+                    if (!TextUtils.isEmpty(address) && !TextUtils.isEmpty(poiName)) {
                         tvPlaceDesc.setText(address);
                         tvPlaceTitle.setText(poiName);
 //                        String value = longitude + "," + latitude;
@@ -340,7 +341,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     @OnClick({R.id.tatv_report_path, R.id.tatv_event_type, R.id.col_happen})
     public void onViewClicked(View view) {
         String title = taevTitle.getEditText().getText().toString().trim();
-        hideKeyboard(btnPush);
+        hideKeyboard(taevTitle.getEditText());
         switch (view.getId()) {
             case R.id.tatv_event_type:
                 if (categorySelectView != null) {

@@ -23,8 +23,6 @@ import android.view.ViewAnimationUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
-
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
 import com.google.gson.internal.LinkedTreeMap;
@@ -42,7 +40,6 @@ import com.sdxxtop.guardianapp.model.http.net.RetrofitHelper;
 import com.sdxxtop.guardianapp.model.http.util.RxUtils;
 import com.sdxxtop.guardianapp.presenter.HomePresenter;
 import com.sdxxtop.guardianapp.presenter.contract.HomeContract;
-import com.sdxxtop.guardianapp.service.ForegroundService;
 import com.sdxxtop.guardianapp.service.NotificationMonitor;
 import com.sdxxtop.guardianapp.ui.dialog.DownloadDialog;
 import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
@@ -59,11 +56,11 @@ import com.sdxxtop.imagora.receiver.LoginIMReceiver;
 import com.sdxxtop.openlive.activities.presenter.im.AgoraIMLoginPresenter;
 import com.sdxxtop.openlive.activities.presenter.im.IAgoraIMLoginView;
 import com.sdxxtop.sdkagora.AgoraSession;
-import com.sdxxtop.sdkagora.SoundPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.app.AlertDialog;
 import butterknife.BindView;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
@@ -71,6 +68,8 @@ import io.reactivex.functions.Consumer;
 import me.yokeyword.fragmentation.SupportFragment;
 
 public class HomeActivity extends BaseMvpActivity<HomePresenter> implements HomeContract.IView, IAgoraIMLoginView {
+
+    private static final String TAG = "HomeActivity";
 
     private String[] PERMISSIONS = {
             Manifest.permission.RECORD_AUDIO,
@@ -133,7 +132,6 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
         intentFilter.addAction(LoginIMReceiver.ACTION_LOGIN_RECEIVER);
         intentFilter.addAction(LoginIMReceiver.ACTION_LOGOUT_RECEIVER);
         registerReceiver(agoraLoginReceiver, intentFilter);
-
 
 
         switchFragment(0);
@@ -433,19 +431,27 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
     public void onBackPressedSupport() {
         if (mBackPressed + TIME_EXIT > System.currentTimeMillis()) {
             //用户退出处理
-            finish();
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
-                finishAffinity();
-            }
-            if (isServiceExisted(ForegroundService.class.getName())) {
-                Intent intent = new Intent(this, ForegroundService.class);
-                stopService(intent);
-            }
-            if (isServiceExisted(NotificationMonitor.class.getName())) {
-                Intent intent = new Intent(this, NotificationMonitor.class);
-                stopService(intent);
-            }
-            super.onBackPressedSupport();
+//            finish();
+//            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
+//                finishAffinity();
+//            }
+
+//            if (isServiceExisted(ForegroundService.class.getName())) {
+//                Intent intent = new Intent(this, ForegroundService.class);
+//                stopService(intent);
+//            }
+//            if (isServiceExisted(NotificationMonitor.class.getName())) {
+//                Intent intent = new Intent(this, NotificationMonitor.class);
+//                stopService(intent);
+//            }
+//            super.onBackPressedSupport();
+
+            //返回键直接返回桌面---不关闭页面
+            Intent home = new Intent(Intent.ACTION_MAIN);
+            home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            home.addCategory(Intent.CATEGORY_HOME);
+            startActivity(home);
+
             return;
         } else {
             Toast.makeText(this, "再点击一次返回退出程序", Toast.LENGTH_SHORT).show();

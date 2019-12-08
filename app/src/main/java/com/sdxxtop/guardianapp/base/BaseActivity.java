@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.sdxxtop.guardianapp.app.App;
 import com.sdxxtop.guardianapp.service.NotificationMonitor;
 import com.sdxxtop.guardianapp.utils.DialogUtil;
+import com.sdxxtop.guardianapp.utils.FixMemLeak;
 import com.sdxxtop.guardianapp.utils.StatusBarUtil;
 import com.sdxxtop.guardianapp.utils.SystemUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -28,6 +29,7 @@ public abstract class BaseActivity extends SupportActivity {
     private Unbinder mUnbinder;
     protected BaseActivity mContext;
     private DialogUtil mDialogUtil;
+    private InputMethodManager imm;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,6 +46,8 @@ public abstract class BaseActivity extends SupportActivity {
         initView();
         initEvent();
         initData();
+
+        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 
     /**
@@ -84,6 +88,8 @@ public abstract class BaseActivity extends SupportActivity {
         if (mDialogUtil != null) {
             mDialogUtil = null;
         }
+
+        FixMemLeak.fixInputMethodManagerLeak(imm, this);
     }
 
     public void statusBar(boolean isDark) {
@@ -140,10 +146,11 @@ public abstract class BaseActivity extends SupportActivity {
         getWindow().setAttributes(attrs);
     }
 
-    public static void hideKeyboard(View view) {
-        InputMethodManager imm = (InputMethodManager) view.getContext()
-                .getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null) {
+    public void hideKeyboard(View view) {
+        if (view != null) {
+            if (imm == null) {
+                imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            }
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
@@ -196,4 +203,6 @@ public abstract class BaseActivity extends SupportActivity {
         super.onPause();
         MobclickAgent.onPause(this);
     }
+
+
 }
