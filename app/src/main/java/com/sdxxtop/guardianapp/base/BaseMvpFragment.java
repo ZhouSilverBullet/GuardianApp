@@ -37,7 +37,7 @@ public abstract class BaseMvpFragment<T extends RxPresenter> extends BaseFragmen
     public void onDestroy() {
         super.onDestroy();
         if (mPresenter != null) {
-            mPresenter.unSubscribe();
+            mPresenter.detachView();
         }
     }
 }

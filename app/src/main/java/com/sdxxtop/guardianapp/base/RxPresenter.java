@@ -32,6 +32,7 @@ public class RxPresenter<T extends BaseView> implements BasePresenter<T> {
 
     @Override
     public void detachView() {
+        unSubscribe();
         if (mView != null) {
             mView = null;
         }

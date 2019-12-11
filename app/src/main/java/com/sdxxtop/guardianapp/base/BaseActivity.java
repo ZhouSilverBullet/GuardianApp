@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.sdxxtop.guardianapp.app.App;
 import com.sdxxtop.guardianapp.service.NotificationMonitor;
 import com.sdxxtop.guardianapp.utils.DialogUtil;
-import com.sdxxtop.guardianapp.utils.FixMemLeak;
 import com.sdxxtop.guardianapp.utils.StatusBarUtil;
 import com.sdxxtop.guardianapp.utils.SystemUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -89,7 +88,7 @@ public abstract class BaseActivity extends SupportActivity {
             mDialogUtil = null;
         }
 
-        FixMemLeak.fixInputMethodManagerLeak(imm, this);
+//        FixMemLeak.fixInputMethodManagerLeak(imm, this);
     }
 
     public void statusBar(boolean isDark) {

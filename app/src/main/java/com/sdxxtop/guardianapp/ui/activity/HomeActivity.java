@@ -21,7 +21,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
@@ -143,11 +142,12 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
             public void accept(Boolean aBoolean) throws Exception {
                 if (aBoolean) {
                     //TODO  猎鹰相关关闭
-//                    startPatrolService();
-                    mPresenter.startUploadingPoint();
+//                    mPresenter.startUploadingPoint();
                 }
             }
         });
+        //TODO  猎鹰相关关闭
+        mPresenter.startUploadingPoint();
 
         cbtView.setOnMenuClickListener(new CustomBottomTab.OnMenuClickListener() {
             @Override
@@ -328,7 +328,6 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
 //                    mView.showData(bean);
 //                }
                 String token_rtm = bean.getToken_rtm();
-
                 loginPresenter.doLogin(token_rtm, String.valueOf(userID));
             }
 
@@ -430,12 +429,12 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
     @Override
     public void onBackPressedSupport() {
         if (mBackPressed + TIME_EXIT > System.currentTimeMillis()) {
-            //用户退出处理
+//            用户退出处理
 //            finish();
 //            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
 //                finishAffinity();
 //            }
-
+//
 //            if (isServiceExisted(ForegroundService.class.getName())) {
 //                Intent intent = new Intent(this, ForegroundService.class);
 //                stopService(intent);
@@ -446,15 +445,18 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
 //            }
 //            super.onBackPressedSupport();
 
-            //返回键直接返回桌面---不关闭页面
-            Intent home = new Intent(Intent.ACTION_MAIN);
-            home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            home.addCategory(Intent.CATEGORY_HOME);
-            startActivity(home);
-
-            return;
+//            //返回键直接返回桌面---不关闭页面
+//            Intent home = new Intent(Intent.ACTION_MAIN);
+//            home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//            home.addCategory(Intent.CATEGORY_HOME);
+//            startActivity(home);
+            //模拟Home键操作
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            startActivity(intent);
         } else {
-            Toast.makeText(this, "再点击一次返回退出程序", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "再点击一次返回退出程序", Toast.LENGTH_SHORT).show();
             mBackPressed = System.currentTimeMillis();
         }
     }
