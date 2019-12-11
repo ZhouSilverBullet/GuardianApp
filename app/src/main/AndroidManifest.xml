@@ -60,7 +60,6 @@
         <activity
             android:name=".ui.activity.HomeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:launchMode="singleTask"
             android:theme="@style/AppNormalTheme" />
         <activity
             android:name=".ui.activity.SplashActivity"
