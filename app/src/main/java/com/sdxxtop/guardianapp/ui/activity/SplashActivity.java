@@ -27,7 +27,6 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         if((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0){
             finish();
             return;
@@ -40,6 +39,7 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
                 return;
             }
         }
+        super.onCreate(savedInstanceState);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             WindowManager.LayoutParams lp = getWindow().getAttributes();
@@ -166,7 +166,9 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
 
     @Override
     public void showError(String error) {
-        UIUtils.showToast(error);
+        if (!"参数错误".equals(error)){
+            UIUtils.showToast(error);
+        }
         skipLogin();
     }
 }
