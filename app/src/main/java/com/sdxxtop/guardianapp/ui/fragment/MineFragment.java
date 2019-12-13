@@ -14,6 +14,7 @@ import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.sdxxtop.guardianapp.R;
+import com.sdxxtop.guardianapp.TrackService.TrackServiceUtil;
 import com.sdxxtop.guardianapp.app.Constants;
 import com.sdxxtop.guardianapp.base.BaseMvpFragment;
 import com.sdxxtop.guardianapp.model.bean.UcenterIndexBean;
@@ -131,6 +132,10 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     }
 
     public void logout() {
+        //关闭猎鹰
+        TrackServiceUtil instance = TrackServiceUtil.getInstance();
+        instance.stopTrackService();
+
         UserData.getInstance().logout();
 
         Intent intent = new Intent(getContext(), LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

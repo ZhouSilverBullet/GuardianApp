@@ -28,6 +28,7 @@ import com.google.gson.internal.LinkedTreeMap;
 import com.luck.picture.lib.permissions.RxPermissions;
 import com.orhanobut.logger.Logger;
 import com.sdxxtop.guardianapp.R;
+import com.sdxxtop.guardianapp.TrackService.TrackServiceUtil;
 import com.sdxxtop.guardianapp.app.Constants;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.model.bean.ArticleIndexBean;
@@ -142,12 +143,12 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
             public void accept(Boolean aBoolean) throws Exception {
                 if (aBoolean) {
                     //TODO  猎鹰相关关闭
-//                    mPresenter.startUploadingPoint();
+                    TrackServiceUtil instance = TrackServiceUtil.getInstance();
+                    instance.stsrtTrackService(null);
+                    mPresenter.startUploadingPoint();
                 }
             }
         });
-        //TODO  猎鹰相关关闭
-        mPresenter.startUploadingPoint();
 
         cbtView.setOnMenuClickListener(new CustomBottomTab.OnMenuClickListener() {
             @Override

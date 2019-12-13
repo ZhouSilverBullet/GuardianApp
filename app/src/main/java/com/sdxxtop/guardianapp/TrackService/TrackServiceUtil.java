@@ -25,6 +25,9 @@ import com.sdxxtop.guardianapp.utils.SpUtil;
  * Desc:
  */
 public class TrackServiceUtil {
+
+    private static final String TAG = "TrackServiceUtil";
+
     private Context mContext;
     private static final String CHANNEL_ID_SERVICE_RUNNING = "CHANNEL_ID_SERVICE_RUNNING";
     private AMapTrackClient aMapTrackClient;
@@ -32,7 +35,7 @@ public class TrackServiceUtil {
     private OnTrackLifecycleListener onTrackListener = new SimpleOnTrackLifecycleListener() {
         @Override
         public void onBindServiceCallback(int status, String msg) {
-            Log.w("TrackService", "onBindServiceCallback, status: " + status + ", msg: " + msg);
+            Log.e(TAG, "onBindServiceCallback, status: " + status + ", msg: " + msg);
         }
 
         @Override
@@ -48,10 +51,7 @@ public class TrackServiceUtil {
                 // 已经启动
 //                Toast.makeText(mContext, "服务已经启动", Toast.LENGTH_SHORT).show();
             } else {
-//                Log.w("TrackService", "error onStartTrackCallback, status: " + status + ", msg: " + msg);
-//                Toast.makeText(mContext,
-//                        "error onStartTrackCallback, status: " + status + ", msg: " + msg,
-//                        Toast.LENGTH_LONG).show();
+                Log.e(TAG, "启动服务失败: " + status + ", msg: " + msg);
                 if (aMapTrackClient != null && onTrackListener != null && trackParam != null) {
                     aMapTrackClient.startTrack(trackParam, onTrackListener);
                 }
@@ -64,10 +64,7 @@ public class TrackServiceUtil {
                 // 成功停止
 //                Toast.makeText(mContext, "停止服务成功", Toast.LENGTH_SHORT).show();
             } else {
-//                Log.w("TrackService", "error onStopTrackCallback, status: " + status + ", msg: " + msg);
-//                Toast.makeText(mContext,
-//                        "error onStopTrackCallback, status: " + status + ", msg: " + msg,
-//                        Toast.LENGTH_LONG).show();
+                Log.e(TAG, "停止服务失败: " + status + ", msg: " + msg);
             }
         }
 
@@ -79,9 +76,6 @@ public class TrackServiceUtil {
 //                Toast.makeText(mContext, "定位采集已经开启", Toast.LENGTH_SHORT).show();
             } else {
 //                Log.w("TrackService", "error onStartGatherCallback, status: " + status + ", msg: " + msg);
-//                Toast.makeText(mContext,
-//                        "error onStartGatherCallback, status: " + status + ", msg: " + msg,
-//                        Toast.LENGTH_LONG).show();
                 if (aMapTrackClient != null && onTrackListener != null) {   // 开启定位采集失败重新开启
                     aMapTrackClient.setTrackId(mTrackId);
                     aMapTrackClient.startGather(onTrackListener);
@@ -95,9 +89,6 @@ public class TrackServiceUtil {
 //                Toast.makeText(mContext, "定位采集停止成功", Toast.LENGTH_SHORT).show();
             } else {
 //                Log.w("TrackService", "error onStopGatherCallback, status: " + status + ", msg: " + msg);
-//                Toast.makeText(mContext,
-//                        "error onStopGatherCallback, status: " + status + ", msg: " + msg,
-//                        Toast.LENGTH_LONG).show();
             }
         }
     };
@@ -105,22 +96,30 @@ public class TrackServiceUtil {
     private long mTrackId;
     private TrackParam trackParam;
 
-    public TrackServiceUtil() {
+    private TrackServiceUtil() {
         this.mContext = App.getContext();
         aMapTrackClient = App.getAMapTrackClient();
     }
 
-    public void stsrtTrackService(long serviceId, long terminalId, long trackId, Notification notification) {
-        Log.e("stsrtTrackService", "ForegroundService 服务创建了");
-        if (aMapTrackClient == null) return;
+    public void stsrtTrackService(Notification notification) {
+        long serviceId = SpUtil.getLong(Constants.SERVICE_ID, 0);
+        long terminalId = SpUtil.getLong(Constants.TERMINAL_ID, 0);
+        long trackId = SpUtil.getLong(Constants.TRACK_ID, 0);
+
+        Log.e(TAG, "开启猎鹰--   serviceId = " + serviceId + "    terminalId = " + terminalId + "    trackId = " + trackId);
+        mTrackId = trackId;
+        if (trackParam == null) {
+            trackParam = new TrackParam(serviceId, terminalId);  // 开启的track
+        }
+
+        if (aMapTrackClient == null) {
+            aMapTrackClient = App.getAMapTrackClient();
+        }
         if (notification == null) {
             notification = createNotification();
         }
-        mTrackId = trackId;
-        trackParam = new TrackParam(serviceId, terminalId);  // 开启的track
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            Notification notification = App.getNotification();
             if (notification != null) {
                 trackParam.setNotification(notification);
             }
@@ -132,8 +131,12 @@ public class TrackServiceUtil {
         if (aMapTrackClient != null) {
             long serviceId = SpUtil.getLong(Constants.SERVICE_ID, 0);
             long terminalId = SpUtil.getLong(Constants.TERMINAL_ID, 0);
+            long trackId = SpUtil.getLong(Constants.TRACK_ID, 0);
+            Log.e(TAG, "退出猎鹰--   serviceId = " + serviceId + "    terminalId = " + terminalId + "    trackId = " + trackId);
             aMapTrackClient.stopTrack(new TrackParam(serviceId, terminalId), new SimpleOnTrackLifecycleListener());
             aMapTrackClient.stopGather(new SimpleOnTrackLifecycleListener());
+            trackParam = null;
+            aMapTrackClient = null;
         }
     }
 
@@ -153,7 +156,7 @@ public class TrackServiceUtil {
         }
         Intent nfIntent = new Intent(mContext, PatrolRecordActivity.class);
         nfIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//FLAG_CANCEL_CURRENT ,FLAG_IMMUTABLE,FLAG_UPDATE_CURRENT
+        //FLAG_CANCEL_CURRENT ,FLAG_IMMUTABLE,FLAG_UPDATE_CURRENT
         builder.setContentIntent(PendingIntent.getActivity(mContext, 0, nfIntent, PendingIntent.FLAG_UPDATE_CURRENT))
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("数字罗庄")
@@ -164,4 +167,12 @@ public class TrackServiceUtil {
         return notification;
     }
 
+
+    public static TrackServiceUtil getInstance() {
+        return SingletonHolder.INSTANCE;
+    }
+
+    private static class SingletonHolder {
+        private static final TrackServiceUtil INSTANCE = new TrackServiceUtil();
+    }
 }

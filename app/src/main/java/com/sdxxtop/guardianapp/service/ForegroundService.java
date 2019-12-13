@@ -36,7 +36,6 @@ public class ForegroundService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        trackUtil = new TrackServiceUtil();
         Log.e(TAG, "ForegroundService 服务创建了");
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) { //Android4.3-->Android7.0
             //将service设置成前台服务
@@ -72,13 +71,13 @@ public class ForegroundService extends Service {
             }
         }
 
-        trackUtil = new TrackServiceUtil();
+        trackUtil = TrackServiceUtil.getInstance();
         long serviceId = SpUtil.getLong(Constants.SERVICE_ID, 0);
         long terminalId = SpUtil.getLong(Constants.TERMINAL_ID, 0);
         long trackId = SpUtil.getLong(Constants.TRACK_ID, 0);
         if (notification != null) {
             trackUtil.stopTrackService();  // 1:先关闭猎鹰服务 2: 在开启猎鹰服务
-            trackUtil.stsrtTrackService(serviceId, terminalId, trackId, notification);
+//            trackUtil.stsrtTrackService(serviceId, terminalId, trackId, notification);
         }
     }
 
@@ -108,7 +107,11 @@ public class ForegroundService extends Service {
 
     @Override
     public void onDestroy() {
+        if (trackUtil != null) {
+            trackUtil.stopTrackService();  // 1:先关闭猎鹰服务 2: 在开启猎鹰服务
+        }
         stopForeground(true);
+        Log.e(TAG, "onDestroy");
         stopSelf();
         super.onDestroy();
     }

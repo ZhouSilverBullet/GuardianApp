@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
 
-import com.sdxxtop.guardianapp.app.App;
 import com.sdxxtop.guardianapp.app.Constants;
 import com.sdxxtop.guardianapp.base.RxPresenter;
 import com.sdxxtop.guardianapp.model.bean.ArticleIndexBean;
@@ -75,7 +74,7 @@ public class HomePresenter extends RxPresenter<HomeContract.IView> implements Ho
 
     /********** 猎鹰相关 ***********/
     public void startUploadingPoint() {
-        App.getInstance().startTrackService();
+//        App.getInstance().startTrackService();
         if (handler != null) {
             handler.sendEmptyMessageDelayed(0, 1000 * 60);
         }
