@@ -142,13 +142,15 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
             @Override
             public void accept(Boolean aBoolean) throws Exception {
                 if (aBoolean) {
-                    //TODO  猎鹰相关关闭
-                    TrackServiceUtil instance = TrackServiceUtil.getInstance();
-                    instance.stsrtTrackService(null);
-                    mPresenter.startUploadingPoint();
+
                 }
             }
         });
+
+        //TODO  猎鹰相关关闭
+        TrackServiceUtil instance = TrackServiceUtil.getInstance();
+        instance.stsrtTrackService(null);
+        mPresenter.startUploadingPoint();
 
         cbtView.setOnMenuClickListener(new CustomBottomTab.OnMenuClickListener() {
             @Override

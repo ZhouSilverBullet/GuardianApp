@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.amap.api.track.AMapTrackClient;
 import com.amap.api.track.ErrorCode;
@@ -42,7 +43,7 @@ public class TrackServiceUtil {
         public void onStartTrackCallback(int status, String msg) {
             if (status == ErrorCode.TrackListen.START_TRACK_SUCEE || status == ErrorCode.TrackListen.START_TRACK_SUCEE_NO_NETWORK) {
                 // 成功启动
-//                Toast.makeText(mContext, "启动服务成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "启动服务成功", Toast.LENGTH_SHORT).show();
                 if (aMapTrackClient != null) {
                     aMapTrackClient.setTrackId(mTrackId);
                     aMapTrackClient.startGather(onTrackListener);
@@ -110,6 +111,7 @@ public class TrackServiceUtil {
         mTrackId = trackId;
         if (trackParam == null) {
             trackParam = new TrackParam(serviceId, terminalId);  // 开启的track
+            trackParam.setTrackId(trackId);
         }
 
         if (aMapTrackClient == null) {
