@@ -24,6 +24,8 @@ import com.sdxxtop.guardianapp.model.bean.EventReadIndexBean;
 import com.sdxxtop.guardianapp.model.bean.EventReadIndexBean_new;
 import com.sdxxtop.guardianapp.model.bean.EventSearchTitleBean;
 import com.sdxxtop.guardianapp.model.bean.EventShowBean;
+import com.sdxxtop.guardianapp.model.bean.EventStreamBean;
+import com.sdxxtop.guardianapp.model.bean.EventStreamReportBean;
 import com.sdxxtop.guardianapp.model.bean.ExamineFinishBean;
 import com.sdxxtop.guardianapp.model.bean.FlyEventDetailBean;
 import com.sdxxtop.guardianapp.model.bean.FlyEventListBean;
@@ -383,5 +385,13 @@ public interface EnvirApiService {
     @FormUrlEncoded
     @POST("working/{name}")
     Observable<RequestBean<GridEventListBean>> postGridEventList(@Path("name") String name, @Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("working/Eventstream")
+    Observable<RequestBean<EventStreamBean>> postEventStreamList(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("Evnt/Report")
+    Observable<RequestBean<EventStreamReportBean>> postEventStream(@Field("data") String data);
 
 }

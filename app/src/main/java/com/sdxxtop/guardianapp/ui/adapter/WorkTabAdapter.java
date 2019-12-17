@@ -1,7 +1,10 @@
 package com.sdxxtop.guardianapp.ui.adapter;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +14,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.app.Constants;
+import com.sdxxtop.guardianapp.model.bean.EventStreamBean;
+import com.sdxxtop.guardianapp.model.bean.RequestBean;
 import com.sdxxtop.guardianapp.model.bean.WorkIndexBean;
+import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
+import com.sdxxtop.guardianapp.model.http.net.Params;
+import com.sdxxtop.guardianapp.model.http.util.RxUtils;
 import com.sdxxtop.guardianapp.ui.activity.EventDiscretionListActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportListActivity;
 import com.sdxxtop.guardianapp.ui.activity.GrantCompanyReportActivity;
@@ -22,10 +32,16 @@ import com.sdxxtop.guardianapp.ui.activity.GrantGridReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.GridEventActivity;
 import com.sdxxtop.guardianapp.ui.activity.PatrolRecordActivity;
 import com.sdxxtop.guardianapp.ui.activity.SectionEventActivity;
+import com.sdxxtop.guardianapp.ui.activity.custom_event.CustomHeightBottomSheetDialog;
 import com.sdxxtop.guardianapp.utils.SpUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
+
+import static com.sdxxtop.guardianapp.model.http.net.RetrofitHelper.getEnvirApi;
 
 /**
  * @author :  lwb
@@ -35,16 +51,19 @@ import java.util.List;
 public class WorkTabAdapter extends BaseAdapter {
 
     private int[] imgRes = {R.drawable.icon_shijian_work, R.drawable.icon_shuju_work, R.drawable.icon_qiye_work,
-            R.drawable.icon_bumen_work, R.drawable.icon_shangbao_work, R.drawable.icon_xuncha_work};
-//    private int[] imgRes = {R.drawable.icon_shijian_work, R.drawable.icon_shuju_work, R.drawable.icon_qiye_work,
+            R.drawable.icon_bumen_work, R.drawable.icon_shangbao_work, R.drawable.icon_xuncha_work, R.drawable.icon_cus_evnet_work};
+    //    private int[] imgRes = {R.drawable.icon_shijian_work, R.drawable.icon_shuju_work, R.drawable.icon_qiye_work,
 //            R.drawable.icon_bumen_work, R.drawable.icon_shangbao_work, R.drawable.icon_xuncha_work, R.drawable.icon_bumen_work};
-    private String[] titleRes = {"事件统计", "工作数据", "企业数据", "部门事件", "我的上报", "我的巡查"};
+    private String[] titleRes = {"事件统计", "工作数据", "企业数据", "部门事件", "我的上报", "我的巡查", "自定义事件"};
 //    private String[] titleRes = {"事件统计", "工作数据", "企业数据", "部门事件", "我的上报", "我的巡查", "网格事件"};
 
     private List<Integer> imgResValue = new ArrayList<>();
     private List<String> titleResValue = new ArrayList<>();
+    private Activity context;
+    private CustomHeightBottomSheetDialog dialog;
 
-    public WorkTabAdapter() {
+    public WorkTabAdapter(Activity mContext) {
+        context = mContext;
         for (int imgRe : imgRes) {
             imgResValue.add(imgRe);
         }
@@ -79,7 +98,7 @@ public class WorkTabAdapter extends BaseAdapter {
         ViewHolder holder = null;
         if (convertView == null) {
             // 第一次加载创建View，其余复用 View
-            convertView = LayoutInflater.from(parent.getContext()).inflate(
+            convertView = LayoutInflater.from(context).inflate(
                     R.layout.gridview_item_work, null);
             holder = new ViewHolder();
             holder.imageView = convertView.findViewById(R.id.iv_icon);
@@ -99,7 +118,7 @@ public class WorkTabAdapter extends BaseAdapter {
         holder.llLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(position, parent.getContext());
+                startActivity(position, context);
             }
         });
         return convertView;
@@ -111,50 +130,58 @@ public class WorkTabAdapter extends BaseAdapter {
         LinearLayout llLayout;
     }
 
-    private void startActivity(int index, Context context) {
+    private void startActivity(int index, Activity context) {
         if (mBean == null) {
             showToast(context);
             return;
         }
         Intent intent = null;
-        switch (index) {
-            case 0:   // 事件统计
+        switch (titleRes[index]) {
+            case "事件统计":   // 事件统计
                 if (mBean.is_statistics == 1) {
                     intent = new Intent(context, GrantEventReportActivity.class);
                 }
                 break;
-            case 1:   // 工作数据
+            case "工作数据":   // 工作数据
                 if (mBean.is_working == 1) {
                     intent = new Intent(context, GrantGridReportActivity.class);
                 }
                 break;
-            case 2:   // 企业数据
+            case "企业数据":   // 企业数据
                 if (mBean.is_enterprise == 1) {
                     intent = new Intent(context, GrantCompanyReportActivity.class);
                 }
                 break;
-            case 3:   // 部门事件
+            case "部门事件":   // 部门事件
                 if (mBean.is_sectoral == 1) {
                     intent = new Intent(context, SectionEventActivity.class);
                 }
                 break;
-            case 4:   // 我的上报
+            case "我的上报":   // 我的上报
                 if (mBean.is_report == 1) {
                     intent = new Intent(context, EventReportListActivity.class);
                 }
                 break;
-            case 5:   // 我的巡查
+            case "我的巡查":   // 我的巡查
                 if (mBean.is_patrol == 1) {
                     intent = new Intent(context, EventDiscretionListActivity.class);
                 }
                 break;
-            case 6:   // 网格事件
+            case "网格事件":   // 网格事件
                 if (mBean.is_grid_event == 1) {
                     intent = new Intent(context, GridEventActivity.class);
                 }
                 break;
-            case 7:   // 工作轨迹
+            case "工作轨迹":   // 工作轨迹
                 intent = new Intent(context, PatrolRecordActivity.class);
+                break;
+            case "自定义事件":   // 自定义事件
+                if (dialog == null) {
+                    initDialog();
+                }
+                initData(0);
+                if (true)
+                    return;
                 break;
         }
         if (intent == null) {
@@ -164,14 +191,66 @@ public class WorkTabAdapter extends BaseAdapter {
         context.startActivity(intent);
     }
 
+    private void initData(int page) {
+        Params params = new Params();
+        params.put("sp", page);
+        Observable<RequestBean<EventStreamBean>> observable = getEnvirApi().postEventStreamList(params.getData());
+        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EventStreamBean>() {
+            @Override
+            public void onSuccess(EventStreamBean bean) {
+                if (bean != null) {
+                    if (dialog != null && dialog.adapter != null) {
+                        dialog.setData(bean.serrings, page == 0);
+                        if (dialog.adapter.getData().size() > 0) {
+                            dialog.setPeekHeight(dp2px(bean.serrings.size() * 44));
+                            dialog.show();
+                        } else {
+                            Toast.makeText(context, "当前没有事件流", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String error) {
+            }
+        });
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void initDialog() {
+        dialog = new CustomHeightBottomSheetDialog(context, R.layout.custom_event_list);
+        dialog.setRefreshListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshLayout) {
+                if (dialog != null && dialog.adapter != null) {
+                    initData(dialog.adapter.getData().size());
+                }
+                refreshLayout.finishRefresh();
+                refreshLayout.finishLoadMore();
+            }
+
+            @Override
+            public void onRefresh(RefreshLayout refreshLayout) {
+                initData(0);
+                refreshLayout.finishRefresh();
+                refreshLayout.finishLoadMore();
+            }
+        });
+    }
+
     private WorkIndexBean mBean;
 
     public void setLimits(WorkIndexBean bean) {
         this.mBean = bean;
-
     }
 
     public void showToast(Context context) {
         Toast.makeText(context, "暂无权限", Toast.LENGTH_SHORT).show();
+    }
+
+    private int dp2px(float dpVal) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                dpVal, context.getResources().getDisplayMetrics());
     }
 }

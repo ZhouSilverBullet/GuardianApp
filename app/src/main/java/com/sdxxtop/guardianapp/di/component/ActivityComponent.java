@@ -49,6 +49,7 @@ import com.sdxxtop.guardianapp.ui.activity.SafeStaffDetailActivity;
 import com.sdxxtop.guardianapp.ui.activity.SectionEventActivity;
 import com.sdxxtop.guardianapp.ui.activity.SplashActivity;
 import com.sdxxtop.guardianapp.ui.activity.TaskAgentsActivity;
+import com.sdxxtop.guardianapp.ui.activity.custom_event.CustomEventActivity;
 
 import dagger.Component;
 
@@ -103,5 +104,6 @@ public interface ActivityComponent {
     void inject(GridEventActivity activity);
     void inject(EventReportDetailActivity_new activity);
     void inject(RecordLogActivity activity);
+    void inject(CustomEventActivity activity);
 
 }

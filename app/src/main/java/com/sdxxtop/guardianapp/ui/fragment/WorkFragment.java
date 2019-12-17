@@ -101,7 +101,7 @@ public class WorkFragment extends BaseMvpFragment<WorkFragmentPresenter> impleme
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new NewDaiBanAdapter(null);
         recyclerView.setAdapter(adapter);
-        tabAdapter = new WorkTabAdapter();
+        tabAdapter = new WorkTabAdapter(getActivity());
         gridview.setAdapter(tabAdapter);
 
         cbcvBarView.setOnClick(new CustomOneBarChartView.OnBarChartClick() {

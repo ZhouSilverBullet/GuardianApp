@@ -26,6 +26,7 @@ public class TextAndTextView extends LinearLayout {
     private View textLine;
     private boolean lineIsShow;
     private boolean imgIsShow;
+    private boolean rightImgIsShow;
     private String textViewValue;
     private String textRightValue;
     private TextView textRightImage2;
@@ -45,6 +46,7 @@ public class TextAndTextView extends LinearLayout {
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.TextAndTextView, defStyleAttr, 0);
         lineIsShow = a.getBoolean(R.styleable.TextAndTextView_tatv_line_is_show, true);
         imgIsShow = a.getBoolean(R.styleable.TextAndTextView_tatv_text_img_is_show, true);
+        rightImgIsShow = a.getBoolean(R.styleable.TextAndTextView_tatv_right_img_is_show, true);
         textViewValue = a.getString(R.styleable.TextAndTextView_tatv_text_view);
         textRightValue = a.getString(R.styleable.TextAndTextView_tatv_text_right_value);
         textRightHintValue = a.getString(R.styleable.TextAndTextView_tatv_text_right_hint_value);
@@ -68,6 +70,8 @@ public class TextAndTextView extends LinearLayout {
         if (!imgIsShow) {
             textRightImage.setVisibility(GONE);
         }
+
+        textRightImage.setVisibility(rightImgIsShow ? View.VISIBLE : View.GONE);
 
         textNameText.setText(textViewValue);
 
