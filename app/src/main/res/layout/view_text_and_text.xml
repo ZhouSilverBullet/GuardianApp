@@ -76,6 +76,18 @@
             android:background="@drawable/time_more"
             android:visibility="gone"/>
 
+        <TextView
+            tools:visibility="visible"
+            android:visibility="gone"
+            android:id="@+id/right_text_no_padding"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textColor="#999999"
+            android:textSize="17sp"
+            tools:text="区环保分局"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
     </RelativeLayout>
 
     <View

@@ -17,6 +17,7 @@
         android:layout_height="wrap_content" />
 
     <TextView
+        android:background="@color/color_E0E0E0"
         app:layout_constraintTop_toBottomOf="@+id/titleView"
         android:layout_width="match_parent"
         android:layout_height="1dp" />
@@ -46,6 +47,7 @@
                 android:id="@+id/report_name"
                 app:tatv_right_img_is_show="false"
                 app:tatv_text_view="上报人"
+                app:tatv_right_no_padingtx_is_show="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -53,6 +55,7 @@
                 android:id="@+id/report_phone"
                 app:tatv_right_img_is_show="false"
                 app:tatv_text_view="上报人电话"
+                app:tatv_right_no_padingtx_is_show="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -60,6 +63,16 @@
                 android:id="@+id/report_part"
                 app:tatv_right_img_is_show="false"
                 app:tatv_text_view="上报人所属部门"
+                app:tatv_right_no_padingtx_is_show="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+                android:id="@+id/find_type"
+                app:tatv_right_img_is_show="false"
+                app:tatv_text_view="发现方式"
+                app:tatv_right_no_padingtx_is_show="true"
+                app:tatv_right_no_padingtx_str="巡查"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -172,23 +185,30 @@
                         android:layout_marginRight="15dp"
                         android:layout_marginBottom="5dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:text="定位补充描述"
-                        android:textColor="@color/color_303030"
-                        android:textSize="17sp" />
-
-                    <com.sdxxtop.guardianapp.ui.widget.NumberEditTextView
-                        android:id="@+id/net_content_position"
+                    <LinearLayout
+                        android:id="@+id/ll_location_layout"
+                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginBottom="5dp" />
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:text="定位补充描述"
+                            android:textColor="@color/color_303030"
+                            android:textSize="17sp" />
+
+                        <com.sdxxtop.guardianapp.ui.widget.NumberEditTextView
+                            android:id="@+id/net_content_position"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginBottom="5dp" />
+                    </LinearLayout>
                 </LinearLayout>
 
                 <RelativeLayout
@@ -216,7 +236,7 @@
             <TextView
                 android:background="@color/transparent"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"/>
+                android:layout_height="100dp" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

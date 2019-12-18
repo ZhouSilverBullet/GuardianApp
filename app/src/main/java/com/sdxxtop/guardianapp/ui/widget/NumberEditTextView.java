@@ -12,9 +12,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sdxxtop.guardianapp.R;
-import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import androidx.annotation.IdRes;
 import butterknife.BindView;
@@ -130,7 +130,8 @@ public class NumberEditTextView extends RelativeLayout implements TextWatcher {
 //            tvNumber.setText(length + "/200");
             if (length == maxLength) {
                 StringBuilder append = new StringBuilder().append("已超过").append(maxLength).append("字");
-                UIUtils.showToast(append.toString());
+//                UIUtils.showToast(append.toString());
+                Toast.makeText(getContext(), "超过字数限制", Toast.LENGTH_SHORT).show();
             }
         } else {
             tvNumber.setText(new StringBuilder().append(0).append("/").append(maxLength));

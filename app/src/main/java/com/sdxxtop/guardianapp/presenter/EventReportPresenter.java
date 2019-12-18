@@ -8,6 +8,7 @@ import com.sdxxtop.guardianapp.base.RxPresenter;
 import com.sdxxtop.guardianapp.model.bean.EventModeBean;
 import com.sdxxtop.guardianapp.model.bean.EventSearchTitleBean;
 import com.sdxxtop.guardianapp.model.bean.EventShowBean;
+import com.sdxxtop.guardianapp.model.bean.EventStreamReportBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
 import com.sdxxtop.guardianapp.model.bean.ShowPartBean;
 import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
@@ -35,10 +36,14 @@ public class EventReportPresenter extends RxPresenter<EventReportContract.IView>
     }
 
 
-    public void pushReport(String title, int pathType,
-                           String place, String longitude, String content,
-                           List<File> imagePushPath, List<File> videoPushPath,
-                           String positionDesc, int categoryId) {
+    public void pushReport(
+            String title, int pathType,
+            String place, String longitude, String content,
+            List<File> imagePushPath, List<File> videoPushPath,
+            String positionDesc, int categoryId,
+            int streamType
+
+            , int streamId) {
         ImageAndVideoParams params = new ImageAndVideoParams();
         params.put("tl", title);
         params.put("pt", pathType);
@@ -48,6 +53,7 @@ public class EventReportPresenter extends RxPresenter<EventReportContract.IView>
         params.put("ct", content);
         params.put("spt", positionDesc);
         params.put("cgid", categoryId);
+        params.put("esid", streamId);
 
         params.addImagePathList("img[]", imagePushPath);
         if (videoPushPath != null && videoPushPath.size() > 0) {
@@ -154,6 +160,27 @@ public class EventReportPresenter extends RxPresenter<EventReportContract.IView>
             @Override
             public void onFailure(int code, String error) {
                 UIUtils.showToast(error);
+            }
+        });
+        addSubscribe(disposable);
+    }
+
+    public void loadData(int streamId) {
+        Params params = new Params();
+        params.put("esid", streamId);
+
+        Observable<RequestBean<EventStreamReportBean>> observable = getEnvirApi().postEventStream(params.getData());
+        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EventStreamReportBean>() {
+            @Override
+            public void onSuccess(EventStreamReportBean bean) {
+                if (mView != null) {
+                    mView.setPermissionInfo(bean);
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String error) {
+
             }
         });
         addSubscribe(disposable);

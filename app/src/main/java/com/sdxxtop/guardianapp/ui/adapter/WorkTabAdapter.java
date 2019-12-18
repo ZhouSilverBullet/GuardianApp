@@ -18,6 +18,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.app.Constants;
+import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.model.bean.EventStreamBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
 import com.sdxxtop.guardianapp.model.bean.WorkIndexBean;
@@ -30,6 +31,7 @@ import com.sdxxtop.guardianapp.ui.activity.GrantCompanyReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.GrantEventReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.GrantGridReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.GridEventActivity;
+import com.sdxxtop.guardianapp.ui.activity.HomeActivity;
 import com.sdxxtop.guardianapp.ui.activity.PatrolRecordActivity;
 import com.sdxxtop.guardianapp.ui.activity.SectionEventActivity;
 import com.sdxxtop.guardianapp.ui.activity.custom_event.CustomHeightBottomSheetDialog;
@@ -192,12 +194,18 @@ public class WorkTabAdapter extends BaseAdapter {
     }
 
     private void initData(int page) {
+        if (context instanceof BaseMvpActivity){
+            ((HomeActivity)context).showLoadingDialog();
+        }
         Params params = new Params();
         params.put("sp", page);
         Observable<RequestBean<EventStreamBean>> observable = getEnvirApi().postEventStreamList(params.getData());
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EventStreamBean>() {
             @Override
             public void onSuccess(EventStreamBean bean) {
+                if (context instanceof BaseMvpActivity){
+                    ((HomeActivity)context).hideLoadingDialog();
+                }
                 if (bean != null) {
                     if (dialog != null && dialog.adapter != null) {
                         dialog.setData(bean.serrings, page == 0);
@@ -213,6 +221,9 @@ public class WorkTabAdapter extends BaseAdapter {
 
             @Override
             public void onFailure(int code, String error) {
+                if (context instanceof BaseMvpActivity){
+                    ((HomeActivity)context).hideLoadingDialog();
+                }
             }
         });
     }

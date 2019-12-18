@@ -46,6 +46,7 @@ public class CustomVideoImgSelectView extends LinearLayout implements View.OnCli
     RecyclerView rv;
 
     public boolean showCount;
+    public int maxSelect = 3;
     private GridImageAdapter adapter;
     private BottomSheetDialog bottomSheetDialog;
     private List<LocalMedia> selectImgList = new ArrayList<>();
@@ -69,6 +70,7 @@ public class CustomVideoImgSelectView extends LinearLayout implements View.OnCli
         LayoutInflater.from(getContext()).inflate(R.layout.view_video_img_select, this, true);
         ButterKnife.bind(this);
         setPhotoRecycler(rv);
+        setTvDesc(true);
     }
 
     /************************   初始化  照片/视频 选择   *********************************/
@@ -86,7 +88,7 @@ public class CustomVideoImgSelectView extends LinearLayout implements View.OnCli
                 }
             }
         });
-
+        adapter.setSelectMax(maxSelect);
         recycler.setAdapter(adapter);
         adapter.setOnItemClickListener(new GridImageAdapter.OnItemClickListener() {
             @Override
@@ -153,7 +155,7 @@ public class CustomVideoImgSelectView extends LinearLayout implements View.OnCli
                 // 进入相册 以下是例子：不需要的api可以不写
                 PictureSelector.create((Activity) getContext())
                         .openGallery(PictureMimeType.ofImage())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
-                        .maxSelectNum(selectVideoList.size() == 0 ? 9 : 8)// 最大图片选择数量
+                        .maxSelectNum(selectVideoList.size() == 0 ? maxSelect : maxSelect - 1)// 最大图片选择数量
                         .imageSpanCount(4)// 每行显示个数
                         .selectionMode(PictureConfig.MULTIPLE)// 多选 or 单选
                         .previewImage(true)// 是否可预览图片
@@ -256,6 +258,17 @@ public class CustomVideoImgSelectView extends LinearLayout implements View.OnCli
         }
     }
 
+    public void setMaxImgCount(int count) {
+        if (count > 9) {
+            count = 9;
+        }
+        this.maxSelect = count;
+        setTvDesc(true);
+        if (adapter != null) {
+            adapter.setSelectMax(maxSelect);
+        }
+    }
+
     public void setTvDesc(String value) {
         tvTitle.setText(value);
     }
@@ -270,7 +283,7 @@ public class CustomVideoImgSelectView extends LinearLayout implements View.OnCli
     ForegroundColorSpan colorSpan;
 
     public SpannableStringBuilder getFormatText(int size) {
-        String str = "(" + size + "/9)";
+        String str = "(" + size + "/" + maxSelect + ")";
         SpannableStringBuilder builder = new SpannableStringBuilder(str);
         builder.setSpan(colorSpan, 3, 4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return builder;

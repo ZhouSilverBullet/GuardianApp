@@ -15,6 +15,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.model.bean.EventStreamBean;
+import com.sdxxtop.guardianapp.ui.activity.custom_event.adapter.CustomEventAdapter;
 
 import java.util.List;
 

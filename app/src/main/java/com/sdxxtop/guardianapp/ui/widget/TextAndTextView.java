@@ -31,6 +31,10 @@ public class TextAndTextView extends LinearLayout {
     private String textRightValue;
     private TextView textRightImage2;
     private TextView tvMessgaeCount;
+    private TextView rightTextNoPadding;
+    private String rightTextNoPaddingStr;
+    private int rightTextNoPaddingColor;
+    private boolean rightTextNoPaddingIsShow;
 
     public TextAndTextView(Context context) {
         this(context, null);
@@ -50,6 +54,9 @@ public class TextAndTextView extends LinearLayout {
         textViewValue = a.getString(R.styleable.TextAndTextView_tatv_text_view);
         textRightValue = a.getString(R.styleable.TextAndTextView_tatv_text_right_value);
         textRightHintValue = a.getString(R.styleable.TextAndTextView_tatv_text_right_hint_value);
+        rightTextNoPaddingStr = a.getString(R.styleable.TextAndTextView_tatv_right_no_padingtx_str);
+        rightTextNoPaddingColor = a.getColor(R.styleable.TextAndTextView_tatv_right_no_padingtx_color, getResources().getColor(R.color.color_313131));
+        rightTextNoPaddingIsShow = a.getBoolean(R.styleable.TextAndTextView_tatv_right_no_padingtx_is_show, false);
         a.recycle();
         init();
     }
@@ -61,6 +68,7 @@ public class TextAndTextView extends LinearLayout {
         textRightImage = (TextView) findViewById(R.id.text_and_text_right_image);
         textRightImage2 = (TextView) findViewById(R.id.text_and_text_right_image2);
         tvMessgaeCount = (TextView) findViewById(R.id.tv_messgae_count);
+        rightTextNoPadding = (TextView) findViewById(R.id.right_text_no_padding);
         textLine = findViewById(R.id.text_and_text_line);
 
         if (!lineIsShow) {
@@ -70,6 +78,10 @@ public class TextAndTextView extends LinearLayout {
         if (!imgIsShow) {
             textRightImage.setVisibility(GONE);
         }
+
+        rightTextNoPadding.setVisibility(rightTextNoPaddingIsShow ? View.VISIBLE : View.GONE);
+        rightTextNoPadding.setTextColor(rightTextNoPaddingColor);
+        rightTextNoPadding.setText(rightTextNoPaddingStr);
 
         textRightImage.setVisibility(rightImgIsShow ? View.VISIBLE : View.GONE);
 
@@ -87,6 +99,10 @@ public class TextAndTextView extends LinearLayout {
 
     public TextView getTextRightText() {
         return textRightText;
+    }
+
+    public TextView getTextRightTextNoPadding() {
+        return rightTextNoPadding;
     }
 
     public void setShowLine(boolean isShow) {

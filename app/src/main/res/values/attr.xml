@@ -40,6 +40,9 @@
         <attr name="tatv_text_img_is_show" format="boolean"/>
         <attr name="tatv_line_is_show" format="boolean"/>
         <attr name="tatv_right_img_is_show" format="boolean"/>
+        <attr name="tatv_right_no_padingtx_is_show" format="boolean"/>
+        <attr name="tatv_right_no_padingtx_str" format="string"/>
+        <attr name="tatv_right_no_padingtx_color" format="color"/>
     </declare-styleable>
 
     <!--支持圆角的TextView-->

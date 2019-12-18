@@ -28,6 +28,11 @@ public class EventShowBean {
             return part_name;
         }
 
+        private int part_id;
+        private String part_name;
+        private int parent_id;
+        private int level;
+        private List<ChildrenBean> children;
 
         public int getPart_id() {
             return part_id;
@@ -68,12 +73,6 @@ public class EventShowBean {
         public void setChildren(List<ChildrenBean> children) {
             this.children = children;
         }
-
-        private int part_id;
-        private String part_name;
-        private int parent_id;
-        private int level;
-        private List<ChildrenBean> children;
     }
 
     public static class ChildrenBean {

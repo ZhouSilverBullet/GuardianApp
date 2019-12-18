@@ -60,7 +60,7 @@ public class GridImageAdapter extends RecyclerView.Adapter<GridImageAdapter.View
         this.selectMax = selectMax;
     }
 
-    public  List<LocalMedia> getData(){
+    public List<LocalMedia> getData() {
         return list;
     }
 
@@ -105,7 +105,7 @@ public class GridImageAdapter extends RecyclerView.Adapter<GridImageAdapter.View
      */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = mInflater.inflate(R.layout.gv_filter_image,viewGroup, false);
+        View view = mInflater.inflate(R.layout.gv_filter_image, viewGroup, false);
         final ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -152,7 +152,7 @@ public class GridImageAdapter extends RecyclerView.Adapter<GridImageAdapter.View
             /**
              * 认为可能有异常
              */
-            try{
+            try {
                 LocalMedia media = list.get(position);
                 int mimeType = media.getMimeType();
                 String path = "";
@@ -212,7 +212,7 @@ public class GridImageAdapter extends RecyclerView.Adapter<GridImageAdapter.View
                     });
                 }
 
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -223,6 +223,7 @@ public class GridImageAdapter extends RecyclerView.Adapter<GridImageAdapter.View
 
     public interface OnItemClickListener {
         void onItemClick(int position, View v);
+
         void onItemRemove();
     }
 

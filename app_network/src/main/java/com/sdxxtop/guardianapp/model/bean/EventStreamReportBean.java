@@ -22,8 +22,8 @@ public class EventStreamReportBean {
     public ReportPathBean reportPath;
     public PartBean part;
     public UserBean user;
-    public List<?> part_info;
-    public List<?> category;
+    public List<EventShowBean.NewPartBean> part_info;
+    public List<CategoryBean> category;
 
 
     public static class ReportPathBean {
@@ -49,9 +49,18 @@ public class EventStreamReportBean {
         public int userPart;
         public int reportPart;
         public int reportFind;
+        public int reportDescribe;
+        public int reportImg;
+        public int img;
+        public int supplement;
+        public int supplementNumber;
+        public int eventClassification;
+        public int basicReview;
     }
 
     public static class PartBean {
+        public int part_id;
+        public String part_name;
     }
 
     public static class UserBean {
@@ -70,5 +79,10 @@ public class EventStreamReportBean {
         public int part_id;
         public String part_name;
         public int parent_id;
+    }
+
+    public class CategoryBean {
+        public int category_id;
+        public String category_name;
     }
 }

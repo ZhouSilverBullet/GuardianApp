@@ -104,14 +104,13 @@ public class ProvinceTwoPickerView {
             ArrayList<ArrayList<String>> province_AreaList = new ArrayList<>();//该省的所有地区列表（第三极）
 
             List<EventShowBean.ChildrenBean> children_1 = mData.get(i).getChildren();
-//            children_1.add(0, new EventShowBean.ChildrenBean(0, "全部", new ArrayList<EventShowBean.ChildrenBean>()));
-
-            for (int c = 0; c < children_1.size(); c++) {//遍历该省份的所有城市
-                String cityName = children_1.get(c).getPart_name();
-                cityList.add(cityName);//添加城市
+            if (children_1 != null) {
+                for (int c = 0; c < children_1.size(); c++) {//遍历该省份的所有城市
+                    String cityName = children_1.get(c).getPart_name();
+                    cityList.add(cityName);//添加城市
 //                ArrayList<String> city_AreaList = new ArrayList<>();//该城市的所有地区列表
 
-                //如果无地区数据，建议添加空字符串，防止数据为null 导致三个选项长度不匹配造成崩溃
+                    //如果无地区数据，建议添加空字符串，防止数据为null 导致三个选项长度不匹配造成崩溃
                 /*if (jsonBean.get(i).getCityList().get(c).getArea() == null
                         || jsonBean.get(i).getCityList().get(c).getArea().size() == 0) {
                     city_AreaList.add("");
@@ -128,8 +127,8 @@ public class ProvinceTwoPickerView {
 //                    }
 //                }
 //                province_AreaList.add(city_AreaList);//添加该省所有地区数据
+                }
             }
-
             /**
              * 添加城市数据
              */
@@ -167,7 +166,7 @@ public class ProvinceTwoPickerView {
                         options2Items.get(options1).get(options2) : "";
 
                 int opt2Id = mData.size() > 0
-                        && mData.get(options1).getChildren().size() > 0 ?
+                        && mData.get(options1).getChildren() != null && mData.get(options1).getChildren().size() > 0 ?
                         mData.get(options1).getChildren().get(options2).getPart_id() : 0;
 
 //                String opt3tx = options2Items.size() > 0
