@@ -47,7 +47,7 @@ public class EventMoveActivity extends BaseMvpActivity<EventMovePresenter> imple
     @Override
     protected void initData() {
         super.initData();
-        mPresenter.loadData();
+        mPresenter.loadData(eventId);
     }
 
     @Override

@@ -46,7 +46,7 @@ public class CustomVideoImgSelectView extends LinearLayout implements View.OnCli
     RecyclerView rv;
 
     public boolean showCount;
-    public int maxSelect = 3;
+    public int maxSelect = 9;
     private GridImageAdapter adapter;
     private BottomSheetDialog bottomSheetDialog;
     private List<LocalMedia> selectImgList = new ArrayList<>();
@@ -258,6 +258,10 @@ public class CustomVideoImgSelectView extends LinearLayout implements View.OnCli
         }
     }
 
+    /**
+     * 设置图片最多选择几张
+     * @param count
+     */
     public void setMaxImgCount(int count) {
         if (count > 9) {
             count = 9;

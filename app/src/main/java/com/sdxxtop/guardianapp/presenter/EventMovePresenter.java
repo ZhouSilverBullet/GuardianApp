@@ -27,8 +27,9 @@ public class EventMovePresenter extends RxPresenter<EventMoveContract.IView> imp
     }
 
 
-    public void loadData() {
+    public void loadData(String eventId) {
         Params params = new Params();
+        params.put("ei",eventId);
         Observable<RequestBean<EventShowBean>> observable = getEnvirApi().postEventSector(params.getData());
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EventShowBean>() {
             @Override

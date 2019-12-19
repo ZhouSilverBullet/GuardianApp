@@ -21,10 +21,10 @@ import com.sdxxtop.guardianapp.model.bean.EventIndexBean;
 import com.sdxxtop.guardianapp.model.bean.EventListBean;
 import com.sdxxtop.guardianapp.model.bean.EventModeBean;
 import com.sdxxtop.guardianapp.model.bean.EventReadIndexBean;
-import com.sdxxtop.guardianapp.model.bean.EventReadIndexBean_new;
 import com.sdxxtop.guardianapp.model.bean.EventSearchTitleBean;
 import com.sdxxtop.guardianapp.model.bean.EventShowBean;
 import com.sdxxtop.guardianapp.model.bean.EventStreamBean;
+import com.sdxxtop.guardianapp.model.bean.EventStreamDetailBean;
 import com.sdxxtop.guardianapp.model.bean.EventStreamReportBean;
 import com.sdxxtop.guardianapp.model.bean.ExamineFinishBean;
 import com.sdxxtop.guardianapp.model.bean.FlyEventDetailBean;
@@ -132,16 +132,20 @@ public interface EnvirApiService {
     @POST("event/read")
     Observable<RequestBean<EventReadIndexBean>> postEventRead(@Field("data") String data);
 
+//    @FormUrlEncoded
+//    @POST("event/read")
+//    Observable<RequestBean<EventReadIndexBean_new>> postNewEventRead(@Field("data") String data);
+
     @FormUrlEncoded
-    @POST("event/read")
-    Observable<RequestBean<EventReadIndexBean_new>> postNewEventRead(@Field("data") String data);
+    @POST("evnt/read")
+    Observable<RequestBean<EventStreamDetailBean>> postNewEventRead(@Field("data") String data);
 
     @Multipart
     @POST("event/modify")
     Observable<RequestBean> postEventModify(@PartMap HashMap<String, RequestBody> data);
 
     @Multipart
-    @POST("event/failed")
+    @POST("evnt/failed")
     Observable<RequestBean> postEventFailed(@PartMap HashMap<String, RequestBody> data);
 
     @FormUrlEncoded
@@ -151,7 +155,8 @@ public interface EnvirApiService {
 
     @FormUrlEncoded
 //    @POST("event/showPart")
-    @POST("event/sector")
+//    @POST("event/sector")
+    @POST("evnt/sector")
     Observable<RequestBean<EventShowBean>> postEventSector(@Field("data") String data);
 
     @FormUrlEncoded

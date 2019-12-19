@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.model.bean.EventReadIndexBean;
-import com.sdxxtop.guardianapp.model.bean.EventReadIndexBean_new;
+import com.sdxxtop.guardianapp.model.bean.EventStreamDetailBean;
 import com.sdxxtop.guardianapp.model.bean.MediaBean;
 import com.sdxxtop.guardianapp.presenter.EventReportDetailPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.EventReportDetailContract;
@@ -341,7 +341,7 @@ public class EventReportDetailActivity extends BaseMvpActivity<EventReportDetail
     }
 
     @Override
-    public void readNewData(EventReadIndexBean_new bean) {
+    public void readNewData(EventStreamDetailBean bean) {
 
     }
 

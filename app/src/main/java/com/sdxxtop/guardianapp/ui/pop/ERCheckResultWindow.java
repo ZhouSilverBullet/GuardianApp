@@ -33,7 +33,7 @@ public class ERCheckResultWindow extends PopupWindow {
     @BindView(R.id.tv_select)
     TextView tvSelect;
     @BindView(R.id.et_num_content)
-    NumberEditTextView etNumContent;
+    public NumberEditTextView etNumContent;
     @BindView(R.id.btn_confirm)
     Button btnConfirm;
     @BindView(R.id.rl_containor)
@@ -50,7 +50,8 @@ public class ERCheckResultWindow extends PopupWindow {
         initUI();
         defaultStyle(activity);
     }
-    public ERCheckResultWindow(Activity activity,View view) {
+
+    public ERCheckResultWindow(Activity activity, View view) {
         mActivity = activity;
         this.mView = view;
         initUI();
@@ -64,7 +65,7 @@ public class ERCheckResultWindow extends PopupWindow {
         etNumContent.setMaxLength(100);
         etNumContent.setEditHint("必填");
 
-        if (mView!=null){
+        if (mView != null) {
             mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -90,7 +91,7 @@ public class ERCheckResultWindow extends PopupWindow {
         showAtLocation(parent, Gravity.BOTTOM, 0, 0);
 
 //        setShowBackground(0.6f);
-        if (mView!=null){
+        if (mView != null) {
             mView.setVisibility(View.VISIBLE);
         }
     }
@@ -145,7 +146,7 @@ public class ERCheckResultWindow extends PopupWindow {
                 //提交确定
 
                 String editValue = etNumContent.getEditValue();
-                if (TextUtils.isEmpty(editValue)){
+                if (TextUtils.isEmpty(editValue)) {
                     UIUtils.showToast("请描述无法解决原因");
                     return;
                 }

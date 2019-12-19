@@ -49,174 +49,8 @@
 
                 </RelativeLayout>
 
-                <RelativeLayout
-                    android:layout_marginTop="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:animateLayoutChanges="true"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp">
-
-                    <TextView
-                        style="@style/normal_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="事件标题" />
-
-                    <TextView
-                        android:id="@+id/tv_content_title"
-                        style="@style/normal_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:maxWidth="200dp"
-                        android:singleLine="true"
-                        android:text="下水道堵塞" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerView"
-                        android:layout_width="match_parent"
-                        android:layout_height="105dp"
-                        android:layout_below="@id/tv_content_title"
-                        android:visibility="gone"
-                        tools:visibility="visible" />
-
-                    <RelativeLayout
-                        android:id="@+id/rl_time"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/recyclerView"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp">
-
-                        <TextView
-                            style="@style/normal_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="上报时间" />
-
-                        <TextView
-                            android:id="@+id/tv_time"
-                            style="@style/normal_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:maxWidth="200dp"
-                            android:singleLine="true"
-                            android:text="2019.04.01 12:12:56" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/rl_check_method"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/rl_time"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp">
-
-                        <TextView
-                            style="@style/normal_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="发现方式" />
-
-                        <TextView
-                            android:id="@+id/tv_check_method"
-                            style="@style/normal_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:maxWidth="200dp"
-                            android:singleLine="true"
-                            android:text="巡逻" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/rl_happen"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/rl_check_method"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp">
-
-                        <TextView
-                            style="@style/normal_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="发生地点" />
-
-                        <TextView
-                            android:id="@+id/tv_happen"
-                            style="@style/normal_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:maxWidth="200dp"
-                            android:paddingRight="15dp"
-                            android:singleLine="true"
-                            android:text="巡逻sad" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/data_right" />
-                    </RelativeLayout>
-
-                    <TextView
-                        android:id="@+id/tv_location_desc"
-                        style="@style/normal_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/rl_happen"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:text="定位补充描述"
-                        android:visibility="gone"
-                        tools:visibility="visible" />
-
-                    <RelativeLayout
-                        android:id="@+id/rl_report_path"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_location_desc"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp">
-
-                        <TextView
-                            style="@style/normal_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="责任部门" />
-
-                        <TextView
-                            android:id="@+id/tv_report_path"
-                            style="@style/normal_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:maxWidth="200dp"
-                            android:singleLine="true"
-                            android:text="环保局" />
-                    </RelativeLayout>
-
-                    <TextView
-                        android:id="@+id/tv_description"
-                        style="@style/normal_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/rl_report_path"
-                        android:layout_marginTop="5dp"
-                        android:text="街道下水道严重度堵塞，导致地面积水严重，影响车辆和行人正常通行，请尽快安排处理。" />
-
-                </RelativeLayout>
-
-                <TextView
-                    android:layout_marginTop="15dp"
-                    android:background="@color/color_E0E0E0"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp" />
+                <!--  头布局  -->
+                <include layout="@layout/event_detail_head_layout" />
 
                 <!-- 认领 -->
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -563,11 +397,12 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_marginLeft="15dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="7dp"
                         app:layout_constraintTop_toBottomOf="@+id/tv_ys_result"
                         android:id="@+id/recycler_yanshou"
                         android:layout_width="match_parent"
                         android:layout_height="105dp" />
+
 
                     <TextView
                         android:layout_marginRight="15dp"
@@ -583,25 +418,7 @@
                         android:layout_height="wrap_content" />
 
                     <TextView
-                        android:background="@color/color_E0E0E0"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_ys_beizhu"
-                        android:layout_marginTop="15dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <!-- 认领结果 -->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    tools:visibility="visible"
-                    android:visibility="gone"
-                    android:paddingTop="15dp"
-                    android:id="@+id/col_rl_complete"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
+                        android:layout_marginTop="10dp"
                         android:singleLine="true"
                         android:layout_marginRight="15dp"
                         android:layout_marginLeft="15dp"
@@ -609,7 +426,7 @@
                         android:textColor="#292929"
                         tools:text="评价情况：满意"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_ys_beizhu"
                         android:id="@+id/tv_rl_pingjia_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -687,6 +504,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="100dp" />
             </LinearLayout>
+
         </androidx.core.widget.NestedScrollView>
 
         <!--    底部按钮     -->
@@ -717,6 +535,23 @@
                 android:textColor="@color/white"
                 android:visibility="gone" />
         </LinearLayout>
+
+        <TextView
+            tools:visibility="visible"
+            android:visibility="gone"
+            android:id="@+id/tvBtnClick"
+            android:layout_marginBottom="30dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:gravity="center"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:background="#38B48B"
+            android:text="操作"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

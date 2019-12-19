@@ -29,15 +29,22 @@ public class ERDSecondPresenter extends RxPresenter<ERDSecondContract.IView> imp
     public ERDSecondPresenter() {
     }
 
-    public void modify(String eventId, int status, String extra, List<File> imagePushPath, List<File> videoPushPath) {
+    public void modify(
+            String eventId, int status, String extra,
+            List<File> imagePushPath, List<File> videoPushPath,
+            int pinglunStatus,
+            String pinglunStr
+    ) {
         ImageAndVideoParams params = new ImageAndVideoParams();
         params.put("ei", eventId);
         params.put("st", status);
         params.put("et", extra);
+        params.put("eval", pinglunStatus);
+        params.put("eteval", pinglunStr);
 
         params.addImagePathList("img[]", imagePushPath);
-        if (videoPushPath!=null&&videoPushPath.size()>0){
-            util = new VideoCompressUtil((Activity)mView);
+        if (videoPushPath != null && videoPushPath.size() > 0) {
+            util = new VideoCompressUtil((Activity) mView);
             File file = videoPushPath.get(0);
             util.videoCompress(file.getPath());
 
@@ -53,13 +60,13 @@ public class ERDSecondPresenter extends RxPresenter<ERDSecondContract.IView> imp
                     UIUtils.showToast("压缩失败,请重新尝试");
                 }
             });
-        }else{
+        } else {
             request(params);
         }
     }
 
     private void request(ImageAndVideoParams params) {
-        ((BaseActivity)mView).showLoadingDialog();
+        ((BaseActivity) mView).showLoadingDialog();
         Observable<RequestBean> observable = getEnvirLongApi().postEventFailed(params.getImgAndVideoData());
         Disposable disposable = RxUtils.handleHttp(observable, new IRequestCallback<RequestBean>() {
             @Override

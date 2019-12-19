@@ -116,9 +116,9 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     private SingleStyleView categorySelectView;
 
     private TimeSelectBottomDialog dialog;
+    private EventStreamReportBean.ReportPathBean streamEventPermission;
 
     private static final String TAG = "EventReportActivity";
-    private EventStreamReportBean.ReportPathBean streamEventPermission;
 
     @Override
     protected int getLayout() {
@@ -250,6 +250,8 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
                 .show();
     }
 
+    private int minSelectImg = 0;
+
     // todo 网络请求
     private void toReport() {
 
@@ -258,8 +260,8 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 
         if (streamEventPermission == null) return;
 
-        if (streamEventPermission.reportImg == 1 && (imagePushPath.size() + vedioPushPath.size()) < 3) {
-            showToast("需要提供3个以上图片或者视频");
+        if (streamEventPermission.reportImg == 1 && (imagePushPath.size() + vedioPushPath.size()) < minSelectImg) {
+            showToast("需要提供"+ minSelectImg+"个以上图片或者视频");
             return;
         }
 
@@ -483,7 +485,9 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
             StringUtil.setEditTextInhibitInputSpaChat(taevTitle.getEditText(), streamEventPermission.title);
             taevTitle.getEditText().setHint("事件类目关键词（限制" + streamEventPermission.title + "个字）");
             //选择图片和视频的总数量
-            cvisvView.setMaxImgCount(streamEventPermission.img);
+//            cvisvView.setMaxImgCount(streamEventPermission.img);
+
+            minSelectImg = streamEventPermission.img;
 
         }
         if (user != null) {

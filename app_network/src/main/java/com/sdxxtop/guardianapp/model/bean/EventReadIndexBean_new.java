@@ -35,9 +35,27 @@ public class EventReadIndexBean_new {
     public ExtraDateBean extra_date;//认领信息
     public SendBean send;//派发信息
     public SolveBean solve;//解决信息
-    public CompletedBean completed;//已完成 == 验收
-    public ClaimCompletedBean claim_completed;//认领事件完成
+//    public CompletedBean completed;//已完成 == 验收
+//    public ClaimCompletedBean claim_completed;//认领事件完成
     public RifiutaBean rifiuta;//驳回
+    public ClaimBean claim;//认领人
+    public CheckBean check;//验收
+
+    public class CheckBean {
+        public String check_name;//验收人名称
+        public String check_part;//验收人所属部门
+        public String img;//验收图片
+        public String video;//验收视频
+        public String extra;//评价信息
+        public String appraise;//评价满意度
+        public String check_time;//验收时间
+    }
+
+    public class ClaimBean {
+        public String send_name;//认领人
+        public String send_part_name;//认领人所属部门
+        public String send_time;//认领时间
+    }
 
     public class RifiutaBean {
         public String extra;
@@ -45,15 +63,15 @@ public class EventReadIndexBean_new {
     }
 
     public class UnionBean {
-        public String extra;
-        public String part_name;
-        public String add_time;
+        public String extra;//联办原因
+        public String part_name;//联办部门
+        public String add_time;//联办时间
     }
 
     public class TurnBean {
-        public String part_name;
-        public String extra;
-        public String operate_time;
+        public String part_name;//流转部门
+        public String extra;//流转原因
+        public String operate_time;//流转时间
     }
 
     public static class ExtraDateBean {
@@ -66,18 +84,20 @@ public class EventReadIndexBean_new {
     }
 
     public class SendBean {
-        public String send_time;
-        public String operate_date;
-        public String send_name;
-        public String name;
-        public int important_type;
+        public String send_name;//派发人名称
+        public String send_part_name;//派发人所属部门
+        public String send_time;//派发时间
+        public String settle_name;//解决人名称
+        public String settle_part;//解决人所属部门
+        public String important_type;//事件重要性
+        public String end_date;//事件截止时间
     }
 
-    public static class SolveBean {//最近一条的解决信息
-        public String extra;
-        public String operate_time;
-        public String video;
-        public String img;
+    public static class SolveBean {//解决信息
+        public String settle_time;//解决时间
+        public String settle_reason;//解决描述
+        public String finish_img;//解决图片
+        public String finish_video;//解决视频
     }
 
     public class CompletedBean {//已完成

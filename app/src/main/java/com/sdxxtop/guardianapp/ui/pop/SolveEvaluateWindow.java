@@ -80,7 +80,6 @@ public class SolveEvaluateWindow extends PopupWindow {
                 SolveEvaluateWindow.this.dismiss();
             }
         });
-
     }
 
     public void show(View parent) {

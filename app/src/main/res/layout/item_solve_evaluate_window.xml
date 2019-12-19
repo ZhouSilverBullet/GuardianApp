@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@color/white"
-              android:orientation="vertical"
-              android:paddingLeft="15dp"
-              android:paddingRight="15dp">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:id="@+id/ll_pinglun"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp">
 
     <LinearLayout
         android:id="@+id/rl_containor"
@@ -22,12 +23,12 @@
             android:text="解决评价"
             android:textColor="@color/color_292929"
             android:textSize="17sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <com.sdxxtop.guardianapp.ui.widget.EvaluateSelectView
             android:id="@+id/esv_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <TextView
@@ -37,14 +38,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:layout_marginBottom="10dp"
-        android:text="描述(选填)"/>
+        android:text="描述(选填)" />
 
     <com.sdxxtop.guardianapp.ui.widget.NumberEditTextView
         android:id="@+id/et_num_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <Button
+        android:visibility="gone"
         android:id="@+id/btn_confirm"
         android:layout_width="120dp"
         android:layout_height="34dp"
@@ -53,6 +55,6 @@
         android:layout_marginBottom="18dp"
         android:background="@drawable/btn_green_solid_bg"
         android:text="提交"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white" />
 
 </LinearLayout>

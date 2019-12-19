@@ -14,6 +14,10 @@
         <item name="android:textColor">@color/color_303030</item>
         <item name="android:textSize">15sp</item>
     </style>
+    <style name="event_detail_text_style">
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+    </style>
 
     <style name="confirm_text">
         <item name="android:layout_width">wrap_content</item>

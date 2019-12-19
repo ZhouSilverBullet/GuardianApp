@@ -1,90 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/white"
-              android:clipToPadding="true"
-              android:fitsSystemWindows="true"
-              android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
     <com.sdxxtop.guardianapp.ui.widget.TitleView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:leftLayoutIconIsGray="true"
-        app:titleValue="上报详情"/>
+        app:titleValue="上报详情" />
 
-    <View style="@style/line_style"/>
+    <View style="@style/line_style" />
 
-    <LinearLayout
-        android:id="@+id/ll_normal_layout"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="vertical"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <LinearLayout
-            android:id="@+id/ll_jiejue_layout"
+            android:id="@+id/ll_normal_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:orientation="vertical"
-            android:visibility="gone"
-            tools:visibility="visible">
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
 
-            <TextView
-                android:id="@+id/tv_remark_2"
-                style="@style/normal_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:paddingBottom="5dp"
-                android:text="解决问题的简要描述"/>
-
-            <com.sdxxtop.guardianapp.ui.widget.NumberEditTextView
-                android:id="@+id/et_num_content_2"
+            <LinearLayout
+                android:id="@+id/ll_jiejue_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <TextView
+                    android:id="@+id/tv_remark_2"
+                    style="@style/normal_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="5dp"
+                    android:text="解决问题的简要描述" />
+
+                <com.sdxxtop.guardianapp.ui.widget.NumberEditTextView
+                    android:id="@+id/et_num_content_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <com.sdxxtop.guardianapp.ui.widget.CustomVideoImgSelectView
+                android:id="@+id/cvisv_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" />
+
+            <LinearLayout
+                android:id="@+id/ll_bottom"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    style="@style/line_style"
+                    android:layout_marginTop="15dp" />
+
+                <TextView
+                    android:id="@+id/tv_remark"
+                    style="@style/normal_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="5dp"
+                    android:text="备注" />
+
+                <com.sdxxtop.guardianapp.ui.widget.NumberEditTextView
+                    android:id="@+id/et_num_content1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <include
+                layout="@layout/item_solve_evaluate_window" />
 
         </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-        <com.sdxxtop.guardianapp.ui.widget.CustomVideoImgSelectView
-            android:id="@+id/cvisv_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"/>
-
-        <LinearLayout
-            android:id="@+id/ll_bottom"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <View
-                style="@style/line_style"
-                android:layout_marginTop="15dp"/>
-
-            <TextView
-                android:id="@+id/tv_remark"
-                style="@style/normal_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:paddingBottom="5dp"
-                android:text="备注"/>
-
-            <com.sdxxtop.guardianapp.ui.widget.NumberEditTextView
-                android:id="@+id/et_num_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <include layout="@layout/include_button"/>
+    <include layout="@layout/include_button" />
 
 </LinearLayout>

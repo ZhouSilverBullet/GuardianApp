@@ -1,77 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="TitleView">
-        <attr name="titleValue" format="string"/>
-        <attr name="titleColor" format="color"/>
-        <attr name="bgColor" format="color"/>
-        <attr name="rightTextValue" format="string"/>
-        <attr name="rightTextColor" format="color"/>
-        <attr name="leftLayoutIsShow" format="boolean"/>
-        <attr name="leftLayoutIconIsGray" format="boolean"/>
-        <attr name="fitsSystemWindows" format="boolean"/>
-        <attr name="clipToPadding" format="boolean"/>
+        <attr name="titleValue" format="string" />
+        <attr name="titleColor" format="color" />
+        <attr name="bgColor" format="color" />
+        <attr name="rightTextValue" format="string" />
+        <attr name="rightTextColor" format="color" />
+        <attr name="leftLayoutIsShow" format="boolean" />
+        <attr name="leftLayoutIconIsGray" format="boolean" />
+        <attr name="fitsSystemWindows" format="boolean" />
+        <attr name="clipToPadding" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="SideIndexBar">
-        <attr name="letterSize" format="dimension"/>
-        <attr name="letterColor" format="color"/>
-        <attr name="selectLetterColor" format="color"/>
-        <attr name="selectBackground" format="reference|color"/>
-        <attr name="isBoldface" format="boolean"/>
-        <attr name="isLetterCenter" format="boolean"/>
+        <attr name="letterSize" format="dimension" />
+        <attr name="letterColor" format="color" />
+        <attr name="selectLetterColor" format="color" />
+        <attr name="selectBackground" format="reference|color" />
+        <attr name="isBoldface" format="boolean" />
+        <attr name="isLetterCenter" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="TextAndEditView">
-        <attr name="taev_text_view" format="string"/>
-        <attr name="taev_edit_text_hint" format="string"/>
-        <attr name="taev_end_text_view" format="string"/>
-        <attr name="taev_line_is_show" format="boolean"/>
+        <attr name="taev_text_view" format="string" />
+        <attr name="taev_edit_text_hint" format="string" />
+        <attr name="taev_end_text_view" format="string" />
+        <attr name="taev_line_is_show" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="PieChartview">
-        <attr name="pie_title" format="string"/>
-        <attr name="tv_prev_is_show" format="boolean"/>
+        <attr name="pie_title" format="string" />
+        <attr name="tv_prev_is_show" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="TextAndTextView">
-        <attr name="tatv_text_view" format="string"/>
-        <attr name="tatv_text_right_value" format="string"/>
-        <attr name="tatv_text_right_hint_value" format="string"/>
-        <attr name="tatv_text_img_is_show" format="boolean"/>
-        <attr name="tatv_line_is_show" format="boolean"/>
-        <attr name="tatv_right_img_is_show" format="boolean"/>
-        <attr name="tatv_right_no_padingtx_is_show" format="boolean"/>
-        <attr name="tatv_right_no_padingtx_str" format="string"/>
-        <attr name="tatv_right_no_padingtx_color" format="color"/>
+        <attr name="tatv_text_view" format="string" />
+        <attr name="tatv_text_right_value" format="string" />
+        <attr name="tatv_text_right_hint_value" format="string" />
+        <attr name="tatv_text_img_is_show" format="boolean" />
+        <attr name="tatv_line_is_show" format="boolean" />
+        <attr name="tatv_right_img_is_show" format="boolean" />
+        <attr name="tatv_right_no_padingtx_is_show" format="boolean" />
+        <attr name="tatv_right_no_padingtx_str" format="string" />
+        <attr name="tatv_right_no_padingtx_color" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="Custom2TextView">
+        <attr name="left_text_size" format="dimension" />
+        <attr name="center_text_size" format="dimension" />
+        <attr name="right_text_size" format="dimension" />
+        <attr name="left_text_color" format="color" />
+        <attr name="center_text_color" format="color" />
+        <attr name="right_text_color" format="color" />
+        <attr name="left_text_value" format="string" />
+        <attr name="center_text_value" format="string" />
+        <attr name="right_text_value" format="string" />
     </declare-styleable>
 
     <!--支持圆角的TextView-->
     <declare-styleable name="RoundTextView">
-        <attr name="rtvBgColor" format="color"/>
-        <attr name="rtvBorderWidth" format="dimension"/>
-        <attr name="rtvBorderColor" format="dimension"/>
-        <attr name="rtvRadius" format="dimension"/>
+        <attr name="rtvBgColor" format="color" />
+        <attr name="rtvBorderWidth" format="dimension" />
+        <attr name="rtvBorderColor" format="dimension" />
+        <attr name="rtvRadius" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="TextAndCheckBoxView">
-        <attr name="tacbv_text_view" format="string"/>
-        <attr name="tacbv_text_right_value" format="string"/>
-        <attr name="tacbv_line_is_show" format="boolean"/>
+        <attr name="tacbv_text_view" format="string" />
+        <attr name="tacbv_text_right_value" format="string" />
+        <attr name="tacbv_line_is_show" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="ColorTrackView">
-        <attr name="ctvText" format="string"/>
-        <attr name="ctvText_size" format="dimension"/>
-        <attr name="ctvText_origin_color" format="color"/>
-        <attr name="ctvText_change_color" format="color"/>
-        <attr name="ctvProgress" format="float"/>
-        <attr name="ctvDirection" format="integer"/>
+        <attr name="ctvText" format="string" />
+        <attr name="ctvText_size" format="dimension" />
+        <attr name="ctvText_origin_color" format="color" />
+        <attr name="ctvText_change_color" format="color" />
+        <attr name="ctvProgress" format="float" />
+        <attr name="ctvDirection" format="integer" />
     </declare-styleable>
 
     <declare-styleable name="ImgAndTextLinearView">
-        <attr name="tv_task_title" format="string"/>
-        <attr name="tv_task_prefix" format="string"/>
-        <attr name="iv_icon" format="reference"/>
+        <attr name="tv_task_title" format="string" />
+        <attr name="tv_task_prefix" format="string" />
+        <attr name="iv_icon" format="reference" />
     </declare-styleable>
 
 
@@ -97,18 +109,18 @@
 
 
     <declare-styleable name="MZBannerView">
-        <attr name="open_mz_mode" format="boolean"/>
-        <attr name="canLoop" format="boolean"/>
-        <attr name="indicatorPaddingLeft" format="dimension"/>
-        <attr name="indicatorPaddingRight" format="dimension"/>
-        <attr name="indicatorPaddingTop" format="dimension"/>
-        <attr name="indicatorPaddingBottom" format="dimension"/>
+        <attr name="open_mz_mode" format="boolean" />
+        <attr name="canLoop" format="boolean" />
+        <attr name="indicatorPaddingLeft" format="dimension" />
+        <attr name="indicatorPaddingRight" format="dimension" />
+        <attr name="indicatorPaddingTop" format="dimension" />
+        <attr name="indicatorPaddingBottom" format="dimension" />
         <attr name="indicatorAlign">
-            <enum name="left" value="0"/>
-            <enum name="center" value="1"/>
-            <enum name="right" value="2"/>
+            <enum name="left" value="0" />
+            <enum name="center" value="1" />
+            <enum name="right" value="2" />
         </attr>
-        <attr name="middle_page_cover" format="boolean"/>
+        <attr name="middle_page_cover" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="ShadowLayout">

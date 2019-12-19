@@ -2,7 +2,7 @@ package com.sdxxtop.guardianapp.presenter;
 
 import com.sdxxtop.guardianapp.base.RxPresenter;
 import com.sdxxtop.guardianapp.model.bean.EventReadIndexBean;
-import com.sdxxtop.guardianapp.model.bean.EventReadIndexBean_new;
+import com.sdxxtop.guardianapp.model.bean.EventStreamDetailBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
 import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
 import com.sdxxtop.guardianapp.model.http.net.ImageParams;
@@ -48,10 +48,10 @@ public class EventReportDetailPresenter extends RxPresenter<EventReportDetailCon
     public void loadNewData(String eventId) {
         Params params = new Params();
         params.put("ei", eventId);
-        Observable<RequestBean<EventReadIndexBean_new>> observable = getEnvirApi().postNewEventRead(params.getData());
-        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EventReadIndexBean_new>() {
+        Observable<RequestBean<EventStreamDetailBean>> observable = getEnvirApi().postNewEventRead(params.getData());
+        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EventStreamDetailBean>() {
             @Override
-            public void onSuccess(EventReadIndexBean_new bean) {
+            public void onSuccess(EventStreamDetailBean bean) {
                 if (mView != null) {
                     mView.readNewData(bean);
                 }

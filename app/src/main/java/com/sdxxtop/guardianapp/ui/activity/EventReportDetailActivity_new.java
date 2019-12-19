@@ -11,23 +11,22 @@ import android.widget.TextView;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.model.bean.EventReadIndexBean;
-import com.sdxxtop.guardianapp.model.bean.EventReadIndexBean_new;
+import com.sdxxtop.guardianapp.model.bean.EventStreamDetailBean;
 import com.sdxxtop.guardianapp.model.bean.MediaBean;
 import com.sdxxtop.guardianapp.presenter.EventReportDetailPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.EventReportDetailContract;
+import com.sdxxtop.guardianapp.ui.activity.custom_event.Custom2TextView;
 import com.sdxxtop.guardianapp.ui.adapter.PatrolDetailImgAdapter;
 import com.sdxxtop.guardianapp.ui.pop.ERCheckResultWindow;
 import com.sdxxtop.guardianapp.ui.pop.SelectMapPopView;
 import com.sdxxtop.guardianapp.ui.pop.SolveEvaluateWindow;
+import com.sdxxtop.guardianapp.ui.widget.BottomStyleDialog;
 import com.sdxxtop.guardianapp.ui.widget.CustomProgressBar;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
 import com.sdxxtop.guardianapp.utils.Date2Util;
 import com.sdxxtop.guardianapp.utils.SkipMapUtils;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.Nullable;
@@ -45,30 +44,8 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
     CustomProgressBar cpbProgress;
     @BindView(R.id.rl_progress)
     RelativeLayout rlProgress;
-    @BindView(R.id.tv_content_title)
-    TextView tvContentTitle;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    @BindView(R.id.tv_time)
-    TextView tvTime;
-    @BindView(R.id.rl_time)
-    RelativeLayout rlTime;
-    @BindView(R.id.tv_check_method)
-    TextView tvCheckMethod;
-    @BindView(R.id.rl_check_method)
-    RelativeLayout rlCheckMethod;
-    @BindView(R.id.tv_happen)
-    TextView tvHappen;
-    @BindView(R.id.rl_happen)
-    RelativeLayout rlHappen;
-    @BindView(R.id.tv_location_desc)
-    TextView tvLocationDesc;
-    @BindView(R.id.tv_report_path)
-    TextView tvReportPath;
-    @BindView(R.id.rl_report_path)
-    RelativeLayout rlReportPath;
-    @BindView(R.id.tv_description)
-    TextView tvDescription;
     @BindView(R.id.btn_check_faile)
     Button btnCheckFaile;
     @BindView(R.id.btn_check_success)
@@ -77,6 +54,30 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
     View popwindow_bg;
     @BindView(R.id.tv_title)
     TitleView tvTitle;
+
+    /************ 统一的头部 ***************/
+    @BindView(R.id.c2Tx_title)
+    Custom2TextView c2TxTitle;
+    @BindView(R.id.c2Tx_report_name)
+    Custom2TextView c2TxReportName;
+    @BindView(R.id.c2Tx_report_phone)
+    Custom2TextView c2TxReportPhone;
+    @BindView(R.id.c2Tx_report_part)
+    Custom2TextView c2TxReportPart;
+    @BindView(R.id.c2Tx_report_time)
+    Custom2TextView c2TxReportTime;
+    @BindView(R.id.c2Tx_report_find_type)
+    Custom2TextView c2TxReportFindType;
+    @BindView(R.id.c2Tx_report_find_place)
+    Custom2TextView c2TxReportFindPlace;
+    @BindView(R.id.c2Tx_report_duty_part)
+    Custom2TextView c2TxReportDutyPart;
+    @BindView(R.id.c2Tx_report_event_desc)
+    Custom2TextView c2TxReportEventDesc;
+    @BindView(R.id.c2Tx_report_position_desc)
+    Custom2TextView c2TxReportPositionDesc;
+    @BindView(R.id.c2Tx_report_event_category)
+    Custom2TextView c2TxReportEventCategory;
 
     /************ 事件反馈 ***************/
     /***联办***/
@@ -144,8 +145,6 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
     TextView tvRlTime;
 
     /***认领结果***/
-    @BindView(R.id.col_rl_complete)
-    ConstraintLayout colRlComplete;
     @BindView(R.id.tv_rl_pingjia_status)
     TextView tvRlPingjiaStatus;
     @BindView(R.id.tv_rl_pingjia_desc)
@@ -158,6 +157,10 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
     TextView tvBhTime;
     @BindView(R.id.tv_bh_result)
     TextView tvBhResult;
+
+    /***操作按钮***/
+    @BindView(R.id.tvBtnClick)
+    TextView tvBtnClick;
 
 
     //用于提交
@@ -175,6 +178,9 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
     //先反馈问题
     private ERCheckResultWindow erCheckResultWindow;
     private SolveEvaluateWindow solveEvaluateWindow;
+    /******弹框数据*******/
+    private BottomStyleDialog dialog;  // 操作弹框
+    private ArrayList<String> list = new ArrayList<>();
 
     @Override
     protected void initInject() {
@@ -214,9 +220,20 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
 
 
         tvTitle.getTvRight().setOnClickListener(v -> {
-            Intent intent = new Intent(EventReportDetailActivity_new.this,RecordLogActivity.class);
-            intent.putExtra("eventId",mEventId);
+            Intent intent = new Intent(EventReportDetailActivity_new.this, RecordLogActivity.class);
+            intent.putExtra("eventId", mEventId);
             startActivity(intent);
+        });
+
+        dialog = new BottomStyleDialog(EventReportDetailActivity_new.this, mEventId, popwindow_bg);
+        tvBtnClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (dialog == null) {
+                    dialog = new BottomStyleDialog(EventReportDetailActivity_new.this, mEventId, popwindow_bg);
+                }
+                dialog.show();
+            }
         });
     }
 
@@ -269,98 +286,65 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
     }
 
     @Override
-    public void readNewData(EventReadIndexBean_new bean) {
+    public void readNewData(EventStreamDetailBean bean) {
         address = bean.place;
-        longitude = bean.longitude;
+        longitude = "";
         eventStatus = bean.status;
-        isClaim = bean.is_claim;
+        isClaim = bean.is_claim_auth;
         isClaimAuth = bean.is_claim_auth;
-        isFinish = bean.is_finish;
+//        isFinish = bean.is_finish;
         isModify = bean.is_modify;
-        //显示进度条状态
+        //操作权限
+        dialog.setData(bean);
+
 
         if (!isPartEvent) {
-            showBottomButton(bean);  // 底部按钮显示隐藏
+            showBottomButton(bean);
         }
         collectHeadData(bean);   // 统一数据管理
 
         /********* 流转 **********/
         if (bean.turn != null) {
-            EventReadIndexBean_new.TurnBean turn = bean.turn;
+            EventStreamDetailBean.TurnBean turn = bean.turn;
             setTurnData(turn);
         }
 
         /********* 联办 **********/
         if (bean.union != null) {
-            EventReadIndexBean_new.UnionBean union = bean.union;
+            EventStreamDetailBean.UnionBean union = bean.union;
             setUnionData(union);
         }
 
         /********* 认领 **********/
         if (bean.send != null) {
-            EventReadIndexBean_new.ExtraDateBean pfItem = bean.extra_date;
-            setRlData(pfItem);
-        }
-
-        /********* 评价 *********/
-        if (bean.claim_completed != null) {
-            EventReadIndexBean_new.ClaimCompletedBean rlPingjia = bean.claim_completed;
-            setRlEvaluate(rlPingjia);
+            EventStreamDetailBean.ClaimBean renling = bean.claim;
+            setRlData(renling);
         }
 
         /********* 派发 **********/
         if (bean.send != null) {
-            EventReadIndexBean_new.SendBean pfItem = bean.send;
+            EventStreamDetailBean.SendBean pfItem = bean.send;
             setPfData(pfItem);
         }
 
         /********* 结果 **********/
         if (bean.solve != null) {
-            EventReadIndexBean_new.SolveBean solve = bean.solve;
+            EventStreamDetailBean.SolveBean solve = bean.solve;
             setSolveData(solve);
         }
 
         /********* 验收 **********/
-        if (bean.completed != null) {
-            EventReadIndexBean_new.CompletedBean completed = bean.completed;
-            setCompleted(completed);
+        if (bean.check != null) {
+            EventStreamDetailBean.CheckBean checkBean = bean.check;
+            setCompleted(checkBean);
         }
 
-        /********* 驳回 **********/
-        if (bean.rifiuta != null) {
-            EventReadIndexBean_new.RifiutaBean rifiuta = bean.rifiuta;
-            if (!TextUtils.isEmpty(rifiuta.operate_time)) {
-                colBh.setVisibility(View.VISIBLE);
-                tvBhTime.setText("驳回时间：" + rifiuta.operate_time);
-                tvBhResult.setText("驳回原因：" + rifiuta.extra);
-            } else {
-                colBh.setVisibility(View.GONE);
-            }
-        }
-
-        /**********  无法解决  ************/
-        if (bean.is_claim == 1) {   // 认领状态下不显示进度条
+        /**********  认领状态下不显示进度条  ************/
+        if (bean.is_claim == 1) {
             rlProgress.setVisibility(View.GONE);
             return;
-        }
-        if (bean.settle_status == 2 && bean.status == 4) {
-            cpbProgress.setStatus(bean.status, getTime(bean));
-            cpbProgress.setWFJJYWCValue();
-        } else if (bean.settle_status == 2 && bean.status != 5) {
-            String parfaTime = "";
-            String wufachuli = "";
-            if (bean.send != null) {
-                parfaTime = bean.send.send_time;
-            }
-            if (bean.solve != null) {
-                wufachuli = bean.solve.operate_time;
-            }
-            if (bean.turn != null && bean.union != null) {
-
-            }
-            cpbProgress.setNoSolveValue2(bean.add_time, parfaTime, wufachuli);
         } else {
-            cpbProgress.setStatus(bean.status, getTime(bean));
+            rlProgress.setVisibility(View.VISIBLE);
         }
     }
 
@@ -369,12 +353,15 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
      *
      * @param data
      */
-    private void setTurnData(EventReadIndexBean_new.TurnBean data) {
-        if (!TextUtils.isEmpty(data.operate_time)) {
+    private void setTurnData(EventStreamDetailBean.TurnBean data) {
+        boolean a = isTextViewShow(tvLzTime, data.operate_time, "流转时间：");
+        boolean b = isTextViewShow(tvLzPart, data.part_name, "流转部门：");
+        boolean c = isTextViewShow(tvLzCause, data.extra, "流转原因：");
+        if (a || b || c) {
             colLz.setVisibility(View.VISIBLE);
-            tvLzTime.setText("流转时间：" + data.operate_time);
-            tvLzPart.setText("流转部门：" + data.part_name);
-            tvLzCause.setText("流转原因：" + data.extra);
+//            tvLzTime.setText("流转时间：" + data.operate_time);
+//            tvLzPart.setText("流转部门：" + data.part_name);
+//            tvLzCause.setText("流转原因：" + data.extra);
         } else {
             colLz.setVisibility(View.GONE);
         }
@@ -385,12 +372,15 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
      *
      * @param data
      */
-    private void setUnionData(EventReadIndexBean_new.UnionBean data) {
-        if (!TextUtils.isEmpty(data.add_time)) {
+    private void setUnionData(EventStreamDetailBean.UnionBean data) {
+        boolean a = isTextViewShow(tvLbTime, "", "联办时间：");
+        boolean b = isTextViewShow(tvLbPart, data.part_name, "联办部门：");
+        boolean c = isTextViewShow(tvLbTitle, data.extra, "联办原因：");
+        if (a || b || c) {
             colLb.setVisibility(View.VISIBLE);
-            tvLbTime.setText("联办时间：" + data.add_time);
-            tvLbPart.setText("联办部门：" + data.part_name);
-            tvLbTitle.setText("联办原因：" + data.extra);
+//            tvLbTime.setText("联办时间：" + data.add_time);
+//            tvLbPart.setText("联办部门：" + data.part_name);
+//            tvLbTitle.setText("联办原因：" + data.extra);
         } else {
             colLb.setVisibility(View.GONE);
         }
@@ -401,30 +391,21 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
      *
      * @param data
      */
-    private void setCompleted(EventReadIndexBean_new.CompletedBean data) {
-        if (!TextUtils.isEmpty(data.operate_time)) {
+    private void setCompleted(EventStreamDetailBean.CheckBean data) {
+        boolean a = isTextViewShow(tvYsTime, data.check_time, "验收时间：");
+        boolean b = isTextViewShow(tvYsResult, eventStatus == 4 ? "验收通过" : "验收不通过", "验收结果：");
+        boolean c = isTextViewShow(tvYsBeizhu, data.extra, "备注：");
+        boolean d = isTextViewShow(tvRlPingjiaStatus, data.appraise, "评价情况：");
+        boolean e = isTextViewShow(tvRlPingjiaDesc, data.appExtra, "评价描述：");
+
+        if (a || c || !TextUtils.isEmpty(data.img) || !TextUtils.isEmpty(data.video) || d || e) {
             colYs.setVisibility(View.VISIBLE);
-            tvYsTime.setText("验收时间：" + data.operate_time);
-            tvYsResult.setText("验收结果：" + (data.status == 4 ? "验收通过" : "验收不通过"));
-            tvYsBeizhu.setText("备注：" + data.extra);
+//            tvYsTime.setText("验收时间：" + data.operate_time);
+//            tvYsResult.setText("验收结果：" + (data.status == 4 ? "验收通过" : "验收不通过"));
+//            tvYsBeizhu.setText("备注：" + data.extra);
             bandImgAndVideo(data.img, data.video, recyclerYanshou, yanshouAdapter);
         } else {
             colYs.setVisibility(View.GONE);
-        }
-    }
-
-    /**
-     * 认领评价
-     *
-     * @param data
-     */
-    private void setRlEvaluate(EventReadIndexBean_new.ClaimCompletedBean data) {
-        if (!TextUtils.isEmpty(data.operate_time)) {
-            colRlComplete.setVisibility(View.VISIBLE);
-            tvRlPingjiaStatus.setText("评价详情：" + data.getAppraiseStr());
-            tvRlPingjiaDesc.setText("评价详情：" + data.extra);
-        } else {
-            colRlComplete.setVisibility(View.GONE);
         }
     }
 
@@ -433,12 +414,14 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
      *
      * @param data
      */
-    private void setSolveData(EventReadIndexBean_new.SolveBean data) {
-        if (!TextUtils.isEmpty(data.operate_time)) {
+    private void setSolveData(EventStreamDetailBean.SolveBean data) {
+        boolean a = isTextViewShow(tvJjTime, data.settle_time, "解决反馈时间：");
+        boolean b = isTextViewShow(tvJjDesc, data.settle_reason, "事件问题描述：");
+        if (a || b || !TextUtils.isEmpty(data.finish_img) || !TextUtils.isEmpty(data.finish_video)) {
             colJj.setVisibility(View.VISIBLE);
-            tvJjTime.setText("解决反馈时间：" + data.operate_time);
-            tvJjDesc.setText("事件问题描述：" + data.extra);
-            bandImgAndVideo(data.img, data.video, rvJjRv, rvJjAdapter);
+//            tvJjTime.setText("解决反馈时间：" + data.operate_time);
+//            tvJjDesc.setText("事件问题描述：" + data.extra);
+            bandImgAndVideo(data.finish_img, data.finish_video, rvJjRv, rvJjAdapter);
         } else {
             colJj.setVisibility(View.GONE);
         }
@@ -449,12 +432,15 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
      *
      * @param data
      */
-    private void setRlData(EventReadIndexBean_new.ExtraDateBean data) {
-        if (!TextUtils.isEmpty(data.send_time)) {
+    private void setRlData(EventStreamDetailBean.ClaimBean data) {
+        boolean a = isTextViewShow(tvRlStatus, getStatus(data.status), "状态：");
+        boolean b = isTextViewShow(tvRlName, data.send_name, "认领人：");
+        boolean c = isTextViewShow(tvRlTime, data.send_time, "认领时间：");
+        if (b || c) {
             colRl.setVisibility(View.VISIBLE);
-            tvRlStatus.setText("状态：" + getStatus(data.status));
-            tvRlName.setText("认领人：" + data.name);
-            tvRlTime.setText("认领时间：" + data.send_time);
+//            tvRlStatus.setText("状态：" + getStatus(data.status));
+//            tvRlName.setText("认领人：" + data.name);
+//            tvRlTime.setText("认领时间：" + data.send_time);
         } else {
             colRl.setVisibility(View.GONE);
         }
@@ -463,21 +449,25 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
     /**
      * 设置派发数据
      *
-     * @param pfItem
+     * @param data
      */
-    private void setPfData(EventReadIndexBean_new.SendBean pfItem) {
-        if (!TextUtils.isEmpty(pfItem.send_time)) {
+    private void setPfData(EventStreamDetailBean.SendBean data) {
+        boolean a = isTextViewShow(tvPfTime, data.send_time, "派发时间：");
+        boolean c = isTextViewShow(tvPfName, "派发人：指挥中心", "");
+        boolean b = isTextViewShow(tvPfEndTime, data.end_date, "截止解决日期：");
+        boolean d = isTextViewShow(tvPfImportance, data.important_type, "事件重要性：");
+        if (a || b || d) {
             colPf.setVisibility(View.VISIBLE);
-            tvPfTime.setText("派发时间：" + pfItem.send_time);
-            tvPfName.setText("派发人：指挥中心");
-            tvPfEndTime.setText("截止解决日期：" + pfItem.operate_date);
-            tvPfImportance.setText("事件重要性：" + getImportanceStr(pfItem.important_type));
+//            tvPfTime.setText("派发时间：" + data.send_time);
+//            tvPfEndTime.setText("截止解决日期：" + data.operate_date);
+//            tvPfName.setText("派发人：指挥中心");
+//            tvPfImportance.setText("事件重要性：" + getImportanceStr(data.important_type));
         } else {
             colPf.setVisibility(View.GONE);
         }
     }
 
-    private List<String> getTime(EventReadIndexBean_new bean) {
+    private List<String> getTime(EventStreamDetailBean bean) {
         List<String> time = new ArrayList<>();
         switch (bean.status) {
             case 1:
@@ -486,7 +476,7 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
             case 2:
                 time.add(bean.add_time);
                 if (bean.send != null) {
-                    time.add(bean.send.send_time);
+                    time.add((TextUtils.isEmpty(bean.send.send_time) && bean.claim.status == 4) ? bean.claim.send_time : bean.send.send_time);
                 } else {
                     time.add("");
                 }
@@ -494,12 +484,12 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
             case 3:
                 time.add(bean.add_time);
                 if (bean.send != null) {
-                    time.add(bean.send.send_time);
+                    time.add((TextUtils.isEmpty(bean.send.send_time) && bean.claim.status == 4) ? bean.claim.send_time : bean.send.send_time);
                 } else {
                     time.add("");
                 }
                 if (bean.solve != null) {
-                    time.add(bean.solve.operate_time);
+                    time.add(bean.solve.settle_time);
                 } else {
                     time.add("");
                 }
@@ -507,17 +497,17 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
             case 4:
                 time.add(bean.add_time);
                 if (bean.send != null) {
-                    time.add(bean.send.send_time);
+                    time.add((TextUtils.isEmpty(bean.send.send_time) && bean.claim.status == 4) ? bean.claim.send_time : bean.send.send_time);
                 } else {
                     time.add("");
                 }
                 if (bean.solve != null) {
-                    time.add(bean.solve.operate_time);
+                    time.add(bean.solve.settle_time);
                 } else {
                     time.add("");
                 }
-                if (bean.completed != null) {
-                    time.add(bean.completed.operate_time);
+                if (bean.check != null) {
+                    time.add(bean.check.check_time);
                 } else {
                     time.add("");
                 }
@@ -525,17 +515,17 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
             case 5:
                 time.add(bean.add_time);
                 if (bean.send != null) {
-                    time.add(bean.send.send_time);
+                    time.add((TextUtils.isEmpty(bean.send.send_time) && bean.claim.status == 4) ? bean.claim.send_time : bean.send.send_time);
                 } else {
                     time.add("");
                 }
                 if (bean.solve != null) {
-                    time.add(bean.solve.operate_time);
+                    time.add(bean.solve.settle_time);
                 } else {
                     time.add("");
                 }
-                if (bean.completed != null) {
-                    time.add(bean.completed.operate_time);
+                if (bean.check != null) {
+                    time.add(bean.check.check_time);
                 } else {
                     time.add("");
                 }
@@ -546,145 +536,25 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
     }
 
 
-    /******** 头部统一显示数据 **********/
-    private void collectHeadData(EventReadIndexBean_new bean) {
-        //图片加载
+    /******** 事件流 头部统一显示数据 **********/
+    private void collectHeadData(EventStreamDetailBean bean) {
         bandImgAndVideo(bean.img, bean.video, recyclerView, mAdapter);
-        tvContentTitle.setText(bean.title);
-        tvTime.setText(Date2Util.handleTime(bean.add_time));
-//        handlePatrol(bean.patrol_type);
-//        tvCheckMethod.setText(bean.patrol_name);
-        tvCheckMethod.setText("巡逻");
-        tvHappen.setText(bean.place);
-        tvReportPath.setText(bean.part_name);
-        tvDescription.setText(new StringBuilder().append("事件简要描述：").append(bean.content));
-        //定位补充描述
-        if (TextUtils.isEmpty(bean.supplement)) {
-            tvLocationDesc.setVisibility(View.GONE);
-        } else {
-            tvLocationDesc.setVisibility(View.VISIBLE);
-            tvLocationDesc.setText("定位补充描述: " + bean.supplement);
-        }
-    }
+        checkTextView(c2TxTitle.getTvRight(), bean.title, c2TxTitle);
+        checkTextView(c2TxReportName.getTvRight(), bean.username, c2TxReportName);
+        checkTextView(c2TxReportPhone.getTvRight(), bean.mobile, c2TxReportPhone);
+        checkTextView(c2TxReportPart.getTvRight(), bean.part_name, c2TxReportPart);
+        checkTextView(c2TxReportTime.getTvRight(), Date2Util.handleTime(bean.add_time), c2TxReportTime);
+        checkTextView(c2TxReportFindType.getTvRight(), "巡逻", c2TxReportFindType);
+        checkTextView(c2TxReportFindPlace.getTvRight(), bean.place, c2TxReportFindPlace);
+        checkTextView(c2TxReportDutyPart.getTvRight(), bean.path_name, c2TxReportDutyPart);
+        checkTextView(c2TxReportEventDesc.getTvLeft(), TextUtils.isEmpty(bean.content) ? "" :
+                new StringBuilder().append("事件简要描述：").append(bean.content).toString(), c2TxReportEventDesc);
+        checkTextView(c2TxReportPositionDesc.getTvLeft(), TextUtils.isEmpty(bean.supplement) ? "" :
+                new StringBuilder().append("定位补充描述：").append(bean.supplement).toString(), c2TxReportPositionDesc);
+        checkTextView(c2TxReportEventCategory.getTvRight(), bean.category_name, c2TxReportEventCategory);
 
-    /*** 底部按钮显示隐藏********/
-    private void showBottomButton(EventReadIndexBean_new bean) {
-        if (bean.is_claim_auth == 1 && bean.status == 1) {
-            btnCheckFaile.setTextColor(getResources().getColor(R.color.green));
-            btnCheckFaile.setVisibility(View.VISIBLE);
-            btnCheckFaile.setText("流转事件");
-            btnCheckFaile.setBackgroundResource(R.drawable.btn_white_solid_bg);
-
-            btnCheckSuccess.setTextColor(getResources().getColor(R.color.white));
-            btnCheckSuccess.setVisibility(View.VISIBLE);
-            btnCheckSuccess.setText("认领");
-            btnCheckSuccess.setBackgroundResource(R.drawable.btn_green_solid_bg);
-        } else {
-            //1.是已经解决 2.未解决
-            if (bean.is_finish == 1) {
-                if (bean.is_claim == 1) {
-                    btnCheckFaile.setVisibility(View.GONE);
-
-                    btnCheckSuccess.setTextColor(getResources().getColor(R.color.white));
-                    btnCheckSuccess.setVisibility(View.VISIBLE);
-                    btnCheckSuccess.setText("解决");
-                    btnCheckSuccess.setBackgroundResource(R.drawable.btn_green_solid_bg);
-                    return;
-                }
-                switch (bean.status) {
-                    case 2:
-                        btnCheckFaile.setTextColor(getResources().getColor(R.color.green));
-                        btnCheckFaile.setVisibility(View.VISIBLE);
-                        btnCheckFaile.setText("无法解决");
-                        btnCheckFaile.setBackgroundResource(R.drawable.btn_white_solid_bg);
-
-                        btnCheckSuccess.setTextColor(getResources().getColor(R.color.white));
-                        btnCheckSuccess.setVisibility(View.VISIBLE);
-                        btnCheckSuccess.setText("已解决");
-                        btnCheckSuccess.setBackgroundResource(R.drawable.btn_green_solid_bg);
-                        break;
-                }
-                return;
-            } else {
-                btnCheckFaile.setVisibility(View.GONE);
-                btnCheckSuccess.setVisibility(View.GONE);
-            }
-
-            //是否有验收事件权限 1:有 2:否
-            if (bean.is_modify == 1) {
-                if (bean.is_claim == 1) {  // 评价
-                    btnCheckFaile.setVisibility(View.GONE);
-
-                    btnCheckSuccess.setTextColor(getResources().getColor(R.color.white));
-                    btnCheckSuccess.setVisibility(View.VISIBLE);
-                    btnCheckSuccess.setText("评价");
-                    btnCheckSuccess.setBackgroundResource(R.drawable.btn_green_solid_bg);
-                    return;
-                }
-                switch (bean.status) {
-                    case 3:
-                        btnCheckFaile.setTextColor(getResources().getColor(R.color.white));
-                        btnCheckFaile.setVisibility(View.VISIBLE);
-                        btnCheckFaile.setText("验收通过");
-                        btnCheckFaile.setBackgroundResource(R.drawable.btn_green_solid_bg);
-
-                        btnCheckSuccess.setTextColor(getResources().getColor(R.color.green));
-                        btnCheckSuccess.setVisibility(View.VISIBLE);
-                        btnCheckSuccess.setText("验收不通过");
-                        btnCheckSuccess.setBackgroundResource(R.drawable.btn_white_solid_bg);
-                        break;
-                }
-            } else {
-                btnCheckFaile.setVisibility(View.GONE);
-                btnCheckSuccess.setVisibility(View.GONE);
-            }
-        }
-    }
-
-    /**
-     * 获取重要性描述
-     * 1:低 2:中 3:高
-     *
-     * @param status
-     * @return
-     */
-    private String getImportanceStr(int status) {
-        String str = "";
-        switch (status) {
-            case 1:
-                str = "低";
-                break;
-            case 2:
-                str = "中";
-                break;
-            case 3:
-                str = "高";
-                break;
-            default:
-                str = "低";
-                break;
-        }
-
-        return str;
-    }
-
-    private void handlePatrol(int patrolType) {
-        String strPatrol;
-        switch (patrolType) {
-            case 2:
-                strPatrol = "化验";
-                break;
-            case 3:
-                strPatrol = "感应器报警";
-                break;
-            case 4:
-                strPatrol = "他人反应";
-                break;
-            default:
-                strPatrol = "巡逻";
-                break;
-        }
-        tvCheckMethod.setText("巡逻");
+        getTime(bean);
+        cpbProgress.setStatus(bean.status, getTime(bean));
     }
 
     private String getStatus(int status) {
@@ -706,6 +576,13 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
         return strStatus;
     }
 
+    /**
+     * 判断 图片/视频 资源是否有
+     * @param img
+     * @param vedio
+     * @param recyclerView
+     * @param adapter
+     */
     private void bandImgAndVideo(String img, String vedio, RecyclerView recyclerView, PatrolDetailImgAdapter adapter) {
         List<MediaBean> list = new ArrayList<>();
         if (!TextUtils.isEmpty(vedio)) {
@@ -726,23 +603,6 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
         }
     }
 
-    private String handleShortTime(String time) {
-        if (TextUtils.isEmpty(time)) {
-            return "";
-        }
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM/dd");
-        try {
-            Date date = sdf.parse(time);
-            return sdf2.format(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return "";
-    }
-
     public static void startDetailActivity(Context context, String eventId) {
         Intent intent = new Intent(context, EventReportDetailActivity_new.class);
         intent.putExtra("eventId", eventId);
@@ -757,7 +617,11 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
         }
     }
 
-    @OnClick({R.id.btn_check_success, R.id.rl_happen, R.id.btn_check_faile})
+    public void renling() {
+        mPresenter.failed(mEventId, "", 2);
+    }
+
+    @OnClick({R.id.btn_check_success, R.id.c2Tx_report_find_place, R.id.btn_check_faile})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_check_success:  //右边的按钮点击事件
@@ -811,7 +675,7 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
                     startActivityForResult(intent, 321);
                 }
                 break;
-            case R.id.rl_happen:
+            case R.id.c2Tx_report_find_place:
                 if (TextUtils.isEmpty(address)) {
                     return;
                 }
@@ -826,8 +690,6 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
                     showToast("经纬度不合法");
                     return;
                 }
-
-
                 SelectMapPopView selectMapPopView =
                         new SelectMapPopView(this, findViewById(R.id.ll_root_layout), "高德地图（推荐）", "百度地图");
                 selectMapPopView.setSelectMapClickListener(new SelectMapPopView.SelectMapClickListener() {
@@ -841,8 +703,52 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
                         SkipMapUtils.goToBaiduMap3(mContext, address, split[1], split[0]);
                     }
                 });
-
                 break;
         }
+    }
+
+    /**
+     * 检查是否隐藏布局
+     *
+     * @param tx  TextView
+     * @param str 数据
+     */
+    protected void checkTextView(TextView tx, String str, Custom2TextView c2tv) {
+        if (TextUtils.isEmpty(str)) {
+            c2tv.setVisibility(View.GONE);
+        } else {
+            tx.setText(str);
+            c2tv.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
+     * 检查TextView是否显示
+     *
+     * @param tx
+     * @param str
+     * @return
+     */
+    protected boolean isTextViewShow(TextView tx, String str, String startAppend) {
+        if (TextUtils.isEmpty(str)) {
+            tx.setVisibility(View.GONE);
+            return false;
+        } else {
+            tx.setText(startAppend + str);
+            tx.setVisibility(View.VISIBLE);
+            return true;
+        }
+    }
+
+    public void showBottomButton(EventStreamDetailBean bean) {
+        list.clear();
+        if (bean.is_claim_auth == 1) list.add("认领");
+        if (bean.is_Operate_auth == 1) list.add("流转");
+        if (bean.unable_solve == 1) list.add("无法解决");
+        if (bean.is_solve == 1) list.add("解决");
+        if (bean.is_modify == 1) list.add("验收通过");
+        if (bean.unable_check == 1) list.add("验收不通过");
+        dialog.setData(list);
+        tvBtnClick.setVisibility(list.size() == 0 ? View.GONE : View.VISIBLE);
     }
 }
