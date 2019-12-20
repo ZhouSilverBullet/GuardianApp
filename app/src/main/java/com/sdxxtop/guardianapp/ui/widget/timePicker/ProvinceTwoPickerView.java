@@ -144,10 +144,14 @@ public class ProvinceTwoPickerView {
 
 
     public void show() {
-        if (isLoaded && mData != null && mData.size() > 0) {
-            showPickerView();
+        if (isLoaded) {
+            if (mData != null && mData.size() > 0) {
+                showPickerView();
+            } else {
+                UIUtils.showToast("暂无数据");
+            }
         } else {
-            UIUtils.showToast(mData.size() == 0 ? "暂无数据" : "数据未加载完成,稍后再试...");
+            UIUtils.showToast("数据未加载完成,稍后再试...");
         }
     }
 
@@ -236,6 +240,7 @@ public class ProvinceTwoPickerView {
 
     public interface OnConfirmClick {
         void confirmClick(String resultTx, int resultId);
+
     }
 
     private OnConfirmClick mlistener;

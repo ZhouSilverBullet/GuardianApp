@@ -1,6 +1,7 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -101,6 +102,8 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     CheckBox cbIntoVoice;
     @BindView(R.id.tatv_end_time)
     TextAndTextView tatvEndTime;
+    @BindView(R.id.root_layout)
+    LinearLayout rootLayout;
 
 
     private String lonLng;    //经纬度
@@ -195,7 +198,12 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
         mTitleView.getTvRight().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, EventReportListActivity.class);
+                Intent intent = null;
+                if (streamId == 2) {
+                    intent = new Intent(mContext, EventDiscretionListActivity.class);
+                } else {
+                    intent = new Intent(mContext, EventReportListActivity.class);
+                }
                 startActivity(intent);
             }
         });
@@ -223,13 +231,20 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
         if (getIntent() != null) {
             streamId = getIntent().getIntExtra("streamId", 1);
         }
+        if (streamId == 2) {
+            mTitleView.setTitleValue("巡查处理");
+            mTitleView.getTvRight().setText("我的处理");
+            rootLayout.setBackgroundColor(Color.parseColor("#4B7902"));
+            mTitleView.setBgColor(Color.parseColor("#4B7902"));
+            btnPush.setBackgroundColor(Color.parseColor("#4B7902"));
+        }
     }
 
     @Override
     protected void initData() {
         super.initData();
 //        mPresenter.searchTitle();
-        mPresenter.loadData(1);
+        mPresenter.loadData(streamId);
     }
 
     private void showReportConfirmDialog() {
@@ -261,7 +276,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
         if (streamEventPermission == null) return;
 
         if (streamEventPermission.reportImg == 1 && (imagePushPath.size() + vedioPushPath.size()) < minSelectImg) {
-            showToast("需要提供"+ minSelectImg+"个以上图片或者视频");
+            showToast("需要提供" + minSelectImg + "个以上图片或者视频");
             return;
         }
 
@@ -297,11 +312,19 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
             showToast("请填写事件描述内容");
             return;
         }
+        String endTime = tatvEndTime.getRightTVString();
+        if (streamEventPermission.basicReview == 1 && cbIntoVoice.isChecked()) {
+            if (TextUtils.isEmpty(endTime)) {
+                showToast("请选择整改时效");
+                return;
+            }
+        }
 
         mPresenter.pushReport(
                 title, pathType, place, lonLng, editValue, imagePushPath,
                 vedioPushPath, netContentPosition.getEditValue(), category_id,
-                streamEventPermission.basicReview == 2 ? 0 : (cbIntoVoice.isChecked() ? 1 : 2)  // 是否需要复查,需要选中为1,不选中2
+                streamEventPermission.basicReview == 2 ? 0 : (cbIntoVoice.isChecked() ? 1 : 2),  // 是否需要复查,需要选中为1,不选中2
+                endTime
                 , streamId);
     }
 
@@ -495,7 +518,6 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
             reportPhone.getTextRightTextNoPadding().setText(user.mobile);
             reportPart.getTextRightTextNoPadding().setText(user.part_name);
         }
-
 
         //分类信息
         List<EventStreamReportBean.CategoryBean> category = bean.category;

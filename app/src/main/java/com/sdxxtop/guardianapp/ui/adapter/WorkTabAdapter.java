@@ -53,10 +53,10 @@ import static com.sdxxtop.guardianapp.model.http.net.RetrofitHelper.getEnvirApi;
 public class WorkTabAdapter extends BaseAdapter {
 
     private int[] imgRes = {R.drawable.icon_shijian_work, R.drawable.icon_shuju_work, R.drawable.icon_qiye_work,
-            R.drawable.icon_bumen_work, R.drawable.icon_shangbao_work, R.drawable.icon_xuncha_work, R.drawable.icon_cus_evnet_work};
+            R.drawable.icon_bumen_work, R.drawable.icon_shangbao_work, R.drawable.icon_xuncha_work};
     //    private int[] imgRes = {R.drawable.icon_shijian_work, R.drawable.icon_shuju_work, R.drawable.icon_qiye_work,
 //            R.drawable.icon_bumen_work, R.drawable.icon_shangbao_work, R.drawable.icon_xuncha_work, R.drawable.icon_bumen_work};
-    private String[] titleRes = {"事件统计", "工作数据", "企业数据", "部门事件", "我的上报", "我的巡查", "自定义事件"};
+    private String[] titleRes = {"事件统计", "工作数据", "企业数据", "部门事件", "我的上报", "我的巡查"};
 //    private String[] titleRes = {"事件统计", "工作数据", "企业数据", "部门事件", "我的上报", "我的巡查", "网格事件"};
 
     private List<Integer> imgResValue = new ArrayList<>();
@@ -138,7 +138,7 @@ public class WorkTabAdapter extends BaseAdapter {
             return;
         }
         Intent intent = null;
-        switch (titleRes[index]) {
+        switch (titleResValue.get(index)) {
             case "事件统计":   // 事件统计
                 if (mBean.is_statistics == 1) {
                     intent = new Intent(context, GrantEventReportActivity.class);
@@ -194,8 +194,8 @@ public class WorkTabAdapter extends BaseAdapter {
     }
 
     private void initData(int page) {
-        if (context instanceof BaseMvpActivity){
-            ((HomeActivity)context).showLoadingDialog();
+        if (context instanceof BaseMvpActivity) {
+            ((HomeActivity) context).showLoadingDialog();
         }
         Params params = new Params();
         params.put("sp", page);
@@ -203,8 +203,8 @@ public class WorkTabAdapter extends BaseAdapter {
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<EventStreamBean>() {
             @Override
             public void onSuccess(EventStreamBean bean) {
-                if (context instanceof BaseMvpActivity){
-                    ((HomeActivity)context).hideLoadingDialog();
+                if (context instanceof BaseMvpActivity) {
+                    ((HomeActivity) context).hideLoadingDialog();
                 }
                 if (bean != null) {
                     if (dialog != null && dialog.adapter != null) {
@@ -221,8 +221,8 @@ public class WorkTabAdapter extends BaseAdapter {
 
             @Override
             public void onFailure(int code, String error) {
-                if (context instanceof BaseMvpActivity){
-                    ((HomeActivity)context).hideLoadingDialog();
+                if (context instanceof BaseMvpActivity) {
+                    ((HomeActivity) context).hideLoadingDialog();
                 }
             }
         });
@@ -253,6 +253,20 @@ public class WorkTabAdapter extends BaseAdapter {
     private WorkIndexBean mBean;
 
     public void setLimits(WorkIndexBean bean) {
+        imgResValue.clear();
+        titleResValue.clear();
+        for (int imgRe : imgRes) {
+            imgResValue.add(imgRe);
+        }
+        for (String titleRe : titleRes) {
+            titleResValue.add(titleRe);
+        }
+        if (bean.is_serrings == 1) {
+            imgResValue.add(R.drawable.icon_cus_evnet_work);
+            titleResValue.add("自定义事件");
+        }
+
+        notifyDataSetChanged();
         this.mBean = bean;
     }
 

@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.amap.api.location.AMapLocation;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.model.bean.MainIndexBeanNew;
-import com.sdxxtop.guardianapp.ui.activity.EventDiscretionReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.GridMapActivity;
 import com.sdxxtop.guardianapp.ui.activity.HomeActivity;
@@ -101,11 +100,14 @@ public class MyHomeTabAdapter extends BaseAdapter {
             case 0: // 事件上报
                 if (mBean.is_report == 1) {
                     intent = new Intent(context, EventReportActivity.class);
+                    intent.putExtra("streamId",1);
                 }
                 break;
             case 1:  // 巡查上报
                 if (mBean.is_patrol == 1) {
-                    intent = new Intent(context, EventDiscretionReportActivity.class);
+//                    intent = new Intent(context, EventDiscretionReportActivity.class);
+                    intent = new Intent(context, EventReportActivity.class);
+                    intent.putExtra("streamId",2);
                 }
                 break;
             case 2:

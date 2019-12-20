@@ -100,6 +100,10 @@ public class TitleView extends RelativeLayout {
         tvTitle.setText(titleValue);
     }
 
+    public void setBgColor(int bgColor) {
+        setBackgroundColor(bgColor);
+    }
+
     /**
      * 需要的时候，重新把返回键的监听改一下
      *

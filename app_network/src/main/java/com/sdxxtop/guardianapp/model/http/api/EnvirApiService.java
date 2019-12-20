@@ -121,7 +121,7 @@ public interface EnvirApiService {
     Observable<RequestBean<EventIndexBean>> postEventIndex(@Field("data") String data);
 
     @Multipart
-    @POST("event/add")
+    @POST("Evnt/Eventadd")
     Observable<RequestBean> postEventAdd(@PartMap Map<String, RequestBody> data);
 
     @Multipart

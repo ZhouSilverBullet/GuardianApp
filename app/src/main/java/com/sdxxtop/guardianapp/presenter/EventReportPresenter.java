@@ -41,8 +41,8 @@ public class EventReportPresenter extends RxPresenter<EventReportContract.IView>
             String place, String longitude, String content,
             List<File> imagePushPath, List<File> videoPushPath,
             String positionDesc, int categoryId,
-            int streamType
-
+            int streamType,
+            String etime
             , int streamId) {
         ImageAndVideoParams params = new ImageAndVideoParams();
         params.put("tl", title);
@@ -54,6 +54,8 @@ public class EventReportPresenter extends RxPresenter<EventReportContract.IView>
         params.put("spt", positionDesc);
         params.put("cgid", categoryId);
         params.put("esid", streamId);
+        params.put("sta", streamType);
+        params.put("etime", etime);
 
         params.addImagePathList("img[]", imagePushPath);
         if (videoPushPath != null && videoPushPath.size() > 0) {

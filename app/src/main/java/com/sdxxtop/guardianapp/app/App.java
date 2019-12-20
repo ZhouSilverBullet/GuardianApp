@@ -52,7 +52,7 @@ public class App extends BaseApp {
 
     private static App instance;
     private static AppComponent appComponent;
-    private static final String TAG = "Init";
+    private static final String TAG = "APP_Init";
     private static AMapTrackClient aMapTrackClient;
 
     @Override
@@ -168,13 +168,9 @@ public class App extends BaseApp {
      * @param applicationContext
      */
     private void initCloudChannel(Context applicationContext) {
-        // 注册方法会自动判断是否支持小米系统推送，如不支持会跳过注册。
-        MiPushRegister.register(applicationContext, "2882303761518019696", "5601801991696");
-        // 注册方法会自动判断是否支持华为系统推送，如不支持会跳过注册。
-        HuaWeiRegister.register(applicationContext);
-
+        this.initNotificationChannel();
         PushServiceFactory.init(applicationContext);
-        CloudPushService pushService = PushServiceFactory.getCloudPushService();
+        final CloudPushService pushService = PushServiceFactory.getCloudPushService();
         pushService.register(applicationContext, new CommonCallback() {
             @Override
             public void onSuccess(String response) {
@@ -186,7 +182,11 @@ public class App extends BaseApp {
                 Log.e(TAG, "init cloudchannel failed -- errorcode:" + errorCode + " -- errorMessage:" + errorMessage);
             }
         });
-        initNotificationChannel();
+
+        // 注册方法会自动判断是否支持小米系统推送，如不支持会跳过注册。
+        MiPushRegister.register(applicationContext, "2882303761518019696", "5601801991696");
+        // 注册方法会自动判断是否支持华为系统推送，如不支持会跳过注册。
+        HuaWeiRegister.register(applicationContext);
     }
 
     //Android 8.0以上设备通知接收
@@ -246,7 +246,7 @@ public class App extends BaseApp {
             intent = new Intent(App.getInstance(), ForegroundService.class);
             startService(intent);
         } else {
-            if (intent!=null){
+            if (intent != null) {
                 stopService(intent);
             }
             intent = new Intent(App.getInstance(), ForegroundService.class);
@@ -286,6 +286,7 @@ public class App extends BaseApp {
             ActivityManager mActivityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
             for (ActivityManager.RunningAppProcessInfo appProcess : mActivityManager
                     .getRunningAppProcesses()) {
+                Log.e(TAG,appProcess.processName);
                 if (appProcess.pid == pid) {
                     return appProcess.processName;
                 }

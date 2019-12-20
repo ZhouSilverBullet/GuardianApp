@@ -33,6 +33,19 @@ public abstract class BaseActivity extends SupportActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        if((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0){
+//            finish();
+//            return;
+//        }
+//        if (!this.isTaskRoot()) {
+//            Intent intent = getIntent();
+//            String action = intent.getAction();
+//            if (intent.hasCategory(Intent.CATEGORY_LAUNCHER) && Intent.ACTION_MAIN.equals(action)) {
+//                finish();
+//                return;
+//            }
+//        }
+
         setContentView(getLayout());
         mContext = this;
 //        setSwipeBackEnable(false);
