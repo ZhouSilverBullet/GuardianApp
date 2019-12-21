@@ -4,7 +4,6 @@ import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -49,7 +48,7 @@ public class StringUtil {
             public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
                 int keep = mMaxLength - (dest.length() - (dend - dstart));
                 if (keep <= 0) {
-                    Toast.makeText(editText.getContext(), "字数超出限制", Toast.LENGTH_SHORT).show();
+                    UIUtils.showToast("字数超出限制");
                     return "";
                 } else if (keep >= end - start) {
                     return null; // keep original

@@ -20,7 +20,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
@@ -29,6 +28,7 @@ import com.sdxxtop.guardianapp.ui.widget.imgservice.webservice.JSAndroid;
 import com.sdxxtop.guardianapp.ui.widget.imgservice.webservice.PermissionUtil;
 import com.sdxxtop.guardianapp.ui.widget.imgservice.webservice.ReWebChomeClient;
 import com.sdxxtop.guardianapp.utils.StatusBarUtil;
+import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -136,10 +136,7 @@ public class ServiceWebActivity extends AppCompatActivity implements ReWebChomeC
                         if (which == 0) {
                             if (PermissionUtil.isOverMarshmallow()) {
                                 if (!PermissionUtil.isPermissionValid(ServiceWebActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                                    Toast.makeText(ServiceWebActivity.this,
-                                            "请去\"设置\"中开启本应用的图片媒体访问权限",
-                                            Toast.LENGTH_SHORT).show();
-
+                                    UIUtils.showToast("请去\"设置\"中开启本应用的图片媒体访问权限");
                                     restoreUploadMsg();
                                     requestPermissionsAndroidM();
                                     return;
@@ -152,18 +149,14 @@ public class ServiceWebActivity extends AppCompatActivity implements ReWebChomeC
                                 startActivityForResult(mSourceIntent, REQUEST_CODE_PICK_IMAGE);
                             } catch (Exception e) {
                                 e.printStackTrace();
-                                Toast.makeText(ServiceWebActivity.this,
-                                        "请去\"设置\"中开启本应用的图片媒体访问权限",
-                                        Toast.LENGTH_SHORT).show();
+                                UIUtils.showToast("请去\"设置\"中开启本应用的图片媒体访问权限");
                                 restoreUploadMsg();
                             }
 
                         } else {
                             if (PermissionUtil.isOverMarshmallow()) {
                                 if (!PermissionUtil.isPermissionValid(ServiceWebActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                                    Toast.makeText(ServiceWebActivity.this,
-                                            "请去\"设置\"中开启本应用的图片媒体访问权限",
-                                            Toast.LENGTH_SHORT).show();
+                                    UIUtils.showToast("请去\"设置\"中开启本应用的图片媒体访问权限");
 
                                     restoreUploadMsg();
                                     requestPermissionsAndroidM();
@@ -171,9 +164,7 @@ public class ServiceWebActivity extends AppCompatActivity implements ReWebChomeC
                                 }
 
                                 if (!PermissionUtil.isPermissionValid(ServiceWebActivity.this, Manifest.permission.CAMERA)) {
-                                    Toast.makeText(ServiceWebActivity.this,
-                                            "请去\"设置\"中开启本应用的相机权限",
-                                            Toast.LENGTH_SHORT).show();
+                                    UIUtils.showToast("请去\"设置\"中开启本应用的相机权限");
 
                                     restoreUploadMsg();
                                     requestPermissionsAndroidM();
@@ -187,9 +178,7 @@ public class ServiceWebActivity extends AppCompatActivity implements ReWebChomeC
 
                             } catch (Exception e) {
                                 e.printStackTrace();
-                                Toast.makeText(ServiceWebActivity.this,
-                                        "请去\"设置\"中开启本应用的相机和图片媒体访问权限",
-                                        Toast.LENGTH_SHORT).show();
+                                UIUtils.showToast("请去\"设置\"中开启本应用的相机和图片媒体访问权限");
 
                                 restoreUploadMsg();
                             }
@@ -302,8 +291,7 @@ public class ServiceWebActivity extends AppCompatActivity implements ReWebChomeC
 
             String strMessage = "请允许使用\"" + permissionsMsg.substring(1).toString() + "\"权限, 以正常使用APP的所有功能.";
 
-            Toast.makeText(ServiceWebActivity.this, strMessage, Toast.LENGTH_SHORT).show();
-
+            UIUtils.showToast(strMessage);
         } else {
             return;
         }

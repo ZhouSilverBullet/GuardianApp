@@ -19,7 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dueeeke.videocontroller.BatteryReceiver;
 import com.dueeeke.videocontroller.MarqueeTextView;
@@ -28,6 +27,7 @@ import com.dueeeke.videoplayer.player.IjkVideoView;
 import com.dueeeke.videoplayer.util.L;
 import com.dueeeke.videoplayer.util.PlayerUtils;
 import com.sdxxtop.guardianapp.R;
+import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
@@ -294,13 +294,13 @@ public class CustomerVideoController extends GestureVideoController implements V
             mIsGestureEnabled = true;
             show();
             mLockButton.setSelected(false);
-            Toast.makeText(getContext(), R.string.dkplayer_unlocked, Toast.LENGTH_SHORT).show();
+            UIUtils.showToast( R.string.dkplayer_unlocked);
         } else {
             hide();
             mIsLocked = true;
             mIsGestureEnabled = false;
             mLockButton.setSelected(true);
-            Toast.makeText(getContext(), R.string.dkplayer_locked, Toast.LENGTH_SHORT).show();
+            UIUtils.showToast( R.string.dkplayer_locked);
         }
         mMediaPlayer.setLock(mIsLocked);
     }
@@ -469,7 +469,7 @@ public class CustomerVideoController extends GestureVideoController implements V
     public boolean onBackPressed() {
         if (mIsLocked) {
             show();
-            Toast.makeText(getContext(), R.string.dkplayer_lock_tip, Toast.LENGTH_SHORT).show();
+            UIUtils.showToast(R.string.dkplayer_lock_tip);
             return true;
         }
 

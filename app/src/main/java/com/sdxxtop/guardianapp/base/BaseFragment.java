@@ -6,12 +6,12 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.sdxxtop.guardianapp.app.App;
 import com.sdxxtop.guardianapp.utils.DialogUtil;
 import com.sdxxtop.guardianapp.utils.StatusBarUtil;
 import com.sdxxtop.guardianapp.utils.SystemUtil;
+import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -84,10 +84,7 @@ public abstract class BaseFragment extends SupportFragment {
         if (TextUtils.isEmpty(msg)) {
             return;
         }
-//        Toast.makeText(context,msg,Toast.LENGTH_LONG).show();
-        Toast toast=Toast.makeText(getContext(),msg,Toast.LENGTH_SHORT);
-        toast.setText(msg);
-        toast.show();
+        UIUtils.showToast(msg);
     }
 
     public boolean isVersionMoreKitkat() {

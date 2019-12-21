@@ -72,7 +72,6 @@ public class PatrolRecordService extends Service implements Handler.Callback {
                 String address1 = address.getAddress();
                 if (TextUtils.isEmpty(address1)) {
                     address1 = "无名路";
-//                    Toast.makeText(PatrolRecordService.this, "无名路", Toast.LENGTH_SHORT).show();
                 }
                 if (longitude == 0.0 || latitude == 0.0) {
                     Logger.e("获取经纬度为0或者地址不对，就放弃这次访问");

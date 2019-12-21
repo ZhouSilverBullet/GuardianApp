@@ -17,7 +17,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -626,7 +625,7 @@ public class AmapPoiActivity extends BaseActivity implements PoiSearch.OnPoiSear
 //                searchText.setText("");
 //                searchResultAdapter.notifyDataSetChanged();
             } else {
-                Toast.makeText(this, "定位失败", Toast.LENGTH_SHORT).show();
+                UIUtils.showToast("定位失败");
                 hideLoadingDialog();
             }
         }
@@ -710,7 +709,7 @@ public class AmapPoiActivity extends BaseActivity implements PoiSearch.OnPoiSear
 //                doSearchQuery();
             }
         } else {
-            Toast.makeText(this, "error code is " + rCode, Toast.LENGTH_SHORT).show();
+            UIUtils.showToast("error code is " + rCode);
         }
     }
 

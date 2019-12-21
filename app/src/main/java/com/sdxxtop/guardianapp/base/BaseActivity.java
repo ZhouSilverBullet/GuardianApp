@@ -9,13 +9,13 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
 import com.sdxxtop.guardianapp.app.App;
 import com.sdxxtop.guardianapp.service.NotificationMonitor;
 import com.sdxxtop.guardianapp.utils.DialogUtil;
 import com.sdxxtop.guardianapp.utils.StatusBarUtil;
 import com.sdxxtop.guardianapp.utils.SystemUtil;
+import com.sdxxtop.guardianapp.utils.UIUtils;
 import com.umeng.analytics.MobclickAgent;
 
 import androidx.annotation.Nullable;
@@ -110,21 +110,11 @@ public abstract class BaseActivity extends SupportActivity {
         }
     }
 
-//    public void showToast(String msg) {
-//        if (TextUtils.isEmpty(msg)) {
-//            return;
-//        }
-//        UIUtils.showToast(msg);
-//    }
-
     public void showToast(String msg) {
         if (TextUtils.isEmpty(msg)) {
             return;
         }
-//        Toast.makeText(context,msg,Toast.LENGTH_LONG).show();
-        Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
-        toast.setText(msg);
-        toast.show();
+        UIUtils.showToast(msg);
     }
 
     public void showLoadingDialog() {

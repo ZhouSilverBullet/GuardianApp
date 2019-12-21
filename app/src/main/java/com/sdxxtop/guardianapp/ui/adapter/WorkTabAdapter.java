@@ -12,7 +12,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -36,6 +35,7 @@ import com.sdxxtop.guardianapp.ui.activity.PatrolRecordActivity;
 import com.sdxxtop.guardianapp.ui.activity.SectionEventActivity;
 import com.sdxxtop.guardianapp.ui.activity.custom_event.CustomHeightBottomSheetDialog;
 import com.sdxxtop.guardianapp.utils.SpUtil;
+import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -213,7 +213,7 @@ public class WorkTabAdapter extends BaseAdapter {
                             dialog.setPeekHeight(dp2px(bean.serrings.size() * 44));
                             dialog.show();
                         } else {
-                            Toast.makeText(context, "当前没有事件流", Toast.LENGTH_SHORT).show();
+                            UIUtils.showToast("当前没有事件流");
                         }
                     }
                 }
@@ -271,7 +271,7 @@ public class WorkTabAdapter extends BaseAdapter {
     }
 
     public void showToast(Context context) {
-        Toast.makeText(context, "暂无权限", Toast.LENGTH_SHORT).show();
+        UIUtils.showToast("暂无权限");
     }
 
     private int dp2px(float dpVal) {

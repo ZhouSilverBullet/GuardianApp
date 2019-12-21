@@ -1,7 +1,5 @@
 package com.sdxxtop.openlive.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +10,7 @@ import com.sdxxtop.sdkagora.AgoraSession;
 import com.sdxxtop.sdkagora.R;
 import com.sdxxtop.sdkagora.RtmCallEventCallback;
 
+import androidx.appcompat.app.AppCompatActivity;
 import io.agora.rtm.ErrorInfo;
 import io.agora.rtm.LocalInvitation;
 import io.agora.rtm.RemoteInvitation;

@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.sdxxtop.guardianapp.R;
@@ -188,7 +187,7 @@ public class MyHomeTabAdapter extends BaseAdapter {
     }
 
     public void showToast(Context context) {
-        Toast.makeText(context, "暂无权限", Toast.LENGTH_SHORT).show();
+        UIUtils.showToast("暂无权限");
     }
 
     private void toFace(Context context) {

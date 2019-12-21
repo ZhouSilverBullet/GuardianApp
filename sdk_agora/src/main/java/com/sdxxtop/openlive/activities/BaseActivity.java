@@ -7,16 +7,15 @@ import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.sdxxtop.openlive.AgoraAppLiveConfig;
-import com.sdxxtop.openlive.rtc.EventHandler;
 import com.sdxxtop.openlive.rtc.EngineConfig;
+import com.sdxxtop.openlive.rtc.EventHandler;
 import com.sdxxtop.openlive.stats.StatsManager;
 import com.sdxxtop.openlive.utils.SpUtil;
 import com.sdxxtop.openlive.utils.WindowUtil;
 import com.sdxxtop.sdkagora.AgoraSession;
 
+import androidx.appcompat.app.AppCompatActivity;
 import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
 

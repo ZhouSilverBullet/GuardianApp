@@ -7,9 +7,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Toast;
 
 import com.sdxxtop.guardianapp.R;
+import com.sdxxtop.guardianapp.utils.UIUtils;
 import com.sdxxtop.skipsettings.SkipSetting;
 
 import java.util.Arrays;
@@ -94,9 +94,6 @@ public class SystemSettingActivity extends AppCompatActivity implements View.OnC
         if (TextUtils.isEmpty(msg)) {
             return;
         }
-//        Toast.makeText(context,msg,Toast.LENGTH_LONG).show();
-        Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
-        toast.setText(msg);
-        toast.show();
+        UIUtils.showToast(msg);
     }
 }
