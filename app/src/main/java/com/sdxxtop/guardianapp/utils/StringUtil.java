@@ -17,12 +17,33 @@ public class StringUtil {
         return temp;
     }
 
+    private static InputFilter filter_speChat = new InputFilter() {
+        @Override
+        public CharSequence filter(CharSequence charSequence, int i, int i1, Spanned spanned, int i2, int i3) {
+            String speChat = "[`~!@#_$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）— +|{}【】‘；：”“’。，、？]";
+            Pattern pattern = Pattern.compile(speChat);
+            Matcher matcher = pattern.matcher(charSequence.toString());
+            if (matcher.find()) return "";
+            else return null;
+        }
+    };
+    private static InputFilter filter_speChat_noletter = new InputFilter() {
+        @Override
+        public CharSequence filter(CharSequence charSequence, int i, int i1, Spanned spanned, int i2, int i3) {
+            String speChat = "[`~!@#_$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）— +|{}【】‘；：”“’。，、？qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM]";
+            Pattern pattern = Pattern.compile(speChat);
+            Matcher matcher = pattern.matcher(charSequence.toString());
+            if (matcher.find()) return "";
+            else return null;
+        }
+    };
+
     /**
      * 禁止EditText特殊字符过滤
      *
      * @param editText
      */
-    public static void setEditTextInhibitInputSpaChat(EditText editText,int mMaxLength) {
+    public static void setEditTextInhibitInputSpaChat(EditText editText, int mMaxLength, boolean isNoLetter) {
         InputFilter filter_space = new InputFilter() {
             @Override
             public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
@@ -30,16 +51,6 @@ public class StringUtil {
                     return "";
                 else
                     return null;
-            }
-        };
-        InputFilter filter_speChat = new InputFilter() {
-            @Override
-            public CharSequence filter(CharSequence charSequence, int i, int i1, Spanned spanned, int i2, int i3) {
-                String speChat = "[`~!@#_$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）— +|{}【】‘；：”“’。，、？]";
-                Pattern pattern = Pattern.compile(speChat);
-                Matcher matcher = pattern.matcher(charSequence.toString());
-                if (matcher.find()) return "";
-                else return null;
             }
         };
 
@@ -65,6 +76,6 @@ public class StringUtil {
             }
         };
 
-        editText.setFilters(new InputFilter[]{filter_space, filter_speChat, filter_length});
+        editText.setFilters(new InputFilter[]{filter_space, isNoLetter ? filter_speChat_noletter : filter_speChat, filter_length});
     }
 }

@@ -56,6 +56,7 @@ public class EventStreamReportBean {
         public int supplementNumber;
         public int eventClassification;
         public int basicReview;
+        public int isNeedLetter;
     }
 
     public static class PartBean {

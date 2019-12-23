@@ -124,6 +124,7 @@ public class NumberEditTextView extends RelativeLayout implements TextWatcher {
         if (!TextUtils.isEmpty(s)) {
             int length = s.length();
             if (length > maxLength) {
+                UIUtils.showToast("超过字数限制");
                 length = maxLength;
             }
             tvNumber.setText(new StringBuilder().append(length).append("/").append(maxLength));
@@ -131,7 +132,6 @@ public class NumberEditTextView extends RelativeLayout implements TextWatcher {
             if (length == maxLength) {
                 StringBuilder append = new StringBuilder().append("已超过").append(maxLength).append("字");
 //                UIUtils.showToast(append.toString());
-                UIUtils.showToast("超过字数限制");
             }
         } else {
             tvNumber.setText(new StringBuilder().append(0).append("/").append(maxLength));

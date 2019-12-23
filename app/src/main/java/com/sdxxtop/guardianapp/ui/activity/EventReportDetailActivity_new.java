@@ -161,6 +161,10 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
     /***操作按钮***/
     @BindView(R.id.tvBtnClick)
     TextView tvBtnClick;
+    @BindView(R.id.tvFuCha2)
+    TextView tvFuCha2;
+    @BindView(R.id.tvFuCha1)
+    TextView tvFuCha1;
 
 
     //用于提交
@@ -393,6 +397,7 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
      */
     private void setCompleted(EventStreamDetailBean.CheckBean data) {
         boolean a = isTextViewShow(tvYsTime, data.check_time, "验收时间：");
+        tvFuCha1.setVisibility(a ? View.VISIBLE : View.GONE);
         boolean b = isTextViewShow(tvYsResult, eventStatus == 4 ? "验收通过" : "验收不通过", "验收结果：");
         boolean c = isTextViewShow(tvYsBeizhu, data.extra, "备注：");
         boolean d = isTextViewShow(tvRlPingjiaStatus, data.appraise, "评价情况：");
@@ -544,7 +549,7 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
         checkTextView(c2TxReportPhone.getTvRight(), bean.mobile, c2TxReportPhone);
         checkTextView(c2TxReportPart.getTvRight(), bean.part_name, c2TxReportPart);
         checkTextView(c2TxReportTime.getTvRight(), Date2Util.handleTime(bean.add_time), c2TxReportTime);
-        checkTextView(c2TxReportFindType.getTvRight(), "巡逻", c2TxReportFindType);
+        checkTextView(c2TxReportFindType.getTvRight(), bean.patrol_type, c2TxReportFindType);
         checkTextView(c2TxReportFindPlace.getTvRight(), bean.place, c2TxReportFindPlace);
         checkTextView(c2TxReportDutyPart.getTvRight(), bean.path_name, c2TxReportDutyPart);
         checkTextView(c2TxReportEventDesc.getTvLeft(), TextUtils.isEmpty(bean.content) ? "" :
@@ -578,6 +583,7 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
 
     /**
      * 判断 图片/视频 资源是否有
+     *
      * @param img
      * @param vedio
      * @param recyclerView

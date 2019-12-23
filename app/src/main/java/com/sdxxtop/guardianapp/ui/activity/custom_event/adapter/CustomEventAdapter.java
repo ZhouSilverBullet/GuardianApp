@@ -33,6 +33,7 @@ public class CustomEventAdapter extends BaseQuickAdapter<EventStreamBean.Serring
 //                Intent intent = new Intent(mContext, CustomEventActivity.class);
                 Intent intent = new Intent(mContext, EventReportActivity.class);
                 intent.putExtra("streamId", item.event_settings_id);
+                intent.putExtra("streamName", item.event_settings_name);
                 mContext.startActivity(intent);
                 if (mDialog != null) {
                     mDialog.dismiss();

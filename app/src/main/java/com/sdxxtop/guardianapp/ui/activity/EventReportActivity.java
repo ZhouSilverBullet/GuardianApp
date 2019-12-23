@@ -228,15 +228,21 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 
     @Override
     protected void initVariables() {
+        String streamName = "";
         if (getIntent() != null) {
             streamId = getIntent().getIntExtra("streamId", 1);
+            streamName = getIntent().getStringExtra("streamName");
         }
-        if (streamId == 2) {
+        if (streamId == 1) {
+
+        } else if (streamId == 2) {
             mTitleView.setTitleValue("巡查处理");
             mTitleView.getTvRight().setText("我的处理");
             rootLayout.setBackgroundColor(Color.parseColor("#4B7902"));
             mTitleView.setBgColor(Color.parseColor("#4B7902"));
             btnPush.setBackgroundColor(Color.parseColor("#4B7902"));
+        } else {
+            mTitleView.setTitleValue(streamName);
         }
     }
 
@@ -505,7 +511,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
             //问题描述 字数限制
             netContent.setMaxLength(streamEventPermission.reportDescribe);
             //输入标题 字数限制
-            StringUtil.setEditTextInhibitInputSpaChat(taevTitle.getEditText(), streamEventPermission.title);
+            StringUtil.setEditTextInhibitInputSpaChat(taevTitle.getEditText(), streamEventPermission.title,streamEventPermission.isNeedLetter==1);
             taevTitle.getEditText().setHint("事件类目关键词（限制" + streamEventPermission.title + "个字）");
             //选择图片和视频的总数量
 //            cvisvView.setMaxImgCount(streamEventPermission.img);
