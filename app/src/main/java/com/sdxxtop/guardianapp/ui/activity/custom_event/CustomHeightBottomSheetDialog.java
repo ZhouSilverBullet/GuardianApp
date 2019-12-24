@@ -40,7 +40,6 @@ public class CustomHeightBottomSheetDialog extends BottomSheetDialog {
     private SmartRefreshLayout smartRefresh;
     private RecyclerView recyclerView;
     public CustomEventAdapter adapter;
-    private OnRefreshLoadMoreListener mListener;
 
 
     public CustomHeightBottomSheetDialog(@NonNull Context context, int Res) {
@@ -75,9 +74,6 @@ public class CustomHeightBottomSheetDialog extends BottomSheetDialog {
         adapter = new CustomEventAdapter(this);
         recyclerView.setAdapter(adapter);
 
-        if (mListener != null) {
-            smartRefresh.setOnRefreshLoadMoreListener(mListener);
-        }
     }
 
     @Override
@@ -87,7 +83,7 @@ public class CustomHeightBottomSheetDialog extends BottomSheetDialog {
         setContentView(view);
 
         //设置最高高度  展示9条
-        mWindow.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, dp2px(9*44));
+        mWindow.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, dp2px(9 * 44));
         mWindow.setGravity(Gravity.BOTTOM);
 
         setPeekHeight();
@@ -96,16 +92,19 @@ public class CustomHeightBottomSheetDialog extends BottomSheetDialog {
     }
 
     public void setRefreshListener(OnRefreshLoadMoreListener listener) {
-        this.mListener = listener;
+        if (listener == null || smartRefresh == null) {
+            return;
+        }
+        smartRefresh.setOnRefreshLoadMoreListener(listener);
     }
 
-    public void setData(List<EventStreamBean.SerringsBean> data,boolean isRefresh) {
+    public void setData(List<EventStreamBean.SerringsBean> data, boolean isRefresh) {
         if (adapter == null) {
             return;
         }
-        if (isRefresh){
+        if (isRefresh) {
             adapter.replaceData(data);
-        }else{
+        } else {
             adapter.addData(data);
         }
     }
