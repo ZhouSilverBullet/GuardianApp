@@ -464,7 +464,7 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
         boolean b = isTextViewShow(tvPfEndTime, data.end_date, "截止解决日期：");
         boolean d = isTextViewShow(tvPfImportance, data.important_type, "事件重要性：");
         boolean e = isTextViewShow(tvPfPart, data.send_part_name, "派发部门：");
-        if (a || b || d) {
+        if (a || b || d || e) {
             colPf.setVisibility(View.VISIBLE);
 //            tvPfTime.setText("派发时间：" + data.send_time);
 //            tvPfEndTime.setText("截止解决日期：" + data.operate_date);
