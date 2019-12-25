@@ -275,9 +275,23 @@
                         android:layout_marginTop="10dp"
                         android:textSize="15sp"
                         android:textColor="#292929"
-                        android:text="截止解决日期：2019.04.05"
+                        android:text="派发部门：李似"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_pf_name"
+                        android:id="@+id/tv_pf_part"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:singleLine="true"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:textSize="15sp"
+                        android:textColor="#292929"
+                        android:text="截止解决日期：2019.04.05"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_pf_part"
                         android:id="@+id/tv_pf_end_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />

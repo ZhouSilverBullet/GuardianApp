@@ -107,6 +107,8 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
     TextView tvPfTime;
     @BindView(R.id.tv_pf_name)
     TextView tvPfName;
+    @BindView(R.id.tv_pf_part)
+    TextView tvPfPart;
     @BindView(R.id.tv_pf_importance)
     TextView tvPfImportance;
     @BindView(R.id.tv_pf_end_time)
@@ -458,9 +460,10 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
      */
     private void setPfData(EventStreamDetailBean.SendBean data) {
         boolean a = isTextViewShow(tvPfTime, data.send_time, "派发时间：");
-        boolean c = isTextViewShow(tvPfName, "派发人：指挥中心", "");
+        boolean c = isTextViewShow(tvPfName, TextUtils.isEmpty(data.send_name) ? "指挥中心" : data.send_name, "派发人：");
         boolean b = isTextViewShow(tvPfEndTime, data.end_date, "截止解决日期：");
         boolean d = isTextViewShow(tvPfImportance, data.important_type, "事件重要性：");
+        boolean e = isTextViewShow(tvPfPart, data.send_part_name, "派发部门：");
         if (a || b || d) {
             colPf.setVisibility(View.VISIBLE);
 //            tvPfTime.setText("派发时间：" + data.send_time);
