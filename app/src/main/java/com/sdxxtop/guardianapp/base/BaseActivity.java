@@ -1,7 +1,6 @@
 package com.sdxxtop.guardianapp.base;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,7 +11,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.sdxxtop.guardianapp.app.App;
-import com.sdxxtop.guardianapp.service.NotificationMonitor;
 import com.sdxxtop.guardianapp.utils.DialogUtil;
 import com.sdxxtop.guardianapp.utils.StatusBarUtil;
 import com.sdxxtop.guardianapp.utils.SystemUtil;
@@ -188,19 +186,14 @@ public abstract class BaseActivity extends SupportActivity {
 
     @Override
     protected void onResume() {
-        super.onResume();
-        Intent intent = new Intent();
-        intent.setAction(NotificationMonitor.ACTION_NLS_CONTROL);
-        intent.putExtra("command", "cancel_last");
-        sendBroadcast(intent);
-
         MobclickAgent.onResume(this);
+        super.onResume();
     }
 
     @Override
     protected void onPause() {
-        super.onPause();
         MobclickAgent.onPause(this);
+        super.onPause();
     }
 
 
