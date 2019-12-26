@@ -41,6 +41,7 @@ import com.sdxxtop.guardianapp.di.component.DaggerAppComponent;
 import com.sdxxtop.guardianapp.di.module.AppModule;
 import com.sdxxtop.guardianapp.model.NetWorkSession;
 import com.sdxxtop.guardianapp.service.ForegroundService;
+import com.sdxxtop.guardianapp.service.NotificationMonitor;
 import com.sdxxtop.sdkagora.AgoraSession;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
@@ -75,6 +76,7 @@ public class App extends BaseApp {
         }
 
         NetWorkSession.init(this, BuildConfig.DEBUG);
+        initNoticeClear();
     }
 
     private void initWebViewServer() {
@@ -299,6 +301,13 @@ public class App extends BaseApp {
 
     public boolean isZhidianProcess(String process) {
         return getPackageName().equals(process);
+    }
+
+    private void initNoticeClear(){
+        Intent intent = new Intent();
+        intent.setAction(NotificationMonitor.ACTION_NLS_CONTROL);
+        intent.putExtra("command", "cancel_last");
+        sendBroadcast(intent);
     }
 
 }

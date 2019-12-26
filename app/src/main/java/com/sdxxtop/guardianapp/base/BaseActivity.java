@@ -1,7 +1,6 @@
 package com.sdxxtop.guardianapp.base;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,7 +10,6 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.sdxxtop.guardianapp.app.App;
-import com.sdxxtop.guardianapp.service.NotificationMonitor;
 import com.sdxxtop.guardianapp.utils.DialogUtil;
 import com.sdxxtop.guardianapp.utils.StatusBarUtil;
 import com.sdxxtop.guardianapp.utils.SystemUtil;
@@ -33,19 +31,6 @@ public abstract class BaseActivity extends SupportActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0){
-//            finish();
-//            return;
-//        }
-//        if (!this.isTaskRoot()) {
-//            Intent intent = getIntent();
-//            String action = intent.getAction();
-//            if (intent.hasCategory(Intent.CATEGORY_LAUNCHER) && Intent.ACTION_MAIN.equals(action)) {
-//                finish();
-//                return;
-//            }
-//        }
-
         setContentView(getLayout());
         mContext = this;
 //        setSwipeBackEnable(false);
@@ -191,13 +176,8 @@ public abstract class BaseActivity extends SupportActivity {
 
     @Override
     protected void onResume() {
-        super.onResume();
-        Intent intent = new Intent();
-        intent.setAction(NotificationMonitor.ACTION_NLS_CONTROL);
-        intent.putExtra("command", "cancel_last");
-        sendBroadcast(intent);
-
         MobclickAgent.onResume(this);
+        super.onResume();
     }
 
     @Override
