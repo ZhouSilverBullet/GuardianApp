@@ -206,8 +206,10 @@ public class GridImageAdapter extends RecyclerView.Adapter<GridImageAdapter.View
                     viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            int adapterPosition = viewHolder.getAdapterPosition();
-                            mItemClickListener.onItemClick(adapterPosition, v);
+                            int position = viewHolder.getPosition();
+                            if (position!=-1){
+                                mItemClickListener.onItemClick(position, v);
+                            }
                         }
                     });
                 }
