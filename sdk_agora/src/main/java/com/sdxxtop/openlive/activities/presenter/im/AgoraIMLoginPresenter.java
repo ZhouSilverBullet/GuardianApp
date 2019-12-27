@@ -9,14 +9,12 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
 import com.sdxxtop.imagora.rtmtutorial.AgoraIMConfig;
 import com.sdxxtop.imagora.rtmtutorial.ChatManager;
 import com.sdxxtop.imagora.utils.MessageUtil;
 import com.sdxxtop.openlive.activities.CallActivity;
-import com.sdxxtop.sdkagora.R;
 
+import androidx.annotation.NonNull;
 import io.agora.rtm.ErrorInfo;
 import io.agora.rtm.ResultCallback;
 import io.agora.rtm.RtmClient;
@@ -93,7 +91,7 @@ public class AgoraIMLoginPresenter implements Handler.Callback {
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(mView.getContext(), "fail: " + errorInfo, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(mView.getContext(), "fail: " + errorInfo, Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
