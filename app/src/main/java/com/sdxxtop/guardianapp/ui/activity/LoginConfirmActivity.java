@@ -1,10 +1,8 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -15,6 +13,7 @@ import com.orhanobut.logger.Logger;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseActivity;
 import com.sdxxtop.guardianapp.model.db.UserData;
+import com.sdxxtop.guardianapp.utils.GuardianUtils;
 
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -101,23 +100,7 @@ public class LoginConfirmActivity extends BaseActivity implements ViewTreeObserv
     }
 
     private void handleJob(int position) {
-        //1:网格员 2: 企业员工 3:街道管理员 4:区级管理员
-        String positionName = "";
-        switch (position) {
-            case 1:
-                positionName = "网格员";
-                break;
-            case 2:
-                positionName = "企业员工";
-                break;
-            case 3:
-                positionName = "街道管理员";
-                break;
-            case 4:
-                positionName = "区级管理员";
-                break;
-        }
-        tvJobs.setText(positionName);
+        tvJobs.setText(GuardianUtils.getJobName(position));
     }
 
     @Override

@@ -122,9 +122,9 @@ public class EventReportDetailSecondActivity extends BaseMvpActivity<ERDSecondPr
                 break;
             case TYPE_CHACK_SUCCSESS://4、验收通过
                 tvRemark.setText("简要");
-                etNumContent1.setEditHint("非必填");
+                etNumContent1.setEditHint("必填");
                 tvTitle.setTitleValue("验收通过");
-                isMastNeed = false;
+                isMastNeed = true;
                 break;
             case TYPE_CHACK_FAILE://5验收不通过
                 tvRemark.setText("验收不通过原因");
