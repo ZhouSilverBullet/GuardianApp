@@ -120,6 +120,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 
     private TimeSelectBottomDialog dialog;
     private EventStreamReportBean.ReportPathBean streamEventPermission;
+    private String errorStr = "";
 
     private static final String TAG = "EventReportActivity";
 
@@ -279,7 +280,10 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
         List<File> imagePushPath = cvisvView.getImageOrVideoPushPath(1);
         List<File> vedioPushPath = cvisvView.getImageOrVideoPushPath(2);
 
-        if (streamEventPermission == null) return;
+        if (streamEventPermission == null) {
+            showToast(errorStr);
+            return;
+        }
 
         if (streamEventPermission.reportImg == 1 && (imagePushPath.size() + vedioPushPath.size()) < minSelectImg) {
             showToast("需要提供" + minSelectImg + "个以上图片或者视频");
@@ -475,6 +479,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
 
     @Override
     public void showError(String error) {
+        errorStr = error;
         hideLoadingDialog();
     }
 
@@ -511,7 +516,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
             //问题描述 字数限制
             netContent.setMaxLength(streamEventPermission.reportDescribe);
             //输入标题 字数限制
-            StringUtil.setEditTextInhibitInputSpaChat(taevTitle.getEditText(), streamEventPermission.title,streamEventPermission.isNeedLetter==1);
+            StringUtil.setEditTextInhibitInputSpaChat(taevTitle.getEditText(), streamEventPermission.title, streamEventPermission.isNeedLetter == 1);
             taevTitle.getEditText().setHint("事件类目关键词（限制" + streamEventPermission.title + "个字）");
             //选择图片和视频的总数量
 //            cvisvView.setMaxImgCount(streamEventPermission.img);

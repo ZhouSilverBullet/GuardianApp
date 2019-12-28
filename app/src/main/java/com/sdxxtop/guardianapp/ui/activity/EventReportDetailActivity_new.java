@@ -560,6 +560,7 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
         checkTextView(c2TxReportPositionDesc.getTvLeft(), TextUtils.isEmpty(bean.supplement) ? "" :
                 new StringBuilder().append("定位补充描述：").append(bean.supplement).toString(), c2TxReportPositionDesc);
         checkTextView(c2TxReportEventCategory.getTvRight(), bean.category_name, c2TxReportEventCategory);
+        tvTitle.getTvRight().setVisibility(bean.basicOperation == 1 ? View.VISIBLE : View.GONE);
 
         getTime(bean);
         cpbProgress.setStatus(bean.status, getTime(bean));

@@ -182,7 +182,9 @@ public class EventReportPresenter extends RxPresenter<EventReportContract.IView>
 
             @Override
             public void onFailure(int code, String error) {
-
+                if (mView != null) {
+                    mView.showError(error);
+                }
             }
         });
         addSubscribe(disposable);

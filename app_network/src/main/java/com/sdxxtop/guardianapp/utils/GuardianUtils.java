@@ -71,7 +71,7 @@ public class GuardianUtils {
                 positionName = "执法人员";
                 break;
             case 6:
-                positionName = "专职网格员";
+                positionName = "编办工作人员";
                 break;
             default:
                 positionName = "网格员";
