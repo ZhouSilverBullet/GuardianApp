@@ -41,7 +41,13 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.custom_event.CustomEventActivity"></activity>
+        <activity android:name=".ui.activity.kaoqin.ClockInActivity"></activity>
+        <activity android:name=".ui.activity.kaoqin.AssessDetailActivity" />
+        <activity android:name=".ui.activity.kaoqin.MyWorkActivity" />
+        <activity android:name=".ui.activity.kaoqin.VersionsExplainActivity" />
+        <activity android:name=".ui.activity.kaoqin.MineAttendanceActivity" />
+        <activity android:name=".ui.activity.kaoqin.MyAssessActivity" />
+        <activity android:name=".ui.activity.custom_event.CustomEventActivity" />
         <activity android:name=".ui.activity.RecordLogActivity" />
         <activity android:name=".ui.activity.GridEventActivity" />
         <activity

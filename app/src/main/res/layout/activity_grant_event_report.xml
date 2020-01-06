@@ -219,6 +219,7 @@
                 android:layout_marginRight="15dp"
                 android:background="#FAFBFF"
                 app:pie_title="上报事件统计"
+                app:is_big="true"
                 app:tv_prev_is_show="false" />
 
             <com.sdxxtop.guardianapp.ui.widget.PieChartView
@@ -231,6 +232,7 @@
                 android:layout_marginBottom="20dp"
                 android:background="#FAFBFF"
                 app:pie_title="待验收事件统计"
+                app:is_big="true"
                 app:tv_prev_is_show="false" />
 
         </LinearLayout>

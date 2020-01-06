@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <inset xmlns:android="http://schemas.android.com/apk/res/android"
-    android:drawable="@drawable/outline_today"
+    android:drawable="@drawable/outline_today2"
     android:insetRight="8dp"
     android:insetLeft="8dp"
     android:insetBottom="8dp"

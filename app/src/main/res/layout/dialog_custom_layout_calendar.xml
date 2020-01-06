@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_data"
+        android:background="@color/white"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        android:textSize="16sp"
+        android:padding="10dp"
+        android:gravity="center"
+        android:text="2019-12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.haibin.calendarview.CalendarView
+        android:layout_marginTop="10dp"
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#fff"
+        app:calendar_height="35dp"
+        app:calendar_padding="10dp"
+        app:current_month_lunar_text_color="#CFCFCF"
+        app:current_month_text_color="#4f4f4f"
+        app:day_text_size="18sp"
+        app:max_select_range="-1"
+        app:min_select_range="-1"
+        app:min_year="2004"
+        app:month_view="com.sdxxtop.guardianapp.ui.activity.kaoqin.calendar.range.CustomRangeMonthView"
+        app:month_view_show_mode="mode_only_current"
+        app:other_month_text_color="#e1e1e1"
+        app:scheme_text="假"
+        app:scheme_text_color="#333"
+        app:scheme_theme_color="#333"
+        app:select_mode="range_mode"
+        app:selected_text_color="#fff"
+        app:selected_theme_color="#EE7621"
+        app:week_background="#fff"
+        app:week_text_color="#111"
+        app:week_view="com.sdxxtop.guardianapp.ui.activity.kaoqin.calendar.range.CustomRangeWeekView"
+        app:year_view_day_text_color="#333333"
+        app:year_view_day_text_size="9sp"
+        app:year_view_month_text_color="#ff0000"
+        app:year_view_month_text_size="15sp"
+        app:year_view_scheme_color="#f17706" />
+
+    <TextView
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/tvCommit"
+        android:textColor="#333333"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:background="@drawable/shape_white_calendar_bg"
+        android:padding="10dp"
+        android:gravity="center"
+        android:text="提交"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

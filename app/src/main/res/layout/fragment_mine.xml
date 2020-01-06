@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <ImageView
@@ -35,30 +36,58 @@
             android:layout_width="match_parent"
             android:layout_height="1px" />
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/rl_login_out"
             android:layout_marginTop="22dp"
             android:paddingLeft="25dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/civ_header"
-                android:layout_width="61dp"
-                android:layout_height="61dp"
-                android:layout_gravity="center_horizontal"
-                android:elevation="5dp"
-                android:src="@drawable/tou_xiang" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/rl_head_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:cardCornerRadius="30dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp">
 
-            <LinearLayout
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/civ_header"
+                    android:layout_width="61dp"
+                    android:layout_height="61dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/tou_xiang" />
+
+                <TextView
+                    android:layout_gravity="bottom"
+                    android:background="@color/green"
+                    android:layout_marginTop="5dp"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="11sp"
+                    android:textColor="@color/white"
+                    android:layout_alignParentBottom="true"
+                    android:gravity="center"
+                    android:text="在线"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                app:layout_constraintBottom_toBottomOf="@+id/rl_head_icon"
+                app:layout_constraintTop_toTopOf="@+id/rl_head_icon"
+                app:layout_constraintLeft_toRightOf="@+id/rl_head_icon"
                 android:gravity="center_vertical"
                 android:layout_marginLeft="14dp"
-                android:layout_toRightOf="@+id/civ_header"
+                android:layout_toRightOf="@+id/rl_head_icon"
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="61dp">
 
                 <TextView
+                    android:layout_marginTop="7dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     android:singleLine="true"
                     android:id="@+id/tv_name"
                     android:includeFontPadding="false"
@@ -68,7 +97,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
+                <com.sdxxtop.guardianapp.ui.activity.kaoqin.RatingBar
+                    app:starCount="5"
+                    android:layout_marginLeft="7dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_name"
+                    app:layout_constraintTop_toTopOf="@+id/tv_name"
+                    app:layout_constraintLeft_toRightOf="@+id/tv_name"
+                    android:id="@+id/tv_item_ratingbar"
+                    app:clickable="false"
+                    app:starEmpty="@drawable/star_unselected"
+                    app:starFill="@drawable/star_select"
+                    app:starStep="3.5"
+                    app:starPadding="5dp"
+                    app:starImageSize="15dp"
+                    app:stepSize="Half"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
                 <TextView
+                    app:layout_constraintTop_toBottomOf="@+id/tv_name"
+                    app:layout_constraintLeft_toLeftOf="parent"
                     android:id="@+id/tv_place"
                     android:includeFontPadding="false"
                     android:layout_marginTop="10dp"
@@ -78,16 +126,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginRight="25dp"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/mine_logout_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.cardview.widget.CardView
             android:layout_marginBottom="30dp"
@@ -154,95 +205,43 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <LinearLayout
-            android:id="@+id/ll_online_service"
-            android:paddingLeft="15dp"
-            android:paddingBottom="15dp"
-            android:paddingTop="5dp"
-            android:orientation="horizontal"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-            <ImageView
-                android:src="@drawable/service_my_new"
-                android:layout_width="18dp"
-                android:layout_height="19dp" />
+
+            <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                app:srlEnableLoadMore="false"
+                app:srlEnableRefresh="false"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
 
             <TextView
-                android:layout_marginLeft="13dp"
-                android:textColor="@color/color_313131"
+                android:visibility="gone"
+                android:layout_marginBottom="95dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:paddingRight="42dp"
+                android:paddingLeft="42dp"
+                android:paddingBottom="14dp"
+                android:paddingTop="14dp"
+                android:gravity="center"
+                android:background="@drawable/shape_mine_gray_bg"
+                android:textColor="@color/white"
                 android:textSize="14sp"
-                android:text="在线客服"
+                android:text="本月已经更换人脸不可操作"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-        </LinearLayout>
 
-        <TextView
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="15dp"
-            android:background="@color/color_f2"
-            android:layout_width="match_parent"
-            android:layout_height="1dp" />
+        </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/ll_banben"
-            android:paddingLeft="15dp"
-            android:paddingBottom="15dp"
-            android:paddingTop="15dp"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:src="@drawable/set_my_new"
-                android:layout_width="18dp"
-                android:layout_height="19dp" />
-
-            <TextView
-                android:layout_marginLeft="13dp"
-                android:textColor="@color/color_313131"
-                android:textSize="14sp"
-                android:text="版本说明"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="15dp"
-            android:background="@color/color_f2"
-            android:layout_width="match_parent"
-            android:layout_height="1dp" />
-
-        <LinearLayout
-            android:id="@+id/ll_guanyu"
-            android:paddingLeft="15dp"
-            android:paddingBottom="15dp"
-            android:paddingTop="15dp"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:src="@drawable/aboutus_my_new"
-                android:layout_width="18dp"
-                android:layout_height="19dp" />
-
-            <TextView
-                android:layout_marginLeft="13dp"
-                android:textColor="@color/color_313131"
-                android:textSize="14sp"
-                android:text="关于我们"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="15dp"
-            android:background="@color/color_f2"
-            android:layout_width="match_parent"
-            android:layout_height="1dp" />
     </LinearLayout>
 
 </RelativeLayout>

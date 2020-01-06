@@ -356,6 +356,21 @@ public class Date2Util {
         return "";
     }
 
+    /**
+     * 获取本月的最后一天
+     *
+     * @return
+     */
+    public static Date getLastDayOfMonth() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        Date firstDayOfMonth = calendar.getTime();
+        calendar.add(Calendar.MONTH, 1);
+        calendar.add(Calendar.DAY_OF_MONTH, -1);
+        Date lastDayOfMonth = calendar.getTime();
+        return lastDayOfMonth;
+    }
+
     public static String getWeixinShowTime(Date time) {
         try {
             Calendar currentTime = Calendar.getInstance();

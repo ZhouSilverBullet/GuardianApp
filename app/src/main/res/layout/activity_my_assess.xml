@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FAFAFA"
+    tools:context=".ui.activity.kaoqin.MyAssessActivity">
+
+
+    <com.sdxxtop.guardianapp.ui.widget.TitleView
+        android:id="@+id/titleView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleValue="我的考核"
+        app:leftLayoutIconIsGray="true"
+        app:rightTextColor="@color/green"
+        app:rightTextValue="绩效说明"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header_layout"
+        app:layout_constraintTop_toBottomOf="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <TextView
+            android:id="@+id/tv_change"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:paddingBottom="18dp"
+            android:paddingTop="18dp"
+            android:textSize="15sp"
+            android:textColor="#2593E7"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="图表"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.sdxxtop.guardianapp.ui.activity.kaoqin.calendar.MyAssessCalendarView
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintLeft_toRightOf="@+id/tv_change"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_change"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_change"
+            android:id="@+id/mcv_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:id="@+id/rl_layout"
+        app:layout_constraintTop_toBottomOf="@+id/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.sdxxtop.guardianapp.ui.widget.chart.CustomOneBarChartView
+            android:id="@+id/cbcv_bar_view"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+
+        <com.sdxxtop.guardianapp.ui.widget.PieChartView
+            android:gravity="center"
+            android:visibility="gone"
+            android:id="@+id/pieChartView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+    </RelativeLayout>
+
+    <com.sdxxtop.guardianapp.ui.activity.kaoqin.MyAssessLayout
+        android:layout_marginTop="10dp"
+        android:id="@+id/my_assess_1"
+        app:layout_constraintTop_toBottomOf="@+id/rl_layout"
+        app:icon_res="@drawable/icon_my_wdkq"
+        app:title_tx="我的考勤"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.sdxxtop.guardianapp.ui.activity.kaoqin.MyAssessLayout
+        android:id="@+id/my_assess_2"
+        app:layout_constraintTop_toBottomOf="@+id/my_assess_1"
+        app:icon_res="@drawable/icon_my_wdgz"
+        app:title_tx="我的工作"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.sdxxtop.guardianapp.ui.activity.kaoqin.MyAssessLayout
+        android:id="@+id/my_assess_3"
+        app:layout_constraintTop_toBottomOf="@+id/my_assess_2"
+        app:icon_res="@drawable/icon_my_jxmx"
+        app:title_tx="绩效明细"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

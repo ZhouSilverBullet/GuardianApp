@@ -58,4 +58,6 @@
     </array>
 
     <color name="blue">#0094ff</color>
+    <color name="texthintcolor">#999999</color>
+    <color name="green_lv">#54BB5B</color>
 </resources>

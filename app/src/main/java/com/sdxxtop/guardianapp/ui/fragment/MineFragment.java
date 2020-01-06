@@ -24,13 +24,15 @@ import com.sdxxtop.guardianapp.presenter.contract.MineContract;
 import com.sdxxtop.guardianapp.ui.activity.CenterMessageActivity;
 import com.sdxxtop.guardianapp.ui.activity.ContactActivity;
 import com.sdxxtop.guardianapp.ui.activity.LoginActivity;
+import com.sdxxtop.guardianapp.ui.activity.kaoqin.adapter.MineMenuAdapter;
 import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
-import com.sdxxtop.guardianapp.ui.widget.imgservice.OnlineServiceActivity;
 import com.sdxxtop.guardianapp.utils.SpUtil;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -48,18 +50,12 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     LinearLayout llContacts;
     @BindView(R.id.ll_message)
     LinearLayout llMessage;
-    @BindView(R.id.ll_online_service)
-    LinearLayout llOnlineService;
-    @BindView(R.id.ll_banben)
-    LinearLayout llBanben;
-    @BindView(R.id.ll_guanyu)
-    LinearLayout llGuanyu;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
 
     private boolean isAdmin;
 
     private int IMAGE_STORE = 100;
-    private String mPartName;
-    private String partUnit; //什么单位
     private int is_mail; //是否有权限进入通讯录
 
     public static MineFragment newInstance(boolean isAdmin) {
@@ -82,7 +78,8 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
         if (getArguments() != null) {
             isAdmin = getArguments().getBoolean("isAdmin");
         }
-//        topViewPadding(mTitleView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(new MineMenuAdapter());
     }
 
     @Override
@@ -162,18 +159,6 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
         }
         tvName.setText(bean.name);
         tvPlace.setText(new StringBuilder().append(bean.part_name).append(" ").append(bean.getStringPosition()));
-        mPartName = bean.part_name;
-        switch (bean.type) { //1:区级 2: 乡镇 3:企业
-            case 1:
-                partUnit = "区级单位";
-                break;
-            case 2:
-                partUnit = "街道单位";
-                break;
-            case 3:
-                partUnit = "企业单位";
-                break;
-        }
     }
 
     @Override
@@ -203,7 +188,7 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
         mPresenter.loadData();
     }
 
-    @OnClick({R.id.civ_header, R.id.ll_contacts, R.id.ll_message, R.id.ll_online_service, R.id.ll_banben, R.id.ll_guanyu, R.id.rl_login_out})
+    @OnClick({R.id.civ_header, R.id.ll_contacts, R.id.ll_message, R.id.rl_login_out})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.civ_header:
@@ -228,17 +213,8 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
                 Intent messageIntent = new Intent(getActivity(), CenterMessageActivity.class);
                 startActivity(messageIntent);
                 break;
-            case R.id.ll_online_service:
-                Intent intent = new Intent(getContext(), OnlineServiceActivity.class);
-                intent.putExtra("href", "https://tb.53kf.com/code/client/b722216fa3d928f41a494d544ac54dcb/2?device=android");
-                startActivity(intent);
-                break;
             case R.id.rl_login_out:  // 退出
                 logoutDialog();
-                break;
-            case R.id.ll_banben:
-                break;
-            case R.id.ll_guanyu:
                 break;
         }
     }

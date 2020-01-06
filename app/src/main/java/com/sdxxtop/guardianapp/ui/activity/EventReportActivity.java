@@ -250,7 +250,6 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     @Override
     protected void initData() {
         super.initData();
-//        mPresenter.searchTitle();
         mPresenter.loadData(streamId);
     }
 

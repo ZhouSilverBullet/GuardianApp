@@ -53,6 +53,8 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
 
     protected String[] mParties = new String[]{"环保局", "城管局", "应急局", "盛庄街道"};
     private boolean prevIsShow;
+    private boolean prevIsBig;
+    private boolean isDrawValue = true;
 
     public PieChartView(Context context) {
         this(context, null);
@@ -66,14 +68,15 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
         super(context, attrs, defStyleAttr);
         TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.PieChartview, defStyleAttr, 0);
         title = typedArray.getString(R.styleable.PieChartview_pie_title);
-        prevIsShow = typedArray.getBoolean(R.styleable.PieChartview_tv_prev_is_show,false);
+        prevIsShow = typedArray.getBoolean(R.styleable.PieChartview_tv_prev_is_show, false);
+        prevIsBig = typedArray.getBoolean(R.styleable.PieChartview_is_big, false);
 
         typedArray.recycle();
         initView();
     }
 
     private void initView() {
-        LayoutInflater.from(getContext()).inflate(R.layout.view_pie_chart, this, true);
+        LayoutInflater.from(getContext()).inflate(prevIsBig ? R.layout.view_pie_chart : R.layout.view_pie_chart2, this, true);
         ButterKnife.bind(this);
 
         if (!TextUtils.isEmpty(title)) {
@@ -82,9 +85,9 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
             tvTitle.setVisibility(View.GONE);
         }
 
-        if (prevIsShow){
+        if (prevIsShow) {
             tv_up.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             tv_up.setVisibility(View.GONE);
         }
         //初始化饼图
@@ -163,7 +166,7 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
         ArrayList<Integer> colors = new ArrayList<Integer>();
         for (int i = 0; i < dataList.size(); i++) {
             EventChartBean.ChartInfoBean item = dataList.get(i);
-            if (item.getCount()!=0){
+            if (item.getCount() != 0) {
                 entries.add(new PieEntry(item.getNum(), item.getPart_name(), item.getCount() + "," + item.getPart_id()));
                 colors.add(Color.parseColor(item.getColor()));
             }
@@ -174,7 +177,7 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
         dataSet.setSliceSpace(1f);
         dataSet.setIconsOffset(new MPPointF(0, 40));
         dataSet.setSelectionShift(5f);
-        dataSet.setDrawValues(true);  // 不画值
+        dataSet.setDrawValues(isDrawValue);  // 不画值
         // add a lot of colors
         dataSet.setColors(colors);
         dataSet.setUsingSliceColorAsValueLineColor(true);
@@ -238,6 +241,19 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
 
     public interface OnPieChartClick {
         void pieItemClick(String id);
+    }
+
+    public PieChart getPieChart() {
+        return pieChart;
+    }
+
+    /**
+     * 是否显示数据值
+     *
+     * @param isDrawValue
+     */
+    public void isDrawValue(boolean isDrawValue) {
+        this.isDrawValue = isDrawValue;
     }
 
 }

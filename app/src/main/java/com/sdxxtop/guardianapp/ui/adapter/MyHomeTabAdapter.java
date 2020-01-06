@@ -18,6 +18,7 @@ import com.sdxxtop.guardianapp.ui.activity.EventReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.GridMapActivity;
 import com.sdxxtop.guardianapp.ui.activity.HomeActivity;
 import com.sdxxtop.guardianapp.ui.activity.MyFaceLivenessActivity;
+import com.sdxxtop.guardianapp.ui.activity.kaoqin.ClockInActivity;
 import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
 import com.sdxxtop.guardianapp.ui.widget.imgservice.OnlineServiceActivity;
 import com.sdxxtop.guardianapp.utils.AMapFindLocation2;
@@ -109,7 +110,7 @@ public class MyHomeTabAdapter extends BaseAdapter {
                     intent.putExtra("streamId",2);
                 }
                 break;
-            case 2:
+            case 2:  // 打卡
                 toFaceDaka(context);
                 break;
             case 3: // 无人机检测
@@ -140,6 +141,12 @@ public class MyHomeTabAdapter extends BaseAdapter {
     }
 
     private void toFaceDaka(Context context) {
+
+        if (true){
+            context.startActivity(new Intent(context, ClockInActivity.class));
+            return;
+        }
+
         //判断一次打卡，gps是否打开
         if (mBean.is_clock == 1) {
             if (mBean.is_face == 1) {

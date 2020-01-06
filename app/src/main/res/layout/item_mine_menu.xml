@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/ll_online_service"
+        android:paddingLeft="15dp"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/icon"
+            android:src="@drawable/service_my_new"
+            android:layout_width="18dp"
+            android:layout_height="19dp" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_marginLeft="13dp"
+            android:textColor="@color/color_313131"
+            android:textSize="14sp"
+            android:text="在线客服"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <TextView
+        app:layout_constraintTop_toBottomOf="@+id/ll_online_service"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:background="@color/color_f2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/ll_banben"-->
+<!--        android:paddingLeft="15dp"-->
+<!--        android:paddingBottom="15dp"-->
+<!--        android:paddingTop="15dp"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content">-->
+
+<!--        <ImageView-->
+<!--            android:src="@drawable/set_my_new"-->
+<!--            android:layout_width="18dp"-->
+<!--            android:layout_height="19dp" />-->
+
+<!--        <TextView-->
+<!--            android:layout_marginLeft="13dp"-->
+<!--            android:textColor="@color/color_313131"-->
+<!--            android:textSize="14sp"-->
+<!--            android:text="版本说明"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content" />-->
+<!--    </LinearLayout>-->
+
+<!--    <TextView-->
+<!--        android:layout_marginRight="15dp"-->
+<!--        android:layout_marginLeft="15dp"-->
+<!--        android:background="@color/color_f2"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="1dp" />-->
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/ll_guanyu"-->
+<!--        android:paddingLeft="15dp"-->
+<!--        android:paddingBottom="15dp"-->
+<!--        android:paddingTop="15dp"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content">-->
+
+<!--        <ImageView-->
+<!--            android:src="@drawable/aboutus_my_new"-->
+<!--            android:layout_width="18dp"-->
+<!--            android:layout_height="19dp" />-->
+
+<!--        <TextView-->
+<!--            android:layout_marginLeft="13dp"-->
+<!--            android:textColor="@color/color_313131"-->
+<!--            android:textSize="14sp"-->
+<!--            android:text="关于我们"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content" />-->
+<!--    </LinearLayout>-->
+
+<!--    <TextView-->
+<!--        android:layout_marginRight="15dp"-->
+<!--        android:layout_marginLeft="15dp"-->
+<!--        android:background="@color/color_f2"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="1dp" />-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

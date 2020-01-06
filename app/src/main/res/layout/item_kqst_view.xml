@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/tvTopLine"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+
+    <TextView
+        android:id="@+id/tvLineVer"
+        android:background="#DCDCDC"
+        app:layout_constraintRight_toRightOf="@+id/tvPoint"
+        app:layout_constraintLeft_toLeftOf="@+id/tvPoint"
+        app:layout_constraintTop_toTopOf="@+id/tvTime"
+        app:layout_constraintBottom_toTopOf="@+id/tvPoint"
+        android:layout_width="1dp"
+        android:layout_height="0dp"/>
+
+    <TextView
+        android:layout_marginLeft="15dp"
+        android:id="@+id/tvPoint"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvTime"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTime"
+        android:background="@drawable/shape_list_bg"
+        android:layout_width="7dp"
+        android:layout_height="7dp"/>
+
+    <TextView
+        android:id="@+id/tvLineXXXX"
+        android:background="#DCDCDC"
+        app:layout_constraintRight_toRightOf="@+id/tvPoint"
+        app:layout_constraintLeft_toLeftOf="@+id/tvPoint"
+        app:layout_constraintTop_toBottomOf="@+id/tvPoint"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="1dp"
+        android:layout_height="0dp"/>
+
+    <TextView
+        android:layout_marginLeft="15dp"
+        android:id="@+id/tvTime"
+        android:textColor="@color/color_999999"
+        android:textSize="13sp"
+        android:text="上班时间09:00"
+        app:layout_constraintLeft_toRightOf="@+id/tvPoint"
+        app:layout_constraintTop_toBottomOf="@+id/tvTopLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:paddingTop="15dp"
+        app:layout_constraintLeft_toLeftOf="@+id/tvTime"
+        app:layout_constraintTop_toBottomOf="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvtime_dk"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvStatus"
+            app:layout_constraintBottom_toBottomOf="@+id/tvStatus"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@color/color_313131"
+            android:text="打卡时间08:45"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:paddingRight="7dp"
+            android:paddingLeft="7dp"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:background="@drawable/shape_item_dk_normal_bg"
+            android:layout_marginLeft="10dp"
+            android:textColor="#2593E7"
+            android:text="正常"
+            app:layout_constraintLeft_toRightOf="@+id/tvtime_dk"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/ivIcon"
+            android:layout_marginTop="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvStatus"
+            android:src="@drawable/location_agarn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tvPlace"
+            android:layout_marginLeft="5dp"
+            app:layout_constraintBottom_toBottomOf="@+id/ivIcon"
+            app:layout_constraintTop_toTopOf="@+id/ivIcon"
+            app:layout_constraintLeft_toRightOf="@+id/ivIcon"
+            android:textSize="11sp"
+            android:textColor="@color/color_999999"
+            android:text="弘祥科技园"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="6dp"
+            app:layout_constraintLeft_toLeftOf="@+id/tvPlace"
+            app:layout_constraintTop_toBottomOf="@+id/ivIcon"
+            android:textColor="#2593E7"
+            android:textSize="11sp"
+            android:text="备注 >"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

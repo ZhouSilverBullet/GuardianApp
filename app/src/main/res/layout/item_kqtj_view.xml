@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="12dp"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="12dp">
+
+    <TextView
+        android:id="@+id/item_statistical_day_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.2"
+        android:text="工作天数"
+        android:textColor="@color/texthintcolor"
+        android:textSize="17sp" />
+
+
+    <TextView
+        android:id="@+id/item_statistical_day_count"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="3天3小时45分钟"
+        android:textColor="#333333"
+        android:textSize="17sp" />
+
+</LinearLayout>

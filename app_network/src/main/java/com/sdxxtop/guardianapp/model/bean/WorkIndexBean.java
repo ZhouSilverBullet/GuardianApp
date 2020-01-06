@@ -24,7 +24,7 @@ public class WorkIndexBean {
     public List<MonthComplete> month_complete;
     public List<PendingEvent> pending_event;
 
-    public class MonthComplete {
+    public static class MonthComplete {
         public int complete_rate;
         public int events_count;
         public int events_complete;
