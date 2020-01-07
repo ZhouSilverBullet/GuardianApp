@@ -37,13 +37,21 @@ import com.sdxxtop.guardianapp.model.bean.GridreportIndexBean;
 import com.sdxxtop.guardianapp.model.bean.GridreportOperatorBean;
 import com.sdxxtop.guardianapp.model.bean.GridreportPatrolBean;
 import com.sdxxtop.guardianapp.model.bean.GridreportUserreportBean;
+import com.sdxxtop.guardianapp.model.bean.GzmxDateBean;
+import com.sdxxtop.guardianapp.model.bean.GztjMonthBean;
 import com.sdxxtop.guardianapp.model.bean.InitBean;
+import com.sdxxtop.guardianapp.model.bean.KqmxMonthBean;
+import com.sdxxtop.guardianapp.model.bean.KqstDayBean;
+import com.sdxxtop.guardianapp.model.bean.KqstMonthBean;
+import com.sdxxtop.guardianapp.model.bean.KqtjMonthBean;
 import com.sdxxtop.guardianapp.model.bean.LoginBean;
 import com.sdxxtop.guardianapp.model.bean.MainIndexBeanNew;
 import com.sdxxtop.guardianapp.model.bean.MainMapBean;
 import com.sdxxtop.guardianapp.model.bean.PartEventListBean;
 import com.sdxxtop.guardianapp.model.bean.PatrolAddBean;
 import com.sdxxtop.guardianapp.model.bean.PatrolReadBean;
+import com.sdxxtop.guardianapp.model.bean.PjgsDateBean;
+import com.sdxxtop.guardianapp.model.bean.RecordInfoBean;
 import com.sdxxtop.guardianapp.model.bean.RecordLogBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
 import com.sdxxtop.guardianapp.model.bean.SectionEventBean;
@@ -57,8 +65,10 @@ import com.sdxxtop.guardianapp.model.bean.UcenterIndexBean;
 import com.sdxxtop.guardianapp.model.bean.UnreadIndexBean;
 import com.sdxxtop.guardianapp.model.bean.UnreadNewslistBean;
 import com.sdxxtop.guardianapp.model.bean.WorkIndexBean;
+import com.sdxxtop.guardianapp.model.bean.XljlDateBean;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -398,5 +408,41 @@ public interface EnvirApiService {
     @FormUrlEncoded
     @POST("Evnt/Report")
     Observable<RequestBean<EventStreamReportBean>> postEventStream(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("Assessment/AssessmentIndex")
+    Observable<RequestBean<KqstMonthBean>> kqstDataInfo(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("Assessment/stat")
+    Observable<RequestBean<KqtjMonthBean>> kqtjDataInfo(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("Assessment/day")
+    Observable<RequestBean<KqstDayBean>> kqtjDayInfo(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("Assessment/detail")
+    Observable<RequestBean<KqmxMonthBean>> kqmxDayInfo(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("Attendance/jobStatistics")
+    Observable<RequestBean<GztjMonthBean>> gztjDayInfo(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("Attendance/patrolDistance")
+    Observable<RequestBean<List<XljlDateBean>>> xljlDayInfo(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("Attendance/jobDetail")
+    Observable<RequestBean<List<GzmxDateBean>>> gzmxDayInfo(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("Assessment/average")
+    Observable<RequestBean<PjgsDateBean>> pjgsDayInfo(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("record/info")
+    Observable<RequestBean<List<RecordInfoBean>>> recordInfo(@Field("data") String data);
 
 }

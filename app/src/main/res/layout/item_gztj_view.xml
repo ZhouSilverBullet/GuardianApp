@@ -10,10 +10,23 @@
         android:id="@+id/tvDesc"
         android:padding="15dp"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/icon"
         app:layout_constraintTop_toTopOf="parent"
         android:text="上报分数"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_marginRight="10dp"
+        android:tint="@color/gray"
+        android:src="@drawable/assess_icon_list_down"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvDesc"
+        android:layout_width="40dp"
+        android:layout_height="40dp"/>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:visibility="gone"

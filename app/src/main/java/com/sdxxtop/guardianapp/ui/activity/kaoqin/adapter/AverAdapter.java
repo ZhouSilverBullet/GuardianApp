@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sdxxtop.guardianapp.R;
+import com.sdxxtop.guardianapp.model.bean.XljlDateBean;
 
 import static com.sdxxtop.guardianapp.ui.activity.kaoqin.DashLineView.dp2px;
 
@@ -15,17 +16,17 @@ import static com.sdxxtop.guardianapp.ui.activity.kaoqin.DashLineView.dp2px;
  * Date: 2020/1/5
  * Desc:
  */
-public class AverAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+public class AverAdapter extends BaseQuickAdapter<XljlDateBean, BaseViewHolder> {
     public AverAdapter() {
         super(R.layout.item_aver_recycler);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, String item) {
+    protected void convert(BaseViewHolder helper, XljlDateBean item) {
         TextView textBg = helper.getView(R.id.item_aver_text_bg);
         TextView textX = helper.getView(R.id.item_aver_text_x);
         TextView textValue = helper.getView(R.id.item_aver_text_value);
-        float work_time = 10;
+        float work_time = item.total_distance;
         if (work_time > 24) {
             work_time = 24f;
         }
@@ -36,7 +37,7 @@ public class AverAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
         } else {
             textBg.setBackgroundColor(Color.parseColor("#553296FA"));
         }
-        textX.setText("2020/01/05");
-        textValue.setText(work_time + "小时");
+        textX.setText(item.sign_date);
+        textValue.setText("" + work_time+"小时");
     }
 }

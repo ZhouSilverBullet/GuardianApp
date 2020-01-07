@@ -8,9 +8,6 @@ import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseActivity;
 import com.sdxxtop.guardianapp.ui.activity.kaoqin.adapter.KQST_Adapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -52,11 +49,6 @@ public class ClockInActivity extends BaseActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         KQST_Adapter adapter = new KQST_Adapter();
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            list.add("");
-        }
         recyclerView.setAdapter(adapter);
-        adapter.replaceData(list);
     }
 }

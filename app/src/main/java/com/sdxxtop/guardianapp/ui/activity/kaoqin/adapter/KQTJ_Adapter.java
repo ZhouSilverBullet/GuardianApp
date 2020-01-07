@@ -1,6 +1,6 @@
 package com.sdxxtop.guardianapp.ui.activity.kaoqin.adapter;
 
-import android.text.TextUtils;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -14,6 +14,7 @@ import com.sdxxtop.guardianapp.R;
  */
 public class KQTJ_Adapter extends BaseQuickAdapter<String, BaseViewHolder> {
 
+    private static final String TAG = "KQTJ_Adapter";
     public KQTJ_Adapter() {
         super(R.layout.item_kqtj_view);
     }
@@ -28,40 +29,15 @@ public class KQTJ_Adapter extends BaseQuickAdapter<String, BaseViewHolder> {
                 nameText.setText("工作天数");
                 break;
             case 1:
-                nameText.setText("出差天数");
-                break;
-            case 2:
-                nameText.setText("加班天数");
-                break;
-            case 3:
-                nameText.setText("请假天数");
-                break;
-            case 4:
                 nameText.setText("迟到次数");
                 break;
-            case 5:
+            case 2:
                 nameText.setText("早退次数");
                 break;
-            case 6:
-                nameText.setText("漏打卡次数");
-                break;
-            case 7:
+            case 3:
                 nameText.setText("旷工次数");
                 break;
-            case 8:
-                nameText.setText("外勤次数");
-                break;
         }
-
-
-        if (TextUtils.isEmpty(item)) {
-            if (position < 4) {
-                countText.setText("");
-            } else {
-                countText.setText("");
-            }
-        } else {
-            countText.setText(item);
-        }
+        countText.setText(item);
     }
 }

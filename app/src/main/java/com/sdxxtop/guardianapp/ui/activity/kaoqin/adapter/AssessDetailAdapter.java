@@ -36,9 +36,9 @@ public class AssessDetailAdapter extends BaseQuickAdapter<AssessDetailAdapter.De
         icon.setOnClickListener(v -> {
             tvTitle2.setVisibility(tvTitle2.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
             tvTitle3.setVisibility(tvTitle3.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
-            if (tvTitle2.getVisibility() == View.VISIBLE||tvTitle3.getVisibility() == View.VISIBLE){
+            if (tvTitle2.getVisibility() == View.VISIBLE || tvTitle3.getVisibility() == View.VISIBLE) {
                 icon.setImageResource(R.drawable.assess_icon_list_up);
-            }else{
+            } else {
                 icon.setImageResource(R.drawable.assess_icon_list_down);
             }
         });

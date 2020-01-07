@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.sdxxtop.guardianapp.R;
 
 import java.util.Calendar;
@@ -27,11 +28,13 @@ public class MonthSelectView extends LinearLayout {
     private TextView tvData;
     private ImageView tvLeft;
     private ImageView tvRight;
-    private int month = 12;
-    private int year = 2020;
+    public int month = 12;
+    public int year = 2020;
 
     private int currentYear;
     private int currentMonth;
+
+    private MaterialCalendarView mCalendarView;
 
     public MonthSelectView(Context context) {
         this(context, null);
@@ -69,8 +72,11 @@ public class MonthSelectView extends LinearLayout {
                     year -= 1;
                     month = 12;
                 }
+                if (mCalendarView != null) {
+                    mCalendarView.goToPrevious();
+                }
                 if (mListener != null) {
-                    mListener.onMonthChanged(year + "-" + month);
+                    mListener.onMonthChanged(year, month);
                 }
                 tvData.setText(year + "年" + month + "月");
                 Toast.makeText(mContext, year + "-" + month, Toast.LENGTH_SHORT).show();
@@ -79,6 +85,7 @@ public class MonthSelectView extends LinearLayout {
         tvRight.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                if ((month == currentMonth) && (year == currentYear)) return;
                 if (month < 12) {
                     month += 1;
                 } else {
@@ -86,8 +93,11 @@ public class MonthSelectView extends LinearLayout {
                     month = 1;
                 }
 
+                if (mCalendarView != null) {
+                    mCalendarView.goToNext();
+                }
                 if (mListener != null) {
-                    mListener.onMonthChanged(year + "-" + month);
+                    mListener.onMonthChanged(year, month);
                 }
                 tvData.setText(year + "年" + month + "月");
                 Toast.makeText(mContext, year + "-" + month, Toast.LENGTH_SHORT).show();
@@ -95,10 +105,23 @@ public class MonthSelectView extends LinearLayout {
         });
     }
 
+    public void setOnMonthChange(int y, int m) {
+        year = y;
+        month = m;
+        tvData.setText(year + "年" + month + "月");
+        if (mListener != null) {
+            mListener.onMonthChanged(year, month);
+        }
+    }
+
     private OnMonthChangeListener mListener;
 
+    public void bindCalendar(MaterialCalendarView calendarView) {
+        this.mCalendarView = calendarView;
+    }
+
     public interface OnMonthChangeListener {
-        void onMonthChanged(String month);
+        void onMonthChanged(int year, int month);
     }
 
     public void setOnMonthChageListener(OnMonthChangeListener listener) {

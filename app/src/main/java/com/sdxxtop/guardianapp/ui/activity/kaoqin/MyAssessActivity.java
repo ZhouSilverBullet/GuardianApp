@@ -2,7 +2,12 @@ package com.sdxxtop.guardianapp.ui.activity.kaoqin;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.TextView;
 
@@ -24,7 +29,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.sdxxtop.guardianapp.ui.activity.kaoqin.AssessDetailActivity.generateCenterSpannableText;
 
 public class MyAssessActivity extends BaseMvpActivity<MyAssessPresenter> implements MyAssessContract.IView {
 
@@ -129,4 +133,13 @@ public class MyAssessActivity extends BaseMvpActivity<MyAssessPresenter> impleme
 
         pieChartView.setPieData(data);
     }
+
+    public static SpannableString generateCenterSpannableText() {
+        SpannableString s = new SpannableString("90\n绩效总分");
+        s.setSpan(new RelativeSizeSpan(1.7f), 0, 2, 0);
+        s.setSpan(new StyleSpan(Typeface.NORMAL), 2, s.length(), 0);
+        s.setSpan(new ForegroundColorSpan(Color.GRAY), 2, s.length(), 0);
+        return s;
+    }
+
 }

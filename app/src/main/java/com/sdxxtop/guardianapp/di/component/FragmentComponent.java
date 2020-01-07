@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.sdxxtop.guardianapp.di.module.FragmentModule;
 import com.sdxxtop.guardianapp.di.qualifier.FragmentScope;
+import com.sdxxtop.guardianapp.ui.activity.kaoqin.fragment.KQST_AttendanceFragment;
 import com.sdxxtop.guardianapp.ui.fragment.CourseListFragment;
 import com.sdxxtop.guardianapp.ui.fragment.DataMonitoringFragment;
 import com.sdxxtop.guardianapp.ui.fragment.EventListFragment;
@@ -33,4 +34,5 @@ public interface FragmentComponent {
     void inject(GridEventFragment fragment);
     void inject(OrganizationListFragment fragment);
     void inject(EventListFragment fragment);
+    void inject(KQST_AttendanceFragment fragment);
 }

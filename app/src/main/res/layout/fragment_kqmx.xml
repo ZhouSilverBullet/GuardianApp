@@ -41,6 +41,14 @@
             android:text="打卡时间"
             android:textColor="#999999"
             android:textSize="17sp" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="在线时长"
+            android:textColor="#999999"
+            android:textSize="17sp" />
 
         <TextView
             android:layout_width="0dp"

@@ -253,6 +253,16 @@ public class Date2Util {
     }
 
     /**
+     * Calendar <==> String
+     * 将Calendar 转化为 String
+     * @param day
+     * @return
+     */
+    public static String getCalendarDate(com.haibin.calendarview.Calendar day) {
+        return "" + day.getYear() + "-" + day.getMonth() + "-" + day.getDay();
+    }
+
+    /**
      * 取得当前日期所在周的第一天
      *
      * @return
@@ -1026,5 +1036,21 @@ public class Date2Util {
             return Integer.parseInt(split[index]);
         }
         return 0;
+    }
+
+    /*
+     * 将时间转换为时间戳
+     */
+    public static String dateToStamp(String s) {
+        String res = "";
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
+            Date date = simpleDateFormat.parse(s);
+            long ts = date.getTime()/1000;
+            res = String.valueOf(ts);
+        } catch (Exception e) {
+
+        }
+        return res;
     }
 }

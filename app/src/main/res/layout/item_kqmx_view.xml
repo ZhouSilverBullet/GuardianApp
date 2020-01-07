@@ -22,21 +22,31 @@
         android:layout_weight="1">
 
         <TextView
-            android:layout_width="0dp"
+            android:id="@+id/tvClockTime"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:gravity="center"
             android:text="打卡时间"
-            android:textColor="@color/color_999999"
-            android:textSize="17sp"
-            android:visibility="gone" />
+            android:textColor="@color/color_313131"
+            android:textSize="17sp"/>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:visibility="gone"
             android:id="@+id/item_attendance_detail_recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
     </FrameLayout>
+
+    <TextView
+        android:id="@+id/tvOnlineTime"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="在线时长"
+        android:textColor="@color/color_313131"
+        android:textSize="17sp" />
 
     <TextView
         android:id="@+id/item_attendance_detail_dec"
@@ -45,6 +55,6 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="备注"
-        android:textColor="@color/color_999999"
+        android:textColor="@color/color_313131"
         android:textSize="17sp" />
 </LinearLayout>

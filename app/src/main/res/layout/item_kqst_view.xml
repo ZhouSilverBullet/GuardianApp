@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
         android:id="@+id/tvTopLine"
@@ -42,11 +43,11 @@
         android:layout_height="0dp"/>
 
     <TextView
-        android:layout_marginLeft="15dp"
         android:id="@+id/tvTime"
+        android:layout_marginLeft="15dp"
         android:textColor="@color/color_999999"
         android:textSize="13sp"
-        android:text="上班时间09:00"
+        tools:text="上班时间09:00"
         app:layout_constraintLeft_toRightOf="@+id/tvPoint"
         app:layout_constraintTop_toBottomOf="@+id/tvTopLine"
         android:layout_width="wrap_content"
@@ -79,7 +80,7 @@
             android:paddingTop="3dp"
             android:background="@drawable/shape_item_dk_normal_bg"
             android:layout_marginLeft="10dp"
-            android:textColor="#2593E7"
+            android:textColor="#33CC00"
             android:text="正常"
             app:layout_constraintLeft_toRightOf="@+id/tvtime_dk"
             app:layout_constraintTop_toTopOf="parent"
@@ -97,6 +98,7 @@
 
         <TextView
             android:id="@+id/tvPlace"
+            android:singleLine="true"
             android:layout_marginLeft="5dp"
             app:layout_constraintBottom_toBottomOf="@+id/ivIcon"
             app:layout_constraintTop_toTopOf="@+id/ivIcon"
@@ -108,14 +110,14 @@
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:paddingRight="10dp"
-            android:paddingBottom="10dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="15dp"
             android:paddingTop="6dp"
             app:layout_constraintLeft_toLeftOf="@+id/tvPlace"
             app:layout_constraintTop_toBottomOf="@+id/ivIcon"
             android:textColor="#2593E7"
             android:textSize="11sp"
-            android:text="备注 >"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </androidx.constraintlayout.widget.ConstraintLayout>

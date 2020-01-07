@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 
     <com.sdxxtop.guardianapp.ui.activity.kaoqin.calendar.MyAssessCalendarView
+        android:id="@+id/mcv_view"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="50dp"

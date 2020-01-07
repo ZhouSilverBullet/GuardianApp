@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.sdxxtop.guardianapp.ui.activity.kaoqin.calendar.MyAssessCalendarView
+    <com.sdxxtop.guardianapp.ui.activity.kaoqin.calendar.MonthSelectView
+        android:id="@+id/msv_view"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="50dp"
@@ -43,7 +44,7 @@
                 android:ellipsize="end"
                 android:gravity="center"
                 android:lines="1"
-                tools:text="2020-01-05"
+                android:text="2020/01/05"
                 android:textColor="#333333"
                 android:textSize="12sp"
                 android:visibility="invisible" />
@@ -75,6 +76,7 @@
 
             </LinearLayout>
         </LinearLayout>
+
     </FrameLayout>
 
 </LinearLayout>

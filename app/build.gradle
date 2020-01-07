@@ -1,6 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.zhousaito.plugin.publishApp'
 
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     defaultConfig {
@@ -55,6 +58,10 @@ android {
     lintOptions {
         abortOnError false
     }
+
+    dataBinding{
+        enabled true
+    }
 }
 
 //360多渠道打包
@@ -72,6 +79,9 @@ publishAppInfo {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "androidx.core:core-ktx:1.1.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
     implementation rootProject.ext.dependencies["androidx.appcompat"]
     implementation rootProject.ext.dependencies["androidx.support.v4"]
     implementation rootProject.ext.dependencies["constraintlayout"]
@@ -153,5 +163,6 @@ dependencies {
     implementation 'com.haibin:calendarview:3.6.6'
     //饺子播放器
     implementation 'cn.jzvd:jiaozivideoplayer:7.0.5'
+    implementation 'com.github.huangyanbin:SmartTable:2.2.0'
     implementation project(path: ':sdk_agora')
 }

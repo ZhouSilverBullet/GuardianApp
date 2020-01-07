@@ -37,6 +37,7 @@ public class MyAssessCalendarView extends LinearLayout implements CalendarView.O
     private View view;
     private TextView tvDataStart;
     private TextView tvDataEnd;
+    public String currentDate;  //默认当天
 
     public MyAssessCalendarView(Context context) {
         this(context, null);
@@ -59,7 +60,7 @@ public class MyAssessCalendarView extends LinearLayout implements CalendarView.O
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date(System.currentTimeMillis());
-        String currentDate = format.format(date);
+        currentDate = format.format(date);
         tvDataStart.setText(currentDate);
         tvDataEnd.setText(currentDate);
 
