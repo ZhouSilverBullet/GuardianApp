@@ -5,6 +5,7 @@ import com.sdxxtop.guardianapp.model.bean.AllarticleBean;
 import com.sdxxtop.guardianapp.model.bean.ArticleIndexBean;
 import com.sdxxtop.guardianapp.model.bean.AuthDataBean;
 import com.sdxxtop.guardianapp.model.bean.AutoLoginBean;
+import com.sdxxtop.guardianapp.model.bean.CategoryStatusBean;
 import com.sdxxtop.guardianapp.model.bean.ContactIndexBean;
 import com.sdxxtop.guardianapp.model.bean.DeviceDataBean;
 import com.sdxxtop.guardianapp.model.bean.DeviceListBean;
@@ -51,6 +52,8 @@ import com.sdxxtop.guardianapp.model.bean.PartEventListBean;
 import com.sdxxtop.guardianapp.model.bean.PatrolAddBean;
 import com.sdxxtop.guardianapp.model.bean.PatrolReadBean;
 import com.sdxxtop.guardianapp.model.bean.PjgsDateBean;
+import com.sdxxtop.guardianapp.model.bean.RecordDetailBean;
+import com.sdxxtop.guardianapp.model.bean.RecordIndexBean;
 import com.sdxxtop.guardianapp.model.bean.RecordInfoBean;
 import com.sdxxtop.guardianapp.model.bean.RecordLogBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
@@ -68,7 +71,6 @@ import com.sdxxtop.guardianapp.model.bean.WorkIndexBean;
 import com.sdxxtop.guardianapp.model.bean.XljlDateBean;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -112,7 +114,7 @@ public interface EnvirApiService {
     Observable<RequestBean<MainIndexBeanNew>> postMainIndex(@Field("data") String data);
 
     @FormUrlEncoded
-    @POST("main/sign")
+    @POST("record/sign")
     Observable<RequestBean> postMainSign(@Field("data") String data);
 
     @FormUrlEncoded
@@ -431,11 +433,11 @@ public interface EnvirApiService {
 
     @FormUrlEncoded
     @POST("Attendance/patrolDistance")
-    Observable<RequestBean<List<XljlDateBean>>> xljlDayInfo(@Field("data") String data);
+    Observable<RequestBean<XljlDateBean>> xljlDayInfo(@Field("data") String data);
 
     @FormUrlEncoded
     @POST("Attendance/jobDetail")
-    Observable<RequestBean<List<GzmxDateBean>>> gzmxDayInfo(@Field("data") String data);
+    Observable<RequestBean<GzmxDateBean>> gzmxDayInfo(@Field("data") String data);
 
     @FormUrlEncoded
     @POST("Assessment/average")
@@ -443,6 +445,18 @@ public interface EnvirApiService {
 
     @FormUrlEncoded
     @POST("record/info")
-    Observable<RequestBean<List<RecordInfoBean>>> recordInfo(@Field("data") String data);
+    Observable<RequestBean<RecordInfoBean>> recordInfo(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("Attendance/getCategoryStatus")
+    Observable<RequestBean<CategoryStatusBean>> getCategoryStatus(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("record/index")
+    Observable<RequestBean<RecordIndexBean>> getRecordIndex(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("record/details")
+    Observable<RequestBean<RecordDetailBean>> getRecordDetail(@Field("data") String data);
 
 }

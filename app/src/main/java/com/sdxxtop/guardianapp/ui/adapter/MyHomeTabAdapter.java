@@ -3,7 +3,6 @@ package com.sdxxtop.guardianapp.ui.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,18 +10,14 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.amap.api.location.AMapLocation;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.model.bean.MainIndexBeanNew;
 import com.sdxxtop.guardianapp.ui.activity.EventReportActivity;
 import com.sdxxtop.guardianapp.ui.activity.GridMapActivity;
 import com.sdxxtop.guardianapp.ui.activity.HomeActivity;
-import com.sdxxtop.guardianapp.ui.activity.MyFaceLivenessActivity;
 import com.sdxxtop.guardianapp.ui.activity.kaoqin.ClockInActivity;
-import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
 import com.sdxxtop.guardianapp.ui.widget.imgservice.OnlineServiceActivity;
-import com.sdxxtop.guardianapp.utils.AMapFindLocation2;
-import com.sdxxtop.guardianapp.utils.GpsUtils;
+import com.sdxxtop.guardianapp.utils.SingleClickListener;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import androidx.cardview.widget.CardView;
@@ -75,9 +70,9 @@ public class MyHomeTabAdapter extends BaseAdapter {
         // 根据key值设置不同数据内容
         holder.imageView.setImageResource(imgRes[position]);
         holder.textView.setText(titleRes[position]);
-        holder.cardview.setOnClickListener(new View.OnClickListener() {
+        holder.cardview.setOnClickListener(new SingleClickListener() {
             @Override
-            public void onClick(View v) {
+            protected void onSingleClick(View v) {
                 startActivity(position, parent.getContext());
             }
         });
@@ -100,18 +95,20 @@ public class MyHomeTabAdapter extends BaseAdapter {
             case 0: // 事件上报
                 if (mBean.is_report == 1) {
                     intent = new Intent(context, EventReportActivity.class);
-                    intent.putExtra("streamId",1);
+                    intent.putExtra("streamId", 1);
                 }
                 break;
             case 1:  // 巡查上报
                 if (mBean.is_patrol == 1) {
 //                    intent = new Intent(context, EventDiscretionReportActivity.class);
                     intent = new Intent(context, EventReportActivity.class);
-                    intent.putExtra("streamId",2);
+                    intent.putExtra("streamId", 2);
                 }
                 break;
             case 2:  // 打卡
-                toFaceDaka(context);
+                intent = new Intent(context, ClockInActivity.class);
+                intent.putExtra("isClock", mBean.is_clock);
+                intent.putExtra("isFace", mBean.is_face);
                 break;
             case 3: // 无人机检测
                 if (mBean.is_uav == 1) {
@@ -131,58 +128,10 @@ public class MyHomeTabAdapter extends BaseAdapter {
                 break;
         }
         if (intent == null) {
-            if (index == 2) {
-                return;
-            }
             showToast(context);
             return;
         }
         context.startActivity(intent);
-    }
-
-    private void toFaceDaka(Context context) {
-
-        if (true){
-            context.startActivity(new Intent(context, ClockInActivity.class));
-            return;
-        }
-
-        //判断一次打卡，gps是否打开
-        if (mBean.is_clock == 1) {
-            if (mBean.is_face == 1) {
-                if (mActivity != null) {
-                    ((HomeActivity) mActivity).showLoadingDialog();
-                }
-                if (GpsUtils.isOPen(context)) {
-                    AMapFindLocation2 instance = AMapFindLocation2.getInstance();
-                    instance.location();
-                    instance.setLocationCompanyListener(new AMapFindLocation2.LocationCompanyListener() {
-                        @Override
-                        public void onAddress(AMapLocation aMapLocation) {
-                            if (mActivity != null) {
-                                ((HomeActivity) mActivity).hideLoadingDialog();
-                            }
-                            String address = aMapLocation.getAddress();
-                            if (TextUtils.isEmpty(address)) {
-                                UIUtils.showToast("定位获取位置失败,请稍后重试");
-                            } else {
-                                instance.stopLocation();
-                                Intent intent = new Intent(context, MyFaceLivenessActivity.class);
-                                intent.putExtra("isFace", true);
-                                intent.putExtra("address", address);
-                                context.startActivity(intent);
-                            }
-                        }
-                    });
-                } else {
-                    GpsUtils.showCode332ErrorDialog(context);
-                }
-            } else {
-                toFace(context);
-            }
-        } else {
-            showToast(context);
-        }
     }
 
     private MainIndexBeanNew mBean;
@@ -195,29 +144,6 @@ public class MyHomeTabAdapter extends BaseAdapter {
 
     public void showToast(Context context) {
         UIUtils.showToast("暂无权限");
-    }
-
-    private void toFace(Context context) {
-
-        new IosAlertDialog(context)
-                .builder()
-                .setTitle("提示")
-                .setMsg("您还没注册人脸信息，是否去录入")
-                .setPositiveButton("录入", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(context, MyFaceLivenessActivity.class);
-                        intent.putExtra("isFace", false);
-                        mActivity.startActivityForResult(intent, 100);
-                    }
-                })
-                .setNegativeButton("", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                    }
-                })
-                .show();
     }
 }
 

@@ -13,7 +13,7 @@ import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
 import com.sdxxtop.guardianapp.model.http.net.Params;
 import com.sdxxtop.guardianapp.model.http.util.RxUtils;
 import com.sdxxtop.guardianapp.ui.activity.kaoqin.DashLineView;
-import com.sdxxtop.guardianapp.ui.activity.kaoqin.adapter.AverAdapter;
+import com.sdxxtop.guardianapp.ui.activity.kaoqin.adapter.XLJLAverAdapter;
 import com.sdxxtop.guardianapp.ui.activity.kaoqin.calendar.MyAssessCalendarView;
 import com.sdxxtop.guardianapp.utils.Date2Util;
 
@@ -42,7 +42,7 @@ public class XLJL_WorkFragment extends BaseFragment implements MyAssessCalendarV
     @BindView(R.id.mcv_view)
     MyAssessCalendarView mcvView;
 
-    private AverAdapter adapter;
+    private XLJLAverAdapter adapter;
 
     @Override
     protected int getFragmentLayout() {
@@ -51,10 +51,7 @@ public class XLJL_WorkFragment extends BaseFragment implements MyAssessCalendarV
 
     @Override
     protected void initView() {
-        weightView.setLayoutParams(new LinearLayout.LayoutParams(0, DashLineView.dp2px(getContext(), 30), 24));
-        averageText.setText("平均" + 24);
-
-        adapter = new AverAdapter();
+        adapter = new XLJLAverAdapter();
         averageRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         averageRecycler.setAdapter(adapter);
 
@@ -70,17 +67,32 @@ public class XLJL_WorkFragment extends BaseFragment implements MyAssessCalendarV
         Params params = new Params();
         params.put("st", start_time);
         params.put("et", endTime);
-        Observable<RequestBean<List<XljlDateBean>>> observable = getEnvirApi().xljlDayInfo(params.getData());
-        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<List<XljlDateBean>>() {
+        Observable<RequestBean<XljlDateBean>> observable = getEnvirApi().xljlDayInfo(params.getData());
+        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<XljlDateBean>() {
             @Override
-            public void onSuccess(List<XljlDateBean> bean) {
-                adapter.replaceData(bean);
+            public void onSuccess(XljlDateBean bean) {
+                bandData(bean);
             }
 
             @Override
             public void onFailure(int code, String error) {
             }
         });
+    }
+
+    private static final String TAG = "XLJL_WorkFragment";
+
+    private void bandData(XljlDateBean bean) { // 26
+        float weight = ((bean.avg < 1 ? 1 : bean.avg) / bean.max) * 26;
+        if (weight > 26) {
+            weight = 26;
+        }
+        if (bean.avg == 0) {
+            weight = 0;
+        }
+        weightView.setLayoutParams(new LinearLayout.LayoutParams(0, DashLineView.dp2px(getContext(), 30), weight));
+        averageText.setText("平均" + bean.avg);
+        adapter.setListData(bean.distance, bean.max);
     }
 
     /**

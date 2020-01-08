@@ -1053,4 +1053,39 @@ public class Date2Util {
         }
         return res;
     }
+
+    /**
+     * 将"yyyy-MM-dd HH:mm:ss"
+     * 转化为 "yyyy-MM-dd"
+     *
+     * @return
+     */
+    public static String getYMDTime(String time) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat formatYMD = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date parse = format.parse(time);
+            time = formatYMD.format(parse);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return time;
+    }
+    /**
+     * 将"yyyy-MM-dd HH:mm:ss"
+     * 转化为 "HH:mm"
+     *
+     * @return
+     */
+    public static String getHMTime(String time) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat formatYMD = new SimpleDateFormat("HH:mm");
+        try {
+            Date parse = format.parse(time);
+            time = formatYMD.format(parse);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return time;
+    }
 }

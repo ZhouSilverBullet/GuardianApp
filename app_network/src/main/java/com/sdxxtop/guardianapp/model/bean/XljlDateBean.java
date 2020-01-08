@@ -8,14 +8,13 @@ import java.util.List;
  * Desc:
  */
 public class XljlDateBean {
+    public float avg;
+    public float max;
 
-    public float total_distance;
-    public String sign_date;
-
-    public List<SignLogBean> sign_log;
+    public List<SignLogBean> distance;
 
     public static class SignLogBean {
-        public String total_distance;
+        public float total_distance;
         public String sign_date;
     }
 }

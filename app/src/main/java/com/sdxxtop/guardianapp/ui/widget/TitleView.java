@@ -103,6 +103,13 @@ public class TitleView extends RelativeLayout {
     public void setBgColor(int bgColor) {
         setBackgroundColor(bgColor);
     }
+    public void setWhiteTheme() {
+        tvTitle.setTextColor(getResources().getColor(R.color.white));
+
+        ImageView view = findViewById(R.id.iv_back);
+        view.setImageResource(R.drawable.white_back);
+
+    }
 
     /**
      * 需要的时候，重新把返回键的监听改一下

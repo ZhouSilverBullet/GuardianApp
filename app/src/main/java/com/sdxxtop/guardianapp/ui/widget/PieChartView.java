@@ -3,7 +3,12 @@ package com.sdxxtop.guardianapp.ui.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Typeface;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.StyleSpan;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,6 +30,7 @@ import com.github.mikephil.charting.utils.MPPointF;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.model.bean.EventChartBean;
+import com.sdxxtop.guardianapp.model.bean.RecordIndexBean;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import java.util.ArrayList;
@@ -208,14 +214,23 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
             for (EventChartBean.ChartInfoBean datum : data) {
                 if (datum.getCount() != 0) {
                     setData(data);
+                    if (!prevIsBig) {
+                        findViewById(R.id.ll_layout).setVisibility(View.VISIBLE);
+                    }
                     tvDodata.setVisibility(View.GONE);
                     return;
                 }
             }
             tvDodata.setVisibility(View.VISIBLE);
+            if (!prevIsBig) {
+                findViewById(R.id.ll_layout).setVisibility(View.INVISIBLE);
+            }
         } else {
             pieChart.removeAllViews();
             pieChart.setData(null);
+            if (!prevIsBig) {
+                findViewById(R.id.ll_layout).setVisibility(View.GONE);
+            }
         }
     }
 
@@ -256,4 +271,29 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
         this.isDrawValue = isDrawValue;
     }
 
+    /**
+     * 设置自定义的指示值
+     */
+    public void setDescValue(RecordIndexBean.ListsBean data){
+        if (!prevIsBig) {
+            TextView tvRCKQ = findViewById(R.id.tvRCKQ);
+            TextView tvXCZF = findViewById(R.id.tvXCZF);
+            TextView tvQTBF = findViewById(R.id.tvQTBF);
+            TextView tvWTSB = findViewById(R.id.tvWTSB);
+            tvRCKQ.setText("日常考勤 " + data.usually_score);
+            tvXCZF.setText("巡查走访 " + data.patrol_score);
+            tvQTBF.setText("其他部分 " + data.other_score);
+            tvWTSB.setText("问题上报 " + data.matter_score);
+            pieChart.setCenterText(generateCenterSpannableText((int) data.score));
+        }
+
+    }
+
+    public static SpannableString generateCenterSpannableText(int score) {
+        SpannableString s = new SpannableString(""+score+"\n绩效总分");
+        s.setSpan(new RelativeSizeSpan(1.7f), 0, 2, 0);
+        s.setSpan(new StyleSpan(Typeface.NORMAL), 2, s.length(), 0);
+        s.setSpan(new ForegroundColorSpan(Color.GRAY), 2, s.length(), 0);
+        return s;
+    }
 }

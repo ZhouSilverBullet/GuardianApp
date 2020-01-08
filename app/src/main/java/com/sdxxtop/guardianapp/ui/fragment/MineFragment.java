@@ -24,6 +24,7 @@ import com.sdxxtop.guardianapp.presenter.contract.MineContract;
 import com.sdxxtop.guardianapp.ui.activity.CenterMessageActivity;
 import com.sdxxtop.guardianapp.ui.activity.ContactActivity;
 import com.sdxxtop.guardianapp.ui.activity.LoginActivity;
+import com.sdxxtop.guardianapp.ui.activity.kaoqin.RatingBar;
 import com.sdxxtop.guardianapp.ui.activity.kaoqin.adapter.MineMenuAdapter;
 import com.sdxxtop.guardianapp.ui.dialog.IosAlertDialog;
 import com.sdxxtop.guardianapp.utils.SpUtil;
@@ -52,6 +53,8 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     LinearLayout llMessage;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.ratingbar)
+    RatingBar ratingbar;
 
     private boolean isAdmin;
 
@@ -159,6 +162,12 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
         }
         tvName.setText(bean.name);
         tvPlace.setText(new StringBuilder().append(bean.part_name).append(" ").append(bean.getStringPosition()));
+        if (bean.grade==0){
+            ratingbar.setVisibility(View.INVISIBLE);
+        }else{
+            ratingbar.setVisibility(View.VISIBLE);
+            ratingbar.setStar(bean.grade);
+        }
     }
 
     @Override

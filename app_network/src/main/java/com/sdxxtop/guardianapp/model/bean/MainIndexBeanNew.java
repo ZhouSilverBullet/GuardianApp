@@ -3,12 +3,12 @@ package com.sdxxtop.guardianapp.model.bean;
 import java.util.List;
 
 public class MainIndexBeanNew {
-    public int is_clock;
+    public int is_clock;//打卡权限  1：是  2：否
     public int is_report;
     public int is_patrol;
     public int is_map;
     public int is_uav;
-    public int is_face;
+    public int is_face;//是否注册人脸 1:是 2:否
     public int avg_tpfpm;
     public int avg_tenpm;
     public int unread_count;

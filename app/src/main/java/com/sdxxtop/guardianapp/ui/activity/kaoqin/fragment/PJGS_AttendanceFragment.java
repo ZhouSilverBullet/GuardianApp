@@ -8,16 +8,12 @@ import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseFragment;
 import com.sdxxtop.guardianapp.model.bean.PjgsDateBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
-import com.sdxxtop.guardianapp.model.bean.XljlDateBean;
 import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
 import com.sdxxtop.guardianapp.model.http.net.Params;
 import com.sdxxtop.guardianapp.model.http.util.RxUtils;
 import com.sdxxtop.guardianapp.ui.activity.kaoqin.DashLineView;
 import com.sdxxtop.guardianapp.ui.activity.kaoqin.adapter.AverAdapter;
 import com.sdxxtop.guardianapp.ui.activity.kaoqin.calendar.MonthSelectView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -78,14 +74,7 @@ public class PJGS_AttendanceFragment extends BaseFragment {
             public void onSuccess(PjgsDateBean bean) {
                 weightView.setLayoutParams(new LinearLayout.LayoutParams(0, DashLineView.dp2px(getContext(), 30), bean.treno_date));
                 averageText.setText("平均" + bean.treno_date + "小时");
-                List<XljlDateBean> list = new ArrayList<>();
-                for (PjgsDateBean.SignBean item : bean.sign) {
-                    XljlDateBean itemBean = new XljlDateBean();
-                    itemBean.sign_date = item.sign_date;
-                    itemBean.total_distance = item.treno_time;
-                    list.add(itemBean);
-                }
-                adapter.replaceData(list);
+                adapter.replaceData(bean.sign);
             }
 
             @Override

@@ -119,7 +119,7 @@ public class MyAssessCalendarView extends LinearLayout implements CalendarView.O
         });
         mCalendarView.setOnMonthChangeListener((year, month) -> tvData.setText("" + year + "-" + Date2Util.getZeroTime(month)));
         mCalendarView.setOnCalendarRangeSelectListener(this);
-        mCalendarView.setSelectRange(1, 30);
+        mCalendarView.setSelectRange(1, 31);
     }
 
 

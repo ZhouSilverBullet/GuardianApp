@@ -25,8 +25,7 @@
         app:layout_constraintTop_toBottomOf="@+id/titleView"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/tou_xiang" />
+        android:layout_gravity="center_horizontal"/>
 
     <LinearLayout
         android:layout_marginLeft="9dp"
@@ -42,7 +41,7 @@
             android:id="@+id/tvPosition"
             android:textSize="15sp"
             android:textColor="@color/color_313131"
-            android:text="产品经理"
+            tools:text="产品经理"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -51,12 +50,12 @@
             android:layout_marginTop="3dp"
             android:textSize="13sp"
             android:textColor="@color/color_999999"
-            android:text="产品部门"
+            tools:text="产品部门"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
-    <TextView
+    <TextClock
         android:id="@+id/tvDate"
         android:paddingRight="30dp"
         android:gravity="center"
@@ -64,6 +63,8 @@
         app:layout_constraintTop_toTopOf="@+id/civ_header"
         app:layout_constraintRight_toRightOf="parent"
         android:text="2019.06.10"
+        android:format12Hour="yyyy.MM.dd"
+        android:format24Hour="yyyy.MM.dd"
         android:layout_width="wrap_content"
         android:layout_height="0dp" />
 
@@ -92,18 +93,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-            <TextView
-                android:id="@+id/tvClockIn"
+            <TextClock
                 android:layout_marginTop="10dp"
-                android:textColor="@color/white"
-                android:textSize="25sp"
+                android:id="@+id/textClock"
                 android:gravity="center"
-                android:text="10:45"
+                android:textSize="25sp"
                 android:background="@drawable/shape_clock_in_bg"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/smart_refresh"
+                android:textColor="@color/white"
+                android:format24Hour="HH:mm"
+                android:format12Hour="hh:mm"
                 android:layout_width="115dp"
                 android:layout_height="115dp" />
         </LinearLayout>

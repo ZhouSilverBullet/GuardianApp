@@ -12,9 +12,6 @@ import com.sdxxtop.guardianapp.ui.activity.kaoqin.calendar.MonthSelectView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
 import com.sdxxtop.guardianapp.utils.Date2Util;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -31,6 +28,7 @@ public class AssessDetailActivity extends BaseActivity {
     RecyclerView recyclerView;
     @BindView(R.id.msv_view)
     MonthSelectView msvView;
+
     private AssessDetailAdapter adapter;
 
     @Override
@@ -44,16 +42,6 @@ public class AssessDetailActivity extends BaseActivity {
         adapter = new AssessDetailAdapter();
         recyclerView.setAdapter(adapter);
 
-        List<AssessDetailAdapter.DetailBean> list = new ArrayList<>();
-        list.add(new AssessDetailAdapter.DetailBean("迟到", "", "", "-0.2"));
-        list.add(new AssessDetailAdapter.DetailBean("早退", "", "", "-0.3"));
-        list.add(new AssessDetailAdapter.DetailBean("上报", "测试洛斯里克熟客舒克是", "其他类", "-0.9"));
-        list.add(new AssessDetailAdapter.DetailBean("其他分类", "测试其他分类", "其他类", "-0.5"));
-        list.add(new AssessDetailAdapter.DetailBean("在线时长", "", "", "-0.2"));
-        list.add(new AssessDetailAdapter.DetailBean("巡逻距离", "", "", "-0.1"));
-        list.add(new AssessDetailAdapter.DetailBean("事件验收", "测试事件验收", "验收类", "-0.1"));
-
-        adapter.replaceData(list);
         msvView.setOnMonthChageListener((year, month) -> loadData(year, month));
     }
 
@@ -65,11 +53,11 @@ public class AssessDetailActivity extends BaseActivity {
     private void loadData(int year, int month) {
         Params params = new Params();
         params.put("de", Date2Util.dateToStamp(""+year + "-" + month));
-        Observable<RequestBean<List<RecordInfoBean>>> observable = getEnvirApi().recordInfo(params.getData());
-        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<List<RecordInfoBean>>() {
+        Observable<RequestBean<RecordInfoBean>> observable = getEnvirApi().recordInfo(params.getData());
+        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<RecordInfoBean>() {
             @Override
-            public void onSuccess(List<RecordInfoBean> bean) {
-
+            public void onSuccess(RecordInfoBean bean) {
+                adapter.replaceData(bean.lists);
             }
 
             @Override
@@ -79,3 +67,4 @@ public class AssessDetailActivity extends BaseActivity {
         });
     }
 }
+

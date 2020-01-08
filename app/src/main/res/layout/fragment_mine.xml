@@ -36,9 +36,23 @@
             android:layout_width="match_parent"
             android:layout_height="1px" />
 
+        <com.sdxxtop.guardianapp.ui.activity.kaoqin.RatingBar
+            android:id="@+id/ratingbar"
+            android:layout_marginTop="5dp"
+            app:starCount="5"
+            android:layout_marginLeft="99dp"
+            app:clickable="false"
+            app:starEmpty="@drawable/star_unselected"
+            app:starFill="@drawable/star_select"
+            app:starStep="3.5"
+            app:starPadding="5dp"
+            app:starImageSize="15dp"
+            app:stepSize="Half"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/rl_login_out"
-            android:layout_marginTop="22dp"
             android:paddingLeft="25dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -59,6 +73,7 @@
                     android:src="@drawable/tou_xiang" />
 
                 <TextView
+                    android:visibility="gone"
                     android:layout_gravity="bottom"
                     android:background="@color/green"
                     android:layout_marginTop="5dp"
@@ -94,23 +109,6 @@
                     android:textColor="@color/white"
                     android:textSize="19sp"
                     android:text="张三"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <com.sdxxtop.guardianapp.ui.activity.kaoqin.RatingBar
-                    app:starCount="5"
-                    android:layout_marginLeft="7dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_name"
-                    app:layout_constraintTop_toTopOf="@+id/tv_name"
-                    app:layout_constraintLeft_toRightOf="@+id/tv_name"
-                    android:id="@+id/tv_item_ratingbar"
-                    app:clickable="false"
-                    app:starEmpty="@drawable/star_unselected"
-                    app:starFill="@drawable/star_select"
-                    app:starStep="3.5"
-                    app:starPadding="5dp"
-                    app:starImageSize="15dp"
-                    app:stepSize="Half"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 

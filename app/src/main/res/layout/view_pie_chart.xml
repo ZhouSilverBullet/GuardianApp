@@ -45,6 +45,7 @@
             android:layout_height="280dp"/>
 
         <TextView
+            android:textSize="11sp"
             android:id="@+id/tv_nodata"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

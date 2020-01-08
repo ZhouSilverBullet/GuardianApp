@@ -1,40 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <com.sdxxtop.guardianapp.ui.activity.kaoqin.calendar.MyAssessCalendarView
-        android:id="@+id/mcv_view"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#E5E5E5" />
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/average_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp" />
-
         <LinearLayout
+            android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:weightSum="30">
 
             <TextView
+                android:id="@+id/item_aver_text_x"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -45,14 +27,26 @@
                 android:lines="1"
                 android:text="2020/01/05"
                 android:textColor="#333333"
-                android:textSize="12sp"
-                android:visibility="invisible" />
+                android:textSize="12sp" />
 
-            <View
-                android:id="@+id/average_weight_view"
+            <TextView
+                android:background="@color/blue"
+                android:id="@+id/item_aver_text_bg"
                 android:layout_width="0dp"
-                android:layout_height="2dp"
+                android:layout_height="30dp"
                 android:layout_weight="26" />
+
+            <TextView
+                android:id="@+id/item_aver_text_value"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:lines="1"
+                android:text="10.00"
+                android:textColor="@color/blue"
+                android:textSize="11sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -60,6 +54,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:visibility="invisible"
                     android:id="@+id/average_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -69,15 +64,12 @@
                     android:textSize="9sp" />
 
                 <com.sdxxtop.guardianapp.ui.activity.kaoqin.DashLineView
+                    android:visibility="invisible"
                     android:layout_width="10dp"
                     android:layout_height="match_parent" />
 
             </LinearLayout>
 
-            <TextView
-                android:layout_width="60dp"
-                android:layout_height="wrap_content" />
         </LinearLayout>
     </FrameLayout>
-
 </LinearLayout>

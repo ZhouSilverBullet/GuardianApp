@@ -9,6 +9,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseFragment;
+import com.sdxxtop.guardianapp.model.bean.CategoryStatusBean;
 import com.sdxxtop.guardianapp.model.bean.GzmxDateBean;
 import com.sdxxtop.guardianapp.model.bean.RequestBean;
 import com.sdxxtop.guardianapp.model.http.callback.IRequestCallback;
@@ -48,12 +49,14 @@ public class GZMX_WorkFragment extends BaseFragment implements MyAssessCalendarV
     @BindView(R.id.smart_refresh)
     SmartRefreshLayout smartRefresh;
 
-    private SingleStyleView typeSelect;
+    private SingleStyleView categorySelect;
     private SingleStyleView eventStatusSelect;
     private GZMX_Adapter adapter;
 
     private String startTime, endTime;
     private int categoryId, status;
+    private List<SingleStyleView.ListDataBean> categoryData = new ArrayList<>();
+    private List<SingleStyleView.ListDataBean> statusData = new ArrayList<>();
 
     @Override
     protected int getFragmentLayout() {
@@ -66,27 +69,12 @@ public class GZMX_WorkFragment extends BaseFragment implements MyAssessCalendarV
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
-        List<SingleStyleView.ListDataBean> typeData = new ArrayList<>();
-        typeData.add(new SingleStyleView.ListDataBean(74, "其他工作类"));
-        typeData.add(new SingleStyleView.ListDataBean(71, "城建管理类"));
-        typeData.add(new SingleStyleView.ListDataBean(72, "市场监管类"));
-        typeData.add(new SingleStyleView.ListDataBean(51, "应急管理类"));
-        typeData.add(new SingleStyleView.ListDataBean(78, "测试类"));
-        typeData.add(new SingleStyleView.ListDataBean(58, "测试你好"));
-        typeData.add(new SingleStyleView.ListDataBean(52, "生态环境类"));
-        typeData.add(new SingleStyleView.ListDataBean(49, "社会稳定类"));
-        typeData.add(new SingleStyleView.ListDataBean(73, "自然资源类"));
-        typeSelect = new SingleStyleView(getActivity(), typeData);
-
-        List<SingleStyleView.ListDataBean> statusData = new ArrayList<>();
-        statusData.add(new SingleStyleView.ListDataBean(1, "已完成"));
-        statusData.add(new SingleStyleView.ListDataBean(2, "已派发"));
-        statusData.add(new SingleStyleView.ListDataBean(3, "未解决"));
-        statusData.add(new SingleStyleView.ListDataBean(4, "已反馈"));
-        statusData.add(new SingleStyleView.ListDataBean(5, "已解决"));
+        //创建分类,状态选择框
+        categoryData.add(new SingleStyleView.ListDataBean(0, "全部"));
+        categorySelect = new SingleStyleView(getActivity(), categoryData);
         eventStatusSelect = new SingleStyleView(getActivity(), statusData);
 
-        typeSelect.setOnItemSelectLintener((id, result) -> {
+        categorySelect.setOnItemSelectLintener((id, result) -> {
             tvEventTypeSelect.setText(result);
             categoryId = id;
             loadData(0);
@@ -116,10 +104,14 @@ public class GZMX_WorkFragment extends BaseFragment implements MyAssessCalendarV
 
     @OnClick({R.id.tvEventTypeSelect, R.id.tvEventStatusSelect})
     public void onViewClicked(View view) {
+        if (statusData.size() == 0) {
+            loadCategoryStatus();
+            return;
+        }
         switch (view.getId()) {
             case R.id.tvEventTypeSelect:
-                if (typeSelect != null) {
-                    typeSelect.show();
+                if (categorySelect != null) {
+                    categorySelect.show();
                 }
                 break;
             case R.id.tvEventStatusSelect:
@@ -136,9 +128,45 @@ public class GZMX_WorkFragment extends BaseFragment implements MyAssessCalendarV
         startTime = mcvView.currentDate;
         endTime = mcvView.currentDate;
         loadData(0);
+        loadCategoryStatus();
+    }
+
+    /**
+     * 加载分类/状态数据
+     */
+    private void loadCategoryStatus() {
+        Params params = new Params();
+        Observable<RequestBean<CategoryStatusBean>> observable = getEnvirApi().getCategoryStatus(params.getData());
+        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<CategoryStatusBean>() {
+            @Override
+            public void onSuccess(CategoryStatusBean bean) {
+                categoryData.clear();
+                statusData.clear();
+                categoryData.add(new SingleStyleView.ListDataBean(0, "全部"));
+
+                for (CategoryStatusBean.CategoryBean item : bean.category) {
+                    categoryData.add(new SingleStyleView.ListDataBean(item.category_id, item.category_name));
+                }
+                for (CategoryStatusBean.StatusBean item : bean.status) {
+                    statusData.add(new SingleStyleView.ListDataBean(item.status_id, item.status_name));
+                }
+
+                categorySelect.replaceData(categoryData);
+                eventStatusSelect.replaceData(statusData);
+            }
+
+            @Override
+            public void onFailure(int code, String error) {
+            }
+        });
     }
 
 
+    /**
+     * 加载列表数据
+     *
+     * @param page
+     */
     private void loadData(int page) {
         Params params = new Params();
         params.put("st", startTime);
@@ -146,16 +174,16 @@ public class GZMX_WorkFragment extends BaseFragment implements MyAssessCalendarV
         params.put("ct", categoryId);
         params.put("su", status);
         params.put("sp", page);
-        Observable<RequestBean<List<GzmxDateBean>>> observable = getEnvirApi().gzmxDayInfo(params.getData());
-        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<List<GzmxDateBean>>() {
+        Observable<RequestBean<GzmxDateBean>> observable = getEnvirApi().gzmxDayInfo(params.getData());
+        Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<GzmxDateBean>() {
             @Override
-            public void onSuccess(List<GzmxDateBean> bean) {
+            public void onSuccess(GzmxDateBean bean) {
                 smartRefresh.finishLoadMore();
                 smartRefresh.finishRefresh();
                 if (page == 0) {
-                    adapter.replaceData(bean);
+                    adapter.replaceData(bean.event);
                 } else {
-                    adapter.addData(bean);
+                    adapter.addData(bean.event);
                 }
             }
 

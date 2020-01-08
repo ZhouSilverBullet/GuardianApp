@@ -45,6 +45,7 @@
             android:layout_height="190dp" />
 
         <TextView
+            android:textSize="11sp"
             android:id="@+id/tv_nodata"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -54,53 +55,102 @@
             android:textColor="#F7C03C" />
 
         <LinearLayout
+            android:id="@+id/ll_layout"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
             android:layout_marginBottom="5dp"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:paddingRight="20dp"
-                android:gravity="center|right"
+                android:gravity="center"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:background="@drawable/shape_chart_yellow_bg"
+                    android:background="#2593E7"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:layout_width="20dp"
-                    android:layout_height="14dp" />
+                    android:layout_width="15dp"
+                    android:layout_height="10dp" />
 
                 <TextView
-                    android:textSize="12sp"
+                    android:id="@+id/tvRCKQ"
+                    android:textSize="8sp"
                     android:layout_marginLeft="6dp"
-                    android:textColor="#FD9D0B"
-                    android:text="考勤部分 30"
+                    android:textColor="#2593E7"
+                    android:text="日常考勤 30"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout
-                android:paddingLeft="20dp"
-                android:gravity="center|left"
+                android:gravity="center"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:background="@drawable/shape_chart_blue_bg"
+                    android:background="#EC6941"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:layout_width="20dp"
-                    android:layout_height="14dp" />
+                    android:layout_width="15dp"
+                    android:layout_height="10dp" />
 
                 <TextView
-                    android:textSize="12sp"
+                    android:id="@+id/tvXCZF"
+                    android:textSize="8sp"
                     android:layout_marginLeft="6dp"
-                    android:textColor="#3296FA"
-                    android:text="考勤部分 60"
+                    android:textColor="#EC6941"
+                    android:text="巡查走访 60"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:background="#07A01E"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="15dp"
+                    android:layout_height="10dp" />
+
+                <TextView
+                    android:id="@+id/tvQTBF"
+                    android:textSize="8sp"
+                    android:layout_marginLeft="6dp"
+                    android:textColor="#07A01E"
+                    android:text="其他部分 60"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:background="#E72A3A"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="15dp"
+                    android:layout_height="10dp" />
+
+                <TextView
+                    android:id="@+id/tvWTSB"
+                    android:textSize="8sp"
+                    android:layout_marginLeft="6dp"
+                    android:textColor="#E72A3A"
+                    android:text="问题上报 60"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>

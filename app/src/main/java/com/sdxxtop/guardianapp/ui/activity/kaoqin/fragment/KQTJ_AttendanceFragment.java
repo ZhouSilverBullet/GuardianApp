@@ -67,10 +67,10 @@ public class KQTJ_AttendanceFragment extends BaseFragment implements MonthSelect
             @Override
             public void onSuccess(KqtjMonthBean bean) {
                 dataList.clear();
-                dataList.add(bean.absent_day);
-                dataList.add(bean.absent_day);
+                dataList.add(bean.sign_count);
                 dataList.add(bean.late_num);
                 dataList.add(bean.early_num);
+                dataList.add(bean.absent_day);
                 adapter.replaceData(dataList);
             }
 

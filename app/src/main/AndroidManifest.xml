@@ -46,7 +46,9 @@
         <activity android:name=".ui.activity.kaoqin.AssessDetailActivity" />
         <activity android:name=".ui.activity.kaoqin.MyWorkActivity" />
         <activity android:name=".ui.activity.kaoqin.VersionsExplainActivity" />
-        <activity android:name=".ui.activity.kaoqin.MineAttendanceActivity" />
+        <activity
+            android:name=".ui.activity.kaoqin.MineAttendanceActivity"
+            android:hardwareAccelerated="true" />
         <activity android:name=".ui.activity.kaoqin.MyAssessActivity" />
         <activity android:name=".ui.activity.custom_event.CustomEventActivity" />
         <activity android:name=".ui.activity.RecordLogActivity" />

@@ -106,6 +106,15 @@ public class CustomOneBarChartView extends LinearLayout {
 
 
     /**
+     * 获取BarChart
+     *
+     * @return
+     */
+    public BarChart getBarChart() {
+        return mChart;
+    }
+
+    /**
      * 初始化BarChart图表
      */
     private void initBarChart(BarChart barChart) {

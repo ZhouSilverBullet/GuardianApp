@@ -21,6 +21,7 @@ public class UcenterIndexBean {
     public int type;
     public int is_mail;
     public int unread_count;
+    public int grade;  // 星星个数
 
     /***** 权限 *******/
     private String is_uav_url;

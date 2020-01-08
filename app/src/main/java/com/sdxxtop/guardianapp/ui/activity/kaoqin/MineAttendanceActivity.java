@@ -3,8 +3,8 @@ package com.sdxxtop.guardianapp.ui.activity.kaoqin;
 import com.google.android.material.tabs.TabLayout;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseActivity;
-import com.sdxxtop.guardianapp.ui.activity.kaoqin.fragment.KQST_AttendanceFragment;
 import com.sdxxtop.guardianapp.ui.activity.kaoqin.fragment.KQMX_AttendanceFragment;
+import com.sdxxtop.guardianapp.ui.activity.kaoqin.fragment.KQST_AttendanceFragment;
 import com.sdxxtop.guardianapp.ui.activity.kaoqin.fragment.KQTJ_AttendanceFragment;
 import com.sdxxtop.guardianapp.ui.activity.kaoqin.fragment.PJGS_AttendanceFragment;
 import com.sdxxtop.guardianapp.ui.adapter.TablayoutFragmentPagerAdapter;
@@ -36,6 +36,7 @@ public class MineAttendanceActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+
         fragments = new ArrayList<>();
 
         fragments.add(new KQST_AttendanceFragment());
@@ -49,7 +50,7 @@ public class MineAttendanceActivity extends BaseActivity {
         stringList.add("平均工时");
         stringList.add("考勤明细");
 
-        viewPager.setAdapter(new TablayoutFragmentPagerAdapter(getSupportFragmentManager(), mContext, stringList, fragments));
+        viewPager.setAdapter(new TablayoutFragmentPagerAdapter(getSupportFragmentManager(), this, stringList, fragments));
         viewPager.setOffscreenPageLimit(1);
         tabLayout.setupWithViewPager(viewPager);
     }

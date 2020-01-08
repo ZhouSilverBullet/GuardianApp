@@ -25,9 +25,9 @@ public class WorkIndexBean {
     public List<PendingEvent> pending_event;
 
     public static class MonthComplete {
-        public int complete_rate;
-        public int events_count;
-        public int events_complete;
+        public float complete_rate;
+        public float events_count;
+        public float events_complete;
         public String time;
     }
 
