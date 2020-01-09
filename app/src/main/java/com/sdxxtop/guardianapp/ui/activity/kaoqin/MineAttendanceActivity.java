@@ -47,7 +47,7 @@ public class MineAttendanceActivity extends BaseActivity {
         stringList = new ArrayList<>();
         stringList.add("考勤视图");
         stringList.add("考勤统计");
-        stringList.add("平均工时");
+        stringList.add("在线时长");
         stringList.add("考勤明细");
 
         viewPager.setAdapter(new TablayoutFragmentPagerAdapter(getSupportFragmentManager(), this, stringList, fragments));
