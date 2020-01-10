@@ -56,14 +56,12 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     @BindView(R.id.ratingbar)
     RatingBar ratingbar;
 
-    private boolean isAdmin;
 
     private int IMAGE_STORE = 100;
     private int is_mail; //是否有权限进入通讯录
 
-    public static MineFragment newInstance(boolean isAdmin) {
+    public static MineFragment newInstance() {
         Bundle args = new Bundle();
-        args.putBoolean("isAdmin", isAdmin);
         MineFragment fragment = new MineFragment();
         fragment.setArguments(args);
         return fragment;
@@ -78,9 +76,6 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
     protected void initView() {
         super.initView();
         statusBar(false);
-        if (getArguments() != null) {
-            isAdmin = getArguments().getBoolean("isAdmin");
-        }
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(new MineMenuAdapter());
     }

@@ -17,11 +17,11 @@ import com.sdxxtop.guardianapp.utils.UIUtils;
 import com.umeng.analytics.MobclickAgent;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import me.yokeyword.fragmentation.SupportActivity;
 
-public abstract class BaseActivity extends SupportActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     private Unbinder mUnbinder;
     protected BaseActivity mContext;

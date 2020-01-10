@@ -120,9 +120,9 @@ public class VideoPlayActivity extends BaseActivity {
     }
 
     @Override
-    public void onBackPressedSupport() {
+    public void onBackPressed() {
         if (!danmukuVideoView.onBackPressed()) {
-            super.onBackPressedSupport();
+            super.onBackPressed();
         }
     }
 

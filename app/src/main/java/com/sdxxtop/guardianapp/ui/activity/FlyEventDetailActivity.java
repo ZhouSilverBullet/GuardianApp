@@ -130,11 +130,11 @@ public class FlyEventDetailActivity extends BaseMvpActivity<FlyEventDetailPresen
     }
 
     @Override
-    public void onBackPressedSupport() {
+    public void onBackPressed() {
         if (JZVideoPlayer.backPress()) {
             return;
         }
-        super.onBackPressedSupport();
+        super.onBackPressed();
     }
 
     @Override

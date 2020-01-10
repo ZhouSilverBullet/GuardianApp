@@ -1,5 +1,6 @@
 package com.sdxxtop.guardianapp.model.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  * Date: 2019/6/14
  * Desc:
  */
-public class ArticleIndexBean {
+public class ArticleIndexBean implements Serializable {
     private List<ShowBean> show;
 
     public List<ShowBean> getShow() {
@@ -18,7 +19,7 @@ public class ArticleIndexBean {
         this.show = show;
     }
 
-    public static class ShowBean{
+    public static class ShowBean implements Serializable{
         private int is_show;
         private String title;
 

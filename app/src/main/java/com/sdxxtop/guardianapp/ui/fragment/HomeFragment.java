@@ -1,6 +1,4 @@
 package com.sdxxtop.guardianapp.ui.fragment;
-
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -70,15 +68,13 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
     TextView tvWeatherStatus;
     /*************** 权限 ***************/
 
-    private boolean isAdmin;
     private HomeImageAdapter adapter;
     private MyHomeTabAdapter homeTabAdapter;
     private AutoTextViewManager manager;
     private MainIndexBeanNew mBean;
 
-    public static HomeFragment newInstance(boolean isAdmin) {
+    public static HomeFragment newInstance() {
         Bundle args = new Bundle();
-        args.putBoolean("isAdmin", isAdmin);
         HomeFragment fragment = new HomeFragment();
         fragment.setArguments(args);
         return fragment;
@@ -98,9 +94,6 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
     protected void initView() {
         super.initView();
         statusBar(true);
-        if (getArguments() != null) {
-            isAdmin = getArguments().getBoolean("isAdmin");
-        }
 
         llContainor.setOnClickListener(new View.OnClickListener() {
             @Override

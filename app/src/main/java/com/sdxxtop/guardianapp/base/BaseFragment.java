@@ -15,11 +15,11 @@ import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import me.yokeyword.fragmentation.SupportFragment;
 
-public abstract class BaseFragment extends SupportFragment {
+public abstract class BaseFragment extends Fragment {
 
     protected View mRootView;
     private Unbinder mUnbinder;

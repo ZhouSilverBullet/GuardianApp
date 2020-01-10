@@ -26,7 +26,7 @@
             android:id="@+id/tvTest"
             android:textColor="@color/black"
             android:textSize="14sp"
-            android:text="@{String.valueOf(vm.str)}"
+            android:text="@{String.valueOf(vm.str2)}"
             android:layout_width="match_parent"
             android:layout_height="30dp"/>
     </LinearLayout>

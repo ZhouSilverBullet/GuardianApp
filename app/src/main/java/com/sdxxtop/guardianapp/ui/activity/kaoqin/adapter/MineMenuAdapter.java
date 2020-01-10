@@ -29,7 +29,7 @@ public class MineMenuAdapter extends BaseQuickAdapter<MineMenuAdapter.Data, Base
 //        list.add(new Data("更换绑定人脸", R.drawable.change_face_my_new));
         list.add(new Data("在线客服", R.drawable.service_my_new));
         list.add(new Data("版本说明", R.drawable.set_my_new));
-//        list.add(new Data("关于我们", R.drawable.aboutus_my_new));
+        list.add(new Data("关于我们", R.drawable.aboutus_my_new));
 
         replaceData(list);
     }

@@ -1,7 +1,6 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
 import android.Manifest;
-import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -13,20 +12,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.PowerManager;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewAnimationUtils;
-import android.widget.ImageView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
 import com.google.gson.internal.LinkedTreeMap;
 import com.luck.picture.lib.permissions.RxPermissions;
-import com.orhanobut.logger.Logger;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.TrackService.TrackServiceUtil;
 import com.sdxxtop.guardianapp.app.Constants;
@@ -50,7 +43,6 @@ import com.sdxxtop.guardianapp.ui.fragment.MineFragment;
 import com.sdxxtop.guardianapp.ui.fragment.WorkFragment;
 import com.sdxxtop.guardianapp.ui.widget.bottom_tab.CustomBottomTab;
 import com.sdxxtop.guardianapp.utils.ExcludePhoneModel;
-import com.sdxxtop.guardianapp.utils.ReflectUtils;
 import com.sdxxtop.guardianapp.utils.SpUtil;
 import com.sdxxtop.imagora.receiver.LoginIMReceiver;
 import com.sdxxtop.openlive.activities.presenter.im.AgoraIMLoginPresenter;
@@ -61,11 +53,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
-import me.yokeyword.fragmentation.SupportFragment;
 
 public class HomeActivity extends BaseMvpActivity<HomePresenter> implements HomeContract.IView, IAgoraIMLoginView {
 
@@ -81,15 +74,10 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
 
     @BindView(R.id.ahn_home_navigation)
     AHBottomNavigation mAHBottomNavigation;
-
     @BindView(R.id.cbt_view)
     public CustomBottomTab cbtView;
 
-    private int prePosition;
-    private SupportFragment[] mFragments = new SupportFragment[5];
-    private boolean isAdmin;
     private RxPermissions mRxPermissions;
-    private int currentPosition = 0;
     private boolean isEnabledNLS = false;
     private static final String ENABLED_NOTIFICATION_LISTENERS = "enabled_notification_listeners";
     private static final String ACTION_NOTIFICATION_LISTENER_SETTINGS = "android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS";
@@ -97,36 +85,16 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
     private AgoraIMLoginPresenter loginPresenter;
     private AgoraLoginReceiver agoraLoginReceiver;
 
-//    @Override
-//    protected void onCreate(@Nullable Bundle savedInstanceState) {
-//        // 设置全屏
-//        Window window = getWindow();
-//        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//        //        AppUtils.hideBottomUIMenuNew(this);
-//
-//        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-//        window.getDecorView().setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
-//            @Override
-//            public void onSystemUiVisibilityChange(int visibility) {
-//                int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
-//                        //布局位于状态栏下方
-//                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
-//                        //全屏
-//                        View.SYSTEM_UI_FLAG_FULLSCREEN |
-//                        //隐藏导航栏
-//                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
-//                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
-//                if (Build.VERSION.SDK_INT >= 19) {
-//                    uiOptions = uiOptions | 0x00001000;
-//                } else {
-//                    uiOptions = uiOptions | View.SYSTEM_UI_FLAG_LOW_PROFILE;
-//                }
-//                window.getDecorView().setSystemUiVisibility(uiOptions);
-//            }
-//        });
-//        super.onCreate(savedInstanceState);
-//
-//    }
+    private ArrayList<ArticleIndexBean.ShowBean> showList = new ArrayList<>();
+
+    //fragment
+    private Fragment currentFragment;
+    private Fragment newFragment;
+    private Fragment homeFragment;
+    private Fragment workFragment;
+    private Fragment applyFragment;
+    private LearningFragment learnFragment;
+    private MineFragment mineFragment = MineFragment.newInstance();
 
     @Override
     protected int getLayout() {
@@ -143,21 +111,12 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
 
     }
 
-    @Override
-    protected void initVariables() {
-        super.initVariables();
-        if (getIntent() != null) {
-            isAdmin = getIntent().getBooleanExtra("isAdmin", false);
-        }
-    }
-
     @SuppressLint("CheckResult")
     @Override
     protected void initView() {
-//        initAHNavigation();
+        initFirstFragment();
 
         loginPresenter = new AgoraIMLoginPresenter(this);
-
         agoraLoginReceiver = new AgoraLoginReceiver(loginPresenter);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(LoginIMReceiver.ACTION_LOGIN_RECEIVER);
@@ -202,70 +161,6 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
         toggleNotificationListenerService(this);
     }
 
-    private void startPatrolService() {
-        // TODO  定位服务 暂时关闭
-        ignoreBatteryOptimization(this);
-//        Logger.e("开启了服务");
-//        Intent intent = new Intent(this, PatrolRecordService.class);
-//        startService(intent);
-    }
-
-    private void initAHNavigation() {
-        int[] tabColors = getApplicationContext().getResources().getIntArray(R.array.tab_colors);
-        AHBottomNavigationAdapter navigationAdapter = new AHBottomNavigationAdapter(this, R.menu.bottom_navigation_menu);
-        navigationAdapter.setupWithBottomNavigation(mAHBottomNavigation, tabColors);
-
-        // Set background color
-        mAHBottomNavigation.setDefaultBackgroundColor(Color.parseColor("#FEFEFE"));
-
-        // Disable the translation inside the CoordinatorLayout
-        mAHBottomNavigation.setBehaviorTranslationEnabled(false);
-        mAHBottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
-
-        // Change colors
-        mAHBottomNavigation.setAccentColor(Color.parseColor("#34B26D"));
-        mAHBottomNavigation.setInactiveColor(Color.parseColor("#747474"));
-        mAHBottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
-            @Override
-            public boolean onTabSelected(int position, boolean wasSelected) {
-                Logger.i("position = " + position + "wasSelected = " + wasSelected);
-//                if (position == 2) {
-//                    return false;
-//                }
-                if (position == 2) {
-                    mPresenter.articleIndex(position, wasSelected);
-                    return false;
-                } else {
-                    currentPosition = position;
-//                    switchFragment(position);
-//                    itemSelectAnimator(position, wasSelected);
-                    return true;
-                }
-            }
-        });
-    }
-
-    private void itemSelectAnimator(int position, boolean wasSelected) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            Logger.i("版本不符合,不进行动画");
-            return;
-        }
-
-        List<View> views = ReflectUtils.getFieldValueByFieldName("views", mAHBottomNavigation);
-        if (views != null) {
-            View view = views.get(position);
-            ImageView icon = view.findViewById(R.id.bottom_navigation_item_icon);
-            final int width = icon.getMeasuredWidth();
-            final int height = icon.getMeasuredHeight();
-            final float radius = (float) Math.sqrt(width * width + height * height) / 2;//半径
-            Animator animator = ViewAnimationUtils.createCircularReveal(icon, width / 2, height / 2, 0, radius);
-            animator.setDuration(300);
-            animator.start();
-        }
-    }
-
-    private List<ArticleIndexBean.ShowBean> showList = new ArrayList<>();
-
     @Override
     public void showPermission(ArticleIndexBean bean, int position, boolean wasSelected) {
         showList.clear();
@@ -276,44 +171,81 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
                     showList.add(showBean);
                 }
             }
-
             if (showList.size() > 0) {
-                if (mFragments[3] != null) {
-                    ((LearningFragment) mFragments[3]).replaceList(showList);
-                    switchFragment(position);
-                    cbtView.setCurrentItem(position);
-                }
-//                itemSelectAnimator(position, wasSelected);
-//                mAHBottomNavigation.setCurrentItem(2, false);
+                learnFragment = LearningFragment.newInstance(showList);
+                switchFragment(position);
+                cbtView.setCurrentItem(position);
             } else {
                 showToast("没有操作权限");
-//                mAHBottomNavigation.setCurrentItem(currentPosition, false);
             }
         } else {
-//            mAHBottomNavigation.setCurrentItem(currentPosition, false);
             showToast("没有操作权限");
         }
     }
 
-    private void switchFragment(int position) {
-        HomeFragment fragment = findFragment(HomeFragment.class);
-        if (fragment == null) {
-            mFragments[0] = HomeFragment.newInstance(isAdmin);
-            mFragments[1] = WorkFragment.newInstance();
-            mFragments[2] = DataMonitoringFragment.newInstance();
-            mFragments[3] = LearningFragment.newInstance();
-            mFragments[4] = MineFragment.newInstance(isAdmin);
+    /**
+     * 初始化第一个Fragment
+     */
+    private void initFirstFragment() {
+        homeFragment = new HomeFragment();
+        currentFragment = homeFragment;
+        getSupportFragmentManager().beginTransaction().replace(R.id.fl_home_container, currentFragment).commitAllowingStateLoss();
+    }
 
-            loadMultipleRootFragment(R.id.fl_home_container, position,
-                    mFragments[0],
-                    mFragments[1],
-                    mFragments[2],
-                    mFragments[3],
-                    mFragments[4]);
-        } else {
-            showHideFragment(mFragments[position], mFragments[prePosition]);
+    /**
+     * 切换Fragment
+     *
+     * @param position
+     */
+    private void switchFragment(int position) {
+        switch (position) {
+            case 0:
+                if (homeFragment == null) {
+                    homeFragment = HomeFragment.newInstance();
+                }
+                newFragment = homeFragment;
+                break;
+            case 1:
+                if (workFragment == null) {
+                    workFragment = WorkFragment.newInstance();
+                }
+                newFragment = workFragment;
+                break;
+            case 2:
+                if (applyFragment == null) {
+                    applyFragment = DataMonitoringFragment.newInstance();
+                }
+                newFragment = applyFragment;
+                break;
+            case 3:
+                if (learnFragment == null) {
+                    learnFragment = LearningFragment.newInstance(showList);
+                }
+                newFragment = learnFragment;
+                break;
+            case 4:
+                if (mineFragment == null) {
+                    mineFragment = MineFragment.newInstance();
+                }
+                newFragment = mineFragment;
+                break;
         }
-        prePosition = position;
+        setCurrentFragment();
+    }
+
+    //设置底部按钮被选中
+    private void setCurrentFragment() {
+        if (newFragment != currentFragment) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            if (newFragment.isAdded()) {
+                transaction.show(newFragment);
+                newFragment.onResume();
+            } else {
+                transaction.add(R.id.fl_home_container, newFragment);
+            }
+            transaction.hide(currentFragment).commit();
+            currentFragment = newFragment;
+        }
     }
 
     @Override
@@ -397,13 +329,10 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
     public void setWurenjiClick() {
         cbtView.setWurenjiClick();
         switchFragment(2);
-        if (mFragments[2] != null) {
-            for (SupportFragment fragment : mFragments) {
-                if (fragment instanceof DataMonitoringFragment) {
-                    DataMonitoringFragment workFragment = (DataMonitoringFragment) fragment;
-                    workFragment.setCurrentItem();
-                    break;
-                }
+        if (applyFragment != null) {
+            if (applyFragment instanceof DataMonitoringFragment) {
+                DataMonitoringFragment workFragment = (DataMonitoringFragment) applyFragment;
+                workFragment.setCurrentItem();
             }
         }
     }
@@ -461,7 +390,7 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
     private long mBackPressed;
 
     @Override
-    public void onBackPressedSupport() {
+    public void onBackPressed() {
         if (mBackPressed + TIME_EXIT > System.currentTimeMillis()) {
 //            用户退出处理
 //            finish();
