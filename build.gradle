@@ -38,3 +38,30 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    appcompat = '1.1.0'
+    material = '1.0.0'
+    constraintlayout = '1.1.3'
+
+    /* kotlin */
+    corektx = "1.2.0-rc01"
+    constraintlayout = "1.1.3"
+    material = "1.0.0"
+    circleimageview = "2.0.0"
+    coroutines = "1.3.0-RC"
+    retrofit = "2.6.0"
+    mainscope = "1.0"
+    lifecycle = "2.2.0-rc03"
+    glide = "4.9.0"
+    multidex = "1.0.3"
+    leakcanary = "2.0-alpha-3"
+
+    glide = "4.9.0"
+
+    /* kt_network */
+    orhanobut_logger = "2.2.0"
+    Pudding = "1.2.0"
+    Toasty = "1.4.2"
+    interceptor = "3.12.0"
+}

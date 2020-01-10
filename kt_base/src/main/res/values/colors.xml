@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#ffffff</color>
+    <color name="half_white">#36F8F3F3</color>
+    <color name="main_color">#0CBEB5</color>
+    <color name="main_press_color">#55F7EE</color>
+    <color name="main_gray_color">#e8e8e8</color>
+
+    <color name="color_f85959">#f85959</color>
+    <color name="color_e8e8e8">#e8e8e8</color>
+    <color name="color_666666">#666666</color>
+    <color name="color_999999">#999999</color>
+    <color name="color_303030">#303030</color>
+    <color name="color_E4E4E4">#E4E4E4</color>
+    <color name="color_E0E0E0">#E0E0E0</color>
+    <color name="color_CCCCCC">#CCCCCC</color>
+    <color name="color_EEEEEE">#EEEEEE</color>
+    <color name="color_F4F4F4">#F4F4F4</color>
+    <color name="color_dddddd">#DDDDDD</color>
+    <color name="color_838282">#838282</color>
+    <color name="color_F9A15C">#F9A15C</color>
+    <color name="color_292929">#292929</color>
+    <color name="color_313131">#313131</color>
+    <color name="color_red_F23030">#F23030</color>
+    <color name="green">#34B26D</color>
+    <color name="translate">#00000000</color>
+    <color name="half_translate">#60000000</color>
+    <color name="color_333333">#333333</color>
+    <color name="color_E6E6E6">#E6E6E6</color>
+    <color name="color_808080">#808080</color>
+    <color name="color_32B16C">#32B16C</color>
+    <color name="color_DEEAE3">#DEEAE3</color>
+    <color name="color_98D4B3">#98D4B3</color>
+
+
+    <color name="color_7ECEF4">#7ECEF4</color>
+    <color name="color_8C97CB">#8C97CB</color>
+
+    <color name="alertdialog_line">#c6c6c6</color>
+    <color name="actionsheet_blue">#32B16C</color>
+    <color name="actionsheet_red">#FD4A2E</color>
+    <color name="actionsheet_gray">#8F8F8F</color>
+
+
+    <color name="color_5532B16C">#5532B16C</color>
+    <color name="color_558C97CB">#558C97CB</color>
+    <color name="color_55F9A15C">#55F9A15C</color>
+    <color name="color_f6">#f6f6f6</color>
+
+    <color name="black">#000000</color>
+
+    <color name="mine_bg">#EFEFF4</color>
+    <color name="color_B2B2B2">#B2B2B2</color>
+    <color name="color_EFEFF4">#EFEFF4</color>
+    <color name="color_FF0CBEB5">#0CBEB5</color>
+    <color name="color_FF1ED8AF">#1ED8AF</color>
+    <color name="color_EBEBEB">#EBEBEB</color>
+    <color name="color_880CBEB5">#880CBEB5</color>
+
+    <array name="tab_colors">
+        <item>#34B26D</item>
+        <item>#34B26D</item>
+        <item>#34B26D</item>
+        <item>#34B26D</item>
+        <item>#34B26D</item>
+    </array>
+
+    <color name="blue">#0094ff</color>
+
+    <color name="transparent">#00000000</color>
+</resources>

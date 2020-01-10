@@ -222,9 +222,9 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
                 }
             }
             tvDodata.setVisibility(View.VISIBLE);
-            if (!prevIsBig) {
-                findViewById(R.id.ll_layout).setVisibility(View.INVISIBLE);
-            }
+//            if (!prevIsBig) {
+//                findViewById(R.id.ll_layout).setVisibility(View.INVISIBLE);
+//            }
         } else {
             pieChart.removeAllViews();
             pieChart.setData(null);

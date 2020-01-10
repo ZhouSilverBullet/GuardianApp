@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TitleView">
+        <attr name="titleValue" format="string"/>
+        <attr name="titleColor" format="color"/>
+        <attr name="bgColor" format="color"/>
+        <attr name="rightTextValue" format="string"/>
+        <attr name="rightTextColor" format="color|reference"/>
+        <attr name="rightImgSrc" format="reference"/>
+        <attr name="leftLayoutIsShow" format="boolean"/>
+        <attr name="leftLayoutIconIsGray" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="TextAndEditView">
+        <attr name="taev_text_view" format="string"/>
+        <attr name="taev_edit_text_hint" format="string"/>
+        <attr name="taev_end_text_view" format="string"/>
+        <attr name="taev_line_is_show" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="TextContentView">
+        <attr name="tcv_text_view" format="string"/>
+        <attr name="tcv_content_text" format="string"/>
+        <attr name="tcv_content_hint_text" format="string"/>
+        <attr name="tcv_end_text_view" format="string"/>
+        <attr name="tcv_line_is_show" format="boolean"/>
+        <attr name="tcv_text_img_is_show" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="TextAndTextView">
+        <attr name="tatv_text_view" format="string"/>
+        <attr name="tatv_text_right_value" format="string"/>
+        <attr name="tatv_text_right_hint_value" format="string"/>
+        <attr name="tatv_text_img_is_show" format="boolean"/>
+        <attr name="tatv_line_is_show" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="auto3d">
+        <attr name="textSize" format="dimension|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="NumberEditTextView">
+        <attr name="netv_et_height" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="TopBanner" >
+        <attr name="tb_height" format="dimension" />
+    </declare-styleable>
+</resources>

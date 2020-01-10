@@ -1,1 +1,1 @@
-include ':app', ':faceplatform', ':picture_library', ':ucrop', ':videocompressor', ':xuxin_webview', ':skipsettings', ':mzbanner', ':sdk_agora', ':app_network', ':kt_base'
+include ':app', ':faceplatform', ':picture_library', ':ucrop', ':videocompressor', ':xuxin_webview', ':skipsettings', ':mzbanner', ':sdk_agora', ':app_network', ':kt_base', ':kt_network'

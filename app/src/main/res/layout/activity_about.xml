@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <variable
             name="vm"
             type="com.sdxxtop.guardianapp.aakt.AboutModel" />
@@ -22,12 +23,20 @@
             android:onClick="@{() -> vm.method()}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/tvTest"
             android:textColor="@color/black"
             android:textSize="14sp"
             android:text="@{String.valueOf(vm.str2)}"
             android:layout_width="match_parent"
-            android:layout_height="30dp"/>
+            android:layout_height="30dp" />
+
+
+        <Button
+            android:onClick="@{()-> vm.request()}"
+            android:text="请求网络"
+            android:layout_width="match_parent"
+            android:layout_height="100dp" />
     </LinearLayout>
 </layout>

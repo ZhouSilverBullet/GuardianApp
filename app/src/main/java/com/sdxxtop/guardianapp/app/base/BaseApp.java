@@ -6,12 +6,13 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 
-import androidx.multidex.MultiDex;
-import androidx.multidex.MultiDexApplication;
+import com.sdxxtop.base.BaseApplication;
 
 import java.util.List;
 
-public abstract class BaseApp extends MultiDexApplication {
+import androidx.multidex.MultiDex;
+
+public abstract class BaseApp extends BaseApplication {
 
     //以下属性应用于整个应用程序，合理利用资源，减少资源浪费
     private static Context mContext;//上下文

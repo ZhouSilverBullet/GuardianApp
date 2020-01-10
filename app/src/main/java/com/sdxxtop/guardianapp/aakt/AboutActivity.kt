@@ -1,36 +1,30 @@
 package com.sdxxtop.guardianapp.aakt
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
 import com.bin.david.form.core.SmartTable
 import com.bin.david.form.data.column.Column
 import com.bin.david.form.data.style.FontStyle
 import com.bin.david.form.data.table.TableData
 import com.bin.david.form.utils.DensityUtils
+import com.sdxxtop.base.BaseKTActivity
 import com.sdxxtop.guardianapp.R
 import com.sdxxtop.guardianapp.databinding.ActivityAboutBinding
 import java.util.*
 
-class AboutActivity : AppCompatActivity() {
+class AboutActivity : BaseKTActivity<ActivityAboutBinding, AboutModel>() {
 
-    private lateinit var viewModel :AboutModel
+    override fun vmClazz() = AboutModel::class.java
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val binding = DataBindingUtil.setContentView<ActivityAboutBinding>(this, R.layout.activity_about)
-        viewModel = ViewModelProviders.of(this)[AboutModel::class.java]
-        binding.vm = viewModel
-        viewModel.str.observe(this, androidx.lifecycle.Observer {
-            println(it)
-//            tvTest.text = it
-        })
-
-//        initView()
+    override fun bindVM() {
+        mBinding.vm = mViewModel
     }
 
-    private fun initView() {
+    override fun initObserve() {
+
+    }
+
+    override fun layoutId() = R.layout.activity_about
+
+    override fun initView() {
         FontStyle.setDefaultTextSize(DensityUtils.sp2px(this, 15f)) //设置全局字体大小
         var columns = arrayListOf<Column<*>>()
         val column1 = Column<Column<String>>("日期", "date")

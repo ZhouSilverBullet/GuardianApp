@@ -310,4 +310,8 @@ public class App extends BaseApp {
         sendBroadcast(intent);
     }
 
+    @Override
+    public boolean isDebug() {
+        return BuildConfig.DEBUG;
+    }
 }
