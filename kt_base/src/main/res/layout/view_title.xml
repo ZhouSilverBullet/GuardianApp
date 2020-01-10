@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_back"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        tools:visibility="visible"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/white_back" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tview_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:ellipsize="end"
+        android:lines="1"
+        android:maxWidth="200dp"
+        android:text="修改密码"
+        android:textColor="@color/color_303030"
+        android:textSize="18sp" />
+
+    <TextView
+        android:gravity="center"
+        android:text=""
+        android:id="@+id/tview_right"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:paddingRight="12dp"
+        android:clickable="true"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
+
+    <ImageButton
+        android:id="@+id/iv_right"
+        android:gravity="center"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:scaleType="centerInside"
+        android:src="@drawable/next_step3"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="12dp" />
+</RelativeLayout>

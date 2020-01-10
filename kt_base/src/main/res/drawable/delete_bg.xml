@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:width="16dp"
+        android:height="16dp">
+        <shape>
+            <corners
+                android:bottomLeftRadius="5dp"
+                android:topRightRadius="5dp" />
+            <solid android:color="@color/half_translate" />
+        </shape>
+    </item>
+    <item
+        android:width="10dp"
+        android:height="10dp"
+        android:left="3dp"
+        android:top="3dp">
+        <selector>
+            <item android:drawable="@drawable/delete" />
+        </selector>
+    </item>
+</layer-list>
