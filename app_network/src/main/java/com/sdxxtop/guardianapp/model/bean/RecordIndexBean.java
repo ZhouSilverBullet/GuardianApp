@@ -16,7 +16,7 @@ public class RecordIndexBean {
         public float patrol_score;
         public float matter_score;
         public float other_score;
-        public float score;
+        public String score;
     }
 
     public static class EchartsBean {

@@ -3,6 +3,12 @@ apply plugin: 'com.zhousaito.plugin.publishApp'
 
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+kapt {
+    generateStubs = true
+}
+
 
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
@@ -59,7 +65,7 @@ android {
         abortOnError false
     }
 
-    dataBinding{
+    dataBinding {
         enabled true
     }
 }
@@ -81,6 +87,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "androidx.core:core-ktx:1.1.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'  // liveData
 
     implementation rootProject.ext.dependencies["androidx.appcompat"]
     implementation rootProject.ext.dependencies["androidx.support.v4"]
@@ -118,9 +125,9 @@ dependencies {
     implementation rootProject.ext.dependencies["butterknife"]
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
+    kapt rootProject.ext.dependencies["butterknife-compiler"]
     implementation rootProject.ext.dependencies["dagger"]
-    annotationProcessor rootProject.ext.dependencies["dagger-compiler"]
+    kapt rootProject.ext.dependencies["dagger-compiler"]
     implementation 'com.amap.api:3dmap:6.8.0'
     implementation 'com.amap.api:map2d:5.2.0'
     implementation 'com.amap.api:search:6.5.0.1'

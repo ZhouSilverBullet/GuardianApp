@@ -7,7 +7,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sdxxtop.guardianapp.R;
-import com.sdxxtop.guardianapp.AAKt.AboutActivity;
+import com.sdxxtop.guardianapp.aakt.AboutActivity;
 import com.sdxxtop.guardianapp.ui.activity.kaoqin.MyAssessActivity;
 import com.sdxxtop.guardianapp.ui.widget.imgservice.OnlineServiceActivity;
 
@@ -29,7 +29,7 @@ public class MineMenuAdapter extends BaseQuickAdapter<MineMenuAdapter.Data, Base
 //        list.add(new Data("更换绑定人脸", R.drawable.change_face_my_new));
         list.add(new Data("在线客服", R.drawable.service_my_new));
         list.add(new Data("版本说明", R.drawable.set_my_new));
-        list.add(new Data("关于我们", R.drawable.aboutus_my_new));
+//        list.add(new Data("关于我们", R.drawable.aboutus_my_new));
 
         replaceData(list);
     }

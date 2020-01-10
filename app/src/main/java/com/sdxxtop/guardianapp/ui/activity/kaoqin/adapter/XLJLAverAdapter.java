@@ -1,5 +1,6 @@
 package com.sdxxtop.guardianapp.ui.activity.kaoqin.adapter;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -8,6 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.model.bean.XljlDateBean;
+import com.sdxxtop.guardianapp.ui.activity.kaoqin.ShowXljlActivity;
 
 import java.util.List;
 
@@ -49,6 +51,11 @@ public class XLJLAverAdapter extends BaseQuickAdapter<XljlDateBean.SignLogBean, 
         }
         textX.setText(item.sign_date);
         textValue.setText("" + item.total_distance);
+        helper.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(mContext, ShowXljlActivity.class);
+            intent.putExtra("date",item.sign_date);
+            mContext.startActivity(intent);
+        });
     }
 
     public void setListData(List<XljlDateBean.SignLogBean> data, float max) {

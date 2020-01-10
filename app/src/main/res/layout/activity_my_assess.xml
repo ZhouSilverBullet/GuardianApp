@@ -47,6 +47,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
 
+        <com.sdxxtop.guardianapp.ui.activity.kaoqin.calendar.YearSelectView
+            android:id="@+id/ysvView"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_change"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_change"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <RelativeLayout
@@ -67,7 +77,7 @@
             android:id="@+id/pieChartView"
             android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="200dp"/>
+            android:layout_height="200dp" />
     </RelativeLayout>
 
     <com.sdxxtop.guardianapp.ui.activity.kaoqin.MyAssessLayout
@@ -75,7 +85,7 @@
         android:id="@+id/my_assess_1"
         app:layout_constraintTop_toBottomOf="@+id/rl_layout"
         app:icon_res="@drawable/icon_my_wdkq"
-        app:title_tx="我的考勤"
+        app:title_tx="日常考勤"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -83,7 +93,7 @@
         android:id="@+id/my_assess_2"
         app:layout_constraintTop_toBottomOf="@+id/my_assess_1"
         app:icon_res="@drawable/icon_my_wdgz"
-        app:title_tx="我的工作"
+        app:title_tx="问题报送"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

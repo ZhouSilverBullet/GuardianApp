@@ -41,7 +41,8 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AAKt.AboutActivity"></activity>
+        <activity android:name=".ui.activity.kaoqin.ShowXljlActivity"></activity>
+        <activity android:name=".aakt.AboutActivity" />
         <activity android:name=".ui.activity.kaoqin.ClockInActivity" />
         <activity android:name=".ui.activity.kaoqin.AssessDetailActivity" />
         <activity android:name=".ui.activity.kaoqin.MyWorkActivity" />

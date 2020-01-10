@@ -56,12 +56,8 @@ public class GZTJ_Adapter extends BaseQuickAdapter<GztjMonthBean.SignLogBean, Ba
             icon.setVisibility(View.GONE);
         }
 
-        if (clickPosition == -1) {
+        if (clickPosition == -1 || clickPosition != helper.getAdapterPosition()) {
             icon.setImageResource(R.drawable.assess_icon_list_down);
-        }
-        
-        if (item.sign_score.size() == 0) {
-            return;
         }
 
         if (helper.getAdapterPosition() == clickPosition) {
@@ -75,6 +71,10 @@ public class GZTJ_Adapter extends BaseQuickAdapter<GztjMonthBean.SignLogBean, Ba
         helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (item.sign_score.size() == 0) {
+                    return;
+                }
+
                 if (clickPosition == helper.getAdapterPosition()) {
                     clickPosition = -1;
                 } else {

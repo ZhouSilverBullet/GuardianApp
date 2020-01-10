@@ -11,6 +11,9 @@ public class RecordDetailBean {
 
     public List<ListsBean> lists;
 
+    public int is_clock;
+    public int is_face;
+
     public static class ListsBean {
         /**
          * sign_time : 09:00

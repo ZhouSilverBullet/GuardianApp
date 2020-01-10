@@ -6,7 +6,7 @@
 
     <com.sdxxtop.guardianapp.ui.widget.TitleView
         app:leftLayoutIconIsGray="true"
-        app:titleValue="我的考核"
+        app:titleValue="绩效明细"
         android:id="@+id/titleView"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"

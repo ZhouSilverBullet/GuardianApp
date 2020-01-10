@@ -6,6 +6,7 @@ import com.sdxxtop.guardianapp.model.bean.ArticleIndexBean;
 import com.sdxxtop.guardianapp.model.bean.AuthDataBean;
 import com.sdxxtop.guardianapp.model.bean.AutoLoginBean;
 import com.sdxxtop.guardianapp.model.bean.CategoryStatusBean;
+import com.sdxxtop.guardianapp.model.bean.CheckTrajectoryBean;
 import com.sdxxtop.guardianapp.model.bean.ContactIndexBean;
 import com.sdxxtop.guardianapp.model.bean.DeviceDataBean;
 import com.sdxxtop.guardianapp.model.bean.DeviceListBean;
@@ -458,5 +459,9 @@ public interface EnvirApiService {
     @FormUrlEncoded
     @POST("record/details")
     Observable<RequestBean<RecordDetailBean>> getRecordDetail(@Field("data") String data);
+
+    @FormUrlEncoded
+    @POST("Attendance/checkTrajectory")
+    Observable<RequestBean<CheckTrajectoryBean>> checkTrajectory(@Field("data") String data);
 
 }

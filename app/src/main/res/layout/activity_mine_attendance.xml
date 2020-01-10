@@ -7,7 +7,7 @@
     <com.sdxxtop.guardianapp.ui.widget.TitleView
         android:id="@+id/titleView"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleValue="考勤统计"
+        app:titleValue="我的考勤"
         app:leftLayoutIconIsGray="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

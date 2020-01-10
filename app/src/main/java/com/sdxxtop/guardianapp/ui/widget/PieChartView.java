@@ -274,7 +274,7 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
     /**
      * 设置自定义的指示值
      */
-    public void setDescValue(RecordIndexBean.ListsBean data){
+    public void setDescValue(RecordIndexBean.ListsBean data) {
         if (!prevIsBig) {
             TextView tvRCKQ = findViewById(R.id.tvRCKQ);
             TextView tvXCZF = findViewById(R.id.tvXCZF);
@@ -284,16 +284,16 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
             tvXCZF.setText("巡查走访 " + data.patrol_score);
             tvQTBF.setText("其他部分 " + data.other_score);
             tvWTSB.setText("问题上报 " + data.matter_score);
-            pieChart.setCenterText(generateCenterSpannableText((int) data.score));
+            pieChart.setCenterText(generateCenterSpannableText(data.score));
         }
 
     }
 
-    public static SpannableString generateCenterSpannableText(int score) {
-        SpannableString s = new SpannableString(""+score+"\n绩效总分");
-        s.setSpan(new RelativeSizeSpan(1.7f), 0, 2, 0);
-        s.setSpan(new StyleSpan(Typeface.NORMAL), 2, s.length(), 0);
-        s.setSpan(new ForegroundColorSpan(Color.GRAY), 2, s.length(), 0);
+    public static SpannableString generateCenterSpannableText(String score) {
+        SpannableString s = new SpannableString("" + score + "\n绩效总分");
+        s.setSpan(new RelativeSizeSpan(1.7f), 0, score.length(), 0);
+        s.setSpan(new StyleSpan(Typeface.NORMAL), score.length(), s.length(), 0);
+        s.setSpan(new ForegroundColorSpan(Color.GRAY), score.length(), s.length(), 0);
         return s;
     }
 }

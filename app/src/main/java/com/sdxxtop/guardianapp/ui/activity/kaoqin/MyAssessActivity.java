@@ -20,6 +20,7 @@ import com.sdxxtop.guardianapp.model.http.util.RxUtils;
 import com.sdxxtop.guardianapp.presenter.MyAssessPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.MyAssessContract;
 import com.sdxxtop.guardianapp.ui.activity.kaoqin.calendar.MonthSelectView;
+import com.sdxxtop.guardianapp.ui.activity.kaoqin.calendar.YearSelectView;
 import com.sdxxtop.guardianapp.ui.widget.PieChartView;
 import com.sdxxtop.guardianapp.ui.widget.TitleView;
 import com.sdxxtop.guardianapp.ui.widget.chart.CustomOneBarChartView;
@@ -57,6 +58,11 @@ public class MyAssessActivity extends BaseMvpActivity<MyAssessPresenter> impleme
     PieChartView pieChartView;
     @BindView(R.id.msv_view)
     MonthSelectView msv_view;
+    @BindView(R.id.ysvView)
+    YearSelectView ysvView;
+
+    private boolean isBarChartShow = false; // 是否显示了饼状图
+    private boolean isFirst = true; // 是否是第一次加载数据
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +97,7 @@ public class MyAssessActivity extends BaseMvpActivity<MyAssessPresenter> impleme
             }
         });
         msv_view.setOnMonthChageListener((year, month) -> loadData(Date2Util.dateToStamp("" + year + "-" + month)));
+        ysvView.setOnMonthChageListener(year -> loadData(Date2Util.dateToStamp("" + year)));
     }
 
     @OnClick({R.id.my_assess_1, R.id.my_assess_2, R.id.my_assess_3, R.id.tv_change})
@@ -108,6 +115,10 @@ public class MyAssessActivity extends BaseMvpActivity<MyAssessPresenter> impleme
             case R.id.tv_change:
                 cbcvBarView.setVisibility(cbcvBarView.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
                 pieChartView.setVisibility(pieChartView.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
+                tvChange.setText(cbcvBarView.getVisibility() == View.GONE ? "图表" : "分值");
+                msv_view.setVisibility(pieChartView.getVisibility() == View.VISIBLE ? View.VISIBLE : View.GONE);
+                ysvView.setVisibility(cbcvBarView.getVisibility() == View.VISIBLE ? View.VISIBLE : View.GONE);
+                isBarChartShow = cbcvBarView.getVisibility() == View.VISIBLE;
                 break;
         }
     }
@@ -165,48 +176,92 @@ public class MyAssessActivity extends BaseMvpActivity<MyAssessPresenter> impleme
      *             问题上报:#E72A3A
      */
     private void bandData(RecordIndexBean bean) {
-        List<EventChartBean.ChartInfoBean> data = new ArrayList<>();
+        if (isFirst) {
+            isFirst = false;
+            List<EventChartBean.ChartInfoBean> data = new ArrayList<>();
+            EventChartBean.ChartInfoBean rckq = new EventChartBean.ChartInfoBean();
+            rckq.setColor("#2593E7");
+            rckq.setCount((int) bean.lists.usually_score);
+            rckq.setNum((int) bean.lists.usually_score);
+            rckq.setPart_name("日常考勤 " + bean.lists.usually_score);
+            data.add(rckq);
 
-        EventChartBean.ChartInfoBean rckq = new EventChartBean.ChartInfoBean();
-        rckq.setColor("#2593E7");
-        rckq.setCount((int) bean.lists.usually_score);
-        rckq.setNum((int) bean.lists.usually_score);
-        rckq.setPart_name("日常考勤 " + bean.lists.usually_score);
-        data.add(rckq);
+            EventChartBean.ChartInfoBean xczf = new EventChartBean.ChartInfoBean();
+            xczf.setColor("#EC6941");
+            xczf.setCount((int) bean.lists.patrol_score);
+            xczf.setNum((int) bean.lists.patrol_score);
+            xczf.setPart_name("巡查走访 " + bean.lists.patrol_score);
+            data.add(xczf);
 
-        EventChartBean.ChartInfoBean xczf = new EventChartBean.ChartInfoBean();
-        xczf.setColor("#EC6941");
-        xczf.setCount((int) bean.lists.patrol_score);
-        xczf.setNum((int) bean.lists.patrol_score);
-        xczf.setPart_name("巡查走访 " + bean.lists.patrol_score);
-        data.add(xczf);
+            EventChartBean.ChartInfoBean qtbf = new EventChartBean.ChartInfoBean();
+            qtbf.setColor("#07A01E");
+            qtbf.setCount((int) bean.lists.other_score);
+            qtbf.setNum((int) bean.lists.other_score);
+            qtbf.setPart_name("其他部分 " + bean.lists.other_score);
+            data.add(qtbf);
 
-        EventChartBean.ChartInfoBean qtbf = new EventChartBean.ChartInfoBean();
-        qtbf.setColor("#07A01E");
-        qtbf.setCount((int) bean.lists.other_score);
-        qtbf.setNum((int) bean.lists.other_score);
-        qtbf.setPart_name("其他部分 " + bean.lists.other_score);
-        data.add(qtbf);
+            EventChartBean.ChartInfoBean wtsb = new EventChartBean.ChartInfoBean();
+            wtsb.setColor("#E72A3A");
+            wtsb.setCount((int) bean.lists.matter_score);
+            wtsb.setNum((int) bean.lists.matter_score);
+            wtsb.setPart_name("问题上报 " + bean.lists.matter_score);
+            data.add(wtsb);
 
-        EventChartBean.ChartInfoBean wtsb = new EventChartBean.ChartInfoBean();
-        wtsb.setColor("#E72A3A");
-        wtsb.setCount((int) bean.lists.matter_score);
-        wtsb.setNum((int) bean.lists.matter_score);
-        wtsb.setPart_name("问题上报 " + bean.lists.matter_score);
-        data.add(wtsb);
+            pieChartView.setPieData(data);
+            pieChartView.setDescValue(bean.lists);
 
-        pieChartView.setPieData(data);
-        pieChartView.setDescValue(bean.lists);
-
-
-        if (bean.echarts == null) return;
-        List<WorkIndexBean.MonthComplete> barData = new ArrayList<>();
-        for (RecordIndexBean.EchartsBean item : bean.echarts) {
-            WorkIndexBean.MonthComplete itemData = new WorkIndexBean.MonthComplete();
-            itemData.complete_rate = item.score;
-            barData.add(itemData);
+            if (bean.echarts == null) return;
+            List<WorkIndexBean.MonthComplete> barData = new ArrayList<>();
+            for (RecordIndexBean.EchartsBean item : bean.echarts) {
+                WorkIndexBean.MonthComplete itemData = new WorkIndexBean.MonthComplete();
+                itemData.complete_rate = item.score;
+                barData.add(itemData);
+            }
+            cbcvBarView.initData(barData, Color.parseColor("#442593E7"));
+            return;
         }
-        cbcvBarView.initData(barData, Color.parseColor("#442593E7"));
+        if (isBarChartShow) {
+            if (bean.echarts == null) return;
+            List<WorkIndexBean.MonthComplete> barData = new ArrayList<>();
+            for (RecordIndexBean.EchartsBean item : bean.echarts) {
+                WorkIndexBean.MonthComplete itemData = new WorkIndexBean.MonthComplete();
+                itemData.complete_rate = item.score;
+                barData.add(itemData);
+            }
+            cbcvBarView.initData(barData, Color.parseColor("#442593E7"));
+        } else {
+            List<EventChartBean.ChartInfoBean> data = new ArrayList<>();
+            EventChartBean.ChartInfoBean rckq = new EventChartBean.ChartInfoBean();
+            rckq.setColor("#2593E7");
+            rckq.setCount((int) bean.lists.usually_score);
+            rckq.setNum((int) bean.lists.usually_score);
+            rckq.setPart_name("日常考勤 " + bean.lists.usually_score);
+            data.add(rckq);
+
+            EventChartBean.ChartInfoBean xczf = new EventChartBean.ChartInfoBean();
+            xczf.setColor("#EC6941");
+            xczf.setCount((int) bean.lists.patrol_score);
+            xczf.setNum((int) bean.lists.patrol_score);
+            xczf.setPart_name("巡查走访 " + bean.lists.patrol_score);
+            data.add(xczf);
+
+            EventChartBean.ChartInfoBean qtbf = new EventChartBean.ChartInfoBean();
+            qtbf.setColor("#07A01E");
+            qtbf.setCount((int) bean.lists.other_score);
+            qtbf.setNum((int) bean.lists.other_score);
+            qtbf.setPart_name("其他部分 " + bean.lists.other_score);
+            data.add(qtbf);
+
+            EventChartBean.ChartInfoBean wtsb = new EventChartBean.ChartInfoBean();
+            wtsb.setColor("#E72A3A");
+            wtsb.setCount((int) bean.lists.matter_score);
+            wtsb.setNum((int) bean.lists.matter_score);
+            wtsb.setPart_name("问题上报 " + bean.lists.matter_score);
+            data.add(wtsb);
+
+            pieChartView.setPieData(data);
+            pieChartView.setDescValue(bean.lists);
+        }
     }
 
 }

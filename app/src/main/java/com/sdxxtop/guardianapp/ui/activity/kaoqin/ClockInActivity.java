@@ -126,6 +126,8 @@ public class ClockInActivity extends BaseActivity {
         Disposable disposable = RxUtils.handleDataHttp(observable, new IRequestCallback<RecordDetailBean>() {
             @Override
             public void onSuccess(RecordDetailBean bean) {
+                isClock = bean.is_clock == 1;
+                isFace = bean.is_face == 1;
                 list.clear();
                 for (RecordDetailBean.ListsBean item : bean.lists) {
                     KqstDayBean.SignLogBean itemBean = new KqstDayBean.SignLogBean();
