@@ -46,6 +46,7 @@ public class GZTJ_Adapter extends BaseQuickAdapter<GztjMonthBean.SignLogBean, Ba
         RecyclerView recyclerView = helper.getView(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         tvDesc.setText(item.title);
+        helper.setText(R.id.tvScore,item.matter_score);
 
         if (item.sign_score != null && item.sign_score.size() > 0) {
             SecondAdapter adapter = new SecondAdapter();

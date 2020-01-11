@@ -7,7 +7,6 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sdxxtop.guardianapp.R;
-import com.sdxxtop.guardianapp.aakt.AboutActivity;
 import com.sdxxtop.guardianapp.ui.activity.kaoqin.MyAssessActivity;
 import com.sdxxtop.guardianapp.ui.widget.imgservice.OnlineServiceActivity;
 
@@ -58,7 +57,7 @@ public class MineMenuAdapter extends BaseQuickAdapter<MineMenuAdapter.Data, Base
 //                    intent = new Intent(mContext, VersionsExplainActivity.class);
                     break;
                 case "关于我们":
-                    intent = new Intent(mContext, AboutActivity.class);
+//                    intent = new Intent(mContext, AboutActivity.class);
                     break;
             }
             if (intent!=null){

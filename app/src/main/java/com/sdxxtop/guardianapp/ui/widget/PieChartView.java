@@ -212,6 +212,11 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
     public void setPieData(List<EventChartBean.ChartInfoBean> data) {
         if (data != null && data.size() > 0) {
             for (EventChartBean.ChartInfoBean datum : data) {
+                if (datum.getCount()<0){
+                    pieChart.removeAllViews();
+                    pieChart.setData(null);
+                    break;
+                }
                 if (datum.getCount() != 0) {
                     setData(data);
                     if (!prevIsBig) {
@@ -228,9 +233,9 @@ public class PieChartView extends LinearLayout implements OnChartValueSelectedLi
         } else {
             pieChart.removeAllViews();
             pieChart.setData(null);
-            if (!prevIsBig) {
-                findViewById(R.id.ll_layout).setVisibility(View.GONE);
-            }
+//            if (!prevIsBig) {
+//                findViewById(R.id.ll_layout).setVisibility(View.GONE);
+//            }
         }
     }
 

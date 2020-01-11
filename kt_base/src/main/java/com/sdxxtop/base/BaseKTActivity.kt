@@ -41,7 +41,7 @@ abstract class BaseKTActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCom
 
     val loadService by lazy {
         LoadSir.getDefault().register(loadSirBindView()) {
-            preLoad();
+            preLoad()
         }
     }
 

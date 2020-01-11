@@ -78,4 +78,30 @@ public class StringUtil {
 
         editText.setFilters(new InputFilter[]{filter_space, isNoLetter ? filter_speChat_noletter : filter_speChat, filter_length});
     }
+
+    public static void setEditTextInhibitInputSpaChat(EditText editText, int mMaxLength){
+        InputFilter filter_length = new InputFilter() {
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                int keep = mMaxLength - (dest.length() - (dend - dstart));
+                if (keep <= 0) {
+                    UIUtils.showToast("字数超出限制");
+                    return "";
+                } else if (keep >= end - start) {
+                    return null; // keep original
+                } else {
+                    keep += start;
+                    if (Character.isHighSurrogate(source.charAt(keep - 1))) {
+                        --keep;
+                        if (keep == start) {
+                            return "";
+                        }
+                    }
+                    return source.subSequence(start, keep);
+                }
+            }
+        };
+
+        editText.setFilters(new InputFilter[]{filter_length});
+    }
 }

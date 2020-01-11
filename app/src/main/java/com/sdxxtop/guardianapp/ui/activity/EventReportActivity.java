@@ -109,6 +109,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     private String lonLng;    //经纬度
     private int part_id;   // 选择的部门id
     private int category_id;   // 事件分类id
+    private int smallCategory_id = 0;   // 小事件分类id
     private boolean isItemClick = false;
     private int streamId = 1;
 
@@ -143,9 +144,14 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
                 isItemClick = true;
                 ShowPartBean.KeywordInfoBean item = (ShowPartBean.KeywordInfoBean) adapter.getItem(position);
                 EditText et_title = taevTitle.getEditText();
-                et_title.setText(item.classify_keyword);
+                et_title.setText(item.classify_keyword.replace(" ",""));
                 et_title.clearFocus();
                 hideKeyboard(taevTitle.getEditText());
+
+                // 分类id
+                tatvEventType.getTextRightText().setText(item.classify_keyword);
+                category_id = item.category_id;
+                smallCategory_id = item.classify_id;
 
                 llSearchDataLayout.setVisibility(View.GONE);
                 mPresenter.keywordMatch(item.classify_keyword, item.classify_keyword_id);
@@ -334,7 +340,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
                 vedioPushPath, netContentPosition.getEditValue(), category_id,
                 streamEventPermission.basicReview == 2 ? 0 : (cbIntoVoice.isChecked() ? 1 : 2),  // 是否需要复查,需要选中为1,不选中2
                 endTime
-                , streamId);
+                , streamId,smallCategory_id);
     }
 
     @Override
@@ -355,10 +361,10 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
     @Override
     public void showKeywordInfo(ShowPartBean bean, int keywordId) {
         ShowPartBean.CategoryInfoBean category = bean.category;
-        if (category != null) {
-            tatvEventType.getTextRightText().setText(category.category_name);
-            category_id = category.category_id;
-        }
+//        if (category != null) {
+//            tatvEventType.getTextRightText().setText(category.category_name);
+//            category_id = category.category_id;
+//        }
 
         if (keywordId == 0) {   // 有id代表点击条目搜索不展示
             if (bean.list != null && bean.list.size() > 0) {
@@ -515,7 +521,8 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
             //问题描述 字数限制
             netContent.setMaxLength(streamEventPermission.reportDescribe);
             //输入标题 字数限制
-            StringUtil.setEditTextInhibitInputSpaChat(taevTitle.getEditText(), streamEventPermission.title, streamEventPermission.isNeedLetter == 1);
+//            StringUtil.setEditTextInhibitInputSpaChat(taevTitle.getEditText(), streamEventPermission.title, streamEventPermission.isNeedLetter == 1);
+            StringUtil.setEditTextInhibitInputSpaChat(taevTitle.getEditText(), streamEventPermission.title);
             taevTitle.getEditText().setHint("事件类目关键词（限制" + streamEventPermission.title + "个字）");
             //选择图片和视频的总数量
 //            cvisvView.setMaxImgCount(streamEventPermission.img);

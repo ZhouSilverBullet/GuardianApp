@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.sdxxtop.guardianapp.R;
@@ -79,7 +78,6 @@ public class MonthSelectView extends LinearLayout {
                     mListener.onMonthChanged(year, month);
                 }
                 tvData.setText(year + "年" + month + "月");
-                Toast.makeText(mContext, year + "-" + month, Toast.LENGTH_SHORT).show();
             }
         });
         tvRight.setOnClickListener(new OnClickListener() {
@@ -100,7 +98,6 @@ public class MonthSelectView extends LinearLayout {
                     mListener.onMonthChanged(year, month);
                 }
                 tvData.setText(year + "年" + month + "月");
-                Toast.makeText(mContext, year + "-" + month, Toast.LENGTH_SHORT).show();
             }
         });
     }

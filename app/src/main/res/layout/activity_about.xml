@@ -2,7 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
         <variable
             name="vm"
             type="com.sdxxtop.guardianapp.aakt.AboutModel" />
@@ -13,11 +12,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.bin.david.form.core.SmartTable
-            android:id="@+id/table"
+        <RelativeLayout
+            android:id="@+id/layout"
             android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="0dp" />
+            android:layout_height="300dp">
+
+<!--            <TextView-->
+<!--                android:gravity="center"-->
+<!--                android:text="jsdksjdlfjklsajkfljaklsdjflsjaflakl"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent" />-->
+
+            <com.bin.david.form.core.SmartTable
+                android:id="@+id/table"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
 
         <Button
             android:onClick="@{() -> vm.method()}"

@@ -1,5 +1,6 @@
 package com.sdxxtop.guardianapp.aakt
 
+import android.view.View
 import com.bin.david.form.core.SmartTable
 import com.bin.david.form.data.column.Column
 import com.bin.david.form.data.style.FontStyle
@@ -19,10 +20,17 @@ class AboutActivity : BaseKTActivity<ActivityAboutBinding, AboutModel>() {
     }
 
     override fun initObserve() {
-
+        mViewModel.monthList.observe(this, androidx.lifecycle.Observer {
+//            showLoadSir(it.isEmpty())
+            loadService?.showSuccess()
+        })
     }
 
     override fun layoutId() = R.layout.activity_about
+
+    override fun loadSirBindView(): View {
+        return mBinding.layout
+    }
 
     override fun initView() {
         FontStyle.setDefaultTextSize(DensityUtils.sp2px(this, 15f)) //设置全局字体大小

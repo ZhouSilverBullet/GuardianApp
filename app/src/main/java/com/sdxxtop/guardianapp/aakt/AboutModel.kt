@@ -14,6 +14,7 @@ import com.sdxxtop.guardianapp.utils.UIUtils
  */
 class AboutModel : BaseViewModel() {
     var str = MutableLiveData<String>("ssssss")
+    val monthList = MutableLiveData<List<Echart>>()
     var str2 = ObservableField<String>()
 
     var index = 0
@@ -35,6 +36,8 @@ class AboutModel : BaseViewModel() {
             //这里实际上返回了结果
             RetrofitClient.apiService.postAppInit(params.data)
         }, {
+            str.value = "0"
+            monthList.value = it.echarts
             showLoadingDialog(false)
 //            val ss = it.lists.usually_score
 //            str2.set(""+ss)
