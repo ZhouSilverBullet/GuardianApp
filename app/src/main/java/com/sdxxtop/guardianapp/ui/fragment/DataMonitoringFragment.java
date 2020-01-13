@@ -34,6 +34,7 @@ public class DataMonitoringFragment extends BaseMvpFragment<DataMonitoringPresen
     private static String[] TITLE = {"扬尘监测", "无人机"};
     private BannerViewHolder bannerViewHolder;
     private AuthDataBean mBean;
+    private int currentSelectIndex = 0;  //选中的item
 
     public static DataMonitoringFragment newInstance() {
         Bundle args = new Bundle();
@@ -82,6 +83,8 @@ public class DataMonitoringFragment extends BaseMvpFragment<DataMonitoringPresen
                 onClick(index, layoutId);
             }
         });
+
+        mMZBanner.getViewPager().setCurrentItem(currentSelectIndex);
     }
 
     private List<DataEntry> mockData() {
@@ -122,7 +125,11 @@ public class DataMonitoringFragment extends BaseMvpFragment<DataMonitoringPresen
     }
 
     public void setCurrentItem() {
-        mMZBanner.getViewPager().setCurrentItem(1);
+        if (mMZBanner!=null){
+            mMZBanner.getViewPager().setCurrentItem(1);
+        }else{
+            currentSelectIndex = 1;
+        }
     }
 
     @Override

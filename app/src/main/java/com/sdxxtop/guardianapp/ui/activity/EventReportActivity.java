@@ -144,7 +144,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
                 isItemClick = true;
                 ShowPartBean.KeywordInfoBean item = (ShowPartBean.KeywordInfoBean) adapter.getItem(position);
                 EditText et_title = taevTitle.getEditText();
-                et_title.setText(item.classify_keyword.replace(" ",""));
+                et_title.setText(item.classify_keyword);
                 et_title.clearFocus();
                 hideKeyboard(taevTitle.getEditText());
 
