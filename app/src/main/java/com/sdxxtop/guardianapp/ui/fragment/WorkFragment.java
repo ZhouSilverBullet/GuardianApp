@@ -106,9 +106,9 @@ public class WorkFragment extends BaseMvpFragment<WorkFragmentPresenter> impleme
 
         cbcvBarView.setOnClick(new CustomOneBarChartView.OnBarChartClick() {
             @Override
-            public void barChartClick(int eventNum, int completeNum) {
-                tvReport.setText("" + eventNum);
-                tvChuli.setText("" + completeNum);
+            public void barChartClick(String eventNum, String completeNum) {
+                tvReport.setText(eventNum);
+                tvChuli.setText(completeNum);
             }
         });
     }

@@ -1,6 +1,7 @@
 package com.sdxxtop.guardianapp.ui.activity.kaoqin.adapter;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -46,7 +47,7 @@ public class GZTJ_Adapter extends BaseQuickAdapter<GztjMonthBean.SignLogBean, Ba
         RecyclerView recyclerView = helper.getView(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         tvDesc.setText(item.title);
-        helper.setText(R.id.tvScore,item.matter_score);
+        helper.setText(R.id.tvScore, item.matter_score);
 
         if (item.sign_score != null && item.sign_score.size() > 0) {
             SecondAdapter adapter = new SecondAdapter();
@@ -62,10 +63,10 @@ public class GZTJ_Adapter extends BaseQuickAdapter<GztjMonthBean.SignLogBean, Ba
         }
 
         if (helper.getAdapterPosition() == clickPosition) {
-            tvDesc.setTextColor(mContext.getColor(R.color.black));
+            tvDesc.setTextColor(Color.parseColor("#000000"));
             smartRefresh.setVisibility(View.VISIBLE);
         } else {
-            tvDesc.setTextColor(mContext.getColor(R.color.color_999999));
+            tvDesc.setTextColor(Color.parseColor("#999999"));
             smartRefresh.setVisibility(View.GONE);
         }
 

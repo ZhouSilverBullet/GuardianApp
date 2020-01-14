@@ -76,7 +76,7 @@ public class App extends BaseApp {
         }
 
         NetWorkSession.init(this, BuildConfig.DEBUG);
-        initNoticeClear();
+//        initNoticeClear();
     }
 
     private void initWebViewServer() {

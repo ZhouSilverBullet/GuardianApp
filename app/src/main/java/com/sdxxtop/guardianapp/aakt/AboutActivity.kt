@@ -1,5 +1,6 @@
 package com.sdxxtop.guardianapp.aakt
 
+import android.annotation.SuppressLint
 import android.view.View
 import com.bin.david.form.core.SmartTable
 import com.bin.david.form.data.column.Column
@@ -59,6 +60,11 @@ class AboutActivity : BaseKTActivity<ActivityAboutBinding, AboutModel>() {
         table.config
                 .setShowXSequence(false)
                 .setShowYSequence(false)
+    }
+
+    @SuppressLint("NewApi")
+    override fun initEvent() {
+
     }
 
 }

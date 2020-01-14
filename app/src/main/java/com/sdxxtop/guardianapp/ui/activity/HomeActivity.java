@@ -155,9 +155,9 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
             }
         });
 
-        if (!isServiceExisted(NotificationMonitor.class.getName())) {
-            startService(new Intent(this, NotificationMonitor.class));
-        }
+//        if (!isServiceExisted(NotificationMonitor.class.getName())) {
+//            startService(new Intent(this, NotificationMonitor.class));
+//        }
         toggleNotificationListenerService(this);
     }
 
@@ -308,9 +308,9 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
 
     @Override
     protected void onResume() {
-        if (!isServiceExisted(NotificationMonitor.class.getName())) {
-            startService(new Intent(this, NotificationMonitor.class));
-        }
+//        if (!isServiceExisted(NotificationMonitor.class.getName())) {
+//            startService(new Intent(this, NotificationMonitor.class));
+//        }
         super.onResume();
         isEnabledNLS = isEnabled();
         if (!isEnabledNLS) {
@@ -320,7 +320,6 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
                 dialog.show();
             }
         }
-//        clearAllNotifications();
     }
 
     /**

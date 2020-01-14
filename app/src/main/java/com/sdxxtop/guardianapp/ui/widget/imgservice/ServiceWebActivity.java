@@ -75,6 +75,7 @@ public class ServiceWebActivity extends AppCompatActivity implements ReWebChomeC
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != Activity.RESULT_OK) {
             if (mUploadMsg != null) {
                 mUploadMsg.onReceiveValue(null);

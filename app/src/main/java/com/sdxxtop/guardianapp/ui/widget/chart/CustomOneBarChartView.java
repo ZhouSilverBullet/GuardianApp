@@ -143,7 +143,7 @@ public class CustomOneBarChartView extends LinearLayout {
                 String data = (String) e.getData();
                 if (mListener != null && !TextUtils.isEmpty(data)) {
                     String[] split = data.split(",");
-                    mListener.barChartClick(Integer.parseInt(split[0]), Integer.parseInt(split[1]));
+                    mListener.barChartClick(split[0], split[1]);
                 }
             }
 
@@ -303,6 +303,6 @@ public class CustomOneBarChartView extends LinearLayout {
     }
 
     public interface OnBarChartClick {
-        void barChartClick(int eventNum, int completeNum);
+        void barChartClick(String eventNum, String completeNum);
     }
 }

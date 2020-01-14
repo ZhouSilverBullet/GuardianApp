@@ -16,7 +16,7 @@ import com.amap.api.track.TrackParam;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.app.App;
 import com.sdxxtop.guardianapp.app.Constants;
-import com.sdxxtop.guardianapp.ui.activity.PatrolRecordActivity;
+import com.sdxxtop.guardianapp.ui.activity.HomeActivity;
 import com.sdxxtop.guardianapp.utils.SpUtil;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 
@@ -156,7 +156,7 @@ public class TrackServiceUtil {
         } else {
             builder = new Notification.Builder(mContext);
         }
-        Intent nfIntent = new Intent(mContext, PatrolRecordActivity.class);
+        Intent nfIntent = new Intent(mContext, HomeActivity.class);
         nfIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         //FLAG_CANCEL_CURRENT ,FLAG_IMMUTABLE,FLAG_UPDATE_CURRENT
         builder.setContentIntent(PendingIntent.getActivity(mContext, 0, nfIntent, PendingIntent.FLAG_UPDATE_CURRENT))

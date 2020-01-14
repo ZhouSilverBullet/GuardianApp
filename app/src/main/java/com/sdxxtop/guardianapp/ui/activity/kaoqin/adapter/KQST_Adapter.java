@@ -42,12 +42,12 @@ public class KQST_Adapter extends BaseQuickAdapter<KqstDayBean.SignLogBean, Base
         tvLineVer.setVisibility(helper.getPosition() == 0 ? View.GONE : View.VISIBLE);
         tvLine.setVisibility(helper.getLayoutPosition() == getData().size() - 1 ? View.INVISIBLE : View.VISIBLE);
 
-        if (!TextUtils.isEmpty(item.sign_name) && !TextUtils.isEmpty(item.sys_date)) {
-            tvTime.setText(item.sign_name + "时间" + item.sys_date);
-            tvTime.setVisibility(View.VISIBLE);
-        } else {
-            tvTime.setVisibility(View.INVISIBLE);
-        }
+        tvTime.setText(item.sign_name + "时间" + item.sys_date);
+//        if (!TextUtils.isEmpty(item.sign_name) && !TextUtils.isEmpty(item.sys_date)) {
+//            tvTime.setVisibility(View.VISIBLE);
+//        } else {
+//            tvTime.setVisibility(View.INVISIBLE);
+//        }
 
         if (!TextUtils.isEmpty(item.sign_time)) {
             tvtime_dk.setText("打卡时间" + getHMtime(item.sign_time));
@@ -58,14 +58,15 @@ public class KQST_Adapter extends BaseQuickAdapter<KqstDayBean.SignLogBean, Base
             tvStatus.setVisibility(View.INVISIBLE);
         }
 
-        if (!TextUtils.isEmpty(item.address)) {
-            tvPlace.setText(item.address);
-            tvPlace.setVisibility(View.VISIBLE);
-            ivIcon.setVisibility(View.VISIBLE);
-        } else {
-            ivIcon.setVisibility(View.INVISIBLE);
-            tvPlace.setVisibility(View.INVISIBLE);
-        }
+        tvPlace.setText(item.address);
+//        if (!TextUtils.isEmpty(item.address)) {
+//            tvPlace.setText(item.address);
+//            tvPlace.setVisibility(View.VISIBLE);
+//            ivIcon.setVisibility(View.VISIBLE);
+//        } else {
+//            ivIcon.setVisibility(View.INVISIBLE);
+//            tvPlace.setVisibility(View.INVISIBLE);
+//        }
 
         int color = Color.parseColor("#33CC00");
         String tx = "正常";
