@@ -157,9 +157,9 @@ public class MineFragment extends BaseMvpFragment<MinePresenter> implements Mine
         }
         tvName.setText(bean.name);
         tvPlace.setText(new StringBuilder().append(bean.part_name).append(" ").append(bean.getStringPosition()));
-        if (bean.grade==0){
+        if (bean.grade == 0) {
             ratingbar.setVisibility(View.INVISIBLE);
-        }else{
+        } else {
             ratingbar.setVisibility(View.VISIBLE);
             ratingbar.setStar(bean.grade);
         }

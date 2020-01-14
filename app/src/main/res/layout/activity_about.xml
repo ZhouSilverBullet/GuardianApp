@@ -38,9 +38,21 @@
             android:id="@+id/tvTest"
             android:textColor="@color/black"
             android:textSize="14sp"
-            android:text="@{String.valueOf(vm.str2)}"
+            android:text="@{String.valueOf(vm.str2+000)}"
             android:layout_width="match_parent"
             android:layout_height="30dp" />
+        <TextView
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:text="@{@string/nameFormat(vm.firstName, vm.lastName)}"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+<!--        <TextView-->
+<!--            android:textColor="@{@color/vm.color}"-->
+<!--            android:textSize="14sp"-->
+<!--            android:text='@{"klsdlklsdl"+vm.str2}'-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="30dp" />-->
 
 
         <Button

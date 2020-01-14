@@ -24,6 +24,7 @@
     <string name="liveness_head_up">缓慢抬头</string>
     <string name="liveness_head_down">缓慢低头</string>
     <string name="liveness_good">非常好</string>
+    <string name="nameFormat">%s 非常好 %s</string>
 
     <string name="permission_camera">摄像头</string>
 
