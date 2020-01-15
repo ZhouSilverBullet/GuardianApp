@@ -50,7 +50,9 @@ public class TrackServiceUtil {
                 }
             } else if (status == ErrorCode.TrackListen.START_TRACK_ALREADY_STARTED) {
                 // 已经启动
-//                Toast.makeText(mContext, "服务已经启动", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "服务已经启动: " + status + ", msg: " + msg);
+                stopTrackService();
+                stsrtTrackService(null);
             } else {
                 Log.e(TAG, "启动服务失败: " + status + ", msg: " + msg);
                 if (aMapTrackClient != null && onTrackListener != null && trackParam != null) {
@@ -63,7 +65,7 @@ public class TrackServiceUtil {
         public void onStopTrackCallback(int status, String msg) {
             if (status == ErrorCode.TrackListen.STOP_TRACK_SUCCE) {
                 // 成功停止
-//                Toast.makeText(mContext, "停止服务成功", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "停止服务成功: " + status + ", msg: " + msg);
             } else {
                 Log.e(TAG, "停止服务失败: " + status + ", msg: " + msg);
             }
@@ -72,11 +74,11 @@ public class TrackServiceUtil {
         @Override
         public void onStartGatherCallback(int status, String msg) {
             if (status == ErrorCode.TrackListen.START_GATHER_SUCEE) {
-//                Toast.makeText(mContext, "定位采集开启成功", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "定位采集开启成功: " + status + ", msg: " + msg);
             } else if (status == ErrorCode.TrackListen.START_GATHER_ALREADY_STARTED) {
-//                Toast.makeText(mContext, "定位采集已经开启", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "定位采集已经开启: " + status + ", msg: " + msg);
             } else {
-//                Log.w("TrackService", "error onStartGatherCallback, status: " + status + ", msg: " + msg);
+                Log.e(TAG, "定位采集失败重新开启: " + status + ", msg: " + msg);
                 if (aMapTrackClient != null && onTrackListener != null) {   // 开启定位采集失败重新开启
                     aMapTrackClient.setTrackId(mTrackId);
                     aMapTrackClient.startGather(onTrackListener);
@@ -134,9 +136,9 @@ public class TrackServiceUtil {
             long serviceId = SpUtil.getLong(Constants.SERVICE_ID, 0);
             long terminalId = SpUtil.getLong(Constants.TERMINAL_ID, 0);
             long trackId = SpUtil.getLong(Constants.TRACK_ID, 0);
-            Log.e(TAG, "退出猎鹰--   serviceId = " + serviceId + "    terminalId = " + terminalId + "    trackId = " + trackId);
-            aMapTrackClient.stopTrack(new TrackParam(serviceId, terminalId), new SimpleOnTrackLifecycleListener());
-            aMapTrackClient.stopGather(new SimpleOnTrackLifecycleListener());
+            Log.e(TAG, "退出猎鹰--   serviceId = " + serviceId + "    terminalId = " + terminalId);
+            aMapTrackClient.stopTrack(new TrackParam(serviceId, terminalId), onTrackListener);
+            aMapTrackClient.stopGather(onTrackListener);
             trackParam = null;
             aMapTrackClient = null;
         }

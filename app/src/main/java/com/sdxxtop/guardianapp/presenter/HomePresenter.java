@@ -73,11 +73,20 @@ public class HomePresenter extends RxPresenter<HomeContract.IView> implements Ho
     }
 
     /********** 猎鹰相关 ***********/
+    @SuppressLint("HandlerLeak")
     public void startUploadingPoint() {
 //        App.getInstance().startTrackService();
-        if (handler != null) {
-            handler.sendEmptyMessageDelayed(0, 1000 * 60);
-        }
+//        if (handler != null) {
+//            handler.removeMessages(0);
+//            handler.sendEmptyMessageDelayed(0, 1000 * 60);
+//        }
+        handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                uploadingPoint();
+            }
+        };
+        handler.sendEmptyMessageDelayed(0, 1000 * 60);
     }
 
     @SuppressLint("HandlerLeak")
