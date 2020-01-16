@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Process;
 import android.util.Log;
+import android.view.inputmethod.InputMethodManager;
 
 import com.alibaba.sdk.android.push.CloudPushService;
 import com.alibaba.sdk.android.push.CommonCallback;
@@ -40,7 +41,6 @@ import com.sdxxtop.guardianapp.di.component.AppComponent;
 import com.sdxxtop.guardianapp.di.component.DaggerAppComponent;
 import com.sdxxtop.guardianapp.di.module.AppModule;
 import com.sdxxtop.guardianapp.model.NetWorkSession;
-import com.sdxxtop.guardianapp.service.ForegroundService;
 import com.sdxxtop.guardianapp.service.NotificationMonitor;
 import com.sdxxtop.sdkagora.AgoraSession;
 import com.umeng.analytics.MobclickAgent;
@@ -55,6 +55,7 @@ public class App extends BaseApp {
     private static AppComponent appComponent;
     private static final String TAG = "APP_Init";
     private static AMapTrackClient aMapTrackClient;
+    private static InputMethodManager imm;
 
     @Override
     public void onCreate() {
@@ -77,6 +78,7 @@ public class App extends BaseApp {
 
         NetWorkSession.init(this, BuildConfig.DEBUG);
 //        initNoticeClear();
+        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 
     private void initWebViewServer() {
@@ -85,6 +87,18 @@ public class App extends BaseApp {
 //        if ("com.sdxxtop.guardianapp:remoteweb".equals(getProcessName(this))) {
 //            new ProgressWebView(this);
 //        }
+    }
+
+    /**
+     * 初始化输入框
+     *
+     * @return
+     */
+    public static InputMethodManager getInputMethodManager() {
+        if (imm != null) {
+            return imm;
+        }
+        return null;
     }
 
     private void initUM() {
@@ -241,21 +255,6 @@ public class App extends BaseApp {
         return null;
     }
 
-    private Intent intent;
-
-    public void startTrackService() {
-        if (!isServiceExisted(ForegroundService.class.getName())) {
-            intent = new Intent(App.getInstance(), ForegroundService.class);
-            startService(intent);
-        } else {
-            if (intent != null) {
-                stopService(intent);
-            }
-            intent = new Intent(App.getInstance(), ForegroundService.class);
-            startService(intent);
-        }
-    }
-
     /**
      * 判断service是否已经运行
      * 必须判断uid,因为可能有重名的Service,所以要找自己程序的Service,不同进程只要是同一个程序就是同一个uid,个人理解android系统中一个程序就是一个用户
@@ -288,7 +287,7 @@ public class App extends BaseApp {
             ActivityManager mActivityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
             for (ActivityManager.RunningAppProcessInfo appProcess : mActivityManager
                     .getRunningAppProcesses()) {
-                Log.e(TAG,appProcess.processName);
+                Log.e(TAG, appProcess.processName);
                 if (appProcess.pid == pid) {
                     return appProcess.processName;
                 }
@@ -303,7 +302,7 @@ public class App extends BaseApp {
         return getPackageName().equals(process);
     }
 
-    private void initNoticeClear(){
+    private void initNoticeClear() {
         Intent intent = new Intent();
         intent.setAction(NotificationMonitor.ACTION_NLS_CONTROL);
         intent.putExtra("command", "cancel_last");

@@ -1,6 +1,6 @@
 package com.sdxxtop.guardianapp.base;
 
-import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -26,10 +26,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     private Unbinder mUnbinder;
     protected BaseActivity mContext;
     private DialogUtil mDialogUtil;
-    private InputMethodManager imm;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);   // 禁止横屏
         super.onCreate(savedInstanceState);
         setContentView(getLayout());
         mContext = this;
@@ -43,8 +43,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         initView();
         initEvent();
         initData();
-
-        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 
     /**
@@ -135,10 +133,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void hideKeyboard(View view) {
         if (view != null) {
-            if (imm == null) {
-                imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imn = App.getInputMethodManager();
+            if (imn != null) {
+                imn.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 

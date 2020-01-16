@@ -87,7 +87,7 @@ public class MyAssessActivity extends BaseMvpActivity<MyAssessPresenter> impleme
     @Override
     protected void initView() {
         initPieChart();
-        titleView.setOnClickListener(new SingleClickListener() {
+        titleView.getTvRight().setOnClickListener(new SingleClickListener() {
             @Override
             protected void onSingleClick(View v) {
                 Intent intent = new Intent(mContext, OnlineServiceActivity.class);
