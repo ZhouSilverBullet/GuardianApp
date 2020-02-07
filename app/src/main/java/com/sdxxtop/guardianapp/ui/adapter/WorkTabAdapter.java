@@ -34,6 +34,7 @@ import com.sdxxtop.guardianapp.ui.activity.HomeActivity;
 import com.sdxxtop.guardianapp.ui.activity.PatrolRecordActivity;
 import com.sdxxtop.guardianapp.ui.activity.SectionEventActivity;
 import com.sdxxtop.guardianapp.ui.activity.custom_event.CustomHeightBottomSheetDialog;
+import com.sdxxtop.guardianapp.ui.assignevent.AssignEventActivity;
 import com.sdxxtop.guardianapp.utils.SpUtil;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 
@@ -72,11 +73,6 @@ public class WorkTabAdapter extends BaseAdapter {
         for (String titleRe : titleRes) {
             titleResValue.add(titleRe);
         }
-        long aLong = SpUtil.getLong(Constants.IS_TRACK, 2);
-//        if (aLong == 1) {
-//            imgResValue.add(R.drawable.icon_bumen_work);
-//            titleResValue.add("工作轨迹");
-//        }
     }
 
 
@@ -177,6 +173,9 @@ public class WorkTabAdapter extends BaseAdapter {
             case "工作轨迹":   // 工作轨迹
                 intent = new Intent(context, PatrolRecordActivity.class);
                 break;
+            case "交办事件":   // 交办事件
+                intent = new Intent(context, AssignEventActivity.class);
+                break;
             case "自定义事件":   // 自定义事件
                 if (dialog == null) {
                     initDialog();
@@ -265,6 +264,15 @@ public class WorkTabAdapter extends BaseAdapter {
             imgResValue.add(R.drawable.icon_cus_evnet_work);
             titleResValue.add("自定义事件");
         }
+
+        long aLong = SpUtil.getLong(Constants.IS_TRACK, 2);
+        if (aLong == 1) {
+            imgResValue.add(R.drawable.icon_bumen_work);
+            titleResValue.add("工作轨迹");
+        }
+
+        imgResValue.add(R.drawable.icon_shuju_work);
+        titleResValue.add("交办事件");
 
         notifyDataSetChanged();
         this.mBean = bean;

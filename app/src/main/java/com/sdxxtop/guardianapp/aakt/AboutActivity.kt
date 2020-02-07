@@ -22,12 +22,16 @@ class AboutActivity : BaseKTActivity<ActivityAboutBinding, AboutModel>() {
 
     override fun initObserve() {
         mViewModel.monthList.observe(this, androidx.lifecycle.Observer {
-//            showLoadSir(it.isEmpty())
+            //            showLoadSir(it.isEmpty())
             loadService?.showSuccess()
         })
     }
 
     override fun layoutId() = R.layout.activity_about
+
+    override fun isDarkStatusIcon(): Boolean {
+        return true
+    }
 
     override fun loadSirBindView(): View {
         return mBinding.layout

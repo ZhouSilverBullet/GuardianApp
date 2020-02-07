@@ -34,14 +34,16 @@
     <application
         android:name=".app.App"
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
         android:resizeableActivity="true"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:hardwareAccelerated="false"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.assignevent.AddAssignEventActivity"></activity>
+        <activity android:name=".ui.assignevent.AssignEventActivity" />
         <activity android:name=".ui.activity.kaoqin.ShowXljlActivity" />
         <activity android:name=".aakt.AboutActivity" />
         <activity android:name=".ui.activity.kaoqin.ClockInActivity" />
@@ -275,13 +277,12 @@
 
         <service android:name="com.amap.api.location.APSService" />
         <service android:name="com.amap.api.track.AMapTrackService" />
-        <service android:name=".service.PatrolRecordService" />
-<!--    轨迹前台服务,关闭    -->
-<!--        <service-->
-<!--            android:name=".service.ForegroundService"-->
-<!--            android:enabled="true"-->
-<!--            android:exported="true"-->
-<!--            android:process=":remote" />-->
+        <service android:name=".service.PatrolRecordService" /> <!-- 轨迹前台服务,关闭 -->
+        <!-- <service -->
+        <!-- android:name=".service.ForegroundService" -->
+        <!-- android:enabled="true" -->
+        <!-- android:exported="true" -->
+        <!-- android:process=":remote" /> -->
         <service
             android:name="com.alibaba.sdk.android.push.MsgService"
             android:exported="false">
@@ -344,13 +345,10 @@
         <service
             android:name="com.alibaba.sdk.android.push.channel.KeepChannelService"
             android:permission="android.permission.BIND_JOB_SERVICE"
-            android:process=":channel" />
-
-<!--   独立进程webView关闭     -->
-<!--        <service-->
-<!--            android:name="com.sdxxtop.webview.romoteservice.OptimizationService"-->
-<!--            android:process=":remotewebview" />-->
-
+            android:process=":channel" /> <!-- 独立进程webView关闭 -->
+        <!-- <service -->
+        <!-- android:name="com.sdxxtop.webview.romoteservice.OptimizationService" -->
+        <!-- android:process=":remotewebview" /> -->
         <service
             android:name=".service.NotificationMonitor"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
