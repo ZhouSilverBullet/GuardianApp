@@ -42,7 +42,8 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.assignevent.AddAssignEventActivity"></activity>
+        <activity android:name=".ui.assignevent.AssignEventDetailActivity"></activity>
+        <activity android:name=".ui.assignevent.AddAssignEventActivity" />
         <activity android:name=".ui.assignevent.AssignEventActivity" />
         <activity android:name=".ui.activity.kaoqin.ShowXljlActivity" />
         <activity android:name=".aakt.AboutActivity" />

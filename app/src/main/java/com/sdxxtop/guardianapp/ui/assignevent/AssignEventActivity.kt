@@ -1,6 +1,7 @@
 package com.sdxxtop.guardianapp.ui.assignevent
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
@@ -11,6 +12,7 @@ import com.sdxxtop.guardianapp.databinding.ActivityAssignEventBinding
 import com.sdxxtop.guardianapp.ui.assignevent.adapter.AssignListAdapter
 import com.sdxxtop.guardianapp.ui.assignevent.assignmodel.AssignListModel
 import kotlinx.android.synthetic.main.activity_assign_event.*
+import java.lang.ref.WeakReference
 
 class AssignEventActivity : BaseKTActivity<ActivityAssignEventBinding, AssignListModel>() {
 
@@ -44,7 +46,7 @@ class AssignEventActivity : BaseKTActivity<ActivityAssignEventBinding, AssignLis
 
     override fun initView() {
         titleView.tvRight.setOnClickListener { startActivity(Intent(AssignEventActivity@ this, AddAssignEventActivity::class.java)) }
-
+        adapter.setOnItemClickListener { adapter, view, position -> startActivity(Intent(AssignEventActivity@this,AssignEventDetailActivity::class.java)) }
 
         val stringlist = arrayListOf("我执行的", "我交办的")
         for (item in stringlist) {

@@ -61,21 +61,31 @@
             android:text="已完成"
             app:layout_constraintTop_toBottomOf="@+id/timeSelect" />
 
-        <com.scwang.smartrefresh.layout.SmartRefreshLayout
-            android:id="@+id/smartRefresh"
-            android:layout_width="match_parent"
-            android:layout_height="500dp"
+        <LinearLayout
+            android:layout_marginTop="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvStatus"
-            app:srlEnableLoadMore="false"
-            app:srlEnableRefresh="false">
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
+            <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                android:id="@+id/smartRefresh"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvStatus"
+                app:srlEnableLoadMore="false"
+                app:srlEnableRefresh="false">
 
-        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
