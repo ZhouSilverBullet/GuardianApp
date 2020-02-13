@@ -1,5 +1,6 @@
 package com.sdxxtop.guardianapp.api
 
+import com.sdxxtop.guardianapp.model.http.api.EnvirApiService
 import com.sdxxtop.network.api.BaseRetrofitClient
 import okhttp3.OkHttpClient
 
@@ -11,7 +12,7 @@ import okhttp3.OkHttpClient
  */
 object RetrofitClient : BaseRetrofitClient() {
     val apiService by lazy {
-        getService(ApiService::class.java, ApiService.BASE_URL)
+        getService(ApiService::class.java, EnvirApiService.BASE_URL)
     }
 
     override fun isDebug(): Boolean {

@@ -3,8 +3,11 @@ package com.sdxxtop.guardianapp.ui.fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.sdxxtop.guardianapp.R;
@@ -15,6 +18,7 @@ import com.sdxxtop.guardianapp.presenter.contract.WorkFragmentContract;
 import com.sdxxtop.guardianapp.ui.activity.TaskAgentsActivity;
 import com.sdxxtop.guardianapp.ui.adapter.NewDaiBanAdapter;
 import com.sdxxtop.guardianapp.ui.adapter.WorkTabAdapter;
+import com.sdxxtop.guardianapp.ui.assignevent.AssignEventActivity;
 import com.sdxxtop.guardianapp.ui.widget.UnScrolGridView;
 import com.sdxxtop.guardianapp.ui.widget.chart.CustomOneBarChartView;
 
@@ -22,6 +26,7 @@ import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -37,8 +42,6 @@ public class WorkFragment extends BaseMvpFragment<WorkFragmentPresenter> impleme
     UnScrolGridView gridview;
     @BindView(R.id.cbcv_bar_view)
     CustomOneBarChartView cbcvBarView;
-    @BindView(R.id.ll_more_event)
-    LinearLayout llMoreEvent;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.tv_chuli)
@@ -49,6 +52,13 @@ public class WorkFragment extends BaseMvpFragment<WorkFragmentPresenter> impleme
     TextView tvTitle;
     @BindView(R.id.tv_no_data)
     TextView tvNoData;
+    @BindView(R.id.cbMyDBEvent)
+    RadioButton cbMyDBEvent;
+    @BindView(R.id.cbAssignEvent)
+    RadioButton cbAssignEvent;
+
+
+    private int currentSeletItem = 1;
 
     private NewDaiBanAdapter adapter;
     private WorkTabAdapter tabAdapter;
@@ -103,6 +113,16 @@ public class WorkFragment extends BaseMvpFragment<WorkFragmentPresenter> impleme
         recyclerView.setAdapter(adapter);
         tabAdapter = new WorkTabAdapter(getActivity());
         gridview.setAdapter(tabAdapter);
+        cbMyDBEvent.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                currentSeletItem = 1;
+            }
+        });
+        cbAssignEvent.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                currentSeletItem = 2;
+            }
+        });
 
         cbcvBarView.setOnClick(new CustomOneBarChartView.OnBarChartClick() {
             @Override
@@ -113,11 +133,16 @@ public class WorkFragment extends BaseMvpFragment<WorkFragmentPresenter> impleme
         });
     }
 
-    @OnClick(R.id.ll_more_event)
+    @OnClick({R.id.ll_more_event})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_more_event:
-                startActivity(new Intent(getContext(), TaskAgentsActivity.class));
+                Log.e("WorkFragment==", "" + currentSeletItem);
+                if (currentSeletItem == 1) { // 选中 我的代办
+                    startActivity(new Intent(getContext(), TaskAgentsActivity.class));
+                } else {
+                    startActivity(new Intent(getContext(), AssignEventActivity.class));
+                }
                 break;
         }
     }

@@ -5,6 +5,8 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -25,6 +27,7 @@ public class Custom2TextView extends LinearLayout {
     private float leftTxSize;
     private float centerTxSize;
     private float rightTxSize;
+    private boolean rightTextIvShow;
     private String leftTxValue;
     private String centerTxValue;
     private String rightTxValue;
@@ -32,6 +35,7 @@ public class Custom2TextView extends LinearLayout {
     private TextView tvLeft;
     private TextView tvCenter;
     private TextView tvRight;
+    private ImageView ivRightTxLeft;
 
     public Custom2TextView(Context context) {
         this(context, null);
@@ -54,6 +58,7 @@ public class Custom2TextView extends LinearLayout {
         leftTxValue = ta.getString(R.styleable.Custom2TextView_left_text_value);
         centerTxValue = ta.getString(R.styleable.Custom2TextView_center_text_value);
         rightTxValue = ta.getString(R.styleable.Custom2TextView_right_text_value);
+        rightTextIvShow = ta.getBoolean(R.styleable.Custom2TextView_right_text_iv_show, false);
 
         initView();
     }
@@ -64,6 +69,7 @@ public class Custom2TextView extends LinearLayout {
         tvLeft = findViewById(R.id.tvLeft);
         tvCenter = findViewById(R.id.tvCenter);
         tvRight = findViewById(R.id.tvRight);
+        ivRightTxLeft = findViewById(R.id.ivRightTxLeft);
 
         tvLeft.setTextColor(leftColor);
         tvCenter.setTextColor(centerColor);
@@ -72,6 +78,8 @@ public class Custom2TextView extends LinearLayout {
         tvLeft.setText(leftTxValue);
         tvCenter.setText(centerTxValue);
         tvRight.setText(rightTxValue);
+
+        ivRightTxLeft.setVisibility(rightTextIvShow ? View.VISIBLE : View.GONE);
     }
 
     public TextView getTvLeft() {

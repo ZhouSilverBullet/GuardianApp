@@ -1,22 +1,39 @@
 package com.sdxxtop.guardianapp.ui.assignevent
 
 import android.content.Intent
-import android.graphics.Bitmap
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.tabs.TabLayout
+import com.scwang.smartrefresh.layout.api.RefreshLayout
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener
 import com.sdxxtop.base.BaseKTActivity
 import com.sdxxtop.guardianapp.R
 import com.sdxxtop.guardianapp.databinding.ActivityAssignEventBinding
 import com.sdxxtop.guardianapp.ui.assignevent.adapter.AssignListAdapter
 import com.sdxxtop.guardianapp.ui.assignevent.assignmodel.AssignListModel
+import com.sdxxtop.guardianapp.ui.widget.SingleStyleView
 import kotlinx.android.synthetic.main.activity_assign_event.*
-import java.lang.ref.WeakReference
 
 class AssignEventActivity : BaseKTActivity<ActivityAssignEventBinding, AssignListModel>() {
 
-    val adapter = AssignListAdapter()
+    private var statusTx = "全部"
+    private val adapter = AssignListAdapter()
+    private var zxSp = 0
+    private var jbSp = 0
+    private var currentSelectItem = 1
+
+    private val statusSelect: SingleStyleView by lazy {
+        val list = arrayListOf<SingleStyleView.ListDataBean>()
+        //待确认，待解决，已拒绝，已完成
+        list.add(SingleStyleView.ListDataBean(0, "全部"))
+        list.add(SingleStyleView.ListDataBean(1, "待确认"))
+        list.add(SingleStyleView.ListDataBean(2, "待解决"))
+        list.add(SingleStyleView.ListDataBean(3, "已拒绝"))
+        list.add(SingleStyleView.ListDataBean(4, "已完成"))
+        SingleStyleView(this@AssignEventActivity, list)
+    }
 
     override fun layoutId() = R.layout.activity_assign_event
     override fun vmClazz() = AssignListModel::class.java
@@ -29,24 +46,25 @@ class AssignEventActivity : BaseKTActivity<ActivityAssignEventBinding, AssignLis
     }
 
     override fun initObserve() {
-        mBinding.vm?.mIsLoadingShow?.observe(this, Observer {
-            Log.e("回掉==", "${it}")
-            showLoadSir(true)
-        })
-
         mBinding.vm?.isShowEmpty?.observe(this, Observer {
             showLoadSir(it)
         })
+
     }
 
     override fun preLoad() {
-        Log.e("preLoad", "stopLoad")
-        mBinding.vm?.stopLoad()
+
+    }
+
+    override fun initData() {
+        mBinding.vm?.postZXData()
+        mBinding.vm?.postJBData()
     }
 
     override fun initView() {
         titleView.tvRight.setOnClickListener { startActivity(Intent(AssignEventActivity@ this, AddAssignEventActivity::class.java)) }
-        adapter.setOnItemClickListener { adapter, view, position -> startActivity(Intent(AssignEventActivity@this,AssignEventDetailActivity::class.java)) }
+        adapter.setOnItemClickListener { adapter, view, position -> startActivity(Intent(AssignEventActivity@ this, AssignEventDetailActivity::class.java)) }
+        tvStatus.setOnClickListener(this)
 
         val stringlist = arrayListOf("我执行的", "我交办的")
         for (item in stringlist) {
@@ -63,6 +81,46 @@ class AssignEventActivity : BaseKTActivity<ActivityAssignEventBinding, AssignLis
             list.add("")
         }
         adapter.replaceData(list)
+        statusSelect.setOnItemSelectLintener { _, result ->
+            statusTx = result
+            tvStatus.text = statusTx
+        }
+
+        tablayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                //选中之后再次点击即复选时触发
+                if (tab.text == "我交办的") {
+                    currentSelectItem = 2
+                    tvStatus.visibility = View.INVISIBLE
+                } else {
+                    currentSelectItem = 1
+                    tvStatus.visibility = View.VISIBLE
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
+        smartRefresh.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
+            override fun onLoadMore(refreshLayout: RefreshLayout?) {
+                if (currentSelectItem == 1) {
+                    mBinding.vm?.postZXData()
+                }
+            }
+
+            override fun onRefresh(refreshLayout: RefreshLayout?) {
+            }
+
+        })
+    }
+
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.tvStatus -> {
+                statusSelect.show()
+            }
+        }
     }
 
 }

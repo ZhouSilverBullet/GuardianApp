@@ -56,6 +56,7 @@
         <attr name="left_text_value" format="string" />
         <attr name="center_text_value" format="string" />
         <attr name="right_text_value" format="string" />
+        <attr name="right_text_iv_show" format="boolean" />
     </declare-styleable>
 
     <!--支持圆角的TextView-->

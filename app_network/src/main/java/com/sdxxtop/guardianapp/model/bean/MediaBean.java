@@ -1,11 +1,13 @@
 package com.sdxxtop.guardianapp.model.bean;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+
 /**
  * @author :  lwb
  * Date: 2019/6/1
  * Desc:
  */
-public class MediaBean {
+public class MediaBean implements MultiItemEntity {
 
     private String path;
     private int type;  // 1:图片  2:视频
@@ -29,5 +31,10 @@ public class MediaBean {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    @Override
+    public int getItemType() {
+        return type;
     }
 }

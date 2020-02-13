@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
 import com.sdxxtop.guardianapp.R;
@@ -23,46 +25,45 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import androidx.annotation.Nullable;
-
 /**
  * @author :  lwb
  * Date: 2019/12/31
  * Desc:
  */
-public class MyAssessCalendarView extends LinearLayout implements CalendarView.OnCalendarRangeSelectListener {
+public class MyAssignCalendarView extends LinearLayout implements CalendarView.OnCalendarRangeSelectListener {
 
     private Context mContext;
     private Dialog dialog;
     private View view;
-    private TextView tvDataStart;
-    private TextView tvDataEnd;
     public String currentDate;  //默认当天
+    private TextView timeStartSelect;
+    private TextView timeEndSelect;
 
-    public MyAssessCalendarView(Context context) {
+    public MyAssignCalendarView(Context context) {
         this(context, null);
     }
 
-    public MyAssessCalendarView(Context context, @Nullable AttributeSet attrs) {
+    public MyAssignCalendarView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public MyAssessCalendarView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public MyAssignCalendarView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        view = LayoutInflater.from(context).inflate(R.layout.cv_kaoqin_calendar, this, true);
+        view = LayoutInflater.from(context).inflate(R.layout.item_only_tx, this, true);
         this.mContext = context;
         initView();
     }
 
     private void initView() {
-        tvDataStart = view.findViewById(R.id.tv_data_start);
-        tvDataEnd = view.findViewById(R.id.tv_data_end);
+        timeStartSelect = view.findViewById(R.id.timeStartSelect);
+        timeEndSelect = view.findViewById(R.id.timeEndSelect);
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         Date date = new Date(System.currentTimeMillis());
         currentDate = format.format(date);
-        tvDataStart.setText(currentDate);
-        tvDataEnd.setText(currentDate);
+        timeStartSelect.setText(currentDate);
+        timeEndSelect.setText(currentDate);
+
 
         view.setOnClickListener(new OnClickListener() {
             @Override
@@ -97,7 +98,7 @@ public class MyAssessCalendarView extends LinearLayout implements CalendarView.O
     private void initCalendarView(View view) {
         CalendarView mCalendarView = view.findViewById(R.id.calendarView);
         TextView tvData = view.findViewById(R.id.tv_data);
-        tvData.setText(Date2Util.getZeroTime(mCalendarView.getCurYear()) +"-"+Date2Util.getZeroTime(mCalendarView.getCurMonth()));
+        tvData.setText(Date2Util.getZeroTime(mCalendarView.getCurYear()) + "-" + Date2Util.getZeroTime(mCalendarView.getCurMonth()));
         TextView tvCommit = view.findViewById(R.id.tvCommit);
         tvCommit.setOnClickListener(new OnClickListener() {
             @Override
@@ -163,10 +164,10 @@ public class MyAssessCalendarView extends LinearLayout implements CalendarView.O
     @Override
     public void onCalendarRangeSelect(Calendar calendar, boolean isEnd) {
         if (!isEnd) {
-            tvDataStart.setText(calendar.getYear() + "-" + Date2Util.getZeroTime(calendar.getMonth()) + "-" + Date2Util.getZeroTime(calendar.getDay()));
-            tvDataEnd.setText("");
+            timeStartSelect.setText(calendar.getYear() + "/" + Date2Util.getZeroTime(calendar.getMonth()) + "/" + Date2Util.getZeroTime(calendar.getDay()));
+            timeEndSelect.setText("");
         } else {
-            tvDataEnd.setText(calendar.getYear() + "-" + Date2Util.getZeroTime(calendar.getMonth()) + "-" + Date2Util.getZeroTime(calendar.getDay()));
+            timeEndSelect.setText(calendar.getYear() + "/" + Date2Util.getZeroTime(calendar.getMonth()) + "/" + Date2Util.getZeroTime(calendar.getDay()));
         }
     }
 

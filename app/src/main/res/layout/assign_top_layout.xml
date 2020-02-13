@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.sdxxtop.guardianapp.ui.activity.custom_event.Custom2TextView
+        android:id="@+id/c2TxTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:left_text_value="事件标题"
+        app:right_text_value="垃圾回收" />
+
+    <com.sdxxtop.guardianapp.ui.activity.custom_event.Custom2TextView
+        android:id="@+id/c2TxST"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:left_text_value="交办时间"
+        app:right_text_value="2019-02-23" />
+
+    <com.sdxxtop.guardianapp.ui.activity.custom_event.Custom2TextView
+        android:id="@+id/c2TxET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:left_text_value="截止时间"
+        app:right_text_value="2019-02-26" />
+
+    <com.sdxxtop.guardianapp.ui.activity.custom_event.Custom2TextView
+        android:id="@+id/c2TxLevel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:left_text_value="交办时间"
+        app:right_text_value="低" />
+
+    <com.sdxxtop.guardianapp.ui.activity.custom_event.Custom2TextView
+        android:id="@+id/c2TxContext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:left_text_value="事件简要表述：绥芬河市付款时间发互粉开始疯狂的时候看到发贺卡史可法酸辣粉和可视电话开发" />
+
+    <com.sdxxtop.guardianapp.ui.activity.custom_event.Custom2TextView
+        android:id="@+id/c2TxPart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:left_text_value="交办部门"
+        app:right_text_value="罗庄街道" />
+
+    <com.sdxxtop.guardianapp.ui.activity.custom_event.Custom2TextView
+        android:id="@+id/c2TxPerson"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:left_text_value="交办人"
+        app:right_text_value="刘洋" />
+
+    <com.sdxxtop.guardianapp.ui.activity.custom_event.Custom2TextView
+        android:id="@+id/c2TxDo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:left_text_value="执行人"
+        app:right_text_iv_show="true"
+        app:right_text_value="路过东" />
+</LinearLayout>

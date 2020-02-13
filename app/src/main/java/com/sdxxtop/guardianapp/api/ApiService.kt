@@ -1,6 +1,7 @@
 package com.sdxxtop.guardianapp.api
 
 import com.sdxxtop.guardianapp.aakt.AboutBean
+import com.sdxxtop.guardianapp.model.NetWorkSession
 import com.sdxxtop.network.helper.data.BaseResponse
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -14,9 +15,10 @@ import retrofit2.http.POST
  */
 
 interface ApiService {
+
     companion object {
 //        const val BASE_URL = "http://yinanapi.sdxxtop.com/api/"
-        const val BASE_URL = "http://envir.test.sdxxtop.com/api/"
+//        const val BASE_URL = "http://envir.test.sdxxtop.com/api/"
     }
 
     @FormUrlEncoded
@@ -26,5 +28,12 @@ interface ApiService {
     @FormUrlEncoded
     @POST("login/sendCode")
     suspend fun postLoginSendCode(@Field("data") data: String): BaseResponse<Any>
+
+    @FormUrlEncoded
+    @POST("assignexec/lists")
+    suspend fun postZXData(@Field("data") data: String): BaseResponse<Any>
+    @FormUrlEncoded
+    @POST("assign/lists")
+    suspend fun postJBData(@Field("data") data: String): BaseResponse<Any>
 
 }

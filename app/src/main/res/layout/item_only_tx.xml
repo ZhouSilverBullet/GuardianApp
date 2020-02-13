@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_assign_status_select"
+    android:orientation="horizontal"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+    <TextView
+        android:id="@+id/timeStartSelect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:drawablePadding="10dp"
+        android:padding="5dp"
+        android:text="2020/2/11"
+        android:textColor="@color/gray_dark" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="~" />
+
+    <TextView
+        android:id="@+id/timeEndSelect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:drawableRight="@drawable/icon_list_down"
+        android:drawablePadding="10dp"
+        android:padding="5dp"
+        android:text="2020/2/11"
+        android:textColor="@color/gray_dark" />
+
+</LinearLayout>

@@ -20,59 +20,77 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            app:leftLayoutIconIsGray="true"
             app:rightTextColor="@color/black"
             app:rightTextValue="添加交办"
             app:titleValue="交办事件" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_E0E0E0"
+            app:layout_constraintTop_toBottomOf="@+id/titleView" />
+
+        <com.sdxxtop.guardianapp.ui.activity.kaoqin.calendar.MyAssignCalendarView
+            android:id="@+id/macv_View"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginLeft="5dp"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/tvStatus"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvStatus" />
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/shape_assign_status_select"
+            android:drawableRight="@drawable/icon_list_down"
+            android:drawablePadding="10dp"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:text="全部"
+            android:textColor="@color/gray_dark"
+            app:layout_constraintBottom_toTopOf="@+id/tablayout"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleView" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="10dp"
+            android:background="@color/color_E0E0E0"
+            app:layout_constraintTop_toBottomOf="@+id/tvStatus" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tablayout"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="#F0F7F8"
-            app:layout_constraintTop_toBottomOf="@+id/titleView"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/tvStatus"
             app:tabIndicatorColor="@color/green"
             app:tabMode="fixed"
             app:tabSelectedTextColor="@color/green"
-            app:tabTextAppearance="@style/GridEventTabLayoutTextStyle"
+            app:tabTextAppearance="@style/AppliedTabLayoutTextStyle"
             app:tabTextColor="#999999" />
 
-        <TextView
-            android:id="@+id/timeSelect"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:padding="5dp"
-            android:text="请选择开始时间--------请选择结束时间"
-            app:layout_constraintTop_toBottomOf="@+id/tablayout" />
-
-        <TextView
-            android:id="@+id/tvStatus"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/shape_assign_status_select"
-            android:drawableRight="@drawable/arrow_down"
-            android:onClick="@{() -> vm.stopLoad()}"
-            android:paddingLeft="10dp"
-            android:paddingTop="3dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="3dp"
-            android:text="已完成"
-            app:layout_constraintTop_toBottomOf="@+id/timeSelect" />
-
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_marginTop="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvStatus"
-            android:layout_width="match_parent"
-            android:layout_height="0dp">
+            app:layout_constraintTop_toBottomOf="@+id/tablayout">
 
             <com.scwang.smartrefresh.layout.SmartRefreshLayout
                 android:id="@+id/smartRefresh"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="11dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvStatus"
                 app:srlEnableLoadMore="false"

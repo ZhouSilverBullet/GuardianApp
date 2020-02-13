@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:background="@drawable/shape_assign_status_select"
+    android:background="@drawable/shape_assign_item_bg"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout

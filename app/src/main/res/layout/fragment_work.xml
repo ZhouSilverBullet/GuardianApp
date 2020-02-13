@@ -2,125 +2,125 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:background="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <androidx.core.widget.NestedScrollView
-        android:background="@color/translate"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/translate">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:scaleType="fitXY"
-                    android:src="@drawable/unify_top_fragment_bg"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp" />
+                    android:layout_height="200dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/unify_top_fragment_bg" />
 
                 <TextView
                     android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="41dp"
-                    android:textStyle="bold"
-                    android:textSize="24sp"
-                    android:textColor="@color/white"
                     android:text="盛庄街道应急管理局"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:background="#80F2F2F2"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_below="@+id/tv_title"
-                    android:layout_marginTop="3dp"
                     android:layout_width="match_parent"
-                    android:layout_height="1px" />
+                    android:layout_height="1px"
+                    android:layout_below="@+id/tv_title"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginRight="15dp"
+                    android:background="#80F2F2F2" />
 
                 <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_title"
-                    android:layout_marginTop="20dp"
                     android:layout_marginLeft="15dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="23dp"
                     app:cardCornerRadius="5dp"
-                    app:cardElevation="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    app:cardElevation="5dp">
 
                     <com.sdxxtop.guardianapp.ui.widget.UnScrolGridView
-                        android:paddingBottom="20dp"
-                        android:paddingTop="20dp"
-                        android:listSelector="@android:color/transparent"
                         android:id="@+id/gridview"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:verticalSpacing="15dp"
-                        android:numColumns="4" />
+                        android:listSelector="@android:color/transparent"
+                        android:numColumns="4"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="20dp"
+                        android:verticalSpacing="15dp" />
 
                 </androidx.cardview.widget.CardView>
 
             </RelativeLayout>
 
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:paddingLeft="15dp"
-                android:textSize="16sp"
-                android:textColor="@color/color_313131"
-                android:textStyle="bold"
                 android:text="部门处理数"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:textColor="@color/color_313131"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <LinearLayout
-                android:paddingTop="11dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="horizontal"
                 android:paddingLeft="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:paddingTop="11dp">
 
                 <TextView
-                    android:textColor="@color/color_313131"
-                    android:textSize="12sp"
-                    android:text="事件数"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="事件数"
+                    android:textColor="@color/color_313131"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/tv_report"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:textColor="#2593E7"
-                    tools:text="0"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    tools:text="0" />
 
                 <TextView
-                    android:layout_marginLeft="10dp"
-                    android:textColor="@color/color_313131"
-                    android:textSize="12sp"
-                    android:text="处理数"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="处理数"
+                    android:textColor="@color/color_313131"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/tv_chuli"
-                    android:layout_marginLeft="5dp"
-                    android:textColor="#2593E7"
-                    android:text="0"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="0"
+                    android:textColor="#2593E7" />
             </LinearLayout>
 
             <com.sdxxtop.guardianapp.ui.widget.chart.CustomOneBarChartView
@@ -128,46 +128,88 @@
                 android:layout_width="match_parent"
                 android:layout_height="170dp" />
 
-            <LinearLayout
-                android:paddingBottom="10dp"
-                android:id="@+id/ll_more_event"
-                android:paddingTop="20dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:background="@color/white"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:layout_marginLeft="15dp"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:textColor="@color/color_313131"
-                    android:text="我的待办"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content" />
+                <RadioGroup
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:layout_marginRight="17dp"
-                    android:background="@drawable/more_work_new"
-                    android:layout_width="14dp"
-                    android:layout_height="4dp" />
+                    <RadioButton
+                        android:id="@+id/cbMyDBEvent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:button="@null"
+                        android:checked="true"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="10dp"
+                        android:text="我的待办"
+                        android:textColor="@color/work_color_select"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            </LinearLayout>
+                    <RadioButton
+                        android:id="@+id/cbAssignEvent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:button="@null"
+                        android:checked="false"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="10dp"
+                        android:text="交办事件"
+                        android:textColor="@color/work_color_select"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@+id/cbMyDBEvent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </RadioGroup>
+
+                <LinearLayout
+                    android:id="@+id/ll_more_event"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:layout_width="14dp"
+                        android:layout_height="4dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="17dp"
+                        android:layout_marginRight="17dp"
+                        android:background="@drawable/more_work_new" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <RelativeLayout
-                android:background="@color/color_f2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/color_f2">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginLeft="15dp"
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="10dp" />
 
                 <TextView
                     android:id="@+id/tv_no_data"
@@ -182,9 +224,9 @@
             </RelativeLayout>
 
             <TextView
-                android:background="@color/translate"
                 android:layout_width="match_parent"
-                android:layout_height="60dp" />
+                android:layout_height="60dp"
+                android:background="@color/translate" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

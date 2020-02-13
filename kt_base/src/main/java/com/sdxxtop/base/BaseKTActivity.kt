@@ -4,6 +4,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.Window
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil.setContentView
 import androidx.databinding.ViewDataBinding
@@ -16,6 +17,7 @@ import com.sdxxtop.base.loadsir.EmptyCallback
 import com.sdxxtop.base.loadsir.ErrorCallback
 import com.sdxxtop.base.loadsir.LoadingCallback
 import com.sdxxtop.base.navigationstatus.INavigationColorStatus
+import com.sdxxtop.base.utils.StatusBarUtil
 
 /**
  * Email: sdxxtop@163.com
@@ -62,7 +64,11 @@ abstract class BaseKTActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCom
         bindVM()
         mBinding.executePendingBindings()
 
-        setDarkStatusIcon(window, isDarkStatusIcon())
+//        setDarkStatusIcon(window, isDarkStatusIcon())
+        //        setSwipeBackEnable(false);
+        if (isInitStatusBar()) {
+            initStatusBar()
+        }
 
         loadService.showCallback(LoadingCallback::class.java)
         //加载错误页面
@@ -171,5 +177,34 @@ abstract class BaseKTActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCom
 //    fun getVmClass(): Class<VM> {
 //        return (this@BaseActivity::javaClass.get().genericSuperclass as ParameterizedType).actualTypeArguments[1] as Class<VM>
 //    }
+
+    protected open fun isInitStatusBar(): Boolean {
+        return true
+    }
+    /**
+     * statusBar 控制
+     */
+    open fun initStatusBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            val window = window
+            // Translucent status bar
+            window.setFlags(
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            if (StatusBarUtil.MIUISetStatusBarLightMode(getWindow(), true)) { //小米MIUI系统
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { //Android6.0以上系统
+                    StatusBarUtil.android6_SetStatusBarLightMode(getWindow())
+                    StatusBarUtil.compat(this)
+                } else {
+                    StatusBarUtil.compat(this)
+                }
+            } else if (StatusBarUtil.FlymeSetStatusBarLightMode(getWindow(), true)) { //魅族flyme系统
+                StatusBarUtil.compat(this)
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { //Android6.0以上系统
+                StatusBarUtil.android6_SetStatusBarLightMode(getWindow())
+                StatusBarUtil.compat(this)
+            }
+        }
+    }
 
 }
