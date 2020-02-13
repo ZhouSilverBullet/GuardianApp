@@ -20,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
+            app:leftLayoutIconIsGray="true"
             app:rightTextColor="@color/black"
             app:rightTextValue="添加交办"
             app:titleValue="交办事件" />

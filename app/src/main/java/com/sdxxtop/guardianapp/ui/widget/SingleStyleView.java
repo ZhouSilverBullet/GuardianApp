@@ -48,7 +48,7 @@ public class SingleStyleView {
         }
         if (pvOptions != null) {
             pvOptions.setPicker(mList);
-        }else{
+        } else {
             initOptionPicker();
         }
     }
@@ -73,7 +73,9 @@ public class SingleStyleView {
                 //返回的分别是三个级别的选中位置
                 String tx = mList.get(options1);
                 ListDataBean listDataBean = mData.get(options1);
-                mLintener.onItemSelect(listDataBean.id, listDataBean.name);
+                if (mLintener != null) {
+                    mLintener.onItemSelect(listDataBean.id, listDataBean.name);
+                }
             }
         })
                 .setTitleText(" ")

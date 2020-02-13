@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/root_layout"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/red"
-    android:fitsSystemWindows="true"
     android:clipToPadding="true"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <com.sdxxtop.guardianapp.ui.widget.TitleView
@@ -15,8 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:bgColor="#D9001B"
-        app:fitsSystemWindows="false"
         app:clipToPadding="false"
+        app:fitsSystemWindows="false"
         app:leftLayoutIsShow="true"
         app:rightTextValue="我的上报"
         app:titleColor="@color/white"
@@ -42,45 +42,45 @@
                 android:layout_marginTop="10dp" />
 
             <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
-                tools:visibility="visible"
-                android:visibility="gone"
                 android:id="@+id/report_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
                 app:tatv_right_img_is_show="false"
+                app:tatv_right_no_padingtx_is_show="true"
                 app:tatv_text_view="上报人"
-                app:tatv_right_no_padingtx_is_show="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                tools:visibility="visible" />
 
             <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
-                tools:visibility="visible"
-                android:visibility="gone"
                 android:id="@+id/report_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
                 app:tatv_right_img_is_show="false"
+                app:tatv_right_no_padingtx_is_show="true"
                 app:tatv_text_view="上报人电话"
-                app:tatv_right_no_padingtx_is_show="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                tools:visibility="visible" />
 
             <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
-                tools:visibility="visible"
-                android:visibility="gone"
                 android:id="@+id/report_part"
-                app:tatv_right_img_is_show="false"
-                app:tatv_text_view="上报人所属部门"
-                app:tatv_right_no_padingtx_is_show="true"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:tatv_right_img_is_show="false"
+                app:tatv_right_no_padingtx_is_show="true"
+                app:tatv_text_view="上报人所属部门"
+                tools:visibility="visible" />
 
             <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
-                tools:visibility="visible"
-                android:visibility="gone"
                 android:id="@+id/find_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
                 app:tatv_right_img_is_show="false"
-                app:tatv_text_view="发现方式"
                 app:tatv_right_no_padingtx_is_show="true"
                 app:tatv_right_no_padingtx_str="巡查"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                app:tatv_text_view="发现方式"
+                tools:visibility="visible" />
 
             <com.sdxxtop.guardianapp.ui.widget.TextAndEditView
                 android:id="@+id/taev_title"
@@ -114,71 +114,71 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/col_happen"
-                        android:paddingTop="15dp"
-                        android:paddingRight="15dp"
-                        android:paddingLeft="15dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="15dp"
+                        android:paddingRight="15dp">
 
                         <TextView
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/tv_place_title"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             android:id="@+id/text_and_text_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:text="定位信息"
                             android:textColor="#333333"
-                            android:textSize="17sp" />
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/tv_place_title" />
 
                         <TextView
+                            android:id="@+id/tv_place_title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
                             android:singleLine="true"
                             android:textColor="@color/color_313131"
                             android:textSize="14sp"
-                            android:layout_marginLeft="10dp"
-                            android:id="@+id/tv_place_title"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintRight_toLeftOf="@+id/tv_icon"
                             app:layout_constraintLeft_toRightOf="@+id/text_and_text_name"
-                            tools:text="鲁南国际工业品采购中心11号"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content" />
+                            app:layout_constraintRight_toLeftOf="@+id/tv_icon"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="鲁南国际工业品采购中心11号" />
 
                         <TextView
-                            android:singleLine="true"
-                            android:textSize="11sp"
-                            android:layout_marginLeft="10dp"
                             android:id="@+id/tv_place_desc"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:singleLine="true"
+                            android:text=""
+                            android:textSize="11sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toRightOf="@+id/text_and_text_name"
                             app:layout_constraintRight_toLeftOf="@+id/tv_icon"
                             app:layout_constraintTop_toBottomOf="@+id/tv_place_title"
-                            app:layout_constraintLeft_toRightOf="@+id/text_and_text_name"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            android:text=""
-                            tools:text="鲁南国际工业品采购中心11号"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content" />
+                            tools:text="鲁南国际工业品采购中心11号" />
 
                         <ImageView
                             android:id="@+id/iv_img"
-                            android:src="@drawable/location_agarn"
-                            app:layout_constraintRight_toRightOf="@+id/tv_icon"
-                            app:layout_constraintLeft_toLeftOf="@+id/tv_icon"
-                            app:layout_constraintTop_toTopOf="parent"
                             android:layout_width="20dp"
-                            android:layout_height="20dp" />
+                            android:layout_height="20dp"
+                            android:src="@drawable/location_agarn"
+                            app:layout_constraintLeft_toLeftOf="@+id/tv_icon"
+                            app:layout_constraintRight_toRightOf="@+id/tv_icon"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:layout_marginTop="5dp"
-                            android:textSize="12sp"
-                            android:textColor="@color/color_999999"
                             android:id="@+id/tv_icon"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/iv_img"
-                            android:text="刷新定位"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="刷新定位"
+                            android:textColor="@color/color_999999"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/iv_img" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -193,9 +193,9 @@
 
                     <LinearLayout
                         android:id="@+id/ll_location_layout"
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -219,61 +219,61 @@
 
                     <LinearLayout
                         android:id="@+id/ll_fucha_layout"
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
-                            android:background="@color/white"
                             android:id="@+id/tatv_banzhuren"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:background="@color/white">
 
                             <TextView
                                 android:id="@+id/tv_ban"
-                                android:paddingBottom="15dp"
-                                android:layout_marginLeft="15dp"
-                                android:textColor="@color/color_333333"
-                                app:layout_constraintLeft_toLeftOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                android:textSize="17sp"
-                                android:text="是否复查"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="15dp"
+                                android:paddingBottom="15dp"
+                                android:text="是否复查"
+                                android:textColor="@color/color_333333"
+                                android:textSize="17sp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
                             <CheckBox
                                 android:id="@+id/cb_into_voice"
-                                android:layout_marginRight="15dp"
-                                app:layout_constraintTop_toTopOf="@+id/tv_ban"
-                                app:layout_constraintBottom_toBottomOf="@+id/tv_ban"
-                                app:layout_constraintRight_toRightOf="parent"
                                 android:layout_width="47dp"
                                 android:layout_height="28dp"
+                                android:layout_marginRight="15dp"
                                 android:background="@drawable/iv_switch"
-                                android:button="@null" />
+                                android:button="@null"
+                                app:layout_constraintBottom_toBottomOf="@+id/tv_ban"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/tv_ban" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <TextView
-                            android:background="@color/color_dddddd"
                             android:layout_width="match_parent"
-                            android:layout_height="1dp" />
+                            android:layout_height="1dp"
+                            android:background="@color/color_dddddd" />
 
                         <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
-                            tools:visibility="visible"
-                            android:visibility="gone"
                             android:id="@+id/tatv_end_time"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:visibility="gone"
                             app:tatv_text_img_is_show="false"
                             app:tatv_text_right_hint_value="请选择整改时效"
-                            app:tatv_text_view="整改时限" />
+                            app:tatv_text_view="整改时限"
+                            tools:visibility="visible" />
                     </LinearLayout>
 
                     <TextView
-                        android:background="@color/transparent"
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"/>
+                        android:layout_height="100dp"
+                        android:background="@color/transparent" />
 
                 </LinearLayout>
 

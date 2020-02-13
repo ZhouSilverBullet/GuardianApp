@@ -29,6 +29,7 @@ import java.util.List;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -260,6 +261,7 @@ public class CustomVideoImgSelectView extends LinearLayout implements View.OnCli
 
     /**
      * 设置图片最多选择几张
+     *
      * @param count
      */
     public void setMaxImgCount(int count) {
@@ -282,6 +284,13 @@ public class CustomVideoImgSelectView extends LinearLayout implements View.OnCli
         tvDesc.setTextColor(Color.parseColor("#313131"));
         colorSpan = new ForegroundColorSpan(Color.parseColor("#D9001B"));
         tvDesc.setText(getFormatText(0));
+    }
+
+    public void clearData() {
+        if (adapter != null) {
+            adapter.getData().clear();
+            adapter.notifyDataSetChanged();
+        }
     }
 
     ForegroundColorSpan colorSpan;

@@ -1,118 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.assignevent.AddAssignEventActivity">
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true">
 
-    <com.sdxxtop.guardianapp.ui.widget.TitleView
-        android:id="@+id/titleView"
+    <data>
+
+        <variable
+            name="vm"
+            type="com.sdxxtop.guardianapp.ui.assignevent.assignmodel.AddAssignEventModel" />
+
+        <variable
+            name="activity"
+            type="com.sdxxtop.guardianapp.ui.assignevent.AddAssignEventActivity" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:bgColor="@color/blue"
-        app:layout_constraintTop_toTopOf="parent"
-        app:leftLayoutIsShow="true"
-        app:titleColor="@color/white"
-        app:titleValue="交办事件" />
+        android:layout_height="match_parent"
+        tools:context=".ui.assignevent.AddAssignEventActivity">
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/tvAssign"
-        app:layout_constraintTop_toBottomOf="@+id/titleView">
-
-        <LinearLayout
+        <com.sdxxtop.guardianapp.ui.widget.TitleView
+            android:id="@+id/titleView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            app:clipToPadding="false"
+            app:fitsSystemWindows="false"
+            app:layout_constraintTop_toTopOf="parent"
+            app:leftLayoutIconIsGray="true"
+            app:titleValue="交办事件" />
 
-            <com.sdxxtop.guardianapp.ui.widget.TextAndEditView
-                android:id="@+id/taev_title"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_E0E0E0"
+            app:layout_constraintTop_toBottomOf="@+id/titleView" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tvAssign"
+            app:layout_constraintTop_toBottomOf="@+id/titleView">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:taev_edit_text_hint="事件类目关键词（限制10个字）"
-                app:taev_text_view="事件标题" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
-                android:id="@+id/tatv_event_execute"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tatv_text_right_hint_value="请点击选择"
-                app:tatv_text_view="执行" />
+                <com.sdxxtop.guardianapp.ui.widget.TextAndEditView
+                    android:id="@+id/taevTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:taev_edit_text_hint="事件类目关键词（限制10个字）"
+                    app:taev_text_view="事件标题" />
 
-            <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
-                android:id="@+id/tatv_event_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tatv_text_right_hint_value="请点击选择"
-                app:tatv_text_view="事件分类" />
+                <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+                    android:id="@+id/tatv_event_execute"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{activity::onClick}"
+                    app:tatv_text_right_hint_value="请点击选择"
+                    app:tatv_text_view="执行" />
 
-            <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
-                android:id="@+id/tatv_event_level"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tatv_text_right_hint_value="请点击选择"
-                app:tatv_text_view="事件等级" />
+                <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+                    android:id="@+id/tatv_event_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{activity::onClick}"
+                    app:tatv_text_right_hint_value="请点击选择"
+                    app:tatv_text_view="事件分类" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
-                android:text="事件简要描述"
-                android:textColor="@color/color_333333"
-                android:textSize="17sp" />
+                <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+                    android:id="@+id/tatv_event_level"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{activity::onClick}"
+                    app:tatv_text_right_hint_value="请点击选择"
+                    app:tatv_text_view="事件等级" />
 
-            <com.sdxxtop.guardianapp.ui.widget.NumberEditTextView
-                android:id="@+id/net_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="5dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:text="事件简要描述"
+                    android:textColor="@color/color_333333"
+                    android:textSize="17sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:text="是否需要回传文件:"
-                android:textColor="@color/color_333333"
-                android:textSize="17sp" />
+                <com.sdxxtop.guardianapp.ui.widget.NumberEditTextView
+                    android:id="@+id/net_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="5dp" />
 
-            <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
-                android:id="@+id/tatv_end_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tatv_text_right_hint_value="请点击选择"
-                app:tatv_text_view="截止时间" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/tatv_banzhuren"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white">
 
-            <com.sdxxtop.guardianapp.ui.widget.CustomVideoImgSelectView
-                android:id="@+id/cvisv_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp" />
+                    <TextView
+                        android:id="@+id/tv_ban"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:text="是否需要回传文件:"
+                        android:textColor="@color/color_333333"
+                        android:textSize="17sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-        </LinearLayout>
+                    <CheckBox
+                        android:id="@+id/cbIntoVoice"
+                        android:layout_width="47dp"
+                        android:layout_height="28dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/iv_switch"
+                        android:button="@null"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.core.widget.NestedScrollView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/tvAssign"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/shape_event_blue_bg"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="交办"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/color_E0E0E0" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+                    android:id="@+id/tatv_end_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{activity::onClick}"
+                    app:tatv_text_right_hint_value="请点击选择"
+                    app:tatv_text_view="截止时间" />
+
+                <com.sdxxtop.guardianapp.ui.widget.CustomVideoImgSelectView
+                    android:id="@+id/cvisvView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <TextView
+            android:id="@+id/tvAssign"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/shape_event_blue_bg"
+            android:gravity="center"
+            android:onClick="@{activity::onClick}"
+            android:padding="10dp"
+            android:text="交办"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

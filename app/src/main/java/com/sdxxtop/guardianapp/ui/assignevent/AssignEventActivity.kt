@@ -47,9 +47,8 @@ class AssignEventActivity : BaseKTActivity<ActivityAssignEventBinding, AssignLis
 
     override fun initObserve() {
         mBinding.vm?.isShowEmpty?.observe(this, Observer {
-            showLoadSir(it)
+//            showLoadSir(it)
         })
-
     }
 
     override fun preLoad() {
