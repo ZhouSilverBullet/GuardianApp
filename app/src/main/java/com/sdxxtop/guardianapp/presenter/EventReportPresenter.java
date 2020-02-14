@@ -43,7 +43,7 @@ public class EventReportPresenter extends RxPresenter<EventReportContract.IView>
             String positionDesc, int categoryId,
             int streamType,
             String etime
-            , int streamId,int classifyId) {
+            , int streamId, int classifyId) {
         ImageAndVideoParams params = new ImageAndVideoParams();
         params.put("tl", title);
         params.put("pt", pathType);

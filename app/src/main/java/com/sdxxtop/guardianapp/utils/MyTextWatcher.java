@@ -19,4 +19,9 @@ public abstract class MyTextWatcher implements TextWatcher {
     public void afterTextChanged(Editable s) {
 
     }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
 }

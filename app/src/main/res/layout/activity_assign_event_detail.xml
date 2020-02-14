@@ -23,9 +23,13 @@
             app:leftLayoutIconIsGray="true"
             app:titleValue="交办详情" />
 
-        <include layout="@layout/assign_top_layout" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_E0E0E0" />
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/smartRefresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:srlEnableLoadMore="false"

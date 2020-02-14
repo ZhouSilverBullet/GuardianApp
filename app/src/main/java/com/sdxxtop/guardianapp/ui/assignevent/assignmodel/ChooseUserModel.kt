@@ -12,13 +12,14 @@ import com.sdxxtop.guardianapp.utils.UIUtils
  * author:lwb
  * Desc:
  */
-class ChooseUserModel :BaseViewModel(){
+class ChooseUserModel : BaseViewModel() {
     var partAndUserData = MutableLiveData<PartAndUserBean>()
 
-    fun postData() {
+    fun postData(search: String) {
         showLoadingDialog(true)
         loadOnUI({
             val params = Params()
+            params.put("sh", search)
             //这里实际上返回了结果
             RetrofitClient.apiService.postUserData(params.data)
         }, {

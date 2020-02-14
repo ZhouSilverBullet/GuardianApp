@@ -1,7 +1,10 @@
 package com.sdxxtop.guardianapp.ui.assignevent
 
 import android.content.Intent
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sdxxtop.base.BaseKTActivity
@@ -28,34 +31,46 @@ class ChoosePartActivity : BaseKTActivity<ActivityChosePartBinding, ChoosePartMo
         mBinding.activity = this
     }
 
-    override fun loadSirBindView(): View {
-        return mBinding.smartRefresh
-    }
+//    override fun loadSirBindView(): View {
+//        return mBinding.smartRefresh
+//    }
 
     override fun preLoad() {
-        mBinding.vm?.postData()
+        mBinding.vm?.postData("")
     }
 
     override fun initObserve() {
         mBinding.vm?.partAndUserData?.observe(this, Observer {
             if (it.part != null) {
                 adapter.replaceData(it.part)
-                showLoadSir(false)
-            } else {
-                showLoadSir(true)
+//                showLoadSir(false)
             }
+//            else {
+//                showLoadSir(true)
+//            }
         })
     }
 
     override fun initView() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
+
+        editTextView.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                mBinding.vm?.postData(p0?.trim().toString())
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+        })
     }
 
     override fun initEvent() {
-        if (intent != null) {
-            mBinding.vm?.postData()
-        }
+        mBinding.vm?.postData("")
     }
 
     override fun onClick(v: View) {

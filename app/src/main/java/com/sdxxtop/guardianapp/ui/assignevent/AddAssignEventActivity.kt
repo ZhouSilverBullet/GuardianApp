@@ -73,6 +73,11 @@ class AddAssignEventActivity : BaseKTActivity<ActivityAddAssignEventBinding, Add
                 tatv_event_type.textRightText.text = result
             }
         })
+
+        /**
+         * 上报成功
+         */
+        mBinding.vm?.assignId?.observe(this, Observer { finish() })
     }
 
     override fun initView() {
@@ -223,6 +228,7 @@ class AddAssignEventActivity : BaseKTActivity<ActivityAddAssignEventBinding, Add
         val imagePushPath = cvisvView.getImageOrVideoPushPath(1)
         val vedioPushPath = cvisvView.getImageOrVideoPushPath(2)
         mBinding.vm?.pushReport(
+                this,
                 contx,
                 selectType,
                 eventLevel,

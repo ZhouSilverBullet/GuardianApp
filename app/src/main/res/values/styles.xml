@@ -177,6 +177,11 @@
         <item name="android:textColor">@color/blue</item>
     </style>
 
+    <style name="AssignDetailStyle">
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+    </style>
+
     <declare-styleable name="MaxHeightRecyclerView">
         <attr name="maxHeight" format="dimension" />
     </declare-styleable>

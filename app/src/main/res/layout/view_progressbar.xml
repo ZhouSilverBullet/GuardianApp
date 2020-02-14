@@ -109,7 +109,7 @@
                     android:id="@+id/tv_text_3"
                     style="@style/progress_text_dec"
                     android:layout_height="match_parent"
-                    android:text="已反馈"/>
+                    android:text="已反馈" />
 
                 <TextView
                     android:id="@+id/tv_date_3"

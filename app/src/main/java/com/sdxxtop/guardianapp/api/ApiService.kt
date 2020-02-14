@@ -1,13 +1,13 @@
 package com.sdxxtop.guardianapp.api
 
 import com.sdxxtop.guardianapp.aakt.AboutBean
-import com.sdxxtop.guardianapp.model.NetWorkSession
+import com.sdxxtop.guardianapp.model.bean.AssignDetailBean
+import com.sdxxtop.guardianapp.model.bean.AssignListBean
 import com.sdxxtop.guardianapp.model.bean.CategoryStatusBean
 import com.sdxxtop.guardianapp.model.bean.PartAndUserBean
 import com.sdxxtop.network.helper.data.BaseResponse
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import okhttp3.RequestBody
+import retrofit2.http.*
 
 /**
  * Email: zhousaito@163.com
@@ -33,11 +33,11 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST("assignexec/lists")
-    suspend fun postZXData(@Field("data") data: String): BaseResponse<Any>
+    suspend fun postZXData(@Field("data") data: String): BaseResponse<AssignListBean>
 
     @FormUrlEncoded
     @POST("assign/lists")
-    suspend fun postJBData(@Field("data") data: String): BaseResponse<Any>
+    suspend fun postJBData(@Field("data") data: String): BaseResponse<AssignListBean>
 
     @FormUrlEncoded
     @POST("assign/cat")
@@ -51,8 +51,12 @@ interface ApiService {
     @POST("assign/part")
     suspend fun postPartData(@Field("data") data: String): BaseResponse<PartAndUserBean>
 
-    @FormUrlEncoded
+    @Multipart
     @POST("assign/add")
-    suspend fun addAssignEvent(@Field("data") data: String): BaseResponse<Any>
+    suspend fun addAssignEvent(@PartMap map: HashMap<String, RequestBody>): BaseResponse<String>
+
+    @FormUrlEncoded
+    @POST("assign/details")
+    suspend fun postAssignDetail(@Field("data") data: String): BaseResponse<AssignDetailBean>
 
 }

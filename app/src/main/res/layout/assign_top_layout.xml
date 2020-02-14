@@ -5,8 +5,30 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <com.sdxxtop.guardianapp.ui.widget.CusAssignTopProgress
+        android:id="@+id/catpView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/white" />
+
+    <TextView
+        android:id="@+id/tvTop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F1F1F1"
+        android:gravity="center"
+        android:padding="9dp"
+        android:text="事件情况（超期１天）"
+        android:textColor="@color/color_313131"
+        android:textStyle="bold" />
+
     <com.sdxxtop.guardianapp.ui.activity.custom_event.Custom2TextView
         android:id="@+id/c2TxTitle"
+        style="@style/AssignDetailStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:left_text_value="事件标题"
@@ -14,6 +36,7 @@
 
     <com.sdxxtop.guardianapp.ui.activity.custom_event.Custom2TextView
         android:id="@+id/c2TxST"
+        style="@style/AssignDetailStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:left_text_value="交办时间"
@@ -21,6 +44,7 @@
 
     <com.sdxxtop.guardianapp.ui.activity.custom_event.Custom2TextView
         android:id="@+id/c2TxET"
+        style="@style/AssignDetailStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:left_text_value="截止时间"
@@ -28,19 +52,22 @@
 
     <com.sdxxtop.guardianapp.ui.activity.custom_event.Custom2TextView
         android:id="@+id/c2TxLevel"
+        style="@style/AssignDetailStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:left_text_value="交办时间"
+        app:left_text_value="事件等级"
         app:right_text_value="低" />
 
     <com.sdxxtop.guardianapp.ui.activity.custom_event.Custom2TextView
         android:id="@+id/c2TxContext"
+        style="@style/AssignDetailStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:left_text_value="事件简要表述：绥芬河市付款时间发互粉开始疯狂的时候看到发贺卡史可法酸辣粉和可视电话开发" />
 
     <com.sdxxtop.guardianapp.ui.activity.custom_event.Custom2TextView
         android:id="@+id/c2TxPart"
+        style="@style/AssignDetailStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:left_text_value="交办部门"
@@ -48,6 +75,7 @@
 
     <com.sdxxtop.guardianapp.ui.activity.custom_event.Custom2TextView
         android:id="@+id/c2TxPerson"
+        style="@style/AssignDetailStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:left_text_value="交办人"
@@ -55,9 +83,50 @@
 
     <com.sdxxtop.guardianapp.ui.activity.custom_event.Custom2TextView
         android:id="@+id/c2TxDo"
+        style="@style/AssignDetailStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:left_text_value="执行人"
         app:right_text_iv_show="true"
         app:right_text_value="路过东" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/eventNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:text="事件附件（3）"
+            android:textColor="@color/color_313131"
+            android:textSize="15sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvUpDown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="10dp"
+            android:text="展开"
+            android:textColor="#2593E7"
+            android:textSize="13sp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp" />
+
 </LinearLayout>

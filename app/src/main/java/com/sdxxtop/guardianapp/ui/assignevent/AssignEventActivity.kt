@@ -1,7 +1,6 @@
 package com.sdxxtop.guardianapp.ui.assignevent
 
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,15 +13,21 @@ import com.sdxxtop.guardianapp.databinding.ActivityAssignEventBinding
 import com.sdxxtop.guardianapp.ui.assignevent.adapter.AssignListAdapter
 import com.sdxxtop.guardianapp.ui.assignevent.assignmodel.AssignListModel
 import com.sdxxtop.guardianapp.ui.widget.SingleStyleView
+import com.sdxxtop.guardianapp.utils.Date2Util
 import kotlinx.android.synthetic.main.activity_assign_event.*
 
 class AssignEventActivity : BaseKTActivity<ActivityAssignEventBinding, AssignListModel>() {
 
-    private var statusTx = "全部"
-    private val adapter = AssignListAdapter()
+    private var statusNum = 0
+    private val zx_adapter = AssignListAdapter()
+    private val jb_adapter = AssignListAdapter()
     private var zxSp = 0
     private var jbSp = 0
-    private var currentSelectItem = 1
+    private var currentSelectItem = 1   //  当前选中的列表
+    private var currentDateTime = Date2Util.getCurrentDateTime()  // 当前日期
+    private var selectStartDate = Date2Util.getCurrentDateTime()  // 选中的开始日期
+    private var selectEndDate = Date2Util.getCurrentDateTime()    // 选中的结束日期
+
 
     private val statusSelect: SingleStyleView by lazy {
         val list = arrayListOf<SingleStyleView.ListDataBean>()
@@ -41,14 +46,26 @@ class AssignEventActivity : BaseKTActivity<ActivityAssignEventBinding, AssignLis
         mBinding.vm = mViewModel
     }
 
-//    override fun loadSirBindView(): View {
-//        return mBinding.smartRefresh
-//    }
-
     override fun initObserve() {
-        mBinding.vm?.isShowEmpty?.observe(this, Observer {
-//            showLoadSir(false)
+        mBinding.vm?.zxData?.observe(this, Observer {
+            if (zxSp == 0) {
+                zx_adapter.replaceData(it.list)
+            } else {
+                zx_adapter.addData(it.list)
+            }
         })
+
+        mBinding.vm?.jbData?.observe(this, Observer {
+            smartRefresh_jb.finishLoadMore()
+            smartRefresh_jb.finishRefresh()
+
+            if (jbSp == 0) {
+                jb_adapter.replaceData(it.list)
+            } else {
+                jb_adapter.addData(it.list)
+            }
+        })
+
     }
 
     override fun preLoad() {
@@ -56,13 +73,16 @@ class AssignEventActivity : BaseKTActivity<ActivityAssignEventBinding, AssignLis
     }
 
     override fun initData() {
-//        mBinding.vm?.postZXData()
-//        mBinding.vm?.postJBData()
+        mBinding.vm?.postZXData(0, 0, currentDateTime, currentDateTime)
+        mBinding.vm?.postJBData(0, currentDateTime, currentDateTime)
     }
 
     override fun initView() {
+        smartRefresh_zx.visibility = View.VISIBLE
+        smartRefresh_jb.visibility = View.GONE
+
         titleView.tvRight.setOnClickListener { startActivity(Intent(AssignEventActivity@ this, AddAssignEventActivity::class.java)) }
-        adapter.setOnItemClickListener { adapter, view, position -> startActivity(Intent(AssignEventActivity@ this, AssignEventDetailActivity::class.java)) }
+
         tvStatus.setOnClickListener(this)
 
         val stringlist = arrayListOf("我执行的", "我交办的")
@@ -72,17 +92,29 @@ class AssignEventActivity : BaseKTActivity<ActivityAssignEventBinding, AssignLis
             tablayout.addTab(newTab)
         }
 
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = adapter
+        recyclerView_zx.layoutManager = LinearLayoutManager(this)
+        recyclerView_zx.adapter = zx_adapter
+        recyclerView_jb.layoutManager = LinearLayoutManager(this)
+        recyclerView_jb.adapter = jb_adapter
 
-        val list = arrayListOf<String>()
-        for (index in 1..20) {
-            list.add("")
+
+        //状态选择
+        statusSelect.setOnItemSelectLintener { id, result ->
+            statusNum = id
+            tvStatus.text = result
+            mBinding.vm?.postZXData(zxSp, statusNum, selectStartDate, selectEndDate)
         }
-        adapter.replaceData(list)
-        statusSelect.setOnItemSelectLintener { _, result ->
-            statusTx = result
-            tvStatus.text = statusTx
+        //日历选择
+        macvView.setOnDataChoose {
+            if (it.size > 0) {
+                selectStartDate = Date2Util.getCalendarDate(it[0])
+                selectEndDate = Date2Util.getCalendarDate(it[it.size - 1])
+                if (currentSelectItem == 1) {
+                    mBinding.vm?.postZXData(zxSp, statusNum, selectStartDate, selectEndDate)
+                } else {
+                    mBinding.vm?.postJBData(jbSp, selectStartDate, selectEndDate)
+                }
+            }
         }
 
         tablayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -91,9 +123,13 @@ class AssignEventActivity : BaseKTActivity<ActivityAssignEventBinding, AssignLis
                 if (tab.text == "我交办的") {
                     currentSelectItem = 2
                     tvStatus.visibility = View.INVISIBLE
+                    smartRefresh_zx.visibility = View.GONE
+                    smartRefresh_jb.visibility = View.VISIBLE
                 } else {
                     currentSelectItem = 1
                     tvStatus.visibility = View.VISIBLE
+                    smartRefresh_zx.visibility = View.VISIBLE
+                    smartRefresh_jb.visibility = View.GONE
                 }
             }
 
@@ -102,14 +138,43 @@ class AssignEventActivity : BaseKTActivity<ActivityAssignEventBinding, AssignLis
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
 
-        smartRefresh.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
+        //交办刷新
+        smartRefresh_jb.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
             override fun onLoadMore(refreshLayout: RefreshLayout?) {
-                if (currentSelectItem == 1) {
-                    mBinding.vm?.postZXData()
-                }
+                jbSp = jb_adapter.data.size
+                mBinding.vm?.postJBData(jbSp, selectStartDate, selectEndDate)
+
+                smartRefresh_jb.finishLoadMore()
+                smartRefresh_jb.finishRefresh()
             }
 
             override fun onRefresh(refreshLayout: RefreshLayout?) {
+                jbSp = 0
+                mBinding.vm?.postJBData(jbSp, selectStartDate, selectEndDate)
+
+                smartRefresh_jb.finishLoadMore()
+                smartRefresh_jb.finishRefresh()
+
+            }
+
+        })
+
+        //执行刷新
+        smartRefresh_zx.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
+            override fun onRefresh(refreshLayout: RefreshLayout?) {
+                zxSp = 0
+                mBinding.vm?.postZXData(zxSp, statusNum, selectStartDate, selectEndDate)
+
+                smartRefresh_zx.finishLoadMore()
+                smartRefresh_zx.finishRefresh()
+            }
+
+            override fun onLoadMore(refreshLayout: RefreshLayout?) {
+                zxSp = zx_adapter.data.size
+                mBinding.vm?.postZXData(zxSp, statusNum, selectStartDate, selectEndDate)
+
+                smartRefresh_zx.finishLoadMore()
+                smartRefresh_zx.finishRefresh()
             }
 
         })

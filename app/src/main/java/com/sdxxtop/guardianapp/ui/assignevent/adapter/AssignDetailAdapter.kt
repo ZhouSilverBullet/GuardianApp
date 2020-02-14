@@ -1,11 +1,15 @@
 package com.sdxxtop.guardianapp.ui.assignevent.adapter
 
+import android.annotation.SuppressLint
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.sdxxtop.guardianapp.R
+import com.sdxxtop.guardianapp.model.bean.AssignDetailBean
 import com.sdxxtop.guardianapp.model.bean.MediaBean
+import com.sdxxtop.guardianapp.ui.activity.custom_event.Custom2TextView
 import com.sdxxtop.guardianapp.ui.adapter.PatrolDetailImgAdapter
 import java.util.*
 
@@ -14,14 +18,7 @@ import java.util.*
  * author:lwb
  * Desc:
  */
-class AssignDetailAdapter : BaseQuickAdapter<String, BaseViewHolder>(R.layout.item_assign_detail_desc) {
-    init {
-        val list = arrayListOf<String>()
-        for (index in 1..10) {
-            list.add("")
-        }
-        replaceData(list)
-
+class AssignDetailAdapter : BaseQuickAdapter<AssignDetailBean.ListBean.ChildBean, BaseViewHolder>(R.layout.item_assign_detail_desc) {
 //        list.add(MediaBean("http://a3.att.hudong.com/13/41/01300000201800122190411861466.jpg", 1))
 //        list.add(MediaBean("http://i2.chinanews.com/simg/cmshd/2020/02/10/c79bdde9ee3d439f96585d9a9728555c.jpg", 1))
 //        list.add(MediaBean("http://b2b.image.yuanlin.com/Biz/2012-4/201242221631294.jpg", 1))
@@ -31,11 +28,37 @@ class AssignDetailAdapter : BaseQuickAdapter<String, BaseViewHolder>(R.layout.it
 //        list.add(MediaBean("http://img.pconline.com.cn/images/upload/upc/tx/wallpaper/1305/02/c0/20460023_1367464507058.jpg", 1))
 //        list.add(MediaBean("http://img.pconline.com.cn/images/upload/upc/tx/wallpaper/1305/02/c0/20460023_1367464507058.jpg", 1))
 
-    }
 
-    override fun convert(helper: BaseViewHolder?, item: String?) {
-        val recyclerView = helper?.getView<RecyclerView>(R.id.recyclerView)
+    //status状态(1:待部门确认 2:待个人确认 3:待解决 4:已完成 5:已退回)
+    @SuppressLint("SetTextI18n")
+    override fun convert(helper: BaseViewHolder?, item: AssignDetailBean.ListBean.ChildBean?) {
+        if (helper == null || item == null) return
 
+        val c2TxSolveName = helper.getView<Custom2TextView>(R.id.c2TxSolveName)
+        val c2TxSolvePart = helper.getView<Custom2TextView>(R.id.c2TxSolvePart)
+        val c2TxSolveTime = helper.getView<Custom2TextView>(R.id.c2TxSolveTime)
+        val c2TxSendBack = helper.getView<Custom2TextView>(R.id.c2TxSendBack)
+        val c2TxSendBackReason = helper.getView<Custom2TextView>(R.id.c2TxSendBackReason)
+        val c2TxOverTime = helper.getView<Custom2TextView>(R.id.c2TxOverTime)
+        val c2TxEventCont = helper.getView<Custom2TextView>(R.id.c2TxEventCont)
+        val eventNum = helper.getView<TextView>(R.id.eventNum)
+
+        c2TxSolveName.tvRight.text = item.duty_name
+        c2TxSolvePart.tvRight.text = item.duty_part_name
+        c2TxSolveTime.tvRight.text = item.finish_time
+        c2TxSendBackReason.tvLeft.text = "退回原因：${item.reject_desc}"
+        c2TxEventCont.tvLeft.text = "事件问题描述：${item.content}"
+        eventNum.text = "事件附件（${item.img.size}）"
+        c2TxOverTime.tvRight.text = "--"
+
+        if (item.status != 5) {
+            c2TxSendBack.tvLeft.text = "退回情况：无"
+        } else {
+            c2TxSendBack.tvLeft.text = "退回情况：已退回"
+        }
+
+
+        val recyclerView = helper.getView<RecyclerView>(R.id.recyclerView)
         recyclerView?.layoutManager = LinearLayoutManager(mContext, RecyclerView.VERTICAL, false)
         arrayListOf<MediaBean>()
         recyclerView?.adapter = PatrolDetailImgAdapter(R.layout.gv_filter_image, ArrayList())
