@@ -24,6 +24,7 @@ class AssignListModel : BaseViewModel() {
             val params = Params()
             params.put("sp", "1")
             //这里实际上返回了结果
+            isShowEmpty.value = false
             RetrofitClient.apiService.postZXData(params.data)
         }, {
             showLoadingDialog(false)

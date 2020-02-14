@@ -41,13 +41,13 @@ class AssignEventActivity : BaseKTActivity<ActivityAssignEventBinding, AssignLis
         mBinding.vm = mViewModel
     }
 
-    override fun loadSirBindView(): View {
-        return mBinding.smartRefresh
-    }
+//    override fun loadSirBindView(): View {
+//        return mBinding.smartRefresh
+//    }
 
     override fun initObserve() {
         mBinding.vm?.isShowEmpty?.observe(this, Observer {
-//            showLoadSir(it)
+//            showLoadSir(false)
         })
     }
 
@@ -56,8 +56,8 @@ class AssignEventActivity : BaseKTActivity<ActivityAssignEventBinding, AssignLis
     }
 
     override fun initData() {
-        mBinding.vm?.postZXData()
-        mBinding.vm?.postJBData()
+//        mBinding.vm?.postZXData()
+//        mBinding.vm?.postJBData()
     }
 
     override fun initView() {
@@ -101,6 +101,7 @@ class AssignEventActivity : BaseKTActivity<ActivityAssignEventBinding, AssignLis
 
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
+
         smartRefresh.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
             override fun onLoadMore(refreshLayout: RefreshLayout?) {
                 if (currentSelectItem == 1) {

@@ -10,6 +10,7 @@ import com.sdxxtop.guardianapp.R
  * Desc:
  */
 class AssignListAdapter : BaseQuickAdapter<String, BaseViewHolder>(R.layout.item_assign_event) {
+
     override fun convert(helper: BaseViewHolder?, item: String?) {
 
     }

@@ -9,8 +9,8 @@ import com.sdxxtop.guardianapp.ui.assignevent.assignmodel.AssignEventDetailModel
 import kotlinx.android.synthetic.main.activity_assign_event_detail.*
 
 class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBinding, AssignEventDetailModel>() {
-    private val adapter = AssignDetailAdapter()
 
+    private val adapter = AssignDetailAdapter()
     override fun vmClazz() = AssignEventDetailModel::class.java
 
     override fun bindVM() {
@@ -26,4 +26,6 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
     }
+
+
 }

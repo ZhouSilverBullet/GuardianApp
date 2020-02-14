@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginBottom="15dp"
     android:background="@drawable/shape_assign_item_bg"
     android:orientation="vertical">
 
@@ -11,14 +13,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
-        android:paddingRight="20dp">
+        android:paddingRight="11dp">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/icon_4_home"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <TextView
+            android:id="@+id/tvStatusIcon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/shape_assign_item_status_low_bg"
+            android:gravity="center"
+            android:text="低"
+            android:textColor="@color/white"
+            android:textSize="10sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,19 +32,24 @@
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="10dp"
             android:text="检查工地"
-            app:layout_constraintLeft_toRightOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textColor="@color/color_313131"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvStatusIcon"
+            app:layout_constraintLeft_toRightOf="@+id/tvStatusIcon"
+            app:layout_constraintTop_toTopOf="@+id/tvStatusIcon" />
 
         <TextView
             android:id="@+id/tvStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="7dp"
             android:text="任务状态：待解决"
+            android:textColor="@color/color_666666"
+            android:textSize="11sp"
             app:layout_constraintLeft_toLeftOf="@+id/tvTitle"
-            app:layout_constraintLeft_toRightOf="@+id/imageView"
+            app:layout_constraintLeft_toRightOf="@+id/tvStatusIcon"
             app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
 
@@ -47,7 +58,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="交办时间：2019/02/06"
-            android:textSize="12sp"
+            android:textColor="@color/color_666666"
+            android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tvTitle" />
@@ -57,7 +69,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="最后操作时间：2019/02/06"
-            android:textSize="12sp"
+            android:textColor="@color/color_666666"
+            android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="@+id/tvStatus"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tvStatus" />
@@ -66,27 +79,26 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="15dp">
 
         <TextView
             android:id="@+id/tvLine"
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@color/black"
+            android:background="@color/color_E0E0E0"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/tvRemainTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="35dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="15dp"
             android:text="任务剩余：1天"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvLine" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
