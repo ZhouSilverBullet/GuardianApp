@@ -48,6 +48,7 @@ class CusAssignTopProgress : LinearLayout {
         tvYWCtx.visibility = View.VISIBLE
         when (status) {
             5 -> {
+                tvLine2.visibility = View.GONE
                 tvYWC.visibility = View.GONE
                 tvYWCtx.visibility = View.GONE
                 tvDJJtx.text = "已退回"

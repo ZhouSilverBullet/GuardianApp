@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="activity"
+            type="com.sdxxtop.guardianapp.ui.assignevent.AssignEventDetailActivity" />
+
+        <variable
             name="vm"
             type="com.sdxxtop.guardianapp.ui.assignevent.assignmodel.AssignEventDetailModel" />
     </data>
@@ -13,6 +17,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipToPadding="true"
+        android:fitsSystemWindows="true"
         android:orientation="vertical"
         tools:context=".ui.assignevent.AssignEventDetailActivity">
 
@@ -20,6 +26,8 @@
             android:id="@+id/titleView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:clipToPadding="true"
+            app:fitsSystemWindows="true"
             app:leftLayoutIconIsGray="true"
             app:titleValue="交办详情" />
 
@@ -31,7 +39,8 @@
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:id="@+id/smartRefresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             app:srlEnableLoadMore="false"
             app:srlEnableRefresh="false">
 
@@ -42,5 +51,47 @@
 
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvGreenBtn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/shape_assign_green_bg"
+                android:gravity="center"
+                android:onClick="@{activity::onClick}"
+                android:paddingTop="14dp"
+                android:paddingBottom="15dp"
+                android:text="确认"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tvWhiteBtn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/shape_assign_white_bg"
+                android:gravity="center"
+                android:onClick="@{activity::onClick}"
+                android:paddingTop="14dp"
+                android:paddingBottom="15dp"
+                android:text="申请退回"
+                android:textColor="#32B16C"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:visibility="visible" />
+        </LinearLayout>
     </LinearLayout>
 </layout>

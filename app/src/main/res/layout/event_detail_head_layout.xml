@@ -1,107 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:orientation="vertical">
 
     <com.sdxxtop.guardianapp.ui.activity.custom_event.Custom2TextView
-        style="@style/event_detail_text_style"
         android:id="@+id/c2Tx_title"
-        app:left_text_value="事件标题"
-        app:center_text_value=""
+        style="@style/event_detail_text_style"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:center_text_value=""
+        app:left_text_value="事件标题" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="105dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:visibility="gone"
         tools:visibility="visible" />
 
     <com.sdxxtop.guardianapp.ui.activity.custom_event.Custom2TextView
-        style="@style/event_detail_text_style"
         android:id="@+id/c2Tx_report_name"
-        app:left_text_value="上报人"
+        style="@style/event_detail_text_style"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:left_text_value="上报人" />
 
     <com.sdxxtop.guardianapp.ui.activity.custom_event.Custom2TextView
-        style="@style/event_detail_text_style"
         android:id="@+id/c2Tx_report_phone"
-        app:left_text_value="上报人电话"
+        style="@style/event_detail_text_style"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:left_text_value="上报人电话" />
 
     <com.sdxxtop.guardianapp.ui.activity.custom_event.Custom2TextView
-        style="@style/event_detail_text_style"
         android:id="@+id/c2Tx_report_part"
-        app:left_text_value="上报人所属部门"
+        style="@style/event_detail_text_style"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:left_text_value="上报人所属部门" />
 
     <TextView
-        android:layout_marginTop="7dp"
-        android:background="@color/color_E0E0E0"
         android:layout_width="match_parent"
-        android:layout_height="1dp" />
+        android:layout_height="1dp"
+        android:layout_marginTop="7dp"
+        android:background="@color/color_E0E0E0" />
 
     <com.sdxxtop.guardianapp.ui.activity.custom_event.Custom2TextView
-        style="@style/event_detail_text_style"
         android:id="@+id/c2Tx_report_time"
-        app:left_text_value="上报时间"
+        style="@style/event_detail_text_style"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:left_text_value="上报时间" />
 
     <com.sdxxtop.guardianapp.ui.activity.custom_event.Custom2TextView
-        style="@style/event_detail_text_style"
         android:id="@+id/c2Tx_report_find_type"
-        app:left_text_value="发现方式"
+        style="@style/event_detail_text_style"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:left_text_value="发现方式" />
 
     <com.sdxxtop.guardianapp.ui.activity.custom_event.Custom2TextView
-        style="@style/event_detail_text_style"
         android:id="@+id/c2Tx_report_find_place"
-        app:left_text_value="事件发生地点"
+        style="@style/event_detail_text_style"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:left_text_value="事件发生地点" />
 
     <com.sdxxtop.guardianapp.ui.activity.custom_event.Custom2TextView
-        style="@style/event_detail_text_style"
         android:id="@+id/c2Tx_report_position_desc"
-        app:left_text_value="事件简要描述："
+        style="@style/event_detail_text_style"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:left_text_value="事件简要描述：" />
 
     <com.sdxxtop.guardianapp.ui.activity.custom_event.Custom2TextView
-        style="@style/event_detail_text_style"
         android:id="@+id/c2Tx_report_duty_part"
-        app:left_text_value="责任部门"
+        style="@style/event_detail_text_style"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:left_text_value="责任部门" />
 
     <com.sdxxtop.guardianapp.ui.activity.custom_event.Custom2TextView
-        style="@style/event_detail_text_style"
         android:id="@+id/c2Tx_report_event_desc"
-        app:left_text_value="事件简要描述："
+        style="@style/event_detail_text_style"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:left_text_value="事件简要描述：" />
 
     <com.sdxxtop.guardianapp.ui.activity.custom_event.Custom2TextView
-        style="@style/event_detail_text_style"
         android:id="@+id/c2Tx_report_event_category"
-        app:left_text_value="事件分类"
+        style="@style/event_detail_text_style"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:left_text_value="事件分类" />
 
     <TextView
-        android:layout_marginTop="7dp"
-        android:background="@color/color_E0E0E0"
         android:layout_width="match_parent"
-        android:layout_height="1dp" />
+        android:layout_height="1dp"
+        android:layout_marginTop="7dp"
+        android:background="@color/color_E0E0E0" />
 </LinearLayout>

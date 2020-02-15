@@ -59,4 +59,20 @@ interface ApiService {
     @POST("assign/details")
     suspend fun postAssignDetail(@Field("data") data: String): BaseResponse<AssignDetailBean>
 
+    @FormUrlEncoded
+    @POST("assignexec/settle")
+    suspend fun postConfirmEvent(@Field("data") data: String): BaseResponse<Any>
+
+    @Multipart
+    @POST("assignexec/finish")
+    suspend fun postSolveEvent(@PartMap map: HashMap<String, RequestBody>): BaseResponse<Any>
+
+    @FormUrlEncoded
+    @POST("assignexec/reject")
+    suspend fun postRejectEvent(@Field("data") data: String): BaseResponse<Any>
+
+    @FormUrlEncoded
+    @POST("assignexec/close")
+    suspend fun postColseEvent(@Field("data") data: String): BaseResponse<Any>
+
 }

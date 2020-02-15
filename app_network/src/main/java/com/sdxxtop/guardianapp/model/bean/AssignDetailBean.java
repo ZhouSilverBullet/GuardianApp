@@ -12,31 +12,34 @@ public class AssignDetailBean {
 
 
     /**
-     * list : {"assign_id":46,"title":"nml","type":2,"grade":3,"img":[""],"assign_part_id":19,"userid":50172,"cat_id":78,"content":"nml","update_time":"2020-02-14 12:34:11","add_date":"2020-02-14","due_time":"2020-02-14","cat_name":"测 测试类","user_name":"张海波（测试）","assign_part_name":"区环保分局","child":[{"duty_id":0,"exec_id":36,"duty_part_id":1,"settle_time":"未确认","finish_time":"未解决","status":1,"content":"","img":[],"reject_desc":"暂无","status_name":"待部门确认","duty_name":"待部门确认","duty_part_name":"罗庄区"}]}
+     * list : {"assign_id":55,"title":"玲珑街道","type":2,"grade":3,"img":[""],"assign_part_id":19,"userid":50172,"cat_id":58,"content":"玲珑街道","update_time":"2020-02-15 09:45:05","add_date":"2020-02-15","due_time":"2020-02-21","cat_name":"测试你好","user_name":"张海波（测试）","assign_part_name":"区环保分局","child":[{"duty_id":0,"exec_id":46,"duty_part_id":1,"settle_time":"未确认","finish_time":"未解决","status":1,"content":"","img":[],"reject_desc":"暂无","status_name":"待部门确认","duty_name":"待部门确认","duty_part_name":"罗庄区"},{"duty_id":0,"exec_id":47,"duty_part_id":19,"settle_time":"未确认","finish_time":"未解决","status":1,"content":"","img":[],"reject_desc":"暂无","status_name":"待部门确认","duty_name":"待部门确认","duty_part_name":"区环保分局"}]}
+     * dispaly_status : 2
+     * dispaly_again : 1
      */
-
 
     public ListBean list;
     public int dispaly_status;
+    public int dispaly_again;
+
 
     public static class ListBean {
         /**
-         * assign_id : 46
-         * title : nml
+         * assign_id : 55
+         * title : 玲珑街道
          * type : 2
          * grade : 3
          * img : [""]
          * assign_part_id : 19
          * userid : 50172
-         * cat_id : 78
-         * content : nml
-         * update_time : 2020-02-14 12:34:11
-         * add_date : 2020-02-14
-         * due_time : 2020-02-14
-         * cat_name : 测 测试类
+         * cat_id : 58
+         * content : 玲珑街道
+         * update_time : 2020-02-15 09:45:05
+         * add_date : 2020-02-15
+         * due_time : 2020-02-21
+         * cat_name : 测试你好
          * user_name : 张海波（测试）
          * assign_part_name : 区环保分局
-         * child : [{"duty_id":0,"exec_id":36,"duty_part_id":1,"settle_time":"未确认","finish_time":"未解决","status":1,"content":"","img":[],"reject_desc":"暂无","status_name":"待部门确认","duty_name":"待部门确认","duty_part_name":"罗庄区"}]
+         * child : [{"duty_id":0,"exec_id":46,"duty_part_id":1,"settle_time":"未确认","finish_time":"未解决","status":1,"content":"","img":[],"reject_desc":"暂无","status_name":"待部门确认","duty_name":"待部门确认","duty_part_name":"罗庄区"},{"duty_id":0,"exec_id":47,"duty_part_id":19,"settle_time":"未确认","finish_time":"未解决","status":1,"content":"","img":[],"reject_desc":"暂无","status_name":"待部门确认","duty_name":"待部门确认","duty_part_name":"区环保分局"}]
          */
 
         public int assign_id;
@@ -75,16 +78,15 @@ public class AssignDetailBean {
             return str;
         }
 
-
         public static class ChildBean {
             /**
-             * duty_id : 0
-             * exec_id : 36
+             * exec_id : 46
+             * duty_id : 0  //执行id
              * duty_part_id : 1
              * settle_time : 未确认
              * finish_time : 未解决
              * status : 1
-             * content :
+             * content : 
              * img : []
              * reject_desc : 暂无
              * status_name : 待部门确认

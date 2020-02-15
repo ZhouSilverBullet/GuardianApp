@@ -19,8 +19,8 @@ import kotlinx.android.synthetic.main.activity_assign_event.*
 class AssignEventActivity : BaseKTActivity<ActivityAssignEventBinding, AssignListModel>() {
 
     private var statusNum = 0
-    private val zx_adapter = AssignListAdapter()
-    private val jb_adapter = AssignListAdapter()
+    private val zx_adapter = AssignListAdapter(1)
+    private val jb_adapter = AssignListAdapter(2)
     private var zxSp = 0
     private var jbSp = 0
     private var currentSelectItem = 1   //  当前选中的列表

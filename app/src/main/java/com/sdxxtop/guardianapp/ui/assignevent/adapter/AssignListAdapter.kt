@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat
  * author:lwb
  * Desc:
  */
-class AssignListAdapter : BaseQuickAdapter<AssignListBean.ListBean, BaseViewHolder>(R.layout.item_assign_event) {
+class AssignListAdapter(private val isZXDetail:Int) : BaseQuickAdapter<AssignListBean.ListBean, BaseViewHolder>(R.layout.item_assign_event) {
 
     override fun convert(helper: BaseViewHolder?, item: AssignListBean.ListBean?) {
         if (helper == null || item == null) return
@@ -55,6 +55,7 @@ class AssignListAdapter : BaseQuickAdapter<AssignListBean.ListBean, BaseViewHold
         helper.itemView.setOnClickListener {
             var intent = Intent(mContext, AssignEventDetailActivity::class.java)
             intent.putExtra("assignId", item.assign_id.toString())
+            intent.putExtra("isZXDetail", isZXDetail)
             mContext.startActivity(intent)
         }
     }
