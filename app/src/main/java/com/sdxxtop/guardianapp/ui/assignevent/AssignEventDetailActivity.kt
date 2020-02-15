@@ -25,14 +25,13 @@ import com.sdxxtop.guardianapp.ui.assignevent.assignmodel.AssignEventDetailModel
 import com.sdxxtop.guardianapp.ui.widget.CusAssignTopProgress
 import com.sdxxtop.guardianapp.ui.widget.NumberEditTextView
 import kotlinx.android.synthetic.main.activity_assign_event_detail.*
-import kotlinx.android.synthetic.main.activity_assign_event_detail.recyclerView
 import kotlinx.android.synthetic.main.assign_top_layout.*
 import java.util.*
 
 class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBinding, AssignEventDetailModel>() {
 
     private val adapter = AssignDetailAdapter()
-    private val mAdapter = PatrolDetailImgAdapter(R.layout.gv_filter_image, ArrayList())
+    private var mAdapter = PatrolDetailImgAdapter(R.layout.gv_filter_image, ArrayList())
 
     private val userId = SpUtil.getInt(Constants.USER_ID, 0)  // 当前用户id
     private var assignId = "0"  // 交办事件id
@@ -40,6 +39,7 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
     private var status = 0     // 事件当前状态
     private var dispalyAgain = 0  // 重新提交按钮  1.显示 2.不显示
     private var execId = 0  // 执行id
+    private var overTimeDesc = ""  // 事件状态(超期/剩余)
     private var rejectNetContent: NumberEditTextView? = null   // 退回的输入控件
     private var topHorRecycler: RecyclerView? = null
 
@@ -79,22 +79,16 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
     override fun initView() {
         if (intent != null) {
             assignId = intent.getStringExtra("assignId")
+            overTimeDesc = intent.getStringExtra("overTime")
             isZXDetail = intent.getIntExtra("isZXDetail", 1)
         }
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
-        val headerView = LayoutInflater.from(this).inflate(R.layout.assign_top_layout, null)
+        val headerView = LayoutInflater.from(this).inflate(R.layout.assign_top_layout, null, false)
+        initTopHeadView(headerView)
         adapter.setHeaderView(headerView)
-        val catpView = headerView.findViewById<CusAssignTopProgress>(R.id.catpView)
-        catpView.visibility = if (isZXDetail == 1) View.VISIBLE else View.GONE
-//        topHorRecycler = headerView.findViewById<RecyclerView>(R.id.recyclerView)
-//
-//        /**** 上报的图片和视频  */
-//        topHorRecycler?.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-//        recyclerView.adapter = mAdapter
-
     }
 
     override fun onResume() {
@@ -107,9 +101,6 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
      */
     @SuppressLint("SetTextI18n")
     private fun bindData(_data: AssignDetailBean) {
-
-        showLoadSir(false)
-
         val data = _data.list
         status = _data.dispaly_status
         dispalyAgain = _data.dispaly_again
@@ -134,7 +125,6 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
                 }
             }
         }
-
         //status状态(1:待部门确认 2:待个人确认 3:待解决 4:已完成 5:已退回)
         if (isZXDetail == 1) {
             catpView.setStatus(status)
@@ -143,9 +133,12 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
         setBtnStatus(data)
 
         //设置 图片视频
-//        if (topHorRecycler != null) {
-//            bandImgAndVideo(data.img, "", topHorRecycler, mAdapter)
-//        }
+        if (topHorRecycler != null) {
+            bandImgAndVideo(data.img, "", topHorRecycler, mAdapter)
+        }
+
+        eventNum.text = "事件附件（${data.img.size}）"
+        tvTop.text = "事件情况（${overTimeDesc}）"
     }
 
     /**
@@ -291,6 +284,31 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
             adapter.replaceData(list)
         } else {
             recyclerView?.visibility = View.GONE
+        }
+    }
+
+    /**
+     * 初始化头部局
+     */
+    private fun initTopHeadView(headerView: View) {
+        if (headerView == null) return
+        /**** 上报的图片和视频  */
+        topHorRecycler = headerView.findViewById<RecyclerView>(R.id.imgRecyclerView)
+        topHorRecycler?.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
+        topHorRecycler?.adapter = mAdapter
+
+        val catpView = headerView.findViewById<CusAssignTopProgress>(R.id.catpView)
+        catpView.visibility = if (isZXDetail == 1) View.VISIBLE else View.GONE
+
+        val tvUpDown = headerView.findViewById<TextView>(R.id.tvUpDown)
+        tvUpDown.setOnClickListener {
+            if (topHorRecycler?.visibility == View.VISIBLE) {
+                topHorRecycler?.visibility = View.GONE
+                tvUpDown.text = "展开"
+            } else {
+                topHorRecycler?.visibility = View.VISIBLE
+                tvUpDown.text = "收起"
+            }
         }
     }
 }

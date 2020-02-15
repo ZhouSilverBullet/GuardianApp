@@ -56,6 +56,7 @@ class AssignListAdapter(private val isZXDetail:Int) : BaseQuickAdapter<AssignLis
             var intent = Intent(mContext, AssignEventDetailActivity::class.java)
             intent.putExtra("assignId", item.assign_id.toString())
             intent.putExtra("isZXDetail", isZXDetail)
+            intent.putExtra("overTime", getOverTimeStr(item.due_day))
             mContext.startActivity(intent)
         }
     }

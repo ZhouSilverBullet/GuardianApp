@@ -1,6 +1,8 @@
 package com.sdxxtop.guardianapp.ui.assignevent.adapter
 
 import android.annotation.SuppressLint
+import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,16 +21,6 @@ import java.util.*
  * Desc:
  */
 class AssignDetailAdapter : BaseQuickAdapter<AssignDetailBean.ListBean.ChildBean, BaseViewHolder>(R.layout.item_assign_detail_desc) {
-//        list.add(MediaBean("http://a3.att.hudong.com/13/41/01300000201800122190411861466.jpg", 1))
-//        list.add(MediaBean("http://i2.chinanews.com/simg/cmshd/2020/02/10/c79bdde9ee3d439f96585d9a9728555c.jpg", 1))
-//        list.add(MediaBean("http://b2b.image.yuanlin.com/Biz/2012-4/201242221631294.jpg", 1))
-//        list.add(MediaBean("http://a0.att.hudong.com/81/87/01300309316150134708870886770.jpg", 1))
-//        list.add(MediaBean("http://bbsfiles.vivo.com.cn/vivobbs/attachment/forum/202001/07/112244s14v2ze1hhjes214.jpg", 1))
-//        list.add(MediaBean("http://www.jete.cn/uploads/allimg/130625/42-130625111206.jpg", 1))
-//        list.add(MediaBean("http://img.pconline.com.cn/images/upload/upc/tx/wallpaper/1305/02/c0/20460023_1367464507058.jpg", 1))
-//        list.add(MediaBean("http://img.pconline.com.cn/images/upload/upc/tx/wallpaper/1305/02/c0/20460023_1367464507058.jpg", 1))
-
-
     //status状态(1:待部门确认 2:待个人确认 3:待解决 4:已完成 5:已退回)
     @SuppressLint("SetTextI18n")
     override fun convert(helper: BaseViewHolder?, item: AssignDetailBean.ListBean.ChildBean?) {
@@ -42,6 +34,8 @@ class AssignDetailAdapter : BaseQuickAdapter<AssignDetailBean.ListBean.ChildBean
         val c2TxOverTime = helper.getView<Custom2TextView>(R.id.c2TxOverTime)
         val c2TxEventCont = helper.getView<Custom2TextView>(R.id.c2TxEventCont)
         val eventNum = helper.getView<TextView>(R.id.eventNum)
+        val tvUpDown = helper.getView<TextView>(R.id.tvUpDown)
+        val llHorLayout = helper.getView<LinearLayout>(R.id.llHorLayout)
 
         c2TxSolveName.tvRight.text = item.duty_name
         c2TxSolvePart.tvRight.text = item.duty_part_name
@@ -58,9 +52,31 @@ class AssignDetailAdapter : BaseQuickAdapter<AssignDetailBean.ListBean.ChildBean
         }
 
 
+        tvUpDown.setOnClickListener {
+            if (llHorLayout?.visibility == View.VISIBLE) {
+                llHorLayout?.visibility = View.GONE
+                tvUpDown.text = "展开"
+            } else {
+                llHorLayout?.visibility = View.VISIBLE
+                tvUpDown.text = "收起"
+            }
+        }
+
         val recyclerView = helper.getView<RecyclerView>(R.id.recyclerView)
-        recyclerView?.layoutManager = LinearLayoutManager(mContext, RecyclerView.VERTICAL, false)
-        arrayListOf<MediaBean>()
-        recyclerView?.adapter = PatrolDetailImgAdapter(R.layout.gv_filter_image, ArrayList())
+        val recyclerView2 = helper.getView<RecyclerView>(R.id.recyclerView2)
+        recyclerView?.layoutManager = LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false)
+        recyclerView2?.layoutManager = LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false)
+
+        val list: MutableList<MediaBean> = ArrayList()
+        if (item.img.isNotEmpty()) {
+            item.img.forEach {
+                if (it.isNotEmpty()) {
+                    list.add(MediaBean(it, 1))
+                }
+            }
+
+        }
+        recyclerView?.adapter = PatrolDetailImgAdapter(R.layout.gv_filter_image, list)
+        recyclerView2?.adapter = PatrolDetailImgAdapter(R.layout.gv_filter_image, list)
     }
 }

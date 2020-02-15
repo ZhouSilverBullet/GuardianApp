@@ -115,7 +115,7 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:paddingBottom="10dp"
-            android:text="展开"
+            android:text="收起"
             android:textColor="#2593E7"
             android:textSize="13sp"
             app:layout_constraintRight_toRightOf="parent"
@@ -123,7 +123,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/imgRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="15dp"
