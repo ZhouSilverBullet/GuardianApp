@@ -110,9 +110,9 @@
         app:layout_constraintTop_toBottomOf="@+id/c2TxEventCont" />
 
     <HorizontalScrollView
-        android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:scrollbars="none"
         app:layout_constraintTop_toBottomOf="@+id/tvUpDown">
 
         <LinearLayout
@@ -126,14 +126,12 @@
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp" />
+                android:paddingLeft="15dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:paddingRight="15dp" />
         </LinearLayout>
     </HorizontalScrollView>

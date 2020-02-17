@@ -155,4 +155,8 @@ public class NumberEditTextView extends RelativeLayout implements TextWatcher {
     public String getEditValue() {
         return etContent.getText().toString().trim();
     }
+
+    public EditText getEditText(){
+        return etContent;
+    }
 }

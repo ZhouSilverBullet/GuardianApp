@@ -24,7 +24,6 @@ class AssignEventActivity : BaseKTActivity<ActivityAssignEventBinding, AssignLis
     private var zxSp = 0
     private var jbSp = 0
     private var currentSelectItem = 1   //  当前选中的列表
-    private var currentDateTime = Date2Util.getCurrentDateTime()  // 当前日期
     private var selectStartDate = Date2Util.getCurrentDateTime()  // 选中的开始日期
     private var selectEndDate = Date2Util.getCurrentDateTime()    // 选中的结束日期
 
@@ -72,9 +71,10 @@ class AssignEventActivity : BaseKTActivity<ActivityAssignEventBinding, AssignLis
 
     }
 
-    override fun initData() {
-        mBinding.vm?.postZXData(0, 0, currentDateTime, currentDateTime)
-        mBinding.vm?.postJBData(0, currentDateTime, currentDateTime)
+    override fun onResume() {
+        super.onResume()
+        mBinding.vm?.postZXData(0, 0, selectStartDate, selectEndDate)
+        mBinding.vm?.postJBData(0, selectStartDate, selectEndDate)
     }
 
     override fun initView() {

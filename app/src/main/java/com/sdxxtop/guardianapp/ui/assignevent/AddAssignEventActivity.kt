@@ -9,6 +9,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.sdxxtop.base.BaseKTActivity
 import com.sdxxtop.guardianapp.R
 import com.sdxxtop.guardianapp.databinding.ActivityAddAssignEventBinding
+import com.sdxxtop.guardianapp.model.bean.AssignDetailBean
 import com.sdxxtop.guardianapp.model.bean.PartAndUserBean
 import com.sdxxtop.guardianapp.ui.assignevent.assignmodel.AddAssignEventModel
 import com.sdxxtop.guardianapp.ui.widget.SingleStyleView
@@ -20,9 +21,9 @@ import kotlinx.android.synthetic.main.activity_add_assign_event.*
 class AddAssignEventActivity : BaseKTActivity<ActivityAddAssignEventBinding, AddAssignEventModel>() {
 
     private var categorySelect: SingleStyleView? = null
-    private var categoryId = 0
-    private var categoryName = ""
-    private var selectType = 0  //1.个人 2.部门
+    private var categoryId = 0     // 分类id
+    private var categoryName = ""  // 分类名字
+    private var selectType = 0     //1.个人 2.部门
     private var selectPartId = ""  // 选中的部门id
     private var selectUserId = ""  // 选中的用户id
     private var eventLevel = 0     // 事件等级
@@ -85,6 +86,22 @@ class AddAssignEventActivity : BaseKTActivity<ActivityAddAssignEventBinding, Add
         cbIntoVoice.setOnClickListener(View.OnClickListener {
             //            cvisvView.visibility = if (cbIntoVoice.isChecked) View.VISIBLE else View.GONE
         })
+
+        if (intent != null) {
+            val rePlaceDataSer = intent.getSerializableExtra("reReplaceData") ?: null
+            if (rePlaceDataSer != null) {
+                val rePlaceData = rePlaceDataSer as AssignDetailBean.ListBean
+                taevTitle.editText.setText(rePlaceData.title)
+                categoryName = rePlaceData.cat_name
+                categoryId = rePlaceData.cat_id
+                tatv_event_type.textRightText.text = categoryName
+                eventLevel = rePlaceData.grade
+                tatv_event_level.textRightText.text = getLevelStr(rePlaceData.grade)
+                net_content.editText.setText(rePlaceData.content)
+//                cbIntoVoice.isChecked = rePlaceData.assign_id == 1
+                tatv_end_time.textRightText.text = rePlaceData.due_time
+            }
+        }
     }
 
     override fun initData() {
@@ -242,4 +259,23 @@ class AddAssignEventActivity : BaseKTActivity<ActivityAddAssignEventBinding, Add
         )
     }
 
+
+    /**
+     * 获取 等级
+     */
+    fun getLevelStr(level: Int): String {
+        var result = ""
+        when (level) {
+            1 -> {
+                result = "低"
+            }
+            2 -> {
+                result = "中"
+            }
+            3 -> {
+                result = "高"
+            }
+        }
+        return result
+    }
 }

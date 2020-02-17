@@ -2,6 +2,7 @@ package com.sdxxtop.guardianapp.ui.assignevent.adapter
 
 import android.annotation.SuppressLint
 import android.view.View
+import android.webkit.WebView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -74,9 +75,12 @@ class AssignDetailAdapter : BaseQuickAdapter<AssignDetailBean.ListBean.ChildBean
                     list.add(MediaBean(it, 1))
                 }
             }
-
         }
         recyclerView?.adapter = PatrolDetailImgAdapter(R.layout.gv_filter_image, list)
-        recyclerView2?.adapter = PatrolDetailImgAdapter(R.layout.gv_filter_image, list)
+        var arrayListOf = arrayListOf<String>("http://xuxingtest.oss-cn-hangzhou.aliyuncs.com/app/20200216170813233692.xlsx")
+        var adapter = OtherFileAdapter()
+        recyclerView2?.adapter = adapter
+        adapter.replaceData(arrayListOf)
+
     }
 }

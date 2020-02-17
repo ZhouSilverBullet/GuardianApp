@@ -41,7 +41,8 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
     private var execId = 0  // 执行id
     private var overTimeDesc = ""  // 事件状态(超期/剩余)
     private var rejectNetContent: NumberEditTextView? = null   // 退回的输入控件
-    private var topHorRecycler: RecyclerView? = null
+    private var topHorRecycler: RecyclerView? = null  // 头布局的图片显示列表
+    private var reReplaceData: AssignDetailBean.ListBean? = null   // 重新派发的数据
 
     private val sendBackDialog: BottomSheetDialog by lazy {
         var bottomDialog = BottomSheetDialog(this)
@@ -102,6 +103,7 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
     @SuppressLint("SetTextI18n")
     private fun bindData(_data: AssignDetailBean) {
         val data = _data.list
+        reReplaceData = data
         status = _data.dispaly_status
         dispalyAgain = _data.dispaly_again
 
@@ -234,6 +236,11 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
                     when (dispalyAgain) {
                         1 -> {  // 重新派发
                             //TODO 重新派发
+                            if (reReplaceData != null) {
+                                val intent = Intent(this@AssignEventDetailActivity, AddAssignEventActivity::class.java)
+                                intent.putExtra("reReplaceData", reReplaceData)
+                                startActivity(intent)
+                            }
                         }
                         2 -> {  // 催办
                             mBinding.vm?.postCuiBanEvent(assignId)

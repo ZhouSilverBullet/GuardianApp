@@ -1,6 +1,7 @@
 package com.sdxxtop.guardianapp.model.bean;
 
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
  * author:lwb
  * Desc:
  */
-public class AssignDetailBean {
+public class AssignDetailBean implements Serializable {
 
 
     /**
@@ -22,7 +23,7 @@ public class AssignDetailBean {
     public int dispaly_again;
 
 
-    public static class ListBean {
+    public static class ListBean implements Serializable {
         /**
          * assign_id : 55
          * title : 玲珑街道
@@ -78,7 +79,7 @@ public class AssignDetailBean {
             return str;
         }
 
-        public static class ChildBean {
+        public static class ChildBean implements Serializable {
             /**
              * exec_id : 46
              * duty_id : 0  //执行id
@@ -86,7 +87,7 @@ public class AssignDetailBean {
              * settle_time : 未确认
              * finish_time : 未解决
              * status : 1
-             * content : 
+             * content :
              * img : []
              * reject_desc : 暂无
              * status_name : 待部门确认
