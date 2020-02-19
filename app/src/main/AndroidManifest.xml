@@ -42,7 +42,8 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.assignevent.AssignSolveActivity"></activity>
+        <activity android:name=".ui.activity.EventReportListActivity"></activity>
+        <activity android:name=".ui.assignevent.AssignSolveActivity" />
         <activity
             android:name=".ui.assignevent.ChooseUserActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
@@ -164,7 +165,6 @@
         <activity
             android:name=".ui.activity.AmapPoiActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".ui.activity.EventReportListActivity" />
         <activity
             android:name=".ui.activity.EventReportDetailActivity"
             android:theme="@style/AppNormalTheme" />

@@ -17,14 +17,14 @@ import java.text.SimpleDateFormat
  * author:lwb
  * Desc:
  */
-class AssignListAdapter(private val isZXDetail:Int) : BaseQuickAdapter<AssignListBean.ListBean, BaseViewHolder>(R.layout.item_assign_event) {
+class AssignListAdapter(private val isZXDetail: Int) : BaseQuickAdapter<AssignListBean.ListBean, BaseViewHolder>(R.layout.item_assign_event) {
 
     override fun convert(helper: BaseViewHolder?, item: AssignListBean.ListBean?) {
         if (helper == null || item == null) return
         val tvStatusIcon = helper.getView<TextView>(R.id.tvStatusIcon)
 
         helper.setText(R.id.tvTitle, item.title)
-        helper.setText(R.id.tvStatus, "任务状态：${getStatusTx(item.grade)}")
+        helper.setText(R.id.tvStatus, if (isZXDetail == 2) "" else "任务状态：${getStatusTx(item.grade)}")
         helper.setText(R.id.tvAssignTime, "交办时间：${item.add_date.replace("-", "/")}")
         helper.setText(R.id.tvLastMakeTime, "最后操作时间：${getFormatDate(item.update_time)}")
 

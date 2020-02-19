@@ -21,13 +21,13 @@ public class EventReportListAdapter extends BaseQuickAdapter<EventIndexBean.Even
         TextView tvTime = helper.getView(R.id.tv_time);
         TextView tvAddress = helper.getView(R.id.tv_address);
         TextView tvStatus = helper.getView(R.id.tv_status);
-        helper.setText(R.id.tv_event_category,item.getCategory_name());
+        helper.setText(R.id.tv_event_category, item.getCategory_name());
 
         tvTitle.setText(item.getTitle());
         tvTime.setText("上报时间：" + Date2Util.handleTime(item.getAdd_time()));
         tvAddress.setText("事件地点：" + item.getPlace());
         String strStatus = "";
-        if (item.getIs_claim()==1){
+        if (item.getIs_claim() == 1) {
             switch (item.getStatus()) {
                 case 2:
                     strStatus = "已认领";
@@ -42,7 +42,7 @@ public class EventReportListAdapter extends BaseQuickAdapter<EventIndexBean.Even
                     strStatus = "待认领";
                     break;
             }
-        }else{
+        } else {
             switch (item.getStatus()) { //状态(1:带派发 2:待解决 3:待验收 4:验收通过 5:验收不通过)
                 case 2:
                     strStatus = "已派发";
@@ -69,7 +69,7 @@ public class EventReportListAdapter extends BaseQuickAdapter<EventIndexBean.Even
             @Override
             public void onClick(View v) {
 //                EventReportDetailActivity.startDetailActivity(v.getContext(), String.valueOf(item.getEvent_id()));
-                EventReportDetailActivity_new.startDetailActivity(v.getContext(),String.valueOf(item.getEvent_id()));
+                EventReportDetailActivity_new.startDetailActivity(v.getContext(), String.valueOf(item.getEvent_id()));
             }
         });
     }

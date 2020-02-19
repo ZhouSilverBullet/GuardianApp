@@ -6,6 +6,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpActivity;
 import com.sdxxtop.guardianapp.model.bean.EventIndexBean;
+import com.sdxxtop.guardianapp.model.bean.FlyEventListBean;
 import com.sdxxtop.guardianapp.presenter.TaskAgentsPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.TaskAgentsContract;
 import com.sdxxtop.guardianapp.ui.adapter.TaskAgentsAdapter;
@@ -14,6 +15,7 @@ import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 
 /**
@@ -95,5 +97,14 @@ public class TaskAgentsActivity extends BaseMvpActivity<TaskAgentsPresenter> imp
         if (page != 0) {
             mAdapter.addData(event);
         }
+    }
+
+    /**
+     * 不会被调用
+     *
+     * @param data
+     */
+    @Override
+    public void setMonthUavData(List<FlyEventListBean.MonthTash> data) {
     }
 }

@@ -1,10 +1,7 @@
 package com.sdxxtop.guardianapp.api
 
 import com.sdxxtop.guardianapp.aakt.AboutBean
-import com.sdxxtop.guardianapp.model.bean.AssignDetailBean
-import com.sdxxtop.guardianapp.model.bean.AssignListBean
-import com.sdxxtop.guardianapp.model.bean.CategoryStatusBean
-import com.sdxxtop.guardianapp.model.bean.PartAndUserBean
+import com.sdxxtop.guardianapp.model.bean.*
 import com.sdxxtop.network.helper.data.BaseResponse
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -72,7 +69,15 @@ interface ApiService {
     suspend fun postRejectEvent(@Field("data") data: String): BaseResponse<Any>
 
     @FormUrlEncoded
-    @POST("assignexec/close")
+    @POST("assign/close")
     suspend fun postColseEvent(@Field("data") data: String): BaseResponse<Any>
+
+    @FormUrlEncoded
+    @POST("event/monthEvent")
+    suspend fun postMonthEvnet(@Field("data") data: String): BaseResponse<FlyEventListBean>
+
+    @FormUrlEncoded
+    @POST("event/eventList")
+    suspend fun postData(@Field("data") data: String): BaseResponse<EventIndexBean>
 
 }
