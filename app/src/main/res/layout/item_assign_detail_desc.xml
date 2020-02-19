@@ -66,6 +66,7 @@
         app:left_text_value="退回原因：无" />
 
     <com.sdxxtop.guardianapp.ui.activity.custom_event.Custom2TextView
+        android:visibility="gone"
         android:id="@+id/c2TxOverTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

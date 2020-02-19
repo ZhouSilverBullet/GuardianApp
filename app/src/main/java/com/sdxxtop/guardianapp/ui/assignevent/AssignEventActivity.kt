@@ -121,11 +121,13 @@ class AssignEventActivity : BaseKTActivity<ActivityAssignEventBinding, AssignLis
             override fun onTabSelected(tab: TabLayout.Tab) {
                 //选中之后再次点击即复选时触发
                 if (tab.text == "我交办的") {
+                    mBinding.vm?.postJBData(0, selectStartDate, selectEndDate)
                     currentSelectItem = 2
                     tvStatus.visibility = View.INVISIBLE
                     smartRefresh_zx.visibility = View.GONE
                     smartRefresh_jb.visibility = View.VISIBLE
                 } else {
+                    mBinding.vm?.postZXData(0, statusNum, selectStartDate, selectEndDate)
                     currentSelectItem = 1
                     tvStatus.visibility = View.VISIBLE
                     smartRefresh_zx.visibility = View.VISIBLE

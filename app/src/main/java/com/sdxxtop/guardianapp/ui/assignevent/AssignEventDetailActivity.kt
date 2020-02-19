@@ -235,7 +235,6 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
                      */
                     when (dispalyAgain) {
                         1 -> {  // 重新派发
-                            //TODO 重新派发
                             if (reReplaceData != null) {
                                 val intent = Intent(this@AssignEventDetailActivity, AddAssignEventActivity::class.java)
                                 intent.putExtra("reReplaceData", reReplaceData)

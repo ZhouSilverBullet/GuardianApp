@@ -38,6 +38,13 @@ class AssignDetailAdapter : BaseQuickAdapter<AssignDetailBean.ListBean.ChildBean
         val tvUpDown = helper.getView<TextView>(R.id.tvUpDown)
         val llHorLayout = helper.getView<LinearLayout>(R.id.llHorLayout)
 
+        if (item.status == 3) {
+            c2TxEventCont.visibility = View.VISIBLE
+        } else {
+            c2TxEventCont.visibility = View.GONE
+        }
+
+
         c2TxSolveName.tvRight.text = item.duty_name
         c2TxSolvePart.tvRight.text = item.duty_part_name
         c2TxSolveTime.tvRight.text = item.finish_time
@@ -55,7 +62,7 @@ class AssignDetailAdapter : BaseQuickAdapter<AssignDetailBean.ListBean.ChildBean
 
         tvUpDown.setOnClickListener {
             if (llHorLayout?.visibility == View.VISIBLE) {
-                llHorLayout?.visibility = View.GONE
+                llHorLayout.visibility = View.GONE
                 tvUpDown.text = "展开"
             } else {
                 llHorLayout?.visibility = View.VISIBLE
