@@ -62,7 +62,7 @@ class AddAssignEventModel : BaseViewModel() {
         params.put("mi", main_id)
         params.put("dt", due_time)
         params.put("ct", content)
-        params.addImagePathList("img", imagePushPath)
+        params.addImagePathList("img[]", imagePushPath)
 
         if (videoPushPath.isNotEmpty()) {
             val file: File = videoPushPath[0]

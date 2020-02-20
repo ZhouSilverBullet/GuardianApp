@@ -234,7 +234,8 @@ class AddAssignEventActivity : BaseKTActivity<ActivityAddAssignEventBinding, Add
             UIUtils.showToast("请选择事件等级")
             return
         }
-        if (net_content.editValue.isEmpty()) {
+        val contentTx = net_content.editValue
+        if (contentTx.isEmpty()) {
             UIUtils.showToast("请填写事件描述")
             return
         }
@@ -253,7 +254,7 @@ class AddAssignEventActivity : BaseKTActivity<ActivityAddAssignEventBinding, Add
                 categoryId,
                 if (selectType == 1) selectUserId else selectPartId,
                 tatv_end_time.rightTVString,
-                contx,
+                contentTx,
                 imagePushPath,
                 vedioPushPath
         )
