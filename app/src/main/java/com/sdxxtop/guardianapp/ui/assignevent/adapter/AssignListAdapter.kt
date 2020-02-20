@@ -1,6 +1,7 @@
 package com.sdxxtop.guardianapp.ui.assignevent.adapter
 
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -9,6 +10,7 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.sdxxtop.guardianapp.R
 import com.sdxxtop.guardianapp.model.bean.AssignListBean
 import com.sdxxtop.guardianapp.ui.assignevent.AssignEventDetailActivity
+import com.sdxxtop.guardianapp.ui.assignevent.AssignSolveActivity
 import java.lang.Exception
 import java.text.SimpleDateFormat
 
@@ -19,23 +21,49 @@ import java.text.SimpleDateFormat
  */
 class AssignListAdapter(private val isZXDetail: Int) : BaseQuickAdapter<AssignListBean.ListBean, BaseViewHolder>(R.layout.item_assign_event) {
 
+    private var isWorkAdapter: Boolean = false
+
     override fun convert(helper: BaseViewHolder?, item: AssignListBean.ListBean?) {
         if (helper == null || item == null) return
         val tvStatusIcon = helper.getView<TextView>(R.id.tvStatusIcon)
+        val tvWorkOverTime = helper.getView<TextView>(R.id.tvWorkOverTime)
+        val tvRemainTime = helper.getView<TextView>(R.id.tvRemainTime)
+        val tvSolveBtn = helper.getView<TextView>(R.id.tvSolveBtn)
+        val conOverTimeLayout = helper.getView<ConstraintLayout>(R.id.conOverTimeLayout)
+
+        helper.setText(R.id.tvWorkOverTime, getOverTimeStr(item.due_day))
+        helper.setText(R.id.tvRemainTime, getOverTimeStr(item.due_day))
+        if (isWorkAdapter) {
+            tvRemainTime.visibility = View.GONE
+
+            if (item.due_day == 0) {
+                tvWorkOverTime.visibility = View.GONE
+            } else {
+                tvWorkOverTime.visibility = View.VISIBLE
+            }
+
+            if (item.status == 3) {
+                tvSolveBtn.visibility = View.VISIBLE
+            } else {
+                tvSolveBtn.visibility = View.GONE
+            }
+        } else {
+            tvRemainTime.visibility = View.VISIBLE
+            tvWorkOverTime.visibility = View.GONE
+            tvSolveBtn.visibility = View.GONE
+
+            if (item.due_day == 0) {
+                conOverTimeLayout.visibility = View.GONE
+            } else {
+                conOverTimeLayout.visibility = View.VISIBLE
+            }
+        }
+
 
         helper.setText(R.id.tvTitle, item.title)
-        helper.setText(R.id.tvStatus, if (isZXDetail == 2) "" else "任务状态：${getStatusTx(item.grade)}")
+        helper.setText(R.id.tvStatus, if (isZXDetail == 2) "" else "任务状态：${getStatusTx(item.status)}")
         helper.setText(R.id.tvAssignTime, "交办时间：${item.add_date.replace("-", "/")}")
         helper.setText(R.id.tvLastMakeTime, "最后操作时间：${getFormatDate(item.update_time)}")
-
-        val conOverTimeLayout = helper.getView<ConstraintLayout>(R.id.conOverTimeLayout)
-        if (item.due_day == 0) {
-            conOverTimeLayout.visibility = View.GONE
-        } else {
-            conOverTimeLayout.visibility = View.VISIBLE
-        }
-        helper.setText(R.id.tvRemainTime, getOverTimeStr(item.due_day))
-
 
         when (item.grade) {
             1 -> {
@@ -59,6 +87,14 @@ class AssignListAdapter(private val isZXDetail: Int) : BaseQuickAdapter<AssignLi
             intent.putExtra("overTime", getOverTimeStr(item.due_day))
             mContext.startActivity(intent)
         }
+
+        tvSolveBtn.setOnClickListener {
+            val intent = Intent(mContext, AssignSolveActivity::class.java)
+            intent.putExtra("assignId", item.assign_id.toString())
+            intent.putExtra("execId", item.exec_id)
+            mContext.startActivity(intent)
+        }
+
     }
 
     //status状态(1:待部门确认 2:待个人确认 3:待解决 4:已完成 5:已退回)
@@ -89,6 +125,11 @@ class AssignListAdapter(private val isZXDetail: Int) : BaseQuickAdapter<AssignLi
 
         }
         return str
+    }
+
+    fun replaceData(data: MutableCollection<out AssignListBean.ListBean>, isWork: Boolean) {
+        this.isWorkAdapter = isWork
+        super.replaceData(data)
     }
 
 }

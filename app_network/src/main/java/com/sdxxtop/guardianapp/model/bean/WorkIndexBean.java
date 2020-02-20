@@ -23,6 +23,7 @@ public class WorkIndexBean {
     public int pending_count;
     public List<MonthComplete> month_complete;
     public List<PendingEvent> pending_event;
+    public List<AssignListBean.ListBean> list_assign;
 
     public static class MonthComplete {
         public float complete_rate;

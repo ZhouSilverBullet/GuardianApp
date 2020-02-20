@@ -24,7 +24,7 @@ class AssignSolveModel : BaseViewModel() {
         params.put("ai", assignId)
         params.put("ei", execId)
         params.put("ry", editValue)
-        params.addImagePathList("img", imagePushPath)
+        params.addImagePathList("img[]", imagePushPath)
 
         if (videoPushPath.isNotEmpty()) {
             val file: File = videoPushPath[0]

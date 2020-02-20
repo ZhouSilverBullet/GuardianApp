@@ -13,6 +13,7 @@ import com.sdxxtop.guardianapp.utils.UIUtils
 import com.sdxxtop.guardianapp.utils.VideoCompressUtil
 import com.sdxxtop.guardianapp.utils.VideoCompressUtil.OnVideoCompress
 import java.io.File
+import kotlin.math.asin
 
 /**
  * Date:2020-02-13
@@ -41,6 +42,7 @@ class AddAssignEventModel : BaseViewModel() {
     }
 
     fun pushReport(
+            assignId: Int, // 交办事件ID
             context: Context,
             title: String, // 标题
             type: Int,   // 类型 1.个人 2.部门
@@ -54,6 +56,7 @@ class AddAssignEventModel : BaseViewModel() {
             videoPushPath: List<File>
     ) {
         val params = ImageAndVideoParams()
+        params.put("ai", assignId)
         params.put("te", title)
         params.put("ty", type)
         params.put("ge", level)
@@ -71,7 +74,7 @@ class AddAssignEventModel : BaseViewModel() {
             util.setOnVideoCompress(object : OnVideoCompress {
                 override fun success(path: String) {
                     params.addCompressVideoPath("video", File(path))
-                    request(params)
+                    request(params, assignId)
                 }
 
                 override fun fail() {
@@ -79,17 +82,21 @@ class AddAssignEventModel : BaseViewModel() {
                 }
             })
         } else {
-            request(params)
+            request(params, assignId)
         }
     }
 
-    fun request(params: ImageAndVideoParams) {
+    fun request(params: ImageAndVideoParams, reAssignId: Int) {
         showLoadingDialog(true)
         loadOnUI({
             //这里实际上返回了结果
             var data = params.imgAndVideoData
             Log.e("data==", "" + data.toString())
-            RetrofitClient.apiService.addAssignEvent(data)
+            if (reAssignId == 0) {
+                RetrofitClient.apiService.addAssignEvent(data)
+            } else {
+                RetrofitClient.apiService.editAssignEvent(data)
+            }
         }, {
             showLoadingDialog(false)
             assignId.value = it

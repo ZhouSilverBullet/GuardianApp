@@ -21,6 +21,7 @@ public class AssignDetailBean implements Serializable {
     public ListBean list;
     public int dispaly_status;
     public int dispaly_again;
+    public int dispaly_urge;
 
 
     public static class ListBean implements Serializable {

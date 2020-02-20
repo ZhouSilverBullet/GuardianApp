@@ -38,7 +38,7 @@ class AssignDetailAdapter : BaseQuickAdapter<AssignDetailBean.ListBean.ChildBean
         val tvUpDown = helper.getView<TextView>(R.id.tvUpDown)
         val llHorLayout = helper.getView<LinearLayout>(R.id.llHorLayout)
 
-        if (item.status == 3) {
+        if (item.status == 4) {
             c2TxEventCont.visibility = View.VISIBLE
         } else {
             c2TxEventCont.visibility = View.GONE

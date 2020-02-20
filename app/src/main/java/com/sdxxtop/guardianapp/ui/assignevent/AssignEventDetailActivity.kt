@@ -34,12 +34,12 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
     private var mAdapter = PatrolDetailImgAdapter(R.layout.gv_filter_image, ArrayList())
 
     private val userId = SpUtil.getInt(Constants.USER_ID, 0)  // 当前用户id
-    private var assignId = "0"  // 交办事件id
-    private var isZXDetail = 1 // 执行详情：1 交办详情： 2
-    private var status = 0     // 事件当前状态
+    private var assignId = "0"    // 交办事件id
+    private var isZXDetail = 1    // 执行详情：1 交办详情： 2
+    private var status = 0        // 事件当前状态
     private var dispalyAgain = 0  // 重新提交按钮  1.显示 2.不显示
-    private var execId = 0  // 执行id
-    private var overTimeDesc = ""  // 事件状态(超期/剩余)
+    private var execId = 0        // 执行id
+    private var overTimeDesc = "" // 事件状态(超期/剩余)
     private var rejectNetContent: NumberEditTextView? = null   // 退回的输入控件
     private var topHorRecycler: RecyclerView? = null  // 头布局的图片显示列表
     private var reReplaceData: AssignDetailBean.ListBean? = null   // 重新派发的数据
@@ -132,7 +132,7 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
             catpView.setStatus(status)
         }
 
-        setBtnStatus(data)
+        setBtnStatus(_data)
 
         //设置 图片视频
         if (topHorRecycler != null) {
@@ -148,7 +148,7 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
      * 执行详情页：确认，申请退回、执行
      * 交办详情页：催办，重新派发、关闭任务
      */
-    private fun setBtnStatus(data: AssignDetailBean.ListBean) {
+    private fun setBtnStatus(data: AssignDetailBean) {
         tvGreenBtn.visibility = View.VISIBLE
         tvWhiteBtn.visibility = View.VISIBLE
 
@@ -184,10 +184,15 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
                 tvWhiteBtn.setTextColor(Color.parseColor("#FFFFFF"))
                 tvWhiteBtn.setBackgroundResource(R.drawable.shape_assign_green_bg)
             } else {
-                tvGreenBtn.text = "催办"
-                tvGreenBtn.setTextColor(Color.parseColor("#FFFFFF"))
-                tvGreenBtn.setBackgroundResource(R.drawable.shape_assign_green_bg)
-                tvWhiteBtn.visibility = View.GONE
+                if (data.dispaly_urge == 1) {
+                    tvGreenBtn.text = "催办"
+                    tvGreenBtn.setTextColor(Color.parseColor("#FFFFFF"))
+                    tvGreenBtn.setBackgroundResource(R.drawable.shape_assign_green_bg)
+                    tvWhiteBtn.visibility = View.GONE
+                } else {
+                    tvGreenBtn.visibility = View.GONE
+                    tvWhiteBtn.visibility = View.GONE
+                }
             }
         }
     }
@@ -239,6 +244,7 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
                                 val intent = Intent(this@AssignEventDetailActivity, AddAssignEventActivity::class.java)
                                 intent.putExtra("reReplaceData", reReplaceData)
                                 startActivity(intent)
+                                finish()
                             }
                         }
                         2 -> {  // 催办

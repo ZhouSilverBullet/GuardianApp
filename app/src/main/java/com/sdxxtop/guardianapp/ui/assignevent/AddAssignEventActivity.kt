@@ -27,6 +27,7 @@ class AddAssignEventActivity : BaseKTActivity<ActivityAddAssignEventBinding, Add
     private var selectPartId = ""  // 选中的部门id
     private var selectUserId = ""  // 选中的用户id
     private var eventLevel = 0     // 事件等级
+    private var assignId = 0       // 重新派发的交办ID
 
     private val calendarDialog: TimeSelectBottomDialog by lazy {
         TimeSelectBottomDialog(this, tatv_end_time.textRightText)
@@ -93,13 +94,14 @@ class AddAssignEventActivity : BaseKTActivity<ActivityAddAssignEventBinding, Add
                 val rePlaceData = rePlaceDataSer as AssignDetailBean.ListBean
                 taevTitle.editText.setText(rePlaceData.title)
                 categoryName = rePlaceData.cat_name
-                categoryId = rePlaceData.cat_id
+                if (rePlaceData.cat_name.isNotEmpty()) categoryId = rePlaceData.cat_id
                 tatv_event_type.textRightText.text = categoryName
                 eventLevel = rePlaceData.grade
                 tatv_event_level.textRightText.text = getLevelStr(rePlaceData.grade)
                 net_content.editText.setText(rePlaceData.content)
 //                cbIntoVoice.isChecked = rePlaceData.assign_id == 1
                 tatv_end_time.textRightText.text = rePlaceData.due_time
+                assignId = rePlaceData.assign_id
             }
         }
     }
@@ -246,6 +248,7 @@ class AddAssignEventActivity : BaseKTActivity<ActivityAddAssignEventBinding, Add
         val imagePushPath = cvisvView.getImageOrVideoPushPath(1)
         val vedioPushPath = cvisvView.getImageOrVideoPushPath(2)
         mBinding.vm?.pushReport(
+                assignId,
                 this,
                 contx,
                 selectType,

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.base.BaseMvpFragment;
+import com.sdxxtop.guardianapp.model.bean.AssignListBean;
 import com.sdxxtop.guardianapp.model.bean.WorkIndexBean;
 import com.sdxxtop.guardianapp.presenter.WorkFragmentPresenter;
 import com.sdxxtop.guardianapp.presenter.contract.WorkFragmentContract;
@@ -19,6 +20,7 @@ import com.sdxxtop.guardianapp.ui.activity.TaskAgentsActivity;
 import com.sdxxtop.guardianapp.ui.adapter.NewDaiBanAdapter;
 import com.sdxxtop.guardianapp.ui.adapter.WorkTabAdapter;
 import com.sdxxtop.guardianapp.ui.assignevent.AssignEventActivity;
+import com.sdxxtop.guardianapp.ui.assignevent.adapter.AssignListAdapter;
 import com.sdxxtop.guardianapp.ui.widget.UnScrolGridView;
 import com.sdxxtop.guardianapp.ui.widget.chart.CustomOneBarChartView;
 
@@ -44,6 +46,8 @@ public class WorkFragment extends BaseMvpFragment<WorkFragmentPresenter> impleme
     CustomOneBarChartView cbcvBarView;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.recyclerView_assign)
+    RecyclerView recyclerViewAssign;
     @BindView(R.id.tv_chuli)
     TextView tvChuli;
     @BindView(R.id.tv_report)
@@ -58,10 +62,11 @@ public class WorkFragment extends BaseMvpFragment<WorkFragmentPresenter> impleme
     RadioButton cbAssignEvent;
 
 
-    private int currentSeletItem = 1;
+    private int currentSeletItem = 1;  // 1:事件 ， 2:交办事件
 
     private NewDaiBanAdapter adapter;
     private WorkTabAdapter tabAdapter;
+    private AssignListAdapter assignAdapter;
 
     public static WorkFragment newInstance() {
         Bundle args = new Bundle();
@@ -113,14 +118,23 @@ public class WorkFragment extends BaseMvpFragment<WorkFragmentPresenter> impleme
         recyclerView.setAdapter(adapter);
         tabAdapter = new WorkTabAdapter(getActivity());
         gridview.setAdapter(tabAdapter);
+
+        recyclerViewAssign.setLayoutManager(new LinearLayoutManager(getContext()));
+        assignAdapter = new AssignListAdapter(1);
+        recyclerViewAssign.setAdapter(assignAdapter);
+
         cbMyDBEvent.setOnCheckedChangeListener((compoundButton, b) -> {
             if (b) {
                 currentSeletItem = 1;
+                recyclerView.setVisibility(View.VISIBLE);
+                recyclerViewAssign.setVisibility(View.GONE);
             }
         });
         cbAssignEvent.setOnCheckedChangeListener((compoundButton, b) -> {
             if (b) {
                 currentSeletItem = 2;
+                recyclerView.setVisibility(View.GONE);
+                recyclerViewAssign.setVisibility(View.VISIBLE);
             }
         });
 
@@ -155,12 +169,25 @@ public class WorkFragment extends BaseMvpFragment<WorkFragmentPresenter> impleme
             cbcvBarView.setNoData();
         }
         List<WorkIndexBean.PendingEvent> pendingList = bean.pending_event;
-        if (pendingList != null && pendingList.size() > 0) {
-            tvNoData.setVisibility(View.GONE);
+        if (pendingList != null) {
             adapter.replaceData(pendingList);
-        } else {
-            tvNoData.setVisibility(View.VISIBLE);
         }
+
+        List<AssignListBean.ListBean> assignList = bean.list_assign;
+        if (assignList != null) {
+            assignAdapter.replaceData(assignList, true);
+        }
+
+        if (currentSeletItem == 1 && pendingList.size() > 0) {
+            tvNoData.setVisibility(View.GONE);
+        } else {
+            if (currentSeletItem == 2 && assignList.size() > 0) {
+                tvNoData.setVisibility(View.GONE);
+            } else {
+                tvNoData.setVisibility(View.GONE);
+            }
+        }
+
         tvReport.setText("" + bean.report);
         tvChuli.setText("" + bean.complete);
         tvTitle.setText(bean.part_name);

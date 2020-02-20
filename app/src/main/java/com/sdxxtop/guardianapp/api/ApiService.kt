@@ -52,6 +52,10 @@ interface ApiService {
     @POST("assign/add")
     suspend fun addAssignEvent(@PartMap map: HashMap<String, RequestBody>): BaseResponse<String>
 
+    @Multipart
+    @POST("assign/edit")
+    suspend fun editAssignEvent(@PartMap map: HashMap<String, RequestBody>): BaseResponse<String>
+
     @FormUrlEncoded
     @POST("assign/details")
     suspend fun postAssignDetail(@Field("data") data: String): BaseResponse<AssignDetailBean>
