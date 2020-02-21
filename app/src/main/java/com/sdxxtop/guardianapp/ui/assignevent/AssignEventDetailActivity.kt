@@ -24,6 +24,7 @@ import com.sdxxtop.guardianapp.ui.assignevent.adapter.AssignDetailAdapter
 import com.sdxxtop.guardianapp.ui.assignevent.assignmodel.AssignEventDetailModel
 import com.sdxxtop.guardianapp.ui.widget.CusAssignTopProgress
 import com.sdxxtop.guardianapp.ui.widget.NumberEditTextView
+import com.sdxxtop.guardianapp.utils.UIUtils
 import kotlinx.android.synthetic.main.activity_assign_event_detail.*
 import kotlinx.android.synthetic.main.assign_top_layout.*
 import java.util.*
@@ -39,7 +40,7 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
     private var status = 0        // 事件当前状态
     private var dispalyAgain = 0  // 重新提交按钮  1.显示 2.不显示
     private var execId = 0        // 执行id
-    private var overTimeDesc = "" // 事件状态(超期/剩余)
+    //    private var overTimeDesc = "" // 事件状态(超期/剩余)
     private var rejectNetContent: NumberEditTextView? = null   // 退回的输入控件
     private var topHorRecycler: RecyclerView? = null  // 头布局的图片显示列表
     private var reReplaceData: AssignDetailBean.ListBean? = null   // 重新派发的数据
@@ -73,6 +74,13 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
         })
 
         mBinding.vm?.finishActivity?.observe(this, Observer { if (it) finish() })
+
+        mBinding.vm?.canBanIsSeccuss?.observe(this, Observer {
+            if (it) {
+                tvGreenBtn.visibility = View.GONE
+                UIUtils.showToast("催办成功")
+            }
+        })
     }
 
     override fun layoutId() = R.layout.activity_assign_event_detail
@@ -80,7 +88,6 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
     override fun initView() {
         if (intent != null) {
             assignId = intent.getStringExtra("assignId")
-            overTimeDesc = intent.getStringExtra("overTime")
             isZXDetail = intent.getIntExtra("isZXDetail", 1)
         }
 
@@ -140,7 +147,7 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
         }
 
         eventNum.text = "事件附件（${data.img.size}）"
-        tvTop.text = "事件情况（${overTimeDesc}）"
+        tvTop.text = "事件情况${getOverTimeStr(data.due_day)}"
     }
 
     /**
@@ -322,5 +329,12 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
                 tvUpDown.text = "收起"
             }
         }
+    }
+
+    /**
+     * 判断超期
+     */
+    private fun getOverTimeStr(day: Int): String {
+        return if (day > 0) "（任务剩余${day}天）" else "（任务超期${day}天）"
     }
 }

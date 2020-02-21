@@ -64,6 +64,10 @@ interface ApiService {
     @POST("assignexec/settle")
     suspend fun postConfirmEvent(@Field("data") data: String): BaseResponse<Any>
 
+    @FormUrlEncoded
+    @POST("assignexec/urge")
+    suspend fun postCuiBanEvent(@Field("data") data: String): BaseResponse<Any>
+
     @Multipart
     @POST("assignexec/finish")
     suspend fun postSolveEvent(@PartMap map: HashMap<String, RequestBody>): BaseResponse<Any>

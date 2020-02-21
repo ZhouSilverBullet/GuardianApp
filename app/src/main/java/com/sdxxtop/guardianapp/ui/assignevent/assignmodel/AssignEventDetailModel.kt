@@ -16,6 +16,7 @@ class AssignEventDetailModel : BaseViewModel() {
 
     var assignDetailData = MutableLiveData<AssignDetailBean>()
     var finishActivity = MutableLiveData<Boolean>(false)
+    var canBanIsSeccuss = MutableLiveData<Boolean>(false)
 
 
     fun loadAssignDetail(assignId: String) {
@@ -58,7 +59,20 @@ class AssignEventDetailModel : BaseViewModel() {
      * 交办 - 催办
      */
     fun postCuiBanEvent(assignId: String) {
-
+        showLoadingDialog(true)
+        loadOnUI({
+            val params = Params()
+            params.put("ai", assignId)
+            //这里实际上返回了结果
+            RetrofitClient.apiService.postCuiBanEvent(params.data)
+        }, {
+            showLoadingDialog(false)
+            canBanIsSeccuss.value = true
+        }, { _, msg, _ ->
+            UIUtils.showToast(msg)
+            canBanIsSeccuss.value = true
+            showLoadingDialog(false)
+        })
     }
 
     /**

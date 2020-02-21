@@ -11,6 +11,7 @@ import com.sdxxtop.guardianapp.ui.activity.CenterMessageActivity;
 import com.sdxxtop.guardianapp.ui.activity.DeviceWarnDetailActivity;
 import com.sdxxtop.guardianapp.ui.activity.EventReportDetailActivity_new;
 import com.sdxxtop.guardianapp.ui.activity.PatrolAddDetailActivity;
+import com.sdxxtop.guardianapp.ui.assignevent.AssignEventDetailActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -106,6 +107,17 @@ public class PushCenterActivity extends AppCompatActivity {
                     intent = new Intent(this, CenterMessage2Activity.class);
                     intent.putExtra("name", "认领事件提醒");
                     intent.putExtra("type", 6);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    break;
+                case 26:  //推送跳转交办详情
+                    if (!jsonObject.has("main_id")) {
+                        finish();
+                        return;
+                    }
+                    intent = new Intent(this, AssignEventDetailActivity.class);
+                    intent.putExtra("assignId", String.valueOf(jsonObject.optInt("main_id")));
+                    intent.putExtra("isZXDetail", 1);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     break;

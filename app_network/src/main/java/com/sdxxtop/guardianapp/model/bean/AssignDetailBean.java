@@ -51,6 +51,7 @@ public class AssignDetailBean implements Serializable {
         public int assign_part_id;
         public int userid;
         public int cat_id;
+        public int due_day;
         public String content;
         public String update_time;
         public String add_date;
