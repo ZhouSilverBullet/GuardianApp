@@ -218,10 +218,11 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
     override fun onClick(v: View) {
         when (v.id) {
             R.id.tcSendBack -> {
-                sendBackDialog.dismiss()
                 if (rejectNetContent != null && rejectNetContent!!.editValue.isNotEmpty()) {
-                    Log.e("tcSendBack--click", "${rejectNetContent!!.editValue.isNotEmpty()}")
+                    sendBackDialog.dismiss()
                     mBinding.vm?.postRejectEvent(assignId, execId, rejectNetContent!!.editValue)
+                } else {
+                    UIUtils.showToast("请填写退回原因")
                 }
             }
 
