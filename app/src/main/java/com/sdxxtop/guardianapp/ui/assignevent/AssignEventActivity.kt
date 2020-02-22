@@ -30,12 +30,13 @@ class AssignEventActivity : BaseKTActivity<ActivityAssignEventBinding, AssignLis
 
     private val statusSelect: SingleStyleView by lazy {
         val list = arrayListOf<SingleStyleView.ListDataBean>()
-        //待确认，待解决，已拒绝，已完成
+//        状态（1:待部门确认 2:待个人确认 3:待解决 4:已完成 5:已退回）
         list.add(SingleStyleView.ListDataBean(0, "全部"))
-        list.add(SingleStyleView.ListDataBean(1, "待确认"))
-        list.add(SingleStyleView.ListDataBean(2, "待解决"))
-        list.add(SingleStyleView.ListDataBean(3, "已拒绝"))
+        list.add(SingleStyleView.ListDataBean(1, "待部门确认"))
+        list.add(SingleStyleView.ListDataBean(2, "待个人确认"))
+        list.add(SingleStyleView.ListDataBean(3, "待解决"))
         list.add(SingleStyleView.ListDataBean(4, "已完成"))
+        list.add(SingleStyleView.ListDataBean(5, "已退回"))
         SingleStyleView(this@AssignEventActivity, list)
     }
 
