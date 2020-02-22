@@ -25,16 +25,7 @@ class CusAssignTopProgress : LinearLayout {
     }
 
     private fun initView() {
-        val view = LayoutInflater.from(context).inflate(R.layout.cus_assign_top_progress, this, true)
-
-//        view.findViewById<TextView>(R.id.tvDQR)
-//        view.findViewById<TextView>(R.id.tvLine1)
-//        view.findViewById<TextView>(R.id.tvDJJ)
-//        view.findViewById<TextView>(R.id.tvLine2)
-//        view.findViewById<TextView>(R.id.tvYWC)
-//        view.findViewById<TextView>(R.id.tvDQRtx)
-//        view.findViewById<TextView>(R.id.tvDJJtx)
-//        view.findViewById<TextView>(R.id.tvYWCtx)
+        LayoutInflater.from(context).inflate(R.layout.cus_assign_top_progress, this, true)
     }
 
     //status状态(1:待部门确认 2:待个人确认 3:待解决 4:已完成 5:已退回)

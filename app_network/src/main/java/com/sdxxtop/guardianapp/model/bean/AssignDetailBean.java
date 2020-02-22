@@ -60,6 +60,7 @@ public class AssignDetailBean implements Serializable {
         public String user_name;
         public String assign_part_name;
         public List<String> img;
+        public List<String> video;
         public List<ChildBean> child;
 
         public String getLevelStr() {
@@ -109,6 +110,8 @@ public class AssignDetailBean implements Serializable {
             public String duty_name;
             public String duty_part_name;
             public List<String> img;
+            public List<String> video;
+            public List<String> files;
         }
     }
 }

@@ -76,6 +76,14 @@ class AssignDetailAdapter : BaseQuickAdapter<AssignDetailBean.ListBean.ChildBean
         recyclerView2?.layoutManager = LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false)
 
         val list: MutableList<MediaBean> = ArrayList()
+        if (item.video.isNotEmpty()) {
+            item.video.forEach {
+                if (it.isNotEmpty()) {
+                    list.add(MediaBean(it, 2))
+                }
+            }
+
+        }
         if (item.img.isNotEmpty()) {
             item.img.forEach {
                 if (it.isNotEmpty()) {
@@ -84,10 +92,9 @@ class AssignDetailAdapter : BaseQuickAdapter<AssignDetailBean.ListBean.ChildBean
             }
         }
         recyclerView?.adapter = PatrolDetailImgAdapter(R.layout.gv_filter_image, list)
-        var arrayListOf = arrayListOf<String>("http://xuxingtest.oss-cn-hangzhou.aliyuncs.com/app/20200216170813233692.xlsx")
         var adapter = OtherFileAdapter()
         recyclerView2?.adapter = adapter
-        adapter.replaceData(arrayListOf)
+        adapter.replaceData(item.files)
 
     }
 }

@@ -3,8 +3,6 @@ package com.sdxxtop.guardianapp.ui.assignevent
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
-import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
@@ -40,7 +38,6 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
     private var status = 0        // 事件当前状态
     private var dispalyAgain = 0  // 重新提交按钮  1.显示 2.不显示
     private var execId = 0        // 执行id
-    //    private var overTimeDesc = "" // 事件状态(超期/剩余)
     private var rejectNetContent: NumberEditTextView? = null   // 退回的输入控件
     private var topHorRecycler: RecyclerView? = null  // 头布局的图片显示列表
     private var reReplaceData: AssignDetailBean.ListBean? = null   // 重新派发的数据
@@ -143,7 +140,7 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
 
         //设置 图片视频
         if (topHorRecycler != null) {
-            bandImgAndVideo(data.img, "", topHorRecycler, mAdapter)
+            bandImgAndVideo(data.img, data.video, topHorRecycler, mAdapter)
         }
 
         eventNum.text = "事件附件（${data.img.size}）"
@@ -284,10 +281,15 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
      * @param recyclerView
      * @param adapter
      */
-    private fun bandImgAndVideo(img: List<String>, vedio: String, recyclerView: RecyclerView?, adapter: PatrolDetailImgAdapter) {
+    private fun bandImgAndVideo(img: List<String>, vedio: List<String>, recyclerView: RecyclerView?, adapter: PatrolDetailImgAdapter) {
         val list: MutableList<MediaBean> = ArrayList()
-        if (!TextUtils.isEmpty(vedio)) {
-            list.add(MediaBean(vedio, 2))
+        if (vedio.isNotEmpty()) {
+            vedio.forEach {
+                if (it.isNotEmpty()) {
+                    list.add(MediaBean(it, 2))
+                }
+            }
+
         }
 
         if (img.isNotEmpty()) {

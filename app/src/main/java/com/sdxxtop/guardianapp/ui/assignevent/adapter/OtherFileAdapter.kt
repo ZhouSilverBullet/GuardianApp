@@ -12,6 +12,7 @@ import com.sdxxtop.guardianapp.R
  */
 class OtherFileAdapter : BaseQuickAdapter<String, BaseViewHolder>(R.layout.other_file_layout) {
 
+
     override fun convert(helper: BaseViewHolder?, item: String?) {
         if (helper == null || item == null) return
         helper.itemView.setOnClickListener {
