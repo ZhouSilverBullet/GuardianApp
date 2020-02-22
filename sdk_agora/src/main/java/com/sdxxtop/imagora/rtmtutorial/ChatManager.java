@@ -31,7 +31,7 @@ public class ChatManager {
 
     public void init() {
 //        String appID = mContext.getString(R.string.private_app_id);
-        String appID = "1ec44debc2504419a025bf7acaf9d9f1";
+        String appID = "3ad47db0b6a041d6b84798200625e29b";
 
         try {
             mRtmClient = RtmClient.createInstance(mContext, appID, new RtmClientListener() {
