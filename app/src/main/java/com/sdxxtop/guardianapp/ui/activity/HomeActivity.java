@@ -15,6 +15,7 @@ import android.content.res.Configuration;
 import android.os.PowerManager;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
@@ -299,6 +300,7 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
 
             @Override
             public void onFailure(int code, String error) {
+                Log.e(TAG,"onFailure -- " +error);
 //                if (mView != null) {
 //                    mView.showError(error);
 //                }

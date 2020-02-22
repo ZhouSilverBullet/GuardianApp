@@ -19,6 +19,7 @@ public interface WapApiService {
     Observable<RequestBean> postAudioLists();
 
     @FormUrlEncoded
-    @POST("grid/audio/rtcbat")
+//    @POST("grid/audio/rtcbat")
+    @POST("grid/audio/rtc")
     Observable<RequestBean<RtcRequestBean>> postAudioRtc(@Field("userid") String data);
 }

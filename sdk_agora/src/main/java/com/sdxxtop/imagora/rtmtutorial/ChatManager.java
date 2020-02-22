@@ -32,11 +32,13 @@ public class ChatManager {
     public void init() {
 //        String appID = mContext.getString(R.string.private_app_id);
         String appID = "3ad47db0b6a041d6b84798200625e29b";
+        Log.e(TAG, "init ---AppID-- " + appID);
 
         try {
             mRtmClient = RtmClient.createInstance(mContext, appID, new RtmClientListener() {
                 @Override
                 public void onConnectionStateChanged(int state, int reason) {
+                    Log.e(TAG, "onConnectionStateChanged --- " + state);
                     for (RtmClientListener listener : mListenerList) {
                         listener.onConnectionStateChanged(state, reason);
                     }
@@ -44,6 +46,7 @@ public class ChatManager {
 
                 @Override
                 public void onMessageReceived(RtmMessage rtmMessage, String peerId) {
+                    Log.e(TAG, "onMessageReceived --- " + peerId);
                     if (mListenerList.isEmpty()) {
                         // If currently there is no callback to handle this
                         // message, this message is unread yet. Here we also
@@ -58,7 +61,7 @@ public class ChatManager {
 
                 @Override
                 public void onTokenExpired() {
-
+                    Log.e(TAG, "onTokenExpired --- ");
                 }
             });
 
@@ -67,6 +70,7 @@ public class ChatManager {
             }
 //            mRtmClient.setParameters("{\"che.audio.live_for_comm\":true}");
         } catch (Exception e) {
+            Log.e(TAG, "init --- exception");
             Log.e(TAG, Log.getStackTraceString(e));
             throw new RuntimeException("NEED TO check rtm sdk init fatal error\n" + Log.getStackTraceString(e));
         }
