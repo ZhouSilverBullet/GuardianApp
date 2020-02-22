@@ -56,6 +56,7 @@ import java.util.List;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
 import butterknife.BindView;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
@@ -294,13 +295,14 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
 //                if (mView != null) {
 //                    mView.showData(bean);
 //                }
+                Log.e(TAG,""+bean.toString());
                 String token_rtm = bean.getToken_rtm();
                 loginPresenter.doLogin(token_rtm, String.valueOf(userID));
             }
 
             @Override
             public void onFailure(int code, String error) {
-                Log.e(TAG,"onFailure -- " +error);
+                Log.e(TAG, "onFailure -- " + code + " ----- " + error);
 //                if (mView != null) {
 //                    mView.showError(error);
 //                }

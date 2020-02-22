@@ -13,13 +13,12 @@ public interface WapApiService {
 //    String BASE_URL =  "http://wap.sdxxtop.com/";
     String BASE_URL =  "https://datascreen.sdxxtop.com/";
 
-
 //    @FormUrlEncoded
     @POST("grid/audio/lists")
     Observable<RequestBean> postAudioLists();
 
     @FormUrlEncoded
+    @POST("grid/audio/rtm")
 //    @POST("grid/audio/rtcbat")
-    @POST("grid/audio/rtc")
     Observable<RequestBean<RtcRequestBean>> postAudioRtc(@Field("userid") String data);
 }

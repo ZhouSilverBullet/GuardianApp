@@ -51,4 +51,15 @@ public class RtcRequestBean {
     public void setChannel(String channel) {
         this.channel = channel;
     }
+
+
+    @Override
+    public String toString() {
+        return "RtcRequestBean{" +
+                "token_uid='" + token_uid + '\'' +
+                ", token_account='" + token_account + '\'' +
+                ", token_rtm='" + token_rtm + '\'' +
+                ", channel='" + channel + '\'' +
+                '}';
+    }
 }
