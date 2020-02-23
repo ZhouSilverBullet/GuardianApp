@@ -24,6 +24,7 @@ import com.sdxxtop.guardianapp.ui.assignevent.adapter.AssignListAdapter;
 import com.sdxxtop.guardianapp.ui.widget.UnScrolGridView;
 import com.sdxxtop.guardianapp.ui.widget.chart.CustomOneBarChartView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -63,6 +64,8 @@ public class WorkFragment extends BaseMvpFragment<WorkFragmentPresenter> impleme
 
 
     private int currentSeletItem = 1;  // 1:事件 ， 2:交办事件
+    private List<WorkIndexBean.PendingEvent> eventList = new ArrayList<>();  // 事件列表数据
+    private List<AssignListBean.ListBean> assignList = new ArrayList<>();    // 交办列表数据
 
     private NewDaiBanAdapter adapter;
     private WorkTabAdapter tabAdapter;
@@ -128,6 +131,11 @@ public class WorkFragment extends BaseMvpFragment<WorkFragmentPresenter> impleme
                 currentSeletItem = 1;
                 recyclerView.setVisibility(View.VISIBLE);
                 recyclerViewAssign.setVisibility(View.GONE);
+                if (eventList != null && eventList.size() > 0) {
+                    tvNoData.setVisibility(View.GONE);
+                } else {
+                    tvNoData.setVisibility(View.VISIBLE);
+                }
             }
         });
         cbAssignEvent.setOnCheckedChangeListener((compoundButton, b) -> {
@@ -135,6 +143,11 @@ public class WorkFragment extends BaseMvpFragment<WorkFragmentPresenter> impleme
                 currentSeletItem = 2;
                 recyclerView.setVisibility(View.GONE);
                 recyclerViewAssign.setVisibility(View.VISIBLE);
+                if (assignList != null && assignList.size() > 0) {
+                    tvNoData.setVisibility(View.GONE);
+                } else {
+                    tvNoData.setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -168,24 +181,30 @@ public class WorkFragment extends BaseMvpFragment<WorkFragmentPresenter> impleme
         } else {
             cbcvBarView.setNoData();
         }
-        List<WorkIndexBean.PendingEvent> pendingList = bean.pending_event;
-        if (pendingList != null) {
-            adapter.replaceData(pendingList);
+        eventList = bean.pending_event;
+        if (eventList != null) {
+            adapter.replaceData(eventList);
         }
 
-        List<AssignListBean.ListBean> assignList = bean.list_assign;
+        assignList = bean.list_assign;
         if (assignList != null) {
             assignAdapter.replaceData(assignList, true);
         }
 
-        if (currentSeletItem == 1 && pendingList.size() > 0) {
-            tvNoData.setVisibility(View.GONE);
-        } else {
-            if (currentSeletItem == 2 && assignList.size() > 0) {
+        if (currentSeletItem == 1) {
+            if (eventList.size() > 0) {
                 tvNoData.setVisibility(View.GONE);
             } else {
                 tvNoData.setVisibility(View.VISIBLE);
             }
+        } else if (currentSeletItem == 2) {
+            if (assignList.size() > 0) {
+                tvNoData.setVisibility(View.GONE);
+            } else {
+                tvNoData.setVisibility(View.VISIBLE);
+            }
+        } else {
+            tvNoData.setVisibility(View.VISIBLE);
         }
 
         tvReport.setText("" + bean.report);
