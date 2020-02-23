@@ -31,14 +31,14 @@ public class ChatManager {
 
     public void init() {
 //        String appID = mContext.getString(R.string.private_app_id);
-        String appID = "3ad47db0b6a041d6b84798200625e29b";
+        String appID = "10202661a1f64b1a9c207ff6539e3950";
         Log.e(TAG, "init ---AppID-- " + appID);
 
         try {
             mRtmClient = RtmClient.createInstance(mContext, appID, new RtmClientListener() {
                 @Override
                 public void onConnectionStateChanged(int state, int reason) {
-                    Log.e(TAG, "onConnectionStateChanged --- " + state);
+                    Log.e(TAG, "onConnectionStateChanged --- " + state+"---- reason -- " +reason);
                     for (RtmClientListener listener : mListenerList) {
                         listener.onConnectionStateChanged(state, reason);
                     }

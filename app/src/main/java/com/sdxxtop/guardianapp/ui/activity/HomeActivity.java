@@ -295,7 +295,7 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
 //                if (mView != null) {
 //                    mView.showData(bean);
 //                }
-                Log.e(TAG,""+bean.toString());
+                Log.e(TAG, "" + bean.toString());
                 String token_rtm = bean.getToken_rtm();
                 loginPresenter.doLogin(token_rtm, String.valueOf(userID));
             }
