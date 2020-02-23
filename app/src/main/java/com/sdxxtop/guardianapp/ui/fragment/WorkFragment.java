@@ -184,7 +184,7 @@ public class WorkFragment extends BaseMvpFragment<WorkFragmentPresenter> impleme
             if (currentSeletItem == 2 && assignList.size() > 0) {
                 tvNoData.setVisibility(View.GONE);
             } else {
-                tvNoData.setVisibility(View.GONE);
+                tvNoData.setVisibility(View.VISIBLE);
             }
         }
 

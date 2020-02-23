@@ -271,7 +271,7 @@ public class WorkTabAdapter extends BaseAdapter {
             titleResValue.add("工作轨迹");
         }
 
-        imgResValue.add(R.drawable.icon_shuju_work);
+        imgResValue.add(R.drawable.icon_jiaoban_work);
         titleResValue.add("交办事件");
 
         notifyDataSetChanged();

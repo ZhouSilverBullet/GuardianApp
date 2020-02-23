@@ -225,7 +225,7 @@
                 <TextView
                     android:id="@+id/tv_no_data"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="200dp"
                     android:background="@color/white"
                     android:gravity="center"
                     android:text="暂无数据"
@@ -233,8 +233,7 @@
                     android:textSize="12sp"
                     android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:visibility="gone" />
+                    app:layout_constraintTop_toTopOf="parent"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
