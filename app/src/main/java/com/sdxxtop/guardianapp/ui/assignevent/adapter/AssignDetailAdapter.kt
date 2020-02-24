@@ -50,7 +50,7 @@ class AssignDetailAdapter : BaseQuickAdapter<AssignDetailBean.ListBean.ChildBean
         c2TxSolveTime.tvRight.text = item.finish_time
         c2TxSendBackReason.tvLeft.text = "退回原因：${item.reject_desc}"
         c2TxEventCont.tvLeft.text = "事件问题描述：${item.content}"
-        eventNum.text = "事件附件（${item.img.size}）"
+        eventNum.text = "事件附件（${item.img.size + item.files.size + item.video.size}）"
         c2TxOverTime.tvRight.text = "--"
 
         if (item.status != 5) {

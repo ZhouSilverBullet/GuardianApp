@@ -74,6 +74,8 @@ class AssignEventActivity : BaseKTActivity<ActivityAssignEventBinding, AssignLis
 
     override fun onResume() {
         super.onResume()
+        zxSp = 0
+        jbSp = 0
         mBinding.vm?.postZXData(0, 0, selectStartDate, selectEndDate)
         mBinding.vm?.postJBData(0, selectStartDate, selectEndDate)
     }

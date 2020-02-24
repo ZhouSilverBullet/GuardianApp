@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.multidex.MultiDexApplication
 import com.kingja.loadsir.core.LoadSir
 import com.sdxxtop.base.loadsir.*
+import com.sdxxtop.common.receiver.ConnectivityReceiver
 import kotlin.properties.Delegates
 
 /**
@@ -23,7 +24,7 @@ abstract class BaseApplication : MultiDexApplication() {
         super.onCreate()
         INSTANCE = this
 
-//        ConnectivityReceiver.register(this)
+        ConnectivityReceiver.register(this)
 
         LoadSir.beginBuilder()
                 .addCallback(ErrorCallback())

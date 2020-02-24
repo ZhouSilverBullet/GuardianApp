@@ -3,6 +3,7 @@ package com.sdxxtop.guardianapp.ui.assignevent
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
@@ -19,6 +20,7 @@ import com.sdxxtop.guardianapp.model.bean.MediaBean
 import com.sdxxtop.guardianapp.model.http.util.SpUtil
 import com.sdxxtop.guardianapp.ui.adapter.PatrolDetailImgAdapter
 import com.sdxxtop.guardianapp.ui.assignevent.adapter.AssignDetailAdapter
+import com.sdxxtop.guardianapp.ui.assignevent.adapter.OtherFileAdapter
 import com.sdxxtop.guardianapp.ui.assignevent.assignmodel.AssignEventDetailModel
 import com.sdxxtop.guardianapp.ui.widget.CusAssignTopProgress
 import com.sdxxtop.guardianapp.ui.widget.NumberEditTextView
@@ -30,6 +32,7 @@ import java.util.*
 class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBinding, AssignEventDetailModel>() {
 
     private val adapter = AssignDetailAdapter()
+    private val fileAdapter = OtherFileAdapter()
     private var mAdapter = PatrolDetailImgAdapter(R.layout.gv_filter_image, ArrayList())
 
     private val userId = SpUtil.getInt(Constants.USER_ID, 0)  // 当前用户id
@@ -40,6 +43,7 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
     private var execId = 0        // 执行id
     private var rejectNetContent: NumberEditTextView? = null   // 退回的输入控件
     private var topHorRecycler: RecyclerView? = null  // 头布局的图片显示列表
+    private var recyclerView2: RecyclerView? = null  // 头布局的图片显示列表
     private var reReplaceData: AssignDetailBean.ListBean? = null   // 重新派发的数据
 
     private val sendBackDialog: BottomSheetDialog by lazy {
@@ -143,8 +147,11 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
             bandImgAndVideo(data.img, data.video, topHorRecycler, mAdapter)
         }
 
-        eventNum.text = "事件附件（${data.img.size}）"
+        eventNum.text = "事件附件（${data.img.size + data.files.size + data.video.size}）"
         tvTop.text = "事件情况${getOverTimeStr(data.due_day)}"
+
+
+        fileAdapter.replaceData(data.files)
     }
 
     /**
@@ -318,17 +325,20 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
         topHorRecycler = headerView.findViewById<RecyclerView>(R.id.imgRecyclerView)
         topHorRecycler?.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         topHorRecycler?.adapter = mAdapter
+        recyclerView2 = headerView.findViewById<RecyclerView>(R.id.recyclerView2)
+        recyclerView2?.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
+        recyclerView2?.adapter = fileAdapter
 
         val catpView = headerView.findViewById<CusAssignTopProgress>(R.id.catpView)
         catpView.visibility = if (isZXDetail == 1) View.VISIBLE else View.GONE
 
         val tvUpDown = headerView.findViewById<TextView>(R.id.tvUpDown)
         tvUpDown.setOnClickListener {
-            if (topHorRecycler?.visibility == View.VISIBLE) {
-                topHorRecycler?.visibility = View.GONE
+            if (llHorLayout?.visibility == View.VISIBLE) {
+                llHorLayout?.visibility = View.GONE
                 tvUpDown.text = "展开"
             } else {
-                topHorRecycler?.visibility = View.VISIBLE
+                llHorLayout?.visibility = View.VISIBLE
                 tvUpDown.text = "收起"
             }
         }

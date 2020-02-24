@@ -28,18 +28,18 @@ class EventReportListActivity : BaseKTActivity<ActivityEventReportListBinding, E
     //5 => '已驳回',
     private val stausSelect: SingleStyleView by lazy {
         val list = arrayListOf<SingleStyleView.ListDataBean>()
+        list.add(SingleStyleView.ListDataBean(0, "全部"))
         list.add(SingleStyleView.ListDataBean(1, "待派发"))
         list.add(SingleStyleView.ListDataBean(2, "待处理"))
         list.add(SingleStyleView.ListDataBean(3, "待验收"))
         list.add(SingleStyleView.ListDataBean(4, "已完成"))
-        list.add(SingleStyleView.ListDataBean(5, "已驳回"))
         SingleStyleView(this@EventReportListActivity, list)
     }
 
     private var categorySelect: SingleStyleView? = null
     private val adapter = EventReportListAdapter()
     private var categoryId: Int = 0
-    private var selectDate = ""
+    private var selectDate = Date2Util.getToday()
     private var statusId = 0
 
     override fun layoutId() = R.layout.activity_event_report_list
@@ -68,13 +68,10 @@ class EventReportListActivity : BaseKTActivity<ActivityEventReportListBinding, E
          * 更新每个月的事件信息
          */
         mBinding.vm?.monthData?.observe(this, Observer {
-            Log.e("item ----- ", "消息到达")
             if (it != null) {
-                Log.e("item ----- ", "${it != null}")
                 calendarView.clearSchemeDate()
                 val map: MutableMap<String, Calendar> = HashMap()
                 for (item in it) {
-                    Log.e("item ----- ", item.add_date)
                     val y = Date2Util.getDateInt(item.add_date, 0)
                     val m = Date2Util.getDateInt(item.add_date, 1)
                     val d = Date2Util.getDateInt(item.add_date, 2)
@@ -95,6 +92,7 @@ class EventReportListActivity : BaseKTActivity<ActivityEventReportListBinding, E
     @SuppressLint("SetTextI18n")
     override fun initView() {
         tvDate.text = "${calendarView.curYear}年${calendarView.curMonth}月${calendarView.curDay}日"
+        tvCurrentDay.text = "${calendarView.curDay}"
         calendarView.setOnCalendarSelectListener(this)
         calendarView.setOnMonthChangeListener(this)
         stausSelect.setOnItemSelectLintener { id, result ->
@@ -110,6 +108,10 @@ class EventReportListActivity : BaseKTActivity<ActivityEventReportListBinding, E
     override fun initData() {
         mBinding.vm?.postCategoryData()
         mBinding.vm?.postMonthEvnet("${calendarView.curYear}-${Date2Util.getZeroTime(calendarView.curMonth)}-01")
+    }
+    override fun onResume() {
+        super.onResume()
+        mBinding.vm?.posData(statusId, categoryId, selectDate)
     }
 
     override fun onClick(v: View) {

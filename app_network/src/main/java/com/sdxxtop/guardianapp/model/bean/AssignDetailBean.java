@@ -61,6 +61,7 @@ public class AssignDetailBean implements Serializable {
         public String assign_part_name;
         public List<String> img;
         public List<String> video;
+        public List<String> files;
         public List<ChildBean> child;
 
         public String getLevelStr() {
