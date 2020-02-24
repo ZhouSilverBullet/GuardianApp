@@ -31,7 +31,7 @@ public class ChatManager {
 
     public void init() {
 //        String appID = mContext.getString(R.string.private_app_id);
-        String appID = "10202661a1f64b1a9c207ff6539e3950";
+        String appID = "0e37bdf56426492980729776108f247a";
         Log.e(TAG, "init ---AppID-- " + appID);
 
         try {
