@@ -54,10 +54,10 @@ import static com.sdxxtop.guardianapp.model.http.net.RetrofitHelper.getEnvirApi;
 public class WorkTabAdapter extends BaseAdapter {
 
     private int[] imgRes = {R.drawable.icon_shijian_work, R.drawable.icon_shuju_work, R.drawable.icon_qiye_work,
-            R.drawable.icon_bumen_work, R.drawable.icon_shangbao_work, R.drawable.icon_xuncha_work};
+            R.drawable.icon_bumen_work, R.drawable.icon_shangbao_work, R.drawable.icon_xuncha_work, R.drawable.icon_jiaoban_work};
     //    private int[] imgRes = {R.drawable.icon_shijian_work, R.drawable.icon_shuju_work, R.drawable.icon_qiye_work,
 //            R.drawable.icon_bumen_work, R.drawable.icon_shangbao_work, R.drawable.icon_xuncha_work, R.drawable.icon_bumen_work};
-    private String[] titleRes = {"事件统计", "工作数据", "企业数据", "部门事件", "我的上报", "我的巡查"};
+    private String[] titleRes = {"事件统计", "工作数据", "企业数据", "部门事件", "我的上报", "我的巡查", "交办事件"};
 //    private String[] titleRes = {"事件统计", "工作数据", "企业数据", "部门事件", "我的上报", "我的巡查", "网格事件"};
 
     private List<Integer> imgResValue = new ArrayList<>();
@@ -174,7 +174,9 @@ public class WorkTabAdapter extends BaseAdapter {
                 intent = new Intent(context, PatrolRecordActivity.class);
                 break;
             case "交办事件":   // 交办事件
-                intent = new Intent(context, AssignEventActivity.class);
+                if (mBean.is_assignment==1) {
+                    intent = new Intent(context, AssignEventActivity.class);
+                }
                 break;
             case "自定义事件":   // 自定义事件
                 if (dialog == null) {
@@ -271,8 +273,8 @@ public class WorkTabAdapter extends BaseAdapter {
             titleResValue.add("工作轨迹");
         }
 
-        imgResValue.add(R.drawable.icon_jiaoban_work);
-        titleResValue.add("交办事件");
+//        imgResValue.add(R.drawable.icon_jiaoban_work);
+//        titleResValue.add("交办事件");
 
         notifyDataSetChanged();
         this.mBean = bean;
