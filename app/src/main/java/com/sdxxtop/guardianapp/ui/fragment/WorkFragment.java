@@ -23,6 +23,7 @@ import com.sdxxtop.guardianapp.ui.assignevent.AssignEventActivity;
 import com.sdxxtop.guardianapp.ui.assignevent.adapter.AssignListAdapter;
 import com.sdxxtop.guardianapp.ui.widget.UnScrolGridView;
 import com.sdxxtop.guardianapp.ui.widget.chart.CustomOneBarChartView;
+import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +71,7 @@ public class WorkFragment extends BaseMvpFragment<WorkFragmentPresenter> impleme
     private NewDaiBanAdapter adapter;
     private WorkTabAdapter tabAdapter;
     private AssignListAdapter assignAdapter;
+    private int isAssignment;  // 交办事件的权限
 
     public static WorkFragment newInstance() {
         Bundle args = new Bundle();
@@ -168,7 +170,11 @@ public class WorkFragment extends BaseMvpFragment<WorkFragmentPresenter> impleme
                 if (currentSeletItem == 1) { // 选中 我的代办
                     startActivity(new Intent(getContext(), TaskAgentsActivity.class));
                 } else {
-                    startActivity(new Intent(getContext(), AssignEventActivity.class));
+                    if (isAssignment == 1) {
+                        startActivity(new Intent(getContext(), AssignEventActivity.class));
+                    } else {
+                        UIUtils.showToast("暂无权限");
+                    }
                 }
                 break;
         }
@@ -182,6 +188,7 @@ public class WorkFragment extends BaseMvpFragment<WorkFragmentPresenter> impleme
             cbcvBarView.setNoData();
         }
         eventList = bean.pending_event;
+        isAssignment = bean.is_assignment;
         if (eventList != null) {
             adapter.replaceData(eventList);
         }

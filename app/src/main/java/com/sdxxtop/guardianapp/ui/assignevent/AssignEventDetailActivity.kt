@@ -28,6 +28,7 @@ import com.sdxxtop.guardianapp.utils.UIUtils
 import kotlinx.android.synthetic.main.activity_assign_event_detail.*
 import kotlinx.android.synthetic.main.assign_top_layout.*
 import java.util.*
+import kotlin.math.abs
 
 class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBinding, AssignEventDetailModel>() {
 
@@ -148,10 +149,21 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
         }
 
         eventNum.text = "事件附件（${data.img.size + data.files.size + data.video.size}）"
-        tvTop.text = "事件情况${getOverTimeStr(data.due_day)}"
-
-
         fileAdapter.replaceData(data.files)
+
+        //交办 催办
+        if (isZXDetail == 2 && _data.dispaly_urge == 1) {
+            tvTop.text = "事件情况${getOverTimeStr(data.due_day)}"
+        } else {
+            tvTop.text = "事件情况"
+        }
+        //执行 状态没完成之前
+        if (isZXDetail == 1 && status < 3) {
+            tvTop.text = "事件情况${getOverTimeStr(data.due_day)}"
+        } else {
+            tvTop.text = "事件情况"
+        }
+
     }
 
     /**
@@ -348,6 +360,16 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
      * 判断超期
      */
     private fun getOverTimeStr(day: Int): String {
-        return if (day > 0) "（任务剩余${day}天）" else "（任务超期${day}天）"
+        return when {
+            day < 0 -> {
+                "（任务超期${abs(day)}天）"
+            }
+            day > 0 -> {
+                "（任务剩余${abs(day)}天）"
+            }
+            else -> {
+                ""
+            }
+        }
     }
 }

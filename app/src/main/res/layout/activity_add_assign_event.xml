@@ -71,6 +71,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:onClick="@{activity::onClick}"
+                    android:visibility="gone"
                     app:tatv_text_right_hint_value="请点击选择"
                     app:tatv_text_view="事件分类" />
 

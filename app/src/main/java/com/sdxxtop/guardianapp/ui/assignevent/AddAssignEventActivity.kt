@@ -17,11 +17,12 @@ import com.sdxxtop.guardianapp.utils.KeyboardktUtils
 import com.sdxxtop.guardianapp.utils.TimeSelectBottomDialog
 import com.sdxxtop.guardianapp.utils.UIUtils
 import kotlinx.android.synthetic.main.activity_add_assign_event.*
+import kotlin.math.abs
 
 class AddAssignEventActivity : BaseKTActivity<ActivityAddAssignEventBinding, AddAssignEventModel>() {
 
     private var categorySelect: SingleStyleView? = null
-    private var categoryId = 0     // 分类id
+    private var categoryId = 1     // 分类id
     private var categoryName = ""  // 分类名字
     private var selectType = 0     //1.个人 2.部门
     private var selectPartId = ""  // 选中的部门id
@@ -228,10 +229,10 @@ class AddAssignEventActivity : BaseKTActivity<ActivityAddAssignEventBinding, Add
             UIUtils.showToast("请选择执行信息")
             return
         }
-        if (categoryId == 0 && tatv_event_type.rightTVString.isEmpty()) {
-            UIUtils.showToast("请选择事件类型")
-            return
-        }
+//        if (categoryId == 0 && tatv_event_type.rightTVString.isEmpty()) {
+//            UIUtils.showToast("请选择事件类型")
+//            return
+//        }
         if (eventLevel == 0) {
             UIUtils.showToast("请选择事件等级")
             return

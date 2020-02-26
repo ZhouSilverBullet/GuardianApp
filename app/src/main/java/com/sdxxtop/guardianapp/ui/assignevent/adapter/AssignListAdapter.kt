@@ -13,6 +13,7 @@ import com.sdxxtop.guardianapp.ui.assignevent.AssignEventDetailActivity
 import com.sdxxtop.guardianapp.ui.assignevent.AssignSolveActivity
 import java.lang.Exception
 import java.text.SimpleDateFormat
+import kotlin.math.abs
 
 /**
  * Date:2020-02-07
@@ -110,7 +111,7 @@ class AssignListAdapter(private val isZXDetail: Int) : BaseQuickAdapter<AssignLi
     }
 
     private fun getOverTimeStr(day: Int): String {
-        return if (day > 0) "任务剩余${day}天" else "任务超期${day}天"
+        return if (day > 0) "任务剩余${abs(day)}天" else "任务超期${abs(day)}天"
     }
 
     fun getFormatDate(time: String): String {

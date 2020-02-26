@@ -31,6 +31,7 @@ import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -181,6 +182,7 @@ public class ClockInActivity extends BaseActivity {
                         }
                     });
                 } else {
+                    hideLoadingDialog();
                     GpsUtils.showCode332ErrorDialog(context);
                 }
             } else {
