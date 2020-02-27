@@ -174,9 +174,8 @@ public class WorkTabAdapter extends BaseAdapter {
                 intent = new Intent(context, PatrolRecordActivity.class);
                 break;
             case "交办事件":   // 交办事件
-                if (mBean.is_assignment==1) {
-                    intent = new Intent(context, AssignEventActivity.class);
-                }
+                intent = new Intent(context, AssignEventActivity.class);
+                intent.putExtra("isAssignment",mBean.is_assignment);
                 break;
             case "自定义事件":   // 自定义事件
                 if (dialog == null) {

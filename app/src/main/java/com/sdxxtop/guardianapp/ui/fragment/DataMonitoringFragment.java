@@ -30,8 +30,8 @@ public class DataMonitoringFragment extends BaseMvpFragment<DataMonitoringPresen
     @BindView(R.id.banner)
     MZBannerView mMZBanner;
 
-    private static int[] RES = {R.drawable.yangchenjiance, R.drawable.wurenji_img};
-    private static String[] TITLE = {"扬尘监测", "无人机"};
+    private static int[] RES = {R.drawable.yangchenjiance, R.drawable.wurenji_img, R.drawable.app_background_report};
+    private static String[] TITLE = {"扬尘监测", "无人机", "问题上报"};
     private BannerViewHolder bannerViewHolder;
     private AuthDataBean mBean;
     private int currentSelectIndex = 0;  //选中的item
@@ -125,9 +125,9 @@ public class DataMonitoringFragment extends BaseMvpFragment<DataMonitoringPresen
     }
 
     public void setCurrentItem() {
-        if (mMZBanner!=null){
+        if (mMZBanner != null) {
             mMZBanner.getViewPager().setCurrentItem(1);
-        }else{
+        } else {
             currentSelectIndex = 1;
         }
     }

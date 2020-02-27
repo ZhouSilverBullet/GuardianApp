@@ -36,6 +36,7 @@
     <string name="active_notification_count_zero">No active notification</string>
     <string name="yc_tx">扬尘检测以现有33个固定检测点原始数据为基础以地图模式呈现，并对数据进行周期性统计分析提供关键地点扬尘整体变化数据。</string>
     <string name="wurenji_tx">我们为无人机装上“鼻子””眼睛“和“大脑”，使之可以灵活、准确地获取与分析精确到每条街道、每栋楼、甚至每个高度的，具有超高空间分辨率的超本地空气污染信息（Hyper-local Air Pollution Information），为环境监测、应急救援、应急响应、智慧城市与科学研究等领域提供强有力的决策依据。</string>
+    <string name="report_problem">聚焦“一领两动”“三重攻坚”任务，围绕党的建设、高质量发展、社会治理三大领域，深挖细查，深刻剖析，全面整改，努力实现问题百分百发现、问题百分比解决、群众百分百满意。</string>
     <string-array name="custom_weekdays">
         <item>日</item>
         <item>一</item>

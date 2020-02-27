@@ -14,10 +14,12 @@ import com.sdxxtop.guardianapp.ui.assignevent.adapter.AssignListAdapter
 import com.sdxxtop.guardianapp.ui.assignevent.assignmodel.AssignListModel
 import com.sdxxtop.guardianapp.ui.widget.SingleStyleView
 import com.sdxxtop.guardianapp.utils.Date2Util
+import com.sdxxtop.guardianapp.utils.UIUtils
 import kotlinx.android.synthetic.main.activity_assign_event.*
 
 class AssignEventActivity : BaseKTActivity<ActivityAssignEventBinding, AssignListModel>() {
 
+    private var isAssignment = 2  // 是否有权限
     private var statusNum = 0
     private val zx_adapter = AssignListAdapter(1)
     private val jb_adapter = AssignListAdapter(2)
@@ -81,10 +83,18 @@ class AssignEventActivity : BaseKTActivity<ActivityAssignEventBinding, AssignLis
     }
 
     override fun initView() {
+        isAssignment = intent.getIntExtra("isAssignment", 2)
+
         smartRefresh_zx.visibility = View.VISIBLE
         smartRefresh_jb.visibility = View.GONE
 
-        titleView.tvRight.setOnClickListener { startActivity(Intent(AssignEventActivity@ this, AddAssignEventActivity::class.java)) }
+        titleView.tvRight.setOnClickListener {
+            if (isAssignment == 1) {
+                startActivity(Intent(AssignEventActivity@ this, AddAssignEventActivity::class.java))
+            } else {
+                UIUtils.showToast("暂无权限")
+            }
+        }
 
         tvStatus.setOnClickListener(this)
 

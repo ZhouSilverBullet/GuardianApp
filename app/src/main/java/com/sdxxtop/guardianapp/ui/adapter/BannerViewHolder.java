@@ -16,12 +16,13 @@ import com.sdxxtop.guardianapp.ui.widget.mzbanner.holder.MZViewHolder;
  * Date: 2019/9/6
  * Desc:
  */
-public class BannerViewHolder implements MZViewHolder<DataEntry>{
+public class BannerViewHolder implements MZViewHolder<DataEntry> {
     private RoundRectImageView mImageView;
     private TextView tvTitle;
     private TextView text_1, text_2, text_3, tvDesc;
     public static final int TYPE_YCJC = 0;  // 扬尘监测
     public static final int TYPE_WURENJI = 1;  // 无人机
+    public static final int TYPE_REPORT_PROBLEM = 2;  // 问题上报
 
     private LinearLayout layout_1;
     private LinearLayout layout_2;
@@ -53,7 +54,7 @@ public class BannerViewHolder implements MZViewHolder<DataEntry>{
             @Override
             public void onClick(View v) {
                 if (mListener != null) {
-                    mListener.onTabClick(position,R.id.ll_layout_1);
+                    mListener.onTabClick(position, R.id.ll_layout_1);
                 }
             }
         });
@@ -61,7 +62,7 @@ public class BannerViewHolder implements MZViewHolder<DataEntry>{
             @Override
             public void onClick(View v) {
                 if (mListener != null) {
-                    mListener.onTabClick(position,R.id.ll_layout_2);
+                    mListener.onTabClick(position, R.id.ll_layout_2);
                 }
             }
         });
@@ -69,7 +70,7 @@ public class BannerViewHolder implements MZViewHolder<DataEntry>{
             @Override
             public void onClick(View v) {
                 if (mListener != null) {
-                    mListener.onTabClick(position,R.id.ll_layout_3);
+                    mListener.onTabClick(position, R.id.ll_layout_3);
                 }
             }
         });
@@ -82,6 +83,12 @@ public class BannerViewHolder implements MZViewHolder<DataEntry>{
                 break;
             case TYPE_WURENJI:
                 tvDesc.setText(context.getResources().getString(R.string.wurenji_tx));
+                text_1.setText("热力图");
+                text_2.setText("数据");
+                text_3.setText("统计");
+                break;
+            case TYPE_REPORT_PROBLEM:
+                tvDesc.setText(context.getResources().getString(R.string.report_problem));
                 text_1.setText("热力图");
                 text_2.setText("数据");
                 text_3.setText("统计");

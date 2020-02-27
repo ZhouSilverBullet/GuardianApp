@@ -170,11 +170,9 @@ public class WorkFragment extends BaseMvpFragment<WorkFragmentPresenter> impleme
                 if (currentSeletItem == 1) { // 选中 我的代办
                     startActivity(new Intent(getContext(), TaskAgentsActivity.class));
                 } else {
-                    if (isAssignment == 1) {
-                        startActivity(new Intent(getContext(), AssignEventActivity.class));
-                    } else {
-                        UIUtils.showToast("暂无权限");
-                    }
+                    Intent intent = new Intent(getContext(), AssignEventActivity.class);
+                    intent.putExtra("isAssignment", isAssignment);
+                    startActivity(intent);
                 }
                 break;
         }
