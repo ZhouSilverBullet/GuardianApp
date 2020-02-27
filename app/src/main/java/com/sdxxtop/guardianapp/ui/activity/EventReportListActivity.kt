@@ -55,6 +55,7 @@ class EventReportListActivity : BaseKTActivity<ActivityEventReportListBinding, E
          */
         mBinding.vm?.category?.observe(this, Observer {
             var list = arrayListOf<SingleStyleView.ListDataBean>()
+            list.add(SingleStyleView.ListDataBean(0, "全部"))
             it.forEach { item -> list.add(SingleStyleView.ListDataBean(item.category_id, item.category_name)) }
             categorySelect = SingleStyleView(this@EventReportListActivity, list)
             categorySelect?.setOnItemSelectLintener { id, result ->
@@ -109,6 +110,7 @@ class EventReportListActivity : BaseKTActivity<ActivityEventReportListBinding, E
         mBinding.vm?.postCategoryData()
         mBinding.vm?.postMonthEvnet("${calendarView.curYear}-${Date2Util.getZeroTime(calendarView.curMonth)}-01")
     }
+
     override fun onResume() {
         super.onResume()
         mBinding.vm?.posData(statusId, categoryId, selectDate)
