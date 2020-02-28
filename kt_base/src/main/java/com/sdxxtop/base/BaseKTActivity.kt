@@ -27,7 +27,7 @@ import com.sdxxtop.base.utils.StatusBarUtil
  */
 abstract class BaseKTActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCompatActivity(), IVMView<VM>, INavigationColorStatus, View.OnClickListener {
     companion object {
-        const val TAG = "BaseActivity"
+        val TAG = this.javaClass.name
     }
 
     val mBinding: DB by lazy {
@@ -181,6 +181,7 @@ abstract class BaseKTActivity<DB : ViewDataBinding, VM : BaseViewModel> : AppCom
     protected open fun isInitStatusBar(): Boolean {
         return true
     }
+
     /**
      * statusBar 控制
      */

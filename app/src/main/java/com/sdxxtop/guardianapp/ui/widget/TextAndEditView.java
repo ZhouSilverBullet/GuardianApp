@@ -74,6 +74,10 @@ public class TextAndEditView extends LinearLayout {
         return editText;
     }
 
+    public String getEditValue() {
+        return editText.getText().toString().trim();
+    }
+
     public void setShowLine(boolean isShow) {
         editLine.setVisibility(isShow ? VISIBLE : GONE);
     }

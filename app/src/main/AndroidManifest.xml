@@ -42,7 +42,11 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.EventReportListActivity"></activity>
+        <activity android:name=".ui.activity.problemgj.ProblemGJListActivity"></activity>
+        <activity
+            android:name=".ui.activity.problemgj.ProblemGJAddActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".ui.activity.EventReportListActivity" />
         <activity android:name=".ui.assignevent.AssignSolveActivity" />
         <activity
             android:name=".ui.assignevent.ChooseUserActivity"

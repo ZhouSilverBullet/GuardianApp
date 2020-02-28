@@ -13,9 +13,12 @@ import com.sdxxtop.guardianapp.presenter.contract.DataMonitoringContract;
 import com.sdxxtop.guardianapp.ui.activity.DeviceListActivity;
 import com.sdxxtop.guardianapp.ui.activity.FlyDataListActivity;
 import com.sdxxtop.guardianapp.ui.activity.MonitorMapActivity;
+import com.sdxxtop.guardianapp.ui.activity.problemgj.ProblemGJAddActivity;
+import com.sdxxtop.guardianapp.ui.activity.problemgj.ProblemGJListActivity;
 import com.sdxxtop.guardianapp.ui.adapter.BannerViewHolder;
 import com.sdxxtop.guardianapp.ui.widget.mzbanner.MZBannerView;
 import com.sdxxtop.guardianapp.ui.widget.mzbanner.holder.MZHolderCreator;
+import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -147,37 +150,64 @@ public class DataMonitoringFragment extends BaseMvpFragment<DataMonitoringPresen
         }
         switch (layoutId) {
             case R.id.ll_layout_1:
-                if (index == 0) {//扬尘
-                    if (mBean.is_raise_dust == 1) {
-                        startActivity(new Intent(getContext(), MonitorMapActivity.class));
-                    } else {
-                        showToast("暂无权限");
-                    }
-                } else {
-                    showToast("暂未开放");
+                switch (index) {
+                    case 0:  //  扬尘监测地图
+                        if (mBean.is_raise_dust == 1) {
+                            startActivity(new Intent(getContext(), MonitorMapActivity.class));
+                        } else {
+                            showToast("暂无权限");
+                        }
+                        break;
+                    case 1:   //  无人机热力图
+                        showToast("暂未开放");
+                        break;
+                    case 2:  //  问题攻坚 添加
+                        if (mBean.is_problem == 1) {
+                            Intent intent = new Intent(getContext(), ProblemGJAddActivity.class);
+                            startActivity(intent);
+                        } else {
+                            showToast("暂未开放");
+                        }
+                        break;
                 }
                 break;
             case R.id.ll_layout_2:
-                if (index == 0) {//扬尘
-                    if (mBean.is_raise_dust == 1) {
-                        Intent intent = new Intent(getContext(), DeviceListActivity.class);
-                        intent.putExtra("status", "全部");
-                        startActivity(intent);
-                    } else {
-                        showToast("暂无权限");
-                    }
-                } else {
-                    if (mBean.is_uav == 1) {
-                        startActivity(new Intent(getContext(), FlyDataListActivity.class));
-                    } else {
-                        showToast("暂无权限");
-                    }
+                switch (index) {
+                    case 0:  // 扬尘监测 列表
+                        if (mBean.is_raise_dust == 1) {
+                            Intent intent = new Intent(getContext(), DeviceListActivity.class);
+                            intent.putExtra("status", "全部");
+                            startActivity(intent);
+                        } else {
+                            showToast("暂无权限");
+                        }
+                        break;
+                    case 1:  //  无人机 数据
+                        if (mBean.is_uav == 1) {
+                            startActivity(new Intent(getContext(), FlyDataListActivity.class));
+                        } else {
+                            showToast("暂无权限");
+                        }
+                        break;
+                    case 2:   // 问题攻坚 列表
+                        if (mBean.is_problem == 1) {
+                            Intent intent = new Intent(getContext(), ProblemGJListActivity.class);
+                            startActivity(intent);
+                        } else {
+                            showToast("暂无权限");
+                        }
+                        break;
                 }
                 break;
             case R.id.ll_layout_3:
-                showToast("暂未开放");
+                switch (index) {
+                    case 0:   //  扬尘监测  报表
+                    case 1:   //  无人机  统计
+                    case 2:   //  问题攻坚 统计
+                        showToast("暂无开放");
+                        break;
+                }
                 break;
         }
     }
-
 }

@@ -2,6 +2,9 @@ package com.sdxxtop.guardianapp.api
 
 import com.sdxxtop.guardianapp.aakt.AboutBean
 import com.sdxxtop.guardianapp.model.bean.*
+import com.sdxxtop.guardianapp.ui.activity.problemgj.bean.AddEventResult
+import com.sdxxtop.guardianapp.ui.activity.problemgj.bean.ListData
+import com.sdxxtop.guardianapp.ui.activity.problemgj.bean.ProblemGJIndexBean
 import com.sdxxtop.network.helper.data.BaseResponse
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -87,5 +90,17 @@ interface ApiService {
     @FormUrlEncoded
     @POST("event/eventList")
     suspend fun postData(@Field("data") data: String): BaseResponse<EventIndexBean>
+
+    @FormUrlEncoded
+    @POST("Problemevent/Report")
+    suspend fun postGJData(@Field("data") data: String): BaseResponse<ProblemGJIndexBean>
+
+    @FormUrlEncoded
+    @POST("problemEvent/index")
+    suspend fun postGJListData(@Field("data") data: String): BaseResponse<ListData>
+
+    @Multipart
+    @POST("Problemevent/Eventadd")
+    suspend fun reportProblem(@PartMap map: HashMap<String, RequestBody>): BaseResponse<AddEventResult>
 
 }

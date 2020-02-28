@@ -89,8 +89,8 @@ public class BannerViewHolder implements MZViewHolder<DataEntry> {
                 break;
             case TYPE_REPORT_PROBLEM:
                 tvDesc.setText(context.getResources().getString(R.string.report_problem));
-                text_1.setText("热力图");
-                text_2.setText("数据");
+                text_1.setText("问题添加");
+                text_2.setText("问题列表");
                 text_3.setText("统计");
                 break;
         }

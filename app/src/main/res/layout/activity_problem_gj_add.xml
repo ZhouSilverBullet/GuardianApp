@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="view"
+            type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="com.sdxxtop.guardianapp.ui.activity.problemgj.model.ProblemGJAddModel" />
+
+        <variable
+            name="activity"
+            type="com.sdxxtop.guardianapp.ui.activity.problemgj.ProblemGJAddActivity" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="true"
+        android:fitsSystemWindows="true"
+        tools:context=".ui.activity.problemgj.ProblemGJAddActivity">
+
+        <com.sdxxtop.guardianapp.ui.widget.TitleView
+            android:id="@+id/titleView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:clipToPadding="false"
+            app:fitsSystemWindows="false"
+            app:layout_constraintTop_toTopOf="parent"
+            app:leftLayoutIconIsGray="true"
+            app:leftLayoutIsShow="true"
+            app:titleValue="问题攻坚" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_E0E0E0"
+            app:layout_constraintTop_toBottomOf="@id/titleView" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toTopOf="@+id/btnPush"
+            app:layout_constraintTop_toBottomOf="@+id/titleView">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.sdxxtop.guardianapp.ui.widget.CustomVideoImgSelectView
+                    android:id="@+id/cvisvView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    app:show="@{vm.indexBean.reportPath.reportImg==1}" />
+
+                <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+                    android:id="@+id/report_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:show="@{vm.indexBean.reportPath.username==1}"
+                    app:tatv_right_img_is_show="false"
+                    app:tatv_right_no_padingtx_is_show="true"
+                    app:tatv_text_view="上报人"
+                    app:text="@{vm.indexBean.user.name}"
+                    tools:visibility="visible" />
+
+                <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+                    android:id="@+id/report_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:show="@{vm.indexBean.reportPath.userPhone==1}"
+                    app:tatv_right_img_is_show="false"
+                    app:tatv_right_no_padingtx_is_show="true"
+                    app:tatv_text_view="上报人电话"
+                    app:text="@{vm.indexBean.user.mobile}"
+                    tools:visibility="visible" />
+
+                <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+                    android:id="@+id/report_part"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:show="@{vm.indexBean.reportPath.userPart==1}"
+                    app:tatv_right_img_is_show="false"
+                    app:tatv_right_no_padingtx_is_show="true"
+                    app:tatv_text_view="上报人所属部门"
+                    app:text="@{vm.indexBean.user.part_name}"
+                    tools:visibility="visible" />
+
+                <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+                    android:id="@+id/find_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:show="@{vm.indexBean.reportPath.reportFind==1}"
+                    app:tatv_right_img_is_show="false"
+                    app:tatv_right_no_padingtx_is_show="true"
+                    app:tatv_right_no_padingtx_str="巡查"
+                    app:tatv_text_view="发现方式"
+                    tools:visibility="visible" />
+
+                <com.sdxxtop.guardianapp.ui.widget.TextAndEditView
+                    android:id="@+id/taevTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:taev_edit_text_hint="事件类目关键词（限制10个字）"
+                    app:taev_text_view="事件标题" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+                        android:id="@+id/tatvEventType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{activity::onClick}"
+                        app:show="@{vm.indexBean.reportPath.eventClassification==1}"
+                        app:tatv_text_right_hint_value="请点击选择"
+                        app:tatv_text_view="事件分类" />
+
+                    <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+                        android:id="@+id/tatvReportPath"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{activity::onClick}"
+                        app:tatv_text_right_hint_value="请点击选择"
+                        app:tatv_text_view="上报部门"
+                        app:text="@{vm.indexBean.part.part_name}" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/colHappen"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{activity::onClick}"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="15dp"
+                        android:paddingRight="15dp">
+
+                        <TextView
+                            android:id="@+id/text_and_text_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="定位信息"
+                            android:textColor="#333333"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/tvPlaceTitle" />
+
+                        <TextView
+                            android:id="@+id/tvPlaceTitle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:singleLine="true"
+                            android:textColor="@color/color_313131"
+                            android:textSize="14sp"
+                            app:layout_constraintLeft_toRightOf="@+id/text_and_text_name"
+                            app:layout_constraintRight_toLeftOf="@+id/tv_icon"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="鲁南国际工业品采购中心11号" />
+
+                        <TextView
+                            android:id="@+id/tvPlaceDesc"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:singleLine="true"
+                            android:text=""
+                            android:textSize="11sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toRightOf="@+id/text_and_text_name"
+                            app:layout_constraintRight_toLeftOf="@+id/tv_icon"
+                            app:layout_constraintTop_toBottomOf="@+id/tvPlaceTitle"
+                            tools:text="鲁南国际工业品采购中心11号" />
+
+                        <ImageView
+                            android:id="@+id/iv_img"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/location_agarn"
+                            app:layout_constraintLeft_toLeftOf="@+id/tv_icon"
+                            app:layout_constraintRight_toRightOf="@+id/tv_icon"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="刷新定位"
+                            android:textColor="@color/color_999999"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/iv_img" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <com.sdxxtop.guardianapp.ui.widget.NumberEditTextView
+                        android:id="@+id/netContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="5dp" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_location_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:show="@{vm.indexBean.reportPath.supplement==1}">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:text="定位补充描述"
+                            android:textColor="@color/color_303030"
+                            android:textSize="17sp" />
+
+                        <com.sdxxtop.guardianapp.ui.widget.NumberEditTextView
+                            android:id="@+id/netContentPosition"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginBottom="5dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_fucha_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/tatv_banzhuren"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            app:show="@{vm.indexBean.reportPath.basicReview==1}">
+
+                            <TextView
+                                android:id="@+id/tv_ban"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="15dp"
+                                android:paddingBottom="15dp"
+                                android:text="是否复查"
+                                android:textColor="@color/color_333333"
+                                android:textSize="17sp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <CheckBox
+                                android:id="@+id/cbIntoVoice"
+                                android:layout_width="47dp"
+                                android:layout_height="28dp"
+                                android:layout_marginRight="15dp"
+                                android:background="@drawable/iv_switch"
+                                android:button="@null"
+                                app:layout_constraintBottom_toBottomOf="@+id/tv_ban"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/tv_ban" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_dddddd" />
+
+                        <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+                            android:id="@+id/tatvEndTime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{activity::onClick}"
+                            android:visibility="gone"
+                            app:tatv_text_img_is_show="false"
+                            app:tatv_text_right_hint_value="请选择整改时效"
+                            app:tatv_text_view="整改时限"
+                            tools:visibility="visible" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_problem_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="vertical"
+                        app:show="@{vm.indexBean.reportPath.isproblem==1}">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:text="问题清单"
+                            android:textColor="@color/color_303030"
+                            android:textSize="17sp" />
+
+                        <com.sdxxtop.guardianapp.ui.widget.NumberEditTextView
+                            android:id="@+id/netProblem"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginBottom="5dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_cuoshi_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:show="@{vm.indexBean.reportPath.ismeasures==1}">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:text="措施清单"
+                            android:textColor="@color/color_303030"
+                            android:textSize="17sp" />
+
+                        <com.sdxxtop.guardianapp.ui.widget.NumberEditTextView
+                            android:id="@+id/netCuoshi"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginBottom="5dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_shixiao_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:show="@{vm.indexBean.reportPath.isprescription==1}">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:text="时效清单"
+                            android:textColor="@color/color_303030"
+                            android:textSize="17sp" />
+
+                        <com.sdxxtop.guardianapp.ui.widget.NumberEditTextView
+                            android:id="@+id/netShixiao"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginBottom="5dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_zeren_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:show="@{vm.indexBean.reportPath.isresponsibility==1}">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:text="责任清单"
+                            android:textColor="@color/color_303030"
+                            android:textSize="17sp" />
+
+                        <com.sdxxtop.guardianapp.ui.widget.NumberEditTextView
+                            android:id="@+id/netZeren"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginBottom="5dp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:background="@color/transparent" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <Button
+            android:id="@+id/btnPush"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/btn_red_solid_bg"
+            android:onClick="@{activity::onClick}"
+            android:text="上报"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -151,19 +151,19 @@ class AssignEventDetailActivity : BaseKTActivity<ActivityAssignEventDetailBindin
         eventNum.text = "事件附件（${data.img.size + data.files.size + data.video.size}）"
         fileAdapter.replaceData(data.files)
 
-        //交办 催办
-        if (isZXDetail == 2 && _data.dispaly_urge == 1) {
-            tvTop.text = "事件情况${getOverTimeStr(data.due_day)}"
-        } else {
-            tvTop.text = "事件情况"
+        if (isZXDetail == 2) {//交办
+            if (_data.dispaly_urge == 1) {  //  催办
+                tvTop.text = "事件情况${getOverTimeStr(data.due_day)}"
+            } else {
+                tvTop.text = "事件情况"
+            }
+        } else if (isZXDetail == 1) {//执行
+            if (status < 4) {     // 状态没完成之前
+                tvTop.text = "事件情况${getOverTimeStr(data.due_day)}"
+            } else {
+                tvTop.text = "事件情况"
+            }
         }
-        //执行 状态没完成之前
-        if (isZXDetail == 1 && status < 3) {
-            tvTop.text = "事件情况${getOverTimeStr(data.due_day)}"
-        } else {
-            tvTop.text = "事件情况"
-        }
-
     }
 
     /**
