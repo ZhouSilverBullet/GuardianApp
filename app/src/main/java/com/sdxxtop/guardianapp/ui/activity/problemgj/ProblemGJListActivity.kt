@@ -19,16 +19,21 @@ class ProblemGJListActivity : BaseKTActivity<ActivityProblemGjListBinding, Probl
     }
 
     private val adapter = ProblemGJAdapter()
+    private var spSize = 0
 
     override fun initObserve() {
         mBinding.vm?.adapterData?.observe(this, Observer {
-            adapter.replaceData(it.event)
+            if (spSize == 0) {
+                adapter.replaceData(it.event)
+            } else {
+                adapter.addData(it.event)
+            }
         })
     }
 
 
     override fun initData() {
-        mBinding.vm?.postList(0)
+        mBinding.vm?.postList(spSize)
     }
 
     override fun initView() {
@@ -37,13 +42,15 @@ class ProblemGJListActivity : BaseKTActivity<ActivityProblemGjListBinding, Probl
 
         smartRefresh.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
             override fun onLoadMore(refreshLayout: RefreshLayout?) {
-                mBinding.vm?.postList(adapter.data.size)
+                spSize = adapter.data.size
+                mBinding.vm?.postList(spSize)
                 smartRefresh.finishLoadMore()
                 smartRefresh.finishRefresh()
             }
 
             override fun onRefresh(refreshLayout: RefreshLayout?) {
-                mBinding.vm?.postList(0)
+                spSize = 0
+                mBinding.vm?.postList(spSize)
                 smartRefresh.finishLoadMore()
                 smartRefresh.finishRefresh()
             }

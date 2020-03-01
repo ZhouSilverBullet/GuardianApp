@@ -21,7 +21,7 @@ public class EventStreamDetailBean {
      * content : 京东快递回到家继续几点到几点海景大酒店快点快点酷酷的好的好的就地解决大姐夫基督
      * img : http://xuxingtest.oss-cn-hangzhou.aliyuncs.com/envir/20191218165358200314.png,http://xuxingtest.oss-cn-hangzhou.aliyuncs
      * .com/envir/20191218165358154818.png,http://xuxingtest.oss-cn-hangzhou.aliyuncs.com/envir/20191218165358194807.png
-     * video : 
+     * video :
      * supplement : 几点了打个电话快点快点很喜欢吃韭菜鸡蛋成都饭店多久记得记得基督教大家都好大喊大叫的继续记得记得基督教大酒店坚持坚持江西南
      * category_name : 其他类
      * union : {"extra":"","part_name":"","add_time":""}
@@ -89,11 +89,20 @@ public class EventStreamDetailBean {
     public int basicOperation;
     public int is_claim;
 
+
+    /**
+     * 问题攻坚附加参数
+     **/
+    public String problem;        //问题清单
+    public String measures;       //措施清单
+    public String prescription;   //时效清单
+    public String responsibility; //责任清单
+
     public static class UnionBean {
         /**
-         * extra : 
-         * part_name : 
-         * add_time : 
+         * extra :
+         * part_name :
+         * add_time :
          */
 
         public String extra;
@@ -104,9 +113,9 @@ public class EventStreamDetailBean {
 
     public static class TurnBean {
         /**
-         * part_name : 
-         * extra : 
-         * operate_time : 
+         * part_name :
+         * extra :
+         * operate_time :
          */
 
         public String part_name;
@@ -118,9 +127,9 @@ public class EventStreamDetailBean {
 
     public static class ClaimBean {//认领
         /**
-         * send_name : 
-         * send_part_name : 
-         * send_time : 
+         * send_name :
+         * send_part_name :
+         * send_time :
          */
 
         public String send_name;
@@ -132,12 +141,12 @@ public class EventStreamDetailBean {
 
     public static class SendBean {
         /**
-         * send_name : 
-         * send_part_name : 
-         * send_time : 
-         * settle_name : 
-         * settle_part : 
-         * end_date : 
+         * send_name :
+         * send_part_name :
+         * send_time :
+         * settle_name :
+         * settle_part :
+         * end_date :
          */
 
         public String send_name;
@@ -151,11 +160,11 @@ public class EventStreamDetailBean {
 
     public static class SolveBean {
         /**
-         * settle_time : 
-         * settle_reason : 
-         * finish_img : 
-         * finish_video : 
-         * important_type : 
+         * settle_time :
+         * settle_reason :
+         * finish_img :
+         * finish_video :
+         * important_type :
          */
 
         public String settle_time;
@@ -167,13 +176,13 @@ public class EventStreamDetailBean {
 
     public static class CheckBean {
         /**
-         * check_name : 
-         * check_part : 
-         * img : 
-         * video : 
-         * extra : 
-         * appraise : 
-         * check_time : 
+         * check_name :
+         * check_part :
+         * img :
+         * video :
+         * extra :
+         * appraise :
+         * check_time :
          */
 
         public String check_name;

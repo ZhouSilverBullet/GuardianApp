@@ -153,6 +153,10 @@ public interface EnvirApiService {
     @POST("evnt/read")
     Observable<RequestBean<EventStreamDetailBean>> postNewEventRead(@Field("data") String data);
 
+    @FormUrlEncoded
+    @POST("Problemevent/read")
+    Observable<RequestBean<EventStreamDetailBean>> postGJEventRead(@Field("data") String data);
+
     @Multipart
     @POST("event/modify")
     Observable<RequestBean> postEventModify(@PartMap HashMap<String, RequestBody> data);

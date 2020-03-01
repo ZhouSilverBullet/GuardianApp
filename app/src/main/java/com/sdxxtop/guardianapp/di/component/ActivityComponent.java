@@ -50,6 +50,7 @@ import com.sdxxtop.guardianapp.ui.activity.SplashActivity;
 import com.sdxxtop.guardianapp.ui.activity.TaskAgentsActivity;
 import com.sdxxtop.guardianapp.ui.activity.custom_event.CustomEventActivity;
 import com.sdxxtop.guardianapp.ui.activity.kaoqin.MyAssessActivity;
+import com.sdxxtop.guardianapp.ui.activity.problemgj.ProblemGJDetailActivity;
 
 import dagger.Component;
 
@@ -106,5 +107,6 @@ public interface ActivityComponent {
     void inject(RecordLogActivity activity);
     void inject(CustomEventActivity activity);
     void inject(MyAssessActivity activity);
+    void inject(ProblemGJDetailActivity activity);
 
 }

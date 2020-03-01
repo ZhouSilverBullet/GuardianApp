@@ -42,7 +42,8 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.problemgj.ProblemGJListActivity"></activity>
+        <activity android:name=".ui.activity.problemgj.ProblemGJDetailActivity"/>
+        <activity android:name=".ui.activity.problemgj.ProblemGJListActivity" />
         <activity
             android:name=".ui.activity.problemgj.ProblemGJAddActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />

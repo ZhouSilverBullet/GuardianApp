@@ -100,6 +100,98 @@
         app:left_text_value="事件分类" />
 
     <TextView
+        android:id="@+id/wentiDesc"
+        style="@style/event_detail_text_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="7dp"
+        android:text="问题清单: "
+        android:textColor="#292929"
+        android:textSize="15sp"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tvWentiTx"
+        style="@style/event_detail_text_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        tools:text="sdfjlsdjfljaldjflaj受到罚款索朗多吉分类四待发货速度快发货快水电费啦打发时间快点互粉啦互粉的房间哈来点话费啦还是短发女生短发 i决定了就发金额分开了三级大风；阿娇放假我就方法"
+        android:textSize="12sp"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/cuoshiDesc"
+        style="@style/event_detail_text_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="7dp"
+        android:text="措施清单: "
+        android:textColor="#292929"
+        android:textSize="15sp"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tvCuoshiTx"
+        style="@style/event_detail_text_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        tools:text="sdfjlsdjfljaldjflaj受到罚款索朗多吉分类四待发货速度快发货快水电费啦打发时间快点互粉啦互粉的房间哈来点话费啦还是短发女生短发 i决定了就发金额分开了三级大风；阿娇放假我就方法"
+        android:textSize="12sp"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/shixiaoDesc"
+        style="@style/event_detail_text_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="7dp"
+        android:text="时效清单: "
+        android:textColor="#292929"
+        android:textSize="15sp"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tvShixiaoTx"
+        style="@style/event_detail_text_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        tools:text="sdfjlsdjfljaldjflaj受到罚款索朗多吉分类四待发货速度快发货快水电费啦打发时间快点互粉啦互粉的房间哈来点话费啦还是短发女生短发 i决定了就发金额分开了三级大风；阿娇放假我就方法"
+        android:textSize="12sp"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/zerenDesc"
+        style="@style/event_detail_text_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="7dp"
+        android:text="责任清单: "
+        android:textColor="#292929"
+        android:textSize="15sp"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tvZerenTx"
+        style="@style/event_detail_text_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        tools:text="sdfjlsdjfljaldjflaj受到罚款索朗多吉分类四待发货速度快发货快水电费啦打发时间快点互粉啦互粉的房间哈来点话费啦还是短发女生短发 i决定了就发金额分开了三级大风；阿娇放假我就方法"
+        android:textSize="12sp"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="7dp"
