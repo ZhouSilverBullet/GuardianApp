@@ -166,7 +166,7 @@ public class DataMonitoringFragment extends BaseMvpFragment<DataMonitoringPresen
                             Intent intent = new Intent(getContext(), ProblemGJAddActivity.class);
                             startActivity(intent);
                         } else {
-                            showToast("暂未开放");
+                            showToast("暂无权限");
                         }
                         break;
                 }
@@ -204,7 +204,7 @@ public class DataMonitoringFragment extends BaseMvpFragment<DataMonitoringPresen
                     case 0:   //  扬尘监测  报表
                     case 1:   //  无人机  统计
                     case 2:   //  问题攻坚 统计
-                        showToast("暂无开放");
+                        showToast("暂未开放");
                         break;
                 }
                 break;
