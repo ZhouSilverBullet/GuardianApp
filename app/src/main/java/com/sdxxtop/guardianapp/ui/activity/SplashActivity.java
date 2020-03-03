@@ -1,10 +1,12 @@
 package com.sdxxtop.guardianapp.ui.activity;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.WindowManager;
 
@@ -20,6 +22,7 @@ import com.sdxxtop.guardianapp.utils.SpUtil;
 import com.sdxxtop.guardianapp.utils.UIUtils;
 
 import androidx.annotation.Nullable;
+
 import me.jessyan.autosize.internal.CancelAdapt;
 
 
@@ -28,6 +31,11 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!isTaskRoot()) {
+            Log.e("SplashActivity", "true");
+            finish();
+            return;
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             WindowManager.LayoutParams lp = getWindow().getAttributes();
@@ -154,7 +162,7 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
 
     @Override
     public void showError(String error) {
-        if (!"参数错误".equals(error)){
+        if (!"参数错误".equals(error)) {
             UIUtils.showToast(error);
         }
         skipLogin();

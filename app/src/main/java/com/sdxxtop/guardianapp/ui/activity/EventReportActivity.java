@@ -45,6 +45,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -149,7 +150,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
                 hideKeyboard(taevTitle.getEditText());
 
                 // 分类id
-                tatvEventType.getTextRightText().setText(item.classify_keyword);
+                tatvEventType.getTextRightText().setText(item.category_name);
                 category_id = item.category_id;
                 smallCategory_id = item.classify_id;
 
@@ -340,7 +341,7 @@ public class EventReportActivity extends BaseMvpActivity<EventReportPresenter> i
                 vedioPushPath, netContentPosition.getEditValue(), category_id,
                 streamEventPermission.basicReview == 2 ? 0 : (cbIntoVoice.isChecked() ? 1 : 2),  // 是否需要复查,需要选中为1,不选中2
                 endTime
-                , streamId,smallCategory_id);
+                , streamId, smallCategory_id);
     }
 
     @Override

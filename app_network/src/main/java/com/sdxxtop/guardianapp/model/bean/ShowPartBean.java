@@ -22,5 +22,6 @@ public class ShowPartBean {
         public int category_id;
         public int classify_id;
         public String classify_keyword;
+        public String category_name;
     }
 }
