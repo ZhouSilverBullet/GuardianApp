@@ -67,9 +67,9 @@ public class SplashActivity extends BaseMvpActivity<SplashPresenter> implements 
     @Override
     protected void initData() {
         super.initData();
-
-        mPresenter.autoLogin();
-
+        if (isTaskRoot()) {
+            mPresenter.autoLogin();
+        }
     }
 
     @Override

@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.haibin.calendarview.Calendar
 import com.haibin.calendarview.Calendar.Scheme
 import com.haibin.calendarview.CalendarView
+import com.scwang.smartrefresh.layout.api.RefreshLayout
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener
 import com.sdxxtop.base.BaseKTActivity
 import com.sdxxtop.guardianapp.R
 import com.sdxxtop.guardianapp.databinding.ActivityEventReportListBinding
@@ -19,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_add_assign_event.*
 import kotlinx.android.synthetic.main.activity_event_report_list.*
 import java.util.*
 
-class EventReportListActivity : BaseKTActivity<ActivityEventReportListBinding, EventReportListModel>(), CalendarView.OnCalendarSelectListener, CalendarView.OnMonthChangeListener {
+class EventReportListActivity : BaseKTActivity<ActivityEventReportListBinding, EventReportListModel>() {
 
     //1 => '待派发',
     //2 => '待处理',
@@ -39,8 +41,10 @@ class EventReportListActivity : BaseKTActivity<ActivityEventReportListBinding, E
     private var categorySelect: SingleStyleView? = null
     private val adapter = EventReportListAdapter()
     private var categoryId: Int = 0
-    private var selectDate = Date2Util.getToday()
     private var statusId = 0
+    private var selectStartDate = Date2Util.getToday()
+    private var selectEndDate = Date2Util.getToday()
+    private var spSize = 0    // 刷新加载标识
 
     override fun layoutId() = R.layout.activity_event_report_list
     override fun vmClazz() = EventReportListModel::class.java
@@ -61,73 +65,69 @@ class EventReportListActivity : BaseKTActivity<ActivityEventReportListBinding, E
             categorySelect?.setOnItemSelectLintener { id, result ->
                 categoryId = id
                 tvCategory.text = result
-                mBinding.vm?.posData(statusId, categoryId, selectDate)
+                mBinding.vm?.posData(statusId, categoryId, 0, selectStartDate, selectEndDate)
             }
         })
 
-        /**
-         * 更新每个月的事件信息
-         */
-        mBinding.vm?.monthData?.observe(this, Observer {
-            if (it != null) {
-                calendarView.clearSchemeDate()
-                val map: MutableMap<String, Calendar> = HashMap()
-                for (item in it) {
-                    val y = Date2Util.getDateInt(item.add_date, 0)
-                    val m = Date2Util.getDateInt(item.add_date, 1)
-                    val d = Date2Util.getDateInt(item.add_date, 2)
-                    map[getSchemeCalendar(y, m, d, -0x123a93, "事").toString()] = getSchemeCalendar(y, m, d, -0x123a93, "事")
-                }
-                calendarView.setSchemeDate(map)
-            }
-        })
         /**
          * 列表数据
          */
         mBinding.vm?.adapterList?.observe(this, Observer {
-            adapter.replaceData(it)
+            if (spSize == 0) {
+                adapter.replaceData(it)
+            } else {
+                adapter.addData(it)
+            }
         })
-
     }
 
     @SuppressLint("SetTextI18n")
     override fun initView() {
-        tvDate.text = "${calendarView.curYear}年${calendarView.curMonth}月${calendarView.curDay}日"
-        tvCurrentDay.text = "${calendarView.curDay}"
-        calendarView.setOnCalendarSelectListener(this)
-        calendarView.setOnMonthChangeListener(this)
         stausSelect.setOnItemSelectLintener { id, result ->
             statusId = id
             tvStatus.text = result
-            mBinding.vm?.posData(statusId, categoryId, selectDate)
+            mBinding.vm?.posData(statusId, categoryId, 0, selectStartDate, selectEndDate)
         }
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
+
+        macvView.setOnDataChoose {
+            if (it.size > 0) {
+                selectStartDate = Date2Util.getCalendarDate(it[0])
+                selectEndDate = Date2Util.getCalendarDate(it[it.size - 1])
+                mBinding.vm?.posData(statusId, categoryId, 0, selectStartDate, selectEndDate)
+            }
+        }
+
+        smartRefresh.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
+            override fun onLoadMore(refreshLayout: RefreshLayout?) {
+                spSize = adapter.data.size
+                mBinding.vm?.posData(statusId, categoryId, spSize, selectStartDate, selectEndDate)
+                refreshLayout?.finishLoadMore()
+                refreshLayout?.finishRefresh()
+            }
+
+            override fun onRefresh(refreshLayout: RefreshLayout?) {
+                spSize = 0
+                mBinding.vm?.posData(statusId, categoryId, 0, selectStartDate, selectEndDate)
+                refreshLayout?.finishLoadMore()
+                refreshLayout?.finishRefresh()
+            }
+        })
     }
 
     override fun initData() {
         mBinding.vm?.postCategoryData()
-        mBinding.vm?.postMonthEvnet("${calendarView.curYear}-${Date2Util.getZeroTime(calendarView.curMonth)}-01")
     }
 
     override fun onResume() {
         super.onResume()
-        mBinding.vm?.posData(statusId, categoryId, selectDate)
+        mBinding.vm?.posData(statusId, categoryId, 0, selectStartDate, selectEndDate)
     }
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.tvDate -> {
-                finish()
-            }
-            R.id.flCurrentLayout -> {
-                //选中当天
-                if (calendarView != null) {
-                    calendarView.scrollToCurrent(true)
-                    calendarView.closeYearSelectLayout()
-                }
-            }
             R.id.tvCategory -> {
                 //分类选择
                 categorySelect?.show()
@@ -137,39 +137,5 @@ class EventReportListActivity : BaseKTActivity<ActivityEventReportListBinding, E
                 stausSelect.show()
             }
         }
-    }
-
-    /**
-     * 选中日期回掉
-     */
-    @SuppressLint("SetTextI18n")
-    override fun onCalendarSelect(calendar: Calendar?, isClick: Boolean) {
-        tvDate.text = "${calendar?.year}年${calendar?.month}月${calendar?.day}日"
-        selectDate = "${calendar?.year}-${calendar?.month}-${calendar?.day}"
-        mBinding.vm?.posData(statusId, categoryId, selectDate)
-    }
-
-    override fun onCalendarOutOfRange(calendar: Calendar?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    /**
-     * 切换月分回掉
-     */
-    override fun onMonthChange(year: Int, month: Int) {
-        mBinding.vm?.postMonthEvnet("${year}-${Date2Util.getZeroTime(month)}-01")
-    }
-
-    private fun getSchemeCalendar(year: Int, month: Int, day: Int, color: Int, text: String): Calendar {
-        val calendar = Calendar()
-        calendar.year = year
-        calendar.month = month
-        calendar.day = day
-        calendar.schemeColor = color //如果单独标记颜色、则会使用这个颜色
-        calendar.scheme = text
-        calendar.addScheme(Scheme())
-        calendar.addScheme(-0xff7800, "假")
-        calendar.addScheme(-0xff7800, "节")
-        return calendar
     }
 }

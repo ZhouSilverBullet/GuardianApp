@@ -20,71 +20,28 @@
         android:fitsSystemWindows="true"
         android:orientation="vertical">
 
+        <com.sdxxtop.guardianapp.ui.widget.TitleView
+            android:id="@+id/titleView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:leftLayoutIconIsGray="true"
+            app:titleValue="我的上报" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_E0E0E0" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/ivBack"
-                android:layout_width="20dp"
-                android:layout_height="25dp"
-                android:layout_centerVertical="true"
-                android:background="@drawable/back_black"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tvDate"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:gravity="center_vertical"
-                android:onClick="@{activity::onClick}"
-                android:textColor="#000000"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/ivBack"
-                app:layout_constraintLeft_toRightOf="@+id/ivBack"
-                app:layout_constraintTop_toTopOf="@+id/ivBack"
-                tools:text="2020年2月17日" />
-
-            <FrameLayout
-                android:id="@+id/flCurrentLayout"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:onClick="@{activity::onClick}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/tvCategory"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/ib_calendar"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:contentDescription="@string/app_name"
-                    android:padding="2dp"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_calendar"
-                    android:tint="#000000" />
-
-                <TextView
-                    android:id="@+id/tvCurrentDay"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="2dp"
-                    android:gravity="center"
-                    android:text="13"
-                    android:textColor="#000000"
-                    android:textSize="10sp" />
-            </FrameLayout>
-
-            <TextView
                 android:id="@+id/tvStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/shape_assign_status_select"
                 android:drawableRight="@drawable/icon_list_down"
@@ -97,15 +54,15 @@
                 android:text="全部"
                 android:textColor="@color/gray_dark"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/tvCategory"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tvCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/shape_assign_status_select"
                 android:drawableRight="@drawable/icon_list_down"
@@ -118,75 +75,39 @@
                 android:text="全部"
                 android:textColor="@color/gray_dark"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/tvStatus"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <com.sdxxtop.guardianapp.ui.activity.kaoqin.calendar.MyAssignCalendarView
+            android:id="@+id/macvView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp" />
 
-        <com.scwang.smartrefresh.layout.SmartRefreshLayout
-            android:id="@+id/srl_layout"
+
+        <LinearLayout
+            android:id="@+id/ll_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="1dp"
-            android:visibility="gone">
+            android:background="#F2F2F2"
+            android:orientation="vertical">
 
-        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
-        <com.haibin.calendarview.CalendarLayout
-            android:id="@+id/calendarLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#fff"
-            android:orientation="vertical"
-            app:calendar_content_view_id="@+id/ll_layout"
-            app:calendar_show_mode="both_month_week_view">
-
-            <com.haibin.calendarview.CalendarView
-                android:id="@+id/calendarView"
+            <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                android:id="@+id/smartRefresh"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#fff"
-                app:calendar_padding="10dp"
-                app:current_month_lunar_text_color="#CFCFCF"
-                app:current_month_text_color="#333333"
-                app:max_year="2020"
-                app:min_year="2004"
-                app:month_view="com.sdxxtop.guardianapp.ui.widget.fly_calendarview.MeiZuMonthView"
-                app:month_view_show_mode="mode_only_current"
-                app:other_month_lunar_text_color="#e1e1e1"
-                app:other_month_text_color="#e1e1e1"
-                app:scheme_text="假"
-                app:scheme_text_color="#333"
-                app:scheme_theme_color="#128c4b"
-                app:selected_lunar_text_color="@color/black"
-                app:selected_text_color="#333"
-                app:selected_theme_color="#80cfcfcf"
-                app:week_background="#fff"
-                app:week_start_with="sun"
-                app:week_text_color="#111111"
-                app:week_view="com.sdxxtop.guardianapp.ui.widget.fly_calendarview.MeizuWeekView"
-                app:week_view_scrollable="true"
-                app:year_view_day_text_color="#333333"
-                app:year_view_day_text_size="9sp"
-                app:year_view_month_text_color="#ff0000"
-                app:year_view_month_text_size="20sp"
-                app:year_view_scheme_color="#f17706" />
-
-            <LinearLayout
-                android:id="@+id/ll_layout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#F2F2F2"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
+            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-            </LinearLayout>
+        </LinearLayout>
 
-        </com.haibin.calendarview.CalendarLayout>
     </LinearLayout>
 </layout>

@@ -15,6 +15,7 @@ import android.content.res.Configuration;
 import android.os.PowerManager;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
@@ -137,6 +138,7 @@ public class HomeActivity extends BaseMvpActivity<HomePresenter> implements Home
             }
         });
 
+        Log.e(TAG,"猎鹰相关");
         //TODO  猎鹰相关关闭
         TrackServiceUtil instance = TrackServiceUtil.getInstance();
         instance.stsrtTrackService(null);

@@ -1,6 +1,5 @@
 package com.sdxxtop.guardianapp.model
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.sdxxtop.base.BaseViewModel
 import com.sdxxtop.guardianapp.api.RetrofitClient
@@ -62,14 +61,16 @@ class EventReportListModel : BaseViewModel() {
     /**
      * 获取某天的数据
      */
-    fun posData(statusId: Int, categoryId: Int, date: String) {
+    fun posData(statusId: Int, categoryId: Int, spSize: Int, startTime: String, endTime: String) {
         showLoadingDialog(true)
         loadOnUI({
             val params = Params()
-            params.put("st", date)
             params.put("et", 2)
             params.put("su", statusId)
             params.put("cid", categoryId)
+            params.put("sp", spSize)
+            params.put("sd", startTime)
+            params.put("ed", endTime)
             //这里实际上返回了结果
             RetrofitClient.apiService.postData(params.data)
         }, {
