@@ -33,6 +33,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -99,6 +100,13 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
     TextView tvLzTime;
     @BindView(R.id.tv_lz_cause)
     TextView tvLzCause;
+    @BindView(R.id.c2Tx_lz_caozuoren)
+    Custom2TextView c2TxLzCaozuoren;
+    @BindView(R.id.c2Tx_lz_keshi)
+    Custom2TextView c2TxLzKeshi;
+    @BindView(R.id.c2Tx_lz_phone)
+    Custom2TextView c2TxLzPhone;
+
 
     /***派发***/
     @BindView(R.id.col_pf)
@@ -167,6 +175,20 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
     TextView tvFuCha2;
     @BindView(R.id.tvFuCha1)
     TextView tvFuCha1;
+
+    /***镇区呼应***/
+    @BindView(R.id.col_zq)
+    ConstraintLayout colZq;
+    @BindView(R.id.c2Tx_zq_caozuoren)
+    Custom2TextView c2TxZqCaozuoren;
+    @BindView(R.id.c2Tx_zq_heshiren)
+    Custom2TextView c2TxZqHeshiren;
+    @BindView(R.id.c2Tx_zq_keshi)
+    Custom2TextView c2TxZqKeshi;
+    @BindView(R.id.c2Tx_zq_phone)
+    Custom2TextView c2TxZqPhone;
+    @BindView(R.id.tv_zq_reason)
+    TextView tvZqReason;
 
 
     //用于提交
@@ -345,6 +367,12 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
             setCompleted(checkBean);
         }
 
+        /********* 验收 **********/
+        if (bean.log != null) {
+            EventStreamDetailBean.LogBean logBean = bean.log;
+            setLogInfo(logBean);
+        }
+
         /**********  认领状态下不显示进度条  ************/
         if (bean.is_claim == 1) {
             rlProgress.setVisibility(View.GONE);
@@ -363,6 +391,10 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
         boolean a = isTextViewShow(tvLzTime, data.operate_time, "流转时间：");
         boolean b = isTextViewShow(tvLzPart, data.part_name, "流转部门：");
         boolean c = isTextViewShow(tvLzCause, data.extra, "流转原因：");
+        c2TxLzCaozuoren.getTvRight().setText(data.verify_person);  //事件核实人
+        c2TxLzKeshi.getTvRight().setText(data.department);  //所在科室
+        c2TxLzPhone.getTvRight().setText(data.telephone);  //联系电话
+
         if (a || b || c) {
             colLz.setVisibility(View.VISIBLE);
 //            tvLzTime.setText("流转时间：" + data.operate_time);
@@ -472,6 +504,24 @@ public class EventReportDetailActivity_new extends BaseMvpActivity<EventReportDe
 //            tvPfImportance.setText("事件重要性：" + getImportanceStr(data.important_type));
         } else {
             colPf.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * 设置镇区呼应信息
+     *
+     * @param data
+     */
+    private void setLogInfo(EventStreamDetailBean.LogBean data) {
+        checkTextView(c2TxZqCaozuoren.getTvRight(), data.name, c2TxZqCaozuoren);
+        checkTextView(c2TxZqHeshiren.getTvRight(), data.verify_person, c2TxZqHeshiren);
+        checkTextView(c2TxZqKeshi.getTvRight(), data.department, c2TxZqKeshi);
+        checkTextView(c2TxZqPhone.getTvRight(), data.telephone, c2TxZqPhone);
+        isTextViewShow(tvZqReason, data.extra, "流转原因：");
+        if (data.name.isEmpty() || data.verify_person.isEmpty() || data.department.isEmpty() || data.telephone.isEmpty()) {
+            colZq.setVisibility(View.GONE);
+        } else {
+            colZq.setVisibility(View.VISIBLE);
         }
     }
 

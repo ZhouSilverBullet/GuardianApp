@@ -70,6 +70,7 @@ public class EventStreamDetailBean {
     public SendBean send;
     public SolveBean solve;
     public CheckBean check;
+    public LogBean log;
     public int is_claim_auth;
     public int is_Operate_auth;
     public int unable_solve;
@@ -121,6 +122,9 @@ public class EventStreamDetailBean {
         public String part_name;
         public String extra;
         public String operate_time;
+        public String verify_person;
+        public String department;
+        public String telephone;
 
 
     }
@@ -195,4 +199,17 @@ public class EventStreamDetailBean {
         public String appExtra;
 
     }
+
+    public static class LogBean {
+        public String name;
+        public String part_name;
+        public String extra;
+        public String path_name;
+        public String verify_person;
+        public String department;
+        public String telephone;
+        public String operate_time;
+        public String operazione;
+    }
+
 }

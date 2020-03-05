@@ -34,6 +34,10 @@ public class RecordLogAdapter extends BaseQuickAdapter<RecordLogBean.EventLogBea
         View tvVerLine = helper.getView(R.id.tv_ver_line);
         TextView tvTemp1 = helper.getView(R.id.tv_temp_1);
         TextView tvTemp2 = helper.getView(R.id.tv_temp_2);
+        TextView tvActionHeshiren = helper.getView(R.id.tv_action_heshiren);
+        TextView tvActionKeshi = helper.getView(R.id.tv_action_keshi);
+        TextView tvActionPhone = helper.getView(R.id.tv_action_phone);
+
         ConstraintLayout colImgLayout = helper.getView(R.id.col_img_layout);
 
         RecyclerView recyclerView = helper.getView(R.id.recyclerView);
@@ -47,6 +51,10 @@ public class RecordLogAdapter extends BaseQuickAdapter<RecordLogBean.EventLogBea
         helper.setText(R.id.tv_name, "操作人：" + item.name);
         helper.setText(R.id.tv_part, "操作人部门：" + item.part_name);
         helper.setText(R.id.tv_action, "操作功能：" + item.operazione);
+        isTextViewShow(tvActionHeshiren,item.verify_person,"事件核实人：");
+        isTextViewShow(tvActionKeshi,item.department,"所在科室：");
+        isTextViewShow(tvActionPhone,item.telephone,"联系电话：");
+
 
         tvLine.setVisibility(helper.getPosition() == 0 ? View.VISIBLE : View.GONE);
         if (getData().size() > 0) {
@@ -142,6 +150,24 @@ public class RecordLogAdapter extends BaseQuickAdapter<RecordLogBean.EventLogBea
             adapter.replaceData(list);
         } else {
             recyclerView.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * 检查TextView是否显示
+     *
+     * @param tx
+     * @param str
+     * @return
+     */
+    protected boolean isTextViewShow(TextView tx, String str, String startAppend) {
+        if (TextUtils.isEmpty(str)) {
+            tx.setVisibility(View.GONE);
+            return false;
+        } else {
+            tx.setText(startAppend + str);
+            tx.setVisibility(View.VISIBLE);
+            return true;
         }
     }
 

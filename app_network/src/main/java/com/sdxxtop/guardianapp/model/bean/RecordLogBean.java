@@ -49,6 +49,12 @@ public class RecordLogBean {
          * type : 9 = 驳回
          * type : 10 = 撤销删除
          **/
+
+        public String verify_person;
+        public String department;
+        public String telephone;
+
+
     }
 
 }

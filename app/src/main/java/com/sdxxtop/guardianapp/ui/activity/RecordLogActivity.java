@@ -9,6 +9,7 @@ import com.sdxxtop.guardianapp.ui.adapter.RecordLogAdapter;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 
 public class RecordLogActivity extends BaseMvpActivity<RecordLogPresenter> implements RecordLogContract.IView {
