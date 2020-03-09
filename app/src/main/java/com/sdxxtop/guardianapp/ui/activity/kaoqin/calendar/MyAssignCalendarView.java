@@ -22,6 +22,7 @@ import com.sdxxtop.guardianapp.R;
 import com.sdxxtop.guardianapp.utils.Date2Util;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,12 +33,18 @@ import java.util.List;
  */
 public class MyAssignCalendarView extends LinearLayout implements CalendarView.OnCalendarRangeSelectListener {
 
+    private static String TAG = "MyAssignCalendarView";
+
     private Context mContext;
     private Dialog dialog;
     private View view;
     public String currentDate;  //默认当天
     private TextView timeStartSelect;
     private TextView timeEndSelect;
+    private CalendarView mCalendarView;
+    private String selectStartDay = "";
+    private String selectEndDay = "";
+
 
     public MyAssignCalendarView(Context context) {
         this(context, null);
@@ -96,7 +103,7 @@ public class MyAssignCalendarView extends LinearLayout implements CalendarView.O
     }
 
     private void initCalendarView(View view) {
-        CalendarView mCalendarView = view.findViewById(R.id.calendarView);
+        mCalendarView = view.findViewById(R.id.calendarView);
         TextView tvData = view.findViewById(R.id.tv_data);
         tvData.setText(Date2Util.getZeroTime(mCalendarView.getCurYear()) + "-" + Date2Util.getZeroTime(mCalendarView.getCurMonth()));
         TextView tvCommit = view.findViewById(R.id.tvCommit);
@@ -105,6 +112,20 @@ public class MyAssignCalendarView extends LinearLayout implements CalendarView.O
             public void onClick(View v) {
                 List<Calendar> calendars = mCalendarView.getSelectCalendarRange();
                 if (calendars == null || calendars.size() == 0) {
+                    List<Calendar> calendarsResult = new ArrayList<>();
+                    if (!selectStartDay.isEmpty() && !selectEndDay.isEmpty()) {
+                        Calendar calendar = new Calendar();
+                        calendar.setYear(Integer.parseInt(selectStartDay.split("/")[0]));
+                        calendar.setMonth(Integer.parseInt(selectStartDay.split("/")[1]));
+                        calendar.setDay(Integer.parseInt(selectStartDay.split("/")[2]));
+                        calendarsResult.add(calendar);
+                        if (mListener != null) {
+                            mListener.selected(calendarsResult);
+                        }
+                        if (dialog != null) {
+                            dialog.dismiss();
+                        }
+                    }
                     return;
                 }
                 for (Calendar c : calendars) {
@@ -120,9 +141,8 @@ public class MyAssignCalendarView extends LinearLayout implements CalendarView.O
         });
         mCalendarView.setOnMonthChangeListener((year, month) -> tvData.setText("" + year + "-" + Date2Util.getZeroTime(month)));
         mCalendarView.setOnCalendarRangeSelectListener(this);
-        mCalendarView.setSelectRange(1, 31);
+        mCalendarView.setSelectRange(1, -1);
     }
-
 
     public interface OnDataChooseListener {
         void selected(List<Calendar> data);
@@ -163,12 +183,36 @@ public class MyAssignCalendarView extends LinearLayout implements CalendarView.O
      */
     @Override
     public void onCalendarRangeSelect(Calendar calendar, boolean isEnd) {
+        Log.e(TAG, "onCalendarRangeSelect: " + calendar.toString() + " ---- " + isEnd);
         if (!isEnd) {
             timeStartSelect.setText(calendar.getYear() + "/" + Date2Util.getZeroTime(calendar.getMonth()) + "/" + Date2Util.getZeroTime(calendar.getDay()));
-            timeEndSelect.setText("");
+
+            if (selectStartDay.equals(calendar.getYear() + "/" + Date2Util.getZeroTime(calendar.getMonth()) + "/" + Date2Util.getZeroTime(calendar.getDay()))) {
+                selectEndDay = selectStartDay;
+
+                timeEndSelect.setText(selectEndDay);
+            } else {
+                selectStartDay = calendar.getYear() + "/" + Date2Util.getZeroTime(calendar.getMonth()) + "/" + Date2Util.getZeroTime(calendar.getDay());
+                selectEndDay = "";
+
+                timeStartSelect.setText(calendar.getYear() + "/" + Date2Util.getZeroTime(calendar.getMonth()) + "/" + Date2Util.getZeroTime(calendar.getDay()));
+                timeEndSelect.setText("");
+            }
+
         } else {
             timeEndSelect.setText(calendar.getYear() + "/" + Date2Util.getZeroTime(calendar.getMonth()) + "/" + Date2Util.getZeroTime(calendar.getDay()));
         }
     }
+
+    /**
+     * 设置时间
+     */
+    public void setTime() {
+        if (timeStartSelect != null && timeEndSelect != null) {
+            timeStartSelect.setText("----");
+            timeEndSelect.setText("----");
+        }
+    }
+
 
 }

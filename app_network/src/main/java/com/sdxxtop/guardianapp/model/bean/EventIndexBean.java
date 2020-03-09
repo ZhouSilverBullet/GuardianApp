@@ -49,6 +49,7 @@ public class EventIndexBean {
         private int is_claim;
         private String category_name;
 
+
         public String getCategory_name() {
             return category_name;
         }

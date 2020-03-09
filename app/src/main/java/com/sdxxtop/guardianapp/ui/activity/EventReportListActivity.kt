@@ -37,14 +37,22 @@ class EventReportListActivity : BaseKTActivity<ActivityEventReportListBinding, E
         list.add(SingleStyleView.ListDataBean(4, "已完成"))
         SingleStyleView(this@EventReportListActivity, list)
     }
+    private val eventTypeSelect: SingleStyleView by lazy {
+        val list = arrayListOf<SingleStyleView.ListDataBean>()
+        list.add(SingleStyleView.ListDataBean(0, "全部"))
+        list.add(SingleStyleView.ListDataBean(2, "事件上报"))
+        list.add(SingleStyleView.ListDataBean(1, "自行处理"))
+        SingleStyleView(this@EventReportListActivity, list)
+    }
 
     private var categorySelect: SingleStyleView? = null
     private val adapter = EventReportListAdapter()
     private var categoryId: Int = 0
     private var statusId = 0
-    private var selectStartDate = Date2Util.getToday()
-    private var selectEndDate = Date2Util.getToday()
+    private var selectStartDate = ""
+    private var selectEndDate = ""
     private var spSize = 0    // 刷新加载标识
+    private var eventTypeId = "0"  // 事件类型默认是 "事件上报" 和  "自行处理"
 
     override fun layoutId() = R.layout.activity_event_report_list
     override fun vmClazz() = EventReportListModel::class.java
@@ -65,7 +73,7 @@ class EventReportListActivity : BaseKTActivity<ActivityEventReportListBinding, E
             categorySelect?.setOnItemSelectLintener { id, result ->
                 categoryId = id
                 tvCategory.text = result
-                mBinding.vm?.posData(statusId, categoryId, 0, selectStartDate, selectEndDate)
+                mBinding.vm?.posData(statusId, categoryId, 0, selectStartDate, selectEndDate, eventTypeId)
             }
         })
 
@@ -83,10 +91,11 @@ class EventReportListActivity : BaseKTActivity<ActivityEventReportListBinding, E
 
     @SuppressLint("SetTextI18n")
     override fun initView() {
+        macvView.setTime()
         stausSelect.setOnItemSelectLintener { id, result ->
             statusId = id
             tvStatus.text = result
-            mBinding.vm?.posData(statusId, categoryId, 0, selectStartDate, selectEndDate)
+            mBinding.vm?.posData(statusId, categoryId, 0, selectStartDate, selectEndDate, eventTypeId)
         }
 
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -96,25 +105,36 @@ class EventReportListActivity : BaseKTActivity<ActivityEventReportListBinding, E
             if (it.size > 0) {
                 selectStartDate = Date2Util.getCalendarDate(it[0])
                 selectEndDate = Date2Util.getCalendarDate(it[it.size - 1])
-                mBinding.vm?.posData(statusId, categoryId, 0, selectStartDate, selectEndDate)
+                mBinding.vm?.posData(statusId, categoryId, 0, selectStartDate, selectEndDate, eventTypeId)
             }
         }
 
         smartRefresh.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
             override fun onLoadMore(refreshLayout: RefreshLayout?) {
                 spSize = adapter.data.size
-                mBinding.vm?.posData(statusId, categoryId, spSize, selectStartDate, selectEndDate)
+                mBinding.vm?.posData(statusId, categoryId, spSize, selectStartDate, selectEndDate, eventTypeId)
                 refreshLayout?.finishLoadMore()
                 refreshLayout?.finishRefresh()
             }
 
             override fun onRefresh(refreshLayout: RefreshLayout?) {
                 spSize = 0
-                mBinding.vm?.posData(statusId, categoryId, 0, selectStartDate, selectEndDate)
+                mBinding.vm?.posData(statusId, categoryId, 0, selectStartDate, selectEndDate, eventTypeId)
                 refreshLayout?.finishLoadMore()
                 refreshLayout?.finishRefresh()
             }
         })
+
+
+        eventTypeSelect.setOnItemSelectLintener { id, result ->
+            eventTypeId = when (id) {
+                1 -> "1"
+                2 -> "2"
+                else -> "0"
+            }
+            tvEventType.text = result
+            mBinding.vm?.posData(statusId, categoryId, 0, selectStartDate, selectEndDate, eventTypeId)
+        }
     }
 
     override fun initData() {
@@ -123,7 +143,7 @@ class EventReportListActivity : BaseKTActivity<ActivityEventReportListBinding, E
 
     override fun onResume() {
         super.onResume()
-        mBinding.vm?.posData(statusId, categoryId, 0, selectStartDate, selectEndDate)
+        mBinding.vm?.posData(statusId, categoryId, 0, selectStartDate, selectEndDate, eventTypeId)
     }
 
     override fun onClick(v: View) {
@@ -135,6 +155,10 @@ class EventReportListActivity : BaseKTActivity<ActivityEventReportListBinding, E
             R.id.tvStatus -> {
                 //状态选择
                 stausSelect.show()
+            }
+            R.id.tvEventType -> {
+                //事件类型选择
+                eventTypeSelect.show()
             }
         }
     }

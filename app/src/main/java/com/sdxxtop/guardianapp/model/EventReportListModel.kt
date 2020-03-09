@@ -61,11 +61,11 @@ class EventReportListModel : BaseViewModel() {
     /**
      * 获取某天的数据
      */
-    fun posData(statusId: Int, categoryId: Int, spSize: Int, startTime: String, endTime: String) {
+    fun posData(statusId: Int, categoryId: Int, spSize: Int, startTime: String, endTime: String, eventTypeId: String) {
         showLoadingDialog(true)
         loadOnUI({
             val params = Params()
-            params.put("et", 2)
+            params.put("et", eventTypeId)
             params.put("su", statusId)
             params.put("cid", categoryId)
             params.put("sp", spSize)
