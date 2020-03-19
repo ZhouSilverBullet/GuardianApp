@@ -58,7 +58,7 @@ public class MineMenuAdapter extends BaseQuickAdapter<MineMenuAdapter.Data, Base
 //                    intent = new Intent(mContext, VersionsExplainActivity.class);
                     break;
                 case "关于我们":
-//                    intent = new Intent(mContext, AboutActivity.class);
+                    intent = new Intent(mContext, AboutActivity.class);
                     break;
             }
             if (intent!=null){

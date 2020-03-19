@@ -1,64 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="vm"
             type="com.sdxxtop.guardianapp.aakt.AboutModel" />
+
+        <variable
+            name="activity"
+            type="com.sdxxtop.guardianapp.aakt.AboutActivity" />
     </data>
 
-    <LinearLayout
-        android:orientation="vertical"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#FFFAFCFF"
+        android:orientation="vertical">
 
-        <RelativeLayout
-            android:id="@+id/layout"
+        <com.sdxxtop.guardianapp.ui.widget.TitleView
+            android:id="@+id/titleView"
             android:layout_width="match_parent"
-            android:layout_height="300dp">
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:leftLayoutIconIsGray="true"
+            app:titleValue="关于我们" />
 
-<!--            <TextView-->
-<!--                android:gravity="center"-->
-<!--                android:text="jsdksjdlfjklsajkfljaklsdjflsjaflakl"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent" />-->
-
-            <com.bin.david.form.core.SmartTable
-                android:id="@+id/table"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </RelativeLayout>
-
-        <Button
-            android:onClick="@{() -> vm.method()}"
+        <LinearLayout
+            android:id="@+id/iconLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="180dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/titleView">
 
-        <TextView
-            android:id="@+id/tvTest"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            android:text="@{String.valueOf(vm.str2+000)}"
-            android:layout_width="match_parent"
-            android:layout_height="30dp" />
-        <TextView
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            android:text="@{@string/nameFormat(vm.firstName, vm.lastName)}"
-            android:layout_width="match_parent"
-            android:layout_height="30dp" />
-<!--        <TextView-->
-<!--            android:textColor="@{@color/vm.color}"-->
-<!--            android:textSize="14sp"-->
-<!--            android:text='@{"klsdlklsdl"+vm.str2}'-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="30dp" />-->
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@mipmap/ic_launcher" />
 
+            <TextView
+                android:id="@+id/us_ban_hao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="数字罗庄 v1.0.0"
+                android:textSize="12sp" />
+        </LinearLayout>
 
-        <Button
-            android:onClick="@{()-> vm.request()}"
-            android:text="请求网络"
+        <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+            android:id="@+id/textCallMine"
             android:layout_width="match_parent"
-            android:layout_height="100dp" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:onClick="@{activity::onClick}"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/iconLayout"
+            app:tatv_line_is_show="true"
+            app:tatv_text_img_is_show="false"
+            app:tatv_text_right_hint_value="400-809-0778"
+            app:tatv_text_view="联系我们" />
+
+        <com.sdxxtop.guardianapp.ui.widget.TextAndTextView
+            android:id="@+id/textUpdateVersion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{activity::onClick}"
+            app:layout_constraintTop_toBottomOf="@+id/textCallMine"
+            app:tatv_line_is_show="true"
+            app:tatv_text_img_is_show="true"
+            app:tatv_text_view="更新版本" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

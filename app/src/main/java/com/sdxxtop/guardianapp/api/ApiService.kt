@@ -103,4 +103,8 @@ interface ApiService {
     @POST("Problemevent/Eventadd")
     suspend fun reportProblem(@PartMap map: HashMap<String, RequestBody>): BaseResponse<AddEventResult>
 
+    @FormUrlEncoded
+    @POST("app/init")
+    suspend fun checkAppVersion(@Field("data") data: String): BaseResponse<InitBean>
+
 }
